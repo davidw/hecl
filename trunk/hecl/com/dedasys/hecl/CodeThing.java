@@ -191,6 +191,7 @@ public class CodeThing implements RealThing {
 	 */
 	public void run(Interp interp) throws HeclException {
 	    RealThing realthing = null;
+
 	    /* These are the three most common argv lengths. */
  	    switch (argv.length) {
 		case 1:
@@ -206,9 +207,9 @@ public class CodeThing implements RealThing {
 		    newargv = new Thing[argv.length];
 	    }
 
+	    realthing = argv[0].val;
 	    if (command == null) {
 		String cmdName = null;
-		realthing = argv[0].val;
 		/* If the argv[0] is a substitution waiting to
 		 * happen, substitute it to get the name. */
 		if (realthing instanceof CodeThing) {

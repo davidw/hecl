@@ -1,3 +1,7 @@
+2005-01-28  David N. Welton  <davidw@dedasys.com>
+
+	* Makefile: A bit of hacking to make the compile nicer.
+
 2005-01-27  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Removed ref and copy.

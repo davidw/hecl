@@ -5,7 +5,9 @@
 # Compiler to use:
 #JAVAC=/usr/lib/j2se/1.4/bin/javac
 JAVAC=gcj-3.4 -C
-CC=gcj-3.4
+
+# Compile to native code
+JCC=gcj-3.4
 
 # Use profiling or not.
 PROFILE = -pg
@@ -74,25 +76,25 @@ MECLASSES = $(patsubst %.java,$(srcdir)%.class,$(MEFILES))
 
 srcdir=com/dedasys/hecl/
 
+all: hecl docs hecl.jar
+
 $(srcdir)%.class : $(srcdir)%.java
 	$(JAVAC) $<
 
 $(srcdir)%.o : $(srcdir)%.java
-	$(CC) -c -O3 -g $(PROFILE) $< -o $@
+	$(JCC) -c -O3 -g $(PROFILE) $< -o $@
 
-classes: $(CLASSES) $(SECLASSES) $(MECLASSES)
-
-ofiles: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
-
-hecl.jar: classes $(CLASSES) $(MECLASSES)
+# Make an archive.
+hecl.jar: $(CLASSES) $(SECLASSES) $(MECLASSES)
 	jar cvf hecl.jar $(CLASSES) $(MECLASSES) $(srcdir)CodeThing\$$Stanza.class \
 	$(srcdir)Parse\$$ParseState.class
 
-hecl: ofiles
+# This is the standard Hecl program.
+hecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS) Hecl.java
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(OBJECTS) $(SEOBJECTS) $(PROFILE)
 
 # "Stand alone" hecl.  Has a script compiled into it.
-sahecl: ofiles
+sahecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
 	gcj-3.4 -O3 -g -o sahecl --main=StandaloneHecl StandaloneHecl.java \
 	$(OBJECTS) $(MEOBJECTS) $(PROFILE)
 
@@ -101,8 +103,9 @@ librl.so: /usr/share/java/libreadline-java.jar
 	gcj-3.4 -fjni -fPIC -shared -Wl,-soname,librl.so -o librl.so \
 	/usr/share/java/libreadline-java.jar
 
-# Readline version of the command line program.
-rlhecl: ofiles librl.so
+# Readline version of the command line program.  You need the readline
+# library for this to work.
+rlhecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS) librl.so
 	gcj-3.4 -g -o rlhecl --main=RLHecl RLHecl.java $(OBJECTS) $(SEOBJECTS) \
 	-L. -lrl -I/usr/share/java/libreadline-java.jar $(PROFILE)
 
@@ -120,7 +123,7 @@ test: hecl
 
 docs: docs/hecl.html docs/index.html
 
-# Generate html docs.
+# Generate html docs with xsltproc from the DocBook manual.
 docs/hecl.html: docs/hecl.xml docs/hecl.xsl docs/nochunk.xsl
 	xsltproc --nonet --stringparam html.stylesheet hecl.css -o docs/hecl.html docs/nochunk.xsl docs/hecl.xml
 

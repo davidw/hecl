@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ import com.dedasys.hecl.*;
 
 /**
  *  <code>Hecl</code> is the main class.  Borrow the code from here if
- *  you want to embed  in your own system.
+ *  you want to embed Hecl in your own system.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -33,10 +33,14 @@ public class Hecl {
      */
     public static void main(String [] args) {
 	try {
+	    /* First, create a new interpreter, and pass it a
+	     * mechanism to load resources with - in this case,
+	     * files. */
 	    Interp interp = new Interp(new LoadFile());
-	    Standard.init(interp);
-	    Eval eval = new Eval();
-	    eval.eval(interp, interp.getscript(args[0]));
+	    /* Initialize the standard Hecl environment. */
+	    com.dedasys.hecl.Standard.init(interp);
+	    /* Evaluate the file at args[0] */
+	    Eval.eval(interp, interp.getscript(args[0]));
 	} catch (Exception e) {
 	    System.err.println(e);
 	}

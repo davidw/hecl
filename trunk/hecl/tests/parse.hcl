@@ -29,3 +29,12 @@ test parse-4 {
     set ps printstuff2
     $ps foo
 } {new foo}
+
+test parse-5 {
+    set out {}
+    set ps printstuff
+    append &out [$ps foo]
+    set ps printstuff2
+    append &out [$ps foo]
+    set out
+} {foonew foo}
