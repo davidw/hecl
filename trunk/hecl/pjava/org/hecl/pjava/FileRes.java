@@ -16,7 +16,6 @@
 package org.hecl.pjava;
 
 import java.io.*;
-
 import org.hecl.*;
 
 /**
