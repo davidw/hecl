@@ -15,7 +15,6 @@ class AppendCmd implements Command {
 	StringBuffer strb;
 	Thing result = argv[1];
 	strb = result.toStringBuffer();
-
 	for (int i = 2; i < argv.length; i++) {
 	    strb.append(argv[i].toString());
 	}

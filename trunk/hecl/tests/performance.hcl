@@ -5,14 +5,12 @@ proc stopwatch {name code} {
 
 set times [hash {}]
 
-stopwatch while-1 {
-    set i 1
-    time {
-	while { < $i 100 } {
-#	    puts $i
-	    set i [+ $i 1]
-	}
-    }
+foreach f [sort {
+    loops.hcl
+}] {
+    sourcehere $f
 }
 
-puts $times
+foreach {k v} $times {
+    puts "$k $v"
+}

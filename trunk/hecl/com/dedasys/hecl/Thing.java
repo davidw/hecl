@@ -245,7 +245,7 @@ public class Thing extends Object {
 	}
     }
 
-    /* Makes a new copy. */
+    /* Makes a deep copy. */
     public Thing copy() {
 	Thing newthing = null;
 	switch (type) {

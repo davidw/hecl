@@ -69,8 +69,10 @@ public class Interp {
 	addCommand("llen", new ListCmd());
 	addCommand("lappend", new ListCmd());
 	addCommand("lindex", new ListCmd());
-	addCommand("split", new ListCmd());
-	addCommand("join", new ListCmd());
+	addCommand("lset", new ListCmd());
+
+	addCommand("split", new JoinSplitCmd());
+	addCommand("join", new JoinSplitCmd());
 
 	addCommand("proc", new ProcCmd());
 

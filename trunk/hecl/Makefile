@@ -9,7 +9,7 @@ ofiles: classes
 	gcj-3.4 -g -c $(srcdir)*.class
 
 hecl: classes
-	gcj-3.4 -g -o hecl --main=com.dedasys.hecl.Hecl $(srcdir)*.class $(PROFILE)
+	gcj-3.4 -pg -g -o hecl --main=com.dedasys.hecl.Hecl $(srcdir)*.class $(PROFILE)
 
 clean:
 	-find . -name "*~" | xargs rm
