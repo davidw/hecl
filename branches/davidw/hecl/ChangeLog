@@ -1,0 +1,19 @@
+2004-10-25  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Proc.java: procs now give errors with the wrong
+	number of arguments.
+
+2004-10-24  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/CatchCmd.java: No longer catch Exception's.
+	Eval should catch them and pass them on as HeclExceptions.
+
+2004-09-17  David N. Welton  <davidw@dedasys.com>
+
+	* HeclThing.java: Added toListString method in order to print
+	sublists separately.
+
+2004-09-15  David N. Welton  <davidw@dedasys.com>
+
+	* Hecl.java: Started changelog.
+
