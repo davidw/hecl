@@ -395,7 +395,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getScriptName</code> method here.
+     * The <code>getScriptName</code> method returns the name of the
+     * file being run, if it exists.
      *
      * @return a <code>String</code> value
      */

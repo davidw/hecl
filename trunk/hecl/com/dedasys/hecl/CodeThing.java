@@ -17,13 +17,29 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+/**
+ * The <code>CodeThing</code> class implements a chunk of "compiled"
+ * code including multiple "Stanzas", or individual commands.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 public class CodeThing {
-    /* The number of lines of commands, for instance. */
+    /* The number of lines of commands. */
     private Vector stanzas;
 
     CodeThing() {
 	stanzas = new Vector();
     }
+
+    /**
+     * The <code>addStanza</code> method adds a new command and its
+     * arguments.
+     *
+     * @param command <code>Command</code> value
+     * @param argv <code>Thing[]</code> value
+     */
 
     public void addStanza(Command command, Thing[] argv) {
 	Stanza sz = new Stanza(command, argv);
@@ -32,6 +48,12 @@ public class CodeThing {
 	// (new Throwable()).printStackTrace();
     }
 
+    /**
+     * The <code>run</code> method runs the CodeThing.
+     *
+     * @param interp <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void run(Interp interp) throws HeclException {
 
 	//System.out.println("RUNNING: " + this.toString() + "</RUNNING>");
@@ -41,6 +63,12 @@ public class CodeThing {
 	}
     }
 
+    /**
+     * The <code>toString</code> method returns a String
+     * representation of the commands it represents.
+     *
+     * @return a <code>String</code> value.
+     */
     public String toString() {
 	StringBuffer out = new StringBuffer();
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements(); ) {
@@ -52,6 +80,13 @@ public class CodeThing {
 	return out.toString();
     }
 
+    /**
+     * The <code>Stanza</code> class represents one command.
+     *
+     * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+     * @version 1.0
+     */
+
     class Stanza {
 	private Command command = null;
 	private Thing[] argv = null;
@@ -62,6 +97,12 @@ public class CodeThing {
 	    argv = newargv;
 	}
 
+	/**
+	 * The <code>run</code> method runs the Stanza.
+	 *
+	 * @param interp <code>Interp</code> value
+	 * @exception HeclException if an error occurs
+	 */
 	public void run(Interp interp) throws HeclException {
 	    Thing[] newargv = new Thing[argv.length];
 
@@ -79,9 +120,14 @@ public class CodeThing {
 	     * types, use references to others. */
 	    for (int i = 0; i < argv.length; i ++) {
 		if (argv[i].type == Thing.SUBST) {
+		    /* If it's a SUBST, we eval it before passing off
+		     * the results. */
 		    eval.eval(interp, argv[i]);
 		    newargv[i] = interp.getResult();
 		} else if (argv[i].type == Thing.GROUP) {
+		    /* If it's a GROUP, we pick out the SUBST elements
+		     * and eval those before passing the whole thing
+		     * off. */
 		    StringBuffer result = new StringBuffer("");
 		    Vector v = argv[i].getGroup();
 		    for (Enumeration e = v.elements();
@@ -110,7 +156,6 @@ public class CodeThing {
 		command.cmdCode(interp, newargv);
 	    } catch (HeclException e) {
 		/* Uh oh, an "issue"! */
-
 		if (newargv[0] != null) {
 		    /* Let the exception know where we are. */
 		    e.where(newargv[0].toString());
@@ -139,6 +184,12 @@ public class CodeThing {
 
 	}
 
+	/**
+	 * The <code>toString</code> method turns a Stanza into a
+	 * string.
+	 *
+	 * @return a <code>String</code> value
+	 */
 	public String toString() {
 	    StringBuffer out = new StringBuffer(argv[0].toString());
 	    for (int i = 1; i < argv.length; i ++) {
