@@ -288,7 +288,7 @@ public class Parse {
         char ch;
         ch = state.nextchar();
         if (ch == '{') {
-            parseBlock(state);
+            parseVarBlock(state);
         } else {
             /* Variable names use this range here. */
             while ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')
@@ -318,7 +318,11 @@ public class Parse {
      *                if an error occurs
      */
     protected void parseBlock(ParseState state) throws HeclException {
-        parseBlockOrCommand(state, true);
+        parseBlockOrCommand(state, true, false);
+    }
+
+    protected void parseVarBlock(ParseState state) throws HeclException {
+	parseBlockOrCommand(state, true, true);
     }
 
     /**
@@ -330,7 +334,7 @@ public class Parse {
      *                if an error occurs
      */
     protected void parseCommand(ParseState state) throws HeclException {
-        parseBlockOrCommand(state, false);
+        parseBlockOrCommand(state, false, false);
     }
 
     /**
@@ -344,7 +348,7 @@ public class Parse {
      * @exception HeclException
      *                if an error occurs
      */
-    protected void parseBlockOrCommand(ParseState state, boolean block)
+    protected void parseBlockOrCommand(ParseState state, boolean block, boolean invar)
             throws HeclException {
         int level = 1;
         char ldelim, rdelim;
@@ -371,6 +375,15 @@ public class Parse {
             if (level == 0) {
                 /* It's just a block, return it. */
                 if (block || parselist) {
+		    ch = state.nextchar();
+		    /* If we are not dealing with a variable parse
+		     * such as ${foo}, and the next character
+		     * isn't a space, we have a problem. */
+		    if (!invar && ch != ' ' && ch != '	' &&
+			ch != '\n' && ch != '\n' && ch != 0) {
+			throw new HeclException("extra characters after close-brace");
+		    }
+		    state.rewind();
                     //return new Thing(out);
                     return;
                 } else {

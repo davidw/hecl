@@ -43,4 +43,4 @@ test parse-6 {
     foreach x y {
 	set z 1
     }XXX
-} {ERROR}
+} {{ERROR {extra characters after close-brace}}}
