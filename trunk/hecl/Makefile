@@ -2,7 +2,7 @@
 
 # $Id$
 
-# Compiler to use.
+# Compiler to use:
 #JAVAC=/usr/lib/j2se/1.4/bin/javac
 JAVAC=gcj-3.4 -C
 CC=gcj-3.4
@@ -10,13 +10,13 @@ CC=gcj-3.4
 # Use profiling or not.
 PROFILE = -pg
 
-# Regular old Java
+# Regular old Java uses these files.
 SEFILES=LoadFile.java
 
-# Cut down J2ME stuff.
+# These files are used in the cut down J2ME stuff.
 MEFILES=LoadString.java
 
-# All versions
+# All versions use these files.
 FILES=AppendCmd.java \
 ForeachCmd.java \
 SortCmd.java \
@@ -80,19 +80,23 @@ classes: $(CLASSES) $(SECLASSES) $(MECLASSES)
 ofiles: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
 
 hecl.jar: classes $(CLASSES) $(MECLASSES)
-	jar cvf hecl.jar $(CLASSES) $(MECLASSES) $(srcdir)CodeThing\$$Stanza.class $(srcdir)Parse\$$ParseState.class
+	jar cvf hecl.jar $(CLASSES) $(MECLASSES) $(srcdir)CodeThing\$$Stanza.class \
+	$(srcdir)Parse\$$ParseState.class
 
 hecl: ofiles
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(OBJECTS) $(SEOBJECTS) $(PROFILE)
 
+# "Stand alone" hecl.  Has a script compiled into it.
 sahecl: ofiles
 	gcj-3.4 -O3 -g -o sahecl --main=StandaloneHecl StandaloneHecl.java \
 	$(OBJECTS) $(MEOBJECTS) $(PROFILE)
 
+# Needed for libreadline.
 librl.so: /usr/share/java/libreadline-java.jar
 	gcj-3.4 -fjni -fPIC -shared -Wl,-soname,librl.so -o librl.so \
 	/usr/share/java/libreadline-java.jar
 
+# Readline version of the command line program.
 rlhecl: ofiles librl.so
 	gcj-3.4 -g -o rlhecl --main=RLHecl RLHecl.java $(OBJECTS) $(SEOBJECTS) \
 	-L. -lrl -I/usr/share/java/libreadline-java.jar $(PROFILE)
@@ -105,5 +109,6 @@ clean:
 	-rm rlhecl
 	-rm librl.so
 
+# Run the tests.
 test: hecl
 	./hecl tests/suite.hcl
