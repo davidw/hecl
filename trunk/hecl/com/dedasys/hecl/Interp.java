@@ -109,7 +109,7 @@ public class Interp {
 
 	addCommand("sourcehere", new SourceHereCmd());
 
-	addCommand("upstack", new SourceCmd());
+	addCommand("upeval", new UpCmd());
 
 	addCommand("sort", new SortCmd());
 
@@ -143,15 +143,26 @@ public class Interp {
      *
      */
     public void stackIncr() {
-	stack.push(new Hashtable());
+	stackPush(new Hashtable());
     }
 
     /**
-     * <code>stackDecr</code> pops the stack frame, destroying it.
+     * <code>stackDecr</code> pops the stack frame, returning it so
+     * that commands like upeval can save it.  If it's not saved, it's
+     * gone.
      *
      */
-    public void stackDecr() {
-	stack.pop();
+    public Hashtable stackDecr() {
+	return (Hashtable)stack.pop();
+    }
+
+    /**
+     * <code>stackDecr</code> pushes a new variable hashtable
+     * (probably saved via upeval) onto the stack frame.
+     *
+     */
+    public void stackPush(Hashtable vars) {
+	stack.push(vars);
     }
 
     /**

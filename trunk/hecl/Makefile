@@ -55,6 +55,7 @@ ListCmd.java \
 ReturnCmd.java \
 ForCmd.java \
 LmatchCmd.java \
+UpCmd.java \
 SetCmd.java
 
 OBJECTS = $(patsubst %.java,$(srcdir)%.o,$(FILES))
