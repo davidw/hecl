@@ -19,7 +19,7 @@ import java.lang.*;
 import java.util.*;
 
 /**
- * Describe class <code>Parse</code> here.
+ * The <code>Parse</code> class takes care of parsing Hecl scripts.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -80,7 +80,7 @@ public class Parse {
 
 	parseLine(in, state);
 	if (outList.size() > 0 ) {
-//	    System.out.println("outlist is : " + outList);
+	    // System.out.println("outlist is : " + outList);
 	    return outList;
 	}
 	return null;
@@ -96,7 +96,7 @@ public class Parse {
 	    cmdName = null;
 	    Vector cmd = new Vector();
 	    cmd = parse();
-//	    System.out.println("CMD is " + cmd);
+	    // System.out.println("CMD is " + cmd);
 
 	    if (cmd == null || cmd.size() == 0) {
 		continue;
@@ -109,11 +109,11 @@ public class Parse {
 	    cmdName = cmd.elementAt(0).toString();
 
 	    // System.out.println("CMD is " + cmdName);
-	    //System.out.println("ARGS ARE " + Arrays.asList(argv));
+	    // System.out.println("ARGS ARE " + Arrays.asList(argv));
 
 	    command = interp.getCmd(cmdName);
 	    code.addStanza(command, argv);
-//		    command.cmdCode(interp, argv);
+	    // command.cmdCode(interp, argv);
 	}
 	return code;
     }
@@ -133,7 +133,7 @@ public class Parse {
      * Describe <code>appendCurrent</code> method here.
      *
      */
-    protected void appendCurrent() {
+/*     protected void appendCurrent() {
 	StringBuffer last;
 	int sz = outList.size();
 
@@ -144,27 +144,37 @@ public class Parse {
 	currentOut = new Thing("");
 	outList.removeElementAt(sz - 1);
     }
+  */
+
+    /**
+     * The <code>appendToCurrent</code> method adds a character to the
+     * group object.
+     *
+     * @param ch a <code>char</code>
+     */
 
     protected void appendToCurrent(char ch) {
 	currentOut.appendToGroup(ch);
     }
 
     /**
-     * Describe <code>addCurrent</code> method here.
+     * The <code>addCurrent</code> method adds a new Thing to the out
+     * list, and sets the current output collector to an empty Thing.
      *
      * @param newthing a <code>Thing</code> value
      */
-    public void addCurrent(Thing newthing) {
+    protected void addCurrent(Thing newthing) {
 	outList.addElement(newthing);
 	currentOut = new Thing("");
     }
 
     /**
-     * Describe <code>addCommand</code> method here.
+     * The <code>addCommand</code> method adds a command to the
+     * current output.
      *
      * @exception HeclException if an error occurs
      */
-    public void addCommand() throws HeclException {
+    protected void addCommand() throws HeclException {
 	Thing saveout = currentOut;
 	currentOut = new Thing("");
 	parseCommand(state);
@@ -173,7 +183,8 @@ public class Parse {
     }
 
     /**
-     * Describe <code>addDollar</code> method here.
+     * The <code>addDollar</code> method adds a $var lookup to the
+     * current output.
      *
      * @param docopy a <code>boolean</code> value
      * @exception HeclException if an error occurs
@@ -188,7 +199,8 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseLine</code> method here.
+     * The <code>parseLine</code> method is where parsing starts on a
+     * new line.
      *
      * @param in a <code>String</code> value
      * @param state a <code>ParseState</code> value
@@ -203,7 +215,6 @@ public class Parse {
 	    if (state.done()) {
 		return;
 	    }
-//	    if (Character.getType(ch) == Character.LINE_SEPARATOR)
 	    switch (ch) {
 		case '{':
 		    parseBlock(state);
@@ -246,7 +257,8 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseComment</code> method here.
+     * The <code>parseComment</code> method keeps reading until a
+     * newline, this 'eating' the comment.
      *
      * @param state a <code>ParseState</code> value
      */
@@ -261,7 +273,9 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseDollar</code> method here.
+     * The <code>parseDollar</code> method parses a $foo variable.
+     * These can also be of the form ${foo} so we deal with that case
+     * too.
      *
      * @param state a <code>ParseState</code> value
      * @param docopy a <code>boolean</code> value
@@ -274,7 +288,9 @@ public class Parse {
 	if (ch == '{') {
 	    parseBlock(state);
 	} else {
-	    while (ch >= 'A' && ch <= 'z') {
+	    /* Variable names use this range here. */
+	    while ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
+		   ch == '_') {
 		appendToCurrent(ch);
 		ch = state.nextchar();
 	    }
@@ -296,35 +312,36 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseBlock</code> method here.
+     * <code>parseBlock</code> parses a {} block.
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseBlock(ParseState state)
+    protected void parseBlock(ParseState state)
 	throws HeclException {
 	parseBlockOrCommand(state, true);
     }
 
     /**
-     * Describe <code>parseCommand</code> method here.
+     * <code>parseCommand</code> parses a [] command.
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseCommand(ParseState state)
+    protected void parseCommand(ParseState state)
 	throws HeclException {
 	parseBlockOrCommand(state, false);
     }
 
     /**
-     * Describe <code>parseBlockOrCommand</code> method here.
+     * <code>parseBlockOrCommand</code> is what parseCommand and
+     * parseBlock use internally.
      *
      * @param state a <code>ParseState</code> value
      * @param block a <code>boolean</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseBlockOrCommand(ParseState state,
+    protected void parseBlockOrCommand(ParseState state,
 					    boolean block)
 	throws HeclException {
 	int level = 1;
@@ -367,12 +384,12 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseText</code> method here.
+     * <code>parseText</code> parses a "string in quotes".
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseText(ParseState state)
+    protected void parseText(ParseState state)
 	throws HeclException {
 	char ch;
 	while (true) {
@@ -407,12 +424,12 @@ public class Parse {
     }
 
     /**
-     * Describe <code>parseWord</code> method here.
+     * <code>parseWord</code> parses a regular old word not in quotes.
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseWord(ParseState state)
+    protected void parseWord(ParseState state)
 	throws HeclException {
 	char ch;
 	while (true) {
@@ -430,11 +447,12 @@ public class Parse {
 		case '&':
 		    addDollar(false);
 		    break;
-		case '"':
+		    /* This isn't special here, we can ignore it? */
+	     /* case '"':
 		    addCurrent();
 		    parseText(state);
 		    appendCurrent();
-		    break;
+		    break;  */
 		case ' ':
 		    return;
 		case '\n':
@@ -458,10 +476,15 @@ public class Parse {
 	}
     }
 
+
     /**
-     * <code>ParseState</code> 
+     * The <code>ParseState</code> class is the state of the current
+     * parse.
      *
+     * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+     * @version 1.0
      */
+
     public class ParseState {
 	public int len;
 
@@ -484,7 +507,8 @@ public class Parse {
 	}
 
 	/**
-	 * Describe <code>nextchar</code> method here.
+	 * <code>nextchar</code> returns the next character, keeping
+	 * track of end-of-command and end-of-file conditions.
 	 *
 	 * @return a <code>char</code> value
 	 */
@@ -504,7 +528,8 @@ public class Parse {
 	}
 
 	/**
-	 * Describe <code>done</code> method here.
+	 * The <code>done</code> method returns true if either the
+	 * end-of-command or end-of-file condition is true.
 	 *
 	 * @return a <code>boolean</code> value
 	 */
@@ -513,7 +538,8 @@ public class Parse {
 	}
 
 	/**
-	 * Describe <code>remaining</code> method here.
+	 * The <code>remaining</code> method is for debugging
+	 * purposes, and prints to standard output the remaining text.
 	 *
 	 */
 	public void remaining() {
@@ -521,7 +547,8 @@ public class Parse {
 	}
 
 	/**
-	 * Describe <code>rewind</code> method here.
+	 * The <code>rewind</code> method "rewinds" the input by one
+	 * character.
 	 *
 	 */
 	public void rewind() {

@@ -55,8 +55,10 @@ public class Thing extends Object {
     static final int SUBST = 7;
 
     /* No float so far because we are targeting J2ME... */
-
     /* static final int FLOAT = 3; */
+
+    /* The constructors create Thing objects from various and sundry
+     * other types. */
 
     public Thing(String thing) {
 	type = STRING;
@@ -92,6 +94,14 @@ public class Thing extends Object {
 	type = INT;
 	data = new Integer(thing == true ? 1 : 0);
     }
+
+    /**
+     * <code>toString</code> returns the String representation of a
+     * Thing.  In most cases it also sets the internal representation
+     * to a String as well.
+     *
+     * @return a <code>String</code> value.
+     */
 
     public String toString() {
 	String result;
@@ -156,12 +166,26 @@ public class Thing extends Object {
 	return result;
     }
 
+    /**
+     * <code>toStringBuffer</code> returns the StringBuffer representation of a
+     * Thing, after first running the <code>toString</code> method on it.
+     *
+     * @return a <code>StringBuffer</code> value.
+     */
+
     public StringBuffer toStringBuffer() {
 	if (type != STRING) {
 	    this.toString();
 	}
 	return (StringBuffer)data;
     }
+
+    /**
+     * <code>toListString</code> returns a String wrapped in {} if it
+     * is a list or string with spaces.
+     *
+     * @return a <code>String</code> value.
+     */
 
     private String toListString() {
 	switch (type) {
@@ -183,6 +207,13 @@ public class Thing extends Object {
 		return this.toString();
 	}
     }
+
+    /**
+     * <code>toInt</code> returns an int value for the Thing in
+     * question.
+     *
+     * @return an <code>int</code> value.
+     */
 
     public int toInt() {
 	Integer result;
@@ -348,7 +379,8 @@ public class Thing extends Object {
 	sb.append(ch);
     }
 
-    /* FIXME - this one is kind of dubious. */
+    /* FIXME - this one is kind of dubious in that string comparisons
+     * between certain objects aren't the right approach. */
 
     public boolean equals (Object obj) {
 	Thing thing = (Thing)obj;
@@ -388,7 +420,13 @@ public class Thing extends Object {
 	}
     }
 
-    /* Makes a deep copy. */
+    /**
+     * <code>copy</code> makes a deep copy of the calling Thing and
+     * returns it.
+     *
+     * @return a <code>Thing</code> value.
+     */
+
     public Thing copy() {
 	Thing newthing = null;
 	switch (type) {
@@ -424,7 +462,13 @@ public class Thing extends Object {
 	return newthing;
     }
 
-    /* Doesn't make a new copy. */
+    /**
+     * <code>makeref</code> makes newval a reference to the Thing
+     * object to which it was passed.
+     *
+     * @param newval a <code>Thing</code> value.
+     */
+
     public void makeref(Thing newval) {
 	newval.type = type;
 	newval.data = data;

@@ -136,11 +136,11 @@ public class ParseList extends Parse {
 		case '&':
 		    addDollar(false);
 		    break;
-		case '"':
+/* 		case '"':
 		    addCurrent();
 		    parseText(state);
 		    appendCurrent();
-		    break;
+		    break;  */
 		case '\\':
 		    ch = state.nextchar();
 		    if (state.done()) {

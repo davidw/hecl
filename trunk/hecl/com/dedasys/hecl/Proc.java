@@ -40,6 +40,7 @@ class Proc implements Command {
 	int i = 0;
 
 	interp.stackIncr();
+	/* Create the argument variables. */
 	for (i = 0; i < varnames.size(); i++) {
 	    if (i == argv.length - 1) {
 		interp.stackDecr();

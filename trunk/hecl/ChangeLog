@@ -1,3 +1,11 @@
+2004-12-05  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Parse.java: Got rid of appendCurrent, as I do
+	not think it is really necessary.
+
+	* com/dedasys/hecl/Thing.java: Fixed up some of the documentation
+	strings.
+
 2004-11-22  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/Parse.java: Added ; as command terminator.

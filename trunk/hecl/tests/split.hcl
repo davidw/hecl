@@ -1,6 +1,6 @@
 
 test split-1 {
-    split "aaa;bbb;ccc" ;
+    split "aaa;bbb;ccc" ";"
 } {aaa bbb ccc}
 
 test split-2 {

@@ -29,6 +29,7 @@ testfiles [sort {
     lset.hcl
     for.hcl
     upeval.hcl
+    parse.hcl
 }]
 
 totals
