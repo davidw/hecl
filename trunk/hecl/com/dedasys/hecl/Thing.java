@@ -31,6 +31,11 @@ public class Thing extends Object {
 
     protected String stringval;
 
+    /* Used to keep track of nesting depth. */
+    private int depth = 0;
+
+    /* Depth that things like lists are allowed to nest. */
+    static final int NESTDEPTH = 10000;
 
     /**
      * Creates a new <code>Thing</code> instance from a string.
@@ -141,9 +146,18 @@ public class Thing extends Object {
      * elements the value might contain.
      *
      * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
      */
-    public Thing deepcopy() {
+    public Thing deepcopy()  throws HeclException  {
+	depth ++;
+        /* If we have too deep a nesting, kill it. */
+	if (depth > NESTDEPTH ) {
+	    throw new
+		HeclException("reference hard limit - circular reference?");
+	}
 	RealThing realthing = val.deepcopy();
+	/* We've done the deepcopy, we can lower the depth again. */
+	depth --;
 	return new Thing(realthing);
     }
 

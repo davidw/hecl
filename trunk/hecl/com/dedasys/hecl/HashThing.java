@@ -115,8 +115,9 @@ public class HashThing implements RealThing {
      * elements.
      *
      * @return a <code>RealThing</code> value
+     * @exception HeclException if an error occurs
      */
-    public RealThing deepcopy() {
+    public RealThing deepcopy() throws HeclException {
 	Hashtable h = new Hashtable();
 
 	for (Enumeration e = val.keys() ;

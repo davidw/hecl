@@ -32,6 +32,7 @@ public abstract interface RealThing {
      * values it contains.
      *
      * @return a <code>RealThing</code> value
+     * @exception HeclException if an error occurs
      */
-    public RealThing deepcopy();
+    public RealThing deepcopy() throws HeclException ;
 }

@@ -1,10 +1,8 @@
-# circular.hcl - funky circular reference
+# circular.hcl - funky circular references
 
 test circular-1 {
     set x 1
-    puts ...................
     set y [list &x]
-    puts -------------------
     set x &y
     llen $x
-} 1
+} {{ERROR {reference hard limit - circular reference?}}}

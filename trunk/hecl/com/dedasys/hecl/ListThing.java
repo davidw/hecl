@@ -128,9 +128,11 @@ public class ListThing implements RealThing {
      * <code>deepcopy</code> copies a list and all of its elements.
      *
      * @return a <code>RealThing</code> value
+     * @exception HeclException if an error occurs
      */
-    public RealThing deepcopy() {
+    public RealThing deepcopy() throws HeclException {
 	Vector newv = new Vector();
+
 	for (Enumeration e = val.elements(); e.hasMoreElements();) {
 	    newv.addElement(((Thing)e.nextElement()).deepcopy());
 	}
