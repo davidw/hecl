@@ -1,5 +1,14 @@
 package com.dedasys.hecl;
 
+/**
+ * <code>WhileCmd</code> implements the "while" command, which
+ * executes its second argument until the first argument returns
+ * false.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class WhileCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
@@ -7,7 +16,6 @@ class WhileCmd implements Command {
 	Eval eval = new Eval();
 
 	Thing result = eval.eval(interp, argv[1]);
-	int argnum = 0;
 
 	while (result.isTrue()) {
 	    try {

@@ -113,6 +113,8 @@ public class Interp {
 	addCommand("time", new TimeCmd());
 
 	addCommand("incr", new IncrCmd());
+
+	addCommand("for", new ForCmd());
     }
 
     /**

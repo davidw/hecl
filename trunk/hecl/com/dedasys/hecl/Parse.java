@@ -60,11 +60,9 @@ public class Parse {
     public Vector parse ()
 	throws HeclException {
 	outList = new Vector();
-//	currentOut = new StringBuffer("");
 	currentOut = new Thing("");
 	state.eoc = false;
 
-	//state.remaining();
 	parseLine(in, state);
 	if (outList.size() > 0 ) {
 	    return outList;

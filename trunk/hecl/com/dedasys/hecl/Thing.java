@@ -10,6 +10,7 @@ public class Thing extends Object {
     static final int INT = 2;
     static final int LIST = 3;
     static final int HASH = 4;
+    static final int CODE = 5;
     /* static final int FLOAT = 3; */
 
     public Thing(String thing) {
@@ -140,9 +141,9 @@ public class Thing extends Object {
 	Vector result = null;
 	switch (type) {
 	    case STRING:
-		ParseList parse = new ParseList(data.toString());
+		ParseList parseLst = new ParseList(data.toString());
 		/* FIXME - this probably doesn't handle newlines. */
-		result = parse.parse();
+		result = parseLst.parse();
 		if (result == null) {
 		    result = new Vector();
 		}

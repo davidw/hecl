@@ -1,3 +1,9 @@
+2004-10-30  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ForCmd.java: Added "for" command code.
+
+	* tests/for.hcl: Added "for" test.
+
 2004-10-28  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/ListCmd.java: lindex now uses negative elements

@@ -27,6 +27,7 @@ testfiles [sort {
     join.hcl
     incr.hcl
     lset.hcl
+    for.hcl
 }]
 
 totals
