@@ -320,6 +320,56 @@ set foo
   <section id="commands">
     <title>Hecl Commands</title>
 
+
+    <!-- + - * / math commands -->
+    <refentry id="math">
+      <refnamediv>
+	<refname>+ - * /</refname>
+	<refpurpose>Basic math commands.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>+</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <command>-</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <command>*</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <command>/</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The basic math commands take two arguments and carry out a
+	  numerical operation on them.  In subtraction, the second
+	  argument is taken from the first.  In division, the first
+	  argument is divided by the second.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [+ 2 2]
+puts [- 10 1]
+puts [* 6 7]
+puts [/ 100 5]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>2
+9
+42
+20</screen>
+      </refsect1>
+    </refentry>
+
+
+
     <!-- append -->
     <refentry id="append">
       <refnamediv>

@@ -1,3 +1,11 @@
+2005-01-26  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added basic math commands.
+
+2005-01-22  David N. Welton  <davidw@dedasys.com>
+
+	* Hecl.java: Added call to initialize 'standard' commands.
+
 2005-01-21  David N. Welton  <davidw@dedasys.com>
 
 	* docs/chunk.xsl: Added for chunked (multiple file) output.

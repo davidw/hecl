@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,34 +13,19 @@
    limitations under the License.
 */
 
-import com.dedasys.hecl.*;
+package com.dedasys.hecl;
 
 /**
- *  <code>Hecl</code> is the main class.  Borrow the code from here if
- *  you want to embed  in your own system.
+ * <code>Standard</code> adds commands to standard Hecl.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 
-public class Hecl {
+class Standard {
 
-    /**
-     * This is the <code>main</code> method, an example of how to
-     * integrate Hecl into your own programs.
-     *
-     * @param args a <code>String[]</code> value
-     */
-    public static void main(String [] args) {
-	try {
-	    Interp interp = new Interp(new LoadFile());
-	    Standard.init(interp);
-	    Eval eval = new Eval();
-	    eval.eval(interp, interp.getscript(args[0]));
-	} catch (Exception e) {
-	    System.err.println(e);
-	}
+    public static void init(Interp interp) throws HeclException {
+	interp.addCommand("time", new TimeCmd());
     }
 
 }
-

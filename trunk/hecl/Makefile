@@ -11,10 +11,10 @@ CC=gcj-3.4
 PROFILE = -pg
 
 # Regular old Java uses these files.
-SEFILES=LoadFile.java
+SEFILES=LoadFile.java Standard.java TimeCmd.java
 
 # These files are used in the cut down J2ME stuff.
-MEFILES=LoadString.java
+MEFILES=LoadString.java Micro.java
 
 # All versions use these files.
 FILES=AppendCmd.java \
@@ -60,7 +60,6 @@ SourceHereCmd.java \
 StringCmd.java \
 StringThing.java \
 Thing.java \
-TimeCmd.java \
 TrueCmd.java \
 UpCmd.java \
 WhileCmd.java \
