@@ -1,0 +1,30 @@
+body {
+    font-family: "Trebuchet MS", verdana, sans-serif;
+    color: #313131;
+    font-size: smaller;
+    background-color: #ffffff;
+}
+
+A:link {
+    color: #3333cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+A:visited {
+    color: #3333cc;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+A:hover {
+    text-decoration: underline;
+}
+
+code {
+    color: #006600;
+}
+
+p {
+    padding-left: 5ex;
+}
