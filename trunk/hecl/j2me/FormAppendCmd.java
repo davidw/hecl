@@ -13,13 +13,12 @@
    limitations under the License.
 */
 
-import com.dedasys.hecl.Command;
-import com.dedasys.hecl.Thing;
-import com.dedasys.hecl.HeclException;
-import com.dedasys.hecl.Interp;
+import javax.microedition.lcdui.Form;
 
-import javax.microedition.lcdui.*;
-import javax.microedition.midlet.*;
+import org.hecl.Command;
+import org.hecl.HeclException;
+import org.hecl.Interp;
+import org.hecl.Thing;
 
 
 /**

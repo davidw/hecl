@@ -12,13 +12,15 @@ are:
 * Power.  Experts should be able to use it and not feel limited.
 
 * Small Core.  The core language should be simple and compact.
-  Extensions provide additional functionality.
+  Modules provide additional functionality.
 
 * Extensible.  Hecl may be used to extend Hecl, as well as Java, of
   course.  The syntax is flexible enough that it is possible to create
   new control structures, for example, entirely in Hecl itself.
 
 * Embeddable.  Hecl is easy to embed into your own Java applications.
+
+* Compatible with many Java versions - J2ME, PJava, J2SE etc.
 
 -- David N. Welton
 

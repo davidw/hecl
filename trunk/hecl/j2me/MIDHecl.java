@@ -13,14 +13,18 @@
    limitations under the License.
 */
 
-import com.dedasys.hecl.Interp;
-import com.dedasys.hecl.Eval;
-import com.dedasys.hecl.Load;
-import com.dedasys.hecl.LoadString;
-import com.dedasys.hecl.Thing;
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
+import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
+import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.TextBox;
+import javax.microedition.lcdui.TextField;
+import javax.microedition.midlet.MIDlet;
 
-import javax.microedition.lcdui.*;
-import javax.microedition.midlet.*;
+import org.hecl.Eval;
+import org.hecl.Interp;
+import org.hecl.Thing;
 
 /**
  * <code>MIDHecl</code> is a small app to demonstrate the use of Hecl
@@ -82,7 +86,7 @@ public class MIDHecl
 
 	    started = true;
 	    try {
-		interp = new Interp(new LoadString(""));
+		interp = new Interp();
 		FormAppendCmd fac = new FormAppendCmd();
 		fac.mainForm = resultFrame;
 		interp.addCommand("formappend", fac);
@@ -123,7 +127,7 @@ public class MIDHecl
 	    runscreen = true;
 	    try {
 		Eval eval = new Eval();
-		eval.eval(interp, new Thing(inBox.getString()));
+		Eval.eval(interp, new Thing(inBox.getString()));
 	    } catch (Exception e) {
 		System.err.println(e);
 	    }
