@@ -18,45 +18,46 @@ MEFILES=LoadString.java
 
 # All versions use these files.
 FILES=AppendCmd.java \
-ForeachCmd.java \
-SortCmd.java \
 BasicMathCmd.java \
-GlobalCmd.java \
-Load.java \
-SourceCmd.java \
 BreakCmd.java \
-HashCmd.java \
-SourceHereCmd.java \
 CatchCmd.java \
-HeclException.java \
-Parse.java \
-StringCmd.java \
 CodeThing.java \
-IfCmd.java \
-ParseList.java \
-Thing.java \
 Command.java \
-IncrCmd.java \
-ProcCmd.java \
-TimeCmd.java \
 CopyCmd.java \
-Interp.java \
-Proc.java \
-TrueCmd.java \
 EqualsCmd.java \
-IntrospectCmd.java \
-PutsCmd.java \
-WhileCmd.java \
-EvalCmd.java \
-JoinSplitCmd.java \
-RefCmd.java \
 Eval.java \
-ListCmd.java \
-ReturnCmd.java \
+EvalCmd.java \
+FilterCmd.java \
 ForCmd.java \
+ForeachCmd.java \
+GlobalCmd.java \
+HashCmd.java \
+HeclException.java \
+IfCmd.java \
+IncrCmd.java \
+Interp.java \
+IntrospectCmd.java \
+JoinSplitCmd.java \
+ListCmd.java \
 LmatchCmd.java \
+Load.java \
+Parse.java \
+ParseList.java \
+Proc.java \
+ProcCmd.java \
+PutsCmd.java \
+RefCmd.java \
+ReturnCmd.java \
+SetCmd.java \
+SortCmd.java \
+SourceCmd.java \
+SourceHereCmd.java \
+StringCmd.java \
+Thing.java \
+TimeCmd.java \
+TrueCmd.java \
 UpCmd.java \
-SetCmd.java
+WhileCmd.java \
 
 OBJECTS = $(patsubst %.java,$(srcdir)%.o,$(FILES))
 CLASSES = $(patsubst %.java,$(srcdir)%.class,$(FILES))

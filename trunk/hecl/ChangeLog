@@ -1,3 +1,9 @@
+2004-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* tests/filter.hcl: Added filter command tests.
+
+	* com/dedasys/hecl/FilterCmd.java: Added filter command.
+
 2004-12-05  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/CodeThing.java: Added more doc strings.

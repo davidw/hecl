@@ -113,13 +113,16 @@ public class Thing extends Object {
 	switch (type) {
 	    case LIST:
 		list = (Vector)data;
-		resbuf = new StringBuffer();
+		resbuf = new StringBuffer("");
 		sz = list.size();
-		for (i = 0; i < sz-1; i++) {
-		    resbuf.append(((Thing)list.elementAt(i)).toListString() + " ");
+		if (sz > 0) {
+		    for (i = 0; i < sz-1; i++) {
+			resbuf.append(
+			    ((Thing)list.elementAt(i)).toListString() + " ");
+		    }
+		    /* Tack last one on without a space. */
+		    resbuf.append(((Thing)list.elementAt(i)).toListString());
 		}
-		/* Tack last one on without a space. */
-		resbuf.append(((Thing)list.elementAt(i)).toListString());
 		result = resbuf.toString();
 		break;
 	    case GROUP:
@@ -380,7 +383,7 @@ public class Thing extends Object {
     }
 
     /* FIXME - this one is kind of dubious in that string comparisons
-     * between certain objects aren't the right approach. */
+     * between certain objects aren't the right approach... */
 
     public boolean equals (Object obj) {
 	Thing thing = (Thing)obj;

@@ -1,35 +1,36 @@
 sourcehere harness.hcl
 
-testfiles [sort {
-    set.hcl
-    list.hcl
-    intro.hcl
-    sort.hcl
+testfiles {
+    append.hcl
     break.hcl
     catch.hcl
-    math.hcl
     equality.hcl
-    foreach.hcl
-    append.hcl
-    if.hcl
-    index.hcl
-    listlen.hcl
-    proc.hcl
-    sourcehere.hcl
-    while.hcl
-    string.hcl
-    hash.hcl
-    ref.hcl
     eval.hcl
-    global.hcl
-    return.hcl
-    split.hcl
-    join.hcl
-    incr.hcl
-    lset.hcl
+    filter.hcl
     for.hcl
-    upeval.hcl
+    foreach.hcl
+    global.hcl
+    hash.hcl
+    if.hcl
+    incr.hcl
+    index.hcl
+    intro.hcl
+    join.hcl
+    list.hcl
+    listlen.hcl
+    lset.hcl
+    math.hcl
     parse.hcl
-}]
+    proc.hcl
+    ref.hcl
+    return.hcl
+    set.hcl
+    sort.hcl
+    sourcehere.hcl
+    split.hcl
+    string.hcl
+    upeval.hcl
+    while.hcl
+}
 
 totals

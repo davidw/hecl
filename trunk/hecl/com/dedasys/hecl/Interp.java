@@ -95,6 +95,7 @@ public class Interp {
 	addCommand("proc", new ProcCmd());
 
 	addCommand("foreach", new ForeachCmd());
+	addCommand("filter", new FilterCmd());
 
 	addCommand("break", new BreakCmd());
 	addCommand("continue", new BreakCmd());
