@@ -1,0 +1,127 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="index.html" title="Hecl Programming Language"><link rel="prev" href="index.html" title="Hecl Programming Language"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="index.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
+      Like many people, I enjoy taking something and experimenting
+      with it before going and reading the instructions!  With this in
+      mind, I have written a brief tutorial that you can use to start
+      exploring Hecl on your own.
+    </p><p>
+      Of course, we would be out of place not to begin with the famous
+      "Hello, World".  Behold:
+    </p><pre class="programlisting">puts "Hello, World"</pre><p>
+      Hecl is based on the notion of commands, which take any number
+      of arguments.  The <span><b class="command">puts</b></span> command takes one
+      argument, a string, and prints it out.
+    </p><p>
+      Like all programming languages, Hecl provides variables that may
+      be used to store information. Here, we set a variable,
+      <tt class="varname">rating</tt>, and then print it out in the midst of
+      a string.  This is called "interpolation", and is a convenient
+      way of creating new strings.
+    </p><pre class="programlisting">set rating 10
+puts "Hecl, from 1 to 10: $rating"</pre><p>
+      Something else we notice in the above examples is that we use
+      double quotes "" to group a series of things.  In Hecl, commands
+      and their arguments are separated by spaces.  Since
+      <span><b class="command">puts</b></span> only takes one argument, a string, we
+      use the quotes to group several words together in order to pass
+      them as one string to the command.  Many languages require
+      quotes to delineate a string, but in Hecl that is not necessary
+      if the string has no spaces in it.  For instance,
+      <b class="userinput"><tt>puts helloworld</tt></b> is legitimate.
+    </p><p>
+      Another way of grouping multiple words in Hecl is with braces:
+      {}.  Hecl does not automatically perform any substitution on the
+      variables or commands grouped within braces, as it does with
+      quotes.
+    </p><pre class="programlisting">puts {The $dollar $signs $are printed	    literally$$ - no substitution}</pre><p>
+      Aside from the dollar sign, which returns a copy of the value of
+      a variable, it is also possible to utilize the results of one
+      command as the input of a second command.  For example:
+    </p><pre class="programlisting">set rating 10
+puts "Rating:"
+puts [set rating]</pre><p>
+      In this case, we pass the results of the <span><b class="command">set</b></span>
+      command to the <span><b class="command">puts</b></span> command.  In reality, <b class="userinput"><tt>set
+	rating</tt></b> is just a long way of writing
+      <tt class="option">$rating</tt> but it's a good example.
+    </p><p>
+      Like everything else in Hecl, we perform math operations as
+      commands:
+    </p><pre class="programlisting">puts "2 + 2 = [+ 2 2]"</pre><p>
+      In the example, the <span><b class="command">+</b></span> takes two arguments,
+      adds them together and return the result, which is then printed
+      out by the <span><b class="command">puts </b></span> command.
+    </p><p>
+      In order to choose between one or more 
+    </p><pre class="programlisting">set temp 10
+if { &lt; $temp 0 } {
+    puts "It's freezing"
+} else {
+    puts "Not freezing"
+}</pre><p>References:</p><pre class="programlisting">set a 1
+set b &amp;a
+puts $b
+# Returns '1'
+set a 2
+puts $b
+# Returns '2'</pre><p>"while" loop command:</p><pre class="programlisting">set i 0
+while { &lt; &amp;i 10 } {
+    puts "i is now $i"
+    incr &amp;i
+}
+</pre><p>Lists:</p><pre class="programlisting">set foo [list a b c]
+set bar {a b c}
+lappend &amp;foo d
+lappend &amp;bar d
+set foo
+# Returns 'a b c d'
+set bar
+# Returns 'a b c d'
+</pre><p>Hash tables:</p><pre class="programlisting">set foo [hash {a b c d}]
+puts [hget &amp;foo a]
+# prints 'b'
+puts [hget &amp;foo c]
+# prints 'd'
+hset &amp;foo c 2
+puts [hget &amp;foo c]
+# prints '2'
+puts $foo
+# prints 'a b c 2' (although not necessarily in that order)
+</pre><p>"foreach" loop command:</p><pre class="programlisting">set lst {a b c d e f}
+foreach {m n} $lst {
+    puts  "It is possible to grab two variables at a time: $m $n"
+}
+
+foreach {x} $lst {
+    puts  "Or one at a time: $x"
+}</pre><p>
+      Create new commands with the "proc" command.  In this example we
+      create a command that prints out a numbered list.
+    </p><pre class="programlisting">set list {red blue green}
+proc printvals {vals} {
+    set num 1
+    foreach v $vals {
+	puts "$num - $v"
+	incr &amp;num
+    }
+}
+
+printvals &amp;list</pre><p>
+      Hecl is very flexible - in this example, we create a
+      "do...while" loop command that works as if it were a native loop
+      construct.
+    </p><pre class="programlisting">proc do {code while condition} {
+    upeval $code
+    while { upeval &amp;condition } {
+	upeval $code
+    }
+}
+
+set x 100
+set foo ""
+do {
+    append &amp;foo $x
+    incr &amp;x
+} while { &lt; &amp;x 10 }
+set foo
+# Returns 100 - because the loop is run once and only once.
+</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="index.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Hecl Programming Language </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl Commands</td></tr></table></div></body></html>

@@ -1,5 +1,12 @@
 2005-01-21  David N. Welton  <davidw@dedasys.com>
 
+	* docs/chunk.xsl: Added for chunked (multiple file) output.
+
+	* docs/nochunk.xsl: Added for non-chunked (single file) output.
+
+	* docs/hecl.xml: Add id's to sections and commands in order to
+	make nice HTML file names.
+
 	* docs/hecl.css: Added CSS file.
 
 	* docs/hecl.html: Added generated HTML file.

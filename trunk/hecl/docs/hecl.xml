@@ -130,7 +130,7 @@
 
   </section>
 
-  <section>
+  <section id="tutorial">
     <title>Hecl Tutorial</title>
     <para>
       Like many people, I enjoy taking something and experimenting
@@ -317,11 +317,11 @@ set foo
 
   </section>
 
-  <section>
+  <section id="commands">
     <title>Hecl Commands</title>
 
     <!-- append -->
-    <refentry>
+    <refentry id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -352,7 +352,7 @@ append &amp;foo "beebop"
     </refentry>
 
     <!-- break -->
-    <refentry>
+    <refentry id="break">
       <refnamediv>
 	<refname>break</refname>
 	<refpurpose>Break out of a loop.</refpurpose>
@@ -390,7 +390,7 @@ while { true } {
     </refentry>
 
     <!-- catch -->
-    <refentry>
+    <refentry id="catch">
       <refnamediv>
 	<refname>catch</refname>
 	<refpurpose>
@@ -432,7 +432,7 @@ set foo
 
 
     <!-- continue -->
-    <refentry>
+    <refentry id="continue">
       <refnamediv>
 	<refname>continue</refname>
 	<refpurpose>Skip to next cycle of a loop</refpurpose>
@@ -474,9 +474,8 @@ puts $res
       </refsect1>
     </refentry>
 
-
-
-    <refentry>
+    <!-- copy -->
+    <refentry id="copy">
       <refnamediv>
 	<refname>copy</refname>
 	<refpurpose>Return a copy of the variable.</refpurpose>
@@ -508,8 +507,8 @@ puts $foo
       </refsect1>
     </refentry>
 
-
-    <refentry>
+    <!-- eq -->
+    <refentry id="eq">
       <refnamediv>
 	<refname>eq</refname>
 	<refpurpose>Tests string equivalence.</refpurpose>
@@ -547,7 +546,7 @@ if {eq 1 1.0} {
       </refsect1>
     </refentry>
 
-    <refentry>
+    <refentry id="eval">
       <refnamediv>
 	<refname>eval</refname>
 	<refpurpose>Evaluate Hecl code.</refpurpose>
@@ -580,7 +579,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry>
+    <refentry id="filter">
       <refnamediv>
 	<refname>filter</refname>
 	<refpurpose>Filter a list.</refpurpose>
@@ -615,7 +614,7 @@ puts [filter $lst x {= $x 4}]
       </refsect1>
     </refentry>
 
-    <refentry>
+    <refentry id="for">
       <refnamediv>
 	<refname>for</refname>
 	<refpurpose>For loop.</refpurpose>
@@ -658,7 +657,7 @@ puts $out
       </refsect1>
     </refentry>
 
-    <refentry>
+    <refentry id="foreach">
       <refnamediv>
 	<refname>foreach</refname>
 	<refpurpose>Iterate over elements in a list.</refpurpose>
@@ -701,7 +700,7 @@ puts $res
     </refentry>
 
     <!-- global -->
-    <refentry>
+    <refentry id="global">
       <refnamediv>
 	<refname>global</refname>
 	<refpurpose>Use global variable from within a proc.</refpurpose>
@@ -739,7 +738,7 @@ puts $foo
     </refentry>
 
     <!-- hash, hget, hset -->
-    <refentry>
+    <refentry id="hash">
       <refnamediv>
 	<refname>hash</refname>
 	<refpurpose>Create and manipulate hash tables.</refpurpose>
@@ -784,7 +783,7 @@ puts [hget &amp;foo a]
     </refentry>
 
     <!-- if -->
-    <refentry>
+    <refentry id="if">
       <refnamediv>
 	<refname>if</refname>
 	<refpurpose>Conditionally execute code.</refpurpose>
@@ -848,7 +847,7 @@ if { > 0 1 } {
     </refentry>
 
     <!-- incr -->
-    <refentry>
+    <refentry id="incr">
       <refnamediv>
 	<refname>incr</refname>
 	<refpurpose>Increment a variable.</refpurpose>
@@ -884,7 +883,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- intro -->
-     <refentry>
+     <refentry id="intro">
       <refnamediv>
 	<refname>intro</refname>
 	<refpurpose>Introspection command.</refpurpose>
@@ -916,7 +915,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- join -->
-     <refentry>
+     <refentry id="join">
       <refnamediv>
 	<refname>join</refname>
 	<refpurpose>Join elements of a list to create a string.</refpurpose>
@@ -950,7 +949,7 @@ puts [join {a b c} "|"]
     </refentry>
 
     <!-- lappend -->
-     <refentry>
+     <refentry id="lappend">
       <refnamediv>
 	<refname>lappend</refname>
 	<refpurpose>Append an element to a list.</refpurpose>
@@ -985,7 +984,7 @@ a b {c d}</screen>
     </refentry>
 
     <!-- lindex -->
-     <refentry>
+    <refentry id="lindex">
       <refnamediv>
 	<refname>lindex</refname>
 	<refpurpose>Return the Nth element of a list</refpurpose>
@@ -1017,7 +1016,7 @@ puts [lindex {a b c} 2]
 
 
     <!-- list -->
-     <refentry>
+     <refentry id="list">
       <refnamediv>
 	<refname>list</refname>
 	<refpurpose>Create a list</refpurpose>
@@ -1049,7 +1048,7 @@ puts [list a b c [list 1 2 3]]
     </refentry>
 
     <!-- llen -->
-     <refentry>
+     <refentry id="llen">
       <refnamediv>
 	<refname>llen</refname>
 	<refpurpose>List length.</refpurpose>
@@ -1078,7 +1077,7 @@ puts [llen {1 2 3 {a b c}}]
     </refentry>
 
      <!-- lset -->
-     <refentry>
+     <refentry id="lset">
       <refnamediv>
 	<refname>lset</refname>
 	<refpurpose>Set list elements.</refpurpose>
@@ -1119,7 +1118,7 @@ a c</screen>
     </refentry>
 
      <!-- proc -->
-     <refentry>
+     <refentry id="proc">
       <refnamediv>
 	<refname>proc</refname>
 	<refpurpose>Create a new procedure.</refpurpose>
@@ -1165,7 +1164,7 @@ puts [addlist {1 2 3 4 5}]
     </refentry>
 
      <!-- puts -->
-     <refentry>
+     <refentry id="puts">
       <refnamediv>
 	<refname>puts</refname>
 	<refpurpose>Print text.</refpurpose>
@@ -1194,7 +1193,7 @@ puts "Hello, world"
     </refentry>
 
     <!-- ref -->
-    <refentry>
+    <refentry id="ref">
       <refnamediv>
 	<refname>ref</refname>
 	<refpurpose>Returns a reference to the variable.</refpurpose>
@@ -1228,7 +1227,7 @@ puts $foo
     </refentry>
 
     <!-- return -->
-    <refentry>
+    <refentry id="return">
       <refnamediv>
 	<refname>return</refname>
 	<refpurpose>Returns a value from a procedure.</refpurpose>
@@ -1263,7 +1262,7 @@ puts [someproc]
     </refentry>
 
     <!-- search -->
-    <refentry>
+    <refentry id="search">
       <refnamediv>
 	<refname>search</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -1296,7 +1295,7 @@ puts [search $lst x {= $x 4}]
     </refentry>
 
     <!-- set -->
-    <refentry>
+    <refentry id="set">
       <refnamediv>
 	<refname>set</refname>
 	<refpurpose>Set a variable.</refpurpose>
@@ -1333,9 +1332,8 @@ foo is bar and bee is bop
       </refsect1>
     </refentry>
 
-
      <!-- sindex -->
-     <refentry>
+     <refentry id="sindex">
       <refnamediv>
 	<refname>sindex</refname>
 	<refpurpose>Return the index'th character of string.</refpurpose>
@@ -1368,7 +1366,7 @@ d</screen>
     </refentry>
 
     <!-- slen -->
-    <refentry>
+    <refentry id="slen">
       <refnamediv>
 	<refname>slen</refname>
 	<refpurpose>String length.</refpurpose>
@@ -1397,7 +1395,7 @@ puts [slen "abcdefghijklmnopqrstuvwxyz"]
     </refentry>
 
      <!-- sort -->
-     <refentry>
+     <refentry id="sort">
       <refnamediv>
 	<refname>sort</refname>
 	<refpurpose>Sorts list alphabetically.</refpurpose>
@@ -1428,7 +1426,7 @@ puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
     </refentry>
 
      <!-- source -->
-     <refentry>
+     <refentry id="source">
       <refnamediv>
 	<refname>source</refname>
 	<refpurpose>Evaluate Hecl script in a file.</refpurpose>
@@ -1464,7 +1462,7 @@ puts $foo
 
 
     <!-- split -->
-    <refentry>
+    <refentry id="split">
       <refnamediv>
 	<refname>split</refname>
 	<refpurpose>Split a string into a list.</refpurpose>
@@ -1500,7 +1498,7 @@ aaaxbbbyccc ddd</screen>
     </refentry>
 
     <!-- time -->
-    <refentry>
+    <refentry id="time">
       <refnamediv>
 	<refname>time</refname>
 	<refpurpose>Time the execution of a script.</refpurpose>
@@ -1541,7 +1539,7 @@ puts "Time is $time"
     </refentry>
 
      <!-- true -->
-     <refentry>
+     <refentry id="true">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Returns true.</refpurpose>
@@ -1570,7 +1568,7 @@ if { true } {
     </refentry>
 
     <!-- upeval -->
-    <refentry>
+    <refentry id="upeval">
       <refnamediv>
 	<refname>upeval</refname>
 	<refpurpose>Evaluate script in next stack frame up.</refpurpose>
@@ -1605,7 +1603,7 @@ puts $foo
     </refentry>
 
     <!-- while -->
-    <refentry>
+    <refentry id="while">
       <refnamediv>
 	<refname>while</refname>
 	<refpurpose>While loop.</refpurpose>
@@ -1646,7 +1644,7 @@ i is 5
     </refentry>
 
 <!--
-     <refentry>
+     <refentry id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -1680,8 +1678,16 @@ append &amp;foo "beebop"
   </section>
 
 
-  <section>
+  <section id="j2me">
     <title>Hecl and J2ME</title>
+
+    <para>
+      Hecl is designed to be small enough to run on mobile devices
+      such as cell phones.  This means that it has been necessary to
+      limit ourselves to Java API's that work with J2ME.
+    </para>
+
+    <para>FIXME - more later.</para>
 
   </section>
 

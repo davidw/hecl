@@ -18,9 +18,6 @@
    limitations under the License.
 -->
 
-
-  <xsl:import href="/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/docbook.xsl"/>
-
   <xsl:param name="use.id.as.filename" select="1"/>
   <xsl:param name="header.rule" select="0"/>
 

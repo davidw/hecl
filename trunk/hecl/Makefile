@@ -120,8 +120,11 @@ clean:
 test: hecl
 	./hecl tests/suite.hcl
 
-docs: docs/hecl.html
+docs: docs/hecl.html docs/index.html
 
 # Generate html docs.
-docs/hecl.html: docs/hecl.xml docs/hecl.xsl
-	xsltproc --nonet --stringparam html.stylesheet hecl.css -o docs/hecl.html docs/hecl.xsl docs/hecl.xml
+docs/hecl.html: docs/hecl.xml docs/hecl.xsl docs/nochunk.xsl
+	xsltproc --nonet --stringparam html.stylesheet hecl.css -o docs/hecl.html docs/nochunk.xsl docs/hecl.xml
+
+docs/index.html: docs/hecl.xml docs/hecl.xsl docs/chunk.xsl
+	xsltproc --nonet --stringparam html.stylesheet hecl.css -o docs/ docs/chunk.xsl docs/hecl.xml
