@@ -38,3 +38,9 @@ test parse-5 {
     append &out [$ps foo]
     set out
 } {foonew foo}
+
+test parse-6 {
+    foreach x y {
+	set z 1
+    }XXX
+} {ERROR}

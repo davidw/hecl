@@ -1,3 +1,8 @@
+2005-03-08  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl: Added case that should generate an error.
+	Thanks to Wojciech for catching this one.
+
 2005-03-04  David N. Welton  <davidw@dedasys.com>
 
 	* tests/foreach.hcl: Test 0 length lists.
