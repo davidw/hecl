@@ -1,5 +1,10 @@
 2005-03-04  David N. Welton  <davidw@dedasys.com>
 
+	* tests/foreach.hcl: Test 0 length lists.
+
+	* com/dedasys/hecl/ForeachCmd.java: Return immediately on 0 length
+	lists.
+
 	* Makefile (sahecl): Depend on StandaloneHecl.java
 	($(srcdir)%.o): Use -Wall.
 

@@ -34,6 +34,9 @@ class ForeachCmd implements Command {
 
 	Vector varlist = ListThing.get(argv[1]);
 	Vector list = ListThing.get(argv[2]);
+	if (list.size() == 0) {
+	    return;
+	}
 	int i = 0;
 	boolean end = false;
 	while (true) {
