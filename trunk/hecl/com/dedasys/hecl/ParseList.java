@@ -1,7 +1,7 @@
 package com.dedasys.hecl;
 
 /**
- * <code>ParseList</code> 
+ * <code>ParseList</code> parses up Hecl lists.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -21,7 +21,7 @@ public class ParseList extends Parse {
 
 
     /**
-     * Describe <code>parseLine</code> method here.
+     * <code>parseLine</code> parses a line of Hecl code.
      *
      * @param in a <code>String</code> value
      * @param state a <code>ParseState</code> value
@@ -62,7 +62,8 @@ public class ParseList extends Parse {
     }
 
     /**
-     * Describe <code>parseText</code> method here.
+     * <code>parseText</code> parses some text, such as that enclosed
+     * in quotes "".
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
@@ -94,7 +95,7 @@ public class ParseList extends Parse {
 
 
     /**
-     * Describe <code>parseWord</code> method here.
+     * <code>parseWord</code> parses a plain Hecl word.
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
@@ -138,5 +139,4 @@ public class ParseList extends Parse {
 	    }
 	}
     }
-
 }

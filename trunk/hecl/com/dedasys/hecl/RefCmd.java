@@ -1,5 +1,13 @@
 package com.dedasys.hecl;
 
+/**
+ * <code>RefCmd</code> implements the "ref" command, similiar in
+ * practice to the &foo variable syntax.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class RefCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)

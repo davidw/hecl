@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * <code>JoinSplitCmd</code> implements the "join" and "split"
- * commands.
+ * commands.  Defaults to " " as a split/join character.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
