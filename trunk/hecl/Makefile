@@ -11,7 +11,7 @@ CC=gcj-3.4
 PROFILE = -pg
 
 # Regular old Java uses these files.
-SEFILES=LoadFile.java Standard.java TimeCmd.java
+SEFILES=LoadFile.java PrintThing.java Standard.java TimeCmd.java
 
 # These files are used in the cut down J2ME stuff.
 MEFILES=LoadString.java Micro.java
@@ -24,7 +24,6 @@ CatchCmd.java \
 CodeThing.java \
 Command.java \
 Compare.java \
-CopyCmd.java \
 EqualsCmd.java \
 Eval.java \
 EvalCmd.java \
@@ -51,7 +50,6 @@ Proc.java \
 ProcCmd.java \
 PutsCmd.java \
 RealThing.java \
-RefCmd.java \
 ReturnCmd.java \
 SetCmd.java \
 SortCmd.java \
@@ -59,6 +57,7 @@ SourceCmd.java \
 SourceHereCmd.java \
 StringCmd.java \
 StringThing.java \
+SubstThing.java \
 Thing.java \
 TrueCmd.java \
 UpCmd.java \

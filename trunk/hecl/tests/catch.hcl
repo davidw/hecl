@@ -7,4 +7,4 @@ test catch-1 {
 test catch-2 {
     catch {set foo 1} bar
     set bar
-} {}
+} {1}

@@ -32,7 +32,7 @@ class CatchCmd implements Command {
 	int retval;
 	try {
 	    Eval.eval(interp, argv[1]);
-	    result = interp.getResult();
+	    result = interp.result;
 	    retval = 0;
 	} catch (HeclException e) {
 	    result = e.getStack();

@@ -76,14 +76,6 @@ public class Thing extends Object {
 
     }
 
-    /* FIXME - this one is kind of dubious in that string comparisons
-     * between certain objects aren't the right approach... */
-
-/*     public boolean equals (Object obj) {
-	Thing thing = (Thing)obj;
-	return this.toString().equals(thing.toString());
-    }  */
-
     /**
      * <code>isTrue</code> is a convenience function that lets us know
      * if the result of a calculation is true or false.
@@ -104,66 +96,23 @@ public class Thing extends Object {
      */
 
     public void makeref(Thing newval) {
-	this.setVal(newval.getVal());
+	this.val = newval.val;
+	this.stringval = newval.stringval;
     }
 
     public String toString() {
-/* 	if (stringval == null) {
-	    stringval = val.toString();
-	}  */
 	stringval = val.toString();
-
-/* 	if (stringval.compareTo("100000") == 0) {
-	    (new Throwable()).printStackTrace();
-	}
-
-	System.out.println("stringval: " + stringval);  */
 	return stringval;
     }
 
     public Thing deepcopy() {
-	RealThing realthing = this.getVal().deepcopy();
+	RealThing realthing = val.deepcopy();
 	return new Thing(realthing);
     }
 
-    public int compare(Thing x) {
-	String xs = x.toString();
+    public int compare(Thing t) {
+	String xs = t.toString();
 	String ts = this.toString();
 	return ts.compareTo(xs);
-    }
-
-    public static String ws(int n) {
-	return new String(new byte[n]).replace('\0', ' ');
-    }
-
-    public static void printThing(Thing t) throws HeclException {
-	printThing(t, 0);
-    }
-
-    public static void printThing(Thing t, int depth) throws HeclException {
-	RealThing rt = t.val;
-	if (rt instanceof IntThing) {
-	    System.out.println(ws(depth * 4) + "INT: " + ((IntThing) rt).get(t));
-	} else if (rt instanceof StringThing) {
-	    System.out.println(ws(depth * 4) + "STR: " + ((StringThing) rt).get(t));
-	} else if (rt instanceof ListThing) {
-	    Vector v = ((ListThing) rt).get(t);
-	    System.out.println(ws(depth * 4) + "LIST START");
-	    for (Enumeration e = v.elements(); e.hasMoreElements();) {
-		Thing.printThing((Thing)e.nextElement(), depth + 1);
-	    }
-	    System.out.println(ws(depth * 4) + "LIST END");
-	} else if (rt instanceof HashThing) {
-	    Hashtable h = ((HashThing) rt).get(t);
-	    System.out.println(ws(depth * 4) + "HASH START");
-	    for (Enumeration e = h.keys(); e.hasMoreElements();) {
-		String key = (String)e.nextElement();
-		System.out.println(ws(depth * 4) + " KEY: " + key);
-		Thing.printThing((Thing)h.get(key), depth + 1);
-	    }
-	    System.out.println(ws(depth * 4) + "HASH END");
-	} else {
-	    System.out.println("OTHER:" + t);
-	}
     }
 }

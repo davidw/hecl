@@ -37,7 +37,7 @@ stopwatch while-4 {
 stopwatch while-5 {
     set i 1
     time {
-	while { < $i 10000 } {
+	while { < $i 1000 } {
 	    set i [+ &i 1]
 	}
     }

@@ -23,11 +23,13 @@ package com.dedasys.hecl;
  */
 class IfCmd implements Command {
 
+    IfCmd() {}
+
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 
 	Eval.eval(interp, argv[1]);
-	Thing result = interp.getResult();
+	Thing result = interp.result;
 	int argnum = 0;
 
 	if (Thing.isTrue(result)) {
@@ -45,7 +47,7 @@ class IfCmd implements Command {
 		    /* elseif - check and see if the condition is
 		     * true, if so evaluate it and return. */
 		    Eval.eval(interp, argv[i + 1]);
-		    result = interp.getResult();
+		    result = interp.result;
 		    if (Thing.isTrue(result)) {
 			Eval.eval(interp, argv[i + 2]);
 			return;

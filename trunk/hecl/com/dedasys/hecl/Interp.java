@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -25,12 +25,12 @@ import java.util.*;
  * @version 1.0
  */
 public class Interp {
+    public long cacheversion = 0;
     Hashtable commands;
     Stack stack;
     int stacklevel;
-    Thing result;
+    public Thing result;
     Stack error;
-
     Load load = null;
     String currentfile = null;
 
@@ -63,8 +63,6 @@ public class Interp {
     public void initCommands()
 	throws HeclException {
 	addCommand("set", new SetCmd());
-
-	addCommand("ref", new RefCmd());
 
 	addCommand("puts", new PutsCmd());
 
@@ -131,13 +129,9 @@ public class Interp {
 
 	addCommand("return", new ReturnCmd());
 
-	addCommand("time", new TimeCmd());
-
 	addCommand("incr", new IncrCmd());
 
 	addCommand("for", new ForCmd());
-
-	addCommand("copy", new CopyCmd());
     }
 
     /**
@@ -165,6 +159,7 @@ public class Interp {
      *
      */
     public void stackPush(Hashtable vars) {
+	cacheversion ++;
 	stack.push(vars);
     }
 
@@ -263,8 +258,8 @@ public class Interp {
 	Hashtable lookup = getVarhash(level);
 
  	if (lookup.containsKey(varname)) {
-	    Thing newval = (Thing)lookup.get(varname);
-	    newval.makeref(value);
+	    Thing oldval = (Thing)lookup.get(varname);
+	    oldval.makeref(value);
 	} else {
 	    lookup.put(varname, value);
 	}

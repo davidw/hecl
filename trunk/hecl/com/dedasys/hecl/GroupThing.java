@@ -32,7 +32,6 @@ public class GroupThing implements RealThing {
 	val.addElement(new Thing(new StringThing(s)));
     }
 
-
     private static void setGroupFromAny(Thing thing) {
 	RealThing realthing = thing.val;
 
@@ -63,7 +62,7 @@ public class GroupThing implements RealThing {
 	    newv.addElement(e.nextElement());
 	}
 
-	return new ListThing(newv);
+	return new GroupThing(newv);
     }
 
     public String toString() {

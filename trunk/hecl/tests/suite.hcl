@@ -22,7 +22,6 @@ testfiles {
     math.hcl
     parse.hcl
     proc.hcl
-    ref.hcl
     return.hcl
     search.hcl
     set.hcl

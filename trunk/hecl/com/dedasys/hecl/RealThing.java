@@ -18,11 +18,6 @@
 package com.dedasys.hecl;
 
 public abstract interface RealThing {
-
-/*     public static Thing create();  */
-
-/*     public static Object get(Interp interp, Thing thing);  */
-
+    /* Using a 'type' is a lot faster than 'instanceof' */
     public RealThing deepcopy();
-
 }

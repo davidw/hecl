@@ -524,39 +524,6 @@ puts $res
       </refsect1>
     </refentry>
 
-    <!-- copy -->
-    <refentry id="copy">
-      <refnamediv>
-	<refname>copy</refname>
-	<refpurpose>Return a copy of the variable.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-	<cmdsynopsis>
-	  <command>copy</command>
-	  <arg choice="req"><replaceable>varname</replaceable></arg>
-	</cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1>
-	<title>Description</title>
-	<para>
-	  The copy command is the equivalent of dollar substitution.
-	  It returns a copy of the variable in question, meaning that
-	  other commands that operate on the copy won't modify the
-	  original value.
-	</para>
-      </refsect1>
-      <refsect1>
-	<title>Example</title>
-	  <programlisting>
-set foo "bee"
-append [copy foo] "bop"
-puts $foo
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>bee</screen>
-      </refsect1>
-    </refentry>
-
     <!-- eq -->
     <refentry id="eq">
       <refnamediv>
@@ -1239,40 +1206,6 @@ puts "Hello, world"
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>Hello, world</screen>
-      </refsect1>
-    </refentry>
-
-    <!-- ref -->
-    <refentry id="ref">
-      <refnamediv>
-	<refname>ref</refname>
-	<refpurpose>Returns a reference to the variable.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-	<cmdsynopsis>
-	  <command>ref</command>
-	  <arg choice="req"><replaceable>varname</replaceable></arg>
-	</cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1>
-	<title>Description</title>
-	<para>
-	  The <command>ref</command> command is the equivalent of the
-	  &amp; syntax - it returns a reference to the Hecl 'thing'
-	  that the variable
-	  <option><replaceable>varname</replaceable></option> points to.
-	</para>
-      </refsect1>
-      <refsect1>
-	<title>Example</title>
-	  <programlisting>
-set foo 1
-set bar [ref foo]
-incr &amp;bar 1
-puts $foo
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>2</screen>
       </refsect1>
     </refentry>
 

@@ -1,7 +1,6 @@
 package com.dedasys.hecl;
 
 public class StringThing implements RealThing {
-
     private StringBuffer val;
 
     public StringThing() {

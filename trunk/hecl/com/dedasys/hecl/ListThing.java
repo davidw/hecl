@@ -21,7 +21,6 @@ import java.util.Enumeration;
 
 
 public class ListThing implements RealThing {
-
     protected Vector val = null;
 
     public ListThing() {

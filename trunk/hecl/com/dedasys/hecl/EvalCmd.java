@@ -28,6 +28,6 @@ class EvalCmd implements Command {
 	throws HeclException {
 
 	Thing result = Eval.eval(interp, argv[1]);
-	interp.setResult(result);
+	interp.result = result;
     }
 }

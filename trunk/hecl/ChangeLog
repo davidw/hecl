@@ -1,3 +1,28 @@
+2005-01-27  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Removed ref and copy.
+
+	* tests/suite.hcl: Removed ref.hcl.
+
+	* com/dedasys/hecl/Thing.java: Moved PrintThing out into its own
+	class.
+
+	* com/dedasys/hecl/Parse.java: Don't use copy and ref commands -
+	use the SubstThing type instead.
+
+	* com/dedasys/hecl/Interp.java: Use cacheing of variables.  Idea
+	by Salvatore Sanfilippo.  Removed copy and ref commands.
+
+	* com/dedasys/hecl/GroupThing.java: deepcopy now returns the right
+	type.
+
+	* com/dedasys/hecl/CodeThing.java: Added doSubstSubst method.
+	Pre-allocate several arrays of Things for use in Stanza.run.
+	Would be nice to be cleverer about this.
+
+	* Makefile: Removed RefCmd and CopyCmd, moved PrintThing to SE
+	files to compile.
+
 2005-01-26  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added basic math commands.

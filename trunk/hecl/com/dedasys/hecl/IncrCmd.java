@@ -33,6 +33,6 @@ class IncrCmd implements Command {
 	    n = IntThing.get(argv[2]);
 	}
 	((IntThing) argv[1].val).set(m + n);
-	interp.setResult(argv[1]);
+	interp.result = argv[1];
     }
 }

@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -39,16 +39,14 @@ public class CodeThing implements RealThing {
 	throws HeclException {
 	RealThing realthing = thing.val;
 
-
-
 	/* FIXME - SubstThing?  */
-	if (realthing instanceof CodeThing) {
-	    return;
+
+	if (!(realthing instanceof CodeThing)) {
+	    CodeThing newthing = null;
+	    Parse hp = new Parse(interp, thing.toString());
+	    newthing = hp.parseToCode();
+	    thing.setVal(newthing);
 	}
-	CodeThing newthing = null;
-	Parse hp = new Parse(interp, thing.toString());
-	newthing = hp.parseToCode();
-	thing.setVal(newthing);
     }
 
 
@@ -68,14 +66,18 @@ public class CodeThing implements RealThing {
 	RealThing realthing = thing.val;
 	Thing newthing = null;
 
-	//System.out.println("CODE");
 	if (((CodeThing) realthing).marksubst) {
 	    Eval.eval(interp, thing);
-	    newthing = interp.getResult();
+	    newthing = interp.result;
 	} else {
 	    newthing = thing;
 	}
 	return newthing;
+    }
+
+    protected static Thing doSubstSubst(Interp interp, Thing thing)
+	throws HeclException {
+	return SubstThing.get(interp, thing);
     }
 
     protected static Thing doGroupSubst(Interp interp, Thing thing)
@@ -99,11 +101,12 @@ public class CodeThing implements RealThing {
 		realthing = t.val;
 		if (realthing instanceof GroupThing) {
 		    result.append(doGroupSubst(interp, t).toString());
+		} else if (realthing instanceof SubstThing) {
+		    result.append(doSubstSubst(interp, t).toString());
 		} else if (realthing instanceof CodeThing) {
 		    result.append(doCodeSubst(interp, t).toString());
 		} else {
 		    result.append(t.toString());
-		    //System.out.println("OTHER");
 		    //	newargv[i] = argv[i];
 		}
 //	    result.append(doGroupSubst(interp, t));
@@ -170,6 +173,11 @@ public class CodeThing implements RealThing {
 	private Command command = null;
 	private Thing[] argv = null;
 
+ 	private Thing[] nav1 = new Thing[1];
+	private Thing[] nav2 = new Thing[2];
+	private Thing[] nav3 = new Thing[3];
+	private Thing[] newargv;
+
 	Stanza(Command newcmd, Thing[] newargv) {
 	    command = newcmd;
 	    argv = newargv;
@@ -183,7 +191,20 @@ public class CodeThing implements RealThing {
 	 */
 	public void run(Interp interp) throws HeclException {
 	    RealThing realthing = null;
-	    Thing[] newargv = new Thing[argv.length];
+	    /* These are the three most common argv lengths. */
+ 	    switch (argv.length) {
+		case 1:
+		    newargv = nav1;
+		    break;
+		case 2:
+		    newargv = nav2;
+		    break;
+		case 3:
+		    newargv = nav3;
+		    break;
+		default:
+		    newargv = new Thing[argv.length];
+	    }
 
 	    if (command == null) {
 		String cmdName = null;
@@ -192,37 +213,39 @@ public class CodeThing implements RealThing {
 		 * happen, substitute it to get the name. */
 		if (realthing instanceof CodeThing) {
 		    cmdName = doCodeSubst(interp, argv[0]).toString();
+		} else if (realthing instanceof GroupThing) {
+		    cmdName = doGroupSubst(interp, argv[0]).toString();
+		} else if (realthing instanceof SubstThing) {
+		    cmdName = doSubstSubst(interp, argv[0]).toString();
 		} else {
 		    cmdName = argv[0].toString();
 		}
 		command = interp.getCmd(cmdName);
 		if (command == null) {
-		    //(new Throwable()).printStackTrace();
 		    throw new HeclException("Command " + cmdName + " does not exist");
 		}
 	    }
 
-	    /* Create new array.  Run args that are SUBST or GROUP
-	     * types, use references to others. */
+	    /* Fill in the elements of the new argv - doing
+	     * substitutions and running code where needs be. */
 	    for (int i = 0; i < argv.length; i ++) {
 		realthing = argv[i].val;
 		if (realthing instanceof GroupThing) {
 		    newargv[i] = doGroupSubst(interp, argv[i]);
+		} else if (realthing instanceof SubstThing) {
+		    newargv[i] = doSubstSubst(interp, argv[i]);
 		} else if (realthing instanceof CodeThing) {
 		    newargv[i] = doCodeSubst(interp, argv[i]);
 		} else {
-		    //System.out.println("OTHER");
 		    newargv[i] = argv[i];
 		}
-
-		//newargv[i] = doSubst(interp, argv[i]);
 	    }
 
-/*      	    System.out.println("COMMAND ");
+/*        	    System.out.println("COMMAND v");
 	    for (int i = 0; i < newargv.length; i ++) {
 		Thing.printThing(newargv[i]);
-		//System.out.println(i + ": " + newargv[i]);
-	    }   */
+	    }
+      	    System.out.println("ENDCOMMAND ^ ");  */
 
 	    try {
 		command.cmdCode(interp, newargv);

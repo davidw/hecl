@@ -20,7 +20,6 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 
 public class HashThing implements RealThing {
-
     private Hashtable val = null;
 
     public HashThing() {

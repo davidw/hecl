@@ -304,22 +304,12 @@ public class Parse {
 		state.rewind();
 	    }
 	}
-	CodeThing code = new CodeThing();
-	Thing[] argv = new Thing[2];
-	argv[1] = currentOut.deepcopy();
-	StringThing.get(argv[1]);
 /* 	System.out.println("parser vvvv");
 	Thing.printThing(argv[1]);
 	System.out.println("parser ^^^^");  */
-	if (docopy) {
-	    argv[0] = new Thing("copy");
-	    code.addStanza(new CopyCmd(), argv);
-	} else {
-	    argv[0] = new Thing("ref");
-	    code.addStanza(new RefCmd(), argv);
-	}
-	code.marksubst = true;
-	currentOut.setVal(code);
+	Thing strcopy = currentOut.deepcopy();
+	StringThing.get(strcopy);
+	currentOut.setVal(new SubstThing(strcopy.toString(), !docopy));
     }
 
     /**

@@ -20,7 +20,6 @@
 package com.dedasys.hecl;
 
 public class IntThing implements RealThing {
-
     private int val;
 
     public IntThing() {
@@ -51,13 +50,11 @@ public class IntThing implements RealThing {
 	    throws HeclException {
 	RealThing realthing = thing.val;
 
-	if (realthing instanceof IntThing) {
+	if (!(realthing instanceof IntThing)) {
 	    /* Don't need to modify it. */
-	} else {
 	    thing.setVal(new IntThing(thing.toString()));
 	}
     }
-
 
     public static int get(Thing thing) throws HeclException {
 	setIntFromAny(thing);
