@@ -1,3 +1,7 @@
+# Makefile for Hecl.
+
+# $Id$
+
 PROFILE = -pg
 
 srcdir=com/dedasys/hecl/
@@ -11,14 +15,14 @@ ofiles: classes
 hecl: classes
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(srcdir)*.class $(PROFILE)
 
+sahecl: classes
+	gcj-3.4 -O3 -g -o sahecl --main=StandaloneHecl StandaloneHecl.java $(srcdir)*.class $(PROFILE)
+
 librl.so: /usr/share/java/libreadline-java.jar
 	gcj-3.4 -fjni -fPIC -shared -Wl,-soname,librl.so -o librl.so /usr/share/java/libreadline-java.jar
 
 rlhecl: classes librl.so
 	gcj-3.4 -g -o rlhecl --main=RLHecl RLHecl.java com/dedasys/hecl/*.class  -L. -lrl -I/usr/share/java/libreadline-java.jar $(PROFILE)
-
-# /usr/share/java/libreadline-java.jar -L/usr/lib/jni/ -lJavaEditline
-
 
 clean:
 	-find . -name "*~" | xargs rm

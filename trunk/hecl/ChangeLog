@@ -1,5 +1,7 @@
 2004-11-09  David N. Welton  <davidw@dedasys.com>
 
+	* Added license text to files.
+
 	* com/dedasys/hecl/Interp.java: It is now necessary to pass an
 	instance of a Load derived object to the Interp being created, so
 	that it has at least one way of loading external resources.
