@@ -57,7 +57,7 @@ LmatchCmd.java \
 SetCmd.java
 
 OBJECTS = $(patsubst %.java,$(srcdir)%.o,$(FILES))
-CLASSES = $(patsubst %.java,$(srcdir)%.class,$(FILES))
+CLASSES = $(patsubst %.java,$(srcdir)%.class,$(FILES)) $(srcdir)CodeThing$$Stanza.class Parse$$ParseState.class
 
 SEOBJECTS = $(patsubst %.java,$(srcdir)%.o,$(SEFILES))
 SECLASSES = $(patsubst %.java,$(srcdir)%.class,$(SEFILES))
@@ -76,6 +76,9 @@ $(srcdir)%.o : $(srcdir)%.java
 classes: $(CLASSES) $(SECLASSES) $(MECLASSES)
 
 ofiles: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
+
+hecl.jar: classes $(CLASSES) $(MECLASSES)
+	jar cvf hecl.jar $(CLASSES) $(MECLASSES)
 
 hecl: ofiles
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(OBJECTS) $(SEOBJECTS) $(PROFILE)

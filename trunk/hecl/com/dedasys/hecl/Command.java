@@ -23,7 +23,9 @@ package com.dedasys.hecl;
  * @version 1.0
  */
 
-public interface Command {
+/* This 'abstract' apparently needs to be here for j2me stuff. */
+
+public abstract interface Command {
 
     /**
      * The <code>cmdCode</code> method takes an interpreter and an

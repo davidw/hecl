@@ -25,7 +25,7 @@ import java.io.*;
  * @version 1.0
  */
 
-public class LoadFile extends Load {
+public class LoadFile implements Load {
     public Thing getscript(String flname)
     throws HeclException {
 	StringBuffer input = null;

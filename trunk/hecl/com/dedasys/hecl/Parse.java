@@ -125,7 +125,7 @@ public class Parse {
      *
      */
     protected void addCurrent() {
-	outList.add(currentOut);
+	outList.addElement(currentOut);
 	currentOut = new Thing("");
     }
 
@@ -155,7 +155,7 @@ public class Parse {
      * @param newthing a <code>Thing</code> value
      */
     public void addCurrent(Thing newthing) {
-	outList.add(newthing);
+	outList.addElement(newthing);
 	currentOut = new Thing("");
     }
 

@@ -35,7 +35,7 @@ class IntrospectCmd implements Command {
 	if (subcmd.equals("commands")) {
 	    for (Enumeration e = interp.cmdNames() ; e.hasMoreElements(); ) {
 		Thing t = new Thing((String)e.nextElement());
-		results.add(t);
+		results.addElement(t);
 	    }
 	    interp.setResult(new Thing(results));
 	    return;

@@ -23,10 +23,7 @@ package com.dedasys.hecl;
  * @version 1.0
  */
 
-abstract public class Load {
+public abstract interface Load {
     public Thing getscript(String resourcename)
-	throws HeclException {
-	StringBuffer input = new StringBuffer();
-	return new Thing(input);
-    }
+	throws HeclException;
 }

@@ -1,3 +1,20 @@
+2004-11-14  David N. Welton  <davidw@dedasys.com>
+
+	* Makefile (CLASSES): Added two inner class .class files manually,
+	as the filenames do not correspond to any .java files.
+
+	* com/dedasys/hecl/Load.java: Made 'Load' into an interface - use
+	'abstract' to make j2me happy.
+
+	* com/dedasys/hecl/Command.java: Added 'abstract' to interface -
+	apparently j2me stuff needs it.  Weird.
+
+	* com/dedasys/hecl/Thing.java: Use addElement instead of add.
+
+	* com/dedasys/hecl/Parse.java: Use addElement instead of add.
+
+	* com/dedasys/hecl/IntrospectCmd.java: Use addElement instead of add.
+
 2004-11-13  David N. Welton  <davidw@dedasys.com>
 
 	* Makefile: Significant cleanup that makes things much smoother.

@@ -224,8 +224,8 @@ public class Thing extends Object {
 		result = new Vector();
 		for (Enumeration e = ((Hashtable)data).keys() ; e.hasMoreElements(); ) {
 		    String key = (String)e.nextElement();
-		    result.add(new Thing(key));
-		    result.add(((Hashtable)data).get(key));
+		    result.addElement(new Thing(key));
+		    result.addElement(((Hashtable)data).get(key));
 		}
 		break;
 	    case LIST:
