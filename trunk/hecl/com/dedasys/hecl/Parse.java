@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -132,32 +132,16 @@ public class Parse {
     }
 
     /**
-     * Describe <code>appendCurrent</code> method here.
-     *
-     */
-/*     protected void appendCurrent() {
-	StringBuffer last;
-	int sz = outList.size();
-
-	System.out.println("FIXME");
-	addCurrent();
-	last = ((Thing)outList.elementAt(sz - 2)).toStringBuffer();
-	last.append(currentOut.toString());
-	currentOut = new Thing("");
-	outList.removeElementAt(sz - 1);
-    }
-  */
-
-    /**
      * The <code>appendToCurrent</code> method adds a character to the
      * group object.
      *
      * @param ch a <code>char</code>
      */
 
+    /* FIXME - this could be reworked. */
+
     protected void appendToCurrent(char ch) {
 	currentOut.appendToGroup(ch);
-	//System.out.println("currenOut is :" + currentOut);
     }
 
     /**

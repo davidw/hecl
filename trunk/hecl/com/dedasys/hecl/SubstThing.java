@@ -15,10 +15,16 @@
 
 /* $Id$ */
 
-/* Integer things. */
 
 package com.dedasys.hecl;
 
+/**
+ * The <code>SubstThing</code> class represents things that must be
+ * substituted - $foo or &foo for example.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class SubstThing implements RealThing {
     public long cacheversion = -1;
     public boolean ref = false;
@@ -28,24 +34,27 @@ public class SubstThing implements RealThing {
     public SubstThing() {
     }
 
-    public SubstThing(String s) {
-	varName = s;
-    }
-
+    /**
+     * Creates a new <code>SubstThing</code> instance from a string,
+     * which is the variable name to reference, and a boolean
+     * indicating whether this is a reference (&) or not ($).
+     *
+     * @param s a <code>String</code> value
+     * @param isref a <code>boolean</code> value
+     */
     public SubstThing(String s, boolean isref) {
 	ref = isref;
 	varName = s;
     }
 
-    public SubstThing(String s, Thing t) {
-	varName = s;
-	val = t;
-    }
-
-    public static Thing create(String s) {
-	return new Thing(new SubstThing(s));
-    }
-
+    /**
+     * <code>setSubstFromAny</code> creates a Subst object from
+     * another type.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static void setSubstFromAny(Interp interp, Thing thing)
 	    throws HeclException {
 	RealThing realthing = thing.val;
@@ -53,10 +62,21 @@ public class SubstThing implements RealThing {
 	if (realthing instanceof SubstThing) {
 	    /* Don't need to modify it. */
 	} else {
-	    thing.setVal(new SubstThing(thing.toString()));
+	    thing.setVal(new SubstThing(thing.toString(), true));
 	}
     }
 
+    /**
+     * <code>get</code> returns the *value* of a SubstThing - in other
+     * words, the Thing that its varName is pointing to.  We use a
+     * cacheing mechanism devised by Salvatore Sanfilippo to avoid
+     * unnecessary lookups.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public static Thing get(Interp interp, Thing thing) throws HeclException {
 	setSubstFromAny(interp, thing);
 	SubstThing getcopy = (SubstThing)thing.val;
@@ -73,14 +93,21 @@ public class SubstThing implements RealThing {
 	}
     }
 
-    public void set(Thing t) {
-	val = t;
-    }
-
+    /**
+     * <code>deepcopy</code> returns a copy of the SubstThing.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing deepcopy() {
-	return new SubstThing(varName);
+	return new SubstThing(varName, ref);
     }
 
+    /**
+     * <code>toString</code> returns a string representation of the
+     * SubstThing.
+     *
+     * @return a <code>String</code> value
+     */
     public String toString() {
 	if (ref) {
 	    return "&{" + varName + "}";

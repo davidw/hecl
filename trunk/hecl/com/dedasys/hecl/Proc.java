@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -28,6 +28,13 @@ class Proc implements Command {
     private Thing vars;
     private Thing code;
 
+    /**
+     * Creates a new <code>Proc</code> instance, with the variable
+     * names in cmdvars, and the actual code in cmdcode.
+     *
+     * @param cmdvars a <code>Thing</code> value
+     * @param cmdcode a <code>Thing</code> value
+     */
     public Proc(Thing cmdvars, Thing cmdcode) {
 	vars = cmdvars;
 	code = cmdcode;
@@ -38,6 +45,7 @@ class Proc implements Command {
 	Vector varnames = ListThing.get(vars);
 	int i = 0;
 
+	/* Push a new frame onto the stack. */
 	interp.stackIncr();
 	/* Create the argument variables. */
 	for (i = 0; i < varnames.size(); i++) {
@@ -58,10 +66,12 @@ class Proc implements Command {
 	try {
 	    Eval.eval(interp, code);
 	} catch (HeclException e) {
+	    /* Don't pop the stack here. */
 	    if (e.code != HeclException.RETURN) {
 		throw e;
 	    }
 	}
+	/* We're done, pop the stack. */
 	interp.stackDecr();
     }
 }

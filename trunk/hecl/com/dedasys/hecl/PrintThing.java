@@ -19,17 +19,47 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+
+
+/**
+ * The <code>PrintThing</code> class is a utility class used to print
+ * out Things.  It is useful for debugging purposes.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class PrintThing {
 
+    /**
+     * <code>ws</code> creats new bytes with nulls, and then replaces
+     * them with whitespace.  Kind of ugly, but it works to print out
+     * a given amount of whitespace.
+     *
+     * @param n an <code>int</code> value
+     * @return a <code>String</code> value
+     */
     private static String ws(int n) {
 	return new String(new byte[n]).replace('\0', ' ');
     }
 
+    /**
+     * <code>printThing</code> prints out a Thing.
+     *
+     * @param t a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void printThing(Thing t) throws HeclException {
 	printThing(t, 0);
     }
 
-    /* This could probably be pulled out of the J2ME version. */
+
+    /**
+     * The main <code>printThing</code> function.
+     *
+     * @param t a <code>Thing</code> value
+     * @param depth an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void printThing(Thing t, int depth) throws HeclException {
 	RealThing rt = t.val;
 	if (rt instanceof IntThing) {

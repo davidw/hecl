@@ -24,6 +24,14 @@ package com.dedasys.hecl;
 
 class Standard {
 
+    /**
+     * <code>init</code> is where commands are added to the
+     * interpreter.  Change this if you would like to add other
+     * commands.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void init(Interp interp) throws HeclException {
 	interp.addCommand("time", new TimeCmd());
     }

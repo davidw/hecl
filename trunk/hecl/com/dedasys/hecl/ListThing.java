@@ -19,18 +19,40 @@ import java.util.Vector;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-
+/**
+ * The <code>ListThing</code> class implements lists, storing them
+ * internally as a Vector.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class ListThing implements RealThing {
     protected Vector val = null;
 
+    /**
+     * Creates a new, empty <code>ListThing</code> instance.
+     *
+     */
     public ListThing() {
 	val = new Vector ();
     }
 
+    /**
+     * Creates a new <code>ListThing</code> instance from a vector.
+     *
+     * @param v a <code>Vector</code> value
+     */
     public ListThing(Vector v) {
 	val = v;
     }
 
+    /**
+     * Attempts to create a new <code>ListThing</code> instance from a
+     * string.  May fail if the string can't be parsed into a list.
+     *
+     * @param s a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
     public ListThing(String s) throws HeclException {
 	ParseList parseList = new ParseList(s);
 	/* FIXME - this probably doesn't handle newlines. */
@@ -40,10 +62,24 @@ public class ListThing implements RealThing {
 	}
     }
 
+    /**
+     * <code>create</code> allocates and returns a new ListThing typed
+     * Thing.
+     *
+     * @param v a <code>Vector</code> value
+     * @return a <code>Thing</code> value
+     */
     public static Thing create (Vector v) {
  	return new Thing(new ListThing(v));
     }
 
+    /**
+     * <code>setListFromAny</code> attempts to transform the given
+     * Thing into a ListThing typed Thing.
+     *
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static void setListFromAny(Thing thing)
 	    throws HeclException {
 	RealThing realthing = thing.val;
@@ -74,21 +110,42 @@ public class ListThing implements RealThing {
     }
 
 
+    /**
+     * <code>get</code> attempts to transform the given Thing into a
+     * List, and return its Vector value.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Vector</code> value
+     * @exception HeclException if an error occurs
+     */
     public static Vector get(Thing thing) throws HeclException {
 	setListFromAny(thing);
 	ListThing getlist = (ListThing)thing.val;
 	return getlist.val;
     }
 
+    /**
+     * <code>deepcopy</code> copies a list and all of its elements.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing deepcopy() {
 	Vector newv = new Vector();
 	for (Enumeration e = val.elements(); e.hasMoreElements();) {
-	    newv.addElement(e.nextElement());
+	    newv.addElement(((Thing)e.nextElement()).deepcopy());
 	}
 
 	return new ListThing(newv);
     }
 
+    /**
+     * <code>toListString</code> is an internal function that
+     * transforms list elements into the string form {foo bar} if the
+     * element contains a space.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return a <code>String</code> value
+     */
     private String toListString(Thing thing) {
 	String elementstring = thing.toString();
 	StringBuffer resbuf = new StringBuffer();
@@ -101,6 +158,12 @@ public class ListThing implements RealThing {
 	return resbuf.toString();
     }
 
+    /**
+     * <code>toString</code> returns a string representation of a
+     * ListThing.
+     *
+     * @return a <code>String</code> value
+     */
     public String toString() {
 	String result = null;
 	StringBuffer resbuf = new StringBuffer("");

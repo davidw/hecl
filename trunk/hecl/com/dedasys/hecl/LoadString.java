@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -28,10 +28,24 @@ import java.io.*;
 public class LoadString implements Load {
     String script = null;
 
+    /**
+     * Creates a new <code>LoadString</code> instance containing the
+     * hecl code in newscript.
+     *
+     * @param newscript a <code>String</code> value
+     */
     public LoadString(String newscript) {
 	script = newscript;
     }
 
+    /**
+     * <code>getscript</code> returns a string that has been compiled
+     * into it.
+     *
+     * @param resourcename a <code>String</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public Thing getscript(String resourcename)
     throws HeclException {
 	return new Thing(script);

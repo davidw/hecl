@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ import java.lang.*;
 
 public class Eval {
 
+    Eval() {}
+
     /**
      * The <code>eval</code> method evaluates some Hecl code passed to
      * it.
@@ -37,9 +39,6 @@ public class Eval {
      * @return a <code>Thing</code> value - the result of the evaluation.
      * @exception HeclException if an error occurs.
      */
-
-    Eval() {}
-
     public static Thing eval(Interp interp, Thing in)
 	throws HeclException
     {

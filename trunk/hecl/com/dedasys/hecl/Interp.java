@@ -56,7 +56,9 @@ public class Interp {
 
     /**
      * The <code>initCommands</code> method initializes all the built
-     * in commands.
+     * in commands.  These are commands available in all versions of
+     * Hecl.  J2SE commands are initialized in Standard.java, and J2ME
+     * commands in Micro.java.
      *
      * @exception HeclException if an error occurs
      */

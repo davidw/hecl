@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,8 +16,25 @@
 package com.dedasys.hecl;
 
 
+/**
+ * The <code>Compare</code> class exists to compare things in
+ * different ways.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 class Compare {
 
+    /**
+     * <code>compareInt</code> exists to compare two Things as ints.
+     * Since it is possible that one or both are not integers, we may
+     * throw a HeclException.
+     *
+     * @param a a <code>Thing</code> value
+     * @param b a <code>Thing</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
     public static int compareInt(Thing a, Thing b) throws HeclException {
 	int ia = IntThing.get(a);
 	int ib = IntThing.get(b);
@@ -30,9 +47,28 @@ class Compare {
 	}
     }
 
+    /**
+     * <code>compareString</code> compares two Things as strings.
+     * This can't fail, because all Things may be represented as
+     * strings.
+     *
+     * @param a a <code>Thing</code> value
+     * @param b a <code>Thing</code> value
+     * @return an <code>int</code> value
+     */
     public static int compareString(Thing a, Thing b) {
 	return StringThing.get(a).compareTo(StringThing.get(b));
     }
+
+    /**
+     * <code>compare</code> is a generic compare method that first
+     * tries to compare two things as integers, and then tries again
+     * as strings.
+     *
+     * @param a a <code>Thing</code> value
+     * @param b a <code>Thing</code> value
+     * @return an <code>int</code> value
+     */
 
     public static int compare(Thing a, Thing b) {
 	try {

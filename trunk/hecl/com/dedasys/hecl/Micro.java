@@ -24,6 +24,13 @@ package com.dedasys.hecl;
 
 class Micro {
 
+    /**
+     * The <code>init</code> method is where we add commands specific
+     * to the J2ME version of Hecl.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void init(Interp interp) throws HeclException {
     }
 

@@ -17,7 +17,21 @@
 
 package com.dedasys.hecl;
 
+/**
+ * The <code>RealThing</code> interface is the actual value contained
+ * within a Thing.  It can be of several different types - integers,
+ * strings, lists, hashes, and so on.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public abstract interface RealThing {
-    /* Using a 'type' is a lot faster than 'instanceof' */
+
+    /**
+     * The <code>deepcopy</code> method must copy a RealThing and any
+     * values it contains.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing deepcopy();
 }

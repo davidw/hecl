@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -61,6 +61,7 @@ class JoinSplitCmd implements Command {
 	    if (argv.length > 2) {
 		splitstr = argv[2].toString();
 	    } else {
+		/* By default, we split on spaces. */
 		splitstr = " ";
 	    }
 

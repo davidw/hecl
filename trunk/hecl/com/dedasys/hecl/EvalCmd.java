@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,8 +26,6 @@ class EvalCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-
-	Thing result = Eval.eval(interp, argv[1]);
-	interp.result = result;
+	interp.result = Eval.eval(interp, argv[1]);
     }
 }

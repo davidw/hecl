@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -35,6 +35,14 @@ class SortCmd implements Command {
 
     /* FIXME - speeding this up a bit wouldn't hurt things. */
 
+    /**
+     * <code>quicksort</code> implementation.
+     *
+     * @param a a <code>Vector</code> value
+     * @param lo an <code>int</code> value
+     * @param hi an <code>int</code> value
+     * @return a <code>Vector</code> value
+     */
     private Vector quicksort (Vector a, int lo, int hi) {
         //  lo is the lower index, hi is the upper index
         //  of the region of array a that is to be sorted

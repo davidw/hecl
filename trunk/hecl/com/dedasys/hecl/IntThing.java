@@ -19,33 +19,80 @@
 
 package com.dedasys.hecl;
 
+/**
+ * The <code>IntThing</code> class represents an integer Thing.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class IntThing implements RealThing {
     private int val;
 
+    /**
+     * Creates a new <code>IntThing</code> instance equal to 0.
+     *
+     */
     public IntThing() {
 	val = 0;
     }
 
+    /**
+     * Creates a new <code>IntThing</code> instance with value i.
+     *
+     * @param i an <code>int</code> value
+     */
     public IntThing(int i) {
 	val = i;
     }
 
+    /**
+     * Creates a new <code>IntThing</code> instance from boolean b
+     * where true is 1 and false is 0.
+     *
+     * @param b a <code>boolean</code> value
+     */
     public IntThing(boolean b) {
 	val = (b == true ? 1 : 0);
     }
 
+    /**
+     * Creates a new <code>IntThing</code> instance from string s.
+     *
+     * @param s a <code>String</code> value
+     */
     public IntThing(String s) {
 	val = Integer.parseInt(s);
     }
 
+    /**
+     * The <code>create</code> method creates and returns a newly
+     * allocated Thing with an IntThing internal representation.
+     *
+     * @param i an <code>int</code> value
+     * @return a <code>Thing</code> value
+     */
     public static Thing create(int i) {
 	return new Thing(new IntThing(i));
     }
 
+    /**
+     * The <code>create</code> method creates and returns a newly
+     * allocated Thing with an IntThing internal representation.
+     *
+     * @param b an <code>boolean</code> value
+     * @return a <code>Thing</code> value
+     */
     public static Thing create(boolean b) {
 	return new Thing(new IntThing(b));
     }
 
+    /**
+     * <code>setIntFromAny</code> transforms the given Thing into an
+     * IntThing, internally.
+     *
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static void setIntFromAny(Thing thing)
 	    throws HeclException {
 	RealThing realthing = thing.val;
@@ -56,20 +103,44 @@ public class IntThing implements RealThing {
 	}
     }
 
+    /**
+     * <code>get</code> attempts to fetch an integer value from a
+     * Thing.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
     public static int get(Thing thing) throws HeclException {
 	setIntFromAny(thing);
 	IntThing getint = (IntThing)thing.val;
 	return getint.val;
     }
 
+    /**
+     * <code>set</code> sets the internal value of an IntThing to i.
+     *
+     * @param i an <code>int</code> value
+     */
     public void set(int i) {
 	val = i;
     }
 
+    /**
+     * <code>deepcopy</code> makes a copy.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing deepcopy() {
 	return new IntThing(val);
     }
 
+    /**
+     * <code>toString</code> creates a string representation of the
+     * IntThing.
+     *
+     * @return a <code>String</code> value
+     */
     public String toString() {
 	return Integer.toString(val);
     }

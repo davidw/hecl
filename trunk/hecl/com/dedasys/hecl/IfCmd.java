@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ class IfCmd implements Command {
 	    return;
 	}
 
+	/* We loop through to capture all else if...else if...else
+	 * possibilities.  */
 	if (argv.length > 3) {
 	    for (int i = 3; i <= argv.length; i += 3) {
 		if (argv[i].toString().equals("else")) {

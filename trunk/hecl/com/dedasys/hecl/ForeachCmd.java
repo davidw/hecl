@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import java.util.*;
  * @version 1.0
  */
 
-/* FIXME - should also handle multiple sets of variable/list, like:
- * foreach var $list othervar $otherlist  */
+/* FIXME - could/should also handle multiple sets of variable/list,
+ * like: foreach var $list othervar $otherlist  */
 
 class ForeachCmd implements Command {
 

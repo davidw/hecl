@@ -35,6 +35,14 @@ public class CodeThing implements RealThing {
 	stanzas = new Vector();
     }
 
+    /**
+     * The <code>setCodeFromAny</code> method makes the Thing passed
+     * to it into a CodeThing representation.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static void setCodeFromAny(Interp interp, Thing thing)
 	throws HeclException {
 	RealThing realthing = thing.val;
@@ -49,7 +57,15 @@ public class CodeThing implements RealThing {
 	}
     }
 
-
+    /**
+     * <code>get</code> returns a CodeThing object from any kind of
+     * Thing - or returns an error.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @return a <code>CodeThing</code> value
+     * @exception HeclException if an error occurs
+     */
     public static CodeThing get(Interp interp, Thing thing)
 	throws HeclException {
 	setCodeFromAny(interp, thing);
@@ -61,6 +77,18 @@ public class CodeThing implements RealThing {
 	return new CodeThing();
     }
 
+    /**
+     * <code>doCodeSubst</code> takes a code Thing and runs it,
+     * returning the result.  This is used for substitution in
+     * situations like this: "foo [bar] baz", where the substitution
+     * needs to be run every time, but the block can't be broken up.
+     * doCodeSubst operates on the [bar] word in the above case.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     protected static Thing doCodeSubst(Interp interp, Thing thing)
 	throws HeclException {
 	RealThing realthing = thing.val;
@@ -75,11 +103,31 @@ public class CodeThing implements RealThing {
 	return newthing;
     }
 
+    /**
+     * <code>doSubstSubst</code> runs substitutions on things of the
+     * SubstThing type, which means $foo or &foo in Hecl.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     protected static Thing doSubstSubst(Interp interp, Thing thing)
 	throws HeclException {
 	return SubstThing.get(interp, thing);
     }
 
+    /**
+     * <code>doGroupSubst</code> runs substitutions on 'groups' of
+     * things, such as "foo $foo [foo]".  The group can't be broken
+     * up, so it needs to be substituted together by subst'ing the
+     * individual components.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     protected static Thing doGroupSubst(Interp interp, Thing thing)
 	throws HeclException {
 	RealThing realthing = thing.val;
@@ -107,9 +155,7 @@ public class CodeThing implements RealThing {
 		    result.append(doCodeSubst(interp, t).toString());
 		} else {
 		    result.append(t.toString());
-		    //	newargv[i] = argv[i];
 		}
-//	    result.append(doGroupSubst(interp, t));
 	    }
 	}
 	return new Thing(new StringThing(result));
@@ -127,8 +173,6 @@ public class CodeThing implements RealThing {
     public void addStanza(Command command, Thing[] argv) {
 	Stanza sz = new Stanza(command, argv);
 	stanzas.addElement(sz);
-	//System.out.println("ADDING : " + sz.toString() + "</ADDING>");
-	// (new Throwable()).printStackTrace();
     }
 
     /**
@@ -163,7 +207,8 @@ public class CodeThing implements RealThing {
     }
 
     /**
-     * The <code>Stanza</code> class represents one command.
+     * The <code>Stanza</code> class represents one command.  A
+     * CodeThing object may have several Stanzas.
      *
      * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
      * @version 1.0
@@ -178,13 +223,22 @@ public class CodeThing implements RealThing {
 	private Thing[] nav3 = new Thing[3];
 	private Thing[] newargv;
 
+	/**
+	 * Creates a new <code>Stanza</code> instance, taking a
+	 * Command and its arguments as input.
+	 *
+	 * @param newcmd a <code>Command</code> value
+	 * @param newargv a <code>Thing[]</code> value
+	 */
 	Stanza(Command newcmd, Thing[] newargv) {
 	    command = newcmd;
 	    argv = newargv;
 	}
 
 	/**
-	 * The <code>run</code> method runs the Stanza.
+	 * The <code>run</code> method runs the Stanza.  In order to
+	 * avoid creating a new newargv each time, the most common
+	 * cases are preallocated.
 	 *
 	 * @param interp <code>Interp</code> value
 	 * @exception HeclException if an error occurs
@@ -242,7 +296,7 @@ public class CodeThing implements RealThing {
 		}
 	    }
 
-/*        	    System.out.println("COMMAND v");
+	 /* System.out.println("COMMAND v");
 	    for (int i = 0; i < newargv.length; i ++) {
 		Thing.printThing(newargv[i]);
 	    }

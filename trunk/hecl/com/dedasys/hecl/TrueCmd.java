@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,10 +24,12 @@ package com.dedasys.hecl;
  */
 
 class TrueCmd implements Command {
+    /* This should be a bit more efficient in terms of speed. */
+    static final Thing trueval = IntThing.create(true);
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 
-	interp.setResult(IntThing.create(1));
+	interp.result = trueval;
     }
 }

@@ -19,17 +19,41 @@ import java.util.Vector;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
+/**
+ * The <code>HashThing</code> class represents a hash table type in
+ * Hecl.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class HashThing implements RealThing {
     private Hashtable val = null;
 
+    /**
+     * Creates a new, empty <code>HashThing</code> instance.
+     *
+     */
     public HashThing() {
 	val = new Hashtable ();
     }
 
+    /**
+     * Creates a new <code>HashThing</code> instance from a Hashtable.
+     *
+     * @param h a <code>Hashtable</code> value
+     */
     public HashThing(Hashtable h) {
 	val = h;
     }
 
+    /**
+     * Creates a new <code>HashThing</code> instance from a Vector.
+     * This may throw an exception, because if the Vector doesn't have
+     * an even number of elements, it won't be a valid hash table.
+     *
+     * @param v a <code>Vector</code> value
+     * @exception HeclException if an error occurs
+     */
     public HashThing(Vector v) throws HeclException {
 	if ((v.size() % 2) != 0) {
 	    throw new HeclException(
@@ -47,6 +71,13 @@ public class HashThing implements RealThing {
 	}
     }
 
+    /**
+     * <code>setHashFromAny</code> attempts to create a HashThing from
+     * the Thing passed to it.
+     *
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static void setHashFromAny(Thing thing)
 	    throws HeclException {
 	RealThing realthing = thing.val;
@@ -64,26 +95,48 @@ public class HashThing implements RealThing {
 	thing.setVal(newthing);
     }
 
-
+    /**
+     * <code>get</code> attempts to return a Hashtable from a given
+     * Thing, in the process transforming that Thing into a HashThing
+     * internally.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Hashtable</code> value
+     * @exception HeclException if an error occurs
+     */
     public static Hashtable get(Thing thing) throws HeclException {
 	setHashFromAny(thing);
 	HashThing gethash = (HashThing)thing.val;
 	return gethash.val;
     }
 
+    /**
+     * <code>deepcopy</code> copies the hash table and all its
+     * elements.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing deepcopy() {
 	Hashtable h = new Hashtable();
 
 	for (Enumeration e = val.keys() ;
 	     e.hasMoreElements(); ) {
 	    String key = (String)e.nextElement();
-	    /* FIXME - do a deepcopy below? */
-	    h.put(key, val.get(key));
+	    h.put(key, ((Thing)val.get(key)).deepcopy());
 	}
 
 	return new HashThing(h);
     }
 
+    /**
+     * <code>toString</code> returns a string representation of a
+     * HashThing, which is in reality a string representation of a
+     * ListThing, only that there are guaranteed to be an even number
+     * of elements.
+     *
+     * @return a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
     public String toString() throws HeclException {
 	Vector v = ListThing.get(new Thing(new HashThing(val)));
 	ListThing newthing = new ListThing(v);

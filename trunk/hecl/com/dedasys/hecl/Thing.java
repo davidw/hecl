@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package com.dedasys.hecl;
 
 import java.util.*;
- 
+
 /**
  * The <code>Thing</code> class is what Hecl revolves around.
  * "Things" can be of several types, include strings, integers, lists,
@@ -31,39 +31,68 @@ public class Thing extends Object {
 
     protected String stringval;
 
+
+    /**
+     * Creates a new <code>Thing</code> instance from a string.
+     *
+     * @param s a <code>String</code> value
+     */
     public Thing(String s) {
 	val = new StringThing(s);
 	stringval = s;
     }
 
+    /**
+     * Creates a new <code>Thing</code> instance from a string buffer.
+     *
+     * @param s a <code>StringBuffer</code> value
+     */
     public Thing(StringBuffer s) {
 	val = new StringThing(s);
 	stringval = s.toString();
     }
 
+    /**
+     * Creates a new <code>Thing</code> instance from an internal
+     * representation.
+     *
+     * @param realthing a <code>RealThing</code> value
+     */
     public Thing(RealThing realthing) {
 	val = realthing;
 	stringval = null;
     }
 
+    /**
+     * <code>setVal</code> sets the internal representation of the
+     * Thing, and cancels the string representation.
+     *
+     * @param realthing a <code>RealThing</code> value
+     */
     public void setVal(RealThing realthing) {
 	val = realthing;
 	stringval = null;
     }
 
+    /**
+     * <code>getVal</code> fetches the internal value of the Thing.
+     *
+     * @return a <code>RealThing</code> value
+     */
     public RealThing getVal() {
 	return val;
     }
 
+    /* FIXME - this shouldn't be here, really. */
     public void appendToGroup(Thing thing) {
 	Vector v = GroupThing.get(this);
 	v.addElement(thing);
 	stringval = null;
     }
 
+    /* FIXME - and neither should this. */
     public void appendToGroup(char ch) {
 	Vector v = GroupThing.get(this);
-	//System.out.println("Group is :" + v + " char is :" + ch);
 	Thing le = (Thing)v.lastElement();
 	StringThing.get(le);
 	RealThing rt = le.getVal();
@@ -71,9 +100,6 @@ public class Thing extends Object {
 	str.append(ch);
 	le.setVal(str);
 	stringval = null;
-	//System.out.println("Group is :" + v);
-	//System.out.println("LastElement is :" + le);
-
     }
 
     /**
@@ -87,7 +113,6 @@ public class Thing extends Object {
 	return (IntThing.get(thing) != 0);
     }
 
-
     /**
      * <code>makeref</code> sets the 'this' Thing to be a reference to
      * the newval that was passed to it.
@@ -100,16 +125,29 @@ public class Thing extends Object {
 	this.stringval = newval.stringval;
     }
 
+    /**
+     * <code>toString</code> returns the String value of a Thing.
+     * FIXME this could probably be improved in terms of efficiency.
+     *
+     * @return a <code>String</code> value
+     */
     public String toString() {
 	stringval = val.toString();
 	return stringval;
     }
 
+    /**
+     * <code>deepcopy</code> copies the thing, its value, and any
+     * elements the value might contain.
+     *
+     * @return a <code>Thing</code> value
+     */
     public Thing deepcopy() {
 	RealThing realthing = val.deepcopy();
 	return new Thing(realthing);
     }
 
+    /* FIXME - remove this in favor of Compare class. */
     public int compare(Thing t) {
 	String xs = t.toString();
 	String ts = this.toString();

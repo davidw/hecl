@@ -1,5 +1,15 @@
 2005-01-28  David N. Welton  <davidw@dedasys.com>
 
+	* com/dedasys/hecl/HashThing.java (HashThing): Added docstrings.
+	deepcopy now makes a deepcopy of individual elements.
+
+	* com/dedasys/hecl/GroupThing.java (GroupThing): Added docstrings.
+	deepcopy now makes a deepcopy of individual elements.
+
+	* com/dedasys/hecl/Compare.java (Compare): Added docstrings.
+
+	* com/dedasys/hecl/CodeThing.java (CodeThing): Added docstrings.
+
 	* Makefile: A bit of hacking to make the compile nicer.
 
 2005-01-27  David N. Welton  <davidw@dedasys.com>

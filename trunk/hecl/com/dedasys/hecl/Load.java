@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,13 +17,23 @@ package com.dedasys.hecl;
 
 /**
  * The <code>Load</code> interface is the template for loading
- * external code files.
+ * external code resources (typically files).
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 
 public abstract interface Load {
+
+    /**
+     * The <code>getscript</code> method takes a resource name, such
+     * as a filename or URL or something else that can contain data,
+     * and returns the data contained therein.
+     *
+     * @param resourcename a <code>String</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public Thing getscript(String resourcename)
 	throws HeclException;
 }
