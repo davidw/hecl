@@ -31,7 +31,7 @@ public class Interp {
     /**
      * Package name prefix of the module classes.
      */
-    public static final String MODULE_CLASS_PACKAGE = "com.dedasys.hecl";
+    public static final String MODULE_CLASS_PACKAGE = "org.hecl";
     /**
      * Class name for the module initialization class.
      */
@@ -156,9 +156,8 @@ public class Interp {
         addCommand("time", new TimeCmd());
 
         addCommand("module", new HeclModuleCmd());
-        
 
-        /* try to load standard modules, if they exist */
+        /* Try to load standard modules, if they exist. */
         loadModule("pjava", false);
         loadModule("j2me", false);
         loadModule("http", false);
@@ -167,7 +166,7 @@ public class Interp {
     /**
      * The <code>stackIncr</code> method creates a new stack frame. Used in
      * the Proc class.
-     *  
+     *
      */
     public void stackIncr() {
         stackPush(new Hashtable());
@@ -547,6 +546,7 @@ public class Interp {
         modules.put(className, clsmodule);
         clsmodule.loadModule(this);
     }
+
     void unloadModule(String name, String className, boolean throwException)
             throws HeclException {
         HeclModule clsmodule;

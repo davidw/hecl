@@ -13,6 +13,7 @@ proc test {name code result} {
 
 proc testfiles {files} {
     foreach f $files {
+	puts "Testing $f"
 	sourcehere $f
     }
 }

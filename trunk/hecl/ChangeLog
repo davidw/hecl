@@ -1,3 +1,15 @@
+2005-03-22  David N. Welton  <davidw@dedasys.com>
+
+	* pjava/org/hecl/pjava/HeclModule.java: dos2unix line endings.
+
+	* core/org/hecl/Thing.java: Check for nesting depth in deepcopy,
+	so that circular list references don't bite us...
+
+	* core/org/hecl/Interp.java: MODULE_CLASS_PACKAGE now uses the
+	right name.
+
+	* build.xml: Added compile instructions for "pjava".
+
 2005-03-17  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Fixed 'search' description.

@@ -12,7 +12,7 @@
 	  <tt class="email">&lt;<a href="mailto:davidw@dedasys.com">davidw@dedasys.com</a>&gt;</tt><br />
 	</p></div></div></div></div><div><p class="copyright">Copyright © 2004, 2005 
 	David N. Welton
-      </p></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#id4684288">Introduction</a></span></dt><dt><span class="section"><a href="#tutorial">Hecl Tutorial</a></span></dt><dt><span class="section"><a href="#commands">Hecl Commands</a></span></dt><dt><span class="section"><a href="#heclandjava">Interfacing Hecl and Java</a></span></dt><dd><dl><dt><span class="section"><a href="#id4744611">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="#id4744706">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="#id4744990">JavaDocs</a></span></dt></dl></dd><dt><span class="section"><a href="#j2me">Hecl and J2ME</a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id4684288"></a>Introduction</h2></div></div></div><p>
+      </p></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#id4684288">Introduction</a></span></dt><dt><span class="section"><a href="#tutorial">Hecl Tutorial</a></span></dt><dt><span class="section"><a href="#commands">Hecl Commands</a></span></dt><dt><span class="section"><a href="#heclandjava">Interfacing Hecl and Java</a></span></dt><dd><dl><dt><span class="section"><a href="#id4744611">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="#id4744707">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="#id4744991">JavaDocs</a></span></dt></dl></dd><dt><span class="section"><a href="#j2me">Hecl and J2ME</a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="id4684288"></a>Introduction</h2></div></div></div><p>
       The Hecl Programming Language is a high-level scripting language
       implemented in Java.  It is intended to be small, extensible,
       extremely flexible, and easy to learn and use.
@@ -208,7 +208,7 @@ set foo
 # Returns 100 - because the loop is run once and only once.
 </pre></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="commands"></a>Hecl Commands</h2></div></div></div><div class="toc"><dl><dt><a href="#math">+ - * /</a> - Basic math commands.</dt><dt><a href="#append">append</a> - Append text to a variable.</dt><dt><a href="#break">break</a> - Break out of a loop.</dt><dt><a href="#catch">catch</a> - 
 	  Evaluates a script, catching any errors.
-	</dt><dt><a href="#continue">continue</a> - Skip to next cycle of a loop</dt><dt><a href="#eq">eq</a> - Tests string equivalence.</dt><dt><a href="#eval">eval</a> - Evaluate Hecl code.</dt><dt><a href="#filter">filter</a> - Filter a list.</dt><dt><a href="#for">for</a> - For loop.</dt><dt><a href="#foreach">foreach</a> - Iterate over elements in a list.</dt><dt><a href="#global">global</a> - Use global variable from within a proc.</dt><dt><a href="#hash">hash</a> - Create and manipulate hash tables.</dt><dt><a href="#if">if</a> - Conditionally execute code.</dt><dt><a href="#incr">incr</a> - Increment a variable.</dt><dt><a href="#intro">intro</a> - Introspection command.</dt><dt><a href="#join">join</a> - Join elements of a list to create a string.</dt><dt><a href="#lappend">lappend</a> - Append an element to a list.</dt><dt><a href="#lindex">lindex</a> - Return the Nth element of a list</dt><dt><a href="#list">list</a> - Create a list</dt><dt><a href="#llen">llen</a> - List length.</dt><dt><a href="#lset">lset</a> - Set list elements.</dt><dt><a href="#proc">proc</a> - Create a new procedure.</dt><dt><a href="#puts">puts</a> - Print text.</dt><dt><a href="#return">return</a> - Returns a value from a procedure.</dt><dt><a href="#search">search</a> - Append text to a variable.</dt><dt><a href="#set">set</a> - Set a variable.</dt><dt><a href="#sindex">sindex</a> - Return the index'th character of string.</dt><dt><a href="#slen">slen</a> - String length.</dt><dt><a href="#sort">sort</a> - Sorts list alphabetically.</dt><dt><a href="#source">source</a> - Evaluate Hecl script in a file.</dt><dt><a href="#split">split</a> - Split a string into a list.</dt><dt><a href="#time">time</a> - Time the execution of a script.</dt><dt><a href="#true">true</a> - Returns true.</dt><dt><a href="#upeval">upeval</a> - Evaluate script in next stack frame up.</dt><dt><a href="#while">while</a> - While loop.</dt></dl></div><div class="refentry" lang="en" xml:lang="en"><a id="math"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>+ - * / — Basic math commands.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">+</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">-</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">*</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">/</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4682820"></a><h2>Description</h2><p>
+	</dt><dt><a href="#continue">continue</a> - Skip to next cycle of a loop</dt><dt><a href="#eq">eq</a> - Tests string equivalence.</dt><dt><a href="#eval">eval</a> - Evaluate Hecl code.</dt><dt><a href="#filter">filter</a> - Filter a list.</dt><dt><a href="#for">for</a> - For loop.</dt><dt><a href="#foreach">foreach</a> - Iterate over elements in a list.</dt><dt><a href="#global">global</a> - Use global variable from within a proc.</dt><dt><a href="#hash">hash</a> - Create and manipulate hash tables.</dt><dt><a href="#if">if</a> - Conditionally execute code.</dt><dt><a href="#incr">incr</a> - Increment a variable.</dt><dt><a href="#intro">intro</a> - Introspection command.</dt><dt><a href="#join">join</a> - Join elements of a list to create a string.</dt><dt><a href="#lappend">lappend</a> - Append an element to a list.</dt><dt><a href="#lindex">lindex</a> - Return the Nth element of a list</dt><dt><a href="#list">list</a> - Create a list</dt><dt><a href="#llen">llen</a> - List length.</dt><dt><a href="#lset">lset</a> - Set list elements.</dt><dt><a href="#proc">proc</a> - Create a new procedure.</dt><dt><a href="#puts">puts</a> - Print text.</dt><dt><a href="#return">return</a> - Returns a value from a procedure.</dt><dt><a href="#search">search</a> - Find the first instance of something in a list.</dt><dt><a href="#set">set</a> - Set a variable.</dt><dt><a href="#sindex">sindex</a> - Return the index'th character of string.</dt><dt><a href="#slen">slen</a> - String length.</dt><dt><a href="#sort">sort</a> - Sorts list alphabetically.</dt><dt><a href="#source">source</a> - Evaluate Hecl script in a file.</dt><dt><a href="#split">split</a> - Split a string into a list.</dt><dt><a href="#time">time</a> - Time the execution of a script.</dt><dt><a href="#true">true</a> - Returns true.</dt><dt><a href="#upeval">upeval</a> - Evaluate script in next stack frame up.</dt><dt><a href="#while">while</a> - While loop.</dt></dl></div><div class="refentry" lang="en" xml:lang="en"><a id="math"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>+ - * / — Basic math commands.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">+</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">-</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">*</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i><br /><tt class="command">/</tt>  <i class="replaceable"><tt>number</tt></i> <i class="replaceable"><tt>number</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4682820"></a><h2>Description</h2><p>
 	  The basic math commands take two arguments and carry out a
 	  numerical operation on them.  In subtraction, the second
 	  argument is taken from the first.  In division, the first
@@ -498,11 +498,11 @@ proc someproc {} {
     return &amp;res
 }
 puts [someproc]
-	  </pre><p>Produces:</p><pre class="screen">1</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="search"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>search — Append text to a variable.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">search</tt>  <i class="replaceable"><tt>list</tt></i> <i class="replaceable"><tt>varname</tt></i> <i class="replaceable"><tt>script</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743604"></a><h2>Description</h2><p>
+	  </pre><p>Produces:</p><pre class="screen">1</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="search"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>search — Find the first instance of something in a list.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">search</tt>  <i class="replaceable"><tt>list</tt></i> <i class="replaceable"><tt>varname</tt></i> <i class="replaceable"><tt>script</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743604"></a><h2>Description</h2><p>
 	  The <span><b class="command">search</b></span> command is similar to
 	  <span><b class="command">filter</b></span> in functionality, except that it
 	  stops searching on the first match.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743627"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743628"></a><h2>Example</h2><pre class="programlisting">
 set lst {1 2 3 4 5 4 3 2 1}
 puts [search $lst x {= $x 4}]
 	  </pre><p>Produces:</p><pre class="screen">4</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="set"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>set — Set a variable.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">set</tt>  <i class="replaceable"><tt>varname</tt></i> ?<i class="replaceable"><tt>value</tt></i>?</p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743701"></a><h2>Description</h2><p>
@@ -526,27 +526,27 @@ foo is bar and bee is bop
 puts [sindex "Hello, world" 0]
 puts [sindex "Hello, world" 11]
 	  </pre><p>Produces:</p><pre class="screen">H
-d</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="slen"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>slen — String length.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">slen</tt>  <i class="replaceable"><tt>string</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743903"></a><h2>Description</h2><p>
+d</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="slen"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>slen — String length.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">slen</tt>  <i class="replaceable"><tt>string</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743904"></a><h2>Description</h2><p>
 	  The <span><b class="command">slen</b></span> returns the length of
 	  <tt class="option"><i class="replaceable"><tt>string</tt></i></tt>.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743924"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743925"></a><h2>Example</h2><pre class="programlisting">
 puts [slen "abcdefghijklmnopqrstuvwxyz"]
 	  </pre><p>Produces:</p><pre class="screen">26</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="sort"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>sort — Sorts list alphabetically.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">sort</tt>  <i class="replaceable"><tt>list</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4743990"></a><h2>Description</h2><p>
 	  The <span><b class="command">sort</b></span> command returns an
 	  alphabetically sorted list of the contents of
 	  <tt class="option"><i class="replaceable"><tt>list</tt></i></tt>.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744011"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744012"></a><h2>Example</h2><pre class="programlisting">
 puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
 	  </pre><p>Produces:</p><pre class="screen">belluno padova rovigo treviso venezia verona vicenza
 </pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="source"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>source — Evaluate Hecl script in a file.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">source</tt>  <i class="replaceable"><tt>filename</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744078"></a><h2>Description</h2><p>
 	  The <span><b class="command">source</b></span> command evaluates the Hecl
 	  script located in file
 	  <tt class="option"><i class="replaceable"><tt>filename</tt></i></tt>.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744099"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744100"></a><h2>Example</h2><pre class="programlisting">
 # Variable foo is defined as "Hello world" in foo.hcl
 source foo.hcl
 puts $foo
-	  </pre><p>Produces:</p><pre class="screen">Hello world</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="split"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>split — Split a string into a list.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">split</tt>  <i class="replaceable"><tt>string</tt></i> ?<i class="replaceable"><tt>splitstring</tt></i>?</p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744178"></a><h2>Description</h2><p>
+	  </pre><p>Produces:</p><pre class="screen">Hello world</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="split"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>split — Split a string into a list.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">split</tt>  <i class="replaceable"><tt>string</tt></i> ?<i class="replaceable"><tt>splitstring</tt></i>?</p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744179"></a><h2>Description</h2><p>
 	  The <span><b class="command">split</b></span> command takes a string and
 	  splits it into a list, divided by
 	  <tt class="option"><i class="replaceable"><tt>splitstring</tt></i></tt>,
@@ -557,7 +557,7 @@ puts [split "aaa bbb ccc"]
 puts [split "aaaxbbbycccxyddd" "xy"]
 	  </pre><p>Produces:</p><pre class="screen">aaa bbb ccc
 aaa bbb ccc
-aaaxbbbyccc ddd</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="time"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>time — Time the execution of a script.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">time</tt>  <i class="replaceable"><tt>script</tt></i> ?<i class="replaceable"><tt>repetitions</tt></i>?</p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744276"></a><h2>Description</h2><p>
+aaaxbbbyccc ddd</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="time"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>time — Time the execution of a script.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">time</tt>  <i class="replaceable"><tt>script</tt></i> ?<i class="replaceable"><tt>repetitions</tt></i>?</p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744277"></a><h2>Description</h2><p>
 	  The <span><b class="command">time</b></span> command executes
 	  <tt class="option"><i class="replaceable"><tt>script</tt></i></tt>
 	  <tt class="option"><i class="replaceable"><tt>repetitions</tt></i></tt>
@@ -573,28 +573,28 @@ set time [time {
     }
 } 10]
 puts "Time is $time"
-	  </pre><p>Produces:</p><pre class="screen">Time is 6</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="true"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>true — Returns true.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">true</tt> </p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744368"></a><h2>Description</h2><p>
+	  </pre><p>Produces:</p><pre class="screen">Time is 6</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="true"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>true — Returns true.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">true</tt> </p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744369"></a><h2>Description</h2><p>
 	  The <span><b class="command">true</b></span> command returns 1, or true.
 	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744385"></a><h2>Example</h2><pre class="programlisting">
 if { true } {
     puts "true is true"
 }
-	  </pre><p>Produces:</p><pre class="screen">true is true</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="upeval"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>upeval — Evaluate script in next stack frame up.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">upeval</tt>  <i class="replaceable"><tt>script</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744451"></a><h2>Description</h2><p>
+	  </pre><p>Produces:</p><pre class="screen">true is true</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="upeval"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>upeval — Evaluate script in next stack frame up.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">upeval</tt>  <i class="replaceable"><tt>script</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744452"></a><h2>Description</h2><p>
 	  The <span><b class="command">upeval</b></span> command evaluates
 	  <tt class="option"><i class="replaceable"><tt>script</tt></i></tt> one stack
 	  frame up from the current stack frame.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744473"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744474"></a><h2>Example</h2><pre class="programlisting">
 proc stackframe {} {
     upeval { incr &amp;foo }
 }
 set foo 1
 stackframe
 puts $foo
-	  </pre><p>Produces:</p><pre class="screen">2</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="while"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>while — While loop.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">while</tt>  <i class="replaceable"><tt>condition</tt></i> <i class="replaceable"><tt>body</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744547"></a><h2>Description</h2><p>
+	  </pre><p>Produces:</p><pre class="screen">2</pre></div></div><div class="refentry" lang="en" xml:lang="en"><div class="refentry.separator"><hr /></div><a id="while"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>while — While loop.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">while</tt>  <i class="replaceable"><tt>condition</tt></i> <i class="replaceable"><tt>body</tt></i></p></div></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744548"></a><h2>Description</h2><p>
 	  The <span><b class="command">while</b></span> command continues to evaluate
 	  <tt class="option"><i class="replaceable"><tt>body</tt></i></tt> while
 	  <tt class="option"><i class="replaceable"><tt>condition</tt></i></tt> is true.
-	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744573"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en" xml:lang="en"><a id="id4744574"></a><h2>Example</h2><pre class="programlisting">
 set i 0
 while { &lt; &amp;i 6 } {
     puts "i is $i"
@@ -606,7 +606,7 @@ i is 2
 i is 3
 i is 4
 i is 5
-</pre></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#id4744611">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="#id4744706">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="#id4744990">JavaDocs</a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744611"></a>Calling Hecl code from Java</h3></div></div></div><p>
+</pre></div></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="#id4744611">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="#id4744707">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="#id4744991">JavaDocs</a></span></dt></dl></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744611"></a>Calling Hecl code from Java</h3></div></div></div><p>
 	Hecl is not a replacement for Java, and is indeed meant to
 	work hand in hand with Java.  We attempt to make it as easy as
 	possible to call Java from Hecl, via the creation of new Hecl
@@ -648,7 +648,7 @@ i is 5
 	<tt class="classname">Thing</tt> as arguments.  In this case, the
 	<tt class="classname">Thing</tt> is the Hecl code read from the disk
 	by <tt class="classname">LoadFile</tt>.
-      </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744706"></a>Creating new Hecl commands</h3></div></div></div><p>
+      </p></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744707"></a>Creating new Hecl commands</h3></div></div></div><p>
 	Creating new Hecl commands is relatively simple.  The first
 	step is to create a new class for your command in a file, say
 	<tt class="filename">HelloCmd.java</tt>.  The code would look
@@ -692,7 +692,7 @@ class HelloCmd implements Command {
 	  Get a String from a Thing.
 	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam"><span class="type">int </span><span class="parameter">i</span></span>);</code>
 	  Creates a new thing from an int.
-	</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744990"></a>JavaDocs</h3></div></div></div><p>
+	</li></ul></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="id4744991"></a>JavaDocs</h3></div></div></div><p>
 	For the complete Hecl javadoc documentation, see the <a href="jdocs" target="_top">Hecl Javadocs</a>.  And, of course, look at
 	  the Hecl source code to see how it's done!
       </p></div></div><div class="section" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="j2me"></a>Hecl and J2ME</h2></div></div></div><p>

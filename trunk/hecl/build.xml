@@ -128,6 +128,17 @@
     </javac>
   </target>
 
+  <target name="compilePjava"
+    depends="initCompile,compileCore"
+    description="Compile Hecl Pjava support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/pjava"/>
+    <javac srcdir="pjava" destdir="build/pjava" debug="true">
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
   <target name="compileCommandline"
     depends="initCompile,compileCore"
     description="Compile Hecl command line support">
@@ -148,8 +159,9 @@
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
   <target name="packageCommandline" description="Create Jar for command
-    line Hecl" depends="compileCommandline">
+    line Hecl" depends="compileCommandline,compilePjava">
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/pjava" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/commandline"
     includes="Hecl.class" update="true"/>
   </target>
