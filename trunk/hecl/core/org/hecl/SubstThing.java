@@ -1,0 +1,126 @@
+/* Copyright 2004-2005 David N. Welton
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
+/* $Id$ */
+
+package org.hecl;
+
+/**
+ * The <code>SubstThing</code> class represents things that must be
+ * substituted - $foo or &foo for example.
+ * 
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
+ * @version 1.0
+ */
+public class SubstThing implements RealThing {
+    public long cacheversion = -1;
+
+    public boolean ref = false;
+
+    private Thing val = null;
+
+    private String varName = null;
+
+    public SubstThing() {
+    }
+
+    /**
+     * Creates a new <code>SubstThing</code> instance from a string, which is
+     * the variable name to reference, and a boolean indicating whether this is
+     * a reference (&) or not ($).
+     * 
+     * @param s
+     *            a <code>String</code> value
+     * @param isref
+     *            a <code>boolean</code> value
+     */
+    public SubstThing(String s, boolean isref) {
+        ref = isref;
+        varName = s;
+    }
+
+    /**
+     * <code>setSubstFromAny</code> creates a Subst object from another type.
+     * 
+     * @param interp
+     *            an <code>Interp</code> value
+     * @param thing
+     *            a <code>Thing</code> value
+     * @exception HeclException
+     *                if an error occurs
+     */
+    private static void setSubstFromAny(Interp interp, Thing thing)
+            throws HeclException {
+        RealThing realthing = thing.val;
+
+        if (realthing instanceof SubstThing) {
+            /* Don't need to modify it. */
+        } else {
+            thing.setVal(new SubstThing(thing.getStringRep(), true));
+        }
+    }
+
+    /**
+     * <code>get</code> returns the *value* of a SubstThing - in other words,
+     * the Thing that its varName is pointing to. We use a cacheing mechanism
+     * devised by Salvatore Sanfilippo to avoid unnecessary lookups.
+     * 
+     * @param interp
+     *            an <code>Interp</code> value
+     * @param thing
+     *            a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException
+     *                if an error occurs
+     */
+    public static Thing get(Interp interp, Thing thing) throws HeclException {
+        setSubstFromAny(interp, thing);
+        SubstThing getcopy = (SubstThing) thing.val;
+
+        if (getcopy.cacheversion != interp.cacheversion) {
+            getcopy.cacheversion = interp.cacheversion;
+            getcopy.val = interp.getVar(getcopy.varName);
+        }
+
+        if (getcopy.ref) {
+            return getcopy.val;
+        } else {
+            return getcopy.val.deepcopy();
+        }
+    }
+
+    /**
+     * <code>deepcopy</code> returns a copy of the SubstThing.
+     * 
+     * @return a <code>RealThing</code> value
+     */
+    public RealThing deepcopy() {
+        return new SubstThing(varName, ref);
+    }
+
+    /**
+     * <code>getStringRep</code> returns a string representation of the
+     * SubstThing.
+     * 
+     * @return a <code>String</code> value
+     */
+    public String getStringRep() {
+        if (ref) {
+            return "&{" + varName + "}";
+        } else {
+            return "${" + varName + "}";
+        }
+    }
+}
