@@ -159,9 +159,7 @@ public class Interp {
         
 
         /* try to load standard modules, if they exist */
-        loadModule("standard", false);
         loadModule("pjava", false);
-        loadModule("j2se", false);
         loadModule("j2me", false);
         loadModule("http", false);
     }
