@@ -2,4 +2,4 @@
 test intro-1 {
     set commands [sort [intro commands]]
     set commands
-} {* + - / < = > append break catch continue fail foreach hash hget hset if intro lappend lindex list llen ok proc puts ref set sindex slen sort source sourcehere test testfiles true upstack while}
+} {* + - / < = > append break catch continue copy eval fail for foreach global globaltestreadfoo globaltestsetfoo hash hget hset if incr intro join lappend lindex list llen lset ok proc puts ref return set sindex slen sort source sourcehere split test testfiles time totals true upstack while}

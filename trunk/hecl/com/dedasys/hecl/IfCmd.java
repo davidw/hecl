@@ -12,7 +12,8 @@ class IfCmd implements Command {
 	throws HeclException {
 	Eval eval = new Eval();
 
-	Thing result = eval.eval(interp, argv[1]);
+	eval.eval(interp, argv[1]);
+	Thing result = interp.getResult();
 	int argnum = 0;
 
 	if (result.isTrue()) {
@@ -29,7 +30,8 @@ class IfCmd implements Command {
 		} else if (argv[i].toString().equals("elseif")) {
 		    /* elseif - check and see if the condition is
 		     * true, if so evaluate it and return. */
-		    result = eval.eval(interp, argv[i + 1]);
+		    eval.eval(interp, argv[i + 1]);
+		    result = interp.getResult();
 		    if (result.isTrue()) {
 			eval.eval(interp, argv[i + 2]);
 			return;

@@ -1,3 +1,27 @@
+2004-11-05  David N. Welton  <davidw@dedasys.com>
+
+	* tests/catch.hcl: We no longer require bad commands to report
+	their name.
+
+	* com/dedasys/hecl/Thing.java: Added CODE, GROUP and SUBST types.
+	I'm not entirely happy with CODE and SUBST, because things
+	external to 'Thing' need to know about them.  We may rejig this
+	soon.
+
+	* com/dedasys/hecl/Parse.java: New method to parse a string into a
+	CodeThing object.  Use GROUP type objects for aggregations of
+	text/code.
+
+	* com/dedasys/hecl/Eval.java: Most of the eval logic is now in
+	CodeThing.  Eval just takes care of doing the parse, if it's
+	needed.
+
+	* RLHecl.java: Added Readline lib support.  We need to make this
+	use Editline, I guess, because I don't want to GPL Hecl.
+
+	* com/dedasys/hecl/CodeThing.java: Added CodeThing class to take
+	care of 'code' type objects.
+
 2004-10-30  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/ForCmd.java: Added "for" command code.

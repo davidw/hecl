@@ -33,7 +33,6 @@ class Proc implements Command {
 	    }
 	    interp.setVar(varnames.elementAt(i).toString(), argv[i + 1]);
 	}
-	// System.out.println("command is " + argv[0] + " i is " + i + " argv.length is " + argv.length);
 
 	if (i != argv.length - 1) {
 	    interp.stackDecr();
@@ -41,7 +40,7 @@ class Proc implements Command {
 		"proc " + argv[0] + " has too many arguments");
 	}
 
-	interp.setResult(eval.eval(interp, code));
+	eval.eval(interp, code);
 	interp.stackDecr();
     }
 }

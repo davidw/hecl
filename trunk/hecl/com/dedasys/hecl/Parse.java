@@ -65,13 +65,48 @@ public class Parse {
 
 	parseLine(in, state);
 	if (outList.size() > 0 ) {
+//	    System.out.println("outlist is : " + outList);
 	    return outList;
 	}
 	return null;
     }
 
+    public CodeThing parseToCode()
+	throws HeclException {
+	CodeThing code = new CodeThing();
+	Command command = null;
+	String cmdName = null;
+	int i = 0;
+	while (more()) {
+	    cmdName = null;
+	    Vector cmd = new Vector();
+	    cmd = parse();
+//	    System.out.println("CMD is " + cmd);
+
+	    if (cmd == null || cmd.size() == 0) {
+		continue;
+	    }
+
+	    Thing[] argv =  new Thing[cmd.size()];
+	    for (i = 0; i < cmd.size(); i ++) {
+		argv[i] = (Thing)cmd.elementAt(i);
+	    }
+	    cmdName = cmd.elementAt(0).toString();
+
+	    // System.out.println("CMD is " + cmdName);
+	    //System.out.println("ARGS ARE " + Arrays.asList(argv));
+
+	    command = interp.getCmd(cmdName);
+	    code.addStanza(command, argv);
+//		    command.cmdCode(interp, argv);
+	}
+	return code;
+    }
+
+
     /**
-     * The <code>addCurrent</code> method adds a new element to the command parsed.
+     * The <code>addCurrent</code> method adds a new element to the
+     * command parsed.
      *
      */
     protected void addCurrent() {
@@ -87,6 +122,7 @@ public class Parse {
 	StringBuffer last;
 	int sz = outList.size();
 
+	System.out.println("FIXME");
 	addCurrent();
 	last = ((Thing)outList.elementAt(sz - 2)).toStringBuffer();
 	last.append(currentOut.toString());
@@ -95,10 +131,8 @@ public class Parse {
     }
 
     protected void appendToCurrent(char ch) {
-	StringBuffer sb = currentOut.toStringBuffer();
-	sb.append(ch);
+	currentOut.appendToGroup(ch);
     }
-
 
     /**
      * Describe <code>addCurrent</code> method here.
@@ -119,7 +153,8 @@ public class Parse {
 	Thing saveout = currentOut;
 	currentOut = new Thing("");
 	parseCommand(state);
-	currentOut = new Thing(saveout.toString() + currentOut.toString());
+	saveout.appendToGroup(currentOut);
+	currentOut = saveout;
     }
 
     /**
@@ -133,7 +168,8 @@ public class Parse {
 	Thing saveout = currentOut;
 	currentOut = new Thing("");
 	parseDollar(state, docopy);
-	currentOut = new Thing(saveout.toString() + currentOut.toString());
+	saveout.appendToGroup(currentOut);
+	currentOut = saveout;
     }
 
     /**
@@ -221,7 +257,7 @@ public class Parse {
 	if (ch == '{') {
 	    parseBlock(state);
 	} else {
-	    while (ch > 'A' && ch < 'z') {
+	    while (ch >= 'A' && ch <= 'z') {
 		appendToCurrent(ch);
 		ch = state.nextchar();
 	    }
@@ -229,16 +265,17 @@ public class Parse {
 		state.rewind();
 	    }
 	}
-	try {
-	    if (docopy) {
-		currentOut = interp.getVar(currentOut.toString()).copy();
-	    } else {
-		currentOut = interp.getVar(currentOut.toString());
-	    }
-	} catch (HeclException e) {
-	    e.where(outList.elementAt(0).toString());
-	    throw e;
+	CodeThing code = new CodeThing();
+	Thing[] argv = new Thing[2];
+	argv[1] = currentOut.copy();
+	if (docopy) {
+	    argv[0] = new Thing("copy");
+	    code.addStanza(new CopyCmd(), argv);
+	} else {
+	    argv[0] = new Thing("ref");
+	    code.addStanza(new RefCmd(), argv);
 	}
+	currentOut.setSubst(code);
     }
 
     /**
@@ -298,12 +335,12 @@ public class Parse {
 	    if (level == 0) {
 		/* It's just a block, return it. */
 		if (block || parselist) {
-//		    return new Thing(out);
+		    //return new Thing(out);
 		    return;
 		} else {
-		    Eval eval = new Eval();
-		    //System.out.println("TO EVAL: " + currentOut.toString());
-		    currentOut = eval.eval(interp, currentOut);
+		    /* We parse it up for later consumption. */
+		    Parse hp = new Parse(interp, currentOut.toString());
+		    currentOut.setSubst(hp.parseToCode());
 		    return;
 		}
 	    } else {

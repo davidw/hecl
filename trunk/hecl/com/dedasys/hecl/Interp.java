@@ -115,6 +115,8 @@ public class Interp {
 	addCommand("incr", new IncrCmd());
 
 	addCommand("for", new ForCmd());
+
+	addCommand("copy", new CopyCmd());
     }
 
     /**
@@ -313,14 +315,9 @@ public class Interp {
      *
      * @param name a <code>String</code> value
      * @return a <code>Command</code> value
-     * @exception HeclException if an error occurs
      */
-    public Command getCmd(String name) throws HeclException {
-	Command result = (Command)commands.get(name);
-	if (result == null) {
-	    throw new HeclException("Command " + name + " does not exist");
-	}
-	return result;
+    public Command getCmd(String name) {
+	return (Command)commands.get(name);
     }
 
     /**

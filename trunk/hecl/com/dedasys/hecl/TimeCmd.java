@@ -9,7 +9,7 @@ class TimeCmd implements Command {
 
 	Eval eval = new Eval();
 	long now = new Date().getTime();
-	Thing result = eval.eval(interp, argv[1]);
+	eval.eval(interp, argv[1]);
 	long done = new Date().getTime();
 	interp.setResult(new Thing((int)(done - now)));
     }

@@ -6,12 +6,32 @@ public class Thing extends Object {
     protected int type;
     protected Object data;
 
+    /* Regular old strings. Represented internally by StringBuffer's*/
     static final int STRING = 1;
+
+    /* Integers, represented by Integer objects. */
     static final int INT = 2;
+
+    /* Lists of objects, represented by Vector objects. */
     static final int LIST = 3;
+
+    /* Hash tables of objects, represented by Hashtable objects. */
     static final int HASH = 4;
+
+    /* "Compiled" code, ready to execute.  CodeThing object is
+     * internal representation. */
     static final int CODE = 5;
+
+    /* Like a list... FIXME  */
+    static final int GROUP = 6;
+
+    /* Like CODE, but to be subst'ed  */
+    static final int SUBST = 7;
+
+
     /* static final int FLOAT = 3; */
+
+
 
     public Thing(String thing) {
 	type = STRING;
@@ -51,13 +71,15 @@ public class Thing extends Object {
     public String toString() {
 	String result;
 	StringBuffer resbuf;
+	int i = 0;
+	Vector list = null;
+	int sz = 0;
 	//System.out.println("TOSTRING: " + data);
 	switch (type) {
 	    case LIST:
-		int i = 0;
-		Vector list = (Vector)data;
+		list = (Vector)data;
 		resbuf = new StringBuffer();
-		int sz = list.size();
+		sz = list.size();
 		for (i = 0; i < sz-1; i++) {
 		    resbuf.append(((Thing)list.elementAt(i)).toListString() + " ");
 		}
@@ -65,6 +87,18 @@ public class Thing extends Object {
 		resbuf.append(((Thing)list.elementAt(i)).toListString());
 		result = resbuf.toString();
 		break;
+	    case GROUP:
+		/* This one also must not transform data into a string
+		 * type. */
+		i = 0;
+		list = (Vector)data;
+		resbuf = new StringBuffer();
+		sz = list.size();
+		resbuf.append("GROUP: ");
+		for (i = 0; i < sz-1; i++) {
+		    resbuf.append(((Thing)list.elementAt(i)).toString() + "|");
+		}
+		return resbuf.toString();
 /* 	    case FLOAT:
 		return data.toString();  */
 	    case HASH:
@@ -80,12 +114,20 @@ public class Thing extends Object {
 		}
 		result = resbuf.toString();
 		break;
+	    case SUBST:
+ 	    case CODE:
+		/* As a special case, we don't transform this back
+		 * into a string. */
+		CodeThing code = (CodeThing)data;
+		return "CODE/SUBST: " + code.toString();
 	    default:
 		result = data.toString();
 		break;
 	}
 	type = STRING;
 	data = new StringBuffer(result);
+/* 	(new Throwable()).printStackTrace();
+	System.out.println("STRING is: " + result);  */
 	return result;
     }
 
@@ -205,6 +247,81 @@ public class Thing extends Object {
 	return result;
     }
 
+    /* FIXME - I'm not entirely happy with how these two types (CODE,
+     * GROUP) fit in with the 'real' types. */
+
+    /* Set code from CodeThing object. */
+
+    public void setCode(CodeThing thing) {
+	type = CODE;
+	data = thing;
+    }
+
+    /* Fetch the code. */
+
+    public CodeThing getCode() {
+	if (type == CODE || type == SUBST) {
+	    return (CodeThing)data;
+	}
+	return null;
+    }
+
+    public void setSubst(CodeThing thing) {
+	type = SUBST;
+	data = thing;
+    }
+
+
+    public void setGroup() {
+	if (type == GROUP) {
+	    return;
+	}
+	Thing newthing = null;
+	Vector group = new Vector();
+	if (type == CODE || type == SUBST) {
+	    newthing = new Thing("");
+	    newthing.type = type;
+	    newthing.data = data;
+	} else {
+	    newthing = new Thing(this.toString());
+	}
+/* 	newthing.type = type;
+	newthing.data = data;
+  */
+	group.addElement(newthing);
+
+	type = GROUP;
+	data = group;
+    }
+
+    public void appendToGroup(Thing thing) {
+	this.setGroup();
+//	System.out.println("appendToGroup: " + thing);
+	((Vector)data).addElement(thing);
+    }
+
+    public Vector getGroup() {
+	return (Vector)data;
+    }
+
+    public void appendToGroup(char ch) {
+	StringBuffer sb = null;
+	if (type == GROUP) {
+	    Thing le = (Thing)((Vector)data).lastElement();
+	    if (le.type != SUBST) {
+		sb = le.toStringBuffer();
+	    } else {
+		/* It's a SUBST type, so we make a new thing and tack it on. */
+		sb = new StringBuffer("");
+		sb.append(ch);
+		this.appendToGroup(new Thing(sb));
+		return;
+	    }
+	} else {
+	    sb = this.toStringBuffer();
+	}
+	sb.append(ch);
+    }
 
     /* FIXME - this one is kind of dubious. */
 

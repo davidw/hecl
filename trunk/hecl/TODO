@@ -5,7 +5,7 @@
 
 2004-10-22  David N. Welton  <davidw@dedasys.com>
 
-	* Commands: binary, switch, error, exit, ?expr?, for, format,
+	* Commands: binary, switch, error, exit, ?expr?, format,
 	lsearch, scan, subst.
 
 2004-10-02  David N. Welton  <davidw@dedasys.com>

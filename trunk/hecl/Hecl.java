@@ -1,4 +1,4 @@
-package com.dedasys.hecl;
+import com.dedasys.hecl.*;
 
 /**
  *  <code>Hecl</code> is the main class.  Borrow the code from here if

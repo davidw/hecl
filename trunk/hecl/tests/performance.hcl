@@ -1,5 +1,6 @@
 proc stopwatch {name code} {
     global times
+    puts $name
     hset &times $name [time $code]
 }
 
@@ -12,5 +13,5 @@ foreach f [sort {
 }
 
 foreach {k v} $times {
-    puts "$k $v"
+    puts "$k	$v"
 }
