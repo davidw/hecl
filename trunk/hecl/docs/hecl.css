@@ -1,0 +1,27 @@
+body {
+    font-family: Verdana, Arial, sans-serif;
+}
+
+h2 {
+    font-size: 110%;
+}
+
+div.cmdsynopsis {
+    font-family: mono;
+}
+
+pre.programlisting {
+    background-color: #ccccff;
+    padding: 1ex;
+    width: 60%;
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+pre.screen {
+    padding: 1ex;
+    width: 60%;
+    margin-left: 5%;
+    margin-right: auto;
+    background-color: #ccffcc;
+}

@@ -795,12 +795,12 @@ puts [hget &amp;foo a]
 	  <arg choice="req"><replaceable>test</replaceable></arg>
 	  <arg choice="req"><replaceable>code</replaceable></arg>
 	  <group choice="opt" rep="repeat">
-	    <arg choice="req">elseif</arg>
+	    <arg choice="req"><option>elseif</option></arg>
 	    <arg choice="req"><replaceable>test</replaceable></arg>
 	    <arg choice="req"><replaceable>code</replaceable></arg>
 	  </group>
 	  <group choice="opt">
-	    <arg choice="req">else</arg>
+	    <arg choice="req"><option>else</option></arg>
 	    <arg choice="req"><replaceable>code</replaceable></arg>
 	  </group>
 	</cmdsynopsis>
@@ -1025,7 +1025,8 @@ puts [lindex {a b c} 2]
       <refsynopsisdiv>
 	<cmdsynopsis>
 	  <command>list</command>
-	  <group choice="req" rep="repeat">
+	  <arg choice="req"><replaceable>element</replaceable></arg>
+	  <group choice="opt" rep="repeat">
 	    <arg choice="req"><replaceable>element</replaceable></arg>
 	  </group>
 	</cmdsynopsis>
@@ -1105,10 +1106,10 @@ puts [llen {1 2 3 {a b c}}]
 	<title>Example</title>
 	  <programlisting>
     set lst {a b c}
-    lset &lst 1 x
+    lset &amp;lst 1 x
     puts $lst
 
-    lset &lst 1
+    lset &amp;lst 1
     puts $lst
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1150,10 +1151,10 @@ a c</screen>
 	  <programlisting>
 proc addlist {lst} {
     set res 0
-    foreach e &lst {
-	incr &res $e
+    foreach e &amp;lst {
+	incr &amp;res $e
     }
-    return &res
+    return &amp;res
 }
 
 puts [addlist {1 2 3 4 5}]
@@ -1218,7 +1219,7 @@ puts "Hello, world"
 	  <programlisting>
 set foo 1
 set bar [ref foo]
-incr &bar 1
+incr &amp;bar 1
 puts $foo
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1250,9 +1251,9 @@ puts $foo
 	  <programlisting>
 proc someproc {} {
     set res 1
-    return &res
+    return &amp;res
     set res 2
-    return &res
+    return &amp;res
 }
 puts [someproc]
 	  </programlisting>
@@ -1528,8 +1529,8 @@ aaaxbbbyccc ddd</screen>
 	  <programlisting>
 set time [time {
     set i 0
-    while { < &i 100 } {
-	incr &i
+    while { &lt; &amp;i 100 } {
+	incr &amp;i
     }
 } 10]
 puts "Time is $time"
@@ -1592,7 +1593,7 @@ if { true } {
 	<title>Example</title>
 	  <programlisting>
 proc stackframe {} {
-    upeval { incr &foo }
+    upeval { incr &amp;foo }
 }
 set foo 1
 stackframe
@@ -1628,9 +1629,9 @@ puts $foo
 	<title>Example</title>
 	  <programlisting>
 set i 0
-while { < &i 6 } {
+while { &lt; &amp;i 6 } {
     puts "i is $i"
-    incr &i
+    incr &amp;i
 }
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1643,6 +1644,7 @@ i is 5
 </screen>
       </refsect1>
     </refentry>
+
 <!--
      <refentry>
       <refnamediv>

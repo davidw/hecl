@@ -124,4 +124,4 @@ docs: docs/hecl.html
 
 # Generate html docs.
 docs/hecl.html: docs/hecl.xml docs/hecl.xsl
-	xsltproc --nonet -o docs/hecl.html docs/hecl.xsl docs/hecl.xml
+	xsltproc --nonet --stringparam html.stylesheet hecl.css -o docs/hecl.html docs/hecl.xsl docs/hecl.xml

@@ -1,5 +1,9 @@
 2005-01-21  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.css: Added CSS file.
+
+	* docs/hecl.html: Added generated HTML file.
+
 	* docs/hecl.xml: Added remaining commands.
 
 	* com/dedasys/hecl/TimeCmd.java: Tweaked time command to take a
