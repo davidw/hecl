@@ -3,7 +3,8 @@
 # $Id$
 
 # Compiler to use.
-JAVAC=gcj-3.4
+#JAVAC=/usr/lib/j2se/1.4/bin/javac
+JAVAC=gcj-3.4 -C
 CC=gcj-3.4
 
 # Use profiling or not.
@@ -57,7 +58,7 @@ LmatchCmd.java \
 SetCmd.java
 
 OBJECTS = $(patsubst %.java,$(srcdir)%.o,$(FILES))
-CLASSES = $(patsubst %.java,$(srcdir)%.class,$(FILES)) $(srcdir)CodeThing$$Stanza.class Parse$$ParseState.class
+CLASSES = $(patsubst %.java,$(srcdir)%.class,$(FILES))
 
 SEOBJECTS = $(patsubst %.java,$(srcdir)%.o,$(SEFILES))
 SECLASSES = $(patsubst %.java,$(srcdir)%.class,$(SEFILES))
@@ -68,7 +69,7 @@ MECLASSES = $(patsubst %.java,$(srcdir)%.class,$(MEFILES))
 srcdir=com/dedasys/hecl/
 
 $(srcdir)%.class : $(srcdir)%.java
-	$(JAVAC) -C $<
+	$(JAVAC) $<
 
 $(srcdir)%.o : $(srcdir)%.java
 	$(CC) -c -O3 -g $(PROFILE) $< -o $@
@@ -78,7 +79,7 @@ classes: $(CLASSES) $(SECLASSES) $(MECLASSES)
 ofiles: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
 
 hecl.jar: classes $(CLASSES) $(MECLASSES)
-	jar cvf hecl.jar $(CLASSES) $(MECLASSES)
+	jar cvf hecl.jar $(CLASSES) $(MECLASSES) $(srcdir)CodeThing\$$Stanza.class $(srcdir)Parse\$$ParseState.class
 
 hecl: ofiles
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(OBJECTS) $(SEOBJECTS) $(PROFILE)

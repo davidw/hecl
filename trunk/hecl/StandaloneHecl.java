@@ -26,7 +26,7 @@ import com.dedasys.hecl.*;
 
 public class StandaloneHecl {
 
-    private static String script = "puts \"hello world\"";
+    private static String script = "for {set i 0} {$i < 10} {incr &i} { puts $i }";
 
 
     /**

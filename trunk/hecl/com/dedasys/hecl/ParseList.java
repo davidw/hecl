@@ -51,7 +51,7 @@ public class ParseList extends Parse {
 	    if (state.done()) {
 		return;
 	    }
-	    if (Character.isWhitespace(ch)) {
+	    if (ch == ' ' || ch == '\t' || ch == '\n') {
 		continue;
 	    }
 	    switch (ch) {
@@ -123,7 +123,7 @@ public class ParseList extends Parse {
 	    if (state.done()) {
 		return;
 	    }
-	    if (Character.isWhitespace(ch)) {
+	    if (ch == ' ' || ch == '\t' || ch == '\n') {
 		return;
 	    }
 	    switch(ch) {

@@ -1,7 +1,14 @@
 2004-11-14  David N. Welton  <davidw@dedasys.com>
 
-	* Makefile (CLASSES): Added two inner class .class files manually,
-	as the filenames do not correspond to any .java files.
+	* com/dedasys/hecl/Thing.java: Get String out of StringBuffer,
+	because j2me can't append stringbuffers to stringbuffers.
+
+	* com/dedasys/hecl/ParseList.java: Use direct character comparison
+	(ch == ' ', etc...)  instead of isWhitespace to determine if the
+	character is white space or not.  Need this for J2ME.
+
+	* Makefile (hecl.jar): Added two inner class .class files
+	manually, as the filenames do not correspond to any .java files.
 
 	* com/dedasys/hecl/Load.java: Made 'Load' into an interface - use
 	'abstract' to make j2me happy.

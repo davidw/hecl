@@ -394,7 +394,7 @@ public class Thing extends Object {
 	switch (type) {
 	    case STRING:
 		StringBuffer sb = new StringBuffer();
-		sb.append((StringBuffer)data);
+		sb.append(((StringBuffer)data).toString());
 		newthing = new Thing(sb);
 		break;
 	    case INT:
