@@ -1252,7 +1252,7 @@ puts [someproc]
     <refentry id="search">
       <refnamediv>
 	<refname>search</refname>
-	<refpurpose>Append text to a variable.</refpurpose>
+	<refpurpose>Find the first instance of something in a list.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
 	<cmdsynopsis>

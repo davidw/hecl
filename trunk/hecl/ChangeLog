@@ -1,3 +1,7 @@
+2005-03-17  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Fixed 'search' description.
+
 2005-03-15  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added compileCommandline and packageCommandline
