@@ -38,3 +38,8 @@ test foreach-4 {
     }
     set res
 } {1234567}
+
+test foreach-5 {
+    set x 0
+    foreach var {} { puts $var }
+} {0}
