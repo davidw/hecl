@@ -1,0 +1,9 @@
+			     J2ME Example
+			     ============
+
+These files are enough to recreate the Hecl.jar, but they need to be
+arrayed within the right directories of the j2me toolkit from Sun to
+build correctly.  If you're trying to work with them and not having
+any luck, do feel free to email me.
+
+$Id$
