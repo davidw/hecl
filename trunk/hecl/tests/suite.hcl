@@ -4,6 +4,7 @@ testfiles {
     append.hcl
     break.hcl
     catch.hcl
+    circular.hcl
     equality.hcl
     eval.hcl
     filter.hcl

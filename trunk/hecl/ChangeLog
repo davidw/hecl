@@ -1,3 +1,7 @@
+2005-03-03  David N. Welton  <davidw@dedasys.com>
+
+	* tests/circular.hcl: Added test for circular references.
+
 2005-02-03  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Oops - true->append for true command name.

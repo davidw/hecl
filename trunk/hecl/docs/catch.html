@@ -4,7 +4,7 @@
       
     "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="break.html" title="break"><link rel="next" href="continue.html" title="continue"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">catch</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="break.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="continue.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="catch"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>catch &#8212; 
 	  Evaluates a script, catching any errors.
-	</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">catch</tt>  <i class="replaceable"><tt>script</tt></i> ?<i class="replaceable"><tt>varname</tt></i>?</p></div></div><div class="refsect1" lang="en"><a name="id4698338"></a><h2>Description</h2><p>
+	</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">catch</tt>  <i class="replaceable"><tt>script</tt></i> ?<i class="replaceable"><tt>varname</tt></i>?</p></div></div><div class="refsect1" lang="en"><a name="id4698337"></a><h2>Description</h2><p>
 	  The catch command evaluates a script, and returns 0 if the
 	  script evaluated successfully.  If there were errors, catch
 	  returns 1.  Optionally, a variable name may be passed to the
@@ -13,7 +13,7 @@
 	  placed in the variable argument.  If the script executes
 	  without problems, the variable will contain the result of
 	  the script execution.
-	</p></div><div class="refsect1" lang="en"><a name="id4698355"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en"><a name="id4698354"></a><h2>Example</h2><pre class="programlisting">
 catch nosuchcommand foo
 set foo
 	  </pre><p>Produces:</p><pre class="screen">
