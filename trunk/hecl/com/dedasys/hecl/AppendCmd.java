@@ -12,17 +12,13 @@ class AppendCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-	Thing result;
+	StringBuffer strb;
+	Thing result = argv[1];
+	strb = result.toStringBuffer();
 
-	if (interp.existsVar(argv[1])) {
-	    result = interp.getVar(argv[1]);
-	} else {
-	    result = new Thing("");
-	}
 	for (int i = 2; i < argv.length; i++) {
-	    result.appendString(argv[i].toString());
+	    strb.append(argv[i].toString());
 	}
-	interp.setVar(argv[1], result);
 	interp.setResult(result);
     }
 }

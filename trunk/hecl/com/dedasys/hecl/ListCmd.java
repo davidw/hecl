@@ -2,6 +2,14 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+/**
+ * <code>ListCmd</code> implements the "list", "llen", "lindex",
+ * "lappend", "join" and "split" commands.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class ListCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)

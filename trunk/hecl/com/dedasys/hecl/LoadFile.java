@@ -2,6 +2,14 @@ package com.dedasys.hecl;
 
 import java.io.*;
 
+/**
+ * <code>LoadFile</code> implements the Load interface.  It is used to
+ * load files from the local file system.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 public class LoadFile extends Load {
     public Thing getscript(String flname)
     throws HeclException {

@@ -20,7 +20,8 @@ public class Interp {
     String currentfile = null;
 
     /**
-     * Creates a new <code>Interp</code> instance.
+     * Creates a new <code>Interp</code> instance, initializing
+     * command and variable hashtables, a stack, and an error stack.
      *
      * @exception HeclException if an error occurs
      */
@@ -130,7 +131,9 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getVarhash</code> method here.
+     * <code>getVarhash</code> fetches the variable Hashtable at the
+     * given level, where -1 means to just get the hashtable on top of
+     * the stack.
      *
      * @param level an <code>int</code> value
      * @return a <code>Hashtable</code> value
@@ -144,7 +147,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getVar</code> method here.
+     * <code>getVar</code> returns the value of a variable given its
+     * name.
      *
      * @param varname a <code>Thing</code> value
      * @return a <code>Thing</code> value
@@ -155,7 +159,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getVar</code> method here.
+     * <code>getVar</code> returns the value of a variable given its
+     * name.
      *
      * @param varname a <code>String</code> value
      * @return a <code>Thing</code> value
@@ -166,7 +171,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getVar</code> method here.
+     * <code>getVar</code> returns the value of a variable given its
+     * name and level.
      *
      * @param varname a <code>String</code> value
      * @param level an <code>int</code> value
@@ -185,7 +191,20 @@ public class Interp {
     }
 
     /**
-     * Describe <code>setVar</code> method here.
+     * <code>setVar</code> sets a variable in the innermost variable
+     * stack frame to a value.
+     *
+     * @param varname a <code>Thing</code> value
+     * @param value a <code>Thing</code> value
+     */
+    public void setVar(Thing varname, Thing value) {
+	setVar(varname.toString(), value);
+    }
+
+
+    /**
+     * <code>setVar</code> sets a variable in the innermost variable
+     * stack frame to a value.
      *
      * @param varname a <code>String</code> value
      * @param value a <code>Thing</code> value
@@ -195,7 +214,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>setVar</code> method here.
+     * <code>setVar</code> sets a variable to a value in the variable
+     * stack frame specified by <code>level</code>.
      *
      * @param varname a <code>String</code> value
      * @param value a <code>Thing</code> value
@@ -212,18 +232,11 @@ public class Interp {
 	}
     }
 
-    /**
-     * Describe <code>setVar</code> method here.
-     *
-     * @param varname a <code>Thing</code> value
-     * @param value a <code>Thing</code> value
-     */
-    public void setVar(Thing varname, Thing value) {
-	setVar(varname.toString(), value);
-    }
 
     /**
-     * Describe <code>existsVar</code> method here.
+     * <code>existsVar</code> returns <code>true</code> if the given
+     * variable exists in the current variable stack frame,
+     * <code>false</code> if it does not.
      *
      * @param varname a <code>Thing</code> value
      * @return a <code>boolean</code> value
@@ -233,7 +246,9 @@ public class Interp {
     }
 
     /**
-     * Describe <code>existsVar</code> method here.
+     * <code>existsVar</code> returns <code>true</code> if the given
+     * variable exists in the current variable stack frame,
+     * <code>false</code> if it does not.
      *
      * @param varname a <code>String</code> value
      * @return a <code>boolean</code> value
@@ -243,7 +258,9 @@ public class Interp {
     }
 
     /**
-     * Describe <code>existsVar</code> method here.
+     * <code>existsVar</code> returns <code>true</code> if the given
+     * variable exists in the variable stack frame given by
+     * <code>level</code>, <code>false</code> if it does not.
      *
      * @param varname a <code>String</code> value
      * @param level an <code>int</code> value
@@ -255,7 +272,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>setResult</code> method here.
+     * <code>setResult</code> sets the interpreter result of the most
+     * recent command.
      *
      * @param newresult a <code>Thing</code> value
      */
@@ -264,7 +282,7 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getResult</code> method here.
+     * <code>getResult</code> fetches the result saved by setResult.
      *
      * @return a <code>Thing</code> value
      */
@@ -273,7 +291,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>addCommand</code> method here.
+     * <code>addCommand</code> adds a command to the command hash
+     * table.
      *
      * @param name a <code>String</code> value
      * @param cmd a <code>Command</code> value
@@ -285,7 +304,8 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getCmd</code> method here.
+     * <code>getCmd</code> fetches a command for excecution from the
+     * command hash table.
      *
      * @param name a <code>String</code> value
      * @return a <code>Command</code> value
@@ -300,7 +320,7 @@ public class Interp {
     }
 
     /**
-     * Describe <code>cmdNames</code> method here.
+     * <code>cmdNames</code> returns a list of all commands registered.
      *
      * @return an <code>Enumeration</code> value
      * @exception HeclException if an error occurs
@@ -310,7 +330,7 @@ public class Interp {
     }
 
     /**
-     * Describe <code>addError</code> method here.
+     * <code>addError</code> adds a Thing as an error message.
      *
      * @param err a <code>Thing</code> value
      */
@@ -319,7 +339,7 @@ public class Interp {
     }
 
     /**
-     * Describe <code>clearError</code> method here.
+     * <code>clearError</code> clears the error stack.
      *
      */
     public void clearError() {

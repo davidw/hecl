@@ -86,15 +86,21 @@ public class Parse {
      *
      */
     protected void appendCurrent() {
-	Thing last;
+	StringBuffer last;
 	int sz = outList.size();
 
 	addCurrent();
-	last = (Thing)outList.elementAt(sz - 2);
-	last.appendString(currentOut.toString());
+	last = ((Thing)outList.elementAt(sz - 2)).toStringBuffer();
+	last.append(currentOut.toString());
 	currentOut = new Thing("");
 	outList.removeElementAt(sz - 1);
     }
+
+    protected void appendToCurrent(char ch) {
+	StringBuffer sb = currentOut.toStringBuffer();
+	sb.append(ch);
+    }
+
 
     /**
      * Describe <code>addCurrent</code> method here.
@@ -180,7 +186,7 @@ public class Parse {
 		case '\n':
 		    return;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    parseWord(state);
 		    addCurrent();
 		    break;
@@ -218,7 +224,7 @@ public class Parse {
 	    parseBlock(state);
 	} else {
 	    while (ch > 'A' && ch < 'z') {
-		currentOut.appendString(ch);
+		appendToCurrent(ch);
 		ch = state.nextchar();
 	    }
 	    if (!state.done()) {
@@ -303,7 +309,7 @@ public class Parse {
 		    return;
 		}
 	    } else {
-		currentOut.appendString(ch);
+		appendToCurrent(ch);
 	    }
 	}
     }
@@ -328,7 +334,7 @@ public class Parse {
 		    if (state.done()) {
 			return;
 		    }
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 		case '[':
 		    addCommand();
@@ -342,7 +348,7 @@ public class Parse {
 		case '"':
 		    return;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 	    }
 	}
@@ -389,10 +395,10 @@ public class Parse {
 		    if (state.done()) {
 			return;
 		    }
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 //		    out.appendString(state.chars[state.idx]);
 		    break;
 	    }

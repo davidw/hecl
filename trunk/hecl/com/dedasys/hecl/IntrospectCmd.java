@@ -2,6 +2,15 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+/**
+ * <code>IntrospectCmd</code> implements the "intro" command,
+ * providing different ways of examining the state of the Hecl
+ * interpreter.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class IntrospectCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)

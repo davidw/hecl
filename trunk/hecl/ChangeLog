@@ -1,3 +1,25 @@
+2004-10-28  David N. Welton  <davidw@dedasys.com>
+
+	* tests/append.hcl: append now uses references instead of the
+	variable name.
+
+	* com/dedasys/hecl/Thing.java: Removed appendString methods in
+	favor of a method that returns a stringbuffer that may be operated
+	on directly.
+
+	* com/dedasys/hecl/ParseList.java: Use toStringBuffer and the
+	resulting stringbuffer to append to the Thing that is the result
+	of parsing.
+
+	* com/dedasys/hecl/Parse.java: Use toStringBuffer and the
+	resulting stringbuffer to append to the Thing that is the result
+	of parsing.
+
+	* com/dedasys/hecl/IncrCmd.java: Use setInt API of Thing.
+
+	* com/dedasys/hecl/AppendCmd.java: Use the toStringBuffer API of
+	Thing.
+
 2004-10-25  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/Proc.java: procs now give errors with the wrong

@@ -3,8 +3,8 @@ package com.dedasys.hecl;
 import java.util.*;
 
 public class Thing extends Object {
-    public int type;
-    public Object data;
+    protected int type;
+    protected Object data;
 
     static final int STRING = 1;
     static final int INT = 2;
@@ -52,12 +52,6 @@ public class Thing extends Object {
 	StringBuffer resbuf;
 	//System.out.println("TOSTRING: " + data);
 	switch (type) {
-	    case STRING:
-		result = data.toString();
-		break;
-	    case INT:
-		result = data.toString();
-		break;
 	    case LIST:
 		int i = 0;
 		Vector list = (Vector)data;
@@ -86,12 +80,19 @@ public class Thing extends Object {
 		result = resbuf.toString();
 		break;
 	    default:
-		result = ((StringBuffer)data).toString();
+		result = data.toString();
 		break;
 	}
 	type = STRING;
 	data = new StringBuffer(result);
 	return result;
+    }
+
+    public StringBuffer toStringBuffer() {
+	if (type != STRING) {
+	    this.toString();
+	}
+	return (StringBuffer)data;
     }
 
     private String toListString() {
@@ -110,8 +111,6 @@ public class Thing extends Object {
 		} else {
 		    return strval;
 		}
-	    case HASH:
-		return this.toString();
 	    default:
 		return this.toString();
 	}
@@ -120,9 +119,6 @@ public class Thing extends Object {
     public int toInt() {
 	Integer result;
 	switch (type) {
-	    case STRING:
-		result = new Integer(Integer.parseInt(data.toString(), 10));
-		break;
 	    case INT:
 		result = ((Integer)data);
 		break;
@@ -135,9 +131,9 @@ public class Thing extends Object {
 	return ((Integer)data).intValue();
     }
 
-    public Integer toInteger() {
-	this.toInt();
-	return (Integer)data;
+    public void setInt(int i) {
+	type = INT;
+	data = new Integer(i);
     }
 
     public Vector toList() throws HeclException {
@@ -178,12 +174,13 @@ public class Thing extends Object {
 	switch (type) {
 	    /* Note that these two share code. */
 	    case STRING:
-		lst = this.toList();
+		this.toList();
 	    case LIST:
 		lst = (Vector)data;
 
 		if ((lst.size() % 2) != 0) {
-		    throw new HeclException("list must have even number of elements");
+		    throw new HeclException(
+			"list must have even number of elements");
 		}
 		/* FIXME: I pulled this '3' (initial size of the hash
 		 * table is list size + 3), out of the air... better
@@ -200,8 +197,7 @@ public class Thing extends Object {
 	    case INT:
 		throw new HeclException("hash must be set from a list");
 	    case HASH:
-		result = (Hashtable)data;
-		break;
+		return (Hashtable)data;
 	}
 	type = HASH;
 	data = result;
@@ -214,30 +210,6 @@ public class Thing extends Object {
     public boolean equals (Object obj) {
 	Thing thing = (Thing)obj;
 	return this.toString().equals(thing.toString());
-    }
-
-    public void appendString(String str) {
-	switch (type) {
-	    case STRING:
-		((StringBuffer)data).append(str);
-		break;
-	    default:
-		data = new StringBuffer(this.toString() + str);
-		break;
-	}
-	type = STRING;
-    }
-
-    public void appendString(char ch) {
-	switch (type) {
-	    case STRING:
-		((StringBuffer)data).append(ch);
-		break;
-	    default:
-		data = new StringBuffer(this.toString() + ch);
-		break;
-	}
-	type = STRING;
     }
 
     public boolean isTrue() {
@@ -262,10 +234,10 @@ public class Thing extends Object {
 		    return -1;
 		else
 		    return 1;
-	    case STRING:
+/* 	    case STRING:
 		xs = x.toString();
 		ts = ((StringBuffer)data).toString();
-		return ts.compareTo(xs);
+		return ts.compareTo(xs);  */
 	    default:
 		xs = x.toString();
 		ts = ((StringBuffer)data).toString();

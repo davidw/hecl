@@ -53,7 +53,7 @@ public class ParseList extends Parse {
 		    addCurrent();
 		    break;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    parseWord(state);
 		    addCurrent();
 		    break;
@@ -81,12 +81,12 @@ public class ParseList extends Parse {
 		    if (state.done()) {
 			return;
 		    }
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 		case '"':
 		    return;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 	    }
 	}
@@ -130,10 +130,10 @@ public class ParseList extends Parse {
 		    if (state.done()) {
 			return;
 		    }
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 		default:
-		    currentOut.appendString(ch);
+		    appendToCurrent(ch);
 		    break;
 	    }
 	}
