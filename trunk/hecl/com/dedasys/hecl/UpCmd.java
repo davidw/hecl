@@ -28,10 +28,9 @@ class UpCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-	Eval eval = new Eval();
 
 	Hashtable save = interp.stackDecr();
-	eval.eval(interp, argv[1]);
+	Eval.eval(interp, argv[1]);
 	interp.stackPush(save);
     }
 }

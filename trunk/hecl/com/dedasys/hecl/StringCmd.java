@@ -24,15 +24,15 @@ package com.dedasys.hecl;
 
 class StringCmd implements Command {
 
-    public void cmdCode(Interp interp, Thing []argv) {
+    public void cmdCode(Interp interp, Thing []argv) throws HeclException {
 	String cmd = argv[0].toString();
 	String str = argv[1].toString();
 
 	if (cmd.equals("slen")) {
-	    interp.setResult(new Thing(str.length()));
+	    interp.setResult(IntThing.create(str.length()));
 	    return;
 	} else if (cmd.equals("sindex")) {
-	    int idx = argv[2].toInt();
+	    int idx = IntThing.get(argv[2]);
 	    try {
 		char chars[] = new char[1];
 		chars[0] = str.charAt(idx);

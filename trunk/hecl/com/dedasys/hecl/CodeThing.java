@@ -25,13 +25,93 @@ import java.util.*;
  * @version 1.0
  */
 
-public class CodeThing {
+public class CodeThing implements RealThing {
     /* The number of lines of commands. */
     private Vector stanzas;
+    /* Mark this for substitution or not. */
+    public boolean marksubst = false;
 
     CodeThing() {
 	stanzas = new Vector();
     }
+
+    private static void setCodeFromAny(Interp interp, Thing thing)
+	throws HeclException {
+	RealThing realthing = thing.val;
+
+
+
+	/* FIXME - SubstThing?  */
+	if (realthing instanceof CodeThing) {
+	    return;
+	}
+	CodeThing newthing = null;
+	Parse hp = new Parse(interp, thing.toString());
+	newthing = hp.parseToCode();
+	thing.setVal(newthing);
+    }
+
+
+    public static CodeThing get(Interp interp, Thing thing)
+	throws HeclException {
+	setCodeFromAny(interp, thing);
+	return (CodeThing)thing.val;
+    }
+
+    public RealThing deepcopy() {
+	/* FIXME - not ok.  */
+	return new CodeThing();
+    }
+
+    protected static Thing doCodeSubst(Interp interp, Thing thing)
+	throws HeclException {
+	RealThing realthing = thing.val;
+	Thing newthing = null;
+
+	//System.out.println("CODE");
+	if (((CodeThing) realthing).marksubst) {
+	    Eval.eval(interp, thing);
+	    newthing = interp.getResult();
+	} else {
+	    newthing = thing;
+	}
+	return newthing;
+    }
+
+    protected static Thing doGroupSubst(Interp interp, Thing thing)
+	throws HeclException {
+	RealThing realthing = thing.val;
+	Thing newthing = null;
+
+	StringBuffer result = new StringBuffer("");
+	Vector v = GroupThing.get(thing);
+
+	/* As a special case, one element groups get turned into
+	 * regular things. */
+	if (v.size() == 1) {
+	    StringThing.get(thing);
+	    return thing;
+	} else {
+	    for (Enumeration e = v.elements();
+		 e.hasMoreElements(); ) {
+		Thing t = (Thing)e.nextElement();
+
+		realthing = t.val;
+		if (realthing instanceof GroupThing) {
+		    result.append(doGroupSubst(interp, t).toString());
+		} else if (realthing instanceof CodeThing) {
+		    result.append(doCodeSubst(interp, t).toString());
+		} else {
+		    result.append(t.toString());
+		    //System.out.println("OTHER");
+		    //	newargv[i] = argv[i];
+		}
+//	    result.append(doGroupSubst(interp, t));
+	    }
+	}
+	return new Thing(new StringThing(result));
+    }
+
 
     /**
      * The <code>addStanza</code> method adds a new command and its
@@ -55,7 +135,6 @@ public class CodeThing {
      * @exception HeclException if an error occurs
      */
     public void run(Interp interp) throws HeclException {
-
 	//System.out.println("RUNNING: " + this.toString() + "</RUNNING>");
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements(); ) {
 	    Stanza s = (Stanza)e.nextElement();
@@ -73,9 +152,9 @@ public class CodeThing {
 	StringBuffer out = new StringBuffer();
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements(); ) {
 	    Stanza s = (Stanza)e.nextElement();
-	    out.append("[");
+//	    out.append("[");
 	    out.append(s.toString());
-	    out.append("]\n");
+//	    out.append("]\n");
 	}
 	return out.toString();
     }
@@ -90,7 +169,6 @@ public class CodeThing {
     class Stanza {
 	private Command command = null;
 	private Thing[] argv = null;
-	Eval eval = new Eval();
 
 	Stanza(Command newcmd, Thing[] newargv) {
 	    command = newcmd;
@@ -104,11 +182,19 @@ public class CodeThing {
 	 * @exception HeclException if an error occurs
 	 */
 	public void run(Interp interp) throws HeclException {
+	    RealThing realthing = null;
 	    Thing[] newargv = new Thing[argv.length];
 
 	    if (command == null) {
-		String cmdName = argv[0].toString();
-		/* FIXME - what if argv0 is $foo instead of foo? */
+		String cmdName = null;
+		realthing = argv[0].val;
+		/* If the argv[0] is a substitution waiting to
+		 * happen, substitute it to get the name. */
+		if (realthing instanceof CodeThing) {
+		    cmdName = doCodeSubst(interp, argv[0]).toString();
+		} else {
+		    cmdName = argv[0].toString();
+		}
 		command = interp.getCmd(cmdName);
 		if (command == null) {
 		    //(new Throwable()).printStackTrace();
@@ -119,38 +205,24 @@ public class CodeThing {
 	    /* Create new array.  Run args that are SUBST or GROUP
 	     * types, use references to others. */
 	    for (int i = 0; i < argv.length; i ++) {
-		if (argv[i].type == Thing.SUBST) {
-		    /* If it's a SUBST, we eval it before passing off
-		     * the results. */
-		    eval.eval(interp, argv[i]);
-		    newargv[i] = interp.getResult();
-		} else if (argv[i].type == Thing.GROUP) {
-		    /* If it's a GROUP, we pick out the SUBST elements
-		     * and eval those before passing the whole thing
-		     * off. */
-		    StringBuffer result = new StringBuffer("");
-		    Vector v = argv[i].getGroup();
-		    for (Enumeration e = v.elements();
-			 e.hasMoreElements(); ) {
- 			Thing t = (Thing)e.nextElement();
-
-			if (t.type == Thing.SUBST) {
-			    eval.eval(interp, t);
-			    result.append(interp.getResult().toString());
-			} else {
-			    result.append(t.toString());
-			}
-		    }
-		    newargv[i] = new Thing(result);
+		realthing = argv[i].val;
+		if (realthing instanceof GroupThing) {
+		    newargv[i] = doGroupSubst(interp, argv[i]);
+		} else if (realthing instanceof CodeThing) {
+		    newargv[i] = doCodeSubst(interp, argv[i]);
 		} else {
+		    //System.out.println("OTHER");
 		    newargv[i] = argv[i];
 		}
+
+		//newargv[i] = doSubst(interp, argv[i]);
 	    }
 
-/*   	    System.out.println("COMMAND ");
+/*      	    System.out.println("COMMAND ");
 	    for (int i = 0; i < newargv.length; i ++) {
-		System.out.println(i + ": " + newargv[i]);
-	    }  */
+		Thing.printThing(newargv[i]);
+		//System.out.println(i + ": " + newargv[i]);
+	    }   */
 
 	    try {
 		command.cmdCode(interp, newargv);
@@ -178,7 +250,7 @@ public class CodeThing {
 		for (int j = 0; j < stack.length; j ++) {
 		    errors.addElement(new Thing(stack[j].toString()));
 		}
-		Thing newexception = new Thing(errors);
+		Thing newexception = new Thing(new ListThing(errors));
 		throw new HeclException(newexception.toString());
 	    }
 

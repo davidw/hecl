@@ -31,23 +31,27 @@ class BasicMathCmd implements Command {
 	switch (cmd) {
 	    case '+':
 		interp.setResult(
-		    new Thing(argv[1].toInt() +
-				  argv[2].toInt()));
+		    IntThing.create(
+			IntThing.get(argv[1]) +
+			IntThing.get(argv[2])));
 		break;
 	    case '-':
 		interp.setResult(
-		    new Thing(argv[1].toInt() -
-				  argv[2].toInt()));
+		    IntThing.create(
+			IntThing.get(argv[1]) -
+			IntThing.get(argv[2])));
 		break;
 	    case '*':
 		interp.setResult(
-		    new Thing(argv[1].toInt() *
-				  argv[2].toInt()));
+		    IntThing.create(
+			IntThing.get(argv[1]) *
+			IntThing.get(argv[2])));
 		break;
 	    case '/':
 		interp.setResult(
-		    new Thing(argv[1].toInt() /
-				  argv[2].toInt()));
+		    IntThing.create(
+			IntThing.get(argv[1]) /
+			IntThing.get(argv[2])));
 		break;
 	}
     }

@@ -38,16 +38,11 @@ public class Eval {
      * @exception HeclException if an error occurs.
      */
 
-    public Thing eval(Interp interp, Thing in)
+    public static Thing eval(Interp interp, Thing in)
 	throws HeclException
     {
-	if (in.type != Thing.CODE && in.type != Thing.SUBST) {
-	    Parse hp = new Parse(interp, in.toString());
-
-	    in.setCode(hp.parseToCode());
-	}
-
-	in.getCode().run(interp);
+	CodeThing code = CodeThing.get(interp, in);
+	code.run(interp);
 	return interp.getResult();
     }
 

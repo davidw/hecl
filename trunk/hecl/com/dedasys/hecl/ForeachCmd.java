@@ -31,10 +31,9 @@ class ForeachCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-	Eval eval = new Eval();
 
-	Vector varlist = argv[1].toList();
-	Vector list = argv[2].toList();
+	Vector varlist = ListThing.get(argv[1]);
+	Vector list = ListThing.get(argv[2]);
 	int i = 0;
 	boolean end = false;
 	while (true) {
@@ -42,7 +41,8 @@ class ForeachCmd implements Command {
 	     * variable to set: foreach {m n} $somelist { code ... } */
 	    for (Enumeration e = varlist.elements(); e.hasMoreElements(); ) {
 		if (end == true) {
-		    throw new HeclException("Foreach argument list does not match list length");
+		    throw new HeclException(
+			"Foreach argument list does not match list length");
 		}
 
 		Thing element = (Thing)list.elementAt(i);
@@ -54,7 +54,8 @@ class ForeachCmd implements Command {
 		}
 	    }
 
-	    eval.eval(interp, argv[3]);
+
+	    Eval.eval(interp, argv[3]);
 	    if (end == true)
 		break;
 	}

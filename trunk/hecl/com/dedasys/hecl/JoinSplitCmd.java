@@ -32,7 +32,7 @@ class JoinSplitCmd implements Command {
 	String cmdname = argv[0].toString();
 
 	if (cmdname.equals("join")) {
-	    Vector list = argv[1].toList();
+	    Vector list = ListThing.get(argv[1]);
 	    StringBuffer result = new StringBuffer("");
 	    boolean first = true;
 	    String joinstr = null;
@@ -51,7 +51,7 @@ class JoinSplitCmd implements Command {
 		}
 		result.append(e.nextElement().toString());
 	    }
-	    interp.setResult(new Thing(result));
+	    interp.setResult(new Thing(new StringThing(result)));
 	} else if (cmdname.equals("split")) {
 	    Vector result = new Vector();
 	    String str = argv[1].toString();
@@ -71,7 +71,7 @@ class JoinSplitCmd implements Command {
 		idx = str.indexOf(splitstr, last);
 	    }
 	    result.addElement(new Thing(str.substring(last, str.length())));
-	    interp.setResult(new Thing(result));
+	    interp.setResult(ListThing.create(results));
 	}
 
     }

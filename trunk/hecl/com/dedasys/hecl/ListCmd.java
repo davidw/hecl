@@ -36,13 +36,13 @@ class ListCmd implements Command {
 	    for (int i = 1; i < argv.length; i++) {
 		result.addElement(argv[i]);
 	    }
-	    interp.setResult(new Thing(result));
+	    interp.setResult(ListThing.create(result));
 	} else if (cmdname.equals("llen")) {
-	    Vector list = argv[1].toList();
-	    interp.setResult(new Thing(list.size()));
+	    Vector list = ListThing.get(argv[1]);
+	    interp.setResult(IntThing.create(list.size()));
 	} else if (cmdname.equals("lindex")) {
-	    Vector list = argv[1].toList();
-	    int idx = argv[2].toInt();
+	    Vector list = ListThing.get(argv[1]);
+	    int idx = IntThing.get(argv[2]);
 	    if (idx >= list.size()) {
 		interp.setResult(new Thing(""));
 	    } else {
@@ -53,19 +53,19 @@ class ListCmd implements Command {
 		interp.setResult((Thing)list.elementAt(idx));
 	    }
 	} else if (cmdname.equals("lappend")) {
-	    Vector list = argv[1].toList();
+	    Vector list = ListThing.get(argv[1]);
 	    for (int i = 2; i < argv.length; i ++) {
 		list.addElement(argv[i]);
 	    }
 	    interp.setResult(argv[1]);
 	} else if (cmdname.equals("linsert")) {
-	    Vector list = argv[1].toList();
-	    int idx = argv[2].toInt();
+	    Vector list = ListThing.get(argv[1]);
+	    int idx = IntThing.get(argv[2]);
 	    list.insertElementAt(argv[3], idx);
 	    interp.setResult(argv[1]);
 	} else if (cmdname.equals("lset")) {
-	    Vector list = argv[1].toList();
-	    int idx = argv[2].toInt();
+	    Vector list = ListThing.get(argv[1]);
+	    int idx = IntThing.get(argv[2]);
 	    if (idx < 0) {
 		idx += list.size();
 	    }

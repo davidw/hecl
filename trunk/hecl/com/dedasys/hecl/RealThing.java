@@ -1,4 +1,4 @@
-/* Copyright 2004 David N. Welton
+/* Copyright 2004-2005 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,21 +13,16 @@
    limitations under the License.
 */
 
+/* $Id$ */
+
 package com.dedasys.hecl;
 
-/**
- * <code>EvalCmd</code> implements the "eval" command.
- *
- * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
- * @version 1.0
- */
+public abstract interface RealThing {
 
-class EvalCmd implements Command {
+/*     public static Thing create();  */
 
-    public void cmdCode(Interp interp, Thing[] argv)
-	throws HeclException {
+/*     public static Object get(Interp interp, Thing thing);  */
 
-	Thing result = Eval.eval(interp, argv[1]);
-	interp.setResult(result);
-    }
+    public RealThing deepcopy();
+
 }

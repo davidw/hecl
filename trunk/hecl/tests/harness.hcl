@@ -1,8 +1,10 @@
+# harness.hcl -- test harness procedures.
 
 proc test {name code result} {
-    # puts "Running $name: "
     catch $code res
-    if { = $res $result } {
+    # puts "Code was $code"
+    # puts "Result was $res"
+    if { eq $res $result } {
 	ok $name
     } else {
 	fail $name $res $result
@@ -17,7 +19,7 @@ proc testfiles {files} {
 
 proc ok {name} {
     global ok
-    puts "$name ok"
+    # puts "$name		ok"
     lappend &ok $name
 }
 

@@ -33,14 +33,14 @@ class HashCmd implements Command {
 
 	if (cmdname.equals("hash")) {
 	    Thing result = argv[1];
-	    result.toHash();
+	    HashThing.get(result);
 	    interp.setResult(result);
 	} else if (cmdname.equals("hget")) {
-	    Hashtable hash = argv[1].toHash();
+	    Hashtable hash = HashThing.get(argv[1]);
 	    String key = argv[2].toString();
 	    interp.setResult((Thing)hash.get(key));
 	} else if (cmdname.equals("hset")) {
-	    Hashtable hash = argv[1].toHash();
+	    Hashtable hash = HashThing.get(argv[1]);
 	    String key = argv[2].toString();
 	    Thing val = argv[3];
 	    hash.put(key, val);

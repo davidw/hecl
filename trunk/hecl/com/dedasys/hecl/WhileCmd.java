@@ -28,13 +28,10 @@ class WhileCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-	Eval eval = new Eval();
 
-	Thing result = eval.eval(interp, argv[1]);
-
-	while (result.isTrue()) {
+	while (Thing.isTrue(Eval.eval(interp, argv[1]))) {
 	    try {
-		eval.eval(interp, argv[2]);
+		Eval.eval(interp, argv[2]);
 	    } catch (HeclException e) {
 		if (e.code == HeclException.BREAK) {
 		    break;
@@ -43,7 +40,6 @@ class WhileCmd implements Command {
 		    throw e;
 		}
 	    }
-	    result = eval.eval(interp, argv[1]);
 	}
     }
 }

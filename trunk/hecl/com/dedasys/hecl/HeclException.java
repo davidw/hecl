@@ -85,7 +85,7 @@ public class HeclException extends Exception {
 	lst.addElement(new Thing(codeToString()));
 	lst.addElement(new Thing(txt));
 
-	stack.push(new Thing(lst));
+	stack.push(new Thing(new ListThing(lst)));
     }
 
     /**
@@ -139,6 +139,6 @@ public class HeclException extends Exception {
      */
 
     public Thing getStack() {
-	return new Thing((Vector)stack);
+	return ListThing.create((Vector)stack);
     }
 }

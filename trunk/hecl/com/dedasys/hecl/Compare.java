@@ -15,34 +15,31 @@
 
 package com.dedasys.hecl;
 
-import java.util.*;
 
-/**
- * <code>CatchCmd</code> implements the "catch" command.
- *
- * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
- * @version 1.0
- */
+class Compare {
 
-class CatchCmd implements Command {
-
-    public void cmdCode(Interp interp, Thing[] argv)
-	throws HeclException {
-	Thing result;
-	Thing retval;
-	try {
-	    Eval.eval(interp, argv[1]);
-	    result = interp.getResult();
-	    retval = IntThing.create(0);
-	} catch (HeclException e) {
-	    result = e.getStack();
-	    retval = IntThing.create(1);
+    public static int compareInt(Thing a, Thing b) throws HeclException {
+	int ia = IntThing.get(a);
+	int ib = IntThing.get(b);
+	if (ia == ib) {
+	    return 0;
+	} else if (ia < ib) {
+	    return -1;
+	} else {
+	    return 1;
 	}
-
-	if (argv.length == 3) {
-	    interp.setVar(argv[2].toString(), result);
-	}
-
-	interp.setResult(retval);
     }
+
+    public static int compareString(Thing a, Thing b) {
+	return StringThing.get(a).compareTo(StringThing.get(b));
+    }
+
+    public static int compare(Thing a, Thing b) {
+	try {
+	    return compareInt(a, b);
+	} catch (Exception e) {
+	    return compareString(a, b);
+	}
+    }
+
 }

@@ -69,6 +69,7 @@ public class Interp {
 	addCommand("puts", new PutsCmd());
 
 	addCommand("=", new EqualsCmd());
+	addCommand("eq", new EqualsCmd());
 	addCommand(">", new EqualsCmd());
 	addCommand("<", new EqualsCmd());
 
@@ -191,7 +192,7 @@ public class Interp {
      * @exception HeclException if an error occurs
      */
     public Thing getVar(Thing varname) throws HeclException {
-	return getVar(varname.toString());
+	return getVar(varname.toString(), -1);
     }
 
     /**
@@ -260,9 +261,9 @@ public class Interp {
     public void setVar(String varname, Thing value, int level) {
 	Hashtable lookup = getVarhash(level);
 
-	if (lookup.containsKey(varname)) {
+ 	if (lookup.containsKey(varname)) {
 	    Thing newval = (Thing)lookup.get(varname);
-	    value.makeref(newval);
+	    newval.makeref(value);
 	} else {
 	    lookup.put(varname, value);
 	}

@@ -28,12 +28,10 @@ class FilterCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
-	Eval eval = new Eval();
 	Vector results = new Vector();
-	Vector list = argv[1].toList();
+	Vector list = ListThing.get(argv[1]);
 	String varname = argv[2].toString();
 	int sz = list.size();
-	Thing boolval;
 	Thing val;
 	boolean brk = false;
 
@@ -47,16 +45,16 @@ class FilterCmd implements Command {
 	for (int i = 0; i < sz; i++) {
 	    val = (Thing)list.elementAt(i);
 	    interp.setVar(varname, val);
-	    eval.eval(interp, argv[3]);
-	    boolval = interp.getResult();
-	    if (boolval.toInt() != 0) {
+	    Eval.eval(interp, argv[3]);
+
+	    if (IntThing.get(interp.getResult()) != 0) {
 		results.addElement(val);
 		if (brk == true) {
 		    break;
 		}
 	    }
 	}
-	interp.setResult(new Thing(results));
+	interp.setResult(new Thing(new ListThing(results)));
 	return;
     }
 }

@@ -27,13 +27,12 @@ class IncrCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 
-	int m = argv[1].toInt();
+	int m = IntThing.get(argv[1]);
 	int n = 1;
 	if (argv.length > 2) {
-	    n = argv[2].toInt();
+	    n = IntThing.get(argv[2]);
 	}
-	int r = m + n;
-	argv[1].setInt(r);
+	((IntThing) argv[1].val).set(m + n);
 	interp.setResult(argv[1]);
     }
 }

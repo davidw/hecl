@@ -37,7 +37,7 @@ class IntrospectCmd implements Command {
 		Thing t = new Thing((String)e.nextElement());
 		results.addElement(t);
 	    }
-	    interp.setResult(new Thing(results));
+	    interp.setResult(ListThing.create(results));
 	    return;
 	}
     }

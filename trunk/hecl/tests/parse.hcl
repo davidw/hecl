@@ -11,10 +11,21 @@ test parse-2 {
 } {1}
 
 proc printstuff {stuff} {
-    puts $stuff
+    return $stuff
+}
+
+proc printstuff2 {stuff} {
+    return "new $stuff"
 }
 
 test parse-3 {
-    set ps pritnstuff
+    set ps printstuff
     $ps foo
-} {}
+} {foo}
+
+test parse-4 {
+    set ps printstuff
+    $ps foo
+    set ps printstuff2
+    $ps foo
+} {new foo}

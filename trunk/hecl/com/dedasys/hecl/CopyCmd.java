@@ -28,6 +28,6 @@ class CopyCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 
-	interp.setResult(interp.getVar(argv[1]).copy());
+	interp.setResult(interp.getVar(argv[1]).deepcopy());
     }
 }

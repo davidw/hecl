@@ -35,8 +35,7 @@ class Proc implements Command {
 
     public void cmdCode (Interp interp, Thing [] argv)
 	throws HeclException {
-	Vector varnames = vars.toList();
-	Eval eval = new Eval();
+	Vector varnames = ListThing.get(vars);
 	int i = 0;
 
 	interp.stackIncr();
@@ -56,7 +55,7 @@ class Proc implements Command {
 		"proc " + argv[0] + " has too many arguments");
 	}
 
-	eval.eval(interp, code);
+	Eval.eval(interp, code);
 	interp.stackDecr();
     }
 }

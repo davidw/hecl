@@ -29,9 +29,11 @@ class AppendCmd implements Command {
 	throws HeclException {
 	StringBuffer strb;
 	Thing result = argv[1];
-	strb = result.toStringBuffer();
+	StringThing.get(result);
+	StringThing st = (StringThing)result.val;
+
 	for (int i = 2; i < argv.length; i++) {
-	    strb.append(argv[i].toString());
+	    st.append(argv[i].toString());
 	}
 	interp.setResult(result);
     }

@@ -80,7 +80,7 @@ public class Parse {
 
 	parseLine(in, state);
 	if (outList.size() > 0 ) {
-	    // System.out.println("outlist is : " + outList);
+	    //System.out.println("outlist is : " + outList);
 	    return outList;
 	}
 	return null;
@@ -92,15 +92,17 @@ public class Parse {
 	Command command = null;
 	String cmdName = null;
 	int i = 0;
+
 	while (more()) {
 	    cmdName = null;
 	    Vector cmd = new Vector();
 	    cmd = parse();
-	    // System.out.println("CMD is " + cmd);
+	    //System.out.println("CMD is " + cmd);
 
 	    if (cmd == null || cmd.size() == 0) {
 		continue;
 	    }
+
 
 	    Thing[] argv =  new Thing[cmd.size()];
 	    for (i = 0; i < cmd.size(); i ++) {
@@ -155,6 +157,7 @@ public class Parse {
 
     protected void appendToCurrent(char ch) {
 	currentOut.appendToGroup(ch);
+	//System.out.println("currenOut is :" + currentOut);
     }
 
     /**
@@ -179,6 +182,7 @@ public class Parse {
 	currentOut = new Thing("");
 	parseCommand(state);
 	saveout.appendToGroup(currentOut);
+	saveout.appendToGroup(new Thing(""));
 	currentOut = saveout;
     }
 
@@ -195,6 +199,7 @@ public class Parse {
 	currentOut = new Thing("");
 	parseDollar(state, docopy);
 	saveout.appendToGroup(currentOut);
+	saveout.appendToGroup(new Thing(""));
 	currentOut = saveout;
     }
 
@@ -249,6 +254,7 @@ public class Parse {
 		    return;
 		default:
 		    appendToCurrent(ch);
+//		    state.rewind();
 		    parseWord(state);
 		    addCurrent();
 		    break;
@@ -300,7 +306,11 @@ public class Parse {
 	}
 	CodeThing code = new CodeThing();
 	Thing[] argv = new Thing[2];
-	argv[1] = currentOut.copy();
+	argv[1] = currentOut.deepcopy();
+	StringThing.get(argv[1]);
+/* 	System.out.println("parser vvvv");
+	Thing.printThing(argv[1]);
+	System.out.println("parser ^^^^");  */
 	if (docopy) {
 	    argv[0] = new Thing("copy");
 	    code.addStanza(new CopyCmd(), argv);
@@ -308,7 +318,8 @@ public class Parse {
 	    argv[0] = new Thing("ref");
 	    code.addStanza(new RefCmd(), argv);
 	}
-	currentOut.setSubst(code);
+	code.marksubst = true;
+	currentOut.setVal(code);
     }
 
     /**
@@ -342,7 +353,7 @@ public class Parse {
      * @exception HeclException if an error occurs
      */
     protected void parseBlockOrCommand(ParseState state,
-					    boolean block)
+				       boolean block)
 	throws HeclException {
 	int level = 1;
 	char ldelim, rdelim;
@@ -374,7 +385,9 @@ public class Parse {
 		} else {
 		    /* We parse it up for later consumption. */
 		    Parse hp = new Parse(interp, currentOut.toString());
-		    currentOut.setSubst(hp.parseToCode());
+		    CodeThing code = hp.parseToCode();
+		    code.marksubst = true;
+		    currentOut.setVal(code);
 		    return;
 		}
 	    } else {
@@ -424,7 +437,7 @@ public class Parse {
     }
 
     /**
-     * <code>parseWord</code> parses a regular old word not in quotes.
+     * <code>parseWord</code> parses a regular word not in quotes.
      *
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
