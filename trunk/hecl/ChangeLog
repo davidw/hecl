@@ -1,5 +1,11 @@
 2005-03-22  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Interp.java: Added method to return list of
+	modules present.
+
+	* core/org/hecl/IntrospectCmd.java: Added a modules introspection
+	command.
+
 	* pjava/org/hecl/pjava/HeclModule.java: dos2unix line endings.
 
 	* core/org/hecl/Thing.java: Check for nesting depth in deepcopy,

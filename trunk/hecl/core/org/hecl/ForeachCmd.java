@@ -32,9 +32,11 @@ import java.util.*;
 class ForeachCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-
-        Vector varlist = ListThing.get(argv[1]);
         Vector list = ListThing.get(argv[2]);
+	if (list.size() == 0) {
+	    return;
+	}
+        Vector varlist = ListThing.get(argv[1]);
         int i = 0;
         boolean end = false;
         while (true) {

@@ -561,4 +561,13 @@ public class Interp {
         modules.remove(className);
         clsmodule.unloadModule(this);
     }
+
+    Thing modules() {
+        Enumeration keys;
+	Vector res = new Vector();
+        for (keys = modules.keys(); keys.hasMoreElements();) {
+	    res.addElement(new Thing((String)keys.nextElement()));
+        }
+	return ListThing.create(res);
+    }
 }
