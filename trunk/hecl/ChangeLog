@@ -1,3 +1,7 @@
+2005-03-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Change URL to hecl.org
+
 2005-03-08  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl: Added case that should generate an error.
