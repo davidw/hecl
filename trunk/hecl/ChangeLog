@@ -1,3 +1,7 @@
+2004-11-13  David N. Welton  <davidw@dedasys.com>
+
+	* Makefile: Significant cleanup that makes things much smoother.
+
 2004-11-09  David N. Welton  <davidw@dedasys.com>
 
 	* Added license text to files.
