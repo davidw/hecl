@@ -18,7 +18,8 @@ package com.dedasys.hecl;
 import java.util.*;
 
 /**
- * <code>FilterCmd</code> implements the "filter" command.
+ * <code>FilterCmd</code> implements the "filter" and "search"
+ * commands.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -35,11 +36,8 @@ class FilterCmd implements Command {
 	Thing val;
 	boolean brk = false;
 
-	if (argv.length == 5) {
-	    String subcmd = argv[4].toString();
-	    if (subcmd.equals("break")) {
-		brk = true;
-	    }
+	if (argv[0].toString().equals("search")) {
+	    brk = true;
 	}
 
 	for (int i = 0; i < sz; i++) {

@@ -97,6 +97,7 @@ public class Interp {
 
 	addCommand("foreach", new ForeachCmd());
 	addCommand("filter", new FilterCmd());
+	addCommand("search", new FilterCmd());
 
 	addCommand("break", new BreakCmd());
 	addCommand("continue", new BreakCmd());

@@ -24,6 +24,7 @@ testfiles {
     proc.hcl
     ref.hcl
     return.hcl
+    search.hcl
     set.hcl
     sort.hcl
     sourcehere.hcl

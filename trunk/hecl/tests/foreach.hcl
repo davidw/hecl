@@ -25,3 +25,16 @@ test foreach-3 {
     }
     set res
 } {{ERROR {Foreach argument list does not match list length}} foreach}
+
+test foreach-4 {
+    set i 0
+    set res {}
+    set lst {a b c d e f g}
+    foreach {m} $lst {
+	incr &i
+	append &res $i
+	continue
+	append &res $m
+    }
+    set res
+} {1234567}

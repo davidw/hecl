@@ -54,8 +54,16 @@ class ForeachCmd implements Command {
 		}
 	    }
 
-
-	    Eval.eval(interp, argv[3]);
+	    try {
+		Eval.eval(interp, argv[3]);
+	    } catch (HeclException e) {
+		if (e.code == HeclException.BREAK) {
+		    break;
+		} else if (e.code == HeclException.CONTINUE) {
+		} else {
+		    throw e;
+		}
+	    }
 	    if (end == true)
 		break;
 	}

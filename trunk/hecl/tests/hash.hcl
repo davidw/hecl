@@ -1,3 +1,5 @@
+# hash.hcl - hash tests
+
 test hash-1 {
     set foo [hash {a b c d}]
     sort [list [hget &foo a] [hget &foo c]]

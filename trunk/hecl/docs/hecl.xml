@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+  "http://www.oasis-open.org/committees/docbook/xml/4.1.2/docbookx.dtd" []>
+
+<!--
+   Copyright 2004-2005 David N. Welton
+
+   Licensed under the Apache License, Version 2.0 (the "License"); you
+   may not use this file except in compliance with the License.  You
+   may obtain a copy of the License at
+
+   	http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+   implied.  See the License for the specific language governing
+   permissions and limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<article>
+  <articleinfo>
+    <title>Hecl Programming Language</title>
+    <copyright>
+      <year>2004</year>
+      <year>2005</year>
+      <holder>
+	David N. Welton
+      </holder>
+    </copyright>
+    <author>
+      <firstname>David</firstname>
+      <surname>Welton</surname>
+      <affiliation>
+	<orgname>DedaSys</orgname>
+	<address>
+	  <email>davidw (AT) dedasys.com</email>
+	</address>
+      </affiliation>
+    </author>
+  </articleinfo>
+
+  <section>
+    <title>Introduction</title>
+    <para>
+      The Hecl Programming Language is a high-level scripting language
+      implemented in Java.  It is intended to be small, extensible,
+      extremely flexible, and easy to learn and use.
+    </para>
+
+    <para>
+      Why Hecl?  Hecl is intended as a complement to the Java
+      programming language, not a replacement.  It tries to do well
+      what Java doesn't, and leaves those tasks to Java for which it
+      is best suited, by providing an API that makes it easy to tie
+      the two together.  Hecl aims to be a very immediate language -
+      you can pick it up and start doing useful things with it quickly
+      - even people without formal training.  Hecl is easy to learn.
+      Where Java is verbose and rigid, Hecl is forgiving and quick to
+      write.  For instance,
+      <userinput>System.out.println("Hello World");</userinput>
+      vs <userinput>puts "Hello World"</userinput> - 41
+      keystrokes (shifted letters count double) versus 22.  Hecl is
+      built to <ulink
+      url="http://www.dedasys.com/articles/scalable_systems.html">"scale
+      down"</ulink> - especially in terms of its users, meaning that
+      it is very quick to learn, and can be quickly put to productive
+      use even by those who are not programmers by trade.
+    </para>
+
+    <para>
+      This makes Hecl ideal for large applications written in Java
+      that would like to provide a user friendly scripting interface,
+      rather than, say, a clunky XML based system.  Examples include:
+      scripted web pages, command/control logic in long running
+      applications, and, I'm sure, many environments I've never
+      considered.  Instead of a simple, static configuration file, you
+      can give your users the power to program portions of the system
+      to do things that you hadn't thought of when you wrote the
+      software originally.
+    </para>
+
+    <para>
+      Hecl is a small language with a minimal core.  The idea is to
+      provide only what's necessary in the language itself, and as
+      needed, add in extensions for specific tasks.  Core Hecl is
+      small enough to run on my Nokia 3100 cell phone as a J2ME
+      application, presenting the interesting possibility of writing
+      scripts, or at some point, maybe even scripting entire
+      applications, for devices running embedded Java.
+    </para>
+
+    <para>
+      Contributions in the form of code, ideas, suggestions, or even
+      donations are welcome.  Hecl is still growing, so your thoughts
+      are important, and you can help shape the language's future.
+      You can download the code via CVS from the SourceForge project
+      page: <ulink href="http://sourceforge.net/projects/hecl/"/>.
+    </para>
+
+    <para>
+      Hecl is available under the liberal Apache 2.0 open source
+      license.  Which says, more or less, that you may use Hecl in
+      your own applications, even if they are not open source.  You
+      have to give me credit, though.  Read the license itself to
+      clear up any doubts.  Oh, and incidentally, I don't see the
+      license as being incompatible with the GPL, so feel free to
+      utilize Hecl in your GPL product (I have added a note to this
+      effect in the NOTICE file that must accompany products using the
+      Hecl code).
+    </para>
+
+    <para>
+      I owe thanks to a lot of people for Hecl.  First and foremost
+      the creator of the Tcl programming language, Dr. John
+      Ousterhout.  While I have attempted to improve some things that
+      I did not care for in Tcl, it is obvious that the simple,
+      extremely flexible command-based approach that Hecl takes is
+      derived from Tcl.  I also borrowed some ideas from the (mostly
+      defunct) Jacl implementation of Tcl in Java.  Many thanks are
+      also due my friend Salvatore Sanfilippo, with whom I have spent
+      many hours discussing Hecl, Tcl, and the philosophy of
+      programming languages in general.  And of course, I owe a huge
+      debt of gratitude to my fiance&egrave;, Ilenia, who puts up with
+      all the hours I spend in front of "that damn computer".
+    </para>
+
+  </section>
+
+  <section>
+    <title>Hecl Tutorial</title>
+    <para>
+      Like many people, I enjoy taking something and experimenting
+      with it before going and reading the instructions!  With this in
+      mind, I have written a brief tutorial that you can use to start
+      exploring Hecl on your own.
+    </para>
+
+    <para>
+      Of course, we would be out of place not to begin with the famous
+      "Hello, World".  Behold:
+    </para>
+    <programlisting>puts "Hello, World"</programlisting>
+    <para>
+      Hecl is based on the notion of commands, which take any number
+      of arguments.  The <command>puts</command> command takes one
+      argument, a string, and prints it out.
+    </para>
+    <para>
+      Like all programming languages, Hecl provides variables that may
+      be used to store information. Here, we set a variable,
+      <varname>rating</varname>, and then print it out in the midst of
+      a string.  This is called "interpolation", and is a convenient
+      way of creating new strings.
+    </para>
+	    <programlisting>set rating 10
+puts "Hecl, from 1 to 10: $rating"</programlisting>
+    <para>
+      Something else we notice in the above examples is that we use
+      double quotes "" to group a series of things.  In Hecl, commands
+      and their arguments are separated by spaces.  Since
+      <command>puts</command> only takes one argument, a string, we
+      use the quotes to group several words together in order to pass
+      them as one string to the command.  Many languages require
+      quotes to delineate a string, but in Hecl that is not necessary
+      if the string has no spaces in it.  For instance,
+      <userinput>puts helloworld</userinput> is legitimate.
+    </para>
+
+    <para>
+      Another way of grouping multiple words in Hecl is with braces:
+      {}.  Hecl does not automatically perform any substitution on the
+      variables or commands grouped within braces, as it does with
+      quotes.
+    </para>
+
+    <programlisting>puts {The $dollar $signs $are printed	    literally$$ - no substitution}</programlisting>
+
+    <para>
+      Aside from the dollar sign, which returns a copy of the value of
+      a variable, it is also possible to utilize the results of one
+      command as the input of a second command.  For example:
+    </para>
+
+    <programlisting>set rating 10
+puts "Rating:"
+puts [set rating]</programlisting>
+
+    <para>
+      In this case, we pass the results of the <command>set</command>
+      command to the <command>puts</command> command.  In reality, <userinput>set
+	rating</userinput> is just a long way of writing
+      <option>$rating</option> but it's a good example.
+    </para>
+
+    <para>
+      Like everything else in Hecl, we perform math operations as
+      commands:
+    </para>
+
+    <programlisting>puts "2 + 2 = [+ 2 2]"</programlisting>
+
+    <para>
+      In the example, the <command>+</command> takes two arguments,
+      adds them together and return the result, which is then printed
+      out by the <command>puts </command> command.
+    </para>
+
+    <para>
+      In order to choose between one or more 
+    </para>
+
+    <programlisting>set temp 10
+if { &lt; $temp 0 } {
+    puts "It's freezing"
+} else {
+    puts "Not freezing"
+}</programlisting>
+
+    <para>References:</para>
+
+    <programlisting>set a 1
+set b &amp;a
+puts $b
+# Returns '1'
+set a 2
+puts $b
+# Returns '2'</programlisting>
+
+    <para>"while" loop command:</para>
+
+    <programlisting>set i 0
+while { &lt; &amp;i 10 } {
+    puts "i is now $i"
+    incr &amp;i
+}
+</programlisting>
+
+    <para>Lists:</para>
+
+    <programlisting>set foo [list a b c]
+set bar {a b c}
+lappend &amp;foo d
+lappend &amp;bar d
+set foo
+# Returns 'a b c d'
+set bar
+# Returns 'a b c d'
+</programlisting>
+
+    <para>Hash tables:</para>
+
+    <programlisting>set foo [hash {a b c d}]
+puts [hget &amp;foo a]
+# prints 'b'
+puts [hget &amp;foo c]
+# prints 'd'
+hset &amp;foo c 2
+puts [hget &amp;foo c]
+# prints '2'
+puts $foo
+# prints 'a b c 2' (although not necessarily in that order)
+</programlisting>
+
+    <para>"foreach" loop command:</para>
+
+    <programlisting>set lst {a b c d e f}
+foreach {m n} $lst {
+    puts  "It is possible to grab two variables at a time: $m $n"
+}
+
+foreach {x} $lst {
+    puts  "Or one at a time: $x"
+}</programlisting>
+
+    <para>
+      Create new commands with the "proc" command.  In this example we
+      create a command that prints out a numbered list.
+    </para>
+
+    <programlisting>set list {red blue green}
+proc printvals {vals} {
+    set num 1
+    foreach v $vals {
+	puts "$num - $v"
+	incr &amp;num
+    }
+}
+
+printvals &amp;list</programlisting>
+
+    <para>
+      Hecl is very flexible - in this example, we create a
+      "do...while" loop command that works as if it were a native loop
+      construct.
+    </para>
+
+    <programlisting>proc do {code while condition} {
+    upeval $code
+    while { upeval &amp;condition } {
+	upeval $code
+    }
+}
+
+set x 100
+set foo ""
+do {
+    append &amp;foo $x
+    incr &amp;x
+} while { &lt; &amp;x 10 }
+set foo
+# Returns 100 - because the loop is run once and only once.
+</programlisting>
+
+  </section>
+
+  <section>
+    <title>Hecl Commands</title>
+
+    <!-- append -->
+    <refentry>
+      <refnamediv>
+	<refname>append</refname>
+	<refpurpose>Append text to a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>append</command>
+	  <arg choice="req"><replaceable>varreference</replaceable></arg>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The append command takes two arguments, a variable reference, and a string to append to the variable.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo "bar"
+append &amp;foo "beebop"
+# The foo variable now contains the string barbeebop
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>barbeebop</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- break -->
+    <refentry>
+      <refnamediv>
+	<refname>break</refname>
+	<refpurpose>Break out of a loop.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>break</command>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The break command breaks out of a loop.  If this command is
+	  not run from within a loop - the <command>while</command> or
+	  <command>foreach</command> commands for instance, it
+	  generates an error.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set i 0
+while { true } {
+    if { > $i 100 } {
+        break
+    }
+    incr &amp;i
+}
+	  </programlisting>
+	<para>
+	  In what would otherwise be an endless loop, the break
+	  command is used to exit.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <!-- catch -->
+    <refentry>
+      <refnamediv>
+	<refname>catch</refname>
+	<refpurpose>
+	  Evaluates a script, catching any errors.
+	</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>catch</command>
+	  <arg choice="req"><replaceable>script</replaceable></arg>
+	  <arg choice="opt"><replaceable>varname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The catch command evaluates a script, and returns 0 if the
+	  script evaluated successfully.  If there were errors, catch
+	  returns 1.  Optionally, a variable name may be passed to the
+	  command, where the results of the script evaluation will be
+	  placed.  In the case of errors, the stack trace will be
+	  placed in the variable argument.  If the script executes
+	  without problems, the variable will contain the result of
+	  the script execution.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+catch nosuchcommand foo
+set foo
+	  </programlisting>
+	  <para>Produces:</para>
+	<screen>
+	  {ERROR {Command nosuchcommand does not exist}}
+	</screen>
+      </refsect1>
+    </refentry>
+
+
+    <!-- continue -->
+    <refentry>
+      <refnamediv>
+	<refname>continue</refname>
+	<refpurpose>Skip to next cycle of a loop</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>continue</command>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The continue command is used within the bodies of looping
+	  commands such as <command>if</command> and
+	  <command>while</command>.  When <command>continue</command>
+	  is called, execution of the loop body stops and and
+	  execution moves on to the next iteration of the loop.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+set i 0
+set res {}
+foreach x {a b c d e} {
+    incr &amp;i
+    continue
+    append &amp;res $x
+}
+puts $i
+puts $res
+	</programlisting>
+	<para>Produces:</para>
+	<screen>5</screen>
+	<para>
+	  The res variable is never appended to, so printing it out
+	  produces an empty string.
+	</para>
+      </refsect1>
+    </refentry>
+
+
+
+    <refentry>
+      <refnamediv>
+	<refname>copy</refname>
+	<refpurpose>Return a copy of the variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>copy</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The copy command is the equivalent of dollar substitution.
+	  It returns a copy of the variable in question, meaning that
+	  other commands that operate on the copy won't modify the
+	  original value.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo "bee"
+append [copy foo] "bop"
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>bee</screen>
+      </refsect1>
+    </refentry>
+
+
+    <refentry>
+      <refnamediv>
+	<refname>eq</refname>
+	<refpurpose>Tests string equivalence.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>eq</command>
+	  <arg choice="req"><replaceable>string1</replaceable></arg>
+	  <arg choice="req"><replaceable>string2</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>eq</command> commands compares two strings,
+	  returning 1 if they are equal, 0 if they are not.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+if {eq 1 1.0} {
+    puts "True"
+} else {
+    puts "False"
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>False</screen>
+
+	<para>
+	  Despite being numerically equivalent, the strings "1" and
+	  "1.0" are different.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry>
+      <refnamediv>
+	<refname>eval</refname>
+	<refpurpose>Evaluate Hecl code.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>eval</command>
+	  <arg choice="req"><replaceable>code</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>eval</command> command takes a string
+	  containing Hecl commands, evaluates them, and returns the
+	  result.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set i 0
+set str {incr}
+lappend &amp;str "i"
+eval $str
+puts $i
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>1</screen>
+      </refsect1>
+    </refentry>
+
+    <refentry>
+      <refnamediv>
+	<refname>filter</refname>
+	<refpurpose>Filter a list.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>filter</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	  <arg choice="req"><replaceable>script</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>filter</command> command takes a list and
+	  filters it according to the code provided in
+	  <option><replaceable>code</replaceable></option>.  The
+	  current element of the list being considered is stored in
+	  the <option><replaceable>varname</replaceable></option>
+	  provided.  A list of 'matches' is returned.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set lst {1 2 3 4 5 4 3 2 1}
+puts [filter $lst x {= $x 4}]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>4 4</screen>
+      </refsect1>
+    </refentry>
+
+    <refentry>
+      <refnamediv>
+	<refname>for</refname>
+	<refpurpose>For loop.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>for</command>
+	  <arg choice="req"><replaceable>initialization</replaceable></arg>
+	  <arg choice="req"><replaceable>test</replaceable></arg>
+	  <arg choice="req"><replaceable>step</replaceable></arg>
+	  <arg choice="req"><replaceable>body</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>for</command> command is like in many other
+	  languages like C and Java.  As arguments, it takes an
+	  <option><replaceable>initialization</replaceable></option>
+	  option, which is often used to set a variable to some
+	  initial value, a
+	  <option><replaceable>test</replaceable></option> to
+	  determine whether to continue running, a
+	  <option><replaceable>step</replaceable></option> script
+	  option which is run at each iteration of the body (to
+	  increment a variable, for example), and the body itself.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set out {}
+for {set i 0} {&lt; $i 10} {incr &amp;i} {
+    append &amp;out $i
+}
+puts $out
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>0123456789</screen>
+      </refsect1>
+    </refentry>
+
+    <refentry>
+      <refnamediv>
+	<refname>foreach</refname>
+	<refpurpose>Iterate over elements in a list.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>foreach</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>body</replaceable></arg>
+	  <command>foreach</command>
+	  <arg choice="req"><replaceable>varlist</replaceable></arg>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>body</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The foreach command iterates over a list.  For each element
+	  of the list,
+	  <option><replaceable>varname</replaceable></option> is set
+	  to a new element of the list, and then
+	  <option><replaceable>body</replaceable></option> is run.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set lst {a b c d e}
+set res {}
+foreach el $lst {
+    append &amp;res $el
+}
+puts $res
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>abcde</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- global -->
+    <refentry>
+      <refnamediv>
+	<refname>global</refname>
+	<refpurpose>Use global variable from within a proc.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>global</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  By default, Hecl variables are always local.  Global
+	  variables are not visible from within procedures.  The
+	  <command>global</command> command makes global variable
+	  <option><replaceable>varname</replaceable></option> visible
+	  within a procedure.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo 1
+proc incfoo {} {
+    global foo
+    incr &foo
+}
+incfoo
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>2</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- hash -->
+    <refentry>
+      <refnamediv>
+	<refname>hash</refname>
+	<refpurpose>Create a hash table.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>hash</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>hash</command> command takes an even-numbered
+	  list and creates a hash table from it, using the even
+	  elements as keys, and odd elements as values.  A new hash
+	  table is returned.  The <command>hget</command> and
+	  <command>hset</command> commands operate on hash tables.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo [hash {a b c d}]
+puts [hget &foo a]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>b</screen>
+      </refsect1>
+    </refentry>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+    <refentry>
+      <refnamediv>
+	<refname>append</refname>
+	<refpurpose>Append text to a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>append</command>
+	  <arg choice="req"><replaceable>varreference</replaceable></arg>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The append command takes two arguments, a variable reference, and a string to append to the variable.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo "bar"
+append &amp;foo "beebop"
+# The foo variable now contains the string barbeebop
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>barbeebop</screen>
+      </refsect1>
+    </refentry>
+-->
+
+  </section>
+
+
+  <section>
+    <title>Hecl and J2ME</title>
+
+  </section>
+
+</article>

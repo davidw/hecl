@@ -119,3 +119,9 @@ clean:
 # Run the tests.
 test: hecl
 	./hecl tests/suite.hcl
+
+docs: docs/hecl.html
+
+# Generate html docs.
+docs/hecl.html: docs/hecl.xml docs/hecl.xsl
+	xsltproc --nonet -o docs/hecl.html docs/hecl.xsl docs/hecl.xml

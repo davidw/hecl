@@ -71,7 +71,7 @@ class JoinSplitCmd implements Command {
 		idx = str.indexOf(splitstr, last);
 	    }
 	    result.addElement(new Thing(str.substring(last, str.length())));
-	    interp.setResult(ListThing.create(results));
+	    interp.setResult(ListThing.create(result));
 	}
 
     }

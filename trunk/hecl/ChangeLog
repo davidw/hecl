@@ -1,3 +1,23 @@
+2005-01-16  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xsl: Initial xslt stylesheet.
+
+	* docs/hecl.xml: Added initial DocBook documentation.
+
+	* tests/search.hcl: Added "search" tests.
+
+	* com/dedasys/hecl/FilterCmd.java: Instead of providing optional
+	"break" to filter in order to provide searches where the first one
+	matches, we just have a separate search command.  This is simpler
+	and more direct.
+
+	* tests/foreach.hcl: Test continue in foreach.
+
+2005-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ForeachCmd.java: Added break/continue capacity
+	to foreach.
+
 2005-01-05  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/WhileCmd.java: Use static eval method.

@@ -29,20 +29,20 @@ class CatchCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 	Thing result;
-	Thing retval;
+	int retval;
 	try {
 	    Eval.eval(interp, argv[1]);
 	    result = interp.getResult();
-	    retval = IntThing.create(0);
+	    retval = 0;
 	} catch (HeclException e) {
 	    result = e.getStack();
-	    retval = IntThing.create(1);
+	    retval = 1;
 	}
 
 	if (argv.length == 3) {
 	    interp.setVar(argv[2].toString(), result);
 	}
 
-	interp.setResult(retval);
+	interp.setResult(IntThing.create(retval));
     }
 }
