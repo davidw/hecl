@@ -25,3 +25,24 @@ pre.screen {
     margin-right: auto;
     background-color: #ccffcc;
 }
+
+A:link {
+    color: #3333cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+A:visited {
+    color: #3333cc;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+A:hover {
+    text-decoration: underline;
+}
+
+A.top:visited {
+    color: #5555ff;
+}
+

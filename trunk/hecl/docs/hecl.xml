@@ -23,7 +23,11 @@
 
 <article>
   <articleinfo>
-    <title>Hecl Programming Language</title>
+    <title>
+      <ulink url="http://www.dedasys.com/freesoftware/hecl/">
+	Hecl Programming Language
+      </ulink>
+    </title>
     <copyright>
       <year>2004</year>
       <year>2005</year>
@@ -37,7 +41,7 @@
       <affiliation>
 	<orgname>DedaSys</orgname>
 	<address>
-	  <email>davidw (AT) dedasys.com</email>
+	  <email>davidw@dedasys.com</email>
 	</address>
       </affiliation>
     </author>
@@ -1657,6 +1661,206 @@ append &amp;foo "beebop"
       </refsect1>
     </refentry>
 -->
+
+  </section>
+
+
+  <section id="heclandjava">
+    <title>Interfacing Hecl and Java</title>
+
+    <section>
+      <title>Calling Hecl code from Java</title>
+      <para>
+	Hecl is not a replacement for Java, and is indeed meant to
+	work hand in hand with Java.  We attempt to make it as easy as
+	possible to call Java from Hecl, via the creation of new Hecl
+	commands that can call Java code, in addition to calling Hecl
+	from Java, which is a matter of a few lines of code.  For
+	example, to evaluate a Hecl file from Java:
+      </para>
+
+      <programlisting>
+	try {
+	    /* First, create a new interpreter, and pass it a
+	     * mechanism to load resources with - in this case,
+	     * files. */
+	    Interp interp = new Interp(new LoadFile());
+	    /* Initialize the standard Hecl environment. */
+	    com.dedasys.hecl.Standard.init(interp);
+	    /* Evaluate the file at args[0] */
+	    Eval.eval(interp, interp.getscript(args[0]));
+	} catch (Exception e) {
+	    System.err.println(e);
+	}
+      </programlisting>
+
+      <para>
+	The above code creates a new interpreter.  Currently,
+	interpreters must know about how they are to load files, so the
+	interpreter is instantiated with a new
+	<classname>LoadFile</classname>, which, as the name suggests,
+	contains code to load files from the file system.  Since Hecl is
+	also meant for embedded environments, it is also possible to
+	create loader classes that load code from a compiled-in string,
+	from the network, or whatever other form of storage you may have
+	in mind.
+      </para>
+      <para>
+	After creating the interpreter, we call
+	<classname>Standard</classname>'s <methodname>init</methodname>
+	method.  <classname>Standard</classname> is a class that adds
+	several commands that we want to be present in standard J2SE
+	Hecl, but not in J2ME Hecl.
+      </para>
+      <para>
+	The real work is done by <methodname>Eval.init</methodname>,
+	which takes an interpreter and a Hecl
+	<classname>Thing</classname> as arguments.  In this case, the
+	<classname>Thing</classname> is the Hecl code read from the disk
+	by <classname>LoadFile</classname>.
+      </para>
+    </section>
+
+    <section>
+      <title>Creating new Hecl commands</title>
+
+      <para>
+	Creating new Hecl commands is relatively simple.  The first
+	step is to create a new class for your command in a file, say
+	<filename>HelloCmd.java</filename>.  The code would look
+	something like this:
+      </para>
+
+      <programlisting>
+class HelloCmd implements Command {
+
+    public void cmdCode(Interp interp, Thing[] argv)
+	throws HeclException {
+
+	System.out.println("Hello world");
+    }
+}
+      </programlisting>
+
+      <para>
+	The command takes an interpreter and an array of
+	<classname>Thing</classname>s as arguments, where the first
+	<classname>Thing</classname> is the name of the command
+	itself, and the others are the arguments to it.
+      </para>
+
+      <para>
+	The "glue" that connects the name of your Hecl command with
+	the Java code is also relatively simple:
+      </para>
+
+      <programlisting>
+	interp.addCommand("hello", new HelloCmd());
+      </programlisting>
+
+      <para>
+	Simple, no?  There are a few other useful methods that you
+	should be aware of, to share variables between Hecl and Java,
+	and to return results from your Hecl commands:
+      </para>
+
+      <itemizedlist>
+	<listitem>
+	  <methodsynopsis>
+	    <methodname>interp.setVar</methodname>
+	    <methodparam>
+	      <type>Thing</type>
+	      <parameter>varname</parameter>
+	    </methodparam>
+	    <methodparam>
+	      <type>Thing</type>
+	      <parameter>value</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+	  This sets the value of <parameter>varname</parameter> to
+	  some value.
+	</listitem>
+
+	<listitem>
+	  <methodsynopsis>
+	    <type>Thing</type>
+	    <methodname>interp.getVar</methodname>
+	    <methodparam>
+	      <type>Thing</type>
+	      <parameter>varname</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+
+	  <methodsynopsis>
+	    <type>Thing</type>
+	    <methodname>interp.getVar</methodname>
+	    <methodparam>
+	      <type>String</type>
+	      <parameter>varname</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+	  These methods take a variable name, either in string form or
+	  as a <classname>Thing</classname>, and return the
+	  <classname>Thing</classname> associated with that variable.
+	</listitem>
+
+	<listitem>
+	  <para><varname>interp.result</varname> is used to set the
+	    result of a command.  This oft-used variable is accessed
+	    directly for simplicity, speed and smaller code size.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <methodsynopsis>
+	    <type>int</type>
+	    <methodname>IntThing.get</methodname>
+	    <methodparam>
+	      <type>Thing</type>
+	      <parameter>thing</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+	  Get an int from a Thing.
+	</listitem>
+
+	<listitem>
+	  <methodsynopsis>
+	    <type>String</type>
+	    <methodname>StringThing.get</methodname>
+	    <methodparam>
+	      <type>Thing</type>
+	      <parameter>thing</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+	  Get a String from a Thing.
+	</listitem>
+
+	<listitem>
+	  <methodsynopsis>
+	    <type>Thing</type>
+	    <methodname>IntThing.create</methodname>
+	    <methodparam>
+	      <type>int</type>
+	      <parameter>i</parameter>
+	    </methodparam>
+	  </methodsynopsis>
+	  Creates a new thing from an int.
+	</listitem>
+
+      </itemizedlist>
+
+    </section>
+
+    <section>
+      <title>JavaDocs</title>
+
+      <para>
+	For the complete Hecl javadoc documentation, see the <ulink
+	  url="jdocs">Hecl Javadocs</ulink>.  And, of course, look at
+	  the Hecl source code to see how it's done!
+      </para>
+
+    </section>
 
   </section>
 

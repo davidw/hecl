@@ -1,3 +1,11 @@
+2005-02-03  David N. Welton  <davidw@dedasys.com>
+
+	* docs/jdocs/index.html: Added javadocs generated with gjdoc.
+
+	* docs/hecl.xml: Added sections on interfacing Java and Hecl.
+
+	* docs/hecl.css: Changed CSS for link look.
+
 2005-01-28  David N. Welton  <davidw@dedasys.com>
 
 	* com/dedasys/hecl/HashThing.java (HashThing): Added docstrings.
