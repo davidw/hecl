@@ -1,3 +1,20 @@
+2005-01-21  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added remaining commands.
+
+	* com/dedasys/hecl/TimeCmd.java: Tweaked time command to take a
+	number of iterations to perform.
+
+2005-01-20  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ReturnCmd.java: Throw RETURN exception.
+
+	* tests/return.hcl (returntest): Make return test a bit more
+	rigorous.
+
+	* com/dedasys/hecl/Proc.java: Catch RETURN exceptions in order to
+	make return command function properly.
+
 2005-01-16  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xsl: Initial xslt stylesheet.

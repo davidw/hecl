@@ -728,7 +728,7 @@ puts $res
 set foo 1
 proc incfoo {} {
     global foo
-    incr &foo
+    incr &amp;foo
 }
 incfoo
 puts $foo
@@ -738,16 +738,23 @@ puts $foo
       </refsect1>
     </refentry>
 
-    <!-- hash -->
+    <!-- hash, hget, hset -->
     <refentry>
       <refnamediv>
 	<refname>hash</refname>
-	<refpurpose>Create a hash table.</refpurpose>
+	<refpurpose>Create and manipulate hash tables.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
 	<cmdsynopsis>
 	  <command>hash</command>
 	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <command>hget</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <arg choice="req"><replaceable>key</replaceable></arg>
+	  <command>hset</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <arg choice="req"><replaceable>key</replaceable></arg>
+	  <arg choice="req"><replaceable>value</replaceable></arg>
 	</cmdsynopsis>
       </refsynopsisdiv>
       <refsect1>
@@ -758,52 +765,886 @@ puts $foo
 	  elements as keys, and odd elements as values.  A new hash
 	  table is returned.  The <command>hget</command> and
 	  <command>hset</command> commands operate on hash tables.
+	  Both take a hash table as their first argument.
+	  <command>hget</command> also takes a key, and returns the
+	  corresponding value, or an error if no key by that name
+	  exists.
 	</para>
       </refsect1>
       <refsect1>
 	<title>Example</title>
 	  <programlisting>
 set foo [hash {a b c d}]
-puts [hget &foo a]
+hset &amp;foo a 42
+puts [hget &amp;foo a]
 	  </programlisting>
 	  <para>Produces:</para>
-	  <screen>b</screen>
+	  <screen>42</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- if -->
+    <refentry>
+      <refnamediv>
+	<refname>if</refname>
+	<refpurpose>Conditionally execute code.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>if</command>
+	  <arg choice="req"><replaceable>test</replaceable></arg>
+	  <arg choice="req"><replaceable>code</replaceable></arg>
+	  <group choice="opt" rep="repeat">
+	    <arg choice="req">elseif</arg>
+	    <arg choice="req"><replaceable>test</replaceable></arg>
+	    <arg choice="req"><replaceable>code</replaceable></arg>
+	  </group>
+	  <group choice="opt">
+	    <arg choice="req">else</arg>
+	    <arg choice="req"><replaceable>code</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The if command executes Hecl code conditionally.  In its
+	  most basic form, it executes a
+	  <option><replaceable>test</replaceable></option>.  If the
+	  results are not 0, then it executes
+	  <option><replaceable>code</replaceable></option>.  If not,
+	  no further actions take place.  <command>if</command> may
+	  take any number of <option>elseif</option> clauses, which
+	  have their own
+	  <option><replaceable>test</replaceable></option> and
+	  <option><replaceable>code</replaceable></option>.  Finally,
+	  if none of the conditions has matched, it is also possible
+	  to supply an <option>else</option> clause that will be
+	  executed if the results of the if and elseif tests were all
+	  false.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+if { true } {
+    puts "true"
+} else {
+    puts "false"
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>true</screen>
+	  <programlisting>
+if { > 0 1 } {
+    puts "true"
+} else {
+    puts "false"
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>false</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- incr -->
+    <refentry>
+      <refnamediv>
+	<refname>incr</refname>
+	<refpurpose>Increment a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>incr</command>
+	  <arg choice="req"><replaceable>varreference</replaceable></arg>
+	  <arg choice="req"><replaceable>integer</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>incr</command> command takes a variable
+	  reference, and adds <option><replaceable>integer to
+	  it</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo 1
+incr &amp;foo
+puts "foo is $foo"
+incr &amp;foo 10
+puts "foo is now $foo"
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>2
+12</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- intro -->
+     <refentry>
+      <refnamediv>
+	<refname>intro</refname>
+	<refpurpose>Introspection command.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>intro</command>
+	  <group>
+	    <arg choice="req">commands</arg>
+	  </group>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>intro</command> command is used for Hecl
+	  introspection.  It takes a subcommand which causes it to
+	  perform the desired function.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+ puts [sort [intro commands]]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set sindex slen sort source sourcehere split time true upeval while</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- join -->
+     <refentry>
+      <refnamediv>
+	<refname>join</refname>
+	<refpurpose>Join elements of a list to create a string.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>join</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="opt"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>join</command> command takes a
+	  <option><replaceable>list</replaceable></option> argument,
+	  and optionally, a
+	  <option><replaceable>string</replaceable></option>
+	  argument.  It joins all elements of the list together with
+	  the string, or, if a string is not provided, with a space.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [join {a b c} "|"]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>a|b|c</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- lappend -->
+     <refentry>
+      <refnamediv>
+	<refname>lappend</refname>
+	<refpurpose>Append an element to a list.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>lappend</command>
+	  <arg choice="req"><replaceable>listreference</replaceable></arg>
+	  <arg choice="req"><replaceable>element</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>lappend</command> takes a reference to a list,
+	  and an element to add to that list.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo a
+lappend &amp;foo "b"
+puts $foo
+lappend &amp;foo "c d"
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>a b
+a b {c d}</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- lindex -->
+     <refentry>
+      <refnamediv>
+	<refname>lindex</refname>
+	<refpurpose>Return the Nth element of a list</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>lindex</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>index</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>lindex</command> command takes a list and an
+	  index number as arguments, and return's the index'th element
+	  of the list.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+puts [lindex {a b c} 2]
+	</programlisting>
+	<para>Produces:</para>
+	<screen>c</screen>
       </refsect1>
     </refentry>
 
 
+    <!-- list -->
+     <refentry>
+      <refnamediv>
+	<refname>list</refname>
+	<refpurpose>Create a list</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>list</command>
+	  <group choice="req" rep="repeat">
+	    <arg choice="req"><replaceable>element</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>list</command> command takes any number of
+	  arguments and returns a list.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+puts [list a b c [list 1 2 3]]
+	</programlisting>
+	<para>Produces:</para>
+	<screen>a b c {1 2 3}</screen>
+      </refsect1>
+    </refentry>
 
+    <!-- llen -->
+     <refentry>
+      <refnamediv>
+	<refname>llen</refname>
+	<refpurpose>List length.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>llen</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>llen</command> returns the length of its list
+	  argument.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [llen {1 2 3 {a b c}}]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>4</screen>
+      </refsect1>
+    </refentry>
 
+     <!-- lset -->
+     <refentry>
+      <refnamediv>
+	<refname>lset</refname>
+	<refpurpose>Set list elements.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>lset</command>
+	  <arg choice="req"><replaceable>listref</replaceable></arg>
+	  <arg choice="req"><replaceable>index</replaceable></arg>
+	  <arg choice="opt"><replaceable>replacement</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>lset</command> command sets the
+	  <option><replaceable>index</replaceable></option>'th element
+	  of the list to
+	  <option><replaceable>replacement</replaceable></option>.  If
+	  <option><replaceable>replacement</replaceable></option> is
+	  not present, then the element is deleted.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+    set lst {a b c}
+    lset &lst 1 x
+    puts $lst
 
+    lset &lst 1
+    puts $lst
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>a x c
+a c</screen>
+      </refsect1>
+    </refentry>
 
+     <!-- proc -->
+     <refentry>
+      <refnamediv>
+	<refname>proc</refname>
+	<refpurpose>Create a new procedure.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>proc</command>
+	  <arg choice="req"><replaceable>name</replaceable></arg>
+	  <arg choice="req"><replaceable>arglist</replaceable></arg>
+	  <arg choice="req"><replaceable>body</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>proc</command> command creates new procedures,
+	  which are virtually indistinguishable from built-in Hecl
+	  commands.  <option><replaceable>name</replaceable></option>
+	  is the name of the new command,
+	  <option><replaceable>arglist</replaceable></option> is a
+	  list of arguments that the new command will take and make
+	  available as local variables within the
+	  <option><replaceable>body</replaceable></option>, which is
+	  the code executed every time the command is called.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+proc addlist {lst} {
+    set res 0
+    foreach e &lst {
+	incr &res $e
+    }
+    return &res
+}
 
+puts [addlist {1 2 3 4 5}]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>15</screen>
+      </refsect1>
+    </refentry>
 
+     <!-- puts -->
+     <refentry>
+      <refnamediv>
+	<refname>puts</refname>
+	<refpurpose>Print text.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>puts</command>
+	  <arg choice="req"><replaceable>text</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>puts</command> command prints
+	  <option><replaceable>text</replaceable></option> to stdout.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts "Hello, world"
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>Hello, world</screen>
+      </refsect1>
+    </refentry>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
+    <!-- ref -->
     <refentry>
+      <refnamediv>
+	<refname>ref</refname>
+	<refpurpose>Returns a reference to the variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>ref</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>ref</command> command is the equivalent of the
+	  &amp; syntax - it returns a reference to the Hecl 'thing'
+	  that the variable
+	  <option><replaceable>varname</replaceable></option> points to.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo 1
+set bar [ref foo]
+incr &bar 1
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>2</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- return -->
+    <refentry>
+      <refnamediv>
+	<refname>return</refname>
+	<refpurpose>Returns a value from a procedure.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>return</command>
+	  <arg choice="req"><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>return</command> command returns a value from a
+	  <command>proc</command> command.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+proc someproc {} {
+    set res 1
+    return &res
+    set res 2
+    return &res
+}
+puts [someproc]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>1</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- search -->
+    <refentry>
+      <refnamediv>
+	<refname>search</refname>
+	<refpurpose>Append text to a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>search</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	  <arg choice="req"><replaceable>script</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>search</command> command is similar to
+	  <command>filter</command> in functionality, except that it
+	  stops searching on the first match.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set lst {1 2 3 4 5 4 3 2 1}
+puts [search $lst x {= $x 4}]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>4</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- set -->
+    <refentry>
+      <refnamediv>
+	<refname>set</refname>
+	<refpurpose>Set a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>set</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	  <arg choice="opt"><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>set</command> sets the value of a variable
+	  <option><replaceable>varname</replaceable></option> to value
+	  <option><replaceable>value</replaceable></option>. If
+	  <option><replaceable>value</replaceable></option> is not
+	  provided, returns the value of
+	  <option><replaceable>varname</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set foo "bar"
+set bee bop
+puts "foo is $foo and bee is $bee"
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>1
+foo is bar and bee is bop
+</screen>
+      </refsect1>
+    </refentry>
+
+
+     <!-- sindex -->
+     <refentry>
+      <refnamediv>
+	<refname>sindex</refname>
+	<refpurpose>Return the index'th character of string.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>sindex</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="req"><replaceable>index</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>sindex</command> command returns the
+	  <option><replaceable>index</replaceable></option>'th
+	  character of <option><replaceable>string</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [sindex "Hello, world" 0]
+puts [sindex "Hello, world" 11]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>H
+d</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- slen -->
+    <refentry>
+      <refnamediv>
+	<refname>slen</refname>
+	<refpurpose>String length.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>slen</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>slen</command> returns the length of
+	  <option><replaceable>string</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [slen "abcdefghijklmnopqrstuvwxyz"]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>26</screen>
+      </refsect1>
+    </refentry>
+
+     <!-- sort -->
+     <refentry>
+      <refnamediv>
+	<refname>sort</refname>
+	<refpurpose>Sorts list alphabetically.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>sort</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>sort</command> command returns an
+	  alphabetically sorted list of the contents of
+	  <option><replaceable>list</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>belluno padova rovigo treviso venezia verona vicenza
+</screen>
+      </refsect1>
+    </refentry>
+
+     <!-- source -->
+     <refentry>
+      <refnamediv>
+	<refname>source</refname>
+	<refpurpose>Evaluate Hecl script in a file.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>source</command>
+	  <arg choice="req"><replaceable>filename</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>source</command> command evaluates the Hecl
+	  script located in file
+	  <option><replaceable>filename</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+# Variable foo is defined as "Hello world" in foo.hcl
+source foo.hcl
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>Hello world</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- sourcehere - this one is ugly... we need something more
+    elegant. -->
+
+
+    <!-- split -->
+    <refentry>
+      <refnamediv>
+	<refname>split</refname>
+	<refpurpose>Split a string into a list.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>split</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="opt"><replaceable>splitstring</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>split</command> command takes a string and
+	  splits it into a list, divided by
+	  <option><replaceable>splitstring</replaceable></option>,
+	  which defaults to " " if not present.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [split "aaa;bbb;ccc" ";"]
+puts [split "aaa bbb ccc"]
+puts [split "aaaxbbbycccxyddd" "xy"]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>aaa bbb ccc
+aaa bbb ccc
+aaaxbbbyccc ddd</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- time -->
+    <refentry>
+      <refnamediv>
+	<refname>time</refname>
+	<refpurpose>Time the execution of a script.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>time</command>
+	  <arg choice="req"><replaceable>script</replaceable></arg>
+	  <arg choice="opt"><replaceable>repetitions</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>time</command> command executes
+	  <option><replaceable>script</replaceable></option>
+	  <option><replaceable>repetitions</replaceable></option>
+	  times, if
+	  <option><replaceable>repetitions</replaceable></option> is
+	  present, or once if not.  It measures the amount of time
+	  taken by this execution in milliseconds, and returns it.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set time [time {
+    set i 0
+    while { < &i 100 } {
+	incr &i
+    }
+} 10]
+puts "Time is $time"
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>Time is 6</screen>
+      </refsect1>
+    </refentry>
+
+     <!-- true -->
+     <refentry>
+      <refnamediv>
+	<refname>append</refname>
+	<refpurpose>Returns true.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>true</command>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>true</command> command returns 1, or true.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+if { true } {
+    puts "true is true"
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>true is true</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- upeval -->
+    <refentry>
+      <refnamediv>
+	<refname>upeval</refname>
+	<refpurpose>Evaluate script in next stack frame up.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>upeval</command>
+	  <arg choice="req"><replaceable>script</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>upeval</command> command evaluates
+	  <option><replaceable>script</replaceable></option> one stack
+	  frame up from the current stack frame.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+proc stackframe {} {
+    upeval { incr &foo }
+}
+set foo 1
+stackframe
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>2</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- while -->
+    <refentry>
+      <refnamediv>
+	<refname>while</refname>
+	<refpurpose>While loop.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>while</command>
+	  <arg choice="req"><replaceable>condition</replaceable></arg>
+	  <arg choice="req"><replaceable>body</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>while</command> command continues to evaluate
+	  <option><replaceable>body</replaceable></option> while
+	  <option><replaceable>condition</replaceable></option> is true.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+set i 0
+while { < &i 6 } {
+    puts "i is $i"
+    incr &i
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>i is 0
+i is 1
+i is 2
+i is 3
+i is 4
+i is 5
+</screen>
+      </refsect1>
+    </refentry>
+<!--
+     <refentry>
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>

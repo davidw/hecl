@@ -29,5 +29,6 @@ class ReturnCmd implements Command {
 	throws HeclException {
 
 	interp.setResult(argv[1]);
+	throw new HeclException(HeclException.RETURN);
     }
 }

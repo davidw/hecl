@@ -55,7 +55,13 @@ class Proc implements Command {
 		"proc " + argv[0] + " has too many arguments");
 	}
 
-	Eval.eval(interp, code);
+	try {
+	    Eval.eval(interp, code);
+	} catch (HeclException e) {
+	    if (e.code != HeclException.RETURN) {
+		throw e;
+	    }
+	}
 	interp.stackDecr();
     }
 }

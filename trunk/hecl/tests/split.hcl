@@ -7,3 +7,7 @@ test split-2 {
     split "aaa bbb ccc"
 } {aaa bbb ccc}
 
+test split-2 {
+    split "aaaxbbbycccxyddd" "xy"
+} {aaaxbbbyccc ddd}
+

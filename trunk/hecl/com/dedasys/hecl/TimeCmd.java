@@ -29,8 +29,16 @@ class TimeCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
+	int times = 1;
+
+	if (argv.length > 2) {
+	    times = IntThing.get(argv[2]);
+	}
 	long now = new Date().getTime();
-	Eval.eval(interp, argv[1]);
+	while (times > 0) {
+	    Eval.eval(interp, argv[1]);
+	    times --;
+	}
 	long done = new Date().getTime();
 
 	interp.setResult(IntThing.create((int)(done - now)));
