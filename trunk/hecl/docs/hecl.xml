@@ -1528,7 +1528,7 @@ puts "Time is $time"
      <!-- true -->
      <refentry id="true">
       <refnamediv>
-	<refname>append</refname>
+	<refname>true</refname>
 	<refpurpose>Returns true.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
