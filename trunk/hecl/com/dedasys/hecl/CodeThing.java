@@ -60,19 +60,12 @@ public class CodeThing {
 		}
 	    }
 
-	    /* Create new array.  Run args that are CODE or GROUP
+	    /* Create new array.  Run args that are SUBST or GROUP
 	     * types, use references to others. */
 	    for (int i = 0; i < argv.length; i ++) {
 		if (argv[i].type == Thing.SUBST) {
 		    eval.eval(interp, argv[i]);
 		    newargv[i] = interp.getResult();
-		    //System.out.println("NEW: " + newargv[i] + "||| OLD: " + argv[i]);
-/* 		} else if (argv[i].type == Thing.SUBST) {
-		    eval.eval(interp, argv[i]);
-		    newargv[i] = interp.getResult();
-		    System.out.println("NEW: " + newargv[i] + "||| OLD: " + argv[i]);
-
-  */
 		} else if (argv[i].type == Thing.GROUP) {
 		    StringBuffer result = new StringBuffer("");
 		    Vector v = argv[i].getGroup();

@@ -2,6 +2,13 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+/**
+ * <code>SortCmd</code> implements the "sort" command.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class SortCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)
@@ -11,7 +18,9 @@ class SortCmd implements Command {
 	interp.setResult(new Thing(v));
     }
 
-    public Vector quicksort (Vector a, int lo, int hi) {
+    /* FIXME - speeding this up a bit wouldn't hurt things. */
+
+    private Vector quicksort (Vector a, int lo, int hi) {
         //  lo is the lower index, hi is the upper index
         //  of the region of array a that is to be sorted
         int i = lo, j = hi;

@@ -1,3 +1,11 @@
+2004-11-09  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Interp.java: It is now necessary to pass an
+	instance of a Load derived object to the Interp being created, so
+	that it has at least one way of loading external resources.
+
+	* A few more documentation comments.
+
 2004-11-05  David N. Welton  <davidw@dedasys.com>
 
 	* tests/catch.hcl: We no longer require bad commands to report

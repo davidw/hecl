@@ -16,20 +16,23 @@ public class Interp {
     Thing result;
     Stack error;
 
-    LoadFile loadfile = null;
+    Load load = null;
     String currentfile = null;
 
     /**
      * Creates a new <code>Interp</code> instance, initializing
      * command and variable hashtables, a stack, and an error stack.
      *
+     * @param varname a <code>Load</code> instance of some type.
      * @exception HeclException if an error occurs
      */
-    public Interp ()
+    public Interp (Load newloader)
 	throws HeclException {
 	commands = new Hashtable();
 	stack = new Stack();
 	error = new Stack();
+
+	load = newloader;
 	// Set up stack frame for globals.
 	stack.push(new Hashtable());
 
@@ -348,17 +351,21 @@ public class Interp {
     }
 
     /**
-     * Describe <code>getscript</code> method here.
+     * The <code>getscript</code> method returns the text of a script
+     * resource (file, url, whatever) as a Thing.
      *
-     * @param filename a <code>String</code> value
+     * @param resourcename a <code>String</code> value
      * @return a <code>Thing</code> value
      * @exception HeclException if an error occurs
      */
-    public Thing getscript(String filename)
+
+    /* FIXME - this ought not to use LoadFile, so that we can change
+     * it. */
+
+    public Thing getscript(String resourcename)
 	throws HeclException {
-	currentfile = filename;
-	loadfile = new LoadFile();
-	return loadfile.getscript(filename);
+	currentfile = resourcename;
+	return load.getscript(resourcename);
     }
 
     /**

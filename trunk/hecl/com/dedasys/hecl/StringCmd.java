@@ -1,5 +1,12 @@
 package com.dedasys.hecl;
 
+/**
+ * <code>StringCmd</code> implements the "slen" and "sindex" commands.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 class StringCmd implements Command {
 
     public void cmdCode(Interp interp, Thing []argv) {

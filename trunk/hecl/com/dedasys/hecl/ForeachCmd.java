@@ -9,6 +9,9 @@ import java.util.*;
  * @version 1.0
  */
 
+/* FIXME - should also handle multiple sets of variable/list, like:
+ * foreach var $list othervar $otherlist  */
+
 class ForeachCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv)

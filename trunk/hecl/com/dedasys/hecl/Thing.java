@@ -2,6 +2,15 @@ package com.dedasys.hecl;
 
 import java.util.*;
 
+/**
+ * The <code>Thing</code> class is what Hecl revolves around.
+ * "Things" can be of several types, include strings, integers, lists,
+ * hash tables.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 public class Thing extends Object {
     protected int type;
     protected Object data;
@@ -22,16 +31,17 @@ public class Thing extends Object {
      * internal representation. */
     static final int CODE = 5;
 
-    /* Like a list... FIXME  */
+    /* Used when there is a group of things scrunched together, such
+     * as "[something] blah blah" and they must be kept together. */
     static final int GROUP = 6;
 
-    /* Like CODE, but to be subst'ed  */
+    /* Like CODE, but to be substituted before it is passed to the
+     * command that uses it. */
     static final int SUBST = 7;
 
+    /* No float so far because we are targeting J2ME... */
 
     /* static final int FLOAT = 3; */
-
-
 
     public Thing(String thing) {
 	type = STRING;
@@ -247,7 +257,7 @@ public class Thing extends Object {
 	return result;
     }
 
-    /* FIXME - I'm not entirely happy with how these two types (CODE,
+    /* FIXME - I'm not entirely  happy with how these two types (CODE,
      * GROUP) fit in with the 'real' types. */
 
     /* Set code from CodeThing object. */

@@ -22,7 +22,7 @@ public class RLHecl {
      */
     public static void main(String [] args) {
 	try {
-	    Interp interp = new Interp();
+	    Interp interp = new Interp(new LoadFile());
 	    Eval eval = new Eval();
 
 	    if (args.length > 0) {
