@@ -1,3 +1,7 @@
+2004-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Parse.java: Added ; as command terminator.
+
 2004-11-20  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/ : Added various other bits and pieces of the Hecl.jar

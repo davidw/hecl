@@ -234,6 +234,8 @@ public class Parse {
 		    return;
 		case '\n':
 		    return;
+		case ';':
+		    return;
 		default:
 		    appendToCurrent(ch);
 		    parseWord(state);
@@ -434,11 +436,12 @@ public class Parse {
 		    appendCurrent();
 		    break;
 		case ' ':
-//		    return new Thing(out);
 		    return;
 		case '\n':
 		    state.eoc = true;
-//		    return new Thing(out);
+		    return;
+		case ';':
+		    state.eoc = true;
 		    return;
 		case '\\':
 		    ch = state.nextchar();
