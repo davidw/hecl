@@ -1,5 +1,10 @@
 2005-03-04  David N. Welton  <davidw@dedasys.com>
 
+	* Makefile (sahecl): Depend on StandaloneHecl.java
+	($(srcdir)%.o): Use -Wall.
+
+	* StandaloneHecl.java: Fixed script.
+
 	* com/dedasys/hecl/Thing.java: Add code to check for nesting depth
 	so that circular references don't crash things.
 

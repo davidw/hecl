@@ -26,7 +26,7 @@ import com.dedasys.hecl.*;
 
 public class StandaloneHecl {
 
-    private static String script = "for {set i 0} {$i < 10} {incr &i} { puts $i }";
+    private static String script = "for {set i 0} {< $i 10} {incr &i} { puts $i }";
 
 
     /**
@@ -38,8 +38,7 @@ public class StandaloneHecl {
     public static void main(String [] args) {
 	try {
 	    Interp interp = new Interp(new LoadString(script));
-	    Eval eval = new Eval();
-	    eval.eval(interp, interp.getscript(null));
+	    Eval.eval(interp, interp.getscript(null));
 	} catch (Exception e) {
 	    System.err.println(e);
 	}

@@ -82,7 +82,7 @@ $(srcdir)%.class : $(srcdir)%.java
 	$(JAVAC) $<
 
 $(srcdir)%.o : $(srcdir)%.java
-	$(JCC) -c -O3 -g $(PROFILE) $< -o $@
+	$(JCC) -c -O3 -g -Wall $(PROFILE) $< -o $@
 
 # Make an archive.
 hecl.jar: $(CLASSES) $(SECLASSES) $(MECLASSES)
@@ -94,7 +94,7 @@ hecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS) Hecl.java
 	gcj-3.4 -O3 -g -o hecl --main=Hecl Hecl.java $(OBJECTS) $(SEOBJECTS) $(PROFILE)
 
 # "Stand alone" hecl.  Has a script compiled into it.
-sahecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS)
+sahecl: $(OBJECTS) $(SEOBJECTS) $(MEOBJECTS) StandaloneHecl.java
 	gcj-3.4 -O3 -g -o sahecl --main=StandaloneHecl StandaloneHecl.java \
 	$(OBJECTS) $(MEOBJECTS) $(PROFILE)
 
