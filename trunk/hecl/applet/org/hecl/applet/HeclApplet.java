@@ -70,8 +70,7 @@ public class HeclApplet extends Applet implements ActionListener {
 
         go.addActionListener(this);
 
-        input
-                .setText("for {set i 0} {< $i 10} {incr &i} {\n    puts \"I=$i\"\n}\n");
+        input.setText("for {set i 0} {< $i 10} {incr &i} {\n    puts \"I=$i\"\n}\n");
     }
 
     String resultString = "";

@@ -1,3 +1,13 @@
+2005-03-15  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added compileCommandline and packageCommandline
+	targets.  This last one creates a Hecl.jar that can be run with a
+	normal Java system.
+
+	* commandline/Hecl.java: Added a command line interpreter.  Some
+	features like determining whether a command is complete or not
+	would still be handy.
+
 2005-03-11  Wojciech Kocjan <wojciech@kocjan.org>
 
 	* Large rework of the code and build process.

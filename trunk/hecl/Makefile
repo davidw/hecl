@@ -74,7 +74,7 @@ SECLASSES = $(patsubst %.java,$(srcdir)%.class,$(SEFILES))
 MEOBJECTS = $(patsubst %.java,$(srcdir)%.o,$(MEFILES))
 MECLASSES = $(patsubst %.java,$(srcdir)%.class,$(MEFILES))
 
-srcdir=com/dedasys/hecl/
+srcdir=core/org/hecl/
 
 all: hecl docs hecl.jar
 
