@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+  <head>
+    <title>Hecl Programming Language Examples</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+pre {
+      margin-left: 2em;
+}
+    </style>
+  </head>
+  <body>
+
+    <h1 align="center"><a href="/">Hecl</a> &gt;&gt; Hecl Examples</h1>
+    <p>Hello World:</p>
+    <pre><code>puts "Hello, World"</code></pre>
+    <p>
+      Set a variable, print it out in the midst of a string:
+    </p>
+    <pre><code>set rating 10
+puts "Hecl, from 1 to 10: $rating"</code></pre>
+    <p>
+      Grouping with braces {}:
+    </p>
+
+    <pre><code>puts {The $dollar $signs $are printed	    literally$$ - no substitution}</code></pre>
+
+    <p>Utilize the result of a command:</p>
+
+    <pre><code>set rating 10
+puts "Rating:"
+puts [set rating]</code></pre>
+
+    <p>Basic math:</p>
+
+	    <pre><code>puts "2 + 2 = [+ 2 2]"</code></pre>
+
+	    <p>"if" command:</p>
+
+	    <pre><code>set temp 10
+if { < $temp 0 } {
+    puts "It's freezing"
+} else {
+    puts "Not freezing"
+}</code></pre>
+
+	    <p>References:</p>
+
+	    <pre><code>set a 1
+set b &a
+puts $b
+# Returns '1'
+set a 2
+puts $b
+# Returns '2'</code></pre>
+
+	    <p>"while" loop command:</p>
+
+	    <pre><code>set i 0
+while { < &i 10 } {
+    puts "i is now $i"
+    incr &i
+}
+</code></pre>
+
+	    <p>Lists:</p>
+
+	    <pre><code>set foo [list a b c]
+set bar {a b c}
+lappend &foo d
+lappend &bar d
+set foo
+# Returns 'a b c d'
+set bar
+# Returns 'a b c d'
+</code></pre>
+
+	    <p>Hash tables:</p>
+
+	    <pre><code>set foo [hash {a b c d}]
+puts [hget &foo a]
+# prints 'b'
+puts [hget &foo c]
+# prints 'd'
+hset &foo c 2
+puts [hget &foo c]
+# prints '2'
+puts $foo
+# prints 'a b c 2' (although not necessarily in that order)
+</code></pre>
+
+	    <p>"foreach" loop command:</p>
+
+	    <pre><code>set lst {a b c d e f}
+foreach {m n} $lst {
+    puts  "It is possible to grab two variables at a time: $m $n"
+}
+
+foreach {x} $lst {
+    puts  "Or one at a time: $x"
+}</code></pre>
+
+	    <p>Create new commands with the "proc" command.  In this
+	    example we create a command that prints out a numbered
+	    list.</p>
+
+	    <pre><code>set list {red blue green}
+proc printvals {vals} {
+    set num 1
+    foreach v $vals {
+	puts "$num - $v"
+	incr &num
+    }
+}
+
+printvals &list</code></pre>
+
+	    <p>Hecl is very flexible - in this example, we create a
+	    "do...while" loop command that works as if it were a
+	    native loop construct.</p>
+
+	    <pre><code>proc do {code while condition} {
+    upeval $code
+    while { upeval &condition } {
+	upeval $code
+    }
+}
+
+set x 100
+set foo ""
+do {
+    append &foo $x
+    incr &x
+} while {< &x 10}
+set foo
+# Returns 100 - because the loop is run once and only once.
+</code></pre>
+
+
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+    <pre><code></code></pre>
+
+  </body>
+</html>
