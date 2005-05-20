@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Interfacing Hecl and Java</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><link rel="start" href="index.html" title="
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Interfacing Hecl and Java</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="
       
 	Hecl Programming Language
       
@@ -6,7 +6,7 @@
       
 	Hecl Programming Language
       
-    "><link rel="prev" href="while.html" title="while"><link rel="next" href="j2me.html" title="Hecl and J2ME"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="while.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id4759384">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="heclandjava.html#id4759480">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="heclandjava.html#id4759764">JavaDocs</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4759384"></a>Calling Hecl code from Java</h3></div></div></div><p>
+    "><link rel="prev" href="while.html" title="while"><link rel="next" href="j2me.html" title="Hecl and J2ME"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="while.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id2529916">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2530012">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2530296">JavaDocs</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2529916"></a>Calling Hecl code from Java</h3></div></div></div><p>
 	Hecl is not a replacement for Java, and is indeed meant to
 	work hand in hand with Java.  We attempt to make it as easy as
 	possible to call Java from Hecl, via the creation of new Hecl
@@ -30,7 +30,7 @@
 	The above code creates a new interpreter.  Currently,
 	interpreters must know about how they are to load files, so the
 	interpreter is instantiated with a new
-	<tt class="classname">LoadFile</tt>, which, as the name suggests,
+	<code class="classname">LoadFile</code>, which, as the name suggests,
 	contains code to load files from the file system.  Since Hecl is
 	also meant for embedded environments, it is also possible to
 	create loader classes that load code from a compiled-in string,
@@ -38,20 +38,20 @@
 	in mind.
       </p><p>
 	After creating the interpreter, we call
-	<tt class="classname">Standard</tt>'s <tt class="methodname">init</tt>
-	method.  <tt class="classname">Standard</tt> is a class that adds
+	<code class="classname">Standard</code>'s <code class="methodname">init</code>
+	method.  <code class="classname">Standard</code> is a class that adds
 	several commands that we want to be present in standard J2SE
 	Hecl, but not in J2ME Hecl.
       </p><p>
-	The real work is done by <tt class="methodname">Eval.init</tt>,
+	The real work is done by <code class="methodname">Eval.init</code>,
 	which takes an interpreter and a Hecl
-	<tt class="classname">Thing</tt> as arguments.  In this case, the
-	<tt class="classname">Thing</tt> is the Hecl code read from the disk
-	by <tt class="classname">LoadFile</tt>.
-      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4759480"></a>Creating new Hecl commands</h3></div></div></div><p>
+	<code class="classname">Thing</code> as arguments.  In this case, the
+	<code class="classname">Thing</code> is the Hecl code read from the disk
+	by <code class="classname">LoadFile</code>.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2530012"></a>Creating new Hecl commands</h3></div></div></div><p>
 	Creating new Hecl commands is relatively simple.  The first
 	step is to create a new class for your command in a file, say
-	<tt class="filename">HelloCmd.java</tt>.  The code would look
+	<code class="filename">HelloCmd.java</code>.  The code would look
 	something like this:
       </p><pre class="programlisting">
 class HelloCmd implements Command {
@@ -64,8 +64,8 @@ class HelloCmd implements Command {
 }
       </pre><p>
 	The command takes an interpreter and an array of
-	<tt class="classname">Thing</tt>s as arguments, where the first
-	<tt class="classname">Thing</tt> is the name of the command
+	<code class="classname">Thing</code>s as arguments, where the first
+	<code class="classname">Thing</code> is the name of the command
 	itself, and the others are the arguments to it.
       </p><p>
 	The "glue" that connects the name of your Hecl command with
@@ -77,13 +77,13 @@ class HelloCmd implements Command {
 	should be aware of, to share variables between Hecl and Java,
 	and to return results from your Hecl commands:
       </p><div class="itemizedlist"><ul type="disc"><li><code class="methodsynopsis"><span class="methodname">interp.setVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>,<br>              <span class="methodparam"><span class="type">Thing </span><span class="parameter">value</span></span>);</code>
-	  This sets the value of <i class="parameter"><tt>varname</tt></i> to
+	  This sets the value of <em class="parameter"><code>varname</code></em> to
 	  some value.
 	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>);</code><br><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">String </span><span class="parameter">varname</span></span>);</code>
 	  These methods take a variable name, either in string form or
-	  as a <tt class="classname">Thing</tt>, and return the
-	  <tt class="classname">Thing</tt> associated with that variable.
-	</li><li><p><tt class="varname">interp.result</tt> is used to set the
+	  as a <code class="classname">Thing</code>, and return the
+	  <code class="classname">Thing</code> associated with that variable.
+	</li><li><p><code class="varname">interp.result</code> is used to set the
 	    result of a command.  This oft-used variable is accessed
 	    directly for simplicity, speed and smaller code size.
 	  </p></li><li><code class="methodsynopsis"><span class="type">int </span><span class="methodname">IntThing.get</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">thing</span></span>);</code>
@@ -92,7 +92,7 @@ class HelloCmd implements Command {
 	  Get a String from a Thing.
 	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam"><span class="type">int </span><span class="parameter">i</span></span>);</code>
 	  Creates a new thing from an int.
-	</li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id4759764"></a>JavaDocs</h3></div></div></div><p>
+	</li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2530296"></a>JavaDocs</h3></div></div></div><p>
 	For the complete Hecl javadoc documentation, see the <a href="jdocs" target="_top">Hecl Javadocs</a>.  And, of course, look at
 	  the Hecl source code to see how it's done!
-      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="while.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">while </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl and J2ME</td></tr></table></div></body></html>
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="while.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">while </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl and J2ME</td></tr></table></div></body></html>

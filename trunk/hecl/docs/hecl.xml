@@ -134,6 +134,33 @@
 
   </section>
 
+  <section id="installation">
+    <title>Installation</title>
+    <para>Hecl is easy to compile and install as a standard J2SE application.</para>
+    <procedure>
+      <step>
+	Hecl uses the <link url="http://www.hecl.org/">Apache
+	Ant</link> build system, so you need to install that to
+	compile Hecl.
+      </step>
+      <step>
+	To compile the standard, J2SE version of Hecl, do this:
+	<screen>
+ant packageCommandline
+</screen>
+      </step>
+      <step>
+	You should now have a Hecl.jar file.  To run it, do this:
+	<screen>
+java -jar Hecl.jar 
+hecl> puts "hello world"
+hello world
+</screen>
+      </step>
+    </procedure>
+
+  </section>
+
   <section id="tutorial">
     <title>Hecl Tutorial</title>
     <para>

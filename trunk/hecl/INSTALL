@@ -1,0 +1,27 @@
+		      Getting Started with Hecl
+		      =========================
+
+How to compile and run simple Hecl programs.
+
+1) Hecl is built with the Ant tool, so you'll need that in order to
+   build Hecl.
+
+2) To compile the J2SE version of Hecl, do this:\
+
+   ant packageCommandline
+
+3) At this point, you have a Hecl.jar file, and can run it like so:
+
+   hecl> puts "hello world"
+hello world
+
+4) If you wish, you could also compile it to native code with GCJ:
+
+   gcj-3.4 -o hecl --main=Hecl Hecl.jar 
+
+   davidw@medford:~/workshop/hecl$ ./hecl 
+   hecl> puts "hello world"
+hello world
+
+
+$Id$

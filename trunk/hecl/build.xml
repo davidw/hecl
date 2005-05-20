@@ -163,7 +163,11 @@
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/pjava" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/commandline"
-    includes="Hecl.class" update="true"/>
+    includes="Hecl.class" update="true">
+      <manifest>
+        <attribute name="Main-Class" value="Hecl"/>
+      </manifest>
+    </jar>
   </target>
 
   <target name="packageJARs" description="Create Jar distributions of the sources"
