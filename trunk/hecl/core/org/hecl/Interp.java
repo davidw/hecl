@@ -81,7 +81,7 @@ public class Interp {
      * @exception HeclException
      *                if an error occurs
      */
-    public void initInterp() throws HeclException {
+    private void initInterp() throws HeclException {
         addCommand("set", new SetCmd());
 
         addCommand("puts", new PutsCmd());
@@ -248,11 +248,11 @@ public class Interp {
     public Thing getVar(String varname, int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
 
-        Thing result = (Thing) lookup.get(varname);
-        if (result == null) {
+        Thing res = (Thing) lookup.get(varname);
+        if (res == null) {
             throw new HeclException("Variable " + varname + " does not exist");
         }
-        return result;
+        return res;
     }
 
     /**

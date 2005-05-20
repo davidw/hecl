@@ -8,3 +8,12 @@ proc returntest {} {
 test return-1 {
     returntest
 } 1
+
+proc emptyreturn {} {
+    set x 1
+    return
+}
+
+test return-2 {
+    emptyreturn
+} 1

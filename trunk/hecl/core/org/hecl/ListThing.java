@@ -87,13 +87,13 @@ public class ListThing implements RealThing {
      */
     private static void setListFromAny(Thing thing) throws HeclException {
         RealThing realthing = thing.val;
-        RealThing newthing = null;
 
         if (realthing instanceof ListThing) {
             /* Nothing to be done. */
             return;
         }
 
+        RealThing newthing = null;
         Vector newval = new Vector();
         if (realthing instanceof IntThing) {
             newval.addElement(new Thing(realthing));

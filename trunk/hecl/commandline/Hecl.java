@@ -30,7 +30,7 @@ public class Hecl {
 	    Vector argv = new Vector();
 
             for (i = 0; i < args.length; i++) {
-                System.out.println("(running " + args[i] + ")");
+                //System.out.println("(running " + args[i] + ")");
 		argv.addElement(new Thing(args[i]));
             }
 	    interp.setVar("argv", ListThing.create(argv));

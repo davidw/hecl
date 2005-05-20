@@ -27,7 +27,9 @@ class ReturnCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 
-        interp.setResult(argv[1]);
+	if (argv.length > 1) {
+	    interp.setResult(argv[1]);
+	}
         throw new HeclException(HeclException.RETURN);
     }
 }

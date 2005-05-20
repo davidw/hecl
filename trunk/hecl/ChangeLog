@@ -1,5 +1,17 @@
 2005-05-20  David N. Welton  <davidw@dedasys.com>
 
+	* tests/return.hcl (emptyreturn): Test for empty returns.
+
+	* core/org/hecl/ReturnCmd.java: Allow empty returns.
+
+	* core/org/hecl/Parse.java: Moved ParseState class to its own file
+	for space savings.
+
+	* core/org/hecl/CodeThing.java: Moved Stanza class to its own file
+	for space savings.
+
+2005-05-20  David N. Welton  <davidw@dedasys.com>
+
 	* docs/hecl.xml: Added short section on installation.
 
 2005-05-20  David N. Welton  <davidw@dedasys.com>
