@@ -10,11 +10,7 @@
 	* core/org/hecl/CodeThing.java: Moved Stanza class to its own file
 	for space savings.
 
-2005-05-20  David N. Welton  <davidw@dedasys.com>
-
 	* docs/hecl.xml: Added short section on installation.
-
-2005-05-20  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added Main-Class entry to Jar file so that it can be
 	run from the command line.
