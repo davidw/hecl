@@ -40,7 +40,9 @@ public class Interp {
 
     public long cacheversion = 0;
 
-    Hashtable commands;
+    /* Save some space by making this public and removing the
+     * accessors. */
+    public Hashtable commands;
 
     Stack stack;
 
@@ -82,80 +84,80 @@ public class Interp {
      *                if an error occurs
      */
     private void initInterp() throws HeclException {
-        addCommand("set", new SetCmd());
+        commands.put("set", new SetCmd());
 
-        addCommand("puts", new PutsCmd());
+        commands.put("puts", new PutsCmd());
 
-        addCommand("=", new EqualsCmd());
-        addCommand("eq", new EqualsCmd());
-        addCommand(">", new EqualsCmd());
-        addCommand("<", new EqualsCmd());
+        commands.put("=", new EqualsCmd());
+        commands.put("eq", new EqualsCmd());
+        commands.put(">", new EqualsCmd());
+        commands.put("<", new EqualsCmd());
 
-        addCommand("if", new IfCmd());
+        commands.put("if", new IfCmd());
 
-        addCommand("while", new WhileCmd());
+        commands.put("while", new WhileCmd());
 
-        addCommand("+", new BasicMathCmd());
-        addCommand("-", new BasicMathCmd());
-        addCommand("*", new BasicMathCmd());
-        addCommand("/", new BasicMathCmd());
+        commands.put("+", new BasicMathCmd());
+        commands.put("-", new BasicMathCmd());
+        commands.put("*", new BasicMathCmd());
+        commands.put("/", new BasicMathCmd());
 
-        addCommand("/", new BasicMathCmd());
+        commands.put("/", new BasicMathCmd());
 
-        addCommand("list", new ListCmd());
-        addCommand("llen", new ListCmd());
-        addCommand("lappend", new ListCmd());
-        addCommand("lindex", new ListCmd());
-        addCommand("lset", new ListCmd());
+        commands.put("list", new ListCmd());
+        commands.put("llen", new ListCmd());
+        commands.put("lappend", new ListCmd());
+        commands.put("lindex", new ListCmd());
+        commands.put("lset", new ListCmd());
 
-        addCommand("split", new JoinSplitCmd());
-        addCommand("join", new JoinSplitCmd());
+        commands.put("split", new JoinSplitCmd());
+        commands.put("join", new JoinSplitCmd());
 
-        addCommand("proc", new ProcCmd());
+        commands.put("proc", new ProcCmd());
 
-        addCommand("foreach", new ForeachCmd());
-        addCommand("filter", new FilterCmd());
-        addCommand("search", new FilterCmd());
+        commands.put("foreach", new ForeachCmd());
+        commands.put("filter", new FilterCmd());
+        commands.put("search", new FilterCmd());
 
-        addCommand("break", new BreakCmd());
-        addCommand("continue", new BreakCmd());
+        commands.put("break", new BreakCmd());
+        commands.put("continue", new BreakCmd());
 
-        addCommand("true", new TrueCmd());
+        commands.put("true", new TrueCmd());
 
-        addCommand("catch", new CatchCmd());
+        commands.put("catch", new CatchCmd());
 
-        addCommand("intro", new IntrospectCmd());
+        commands.put("intro", new IntrospectCmd());
 
-        addCommand("source", new ResCmd());
+        commands.put("source", new ResCmd());
 
-        addCommand("sourcehere", new ResCmd());
+        commands.put("sourcehere", new ResCmd());
 
-        addCommand("upeval", new UpCmd());
+        commands.put("upeval", new UpCmd());
 
-        addCommand("sort", new SortCmd());
+        commands.put("sort", new SortCmd());
 
-        addCommand("append", new AppendCmd());
+        commands.put("append", new AppendCmd());
 
-        addCommand("slen", new StringCmd());
-        addCommand("sindex", new StringCmd());
+        commands.put("slen", new StringCmd());
+        commands.put("sindex", new StringCmd());
 
-        addCommand("hash", new HashCmd());
-        addCommand("hget", new HashCmd());
-        addCommand("hset", new HashCmd());
+        commands.put("hash", new HashCmd());
+        commands.put("hget", new HashCmd());
+        commands.put("hset", new HashCmd());
 
-        addCommand("eval", new EvalCmd());
+        commands.put("eval", new EvalCmd());
 
-        addCommand("global", new GlobalCmd());
+        commands.put("global", new GlobalCmd());
 
-        addCommand("return", new ReturnCmd());
+        commands.put("return", new ReturnCmd());
 
-        addCommand("incr", new IncrCmd());
+        commands.put("incr", new IncrCmd());
 
-        addCommand("for", new ForCmd());
+        commands.put("for", new ForCmd());
 
-        addCommand("time", new TimeCmd());
+        commands.put("time", new TimeCmd());
 
-        addCommand("module", new HeclModuleCmd());
+        commands.put("module", new HeclModuleCmd());
 
         /* Try to load standard modules, if they exist. */
         loadModule("pjava", false);
@@ -366,47 +368,6 @@ public class Interp {
     }
 
     /**
-     * <code>addCommand</code> adds a command to the command hash table.
-     * 
-     * @param name
-     *            a <code>String</code> value
-     * @param cmd
-     *            a <code>Command</code> value
-     * @exception HeclException
-     *                if an error occurs
-     */
-    public void addCommand(String name, Command cmd) throws HeclException {
-        commands.put(name, cmd);
-    }
-
-    public void removeCommand(String name) throws HeclException {
-        commands.remove(name);
-    }
-
-    /**
-     * <code>getCommand</code> fetches a command for excecution from the command
-     * hash table.
-     * 
-     * @param name
-     *            a <code>String</code> value
-     * @return a <code>Command</code> value
-     */
-    public Command getCommand(String name) {
-        return (Command) commands.get(name);
-    }
-
-    /**
-     * <code>cmdNames</code> returns a list of all commands registered.
-     * 
-     * @return an <code>Enumeration</code> value
-     * @exception HeclException
-     *                if an error occurs
-     */
-    public Enumeration cmdNames() throws HeclException {
-        return commands.keys();
-    }
-
-    /**
      * <code>addError</code> adds a Thing as an error message.
      * 
      * @param err
@@ -529,7 +490,7 @@ public class Interp {
                 throw new HeclException("module \"" + name
                         + "\" already loaded.");
             else
-                return;
+		return;
         }
 
         try {

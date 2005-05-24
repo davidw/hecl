@@ -152,9 +152,15 @@ public class HashThing implements RealThing {
      * @exception HeclException
      *                if an error occurs
      */
-    public String getStringRep() throws HeclException {
-        Vector v = ListThing.get(new Thing(new HashThing(val)));
-        ListThing newthing = new ListThing(v);
+    public String getStringRep() {
+	ListThing newthing = null;
+	try {
+	    Vector v = ListThing.get(new Thing(new HashThing(val)));
+	    newthing = new ListThing(v);
+	} catch (HeclException he) {
+	    /* We should never get here because a hash is always a
+	     * well formed list. */
+	}
         return newthing.getStringRep();
     }
 

@@ -95,10 +95,7 @@ public class ListThing implements RealThing {
 
         RealThing newthing = null;
         Vector newval = new Vector();
-        if (realthing instanceof IntThing) {
-            newval.addElement(new Thing(realthing));
-            newthing = new ListThing(newval);
-        } else if (realthing instanceof HashThing) {
+	if (realthing instanceof HashThing) {
             Hashtable h = HashThing.get(thing);
 
             for (Enumeration e = h.keys(); e.hasMoreElements();) {
@@ -151,14 +148,15 @@ public class ListThing implements RealThing {
      * @param thing
      *            a <code>Thing</code> value
      * @return a <code>String</code> value
-     * @throws HeclException
      */
-    private String toListString(Thing thing) throws HeclException {
+    private String toListString(Thing thing) {
         String elementstring = thing.getStringRep();
         StringBuffer resbuf = new StringBuffer();
 
         if (elementstring.indexOf(' ') > 0) {
-            resbuf.append("{" + elementstring + "}");
+            resbuf.append("{");
+            resbuf.append(elementstring);
+            resbuf.append("}");
         } else {
             resbuf.append(elementstring);
         }
@@ -170,19 +168,19 @@ public class ListThing implements RealThing {
      * ListThing.
      * 
      * @return a <code>String</code> value
-     * @throws HeclException
      */
-    public String getStringRep() throws HeclException {
+    public String getStringRep() {
         String result = null;
         StringBuffer resbuf = new StringBuffer("");
         int sz = val.size();
         int i = 0;
 
         if (sz > 0) {
-            for (i = 0; i < sz - 1; i++) {
-                resbuf.append(toListString((Thing) val.elementAt(i)) + " ");
-            }
-            resbuf.append(toListString((Thing) val.elementAt(i)));
+	    for (i = 0; i < sz - 1; i++) {
+		resbuf.append(toListString((Thing) val.elementAt(i)));
+		resbuf.append(" ");
+	    }
+	    resbuf.append(toListString((Thing) val.elementAt(i)));
         }
 
         return resbuf.toString();

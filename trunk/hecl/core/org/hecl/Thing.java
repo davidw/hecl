@@ -143,15 +143,10 @@ public class Thing extends Object {
      * @return a <code>String</code> value
      */
     public String toString() {
-        try {
-            stringval = val.getStringRep();
-        } catch (HeclException exception) {
-
-        }
-        return stringval;
+        return val.getStringRep();
     }
 
-    public String getStringRep() throws HeclException {
+    public String getStringRep() {
         if (this instanceof RealThing) {
             return ((RealThing) this).getStringRep();
         } else {
@@ -177,12 +172,5 @@ public class Thing extends Object {
 	/* We've done the deepcopy, we can lower the depth again. */
 	depth --;
 	return new Thing(realthing);
-    }
-
-    /* FIXME - remove this in favor of Compare class. */
-    public int compare(Thing t) {
-        String xs = t.toString();
-        String ts = this.toString();
-        return ts.compareTo(xs);
     }
 }

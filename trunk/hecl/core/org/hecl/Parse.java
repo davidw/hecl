@@ -95,27 +95,33 @@ public class Parse {
         Command command = null;
         String cmdName = null;
         int i = 0;
+	Vector cmd;
+	Thing[] argv;
+	int cmdsize = 0;
 
         while (more()) {
-            cmdName = null;
-            Vector cmd = new Vector();
             cmd = parse();
             //System.out.println("CMD is " + cmd);
 
-            if (cmd == null || cmd.size() == 0) {
+            if (cmd == null) {
                 continue;
             }
+	    cmdsize = cmd.size();
+	    if (cmdsize == 0) {
+		continue;
+	    }
 
-            Thing[] argv = new Thing[cmd.size()];
-            for (i = 0; i < cmd.size(); i++) {
+            cmdName = null;
+            argv = new Thing[cmdsize];
+            for (i = 0; i < cmdsize; i++) {
                 argv[i] = (Thing) cmd.elementAt(i);
             }
-            cmdName = ((Thing) cmd.elementAt(0)).getStringRep();
+	    cmdName = argv[0].getStringRep();
 
             // System.out.println("CMD is " + cmdName);
             // System.out.println("ARGS ARE " + Arrays.asList(argv));
 
-            command = interp.getCommand(cmdName);
+            command = (Command)interp.commands.get(cmdName);
             code.addStanza(command, argv);
             // command.cmdCode(interp, argv);
         }
@@ -305,7 +311,6 @@ public class Parse {
          * System.out.println("parser ^^^^");
          */
         Thing strcopy = currentOut.deepcopy();
-        StringThing.get(strcopy);
         currentOut.setVal(new SubstThing(strcopy.getStringRep(), !docopy));
     }
 
@@ -487,8 +492,7 @@ public class Parse {
                     if (state.done()) {
                         return;
                     }
-                    appendToCurrent(ch);
-                    break;
+		    /* Fall through on purpose.  */
                 default :
                     appendToCurrent(ch);
                     //		    out.appendString(state.chars[state.idx]);

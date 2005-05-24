@@ -107,7 +107,7 @@ public class GroupThing implements RealThing {
      * 
      * @return a <code>String</code> value
      */
-    public String getStringRep() throws HeclException {
+    public String getStringRep() {
         String result = null;
         StringBuffer resbuf = new StringBuffer("");
         int sz = val.size();

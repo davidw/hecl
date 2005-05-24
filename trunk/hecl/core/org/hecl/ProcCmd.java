@@ -26,7 +26,6 @@ package org.hecl;
 class ProcCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        Proc proc = new Proc(argv[2], argv[3]);
-        interp.addCommand(argv[1].getStringRep(), proc);
+        interp.commands.put(argv[1].getStringRep(), new Proc(argv[2], argv[3]));
     }
 }

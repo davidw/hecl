@@ -94,7 +94,7 @@ class Stanza {
 	    } else {
 		cmdName = argv[0].getStringRep();
 	    }
-	    command = interp.getCommand(cmdName);
+	    command = (Command)interp.commands.get(cmdName);
 	    if (command == null) {
 		throw new HeclException("Command " + cmdName
 					+ " does not exist");
@@ -134,12 +134,10 @@ class Stanza {
 	    }
 	    switch (e.code) {
 	    case HeclException.BREAK :
-		throw e;
 	    case HeclException.CONTINUE :
-		throw e;
 	    case HeclException.RETURN :
-		throw e;
 	    case HeclException.ERROR :
+		/* Automatically fall through. */
 		throw e;
 	    }
 	} catch (Exception e) {
@@ -149,10 +147,11 @@ class Stanza {
 	     * Hecl.
 	     */
 	    msg = e.getMessage();
-	    if (msg == null)
+	    if (msg == null) {
 		msg = "(null exception of type " + e.getClass() + ")";
-	    else
+	    } else {
 		msg = "Exception of type " + e.getClass() + ": " + msg;
+	    }
 	    throw new HeclException(msg);
 	}
 
@@ -166,7 +165,8 @@ class Stanza {
     public String toString() {
 	StringBuffer out = new StringBuffer(argv[0].toString());
 	for (int i = 1; i < argv.length; i++) {
-	    out.append(" " + argv[i].toString());
+	    out.append(" ");
+	    out.append(argv[i].toString());
 	}
 	return out.toString();
     }

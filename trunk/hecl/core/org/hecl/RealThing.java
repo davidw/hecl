@@ -42,5 +42,5 @@ public abstract interface RealThing {
      * 
      * @return a <code>String</code> representation of the value
      */
-    public String getStringRep() throws HeclException;
+    public String getStringRep();
 }

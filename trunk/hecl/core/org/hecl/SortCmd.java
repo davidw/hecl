@@ -53,10 +53,12 @@ class SortCmd implements Command {
         Thing h;
         //  partition
         do {
-            while (((Thing) a.elementAt(i)).compare(x) < 0) {
+//            while (((Thing) a.elementAt(i)).compare(x) < 0) {
+            while (Compare.compare((Thing)a.elementAt(i), x) < 0) {
                 i++;
             }
-            while (((Thing) a.elementAt(j)).compare(x) > 0) {
+//            while (((Thing) a.elementAt(j)).compare(x) > 0) {
+            while (Compare.compare((Thing)a.elementAt(j), x) > 0) {
                 j--;
             }
             if (i <= j) {

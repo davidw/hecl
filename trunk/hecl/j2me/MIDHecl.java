@@ -89,7 +89,7 @@ public class MIDHecl
 		interp = new Interp();
 		FormAppendCmd fac = new FormAppendCmd();
 		fac.mainForm = resultFrame;
-		interp.addCommand("formappend", fac);
+		interp.commands.put("formappend", fac);
 	    } catch (Exception e) {
 		System.err.println(e);
 	    }

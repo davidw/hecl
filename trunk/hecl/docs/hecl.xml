@@ -1782,11 +1782,11 @@ class HelloCmd implements Command {
       </para>
 
       <programlisting>
-	interp.addCommand("hello", new HelloCmd());
+	interp.commands.put("hello", new HelloCmd());
       </programlisting>
 
       <para>
-	Simple, no?  There are a few other useful methods that you
+	Easy, no?  There are a few other useful methods that you
 	should be aware of, to share variables between Hecl and Java,
 	and to return results from your Hecl commands:
       </para>

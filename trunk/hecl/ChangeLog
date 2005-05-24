@@ -1,3 +1,49 @@
+2005-05-24  David N. Welton  <davidw@dedasys.com>
+
+	* tests/sort.hcl: Sorting numbers always does an integer sort now.
+
+	* http/org/hecl/http/HeclModule.java: Use Interp.commands
+	directly.
+
+	* core/org/hecl/Thing.java: Removed compare method in favore of
+	Compare class.  toString method no longer throws HeclException.
+
+	* core/org/hecl/Stanza.java: Automatically fall through in case
+	statement for small space savings.
+
+	* core/org/hecl/RealThing.java: getStringRep doesn't throw a
+	HeclException.
+
+	* core/org/hecl/ProcCmd.java: Reworked for small space savings,
+	and to utilize Interp.commands directly.
+
+	* core/org/hecl/Parse.java: Reworked things a bit to save some
+	space.
+
+	* core/org/hecl/ListThing.java: Removed IntThing shortcut.
+	Removed various HeclExceptions from functions to transform lists
+	to strings.
+
+	* core/org/hecl/IntrospectCmd.java: Use Interp.commands.put
+	directly instead of accessor functions.
+
+	* core/org/hecl/Interp.java: Use commands.put directly instead of
+	accessor functions.  Cut that extra bit of fat out.
+
+	* core/org/hecl/HeclException.java: Rejig things to save a few
+	bytes.
+
+	* core/org/hecl/HashThing.java: Don't throw exceptions from
+	getStringRep.
+
+	* core/org/hecl/GroupThing.java: Don't throw exceptions from
+	getStringRep.
+
+	* core/org/hecl/Compare.java: Lose some of the HeclExceptions.
+
+	* applet/org/hecl/applet/HeclApplet.java: Work with commands hash
+	table directly.
+
 2005-05-20  David N. Welton  <davidw@dedasys.com>
 
 	* tests/return.hcl (emptyreturn): Test for empty returns.

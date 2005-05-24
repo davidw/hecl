@@ -43,11 +43,11 @@ public class HeclModule implements org.hecl.HeclModule, ResHandle {
 
     public void loadModule(Interp interp) throws HeclException {
         interp.addResourceGetter(this);
-        interp.addCommand("http", new HttpCommand());
+        interp.commands.put("http", new HttpCommand());
     }
 
     public void unloadModule(Interp interp) throws HeclException {
         interp.removeResourceGetter(this);
-        interp.removeCommand("http");
+        interp.commands.remove("http");
     }
 }

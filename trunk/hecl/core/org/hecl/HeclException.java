@@ -151,12 +151,12 @@ public class HeclException extends Exception {
     public static HeclException createWrongNumArgsException(Thing argv[],
             int count, String message) throws HeclException {
         int i;
-        String str = "";
+        StringBuffer str = new StringBuffer();
         for (i = 0; i < count; i++) {
-            str += argv[i].getStringRep() + " ";
+            str.append(argv[i].getStringRep());
+            str.append(" ");
         }
-        str = "wrong # args: should be \"" + str + message + "\"";
-        return new HeclException(str);
+        return new HeclException("wrong # args: should be \"" + str + message + "\"");
     }
     /**
      * 

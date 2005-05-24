@@ -86,7 +86,7 @@ public class HeclApplet extends Applet implements ActionListener {
             try {
                 interp = new Interp();
                 eval = new Eval();
-                interp.addCommand("puts", new PutsCommand());
+                interp.commands.put("puts", new PutsCommand());
             } catch (HeclException error) {
                 output.setForeground(Color.red);
                 output.setText("Error while initializing Hecl:\n"

@@ -62,7 +62,7 @@ public class StringThing implements RealThing {
      *            a <code>Thing</code> value
      * @throws HeclException
      */
-    private static void setStringFromAny(Thing thing) throws HeclException {
+    private static void setStringFromAny(Thing thing) {
         RealThing realthing = thing.val;
         if (!(realthing instanceof StringThing)) {
             thing.val = new StringThing(((Thing) thing).getStringRep());
@@ -78,7 +78,7 @@ public class StringThing implements RealThing {
      * @return a <code>String</code> value
      * @throws HeclException
      */
-    public static String get(Thing thing) throws HeclException {
+    public static String get(Thing thing) {
         setStringFromAny(thing);
         return thing.getStringRep();
     }
