@@ -60,6 +60,9 @@ public class Hecl {
 	    }
 	    try {
 		Eval.eval(interp, new Thing(line));
+		if (interp.result != null) {
+		    System.out.println(interp.result);
+		}
 	    } catch (HeclException he) {
 		System.out.println(he);
 	    }

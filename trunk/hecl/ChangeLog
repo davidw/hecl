@@ -1,3 +1,10 @@
+2005-05-26  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ClassThing.java: Removed, for now.
+
+	* commandline/Hecl.java: Print interp.result for each command when
+	in interactive mode.
+
 2005-05-24  David N. Welton  <davidw@dedasys.com>
 
 	* tests/sort.hcl: Sorting numbers always does an integer sort now.
