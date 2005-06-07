@@ -147,8 +147,6 @@ public class CodeThing implements RealThing {
     protected static Thing doGroupSubst(Interp interp, Thing thing)
             throws HeclException {
         RealThing realthing = thing.val;
-        Thing newthing = null;
-
         StringBuffer result = new StringBuffer("");
         Vector v = GroupThing.get(thing);
 

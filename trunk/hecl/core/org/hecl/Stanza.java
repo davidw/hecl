@@ -125,6 +125,7 @@ class Stanza {
 	 */
 
 	try {
+	    interp.result = new Thing("");
 	    command.cmdCode(interp, newargv);
 	} catch (HeclException e) {
 	    /* Uh oh, an "issue"! */

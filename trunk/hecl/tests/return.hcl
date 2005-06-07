@@ -16,4 +16,17 @@ proc emptyreturn {} {
 
 test return-2 {
     emptyreturn
-} 1
+} {}
+
+test return-3 {
+    set x 10
+    puts foo
+} {}
+
+test return-4 {
+    set x 10
+    set x
+    set res [puts x]
+    append &res [puts y]
+    set res
+} {}

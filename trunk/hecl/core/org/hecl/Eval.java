@@ -40,8 +40,7 @@ public class Eval {
      *                if an error occurs.
      */
     public static Thing eval(Interp interp, Thing in) throws HeclException {
-        CodeThing.get(interp, in).run(interp);
-        return interp.result;
+	CodeThing.get(interp, in).run(interp);
+	return interp.result;
     }
-
 }

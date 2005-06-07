@@ -1,3 +1,11 @@
+2005-06-07  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Stanza.java: Cancel out interp.result each time
+	through.
+
+	* tests/return.hcl (emptyreturn): Test for return values that
+	'stick around' longer than they are welcome to.
+
 2005-05-26  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/ClassThing.java: Removed, for now.

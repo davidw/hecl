@@ -42,4 +42,4 @@ test foreach-4 {
 test foreach-5 {
     set x 0
     foreach var {} { puts $var }
-} {0}
+} {}
