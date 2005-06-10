@@ -2,6 +2,7 @@ import java.util.Vector;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import org.hecl.Compare;
 import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
@@ -60,7 +61,8 @@ public class Hecl {
 	    }
 	    try {
 		Eval.eval(interp, new Thing(line));
-		if (interp.result != null) {
+		if (interp.result != null &&
+		    Compare.compareString(interp.result, new Thing("")) != 0) {
 		    System.out.println(interp.result);
 		}
 	    } catch (HeclException he) {

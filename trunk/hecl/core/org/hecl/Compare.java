@@ -21,7 +21,7 @@ package org.hecl;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
-class Compare {
+public class Compare {
 
     /**
      * <code>compareInt</code> exists to compare two Things as ints. Since it

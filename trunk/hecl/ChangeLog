@@ -1,3 +1,10 @@
+2005-06-11  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/Hecl.java: Throw away empty strings, don't report
+	them back to the user.
+
+	* core/org/hecl/Compare.java: Make this class public.
+
 2005-06-07  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Stanza.java: Cancel out interp.result each time
