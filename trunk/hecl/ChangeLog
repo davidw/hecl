@@ -1,5 +1,7 @@
 2005-08-07  David N. Welton  <davidw@dedasys.com>
 
+	* docs/jdocs/: Updated javadocs.
+
 	* build.xml: Added 'docs' build target.  Ant syntax is very, very
 	verbose.
 

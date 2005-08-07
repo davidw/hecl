@@ -23,7 +23,7 @@ package org.hecl;
  * @version 1.0
  */
 
-public class AppendCmd implements Command {
+class AppendCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         StringBuffer strb;
         Thing result = argv[1];
