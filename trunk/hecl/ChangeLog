@@ -1,3 +1,12 @@
+2005-08-07  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added 'docs' build target.  Ant syntax is very, very
+	verbose.
+
+	* tests/sort.hcl: Add test for empty list.
+
+	* core/org/hecl/SortCmd.java: Test for 0 length lists.
+
 2005-06-11  David N. Welton  <davidw@dedasys.com>
 
 	* commandline/Hecl.java: Throw away empty strings, don't report

@@ -220,4 +220,19 @@
       </manifest>
     </jar>
   </target>
+
+  <!-- Docs -->
+  <target name="docs">
+    <exec executable="xsltproc">
+      <arg value="--nonet" />
+      <arg value="--stringparam" />
+      <arg value="html.stylesheet" />
+      <arg value="hecl.css" />
+      <arg value="-o" />
+      <arg value="docs/" />
+      <arg value="docs/chunk.xsl" />
+      <arg value="docs/hecl.xml" />
+    </exec>
+  </target>
+
 </project>

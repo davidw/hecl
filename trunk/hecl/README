@@ -7,7 +7,8 @@ are:
 
 * Simplicity.  The language shouldn't be complicated.  It should
   "scale down", which means that even someone without much experience
-  programming ought to be able to use it and be productive with it.
+  programming ought to be able to use it and be productive with it,
+  even if their code isn't beautiful.
 
 * Power.  Experts should be able to use it and not feel limited.
 
@@ -21,6 +22,9 @@ are:
 * Embeddable.  Hecl is easy to embed into your own Java applications.
 
 * Compatible with many Java versions - J2ME, PJava, J2SE etc.
+
+To get started, read the INSTALL file and the documentation, starting
+with docs/index.html.
 
 -- David N. Welton
 

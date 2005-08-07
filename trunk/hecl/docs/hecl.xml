@@ -139,7 +139,7 @@
     <para>Hecl is easy to compile and install as a standard J2SE application.</para>
     <procedure>
       <step>
-	Hecl uses the <link url="http://www.hecl.org/">Apache
+	Hecl uses the <link url="http://ant.apache.org/">Apache
 	Ant</link> build system, so you need to install that to
 	compile Hecl.
       </step>
@@ -152,10 +152,32 @@ ant packageCommandline
       <step>
 	You should now have a Hecl.jar file.  To run it, do this:
 	<screen>
-java -jar Hecl.jar 
+java -jar Hecl.jar Hecl
 hecl> puts "hello world"
 hello world
 </screen>
+      </step>
+      <step>
+	If you wish, you can compile Hecl to native code with GCJ:
+	<screen>
+gcj -o hecl --main=Hecl Hecl.jar
+davidw@medford:~/workshop/hecl$ ./hecl
+hecl> puts "hello world"
+hello world
+	</screen>
+      </step>
+      <step>
+	If you want to check your installation of Hecl, you can run
+	the test suite to make sure everything checks out:
+	<screen>
+java -classpath Hecl.jar Hecl tests/suite.hcl
+	</screen>
+	A performance test is also supplied so that you can compare
+	numbers if you're curious, or want to hack on Hecl to improve
+	its speed:
+	<screen>
+java -classpath Hecl.jar Hecl tests/performance.hcl
+	</screen>
       </step>
     </procedure>
 

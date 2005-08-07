@@ -28,7 +28,9 @@ class SortCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Vector v = ListThing.get(argv[1]);
-        v = quicksort(v, 0, v.size() - 1);
+	if (v.size() != 0) {
+	    v = quicksort(v, 0, v.size() - 1);
+	}
         interp.setResult(ListThing.create(v));
     }
 
