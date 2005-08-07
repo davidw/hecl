@@ -102,7 +102,8 @@
       donations are welcome.  Hecl is still growing, so your thoughts
       are important, and you can help shape the language's future.
       You can download the code via CVS from the SourceForge project
-      page: <ulink href="http://sourceforge.net/projects/hecl/"/>.
+      page: <ulink
+      url="http://sourceforge.net/projects/hecl/">http://sourceforge.net/projects/hecl/</ulink>.
     </para>
 
     <para>
@@ -128,8 +129,8 @@
       also due my friend Salvatore Sanfilippo, with whom I have spent
       many hours discussing Hecl, Tcl, and the philosophy of
       programming languages in general.  And of course, I owe a huge
-      debt of gratitude to my fiance&egrave;, Ilenia, who puts up with
-      all the hours I spend in front of "that damn computer".
+      debt of gratitude to my wife, Ilenia, who puts up with all the
+      hours I spend in front of "that damn computer".
     </para>
 
   </section>
