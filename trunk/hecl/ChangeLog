@@ -1,3 +1,10 @@
+2005-08-13  David N. Welton  <davidw@dedasys.com>
+
+	* tests/math.hcl: Test for '+' that accepts multiple arguments.
+
+	* core/org/hecl/BasicMathCmd.java: Now it's possible to add more
+	than one number: set six [+ 1 2 3].
+
 2005-08-07  David N. Welton  <davidw@dedasys.com>
 
 	* docs/jdocs/: Updated javadocs.

@@ -18,3 +18,7 @@ test math-4 {
 test math-5 {
     / 6 7
 } {0}
+
+test math-6 {
+    + 1 2 3
+} {6}

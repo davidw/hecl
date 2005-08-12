@@ -26,10 +26,14 @@ class BasicMathCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         char cmd = (argv[0].getStringRep()).charAt(0);
+	int res;
         switch (cmd) {
             case '+' :
-                interp.setResult(IntThing.create(IntThing.get(argv[1])
-                        + IntThing.get(argv[2])));
+		res = 0;
+		for (int i = 1; i < argv.length; i ++) {
+		    res += IntThing.get(argv[i]);
+		}
+		interp.setResult(IntThing.create(res));
                 break;
             case '-' :
                 interp.setResult(IntThing.create(IntThing.get(argv[1])
