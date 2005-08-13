@@ -223,17 +223,17 @@
 
   <!-- Docs -->
 
-  <target name="jdocs">
-    <exec executable="javadoc">
-      <arg value="-s"/>
-      <arg value="core"/>
-      <arg value="-all"/>
-      <arg value="-d"/>
-      <arg value="docs/jdocs"/>
-    </exec>
+  <target name="javadocs">
+    <javadoc packagenames="org.hecl"
+      sourcepath="core"
+      destdir="docs/jdocs"
+      author="true"
+      version="true"
+      use="true">
+    </javadoc>
   </target>
 
-  <target name="docs" depends="jdocs">
+  <target name="docbook">
     <exec executable="xsltproc">
       <arg value="--nonet" />
       <arg value="--stringparam" />
@@ -244,6 +244,9 @@
       <arg value="docs/chunk.xsl" />
       <arg value="docs/hecl.xml" />
     </exec>
+  </target>
+
+  <target name="docs" depends="javadocs,docbook">
   </target>
 
 </project>

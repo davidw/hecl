@@ -25,15 +25,16 @@ package org.hecl;
 class GlobalCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        String varname = argv[1].getStringRep();
+	for (int i = 1; i < argv.length; i ++) {
+	    String varname = argv[i].getStringRep();
 
-        if (!interp.existsVar(varname, 0)) {
-            Thing newThing = new Thing("");
-            interp.setVar(varname, newThing, 0);
-            interp.setVar(argv[1], newThing);
-        } else {
-            interp.setVar(argv[1], interp.getVar(varname, 0));
-
-        }
+	    if (!interp.existsVar(varname, 0)) {
+		Thing newThing = new Thing("");
+		interp.setVar(varname, newThing, 0);
+		interp.setVar(argv[i], newThing);
+	    } else {
+		interp.setVar(argv[i], interp.getVar(varname, 0));
+	    }
+	}
     }
 }

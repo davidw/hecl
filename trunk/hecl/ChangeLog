@@ -1,5 +1,11 @@
 2005-08-13  David N. Welton  <davidw@dedasys.com>
 
+	* tests/global.hcl (twoglobals): Test for 'global' with multiple
+	variable names.
+
+	* core/org/hecl/GlobalCmd.java: The 'global' command now accepts
+	multiple variable names.
+
 	* tests/math.hcl: Test for '+' that accepts multiple arguments.
 
 	* core/org/hecl/BasicMathCmd.java: Now it's possible to add more

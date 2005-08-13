@@ -385,7 +385,7 @@ set foo
 	<cmdsynopsis>
 	  <command>+</command>
 	  <arg choice="req"><replaceable>number</replaceable></arg>
-	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="opt" rep="repeat"><replaceable>number</replaceable></arg>
 	  <command>-</command>
 	  <arg choice="req"><replaceable>number</replaceable></arg>
 	  <arg choice="req"><replaceable>number</replaceable></arg>
@@ -410,12 +410,14 @@ set foo
 	<title>Example</title>
 	  <programlisting>
 puts [+ 2 2]
+puts [+ 1 2 3]
 puts [- 10 1]
 puts [* 6 7]
 puts [/ 100 5]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>2
+6
 9
 42
 20</screen>
@@ -780,6 +782,7 @@ puts $res
 	<cmdsynopsis>
 	  <command>global</command>
 	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	  <arg choice="opt" rep="repeat"><replaceable>varname</replaceable></arg>
 	</cmdsynopsis>
       </refsynopsisdiv>
       <refsect1>

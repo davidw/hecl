@@ -2,14 +2,14 @@
       
 	Hecl Programming Language
       
-    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="llen.html" title="llen"><link rel="next" href="proc.html" title="proc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lset</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="llen.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="proc.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lset"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lset &#8212; Set list elements.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lset</code>  <em class="replaceable"><code>listref</code></em> <em class="replaceable"><code>index</code></em> ?<em class="replaceable"><code>replacement</code></em>?</p></div></div><div class="refsect1" lang="en"><a name="id4762414"></a><h2>Description</h2><p>
+    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="llen.html" title="llen"><link rel="next" href="proc.html" title="proc"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lset</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="llen.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="proc.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lset"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lset &#8212; Set list elements.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lset</code>  <em class="replaceable"><code>listref</code></em> <em class="replaceable"><code>index</code></em> ?<em class="replaceable"><code>replacement</code></em>?</p></div></div><div class="refsect1" lang="en"><a name="id4762424"></a><h2>Description</h2><p>
 	  The <span><strong class="command">lset</strong></span> command sets the
 	  <code class="option"><em class="replaceable"><code>index</code></em></code>'th element
 	  of the list to
 	  <code class="option"><em class="replaceable"><code>replacement</code></em></code>.  If
 	  <code class="option"><em class="replaceable"><code>replacement</code></em></code> is
 	  not present, then the element is deleted.
-	</p></div><div class="refsect1" lang="en"><a name="id4762446"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en"><a name="id4762455"></a><h2>Example</h2><pre class="programlisting">
     set lst {a b c}
     lset &amp;lst 1 x
     puts $lst
