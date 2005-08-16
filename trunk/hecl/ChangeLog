@@ -1,5 +1,7 @@
 2005-08-16  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Added '=', '!=' and 'ne' documentation.
+
 	* core/org/hecl/EqualsCmd.java: Added != and ne commands from
 	David Baker <david.baker@akain.com>.
 

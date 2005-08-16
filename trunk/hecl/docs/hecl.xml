@@ -374,6 +374,46 @@ set foo
   <section id="commands">
     <title>Hecl Commands</title>
 
+    <!-- = -->
+    <refentry id="equality">
+      <refnamediv>
+	<refname>= !=</refname>
+	<refpurpose>Integer equality</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>=</command>
+	  <arg choice="req"><replaceable>num1</replaceable></arg>
+	  <arg choice="req"><replaceable>num2</replaceable></arg>
+	  <command>!=</command>
+	  <arg choice="req"><replaceable>num1</replaceable></arg>
+	  <arg choice="req"><replaceable>num2</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title> <para>Tests two numbers for
+	equality, returning 1 if they are, 0 if they aren't equal.  In
+	the case of <command>!=</command>, returns 1 if they are not
+	equal, 0 if they are equal.</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+puts [= 1 1]
+puts [= 0 1]
+puts [= 00001 1]
+puts [!= 1 1]
+	</programlisting>
+	<para>Produces:</para>
+	<screen>
+1
+0
+1
+0
+	</screen>
+      </refsect1>
+    </refentry>
+
 
     <!-- + - * / math commands -->
     <refentry id="math">
@@ -1188,6 +1228,40 @@ puts [llen {1 2 3 {a b c}}]
 	  <para>Produces:</para>
 	  <screen>a x c
 a c</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- ne -->
+    <refentry id="ne">
+      <refnamediv>
+	<refname>ne</refname>
+	<refpurpose>String "not equal".</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>ne</command>
+	  <arg choice="req"><replaceable>string1</replaceable></arg>
+	  <arg choice="req"><replaceable>string2</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>ne</command> commands compares two strings,
+	  returning 0 if they are equal, 1 if they are not.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+if {ne 1 00001} {
+    puts "True"
+} else {
+    puts "False"
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>True</screen>
       </refsect1>
     </refentry>
 
