@@ -42,8 +42,19 @@ class EqualsCmd implements Command {
                         .create(IntThing.get(argv[1]) < IntThing.get(argv[2])));
                 break;
             case 'e' :
-                interp.setResult(IntThing.create(Compare.compareString(argv[1],
-                        argv[2]) == 0 ? 1 : 0));
+                interp.setResult(IntThing.create(
+				     Compare.compareString(argv[1], argv[2]) == 0 ? 1 : 0));
+		break;
+
+     	    case '!':
+                 interp.setResult(IntThing.create(
+				      Compare.compareInt(argv[1], argv[2]) == 0 ? 0 : 1));
+                 break;
+     	    case 'n':
+                 interp.setResult(IntThing.create(
+				      Compare.compareString(argv[1], argv[2]) == 0 ? 0 : 1));
+                 break;
+
         }
     }
 }

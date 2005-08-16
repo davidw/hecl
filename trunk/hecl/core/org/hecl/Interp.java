@@ -92,6 +92,8 @@ public class Interp {
         commands.put("eq", new EqualsCmd());
         commands.put(">", new EqualsCmd());
         commands.put("<", new EqualsCmd());
+	commands.put("!=", new EqualsCmd());
+	commands.put("ne", new EqualsCmd());
 
         commands.put("if", new IfCmd());
 
