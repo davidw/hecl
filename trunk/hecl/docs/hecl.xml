@@ -1811,11 +1811,9 @@ append &amp;foo "beebop"
 	    /* First, create a new interpreter, and pass it a
 	     * mechanism to load resources with - in this case,
 	     * files. */
-	    Interp interp = new Interp(new LoadFile());
-	    /* Initialize the standard Hecl environment. */
-	    com.dedasys.hecl.Standard.init(interp);
+	    Interp interp = new Interp();
 	    /* Evaluate the file at args[0] */
-	    Eval.eval(interp, interp.getscript(args[0]));
+            Eval.eval(interp, interp.getResAsThing(args[0]));
 	} catch (Exception e) {
 	    System.err.println(e);
 	}
