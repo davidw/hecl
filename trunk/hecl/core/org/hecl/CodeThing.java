@@ -37,6 +37,10 @@ public class CodeThing implements RealThing {
         stanzas = new Vector();
     }
 
+    CodeThing(Vector newstanzas) {
+	stanzas = newstanzas;
+    }
+
     /**
      * The <code>setCodeFromAny</code> method makes the Thing passed to it
      * into a CodeThing representation.
@@ -80,9 +84,22 @@ public class CodeThing implements RealThing {
         return (CodeThing) thing.val;
     }
 
-    public RealThing deepcopy() {
-        /* FIXME - not ok. */
-        return new CodeThing();
+
+    /**
+     * CodeThing's <code>deepcopy</code> method makes a copy of all
+     * the stanzas, which in turn copy all their objects.
+     *
+     * @return a <code>RealThing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public RealThing deepcopy() throws HeclException {
+	Vector deststanzas = new Vector();
+
+	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
+            Stanza s = (Stanza) e.nextElement();
+            deststanzas.addElement(s.deepcopy());
+        }
+        return new CodeThing(deststanzas);
     }
 
     /**
@@ -213,13 +230,13 @@ public class CodeThing implements RealThing {
      */
     public String getStringRep() {
         StringBuffer out = new StringBuffer();
+
         for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
             Stanza s = (Stanza) e.nextElement();
             //	    out.append("[");
-            out.append(s.toString());
+            out.append(s.toString() + ";\n");
             //	    out.append("]\n");
         }
         return out.toString();
     }
-
 }

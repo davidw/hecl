@@ -1,3 +1,12 @@
+2005-08-24  David N. Welton  <davidw@dedasys.com>
+
+	* tests/deepcopy.hcl: Added tests to determine whether deep
+	copying is working or not.
+
+	* core/org/hecl/Stanza.java: Added deepcopy method.
+
+	* core/org/hecl/CodeThing.java: Added real deepcopy method.
+
 2005-08-16  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added '=', '!=' and 'ne' documentation.

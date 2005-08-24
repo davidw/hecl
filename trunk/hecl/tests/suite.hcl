@@ -5,6 +5,7 @@ testfiles {
     break.hcl
     catch.hcl
     circular.hcl
+    deepcopy.hcl
     equality.hcl
     eval.hcl
     filter.hcl

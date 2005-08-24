@@ -50,6 +50,24 @@ class Stanza {
 	argv = newargv;
     }
 
+
+
+    /**
+     * <code>deepcopy</code> creates a new stanza and returns it.
+     *
+     * @return a <code>Stanza</code> value
+     */
+
+    public Stanza deepcopy () throws HeclException {
+	Stanza deststanza;
+	Thing[] destargv = new Thing[argv.length];
+
+	for (int i = 0; i < argv.length; i++) {
+	    destargv[i] = argv[i].deepcopy();
+	}
+	return new Stanza(command, destargv);
+    }
+
     /**
      * The <code>run</code> method runs the Stanza. In order to avoid
      * creating a new newargv each time, the most common cases are
