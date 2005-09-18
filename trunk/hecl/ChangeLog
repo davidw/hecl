@@ -1,5 +1,9 @@
 2005-09-18  David N. Welton  <davidw@dedasys.com>
 
+	* j2me/Hecl.java: Much more sophisticated demo with gui elements.
+
+	* j2me/GUICmds.java: Initial GUI commands.
+
 	* core/org/hecl/: Removed Module and Resource related files.
 
 	* pjava: Removed files here as the related functionality is now in
