@@ -1,5 +1,10 @@
 2005-09-18  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/: Removed Module and Resource related files.
+
+	* pjava: Removed files here as the related functionality is now in
+	the files/ directory.
+
 	* core/org/hecl/IntrospectCmd.java: Removed 'modules' subcommand -
 	this will have to go elsewhere.
 
