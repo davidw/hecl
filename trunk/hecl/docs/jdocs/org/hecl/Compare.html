@@ -1,15 +1,322 @@
-<?xml version="1.0" encoding="null"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Compare</title><script src="../../resources/gjdoc.js" type="text/javascript"><!-- this comment required for konqueror 3.2.2 --></script><meta http-equiv="Content-Type" content="text/html; charset=null"/><meta name="generator" content="GNU Gjdoc Standard Doclet"/><meta name="keywords" content="org.hecl.Compare class"/><meta name="keywords" content="compareInt()"/><meta name="keywords" content="compareString()"/><meta name="keywords" content="compare()"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-layout.css" title="GNU Clean"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-color1.css" title="GNU Clean"/></head><body class="content class" onload="top.contentPageLoaded(document.title)"><table class="navbar div top"><tr><td class="navbar div top" colspan="2"><div class="navbar div top" colspan="2"><span class="navbar item enabled"><a href="../../org/hecl/package-summary.html">Package</a></span> <span class="navbar item active">Class</span> <span class="navbar item enabled"><a href="Compare-uses.html">Use</a></span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr><tr><td class="navi"><a href="../../org/hecl/Command.html">Prev Class</a> | <a href="../../org/hecl/Eval.html">Next Class</a></td><td class="navi"><a href="../../index.html" title="Show in a frameset" target="_top">Frames</a> | <a href="Compare.html" title="Show without frames" target="_top">No Frames</a> </td></tr><tr><td class="navi">Summary: Nested | Field | <a href="#summary-methods">Method</a> | Constr</td><td class="navi">Detail: Nested | Field | <a href="#detail-methods">Method</a> | Constr</td></tr></table><div class="class title outer"><h3 class="class title-package">org.hecl</h3><h1 class="class title-class">Class Compare</h1></div><div class="class inheritance-tree"><ul class="inheritance 0"><li class="inheritance 0"><code>java.lang.Object</code></li><ul class="inheritance 1"><li class="inheritance 1"><code>org.hecl.Compare</code></li></ul></ul></div><hr/><div class="class synopsis outer"><div class="class synopsis declaration"><code>public class <b class="class synopsis name">Compare</b></code></div><div class="class synopsis superclass"><code>extends java.lang.Object</code></div></div><hr/><div class="class description"> The <code>Compare</code> class exists to compare things in different ways.
-</div><p class="taglet"><div class="tag list">Version:</div><dl class="tag section header"><dt>1.0</dt></dl></p><p class="taglet"><dl class="tag list"><dt class="tag section header"><b>Author:</b></dt><dd class="tag item"><a href="mailto:davidw@dedasys.com">David N. Welton </a></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><a name="summary-methods"/><dl class="table container"><table class="class summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Method Summary</h2></td></tr><tr><td class="left" valign="top"><code class="synopsis">static int</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#compare(org.hecl.Thing,org.hecl.Thing)">compare</a>(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;a, <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;b)</code></dt><dd class="description"> <code>compare</code> is a generic compare method that first tries to
- compare two things as integers, and then tries again as strings.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">static int</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#compareInt(org.hecl.Thing,org.hecl.Thing)">compareInt</a>(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;a, <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;b)</code></dt><dd class="description"> <code>compareInt</code> exists to compare two Things as ints.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">static int</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#compareString(org.hecl.Thing,org.hecl.Thing)">compareString</a>(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;a, <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;b)</code></dt><dd class="description"> <code>compareString</code> compares two Things as strings.</dd></dl></td></tr></table></dl><a name="detail-methods"/><h2 class="section header">Method Details</h2><div class="section"><a name="compare(org.hecl.Thing,org.hecl.Thing)"/><div class="member detail outer"><h3 class="member detail name">compare</h3><pre class="member detail synopsis">public static int compare(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> a,
-                          <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> b)</pre><blockquote class="member detail name"><div class="member detail description"> <code>compare</code> is a generic compare method that first tries to
- compare two things as integers, and then tries again as strings.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">a</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd><dd class="item"><code class="name">b</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd></dl></p><p class="member detail return list"><dl><dt class="member detail return header"><b>Returns:</b></dt><dd class="member detail return item">an <code>int</code> value</dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="compareInt(org.hecl.Thing,org.hecl.Thing)"/><div class="member detail outer"><h3 class="member detail name">compareInt</h3><pre class="member detail synopsis">public static int compareInt(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> a,
-                             <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> b)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>compareInt</code> exists to compare two Things as ints. Since it
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<!-- Generated by javadoc (build 1.5.0_04) on Sun Sep 18 14:42:35 CEST 2005 -->
+<TITLE>
+Compare
+</TITLE>
+
+<META NAME="keywords" CONTENT="org.hecl.Compare class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="Compare";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Compare.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../org/hecl/Command.html" title="interface in org.hecl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../org/hecl/Eval.html" title="class in org.hecl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/Compare.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Compare.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.hecl</FONT>
+<BR>
+Class Compare</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>org.hecl.Compare</B>
+</PRE>
+<HR>
+<DL>
+<DT><PRE>public class <B>Compare</B><DT>extends java.lang.Object</DL>
+</PRE>
+
+<P>
+The <code>Compare</code> class exists to compare things in different ways.
+<P>
+
+<P>
+<DL>
+<DT><B>Version:</B></DT>
+  <DD>1.0</DD>
+<DT><B>Author:</B></DT>
+  <DD><a href="mailto:davidw@dedasys.com">David N. Welton </a></DD>
+</DL>
+<HR>
+
+<P>
+
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../org/hecl/Compare.html#Compare()">Compare</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Compare.html#compare(org.hecl.Thing, org.hecl.Thing)">compare</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+        <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>compare</code> is a generic compare method that first tries to
+ compare two things as integers, and then tries again as strings.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Compare.html#compareInt(org.hecl.Thing, org.hecl.Thing)">compareInt</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+           <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>compareInt</code> exists to compare two Things as ints.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Compare.html#compareString(org.hecl.Thing, org.hecl.Thing)">compareString</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+              <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>compareString</code> compares two Things as strings.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Compare()"><!-- --></A><H3>
+Compare</H3>
+<PRE>
+public <B>Compare</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="compareInt(org.hecl.Thing, org.hecl.Thing)"><!-- --></A><H3>
+compareInt</H3>
+<PRE>
+public static int <B>compareInt</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+                             <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)
+                      throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>compareInt</code> exists to compare two Things as ints. Since it
  is possible that one or both are not integers, we may throw a
  HeclException.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">a</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd><dd class="item"><code class="name">b</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd></dl></p><p class="member detail return list"><dl><dt class="member detail return header"><b>Returns:</b></dt><dd class="member detail return item">an <code>int</code> value</dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="compareString(org.hecl.Thing,org.hecl.Thing)"/><div class="member detail outer"><h3 class="member detail name">compareString</h3><pre class="member detail synopsis">public static int compareString(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> a,
-                                <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> b)</pre><blockquote class="member detail name"><div class="member detail description"> <code>compareString</code> compares two Things as strings. This can't
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>a</CODE> - a <code>Thing</code> value<DD><CODE>b</CODE> - a <code>Thing</code> value
+<DT><B>Returns:</B><DD>an <code>int</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="compareString(org.hecl.Thing, org.hecl.Thing)"><!-- --></A><H3>
+compareString</H3>
+<PRE>
+public static int <B>compareString</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+                                <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)</PRE>
+<DL>
+<DD><code>compareString</code> compares two Things as strings. This can't
  fail, because all Things may be represented as strings.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">a</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd><dd class="item"><code class="name">b</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd></dl></p><p class="member detail return list"><dl><dt class="member detail return header"><b>Returns:</b></dt><dd class="member detail return item">an <code>int</code> value</dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div></div><p class="navbar bottom spacer"> </p><table class="navbar div bottom"><tr><td><div class="navbar div top" colspan="2"><span class="navbar item enabled"><a href="../../org/hecl/package-summary.html">Package</a></span> <span class="navbar item active">Class</span> <span class="navbar item enabled"><a href="Compare-uses.html">Use</a></span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr></table></body></html>
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>a</CODE> - a <code>Thing</code> value<DD><CODE>b</CODE> - a <code>Thing</code> value
+<DT><B>Returns:</B><DD>an <code>int</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="compare(org.hecl.Thing, org.hecl.Thing)"><!-- --></A><H3>
+compare</H3>
+<PRE>
+public static int <B>compare</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;a,
+                          <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;b)</PRE>
+<DL>
+<DD><code>compare</code> is a generic compare method that first tries to
+ compare two things as integers, and then tries again as strings.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>a</CODE> - a <code>Thing</code> value<DD><CODE>b</CODE> - a <code>Thing</code> value
+<DT><B>Returns:</B><DD>an <code>int</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Compare.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../org/hecl/Command.html" title="interface in org.hecl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../org/hecl/Eval.html" title="class in org.hecl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/Compare.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Compare.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

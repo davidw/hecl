@@ -12,7 +12,7 @@ set times [hash {}]
 foreach f [sort {
     loops.hcl
 }] {
-    sourcehere $f
+    source $f
 }
 
 proc hashsort {h} {

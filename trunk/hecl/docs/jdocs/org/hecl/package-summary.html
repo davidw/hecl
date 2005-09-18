@@ -1,13 +1,252 @@
-<?xml version="1.0" encoding="null"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>org.hecl</title><script src="../../resources/gjdoc.js" type="text/javascript"><!-- this comment required for konqueror 3.2.2 --></script><meta http-equiv="Content-Type" content="text/html; charset=null"/><meta name="generator" content="GNU Gjdoc Standard Doclet"/><meta name="keywords" content="org.hecl packages"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-layout.css" title="GNU Clean"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-color1.css" title="GNU Clean"/></head><body class="content package" onload="top.contentPageLoaded(document.title)"><table class="navbar div top"><tr><td class="navbar div top" colspan="2"><div class="navbar div top" colspan="2"><span class="navbar item active">Package</span> <span class="navbar item disabled">Class</span> <span class="navbar item disabled">Use</span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr><tr><td class="navi">Prev Package | Next Package</td><td class="navi"><a href="../../index.html" title="Show in a frameset" target="_top">Frames</a> | <a href="package-summary.html" title="Show without frames" target="_top">No Frames</a> </td></tr></table><h1 class="package title">Package org.hecl</h1><div class="package description top"></div><dl class="table container"><table class="package summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Interface Summary</h2></td></tr><tr><td class="left"><a href="../../org/hecl/Command.html" title="Interface in org.hecl">Command</a></td><td class="right"> The <code>Command</code> interface is the template for all commands
- implemented in Hecl.</td></tr><tr><td class="left"><a href="../../org/hecl/HeclModule.html" title="Interface in org.hecl">HeclModule</a></td><td class="right"></td></tr><tr><td class="left"><a href="../../org/hecl/RealThing.html" title="Interface in org.hecl">RealThing</a></td><td class="right"> The <code>RealThing</code> interface is the actual value contained within a
- Thing.</td></tr><tr><td class="left"><a href="../../org/hecl/ResHandle.html" title="Interface in org.hecl">ResHandle</a></td><td class="right"> The <code>Load</code> interface is the template for loading external code
- resources (typically files).</td></tr></table></dl>
-<dl class="table container"><table class="package summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Class Summary</h2></td></tr><tr><td class="left"><a href="../../org/hecl/CodeThing.html" title="Class in org.hecl">CodeThing</a></td><td class="right"> The <code>CodeThing</code> class implements a chunk of "compiled" code
- including multiple "Stanzas", or individual commands.</td></tr><tr><td class="left"><a href="../../org/hecl/Compare.html" title="Class in org.hecl">Compare</a></td><td class="right"> The <code>Compare</code> class exists to compare things in different ways.</td></tr><tr><td class="left"><a href="../../org/hecl/Eval.html" title="Class in org.hecl">Eval</a></td><td class="right"> <code>Eval</code> takes care of evaluating code.</td></tr><tr><td class="left"><a href="../../org/hecl/GroupThing.html" title="Class in org.hecl">GroupThing</a></td><td class="right"> The <code>GroupThing</code> class is for Hecl "groups".</td></tr><tr><td class="left"><a href="../../org/hecl/HashThing.html" title="Class in org.hecl">HashThing</a></td><td class="right"> The <code>HashThing</code> class represents a hash table type in Hecl.</td></tr><tr><td class="left"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></td><td class="right"> The <code>HeclException</code> class implements exceptions for Hecl.</td></tr><tr><td class="left"><a href="../../org/hecl/HeclModuleCmd.html" title="Class in org.hecl">HeclModuleCmd</a></td><td class="right"> <code>HeclModuleCmd</code> implements the "module" command.</td></tr><tr><td class="left"><a href="../../org/hecl/Interp.html" title="Class in org.hecl">Interp</a></td><td class="right"> <code>Interp</code> is the Hecl interpreter, the class responsible for
- knowing what variables and commands are available.</td></tr><tr><td class="left"><a href="../../org/hecl/IntThing.html" title="Class in org.hecl">IntThing</a></td><td class="right"> The <code>IntThing</code> class represents an integer Thing.</td></tr><tr><td class="left"><a href="../../org/hecl/ListThing.html" title="Class in org.hecl">ListThing</a></td><td class="right"> The <code>ListThing</code> class implements lists, storing them internally
- as a Vector.</td></tr><tr><td class="left"><a href="../../org/hecl/ObjectThing.html" title="Class in org.hecl">ObjectThing</a></td><td class="right"></td></tr><tr><td class="left"><a href="../../org/hecl/Parse.html" title="Class in org.hecl">Parse</a></td><td class="right"> The <code>Parse</code> class takes care of parsing Hecl scripts.</td></tr><tr><td class="left"><a href="../../org/hecl/ParseList.html" title="Class in org.hecl">ParseList</a></td><td class="right"> <code>ParseList</code> parses up Hecl lists.</td></tr><tr><td class="left"><a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a></td><td class="right"> The <code>ParseState</code> class is the state of the current parse.</td></tr><tr><td class="left"><a href="../../org/hecl/PrintThing.html" title="Class in org.hecl">PrintThing</a></td><td class="right"> The <code>PrintThing</code> class is a utility class used to print out
- Things.</td></tr><tr><td class="left"><a href="../../org/hecl/StringThing.html" title="Class in org.hecl">StringThing</a></td><td class="right"> The <code>StringThing</code> class is the internal representation of string
- types.</td></tr><tr><td class="left"><a href="../../org/hecl/SubstThing.html" title="Class in org.hecl">SubstThing</a></td><td class="right"> The <code>SubstThing</code> class represents things that must be
- substituted - $foo or &amp;foo for example.</td></tr><tr><td class="left"><a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a></td><td class="right"> The <code>Thing</code> class is what Hecl revolves around.</td></tr></table></dl>
-<a name="description"/><div class="package description full"></div><p class="navbar bottom spacer"> </p><table class="navbar div bottom"><tr><td><div class="navbar div top" colspan="2"><span class="navbar item active">Package</span> <span class="navbar item disabled">Class</span> <span class="navbar item disabled">Use</span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr></table></body></html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<!-- Generated by javadoc (build 1.5.0_04) on Sun Sep 18 14:42:36 CEST 2005 -->
+<TITLE>
+org.hecl
+</TITLE>
+
+<META NAME="keywords" CONTENT="org.hecl package">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="org.hecl";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV PACKAGE&nbsp;
+&nbsp;NEXT PACKAGE</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<H2>
+Package org.hecl
+</H2>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Interface Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Command.html" title="interface in org.hecl">Command</A></B></TD>
+<TD>The <code>Command</code> interface is the template for all commands
+ implemented in Hecl.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></B></TD>
+<TD>The <code>RealThing</code> interface is the actual value contained within a
+ Thing.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/CodeThing.html" title="class in org.hecl">CodeThing</A></B></TD>
+<TD>The <code>CodeThing</code> class implements a chunk of "compiled" code
+ including multiple "Stanzas", or individual commands.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Compare.html" title="class in org.hecl">Compare</A></B></TD>
+<TD>The <code>Compare</code> class exists to compare things in different ways.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Eval.html" title="class in org.hecl">Eval</A></B></TD>
+<TD><code>Eval</code> takes care of evaluating code.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/GroupThing.html" title="class in org.hecl">GroupThing</A></B></TD>
+<TD>The <code>GroupThing</code> class is for Hecl "groups".</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/HashThing.html" title="class in org.hecl">HashThing</A></B></TD>
+<TD>The <code>HashThing</code> class represents a hash table type in Hecl.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Interp.html" title="class in org.hecl">Interp</A></B></TD>
+<TD><code>Interp</code> is the Hecl interpreter, the class responsible for
+ knowing what variables and commands are available.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/IntThing.html" title="class in org.hecl">IntThing</A></B></TD>
+<TD>The <code>IntThing</code> class represents an integer Thing.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/ListThing.html" title="class in org.hecl">ListThing</A></B></TD>
+<TD>The <code>ListThing</code> class implements lists, storing them internally
+ as a Vector.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/ObjectThing.html" title="class in org.hecl">ObjectThing</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Parse.html" title="class in org.hecl">Parse</A></B></TD>
+<TD>The <code>Parse</code> class takes care of parsing Hecl scripts.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/ParseList.html" title="class in org.hecl">ParseList</A></B></TD>
+<TD><code>ParseList</code> parses up Hecl lists.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A></B></TD>
+<TD>The <code>ParseState</code> class is the state of the current parse.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/PrintThing.html" title="class in org.hecl">PrintThing</A></B></TD>
+<TD>The <code>PrintThing</code> class is a utility class used to print out
+ Things.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/StringThing.html" title="class in org.hecl">StringThing</A></B></TD>
+<TD>The <code>StringThing</code> class is the internal representation of string
+ types.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/SubstThing.html" title="class in org.hecl">SubstThing</A></B></TD>
+<TD>The <code>SubstThing</code> class represents things that must be
+ substituted - $foo or &foo for example.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></B></TD>
+<TD>The <code>Thing</code> class is what Hecl revolves around.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Exception Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></B></TD>
+<TD>The <code>HeclException</code> class implements exceptions for Hecl.</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+<DL>
+</DL>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV PACKAGE&nbsp;
+&nbsp;NEXT PACKAGE</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

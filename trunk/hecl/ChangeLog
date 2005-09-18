@@ -1,3 +1,33 @@
+2005-09-18  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/IntrospectCmd.java: Removed 'modules' subcommand -
+	this will have to go elsewhere.
+
+	* core/org/hecl/Interp.java: Ripped out the module and resource
+	code.  The modules code can be readded in in the modules/
+	directory and the compiled in as desired, but it's better as
+	something external to the core for those who know exactly what
+	they want to compile in and prefer to keep things reduced to the
+	bare minimum.
+
+	* http_micro/org/hecl/http/HttpRequest.java: This is where the
+	j2me http request code resides.  It's compiled together with the
+	http/ code to produce the http library for j2me.
+
+	* files/org/hecl/files/HeclFile.java: Added a collection of file
+	commands - 'cd', 'filetolist', 'listtofile' and 'source'.
+
+	* build.xml: Added 'files' package, and split the http into
+	standard and j2me builds.
+
+	* tests/path.hcl: Added some tests for path commands.
+
+	* docs/hecl.xml: Added lrange command documentation.
+
+2005-09-17  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmd.java: Added lrange command.
+
 2005-08-24  David N. Welton  <davidw@dedasys.com>
 
 	* tests/deepcopy.hcl: Added tests to determine whether deep

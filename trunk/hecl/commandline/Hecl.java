@@ -1,3 +1,18 @@
+/* Copyright 2005 Wojciech Kocjan, David N. Welton
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 import java.util.Vector;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -9,24 +24,30 @@ import org.hecl.Thing;
 import org.hecl.ListThing;
 import org.hecl.HeclException;
 
-/*
- * Created on 2005-03-04
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+import org.hecl.files.HeclFile;
+import org.hecl.http.HttpModule;
+
 
 /**
- * @author zoro
+ * <code>Hecl</code> - this class implements the main Hecl command
+ * line interpreter.
  *
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
  */
 public class Hecl {
+    /**
+     * <code>main</code> is what actually runs things.
+     *
+     * @param args a <code>String[]</code> value
+     */
     public static void main(String[] args) {
         try {
             int i;
             Interp interp = new Interp();
+	    /* Add the standard packages in. */
+	    HeclFile.loadModule(interp);
+	    HttpModule.loadModule(interp);
             Eval eval = new Eval();
 	    Vector argv = new Vector();
 
@@ -36,7 +57,7 @@ public class Hecl {
             }
 	    interp.setVar("argv", ListThing.create(argv));
 	    if (args.length > 0) {
-		Eval.eval(interp, interp.getResAsThing(args[0]));
+		HeclFile.sourceFile(interp, args[0]);
 	    } else {
 		Hecl.commandLine(interp);
 	    }
@@ -46,6 +67,16 @@ public class Hecl {
         }
     }
 
+    /**
+     * The <code>commandLine</code> method implements a
+     * Read/Eval/Print Loop.  This could be improved by having
+     * something akin to Tcl's "is command complete?" function so that
+     * it would be possible to accept a command over more than one
+     * line.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception IOException if an error occurs
+     */
     private static void commandLine (Interp interp) throws IOException {
 	BufferedReader buff = new
 	    BufferedReader(new InputStreamReader(System.in));

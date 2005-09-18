@@ -7,64 +7,25 @@
   which can be created as machine-dependant parameters.
   -->
   <property file="build.properties"/>
+
   <path id="buildclasspath">
     <pathelement location="build/core"/>
   </path>
+
+  <path id="filesclasspath">
+    <pathelement location="build/files"/>
+  </path>
+
+  <path id="http_standardclasspath">
+    <pathelement location="build/http_standard"/>
+  </path>
+
   <!--
   Additional classpath locations, specified in build.properties file
   -->
   <path id="classpath">
-    <pathelement location="${lib.classpath.01}"/>
-    <pathelement location="${lib.classpath.02}"/>
-    <pathelement location="${lib.classpath.03}"/>
-    <pathelement location="${lib.classpath.04}"/>
-    <pathelement location="${lib.classpath.05}"/>
-    <pathelement location="${lib.classpath.06}"/>
-    <pathelement location="${lib.classpath.07}"/>
-    <pathelement location="${lib.classpath.08}"/>
-    <pathelement location="${lib.classpath.09}"/>
-    <pathelement location="${lib.classpath.10}"/>
-    <pathelement location="${lib.classpath.11}"/>
-    <pathelement location="${lib.classpath.12}"/>
-    <pathelement location="${lib.classpath.13}"/>
-    <pathelement location="${lib.classpath.14}"/>
-    <pathelement location="${lib.classpath.15}"/>
-    <pathelement location="${lib.classpath.16}"/>
-    <pathelement location="${lib.classpath.17}"/>
-    <pathelement location="${lib.classpath.18}"/>
-    <pathelement location="${lib.classpath.19}"/>
-    <pathelement location="${lib.classpathel0}"/>
-    <pathelement location="${lib.classpathel1}"/>
-    <pathelement location="${lib.classpathel2}"/>
-    <pathelement location="${lib.classpathel3}"/>
-    <pathelement location="${lib.classpathel4}"/>
-    <pathelement location="${lib.classpathel5}"/>
-    <pathelement location="${lib.classpathel6}"/>
-    <pathelement location="${lib.classpathel7}"/>
-    <pathelement location="${lib.classpathel8}"/>
-    <pathelement location="${lib.classpathel9}"/>
-    <pathelement location="${lib.classpathel0}"/>
-    <pathelement location="${lib.classpathel1}"/>
-    <pathelement location="${lib.classpathel2}"/>
-    <pathelement location="${lib.classpathel3}"/>
-    <pathelement location="${lib.classpathel4}"/>
-    <pathelement location="${lib.classpathel5}"/>
-    <pathelement location="${lib.classpathel6}"/>
-    <pathelement location="${lib.classpathel7}"/>
-    <pathelement location="${lib.classpathel8}"/>
-    <pathelement location="${lib.classpathel9}"/>
-    <pathelement location="${lib.classpathel0}"/>
-    <pathelement location="${lib.classpathel1}"/>
-    <pathelement location="${lib.classpathel2}"/>
-    <pathelement location="${lib.classpathel3}"/>
-    <pathelement location="${lib.classpathel4}"/>
-    <pathelement location="${lib.classpathel5}"/>
-    <pathelement location="${lib.classpathel6}"/>
-    <pathelement location="${lib.classpathel7}"/>
-    <pathelement location="${lib.classpathel8}"/>
-    <pathelement location="${lib.classpathel9}"/>
-    <pathelement location="${lib.classpathel0}"/>
   </path>
+
   <!-- virtual targets -->
   <target name="clean" description="Clean the build"
     depends="cleanOut,cleanBuild,cleanClasses">
@@ -75,7 +36,7 @@
     depends="compile,package"/>
 
   <target name="compile" description="Complete everything"
-    depends="compileCore,compileApplet,compileHttp,buildJ2MEtest"/>
+    depends="compileCore,compileCommandline,compileApplet,buildJ2MEtest"/>
 
   <target name="package" description="Package things into JARs"
     depends="packageJARs,packageApplet,packageJ2MEtest"/>
@@ -117,16 +78,46 @@
     </javac>
   </target>
 
-  <target name="compileHttp"
+  <target name="compileFiles"
     depends="initCompile,compileCore"
-    description="Compile Hecl http support">
+    description="Compile Hecl files support">
     <mkdir dir="build"/>
-    <mkdir dir="build/http"/>
-    <javac srcdir="http" destdir="build/http" debug="true">
+    <mkdir dir="build/files"/>
+    <javac srcdir="files" destdir="build/files" debug="true">
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
+
+  <target name="compileHttpStandard"
+    depends="initCompile,compileCore"
+    description="Compile J2SE Hecl http support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/http_standard"/>
+
+    <javac destdir="build/http_standard" debug="true">
+      <src path="http"/>
+      <src path="http_standard"/>
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+
+  <target name="compileHttpMicro"
+    depends="initCompile,compileCore"
+    description="Compile J2ME Hecl http support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/http_micro"/>
+
+    <javac destdir="build/http_micro" debug="true">
+      <src path="http"/>
+      <src path="http_micro"/>
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
 
   <target name="compilePjava"
     depends="initCompile,compileCore"
@@ -140,11 +131,13 @@
   </target>
 
   <target name="compileCommandline"
-    depends="initCompile,compileCore"
+    depends="initCompile,compileCore,compileFiles,compileHttpStandard"
     description="Compile Hecl command line support">
     <mkdir dir="build"/>
     <mkdir dir="build/commandline"/>
     <javac srcdir="commandline" destdir="build/commandline" debug="true">
+      <classpath refid="filesclasspath"/>
+      <classpath refid="http_standardclasspath"/>
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
     </javac>
@@ -158,12 +151,12 @@
 
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
-  <target name="packageCommandline" description="Create Jar for command
-    line Hecl" depends="compileCommandline,compilePjava">
+  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compilePjava,compileHttpStandard">
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/pjava" update="true"/>
-    <jar destfile="Hecl.jar" basedir="build/commandline"
-    includes="Hecl.class" update="true">
+    <jar destfile="Hecl.jar" basedir="build/files" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/http_standard" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/commandline" includes="Hecl.class" update="true">
       <manifest>
         <attribute name="Main-Class" value="Hecl"/>
       </manifest>
@@ -174,7 +167,8 @@
     depends="compile,initPackage">
     <jar destfile="out/heclCore.jar" basedir="build/core"/>
     <jar destfile="out/heclApplet.jar" basedir="build/applet"/>
-    <jar destfile="out/heclHttp.jar" basedir="build/http"/>
+    <jar destfile="out/heclFiles.jar" basedir="build/files"/>
+<!--    <jar destfile="out/heclHttp.jar" basedir="build/http"/> -->
   </target>
 
   <target name="packageApplet" description="Create HTML applet structure"
@@ -182,7 +176,8 @@
     <mkdir dir="out/applet"/>
     <copy file="out/heclCore.jar" tofile="out/applet/heclCore.jar"/>
     <copy file="out/heclApplet.jar" tofile="out/applet/heclApplet.jar"/>
-    <copy file="out/heclHttp.jar" tofile="out/applet/heclHttp.jar"/>
+    <copy file="out/heclFiles.jar" tofile="out/applet/heclFiles.jar"/>
+<!--     <copy file="out/heclHttp.jar" tofile="out/applet/heclHttp.jar"/> -->
     <copy file="HTML/applet.html" tofile="out/applet/index.html"/>
   </target>
 
@@ -197,6 +192,7 @@
       <fileset dir="j2me"/>
     </copy>
   </target>
+
   <target name="buildJ2MEtest"
     depends="packageJ2MESource"
     description="Builds J2ME Hecl test">
@@ -205,6 +201,7 @@
       <classpath refid="classpath"/>
     </javac>
   </target>
+
   <target name="packageJ2MEtest"
     depends="buildJ2MEtest"
     description="Packages J2ME Hecl test as a JAR">

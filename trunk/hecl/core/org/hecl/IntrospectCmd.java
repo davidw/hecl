@@ -37,9 +37,6 @@ class IntrospectCmd implements Command {
             }
             interp.setResult(ListThing.create(results));
             return;
-        } else if (subcmd.equals("modules")) {
-	    interp.setResult(interp.modules());
-	    return;
-	}
+        }
     }
 }

@@ -18,8 +18,8 @@ package org.hecl;
 import java.util.*;
 
 /**
- * <code>ListCmd</code> implements the "list", "llen", "lindex" and "lappend"
- * commands.
+ * <code>ListCmd</code> implements the "list", "llen", "lindex",
+ * "lrange" and "lappend" commands.
  * 
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
@@ -60,6 +60,9 @@ class ListCmd implements Command {
         } else if (cmdname.equals("linsert")) {
             Vector list = ListThing.get(argv[1]);
             int idx = IntThing.get(argv[2]);
+            if (idx < 0) {
+                idx += list.size();
+            }
             list.insertElementAt(argv[3], idx);
             interp.setResult(argv[1]);
         } else if (cmdname.equals("lset")) {
@@ -74,7 +77,29 @@ class ListCmd implements Command {
                 list.setElementAt(argv[3], idx);
             }
             interp.setResult(argv[1]);
-        }
+        } else if (cmdname.equals("lrange")) {
+	    Vector list = ListThing.get(argv[1]);
+	    int first = IntThing.get(argv[2]);
+	    int last = IntThing.get(argv[3]);
+	    int ls = list.size();
+
+            if (first < 0) {
+                first += ls;
+            }
+
+	    if (last < 0) {
+		last += ls;
+	    }
+
+	    if (last <= first || last >= ls || first >= ls) {
+                interp.setResult(new Thing(""));
+	    }
+	    Vector resultv = new Vector();
+            for (int i = first; i <= last; i++) {
+		resultv.addElement(list.elementAt(i));
+            }
+            interp.setResult(ListThing.create(resultv));
+	}
         return;
     }
 }

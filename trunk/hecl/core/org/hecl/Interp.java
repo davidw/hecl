@@ -32,11 +32,6 @@ public class Interp {
      * Package name prefix of the module classes.
      */
     public static final String MODULE_CLASS_PACKAGE = "org.hecl";
-    /**
-     * Class name for the module initialization class.
-     */
-    public static final String MODULE_CLASS_LOADERCLASS = "HeclModule";
-    Hashtable modules = new Hashtable();
 
     public long cacheversion = 0;
 
@@ -111,6 +106,7 @@ public class Interp {
         commands.put("lappend", new ListCmd());
         commands.put("lindex", new ListCmd());
         commands.put("lset", new ListCmd());
+        commands.put("lrange", new ListCmd());
 
         commands.put("split", new JoinSplitCmd());
         commands.put("join", new JoinSplitCmd());
@@ -129,10 +125,6 @@ public class Interp {
         commands.put("catch", new CatchCmd());
 
         commands.put("intro", new IntrospectCmd());
-
-        commands.put("source", new ResCmd());
-
-        commands.put("sourcehere", new ResCmd());
 
         commands.put("upeval", new UpCmd());
 
@@ -158,13 +150,6 @@ public class Interp {
         commands.put("for", new ForCmd());
 
         commands.put("time", new TimeCmd());
-
-        commands.put("module", new HeclModuleCmd());
-
-        /* Try to load standard modules, if they exist. */
-        loadModule("pjava", false);
-        loadModule("j2me", false);
-        loadModule("http", false);
     }
 
     /**
@@ -385,152 +370,5 @@ public class Interp {
      */
     public void clearError() {
         error = new Stack();
-    }
-
-    /**
-     * Registers a new <code>ResourceGetter</code> in this interpreter.
-     * 
-     * @param getter
-     *            new getter to use
-     */
-    public void addResourceGetter(ResHandle getter) {
-        int pri, i, j = -1, size;
-        /* if we have already registered this getter, do nothing */
-        if (getters.contains(getter))
-            return;
-        size = getters.size();
-        pri = getter.getPriority();
-        for (i = 0; i < size; i++) {
-            if (((ResHandle) getters.elementAt(i)).getPriority() < pri) {
-                j = i;
-                break;
-            }
-        }
-        if (j < 0)
-            getters.addElement(getter);
-        else
-            getters.insertElementAt(getter, j);
-    }
-
-    /**
-     * Unregisters a <code>ResourceGetter</code> from this interpreter.
-     * 
-     * @param getter
-     */
-    public void removeResourceGetter(ResHandle getter) {
-        getters.removeElement(getter);
-    }
-
-    /**
-     * 
-     * @param resourcename
-     * @return
-     */
-    ResHandle findResourceGetter(String resourcename) {
-        Enumeration elements;
-        ResHandle rc = null;
-        for (elements = getters.elements(); elements.hasMoreElements();) {
-            rc = (ResHandle) elements.nextElement();
-            if (rc.handleRes(resourcename)) {
-                return rc;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * The <code>getResAsThing</code> method returns the text of a script
-     * resource (file, url, whatever) as a Thing.
-     * 
-     * @param resourcename
-     *            a <code>String</code> value
-     * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
-     */
-    public Thing getResAsThing(String resourcename) throws HeclException {
-        ResHandle loader;
-        loader = findResourceGetter(resourcename);
-        if (loader == null)
-            throw new HeclException("Unable to load resource \"" + resourcename
-                    + "\"");
-        currentfile = resourcename;
-        return loader.getRes(resourcename);
-    }
-
-    /**
-     * The <code>getScriptName</code> method returns the name of the file
-     * being run, if it exists.
-     * 
-     * @return a <code>String</code> value
-     */
-    public String getCurrentScriptName() {
-        return currentfile;
-    }
-    public void loadModule(String name, boolean throwException)
-            throws HeclException {
-        String className;
-        className = MODULE_CLASS_PACKAGE + "." + name.toLowerCase() + "."
-                + MODULE_CLASS_LOADERCLASS;
-        loadModule(name, className, throwException);
-    }
-
-    public void unloadModule(String name, boolean throwException)
-            throws HeclException {
-        String className;
-        className = MODULE_CLASS_PACKAGE + "." + name.toLowerCase() + "."
-                + MODULE_CLASS_LOADERCLASS;
-        unloadModule(name, className, throwException);
-    }
-
-    void loadModule(String name, String className, boolean throwException)
-            throws HeclException {
-        Class cls;
-        HeclModule clsmodule;
-        if (modules.get(className) != null) {
-            if (throwException)
-                throw new HeclException("module \"" + name
-                        + "\" already loaded.");
-            else
-		return;
-        }
-
-        try {
-            cls = Class.forName(className);
-            clsmodule = (HeclModule) cls.newInstance();
-        } catch (Exception exception) {
-            if (throwException)
-                throw new HeclException("module \"" + name
-                        + "\" does not exist.");
-            else
-                return;
-        }
-
-        modules.put(className, clsmodule);
-        clsmodule.loadModule(this);
-    }
-
-    void unloadModule(String name, String className, boolean throwException)
-            throws HeclException {
-        HeclModule clsmodule;
-        clsmodule = (HeclModule) modules.get(className);
-        if (clsmodule == null) {
-            if (throwException)
-                throw new HeclException("module \"" + name
-                        + "\" is not loaded.");
-            else
-                return;
-        }
-        modules.remove(className);
-        clsmodule.unloadModule(this);
-    }
-
-    Thing modules() {
-        Enumeration keys;
-	Vector res = new Vector();
-        for (keys = modules.keys(); keys.hasMoreElements();) {
-	    res.addElement(new Thing((String)keys.nextElement()));
-        }
-	return ListThing.create(res);
     }
 }

@@ -1,4 +1,9 @@
-sourcehere harness.hcl
+# Suite.hcl - Hecl test suite.
+
+# Move to the correct directory.
+cd [listtofile [lrange [filetolist [currentfile]] 0 -2]]
+
+source harness.hcl
 
 testfiles {
     append.hcl
@@ -23,12 +28,13 @@ testfiles {
     lset.hcl
     math.hcl
     parse.hcl
+    path.hcl
     proc.hcl
     return.hcl
     search.hcl
     set.hcl
     sort.hcl
-    sourcehere.hcl
+    source.hcl
     split.hcl
     string.hcl
     upeval.hcl

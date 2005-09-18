@@ -1,4 +1,5 @@
 
 test source-1 {
-    source source.hcl
-} {}
+    source sourcefile.hcl
+    set roger_that
+} {yes}

@@ -374,6 +374,10 @@ set foo
   <section id="commands">
     <title>Hecl Commands</title>
 
+    <para>
+      These commands are part of the Hecl core and are always present.
+    </para>
+
     <!-- = -->
     <refentry id="equality">
       <refnamediv>
@@ -1023,8 +1027,8 @@ puts "foo is now $foo"
 	  <programlisting>
  puts [sort [intro commands]]
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set sindex slen sort source sourcehere split time true upeval while</screen>
+	  <para>Produces: (depending on the available commands)</para>
+	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set sindex slen sort source split time true upeval while</screen>
       </refsect1>
     </refentry>
 
@@ -1190,8 +1194,42 @@ puts [llen {1 2 3 {a b c}}]
       </refsect1>
     </refentry>
 
-     <!-- lset -->
-     <refentry id="lset">
+    <!-- lrange -->
+    <refentry id="lrange">
+      <refnamediv>
+	<refname>lrange</refname>
+	<refpurpose>Get range of elements from a list.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>lrange</command>
+	  <arg choice="req"><replaceable>list</replaceable></arg>
+	  <arg choice="req"><replaceable>first</replaceable></arg>
+	  <arg choice="req"><replaceable>last</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>lrange</command> command fetches a range of
+	  elements from
+	  <option><replaceable>list</replaceable></option>, starting
+	  at element <option><replaceable>first</replaceable></option>
+	  and ending at <option><replaceable>first</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+lrange {a b c d e f g} 0 2
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>a b c</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- lset -->
+    <refentry id="lset">
       <refnamediv>
 	<refname>lset</refname>
 	<refpurpose>Set list elements.</refpurpose>
@@ -1539,42 +1577,6 @@ puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
       </refsect1>
     </refentry>
 
-     <!-- source -->
-     <refentry id="source">
-      <refnamediv>
-	<refname>source</refname>
-	<refpurpose>Evaluate Hecl script in a file.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-	<cmdsynopsis>
-	  <command>source</command>
-	  <arg choice="req"><replaceable>filename</replaceable></arg>
-	</cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1>
-	<title>Description</title>
-	<para>
-	  The <command>source</command> command evaluates the Hecl
-	  script located in file
-	  <option><replaceable>filename</replaceable></option>.
-	</para>
-      </refsect1>
-      <refsect1>
-	<title>Example</title>
-	  <programlisting>
-# Variable foo is defined as "Hello world" in foo.hcl
-source foo.hcl
-puts $foo
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>Hello world</screen>
-      </refsect1>
-    </refentry>
-
-    <!-- sourcehere - this one is ugly... we need something more
-    elegant. -->
-
-
     <!-- split -->
     <refentry id="split">
       <refnamediv>
@@ -1788,6 +1790,56 @@ append &amp;foo "beebop"
       </refsect1>
     </refentry>
 -->
+
+  </section>
+
+  <section id="extensioncommands">
+    <title>Hecl Extension Commands</title>
+
+    <para>
+      These commands are available in various Hecl extensions, that
+      may or may not be available in different environments.
+    </para>
+
+    <section>
+      <title>File Interaction</title>
+      <para>
+	J2ME systems do not always have a file system, so these are
+	not necessarily available for that environment.
+      </para>
+
+      <!-- source -->
+      <refentry id="source">
+	<refnamediv>
+	  <refname>source</refname>
+	  <refpurpose>Evaluate Hecl script in a file.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>source</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>source</command> command evaluates the Hecl
+	    script located in file
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+# Variable foo is defined as "Hello world" in foo.hcl
+source foo.hcl
+puts $foo
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>Hello world</screen>
+	</refsect1>
+      </refentry>
+    </section>
 
   </section>
 

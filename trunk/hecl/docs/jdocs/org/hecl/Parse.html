@@ -1,53 +1,763 @@
-<?xml version="1.0" encoding="null"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><title>Parse</title><script src="../../resources/gjdoc.js" type="text/javascript"><!-- this comment required for konqueror 3.2.2 --></script><meta http-equiv="Content-Type" content="text/html; charset=null"/><meta name="generator" content="GNU Gjdoc Standard Doclet"/><meta name="keywords" content="org.hecl.Parse class"/><meta name="keywords" content="outList"/><meta name="keywords" content="state"/><meta name="keywords" content="interp"/><meta name="keywords" content="in"/><meta name="keywords" content="currentOut"/><meta name="keywords" content="parselist"/><meta name="keywords" content="more()"/><meta name="keywords" content="parse()"/><meta name="keywords" content="parseToCode()"/><meta name="keywords" content="addCurrent()"/><meta name="keywords" content="appendToCurrent()"/><meta name="keywords" content="addCommand()"/><meta name="keywords" content="addDollar()"/><meta name="keywords" content="parseLine()"/><meta name="keywords" content="parseBlock()"/><meta name="keywords" content="parseVarBlock()"/><meta name="keywords" content="parseCommand()"/><meta name="keywords" content="parseBlockOrCommand()"/><meta name="keywords" content="parseText()"/><meta name="keywords" content="parseWord()"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-layout.css" title="GNU Clean"/><link rel="stylesheet" type="text/css" href="../../resources/gjdochtml-clean-color1.css" title="GNU Clean"/></head><body class="content class" onload="top.contentPageLoaded(document.title)"><table class="navbar div top"><tr><td class="navbar div top" colspan="2"><div class="navbar div top" colspan="2"><span class="navbar item enabled"><a href="../../org/hecl/package-summary.html">Package</a></span> <span class="navbar item active">Class</span> <span class="navbar item enabled"><a href="Parse-uses.html">Use</a></span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr><tr><td class="navi"><a href="../../org/hecl/ObjectThing.html">Prev Class</a> | <a href="../../org/hecl/ParseList.html">Next Class</a></td><td class="navi"><a href="../../index.html" title="Show in a frameset" target="_top">Frames</a> | <a href="Parse.html" title="Show without frames" target="_top">No Frames</a> </td></tr><tr><td class="navi">Summary: Nested | <a href="#summary-fields">Field</a> | <a href="#summary-methods">Method</a> | <a href="#summary-constructors">Constr</a></td><td class="navi">Detail: Nested | <a href="#detail-fields">Field</a> | <a href="#detail-methods">Method</a> | <a href="#detail-constructors">Constr</a></td></tr></table><div class="class title outer"><h3 class="class title-package">org.hecl</h3><h1 class="class title-class">Class Parse</h1></div><div class="class inheritance-tree"><ul class="inheritance 0"><li class="inheritance 0"><code>java.lang.Object</code></li><ul class="inheritance 1"><li class="inheritance 1"><code>org.hecl.Parse</code></li></ul></ul></div><dl class="class subclasses"><dt class="class subclasses header"><b>Known Direct Subclasses:</b></dt><dd class="class subclasses header"><a href="../../org/hecl/ParseList.html" title="Class in org.hecl">ParseList</a></dd></b></dt></dl><hr/><div class="class synopsis outer"><div class="class synopsis declaration"><code>public class <b class="class synopsis name">Parse</b></code></div><div class="class synopsis superclass"><code>extends java.lang.Object</code></div></div><hr/><div class="class description"> The <code>Parse</code> class takes care of parsing Hecl scripts.
-</div><p class="taglet"><div class="tag list">Version:</div><dl class="tag section header"><dt>1.0</dt></dl></p><p class="taglet"><dl class="tag list"><dt class="tag section header"><b>Author:</b></dt><dd class="tag item"><a href="mailto:davidw@dedasys.com">David N. Welton </a></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><a name="summary-fields"/><dl class="table container"><table class="class summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Field Summary</h2></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a></code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#currentOut">currentOut</a></code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  String</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#in">in</a></code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  <a href="../../org/hecl/Interp.html" title="Class in org.hecl">Interp</a></code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#interp">interp</a></code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  Vector</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#outList">outList</a></code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  boolean</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parselist">parselist</a></code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  <a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a></code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#state">state</a></code></dt></dl></td></tr></table></dl><a name="summary-constructors"/><dl class="table container"><table class="class summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Constructor Summary</h2></td></tr><tr><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#Parse()">Parse</a>()</code></dt><dd class="description"> Creates a new <code>Parse</code> instance.</dd></dl></td></tr><tr><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#Parse(org.hecl.Interp,String)">Parse</a>(<a href="../../org/hecl/Interp.html" title="Class in org.hecl">Interp</a>&nbsp;interp_in, String&nbsp;in_in)</code></dt><dd class="description"> Creates a new <code>Parse</code> instance.</dd></dl></td></tr></table></dl><a name="summary-methods"/><dl class="table container"><table class="class summary" border="1" width="100%"><tr class="table header"><td colspan="2"><h2 class="table header">Method Summary</h2></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#addCommand()">addCommand</a>()</code></dt><dd class="description"> The <code>addCommand</code> method adds a command to the current
- output.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#addCurrent()">addCurrent</a>()</code></dt><dd class="description"> The <code>addCurrent</code> method adds a new element to the command
- parsed.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#addCurrent(org.hecl.Thing)">addCurrent</a>(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a>&nbsp;newthing)</code></dt><dd class="description"> The <code>addCurrent</code> method adds a new Thing to the out list,
- and sets the current output collector to an empty Thing.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis"> void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#addDollar(boolean)">addDollar</a>(boolean&nbsp;docopy)</code></dt><dd class="description"> The <code>addDollar</code> method adds a $var lookup to the current
- output.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#appendToCurrent(char)">appendToCurrent</a>(char&nbsp;ch)</code></dt><dd class="description"> The <code>appendToCurrent</code> method adds a character to the group
- object.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis"> boolean</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#more()">more</a>()</code></dt><dd class="description"> The <code>more</code> method returns a boolean value indicating whether
- there is more text to be parsed or not.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis"> Vector</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parse()">parse</a>()</code></dt><dd class="description"> The <code>parse</code> method runs the parser on the text added by
- creating a new Parse instance.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseBlock(org.hecl.ParseState)">parseBlock</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt><dd class="description"> <code>parseBlock</code> parses a {} block.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseBlockOrCommand(org.hecl.ParseState,boolean,boolean)">parseBlockOrCommand</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state, boolean&nbsp;block, boolean&nbsp;invar)</code></dt><dd class="description"> <code>parseBlockOrCommand</code> is what parseCommand and parseBlock
- use internally.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseCommand(org.hecl.ParseState)">parseCommand</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt><dd class="description"> <code>parseCommand</code> parses a [] command.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis"> void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseLine(String,org.hecl.ParseState)">parseLine</a>(String&nbsp;in, <a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt><dd class="description"> The <code>parseLine</code> method is where parsing starts on a new
- line.</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseText(org.hecl.ParseState)">parseText</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt><dd class="description"> <code>parseText</code> parses a "string in quotes".</dd></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis"> <a href="../../org/hecl/CodeThing.html" title="Class in org.hecl">CodeThing</a></code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseToCode()">parseToCode</a>()</code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseVarBlock(org.hecl.ParseState)">parseVarBlock</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt></dl></td></tr><tr><td class="left" valign="top"><code class="synopsis">protected  void</code></td><td class="right"><dl class="list"><dt class="synopsis"><code><a href="#parseWord(org.hecl.ParseState)">parseWord</a>(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a>&nbsp;state)</code></dt><dd class="description"> <code>parseWord</code> parses a regular word not in quotes.</dd></dl></td></tr></table></dl><a name="detail-fields"/><h2 class="section header">Field Details</h2><div class="section"><a name="currentOut"/><div class="member detail outer"><h3 class="member detail name">currentOut</h3><pre class="member detail synopsis">protected <a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> currentOut</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="in"/><div class="member detail outer"><h3 class="member detail name">in</h3><pre class="member detail synopsis">protected String in</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="interp"/><div class="member detail outer"><h3 class="member detail name">interp</h3><pre class="member detail synopsis">protected <a href="../../org/hecl/Interp.html" title="Class in org.hecl">Interp</a> interp</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="outList"/><div class="member detail outer"><h3 class="member detail name">outList</h3><pre class="member detail synopsis">protected Vector outList</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parselist"/><div class="member detail outer"><h3 class="member detail name">parselist</h3><pre class="member detail synopsis">protected boolean parselist</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="state"/><div class="member detail outer"><h3 class="member detail name">state</h3><pre class="member detail synopsis">protected <a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state</pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div></div><a name="detail-constructors"/><h2 class="section header">Constructor Details</h2><div class="section"><a name="Parse()"/><div class="member detail outer"><h3 class="member detail name">Parse</h3><pre class="member detail synopsis">public Parse()</pre><blockquote class="member detail name"><div class="member detail description"> Creates a new <code>Parse</code> instance. Not actually used by
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+<!-- Generated by javadoc (build 1.5.0_04) on Sun Sep 18 14:42:36 CEST 2005 -->
+<TITLE>
+Parse
+</TITLE>
+
+<META NAME="keywords" CONTENT="org.hecl.Parse class">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    parent.document.title="Parse";
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Parse.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../org/hecl/ObjectThing.html" title="class in org.hecl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../org/hecl/ParseList.html" title="class in org.hecl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/Parse.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Parse.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.hecl</FONT>
+<BR>
+Class Parse</H2>
+<PRE>
+java.lang.Object
+  <IMG SRC="../../resources/inherit.gif" ALT="extended by "><B>org.hecl.Parse</B>
+</PRE>
+<DL>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../org/hecl/ParseList.html" title="class in org.hecl">ParseList</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE>public class <B>Parse</B><DT>extends java.lang.Object</DL>
+</PRE>
+
+<P>
+The <code>Parse</code> class takes care of parsing Hecl scripts.
+<P>
+
+<P>
+<DL>
+<DT><B>Version:</B></DT>
+  <DD>1.0</DD>
+<DT><B>Author:</B></DT>
+  <DD><a href="mailto:davidw@dedasys.com">David N. Welton </a></DD>
+</DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#currentOut">currentOut</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.lang.String</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#in">in</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../org/hecl/Interp.html" title="class in org.hecl">Interp</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#interp">interp</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;java.util.Vector</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#outList">outList</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parselist">parselist</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#state">state</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#Parse()">Parse</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new <code>Parse</code> instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#Parse(org.hecl.Interp, java.lang.String)">Parse</A></B>(<A HREF="../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp_in,
+      java.lang.String&nbsp;in_in)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a new <code>Parse</code> instance.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#addCommand()">addCommand</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>addCommand</code> method adds a command to the current
+ output.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#addCurrent()">addCurrent</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>addCurrent</code> method adds a new element to the command
+ parsed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#addCurrent(org.hecl.Thing)">addCurrent</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;newthing)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>addCurrent</code> method adds a new Thing to the out list,
+ and sets the current output collector to an empty Thing.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#addDollar(boolean)">addDollar</A></B>(boolean&nbsp;docopy)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>addDollar</code> method adds a $var lookup to the current
+ output.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#appendToCurrent(char)">appendToCurrent</A></B>(char&nbsp;ch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>appendToCurrent</code> method adds a character to the group
+ object.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#more()">more</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>more</code> method returns a boolean value indicating whether
+ there is more text to be parsed or not.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;java.util.Vector</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parse()">parse</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>parse</code> method runs the parser on the text added by
+ creating a new Parse instance.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseBlock(org.hecl.ParseState)">parseBlock</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseBlock</code> parses a {} block.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseBlockOrCommand(org.hecl.ParseState, boolean, boolean)">parseBlockOrCommand</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state,
+                    boolean&nbsp;block,
+                    boolean&nbsp;invar)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseBlockOrCommand</code> is what parseCommand and parseBlock
+ use internally.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseCommand(org.hecl.ParseState)">parseCommand</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseCommand</code> parses a [] command.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseLine(java.lang.String, org.hecl.ParseState)">parseLine</A></B>(java.lang.String&nbsp;in,
+          <A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>parseLine</code> method is where parsing starts on a new
+ line.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseText(org.hecl.ParseState)">parseText</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseText</code> parses a "string in quotes".</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../org/hecl/CodeThing.html" title="class in org.hecl">CodeThing</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseToCode()">parseToCode</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseVarBlock(org.hecl.ParseState)">parseVarBlock</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Parse.html#parseWord(org.hecl.ParseState)">parseWord</A></B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseWord</code> parses a regular word not in quotes.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.Object</B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="outList"><!-- --></A><H3>
+outList</H3>
+<PRE>
+protected java.util.Vector <B>outList</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="state"><!-- --></A><H3>
+state</H3>
+<PRE>
+protected <A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A> <B>state</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="interp"><!-- --></A><H3>
+interp</H3>
+<PRE>
+protected <A HREF="../../org/hecl/Interp.html" title="class in org.hecl">Interp</A> <B>interp</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="in"><!-- --></A><H3>
+in</H3>
+<PRE>
+protected java.lang.String <B>in</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="currentOut"><!-- --></A><H3>
+currentOut</H3>
+<PRE>
+protected <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A> <B>currentOut</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="parselist"><!-- --></A><H3>
+parselist</H3>
+<PRE>
+protected boolean <B>parselist</B></PRE>
+<DL>
+<DL>
+</DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="Parse()"><!-- --></A><H3>
+Parse</H3>
+<PRE>
+public <B>Parse</B>()</PRE>
+<DL>
+<DD>Creates a new <code>Parse</code> instance. Not actually used by
  anything.
-</div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="Parse(org.hecl.Interp,String)"/><div class="member detail outer"><h3 class="member detail name">Parse</h3><pre class="member detail synopsis">public Parse(<a href="../../org/hecl/Interp.html" title="Class in org.hecl">Interp</a> interp_in,
-             String in_in)</pre><blockquote class="member detail name"><div class="member detail description"> Creates a new <code>Parse</code> instance.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">interp_in</code><span class="separator"> - </span><span class="description">a <code>Interp</code> value</span></dd><dd class="item"><code class="name">in_in</code><span class="separator"> - </span><span class="description">a <code>String</code> value</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div></div><a name="detail-methods"/><h2 class="section header">Method Details</h2><div class="section"><a name="addCommand()"/><div class="member detail outer"><h3 class="member detail name">addCommand</h3><pre class="member detail synopsis">protected void addCommand()
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> The <code>addCommand</code> method adds a command to the current
- output.
-</div><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="addCurrent()"/><div class="member detail outer"><h3 class="member detail name">addCurrent</h3><pre class="member detail synopsis">protected void addCurrent()</pre><blockquote class="member detail name"><div class="member detail description"> The <code>addCurrent</code> method adds a new element to the command
- parsed.
-</div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="addCurrent(org.hecl.Thing)"/><div class="member detail outer"><h3 class="member detail name">addCurrent</h3><pre class="member detail synopsis">protected void addCurrent(<a href="../../org/hecl/Thing.html" title="Class in org.hecl">Thing</a> newthing)</pre><blockquote class="member detail name"><div class="member detail description"> The <code>addCurrent</code> method adds a new Thing to the out list,
- and sets the current output collector to an empty Thing.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">newthing</code><span class="separator"> - </span><span class="description">a <code>Thing</code> value</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="addDollar(boolean)"/><div class="member detail outer"><h3 class="member detail name">addDollar</h3><pre class="member detail synopsis">public void addDollar(boolean docopy)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> The <code>addDollar</code> method adds a $var lookup to the current
- output.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">docopy</code><span class="separator"> - </span><span class="description">a <code>boolean</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="appendToCurrent(char)"/><div class="member detail outer"><h3 class="member detail name">appendToCurrent</h3><pre class="member detail synopsis">protected void appendToCurrent(char ch)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> The <code>appendToCurrent</code> method adds a character to the group
- object.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">ch</code><span class="separator"> - </span><span class="description">a <code>char</code></span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="more()"/><div class="member detail outer"><h3 class="member detail name">more</h3><pre class="member detail synopsis">public boolean more()</pre><blockquote class="member detail name"><div class="member detail description"> The <code>more</code> method returns a boolean value indicating whether
+<P>
+</DL>
+<HR>
+
+<A NAME="Parse(org.hecl.Interp, java.lang.String)"><!-- --></A><H3>
+Parse</H3>
+<PRE>
+public <B>Parse</B>(<A HREF="../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp_in,
+             java.lang.String&nbsp;in_in)</PRE>
+<DL>
+<DD>Creates a new <code>Parse</code> instance.
+<P>
+<DL>
+<DT><B>Parameters:</B><DD><CODE>interp_in</CODE> - a <code>Interp</code> value<DD><CODE>in_in</CODE> - a <code>String</code> value</DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="more()"><!-- --></A><H3>
+more</H3>
+<PRE>
+public boolean <B>more</B>()</PRE>
+<DL>
+<DD>The <code>more</code> method returns a boolean value indicating whether
  there is more text to be parsed or not.
-</div><p class="member detail return list"><dl><dt class="member detail return header"><b>Returns:</b></dt><dd class="member detail return item">a <code>boolean</code> value</dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parse()"/><div class="member detail outer"><h3 class="member detail name">parse</h3><pre class="member detail synopsis">public Vector parse()
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> The <code>parse</code> method runs the parser on the text added by
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a <code>boolean</code> value</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parse()"><!-- --></A><H3>
+parse</H3>
+<PRE>
+public java.util.Vector <B>parse</B>()
+                       throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>parse</code> method runs the parser on the text added by
  creating a new Parse instance.
-</div><p class="member detail return list"><dl><dt class="member detail return header"><b>Returns:</b></dt><dd class="member detail return item">a <code>Vector</code> value</dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseBlock(org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseBlock</h3><pre class="member detail synopsis">protected void parseBlock(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>parseBlock</code> parses a {} block.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseBlockOrCommand(org.hecl.ParseState,boolean,boolean)"/><div class="member detail outer"><h3 class="member detail name">parseBlockOrCommand</h3><pre class="member detail synopsis">protected void parseBlockOrCommand(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state,
-                                   boolean block,
-                                   boolean invar)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>parseBlockOrCommand</code> is what parseCommand and parseBlock
- use internally.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd><dd class="item"><code class="name">block</code><span class="separator"> - </span><span class="description">a <code>boolean</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseCommand(org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseCommand</h3><pre class="member detail synopsis">protected void parseCommand(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>parseCommand</code> parses a [] command.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseLine(String,org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseLine</h3><pre class="member detail synopsis">public void parseLine(String in,
-                      <a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> The <code>parseLine</code> method is where parsing starts on a new
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>a <code>Vector</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseToCode()"><!-- --></A><H3>
+parseToCode</H3>
+<PRE>
+public <A HREF="../../org/hecl/CodeThing.html" title="class in org.hecl">CodeThing</A> <B>parseToCode</B>()
+                      throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addCurrent()"><!-- --></A><H3>
+addCurrent</H3>
+<PRE>
+protected void <B>addCurrent</B>()</PRE>
+<DL>
+<DD>The <code>addCurrent</code> method adds a new element to the command
+ parsed.
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="appendToCurrent(char)"><!-- --></A><H3>
+appendToCurrent</H3>
+<PRE>
+protected void <B>appendToCurrent</B>(char&nbsp;ch)
+                        throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>appendToCurrent</code> method adds a character to the group
+ object.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>ch</CODE> - a <code>char</code>
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addCurrent(org.hecl.Thing)"><!-- --></A><H3>
+addCurrent</H3>
+<PRE>
+protected void <B>addCurrent</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;newthing)</PRE>
+<DL>
+<DD>The <code>addCurrent</code> method adds a new Thing to the out list,
+ and sets the current output collector to an empty Thing.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>newthing</CODE> - a <code>Thing</code> value</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addCommand()"><!-- --></A><H3>
+addCommand</H3>
+<PRE>
+protected void <B>addCommand</B>()
+                   throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>addCommand</code> method adds a command to the current
+ output.
+<P>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addDollar(boolean)"><!-- --></A><H3>
+addDollar</H3>
+<PRE>
+public void <B>addDollar</B>(boolean&nbsp;docopy)
+               throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>addDollar</code> method adds a $var lookup to the current
+ output.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>docopy</CODE> - a <code>boolean</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseLine(java.lang.String, org.hecl.ParseState)"><!-- --></A><H3>
+parseLine</H3>
+<PRE>
+public void <B>parseLine</B>(java.lang.String&nbsp;in,
+                      <A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+               throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>parseLine</code> method is where parsing starts on a new
  line.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">in</code><span class="separator"> - </span><span class="description">a <code>String</code> value</span></dd><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseText(org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseText</h3><pre class="member detail synopsis">protected void parseText(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>parseText</code> parses a "string in quotes".
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseToCode()"/><div class="member detail outer"><h3 class="member detail name">parseToCode</h3><pre class="member detail synopsis">public <a href="../../org/hecl/CodeThing.html" title="Class in org.hecl">CodeThing</a> parseToCode()
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseVarBlock(org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseVarBlock</h3><pre class="member detail synopsis">protected void parseVarBlock(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"></div><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div><hr/><a name="parseWord(org.hecl.ParseState)"/><div class="member detail outer"><h3 class="member detail name">parseWord</h3><pre class="member detail synopsis">protected void parseWord(<a href="../../org/hecl/ParseState.html" title="Class in org.hecl">ParseState</a> state)
-            throws <a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></pre><blockquote class="member detail name"><div class="member detail description"> <code>parseWord</code> parses a regular word not in quotes.
-</div><p class="parameter"><dl><dt class="header"><b>Parameters:</b></dt><dd class="item"><code class="name">state</code><span class="separator"> - </span><span class="description">a <code>ParseState</code> value</span></dd></dl></p><p class="member detail thrown list"><dl><dt class="member detail thrown header"><b>Throws:</b></dt><dd class="member detail thrown item"><code class="name"><a href="../../org/hecl/HeclException.html" title="Class in org.hecl">HeclException</a></code><span class="separator"> - </span><span class="description">if an error occurs</span></dd></dl></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p><p class="taglet"></p></blockquote></div></div><p class="navbar bottom spacer"> </p><table class="navbar div bottom"><tr><td><div class="navbar div top" colspan="2"><span class="navbar item enabled"><a href="../../org/hecl/package-summary.html">Package</a></span> <span class="navbar item active">Class</span> <span class="navbar item enabled"><a href="Parse-uses.html">Use</a></span> <span class="navbar item enabled"><a href="tree.html">Tree</a></span> <span class="navbar item enabled"><a href="../../alphaindex.html">Index</a></span> <span class="navbar item enabled"><a href="../../deprecated.html">Deprecated</a></span> <span class="navbar item enabled"><a href="../../about.html">About</a></span></div></td></tr></table></body></html>
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>in</CODE> - a <code>String</code> value<DD><CODE>state</CODE> - a <code>ParseState</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseBlock(org.hecl.ParseState)"><!-- --></A><H3>
+parseBlock</H3>
+<PRE>
+protected void <B>parseBlock</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+                   throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>parseBlock</code> parses a {} block.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>state</CODE> - a <code>ParseState</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseVarBlock(org.hecl.ParseState)"><!-- --></A><H3>
+parseVarBlock</H3>
+<PRE>
+protected void <B>parseVarBlock</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+                      throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseCommand(org.hecl.ParseState)"><!-- --></A><H3>
+parseCommand</H3>
+<PRE>
+protected void <B>parseCommand</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+                     throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>parseCommand</code> parses a [] command.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>state</CODE> - a <code>ParseState</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseBlockOrCommand(org.hecl.ParseState, boolean, boolean)"><!-- --></A><H3>
+parseBlockOrCommand</H3>
+<PRE>
+protected void <B>parseBlockOrCommand</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state,
+                                   boolean&nbsp;block,
+                                   boolean&nbsp;invar)
+                            throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>parseBlockOrCommand</code> is what parseCommand and parseBlock
+ use internally.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>state</CODE> - a <code>ParseState</code> value<DD><CODE>block</CODE> - a <code>boolean</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseText(org.hecl.ParseState)"><!-- --></A><H3>
+parseText</H3>
+<PRE>
+protected void <B>parseText</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+                  throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>parseText</code> parses a "string in quotes".
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>state</CODE> - a <code>ParseState</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="parseWord(org.hecl.ParseState)"><!-- --></A><H3>
+parseWord</H3>
+<PRE>
+protected void <B>parseWord</B>(<A HREF="../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)
+                  throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD><code>parseWord</code> parses a regular word not in quotes.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>state</CODE> - a <code>ParseState</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../org/hecl/package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/Parse.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../org/hecl/ObjectThing.html" title="class in org.hecl"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../org/hecl/ParseList.html" title="class in org.hecl"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../index.html?org/hecl/Parse.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="Parse.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+
+</BODY>
+</HTML>

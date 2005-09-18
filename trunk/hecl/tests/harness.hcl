@@ -14,7 +14,7 @@ proc test {name code result} {
 proc testfiles {files} {
     foreach f $files {
 	puts "Running $f"
-	sourcehere $f
+	source $f
     }
 }
 
