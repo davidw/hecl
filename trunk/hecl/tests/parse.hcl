@@ -44,3 +44,7 @@ test parse-6 {
 	set z 1
     }XXX
 } {{ERROR {extra characters after close-brace}}}
+
+test parse-7 {
+    set foo {};set bar 1
+} {1}

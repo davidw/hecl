@@ -1,3 +1,10 @@
+2005-09-23  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-7): Add test for parsing change.
+
+	* core/org/hecl/Parse.java: the ';' character is ok immediately
+	after a right brace, too.
+
 2005-09-18  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/Hecl.java: Much more sophisticated demo with gui elements.

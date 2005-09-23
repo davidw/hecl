@@ -385,7 +385,7 @@ public class Parse {
 		     * such as ${foo}, and the next character
 		     * isn't a space, we have a problem. */
 		    if (!invar && ch != ' ' && ch != '	' &&
-			ch != '\n' && ch != '\n' && ch != 0) {
+			ch != '\n' && ch != '\n' && ch != ';' && ch != 0) {
 			throw new HeclException("extra characters after close-brace");
 		    }
 		    state.rewind();
