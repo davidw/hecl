@@ -1,3 +1,12 @@
+2005-10-02  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: New, updated commands that all use a list of
+	properties to govern their behavior: form, textbox, stringitem,
+	string, cmd, textfield, plus getprop, setprop and setcurrent.
+
+	* j2me/Hecl.java: Massive reworking based on new gui commands.
+	Hecl demo is now written in Hecl!
+
 2005-09-23  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl (parse-7): Add test for parsing change.

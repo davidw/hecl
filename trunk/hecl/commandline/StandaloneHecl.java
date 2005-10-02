@@ -18,6 +18,9 @@ import org.hecl.Interp;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import org.hecl.http.*;
+import org.hecl.files.*;
+
 /**
  * <code>StandaloneHecl</code> is an example of how to use Hecl to run
  * some code that is contained within the program itself.

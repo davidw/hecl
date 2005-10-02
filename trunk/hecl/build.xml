@@ -36,7 +36,7 @@
     depends="compile,package"/>
 
   <target name="compile" description="Complete everything"
-    depends="compileCore,compileCommandline,compileApplet,buildJ2MEtest"/>
+    depends="compileCore,compileCommandline,compileApplet"/>
 
   <target name="package" description="Package things into JARs"
     depends="packageJARs,packageApplet,packageJ2MEtest"/>
