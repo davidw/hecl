@@ -33,7 +33,6 @@ hello world
 
    ./hecl tests/performance.hcl
 
-6) Documentation.  I always save that for last, too, but if you want
-   to have a look, start with docs/index.html.
+6) J2ME Hecl.  Look at README in the j2me directory.
 
 $Id$
