@@ -1,9 +1,13 @@
-			     J2ME Example
-			     ============
+			  J2ME Hecl Example
+			  =================
 
-These files are enough to recreate the Hecl.jar, but they need to be
-arrayed within the right directories of the j2me toolkit from Sun to
-build correctly.  If you're trying to work with them and not having
-any luck, do feel free to email me.
+This code is an example J2ME application that is written in Hecl
+itself.  To build it, you need the Sun Java Wireless Toolkit:
+
+http://java.sun.com/products/sjwtoolkit/
+
+On Linux, I use gammu to upload the application to my phone:
+
+gammu nothing --nokiaaddfile Application Hecl
 
 $Id$

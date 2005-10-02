@@ -1,5 +1,8 @@
 2005-10-02  David N. Welton  <davidw@dedasys.com>
 
+	* Updated j2me readme, added in some jdocs files that were
+	missing.
+
 	* j2me/GUICmds.java: New, updated commands that all use a list of
 	properties to govern their behavior: form, textbox, stringitem,
 	string, cmd, textfield, plus getprop, setprop and setcurrent.
