@@ -12,7 +12,7 @@ How to compile and run simple Hecl programs.
 
 3) At this point, you have a Hecl.jar file, and can run it like so:
 
-   java -classpath Hecl.jar Hecl
+   java -jar Hecl.jar
    hecl> puts "hello world"
 hello world
 
@@ -32,6 +32,10 @@ hello world
    and, to get some performance numbers:
 
    ./hecl tests/performance.hcl
+
+   or, using standard Java:
+
+   java -jar Hecl.jar tests/suite.hcl
 
 6) J2ME Hecl.  Look at README in the j2me directory.
 
