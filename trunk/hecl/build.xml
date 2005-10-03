@@ -119,6 +119,7 @@
   </target>
 
 
+<!--
   <target name="compilePjava"
     depends="initCompile,compileCore"
     description="Compile Hecl Pjava support">
@@ -129,6 +130,7 @@
       <classpath refid="classpath"/>
     </javac>
   </target>
+-->
 
   <target name="compileCommandline"
     depends="initCompile,compileCore,compileFiles,compileHttpStandard"
@@ -151,9 +153,8 @@
 
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
-  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compilePjava,compileHttpStandard">
+  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttpStandard">
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
-    <jar destfile="Hecl.jar" basedir="build/pjava" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/files" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/http_standard" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/commandline" includes="Hecl.class" update="true">
@@ -162,6 +163,19 @@
       </manifest>
     </jar>
   </target>
+
+  <target name="packageStandalone" description="Create Jar for
+    standalone Hecl" depends="compileCommandline,compileHttpStandard">
+    <jar destfile="StandaloneHecl.jar" basedir="build/core" update="true"/>
+    <jar destfile="StandaloneHecl.jar" basedir="build/files" update="true"/>
+    <jar destfile="StandaloneHecl.jar" basedir="build/http_standard" update="true"/>
+    <jar destfile="StandaloneHecl.jar" basedir="build/commandline" includes="StandaloneHecl.class" update="true">
+      <manifest>
+        <attribute name="Main-Class" value="StandaloneHecl"/>
+      </manifest>
+    </jar>
+  </target>
+
 
   <target name="packageJARs" description="Create Jar distributions of the sources"
     depends="compile,initPackage">

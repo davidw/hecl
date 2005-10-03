@@ -1,3 +1,8 @@
+2005-10-03  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Get rid of the pjava stuff.  We can add it back in
+	later if there are any modules that are specific to that platform.
+
 2005-10-02  David N. Welton  <davidw@dedasys.com>
 
 	* Updated j2me readme, added in some jdocs files that were

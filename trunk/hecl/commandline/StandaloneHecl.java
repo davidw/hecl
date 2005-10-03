@@ -15,11 +15,16 @@
 
 import org.hecl.Eval;
 import org.hecl.Interp;
+import org.hecl.ObjectThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.http.*;
 import org.hecl.files.*;
+
+import java.io.File;
+import java.io.RandomAccessFile;
+import java.io.IOException;
 
 /**
  * <code>StandaloneHecl</code> is an example of how to use Hecl to run
@@ -30,15 +35,36 @@ import org.hecl.files.*;
  */
 public class StandaloneHecl {
 
-    private static String script = "for {set i 0} {< $i 10} {incr &i} { puts $i }";
+//    private static String script = "for {set i 0} {< $i 10} {incr &i} { puts $i }";
+    private static String script = "puts $bobvar ";
 
     public static void main(String[] args) {
+	File f = new File("bob.txt");
+	File rf = null;
+	Thing t = ObjectThing.create(f);
+	Thing r = null;
+
         try {
             Interp interp = new Interp();
+	    interp.setVar("bobvar", t);
+
 	    HeclFile.loadModule(interp);
 	    HttpModule.loadModule(interp);
             Eval eval = new Eval();
             Eval.eval(interp, new Thing(script));
+
+	    r = interp.getVar("bobvar");
+	    rf = (File)ObjectThing.get(r);
+
+	    try {
+		RandomAccessFile raf = new RandomAccessFile(f, "rw");
+		raf.writeChars("aString");
+		raf.close();
+	    } catch (IOException e) {
+		System.err.println(e.toString());
+	    }
+	    
+
         } catch (Exception e) {
             e.printStackTrace();
         }
