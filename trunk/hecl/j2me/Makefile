@@ -8,9 +8,9 @@ all: Hecl.jar
 heclclasses:
 	javac -target cldc1.0 -source 1.4 -bootclasspath $(CLDCAPI):$(MIDPAPI) -sourcepath ../core/ ../core/org/hecl/*.java -d classes/
 
-Hecl.jar: Hecl.java GUICmds.java
+Hecl.jar: Hecl.java GUICmds.java script.hcl
 	javac -target cldc1.0 -source 1.4 -bootclasspath $(CLDCAPI):$(MIDPAPI) -classpath ../out/heclCore.jar Hecl.java GUICmds.java -d classes/
-	jar cfm Hecl.jar MANIFEST.MF -C classes .
+	jar cfm Hecl.jar MANIFEST.MF -C classes . script.hcl
 
 clean:
 	-rm Hecl.jar

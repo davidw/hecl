@@ -13,6 +13,10 @@
    limitations under the License.
 */
 
+import java.io.DataInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -39,42 +43,6 @@ public class Hecl
 
     private static Display display;
 
-    /* This is the script that the user sees and can modify. */
-    private static String script = "set num 0;" +
-" set bckbtn {cmd label Back code back type back} ;" +
-" proc puttext {tf} { string [getprop $tf text] } ;" +
-" proc putnum {num} { incr &num; string $num } ;" +
-" proc back {} {global newform; setcurrent $newform } ; " +
-" proc maketb {} { " +
-"     global bckbtn; setcurrent [textbox label {New TextBox} text defaulttext len 100 code $bckbtn]" +
-" } ;" +
-" proc makeform {} { global bckbtn; setcurrent [form code $bckbtn] } ;" +
-" set newform [form label hello code {" +
-"    stringitem label {Hecl Demo} text {};" +
-"    set tf [textfield label text:];" +
-"    set tfeval [textfield label {eval hecl code:}];" +
-"    cmd label {Print Text} code [list puttext $tf]; " +
-"    cmd label {Eval} code {string [eval [getprop $tfeval text]]}; " +
-"    cmd label {Print Number} code [list putnum &num] ;" +
-"    cmd label {Make Textbox} code maketb;" +
-"    cmd label {Make Form} code makeform;" +
-"    cmd label {Exit} type exit;" +
-"}];" +
-"setcurrent $newform;"
-    ;
-
-    /* And this is the main script itself! */
-    private static String mainscript = "" +
-    " proc err {txt} {global errf; setcurrent $errf; string $txt};" +
-    " proc run {} {global main; if { catch {upeval [getprop $main text]} problem } {err $problem} };" +
-    " set errf [form label Error code {cmd label Back type back code {setcurrent $main}}];" +
-    " set main [textbox label Hecl code {" +
-    "     cmd label Switch code [list setcurrent $errf] ;" +
-    "     cmd label Run code run ;" +
-    "} text {" + script + "} len 1000];" +
-    "setcurrent $main ;"
-    ;
-
     private Interp interp;
     private Eval eval;
 
@@ -89,6 +57,20 @@ public class Hecl
 
     public void startApp() {
 	if (!started) {
+	    int ch;
+	    StringBuffer script = new StringBuffer("");
+	    DataInputStream is = new DataInputStream(
+		this.getClass().getResourceAsStream("/script.hcl"));
+
+	    try {
+		while ((ch = is.read()) != -1) {
+		    script.append((char)ch);
+		}
+		is.close();
+	    } catch (IOException e) {
+		System.err.println("error reading init script: " + e.toString());
+	    }
+
 	    display = Display.getDisplay(this);
 
 	    started = true;
@@ -109,7 +91,7 @@ public class Hecl
 		interp.commands.put("setprop", cmds);
 		interp.commands.put("setcurrent", cmds);
 
-		Eval.eval(interp, new Thing(mainscript));
+		Eval.eval(interp, new Thing(script.toString()));
 	    } catch (Exception e) {
 		System.err.println(e);
 	    }

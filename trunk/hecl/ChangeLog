@@ -1,3 +1,14 @@
+2005-10-06  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: Broke script out into a separate file.
+
+	* j2me/Hecl.java: Use external resource file so that we can just
+	use jar to create new Hecl apps!
+
+2005-10-05  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Compare.java: Do non-destructive comparisons.
+
 2005-10-03  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Get rid of the pjava stuff.  We can add it back in
