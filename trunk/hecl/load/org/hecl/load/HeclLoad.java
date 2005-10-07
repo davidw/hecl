@@ -39,7 +39,7 @@ public class HeclLoad implements org.hecl.modules.HeclModule {
      */
     public void loadModule(Interp interp) throws HeclException {
 	LoadCmd lc = new LoadCmd();
-	interp.commands.put("load", this);
+	interp.commands.put("load", lc);
     }
 
     /**
