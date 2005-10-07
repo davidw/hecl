@@ -35,8 +35,8 @@ public class StandaloneHecl {
     public static void main(String[] args) {
         try {
             Interp interp = new Interp();
-	    HeclFile.loadModule(interp);
-	    HttpModule.loadModule(interp);
+	    new HeclFile().loadModule(interp);
+	    new HttpModule().loadModule(interp);
             Eval eval = new Eval();
             Eval.eval(interp, new Thing(script));
         } catch (Exception e) {

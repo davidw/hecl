@@ -1,4 +1,4 @@
-/* Copyright 2005 Wojciech Kocjan
+/* Copyright 2005 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,29 +13,42 @@
  limitations under the License.
  */
 
-package org.hecl.http;
+
+package org.hecl.load;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-import org.hecl.StringThing;
 import org.hecl.Thing;
 
-import org.hecl.modules.HeclModule;
 
 /**
- * The <code>HttpModule</code> implements HeclModule so that this code
- * can be loaded dynamically.
+ * The <code>HeclLoad</code> class implements a module that can load
+ * external code dynamically.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HttpModule implements HeclModule {
+public class HeclLoad implements org.hecl.modules.HeclModule {
 
+    /**
+     * The <code>loadModule</code> method initializes the 'load'
+     * command.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void loadModule(Interp interp) throws HeclException {
-        interp.commands.put("http", new HttpCommand());
+	LoadCmd lc = new LoadCmd();
+	interp.commands.put("load", this);
     }
 
+    /**
+     * The <code>unloadModule</code> method unloads the module.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void unloadModule(Interp interp) throws HeclException {
-        interp.commands.remove("http");
+        interp.commands.remove("load");
     }
 }

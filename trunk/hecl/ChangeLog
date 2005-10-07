@@ -1,3 +1,43 @@
+2005-10-08  David N. Welton  <davidw@dedasys.com>
+
+	* modules/org/hecl/modules/HeclModule.java: Perhaps we could
+	simply put this file elsewhere, because it seems a waste of
+	resources to just leave it empty here, all by its lonesome.
+
+	* http/org/hecl/http/HttpModule.java: Implement HeclModule.
+
+	* files/org/hecl/files/HeclFile.java: Added writeFile method to
+	dump entire file at once.
+
+	* core/org/hecl/Compare.java: When comparing the string
+	representation of two things, we don't want to use
+	StringThing.get(), because that transforms the object in question
+	into an actual string!
+
+	* commandline/Hecl.java: Module initialization can't be static
+	methods anymore.
+
+2005-10-07  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added modules, load classpaths.  A variety of
+	subsystems, such as compileFiles, now depend on modules, and this
+	is hopefully reflected throughout the build system.  Added a
+	'jfreechart' bit that's only really of use to me right now.
+	packageCommandline no longer includes http_standard by default,
+	since it's now possible to load the code dynamically!
+
+	* files/org/hecl/files/ReadCmd.java: Added a 'readall' command
+	that slurps in an entire file.
+
+	* files/org/hecl/files/WriteCmd.java: Added a 'write' command.
+
+	* load/org/hecl/load/HeclLoad.java: The module portion of the load
+	system.
+
+	* load/org/hecl/load/LoadCmd.java: Implement the 'load' command.
+	For the moment, we use java.net.URLClassLoader to do the dirty
+	work, as this keeps Hecl smaller and lets us use existing code.
+
 2005-10-06  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/script.hcl: Broke script out into a separate file.

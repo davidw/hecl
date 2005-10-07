@@ -16,9 +16,18 @@
     <pathelement location="build/files"/>
   </path>
 
+  <path id="modulesclasspath">
+    <pathelement location="build/modules"/>
+  </path>
+
   <path id="http_standardclasspath">
     <pathelement location="build/http_standard"/>
   </path>
+
+  <path id="loadclasspath">
+    <pathelement location="build/load"/>
+  </path>
+
 
   <!--
   Additional classpath locations, specified in build.properties file
@@ -79,18 +88,44 @@
   </target>
 
   <target name="compileFiles"
-    depends="initCompile,compileCore"
+    depends="initCompile,compileCore,compileModules"
     description="Compile Hecl files support">
     <mkdir dir="build"/>
     <mkdir dir="build/files"/>
     <javac srcdir="files" destdir="build/files" debug="true">
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
+      <classpath refid="modulesclasspath"/>
+    </javac>
+  </target>
+
+  <target name="compileModules"
+    depends="initCompile,compileCore"
+    description="Compile Hecl modules support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/modules"/>
+    <javac srcdir="modules" destdir="build/modules" debug="true">
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+
+  <target name="compileLoad"
+    depends="initCompile,compileCore,compileModules"
+    description="Compile Hecl load (classloader) support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/load"/>
+    <javac srcdir="load" destdir="build/load" debug="true">
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+      <classpath refid="filesclasspath"/>
+      <classpath refid="modulesclasspath"/>
     </javac>
   </target>
 
   <target name="compileHttpStandard"
-    depends="initCompile,compileCore"
+    depends="initCompile,compileCore,compileModules"
     description="Compile J2SE Hecl http support">
     <mkdir dir="build"/>
     <mkdir dir="build/http_standard"/>
@@ -100,6 +135,7 @@
       <src path="http_standard"/>
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
+      <classpath refid="modulesclasspath"/>
     </javac>
   </target>
 
@@ -115,6 +151,7 @@
       <src path="http_micro"/>
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
+      <classpath refid="modulesclasspath"/>
     </javac>
   </target>
 
@@ -133,17 +170,37 @@
 -->
 
   <target name="compileCommandline"
-    depends="initCompile,compileCore,compileFiles,compileHttpStandard"
+    depends="initCompile,compileCore,compileFiles,compileHttpStandard,compileLoad,compileModules"
     description="Compile Hecl command line support">
     <mkdir dir="build"/>
     <mkdir dir="build/commandline"/>
     <javac srcdir="commandline" destdir="build/commandline" debug="true">
       <classpath refid="filesclasspath"/>
       <classpath refid="http_standardclasspath"/>
+      <classpath refid="loadclasspath"/>
+      <classpath refid="modulesclasspath"/>
       <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
+
+
+  <target name="compileJFreeChart"
+    depends="initCompile,compileCore,compileModules"
+    description="Compile Hecl jfreechart support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/jfreechart"/>
+    <javac srcdir="jfreechart" destdir="build/jfreechart" debug="true">
+      <classpath refid="modulesclasspath"/>
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+      <classpath>
+	<pathelement location="/home/davidw/downloads/jfreechart-1.0.0-rc1/lib/jfreechart-1.0.0-rc1.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+
 
   <!-- package targsts -->
   <target name="initPackage"
@@ -156,7 +213,8 @@
   <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttpStandard">
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/files" update="true"/>
-    <jar destfile="Hecl.jar" basedir="build/http_standard" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/load" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/modules" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/commandline" includes="Hecl.class" update="true">
       <manifest>
         <attribute name="Main-Class" value="Hecl"/>
@@ -167,7 +225,8 @@
   <target name="packageStandalone" description="Create Jar for
     standalone Hecl" depends="compileCommandline,compileHttpStandard">
     <jar destfile="StandaloneHecl.jar" basedir="build/core" update="true"/>
-    <jar destfile="StandaloneHecl.jar" basedir="build/files" update="true"/>
+    <jar destfile="StandaloneHecl.jar" basedir="build/files"
+    update="true"/>
     <jar destfile="StandaloneHecl.jar" basedir="build/http_standard" update="true"/>
     <jar destfile="StandaloneHecl.jar" basedir="build/commandline" includes="StandaloneHecl.class" update="true">
       <manifest>
@@ -182,6 +241,9 @@
     <jar destfile="out/heclCore.jar" basedir="build/core"/>
     <jar destfile="out/heclApplet.jar" basedir="build/applet"/>
     <jar destfile="out/heclFiles.jar" basedir="build/files"/>
+    <jar destfile="out/heclHttp.jar" basedir="build/http_standard/"/>
+    <jar destfile="out/heclLoad.jar" basedir="build/load"/>
+    <jar destfile="out/heclModules.jar" basedir="build/modules"/>
 <!--    <jar destfile="out/heclHttp.jar" basedir="build/http"/> -->
   </target>
 

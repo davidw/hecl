@@ -17,7 +17,10 @@
 package org.hecl.files;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.Vector;
@@ -35,7 +38,7 @@ import org.hecl.Thing;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HeclFile {
+public class HeclFile implements org.hecl.modules.HeclModule {
     /* Keep track of the file currently being run. */
     public static String currentFile = null;
 
@@ -62,28 +65,67 @@ public class HeclFile {
     public static StringBuffer readFile(String filename) throws HeclException {
 	File realfn = new File(filename).getAbsoluteFile();
 	StringBuffer data = new StringBuffer();
-	FileReader fr = null;
+	BufferedInputStream fis = null;
 
 	try {
-	    fr = new FileReader(realfn);
-	    int total;
+	    fis = new BufferedInputStream(new FileInputStream(realfn));
+ 	    int total;
 	    int ch;
-	    for (total = 0; (ch = fr.read()) != -1; total ++) {
+	    for (total = 0; (ch = fis.read()) != -1; total ++) {
 		data.append((char)ch);
 	    }
 	} catch (IOException e) {
-	    throw new HeclException("error reading " + realfn);
+	    throw new HeclException("error reading " + realfn +
+				    " : " + e.toString());
 	} finally {
 	    try {
-		if (fr != null) {
-		    fr.close();
+		if (fis != null) {
+		    fis.close();
 		}
 	    } catch (IOException e) {
-
+		throw new HeclException("error closing " + realfn +
+					" stream : " + e.toString());
 	    }
 	}
 	return data;
     }
+
+    /**
+     * The <code>writeFile</code> method writes the 'data' String to
+     * the file given by 'filename'.
+     *
+     * @param filename a <code>String</code> value
+     * @param data a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static void writeFile(String filename, String data) throws HeclException {
+	File realfn = new File(filename).getAbsoluteFile();
+	BufferedOutputStream fos = null;
+
+	System.out.println("data is " + data.length());
+	try {
+	    char[] chars = new char[data.length()];
+	    data.getChars(0, data.length(), chars, 0);
+
+	    fos = new BufferedOutputStream(new FileOutputStream(realfn));
+	    for (int i = 0; i < chars.length; i++) {
+		fos.write(chars[i]);
+	    }
+	} catch (IOException e) {
+	    throw new HeclException("error writing to " + realfn +
+				    " : " + e.toString());
+	} finally {
+	    try {
+		if (fos != null) {
+		    fos.close();
+		}
+	    } catch (IOException e) {
+		throw new HeclException("error closing " + realfn +
+					" stream" + " : " + e.toString());
+	    }
+	}
+    }
+
 
     /**
      * <code>listToFile</code> takes a list like {a b c} and converts
@@ -180,19 +222,23 @@ public class HeclFile {
         Eval.eval(interp, new Thing(readFile(filename)));
     }
 
-    public static void loadModule(Interp interp) throws HeclException {
+    public void loadModule(Interp interp) throws HeclException {
         interp.commands.put("cd", new ChangeDirCmd());
         interp.commands.put("currentfile", new CurrentFileCmd());
         interp.commands.put("filetolist", new PathCmd());
         interp.commands.put("listtofile", new PathCmd());
+        interp.commands.put("readall", new ReadCmd());
+        interp.commands.put("write", new WriteCmd());
         interp.commands.put("source", new SourceCmd());
     }
 
-    public static void unloadModule(Interp interp) throws HeclException {
+    public void unloadModule(Interp interp) throws HeclException {
         interp.commands.remove("cd");
         interp.commands.remove("currentfile");
         interp.commands.remove("filetolist");
         interp.commands.remove("listtofile");
+        interp.commands.remove("readall");
+        interp.commands.remove("write");
         interp.commands.remove("source");
     }
 }

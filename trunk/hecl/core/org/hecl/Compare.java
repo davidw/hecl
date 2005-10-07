@@ -60,7 +60,7 @@ public class Compare {
      * @throws HeclException
      */
     public static int compareString(Thing a, Thing b) {
-        return StringThing.get(a).compareTo(StringThing.get(b));
+        return a.toString().compareTo(b.toString());
     }
 
     /**

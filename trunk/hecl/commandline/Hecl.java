@@ -26,6 +26,7 @@ import org.hecl.HeclException;
 
 import org.hecl.files.HeclFile;
 import org.hecl.http.HttpModule;
+import org.hecl.load.HeclLoad;
 
 
 /**
@@ -46,8 +47,8 @@ public class Hecl {
             int i;
             Interp interp = new Interp();
 	    /* Add the standard packages in. */
-	    HeclFile.loadModule(interp);
-	    HttpModule.loadModule(interp);
+	    new HeclFile().loadModule(interp);
+	    new HeclLoad().loadModule(interp);
             Eval eval = new Eval();
 	    Vector argv = new Vector();
 
