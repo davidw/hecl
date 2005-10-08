@@ -48,3 +48,24 @@ test parse-6 {
 test parse-7 {
     set foo {};set bar 1
 } {1}
+
+test parse-8 {
+    set foo [list a \
+		 b \
+		 c]
+    set foo
+} {a b c}
+
+test parse-9 {
+    set foo "foo\nbar"
+} {foo
+bar}
+
+test parse-10 {
+    set foo \u69
+} {i}
+
+test parse-10 {
+    set foo \u262f
+} \u262f
+

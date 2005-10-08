@@ -1,5 +1,12 @@
 2005-10-08  David N. Welton  <davidw@dedasys.com>
 
+	* tests/parse.hcl: New tests to check escape parsing.
+
+	* core/org/hecl/Parse.java: Parser fix: make sure that a \ that is
+	on its own (after a whitespace) still quotes the character after
+	it.  Added an escape parser so that it is possible to add unicode
+	sequences, newlines, and tabs.
+
 	* modules/org/hecl/modules/HeclModule.java: Perhaps we could
 	simply put this file elsewhere, because it seems a waste of
 	resources to just leave it empty here, all by its lonesome.

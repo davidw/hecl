@@ -251,8 +251,14 @@ public class Parse {
                     return;
                 case ';' :
                     return;
+		case '\\' :
+		    if (!parseEscape(state)) {
+			parseWord(state);
+			addCurrent();
+		    }
+		    break;
                 default :
-                    appendToCurrent(ch);
+		    appendToCurrent(ch);
                     //		    state.rewind();
                     parseWord(state);
                     addCurrent();
@@ -422,11 +428,7 @@ public class Parse {
             }
             switch (ch) {
                 case '\\' :
-                    ch = state.nextchar();
-                    if (state.done()) {
-                        return;
-                    }
-                    appendToCurrent(ch);
+		    parseEscape(state);
                     break;
                 case '[' :
                     addCommand();
@@ -461,6 +463,7 @@ public class Parse {
             if (state.done()) {
                 return;
             }
+	begin:
             switch (ch) {
                 case '[' :
                     addCommand();
@@ -478,6 +481,8 @@ public class Parse {
                  */
                 case ' ' :
                     return;
+                case '	' :
+                    return;
                 case '\r' :
                     state.eoc = true;
                     return;
@@ -488,16 +493,67 @@ public class Parse {
                     state.eoc = true;
                     return;
                 case '\\' :
-                    ch = state.nextchar();
-                    if (state.done()) {
-                        return;
-                    }
-		    /* Fall through on purpose.  */
+		    if (parseEscape(state)) return;
                 default :
                     appendToCurrent(ch);
                     //		    out.appendString(state.chars[state.idx]);
                     break;
             }
         }
+    }
+
+
+    /**
+     * The <code>parseEscape</code> method parses \n \t style escapes
+     * - or just prints the next character.
+     *
+     * @param state a <code>ParseState</code> value
+     * @return a <code>boolean</code> value
+     * @exception HeclException if an error occurs
+     */
+    protected boolean parseEscape(ParseState state) throws HeclException {
+	char ch = state.nextchar();
+	if (state.done()) {
+	    return true;
+	}
+	/* \n style escapes */
+	switch (ch) {
+	    case '\n':
+		return true;
+	    case 'n':
+		appendToCurrent('\n');
+		break;
+	    case 't':
+		appendToCurrent('\t');
+		break;
+	    case 'u':
+		/* Add unicode sequences. */
+		StringBuffer num = new StringBuffer("");
+		char nextc;
+		for (int i = 0; i < 4; i++) {
+		    nextc = state.nextchar();
+		    if (state.done()) {
+			return true;
+		    }
+		    if ((nextc < '0' || nextc > '9') &&
+			(nextc < 'a' || nextc > 'f') &&
+			(nextc < 'A' || nextc > 'F')) {
+
+			state.rewind();
+			break;
+		    }
+		    num.append(nextc);
+		}
+		try {
+		    appendToCurrent((char)Integer.parseInt(num.toString(), 16));
+		} catch (NumberFormatException e) {
+		    throw new HeclException("illegal unicode escape: \\u" + num);
+		}
+		num = null;
+		break;
+	    default:
+		appendToCurrent(ch);
+	}
+	return false;
     }
 }

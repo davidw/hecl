@@ -381,8 +381,8 @@ set foo
     <!-- = -->
     <refentry id="equality">
       <refnamediv>
-	<refname>= !=</refname>
-	<refpurpose>Integer equality</refpurpose>
+	<refname>= !=</refname> <refpurpose>Integer
+	equality</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
 	<cmdsynopsis>

@@ -59,9 +59,8 @@ public class Hecl
 	if (!started) {
 	    int ch;
 	    StringBuffer script = new StringBuffer("");
-	    DataInputStream is = new DataInputStream(
-		this.getClass().getResourceAsStream("/script.hcl"));
-
+	    DataInputStream is =
+		new DataInputStream(this.getClass().getResourceAsStream("/script.hcl"));
 	    try {
 		while ((ch = is.read()) != -1) {
 		    script.append((char)ch);
