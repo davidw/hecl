@@ -65,7 +65,7 @@ test parse-10 {
     set foo \u69
 } {i}
 
-test parse-10 {
+test parse-11 {
     set foo \u262f
 } \u262f
 

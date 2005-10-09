@@ -37,7 +37,7 @@
 
   <!-- virtual targets -->
   <target name="clean" description="Clean the build"
-    depends="cleanOut,cleanBuild,cleanClasses">
+    depends="cleanOut,cleanBuild,cleanClasses,cleanJ2ME">
     <delete file="Hecl.jar"/>
   </target>
 
@@ -48,7 +48,7 @@
     depends="compileCore,compileCommandline,compileApplet"/>
 
   <target name="package" description="Package things into JARs"
-    depends="packageJARs,packageApplet,packageJ2MEtest"/>
+    depends="packageJARs,packageApplet"/>
 
   <!-- clean targets -->
   <target name="cleanOut" description="Clean out directory">
@@ -60,6 +60,11 @@
   <target name="cleanClasses" description="Clean Eclipse classes files">
     <delete dir="classes"/>
   </target>
+  <target name="cleanJ2ME" description="Clean J2ME classes">
+    <delete dir="j2me/classes"/>
+    <delete file="j2me/Hecl.jar"/>
+  </target>
+
 
   <!-- compile targets -->
   <target name="initCompile" description="Initialize compilation">
@@ -155,20 +160,6 @@
     </javac>
   </target>
 
-
-<!--
-  <target name="compilePjava"
-    depends="initCompile,compileCore"
-    description="Compile Hecl Pjava support">
-    <mkdir dir="build"/>
-    <mkdir dir="build/pjava"/>
-    <javac srcdir="pjava" destdir="build/pjava" debug="true">
-      <classpath refid="buildclasspath"/>
-      <classpath refid="classpath"/>
-    </javac>
-  </target>
--->
-
   <target name="compileCommandline"
     depends="initCompile,compileCore,compileFiles,compileHttpStandard,compileLoad,compileModules"
     description="Compile Hecl command line support">
@@ -185,6 +176,7 @@
   </target>
 
 
+  <!-- FIXME: still experimental -->
   <target name="compileJFreeChart"
     depends="initCompile,compileCore,compileModules"
     description="Compile Hecl jfreechart support">
@@ -199,8 +191,6 @@
       </classpath>
     </javac>
   </target>
-
-
 
   <!-- package targsts -->
   <target name="initPackage"
@@ -235,7 +225,6 @@
     </jar>
   </target>
 
-
   <target name="packageJARs" description="Create Jar distributions of the sources"
     depends="compile,initPackage">
     <jar destfile="out/heclCore.jar" basedir="build/core"/>
@@ -244,7 +233,6 @@
     <jar destfile="out/heclHttp.jar" basedir="build/http_standard/"/>
     <jar destfile="out/heclLoad.jar" basedir="build/load"/>
     <jar destfile="out/heclModules.jar" basedir="build/modules"/>
-<!--    <jar destfile="out/heclHttp.jar" basedir="build/http"/> -->
   </target>
 
   <target name="packageApplet" description="Create HTML applet structure"
@@ -258,40 +246,57 @@
   </target>
 
   <!-- J2ME versions -->
-  <target name="packageJ2MESource"
-    depends="initPackage"
-    description="Create source structure for J2ME">
-    <mkdir dir="out/j2mesource"/>
-    <copy todir="out/j2mesource">
-      <fileset dir="core"/>
-      <fileset dir="http"/>
-      <fileset dir="j2me"/>
-    </copy>
-  </target>
 
-  <target name="buildJ2MEtest"
-    depends="packageJ2MESource"
-    description="Builds J2ME Hecl test">
-    <mkdir dir="out/j2me"/>
-    <javac srcdir="out/j2mesource" destdir="out/j2me" target="1.1">
-      <classpath refid="classpath"/>
+  <!-- NOTE: replace these with your own locations! -->
+  <path id="j2mebootclasspath">
+    <pathelement
+    location="/home/davidw/Desktop/WTK2.2/lib/cldcapi10.jar"/>
+    <pathelement
+    location="/home/davidw/Desktop/WTK2.2/lib/midpapi10.jar"/>
+  </path>
+
+  <target name="compileJ2MECore" description="Compile the core classes
+    for J2ME">
+    <mkdir dir="j2me/classes" />
+    <javac srcdir="core"
+      destdir="j2me/classes" target="cldc1.0"
+      source="1.4">
+      <bootclasspath refid="j2mebootclasspath"/>
     </javac>
   </target>
 
-  <target name="packageJ2MEtest"
-    depends="buildJ2MEtest"
-    description="Packages J2ME Hecl test as a JAR">
-    <jar destfile="out/j2me.jar" basedir="out/j2me">
+  <target name="compileJ2ME"
+    description="Compile the J2ME specific stuff"
+    depends ="compileJ2MECore">
+    <javac srcdir="j2me"
+      target="cldc1.0"
+      source="1.4"
+      destdir="j2me/classes">
+      <bootclasspath refid="j2mebootclasspath"/>
+      <classpath>
+	<pathelement location="j2me/classes/" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="packageJ2ME" depends="compileJ2ME">
+    <jar destfile="j2me/Hecl.jar" basedir="j2me/classes"
+    update="true" excludes="org/hecl/PrintThing.class">
       <manifest>
-	<attribute name="MicroEdition-Configuration" value="CLDC-1.0"/>
-	<attribute name="MIDlet-Name" value="Heclmidlettest"/>
+	<attribute name="MIDlet-Name" value="Hecl"/>
 	<attribute name="MIDlet-Vendor" value="Dedasys"/>
 	<attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
-	<attribute name="MIDlet-1" value="Heclmidlettest, Heclmidlettest.png, Heclmidlettest"/>
-	<attribute name="MIDlet-Version" value="1.2"/>
+	<attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
+	<attribute name="MIDlet-Version" value="1.0"/>
 	<attribute name="MicroEdition-Profile" value="MIDP-1.0"/>
+	<attribute name="MicroEdition-Configuration" value="CLDC-1.0"/>
       </manifest>
     </jar>
+    <jar destfile="j2me/Hecl.jar" basedir="j2me/"
+    includes="script.hcl" update="true"/>
+    <jar destfile="j2me/Hecl.jar" basedir="j2me/"
+    includes="Hecl.png" update="true"/>
+
   </target>
 
   <!-- Docs -->

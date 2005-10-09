@@ -1859,42 +1859,40 @@ puts $foo
       </para>
 
       <programlisting>
+import org.hecl.Eval&semi;
+import org.hecl.Interp&semi;
+import org.hecl.Thing&semi;
+import org.hecl.ListThing&semi;
+import org.hecl.HeclException&semi;
+      </programlisting>
+...
+      <programlisting>
+
 	try {
 	    /* First, create a new interpreter, and pass it a
 	     * mechanism to load resources with - in this case,
 	     * files. */
 	    Interp interp = new Interp();
+
+	    /* Add the files package  */
+	    new HeclFile().loadModule(interp);
 	    /* Evaluate the file at args[0] */
-            Eval.eval(interp, interp.getResAsThing(args[0]));
+	    HeclFile.sourceFile(interp, args[0]);
+	    /* Evaluate some code in a string.  */
+	    String helloworld = new String("puts {Hello, world!}");
+	    Eval.eval(interp, new Thing(helloworld));
 	} catch (Exception e) {
 	    System.err.println(e);
 	}
       </programlisting>
 
       <para>
-	The above code creates a new interpreter.  Currently,
-	interpreters must know about how they are to load files, so the
-	interpreter is instantiated with a new
-	<classname>LoadFile</classname>, which, as the name suggests,
-	contains code to load files from the file system.  Since Hecl is
-	also meant for embedded environments, it is also possible to
-	create loader classes that load code from a compiled-in string,
-	from the network, or whatever other form of storage you may have
-	in mind.
-      </para>
-      <para>
-	After creating the interpreter, we call
-	<classname>Standard</classname>'s <methodname>init</methodname>
-	method.  <classname>Standard</classname> is a class that adds
-	several commands that we want to be present in standard J2SE
-	Hecl, but not in J2ME Hecl.
-      </para>
-      <para>
-	The real work is done by <methodname>Eval.init</methodname>,
-	which takes an interpreter and a Hecl
-	<classname>Thing</classname> as arguments.  In this case, the
-	<classname>Thing</classname> is the Hecl code read from the disk
-	by <classname>LoadFile</classname>.
+	The above code first creates a new interpreter.  Next, it
+	instantiates the HeclFile system.  This isn't part of the Hecl
+	core, because some systems, like J2ME, may not have files.  If
+	you don't have files, you can still use
+	<methodname>Eval.eval</methodname> to evaluate some code,
+	which could come from whatever source you desire.
       </para>
     </section>
 

@@ -49,7 +49,6 @@ public class Hecl {
 	    /* Add the standard packages in. */
 	    new HeclFile().loadModule(interp);
 	    new HeclLoad().loadModule(interp);
-            Eval eval = new Eval();
 	    Vector argv = new Vector();
 
             for (i = 0; i < args.length; i++) {

@@ -1,3 +1,11 @@
+2005-10-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Updated docs regarding Hecl/Java integration.
+
+	* build.xml: Fixed up J2ME build system.
+
+	* j2me/Makefile: Removed.
+
 2005-10-08  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl: New tests to check escape parsing.
