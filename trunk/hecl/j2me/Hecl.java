@@ -51,9 +51,15 @@ public class Hecl
     public Hecl() {
     }
 
-    public void destroyApp(boolean unconditional) {}
+    public void destroyApp(boolean unconditional) {
+    }
 
-     public void pauseApp() {}
+    public void exitApp() {
+	destroyApp(true);
+	notifyDestroyed();
+    }
+
+    public void pauseApp() {}
 
     public void startApp() {
 	if (!started) {
@@ -79,6 +85,7 @@ public class Hecl
 		GUICmds cmds = new GUICmds();
 		cmds.display = display;
 		cmds.interp = interp;
+		cmds.midlet = this;
 
 		interp.commands.put("form", cmds);
 		interp.commands.put("textbox", cmds);
@@ -89,6 +96,7 @@ public class Hecl
 		interp.commands.put("getprop", cmds);
 		interp.commands.put("setprop", cmds);
 		interp.commands.put("setcurrent", cmds);
+		interp.commands.put("exit", cmds);
 
 		Eval.eval(interp, new Thing(script.toString()));
 	    } catch (Exception e) {

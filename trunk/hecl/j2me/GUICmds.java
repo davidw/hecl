@@ -35,6 +35,7 @@ import org.hecl.Thing;
 class GUICmds implements org.hecl.Command, CommandListener {
     public Display display;
     public Interp interp;
+    public Hecl midlet;
 
     /* These are callbacks used to implement Commands. */
     private static Hashtable callbacks = new Hashtable();
@@ -201,6 +202,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    Displayable widget = (Displayable)widgets.get(argv[1].toString());
 	    display.setCurrent(widget);
 	    screen = (Screen)widget;
+	} else if (cmdname.equals("exit")) {
+	    midlet.exitApp();
 	}
 
 	properties = null;
