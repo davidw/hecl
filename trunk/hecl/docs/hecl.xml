@@ -696,6 +696,28 @@ puts $i
       </refsect1>
     </refentry>
 
+    <refentry id="exit">
+      <refnamediv>
+	<refname>exit</refname>
+	<refpurpose>Exit the current process</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>exit</command>
+	  <arg choice="opt"><replaceable>exitcode</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>exit</command> command stops the execution of
+	  the current process.  It causes the
+	  <option><replaceable>exitcode</replaceable></option> (an
+	  integer) to be returned by the process.
+	</para>
+      </refsect1>
+    </refentry>
+
     <refentry id="filter">
       <refnamediv>
 	<refname>filter</refname>

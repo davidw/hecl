@@ -2,7 +2,7 @@
       
 	Hecl Programming Language
       
-    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="filter.html" title="filter"><link rel="next" href="foreach.html" title="foreach"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">for</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="filter.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="foreach.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="for"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>for &#8212; For loop.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">for</tt>  <i class="replaceable"><tt>initialization</tt></i> <i class="replaceable"><tt>test</tt></i> <i class="replaceable"><tt>step</tt></i> <i class="replaceable"><tt>body</tt></i></p></div></div><div class="refsect1" lang="en"><a name="id2523024"></a><h2>Description</h2><p>
+    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="filter.html" title="filter"><link rel="next" href="foreach.html" title="foreach"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">for</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="filter.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="foreach.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="for"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>for &#8212; For loop.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">for</tt>  <i class="replaceable"><tt>initialization</tt></i> <i class="replaceable"><tt>test</tt></i> <i class="replaceable"><tt>step</tt></i> <i class="replaceable"><tt>body</tt></i></p></div></div><div class="refsect1" lang="en"><a name="id2523087"></a><h2>Description</h2><p>
 	  The <span><b class="command">for</b></span> command is like in many other
 	  languages like C and Java.  As arguments, it takes an
 	  <tt class="option"><i class="replaceable"><tt>initialization</tt></i></tt>
@@ -13,7 +13,7 @@
 	  <tt class="option"><i class="replaceable"><tt>step</tt></i></tt> script
 	  option which is run at each iteration of the body (to
 	  increment a variable, for example), and the body itself.
-	</p></div><div class="refsect1" lang="en"><a name="id2523059"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en"><a name="id2523122"></a><h2>Example</h2><pre class="programlisting">
 set out {}
 for {set i 0} {&lt; $i 10} {incr &amp;i} {
     append &amp;out $i
