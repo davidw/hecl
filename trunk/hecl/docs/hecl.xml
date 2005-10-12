@@ -477,6 +477,49 @@ puts [/ 100 5]
       </refsect1>
     </refentry>
 
+    <!-- and -->
+    <refentry id="and">
+      <refnamediv>
+	<refname>and</refname>
+	<refpurpose>Logical and</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>and</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>...</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>and</command> command takes one or more
+	  arguments, and performs a binary and on them, in sequence.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+hecl> and 1 0
+0
+hecl> and 1 1
+1
+hecl> and 1
+1
+hecl> and 2 4
+0
+hecl> and 5 1
+1
+hecl> and 5 4
+4
+hecl> and 1 2 4 8
+0
+	</programlisting>
+      </refsect1>
+    </refentry>
+
 
 
     <!-- append -->
@@ -1334,8 +1377,81 @@ if {ne 1 00001} {
       </refsect1>
     </refentry>
 
-     <!-- proc -->
-     <refentry id="proc">
+    <!-- not -->
+    <refentry id="not">
+      <refnamediv>
+	<refname>not</refname>
+	<refpurpose>Logical not</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>not</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>not</command> command performs a logical not on
+	  the argument given to it.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+hecl> not 0
+1
+hecl> not 1
+0
+hecl> not 4
+0
+	</programlisting>
+      </refsect1>
+    </refentry>
+
+    <!-- or -->
+    <refentry id="or">
+      <refnamediv>
+	<refname>or</refname>
+	<refpurpose>Logical or</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>or</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>...</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>or</command> command does a binary or of the
+	  numbers passed to it, so it can also be used as a logical
+	  or.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>
+hecl> or 1
+1
+hecl> or 0
+0
+hecl> or 1 0
+1
+hecl> or 2 4
+6
+hecl> or 1 2 4
+7
+	</programlisting>
+      </refsect1>
+    </refentry>
+
+
+    <!-- proc -->
+    <refentry id="proc">
       <refnamediv>
 	<refname>proc</refname>
 	<refpurpose>Create a new procedure.</refpurpose>

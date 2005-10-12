@@ -78,7 +78,7 @@ public class HeclException extends Exception {
 
     public HeclException(int exception_code) {
         code = exception_code;
-        txt = new String("???");
+        txt = "???";
         pushException();
     }
 
