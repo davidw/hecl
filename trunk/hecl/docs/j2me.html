@@ -52,5 +52,48 @@
 	  </p></li></ol></div><p>
 	For example, let's create a simple form with a text entry
 	widget and a command that acts on it:
-      </p><pre class="programlisting">
-      </pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
+      </p><pre class="programlisting">proc reverse {tf results} {
+    set string [getprop &amp;tf text]
+    set newstring ""
+    set i [slen &amp;string]
+    incr &amp;i -1
+    while {&gt; &amp;i -1} {
+	set c [sindex &amp;string &amp;i]
+	append &amp;newstring &amp;c
+	incr &amp;i -1
+    }
+    setprop &amp;results text $newstring
+}
+
+set mainform [form label "Reverse a String" code {
+    set tf [textfield label "String:"]
+    set results [stringitem label "Results:"]
+    cmd label "Reverse" code [list reverse &amp;tf &amp;results]
+    cmd label "Exit" code exit type exit;
+}]
+
+setcurrent $mainform
+</pre><p>
+	This program is pretty simple.  It displays a form, which
+	contains a textfield and a stringitem, and two commands,
+	<span><b class="command">Reverse</b></span> and <span><b class="command">Exit</b></span>.  When
+	you select <span><b class="command">Reverse</b></span>, the text contained in
+	the textfield is reversed, and displayed in the stringitem.
+	Exit does what you might expect.
+      </p><p>
+	The code is fairly self-explanatory, with a few key points
+	worth noting.  Within the <span><b class="command">reverse</b></span> proc,
+	<span><b class="command">getprop</b></span> and <span><b class="command">setprop</b></span> are
+	used to fetch and set properties of the textfield and
+	stringitem.  All the GUI elements have fairly similar
+	arguments, for instance <tt class="option">label</tt> for the label,
+	and <tt class="option">code</tt> for the code associated with them.
+	Note thouth that the code associated with the form is
+	evaluated immediately, whereas that associated with the
+	commands is only evaluated when they are selected.  Lastly, to
+	actually display this on the screen, it's necessary to set the
+	form as the screen item currently displayed.
+      </p><p>The program looks more or less like this when run:
+
+      </p><div class="figure"><a name="id2527334"></a><p class="title"><b>Figure 1. "reverse" screen shot</b></p><div class="mediaobject"><img src="reverse-screen.png" alt='"reverse" screenshot, with textfield,
+	      stringitem, and two commands, Reverse and Exit'></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

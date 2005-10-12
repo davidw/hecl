@@ -46,3 +46,8 @@ A.top:visited {
     color: #5555ff;
 }
 
+div.mediaobject img {
+    background-color: #777777;
+    padding: 1em;
+    width: auto;
+}

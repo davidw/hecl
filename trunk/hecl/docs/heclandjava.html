@@ -6,7 +6,7 @@
       
 	Hecl Programming Language
       
-    "><link rel="prev" href="source.html" title="source"><link rel="next" href="j2me.html" title="Hecl and J2ME"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="source.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id2526500">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2526552">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2526837">JavaDocs</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2526500"></a>Calling Hecl code from Java</h3></div></div></div><p>
+    "><link rel="prev" href="source.html" title="source"><link rel="next" href="j2me.html" title="Hecl and J2ME"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="source.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id2526727">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2526778">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2527063">JavaDocs</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2526727"></a>Calling Hecl code from Java</h3></div></div></div><p>
 	Hecl is not a replacement for Java, and is indeed meant to
 	work hand in hand with Java.  We attempt to make it as easy as
 	possible to call Java from Hecl, via the creation of new Hecl
@@ -46,7 +46,7 @@ import org.hecl.HeclException;
 	you don't have files, you can still use
 	<tt class="methodname">Eval.eval</tt> to evaluate some code,
 	which could come from whatever source you desire.
-      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2526552"></a>Creating new Hecl commands</h3></div></div></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2526778"></a>Creating new Hecl commands</h3></div></div></div><p>
 	Creating new Hecl commands is relatively simple.  The first
 	step is to create a new class for your command in a file, say
 	<tt class="filename">HelloCmd.java</tt>.  The code would look
@@ -90,7 +90,7 @@ class HelloCmd implements Command {
 	  Get a String from a Thing.
 	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam"><span class="type">int </span><span class="parameter">i</span></span>);</code>
 	  Creates a new thing from an int.
-	</li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2526837"></a>JavaDocs</h3></div></div></div><p>
+	</li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2527063"></a>JavaDocs</h3></div></div></div><p>
 	For the complete Hecl javadoc documentation, see the <a href="jdocs" target="_top">Hecl Javadocs</a>.  And, of course, look at
 	  the Hecl source code to see how it's done!
       </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="source.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">source </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl and J2ME</td></tr></table></div></body></html>

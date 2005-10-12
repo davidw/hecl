@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-  "http://www.oasis-open.org/committees/docbook/xml/4.1.2/docbookx.dtd" []>
+  "http://www.oasis-open.org/committees/docbook/xml/4.1.2/docbookx.dtd"
+  [
+      <!ENTITY reverse.hcl SYSTEM "reverse.hcl" >
+]>
 
 <!--
    Copyright 2004-2005 David N. Welton
@@ -173,14 +176,20 @@ hello world
 	<screen>
 java -classpath Hecl.jar Hecl tests/suite.hcl
 	</screen>
-	A performance test is also supplied so that you can compare
-	numbers if you're curious, or want to hack on Hecl to improve
-	its speed:
+	An (incomplete) performance test is also supplied so that you
+	can compare numbers if you're curious, or want to hack on Hecl
+	to improve its speed:
 	<screen>
 java -classpath Hecl.jar Hecl tests/performance.hcl
 	</screen>
       </step>
     </procedure>
+
+
+    <para>
+      See <xref linkend="j2me"/> for more information on installation
+      and use with J2ME.
+    </para>
 
   </section>
 
@@ -2036,11 +2045,11 @@ puts $foo
       </para>
 
       <programlisting>
-import org.hecl.Eval&semi;
-import org.hecl.Interp&semi;
-import org.hecl.Thing&semi;
-import org.hecl.ListThing&semi;
-import org.hecl.HeclException&semi;
+import org.hecl.Eval;
+import org.hecl.Interp;
+import org.hecl.Thing;
+import org.hecl.ListThing;
+import org.hecl.HeclException;
       </programlisting>
 ...
       <programlisting>
@@ -2292,8 +2301,44 @@ class HelloCmd implements Command {
 	widget and a command that acts on it:
       </para>
 
-      <programlisting>
-      </programlisting>
+      <programlisting><xi:include href="reverse.hcl" parse="text"
+	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+
+      <para>
+	This program is pretty simple.  It displays a form, which
+	contains a textfield and a stringitem, and two commands,
+	<command>Reverse</command> and <command>Exit</command>.  When
+	you select <command>Reverse</command>, the text contained in
+	the textfield is reversed, and displayed in the stringitem.
+	Exit does what you might expect.
+      </para>
+
+      <para>
+	The code is fairly self-explanatory, with a few key points
+	worth noting.  Within the <command>reverse</command> proc,
+	<command>getprop</command> and <command>setprop</command> are
+	used to fetch and set properties of the textfield and
+	stringitem.  All the GUI elements have fairly similar
+	arguments, for instance <option>label</option> for the label,
+	and <option>code</option> for the code associated with them.
+	Note thouth that the code associated with the form is
+	evaluated immediately, whereas that associated with the
+	commands is only evaluated when they are selected.  Lastly, to
+	actually display this on the screen, it's necessary to set the
+	form as the screen item currently displayed.
+      </para>
+
+      <para>The program looks more or less like this when run:
+
+      </para>
+
+      <figure><title>"reverse" screen shot</title>
+          <mediaobject>
+	  <imageobject><imagedata fileref="reverse-screen.png" format="PNG"/></imageobject>
+	  <textobject><phrase>"reverse" screenshot, with textfield,
+	      stringitem, and two commands, Reverse and Exit</phrase></textobject>
+	</mediaobject>
+      </figure>
 
 
     </section>

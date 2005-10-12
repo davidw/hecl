@@ -1,5 +1,10 @@
 2005-10-12  David N. Welton  <davidw@dedasys.com>
 
+	* j2me/GUICmds.java: Added J2ME-specific 'exit' command.
+
+	* docs/hecl.xml: Added some tutorial-like information on creating
+	Hecl J2ME applications.
+
 	* core/org/hecl/GlobalCmd.java: If the variable already exists and
 	it needs copying, do so, so as not to run into problems when
 	someone else sets it and the local and global versions get out of

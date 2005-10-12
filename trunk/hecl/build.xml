@@ -321,7 +321,14 @@
     </javadoc>
   </target>
 
-  <target name="docbook">
+  <target name="docbookresolve">
+    <exec executable="xmllint" output="docs/hecl-processed.xml" error="docs/processing-errors.txt">
+      <arg value="--xinclude" />
+      <arg value="docs/hecl.xml" />
+    </exec>
+  </target>
+
+  <target name="docbook" depends="docbookresolve">
     <exec executable="xsltproc">
       <arg value="--nonet" />
       <arg value="--stringparam" />
@@ -334,7 +341,7 @@
       <arg value="-o"/>
       <arg value="docs/" />
       <arg value="docs/chunk.xsl" />
-      <arg value="docs/hecl.xml" />
+      <arg value="docs/hecl-processed.xml" />
     </exec>
   </target>
 
