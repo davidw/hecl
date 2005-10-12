@@ -1,3 +1,40 @@
+2005-10-12  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/GlobalCmd.java: If the variable already exists and
+	it needs copying, do so, so as not to run into problems when
+	someone else sets it and the local and global versions get out of
+	sync.
+
+	* core/org/hecl/SubstThing.java: We check to see if the Thing in
+	question is slated for copying, and do so if it is.
+
+	* core/org/hecl/ExitCmd.java: Added "exit" command.
+
+	* build.xml: Added updatejad.hcl file to update the .jad file with
+	the correct file size.
+
+	* core/org/hecl/Interp.java, Stanza.java, Thing.java: Implemented
+	a sort of copy on write for Things, so that we don't change
+	"literals" (for example: set foo ""; append &foo "bar"; ), but
+	references still work.
+
+2005-10-11  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added default text for stringitems.
+
+	* core/org/hecl/LogicCmd.java: Added some basic logic commands,
+	'and', 'not' and 'or'.
+
+	* docs/hecl.xml: Added some new commands to the documentation.
+
+	* core/org/hecl/Thing.java: Make getStringRep do the same thing as
+	toString.  I think it may be possible to simply get rid of
+	getStringRep in favor of the more java-ish toString.
+
+2005-10-10  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/HeclFile.java: Make the default file be "".
+
 2005-10-09  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Updated docs regarding Hecl/Java integration.

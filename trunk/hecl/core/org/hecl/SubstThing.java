@@ -92,10 +92,21 @@ public class SubstThing implements RealThing {
         if (getcopy.cacheversion != interp.cacheversion) {
             getcopy.cacheversion = interp.cacheversion;
             getcopy.val = interp.getVar(getcopy.varName);
-        }
+        } /* else {
+	    System.out.println("CACHE HIT");
+	}  */
 
         if (getcopy.ref) {
-            return getcopy.val;
+	    if (getcopy.val.copy) {
+		/* If the Thing value of the substthing is something
+		 * that should be copied, we copy it so that we don't
+		 * mess up the original.  See the set-3 test, for
+		 * example. */
+		Thing copy = getcopy.val.deepcopy();
+		interp.setVar(getcopy.varName, copy);
+		return copy;
+	    }
+	    return getcopy.val;
         } else {
             return getcopy.val.deepcopy();
         }

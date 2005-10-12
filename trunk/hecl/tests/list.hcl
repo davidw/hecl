@@ -35,3 +35,15 @@ test lrange-7 {
     set foo {a b c d e f g}
     lrange $foo -2 -1
 } {f g}
+
+proc touchlist {} {
+    set lst {}
+    lappend &lst "foo"
+    return $lst
+}
+
+test list-8 {
+    touchlist
+    touchlist
+    touchlist
+} {foo}

@@ -15,6 +15,8 @@
 
 package org.hecl;
 
+//import java.util.Arrays;
+
 /**
  * The <code>Stanza</code> class represents one command. A CodeThing
  * object may have several Stanzas.
@@ -119,6 +121,15 @@ class Stanza {
 	    }
 	}
 
+	/* DEBUG - before. */
+	if (false) {
+	    System.out.println("BEFORE COMMAND v");
+	    for (int i = 0; i < argv.length; i ++) {
+		PrintThing.printThing(argv[i]);
+	    }
+	    System.out.println("BEFORE ENDCOMMAND ^ ");
+	}
+
 	/*
 	 * Fill in the elements of the new argv - doing substitutions and
 	 * running code where needs be.
@@ -132,15 +143,22 @@ class Stanza {
 	    } else if (realthing instanceof CodeThing) {
 		newargv[i] = CodeThing.doCodeSubst(interp, argv[i]);
 	    } else {
+		/* FIXME - I do not like this as it is inefficient and gobbles memory. */
+//		newargv[i] = argv[i].deepcopy();
 		newargv[i] = argv[i];
+		newargv[i].copy = true;
 	    }
 	}
 
-	/*
-	 * System.out.println("COMMAND v"); for (int i = 0; i <
-	 * newargv.length; i ++) { Thing.printThing(newargv[i]); }
-	 * System.out.println("ENDCOMMAND ^ ");
-	 */
+	/* DEBUG - after. */
+
+	if (false) {
+	    System.out.println("AFTER COMMAND v");
+	    for (int i = 0; i < newargv.length; i ++) {
+		PrintThing.printThing(newargv[i]);
+	    }
+	    System.out.println("AFTER ENDCOMMAND ^ ");
+	}
 
 	try {
 	    interp.result = new Thing("");

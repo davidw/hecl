@@ -25,6 +25,7 @@ testfiles {
     join.hcl
     list.hcl
     listlen.hcl
+    logic.hcl
     lset.hcl
     math.hcl
     parse.hcl

@@ -166,6 +166,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    /* The 'stringitem' command. Differs from a plain string
 	     * in that it can be modified, and it has both a label and
 	     * text. */
+	    properties.put("text", new Thing("")); /* default  */
 	    setProps(interp, uniqueid, argv, 1);
 	    StringItem si = new StringItem(((Thing)properties.get("label")).toString(),
 					   ((Thing)properties.get("text")).toString());
@@ -346,6 +347,9 @@ class GUICmds implements org.hecl.Command, CommandListener {
 		break;
 	    case STRINGITEM + TEXT + GETPROP:
 		result = new Thing(((StringItem)widget).getText());
+		break;
+	    case STRINGITEM + TEXT + SETPROP:
+		((StringItem)widget).setText(propval.toString());
 		break;
 	    default:
 		if (!ok) {

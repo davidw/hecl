@@ -1808,6 +1808,156 @@ append &amp;foo "beebop"
 	not necessarily available for that environment.
       </para>
 
+      <!-- cd -->
+      <refentry id="cd">
+	<refnamediv>
+	  <refname>cd</refname>
+	  <refpurpose>Change working directory.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>cd</command>
+	    <arg choice="req"><replaceable>directory</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>cd</command> command changes the current
+	    working directory to
+	    <option><replaceable>directory</replaceable></option>.  Or
+	    at least it changes where <emphasis>Java</emphasis> thinks
+	    the working directory is.  It does not change the process'
+	    actual working directory.  Apparently that's not possible
+	    with Java.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <!-- currentfile -->
+      <refentry id="currentfile">
+	<refnamediv>
+	  <refname>currentfile</refname>
+	  <refpurpose>The file currently being sourced.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>currentfile</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>currentfile</command> command returns the
+	    filename of the file currently being sourced.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <!-- filetolist -->
+      <refentry id="filetolist">
+	<refnamediv>
+	  <refname>filetolist</refname>
+	  <refpurpose>Takes a filename and returns a list.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>filetolist</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>filetolist</command> command takes an argument,
+	    <option><replaceable>filename</replaceable></option>, and
+	    returns a list of all the file's directory components.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>hecl> filetolist /var/lib/dpkg/info
+/ var lib dpkg info
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+
+      <!-- listtofile -->
+
+      <refentry id="listtofile">
+	<refnamediv>
+	  <refname>listtofile</refname> <refpurpose>List to file takes
+	  a list and transforms it into a filename, adding the correct
+	  file seperator for the platform in question.
+	  </refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>listtofile</command>
+	    <arg choice="req"><replaceable>list</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>listtofile</command> command takes a list and
+	    returns a filename.  The filename doesn't need to exist on
+	    the system.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>hecl> set lst [list / etc passwd]
+/ etc passwd
+hecl> listtofile $lst
+/etc/passwd
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+
+      <!-- readall -->
+
+      <refentry id="readall">
+	<refnamediv>
+	  <refname>readall</refname>
+	  <refpurpose>Reads an entire file and returns its contents.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>readall</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>readall</command> command reads an entire
+	    file and returns its contents.
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+set data [readall foo.txt]
+set lines [split $data "\n"]
+set i 1
+foreach line $lines {
+    puts "$i $line"
+    incr &amp;i
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>1 .....
+2 ........
+3 ........
+etc...</screen>
+	</refsect1>
+      </refentry>
+
+
       <!-- source -->
       <refentry id="source">
 	<refnamediv>
@@ -1839,6 +1989,11 @@ puts $foo
 	  <screen>Hello world</screen>
 	</refsect1>
       </refentry>
+
+
+
+
+
     </section>
 
   </section>
@@ -2045,11 +2200,81 @@ class HelloCmd implements Command {
 
     <para>
       Hecl is designed to be small enough to run on mobile devices
-      such as cell phones.  This means that it has been necessary to
-      limit ourselves to Java API's that work with J2ME.
+      such as cell phones.  This means that for the Hecl core, has
+      been necessary to limit ourselves to Java API's that work with
+      J2ME.
     </para>
 
-    <para>FIXME - more later.</para>
+    <section id="j2mecommands">
+      <title>Hecl J2ME Commands</title>
+      <para>
+	Commands available in the J2ME version of Hecl to interact
+	with the phone.  FIXME: more soon!
+      </para>
+    </section>
+
+    <section id="heclapps">
+      <title>Creating your own Hecl apps</title>
+
+      <para>
+	Creating new hecl applications is relatively easy.  Everything
+	you need is in the <filename>j2me/</filename> directory.  The
+	<filename>GUICmds.java</filename> file contains most of the
+	functionality that maps J2ME functionality to Hecl and back.
+	The <filename>Hecl.java</filename> file contains the code that
+	starts up Hecl on the cell phone.
+      </para>
+      <para>
+	If you are just looking to write an application, though, the
+	most important file is <filename>script.hcl</filename>, which
+	is what gets loaded up and executed at runtime.  The sample
+	application contained therein is a good guide to how to make
+	your own apps.  If you want to modify it, make a backup copy
+	for use as a reference, and then get started!
+      </para>
+
+      <procedure>
+	<step>
+	  <para>
+	    If you are interested in recompiling the Hecl J2ME Java
+	    files, change the <varname>j2mebootclasspath</varname>
+	    variable in the <filename>build.xml</filename> Ant build
+	    file.  To compile, you can then run <command>ant
+	    packageJ2ME</command> from the hecl directory.
+	  </para>
+	</step>
+
+	<step>
+	  <para>
+	    If you have recompiled the J2ME java files, you can simply
+	    use the <command>ant J2ME</command> command to create the
+	    .jar and .jad files for you, including your version of
+	    script.hcl.
+	  </para>
+	  <para>
+	    Otherwise, it's still pretty easy.  Once you've finished
+	    editing <filename>script.hcl</filename>, update the jar
+	    file with your new copy:
+	    <programlisting>jar uf Hecl.jar script.hcl</programlisting>
+	    Then, make sure to update the .jad so that it has the
+	    correct size for the .jar file.  You can do this
+	    automatically with a Hecl script:
+	    <programlisting>java -jar ../Hecl.jar updatejad.hcl \
+	    Hecl.jad Hecl.jar</programlisting>
+	  </para>
+	</step>
+      </procedure>
+
+      <para>
+	For example, let's create a simple form with a text entry
+	widget and a command that acts on it:
+      </para>
+
+      <programlisting>
+      </programlisting>
+
+
+    </section>
 
   </section>
 

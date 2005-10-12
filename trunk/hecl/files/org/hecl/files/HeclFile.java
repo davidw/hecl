@@ -40,7 +40,7 @@ import org.hecl.Thing;
  */
 public class HeclFile implements org.hecl.modules.HeclModule {
     /* Keep track of the file currently being run. */
-    public static String currentFile = null;
+    public static String currentFile = new String("");
 
     /**
      * <code>changeDir</code> changes where Java thinks the current
@@ -102,7 +102,6 @@ public class HeclFile implements org.hecl.modules.HeclModule {
 	File realfn = new File(filename).getAbsoluteFile();
 	BufferedOutputStream fos = null;
 
-	System.out.println("data is " + data.length());
 	try {
 	    char[] chars = new char[data.length()];
 	    data.getChars(0, data.length(), chars, 0);
@@ -223,10 +222,12 @@ public class HeclFile implements org.hecl.modules.HeclModule {
     }
 
     public void loadModule(Interp interp) throws HeclException {
+	PathCmd pc = new PathCmd();
         interp.commands.put("cd", new ChangeDirCmd());
         interp.commands.put("currentfile", new CurrentFileCmd());
-        interp.commands.put("filetolist", new PathCmd());
-        interp.commands.put("listtofile", new PathCmd());
+        interp.commands.put("filesize", new InfoCmd());
+        interp.commands.put("filetolist", pc);
+        interp.commands.put("listtofile", pc);
         interp.commands.put("readall", new ReadCmd());
         interp.commands.put("write", new WriteCmd());
         interp.commands.put("source", new SourceCmd());
@@ -235,6 +236,7 @@ public class HeclFile implements org.hecl.modules.HeclModule {
     public void unloadModule(Interp interp) throws HeclException {
         interp.commands.remove("cd");
         interp.commands.remove("currentfile");
+        interp.commands.remove("filesize");
         interp.commands.remove("filetolist");
         interp.commands.remove("listtofile");
         interp.commands.remove("readall");

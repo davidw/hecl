@@ -17,6 +17,8 @@ package org.hecl;
 
 import java.util.Vector;
 
+//import java.util.Arrays;
+
 /**
  * The <code>Parse</code> class takes care of parsing Hecl scripts.
  * 
@@ -118,8 +120,8 @@ public class Parse {
             }
 	    cmdName = argv[0].getStringRep();
 
-            // System.out.println("CMD is " + cmdName);
-            // System.out.println("ARGS ARE " + Arrays.asList(argv));
+            //System.out.println("CMD is " + cmdName);
+            //System.out.println("ARGS ARE " + Arrays.asList(argv));
 
             command = (Command)interp.commands.get(cmdName);
             code.addStanza(command, argv);
@@ -285,8 +287,9 @@ public class Parse {
     }
 
     /**
-     * The <code>parseDollar</code> method parses a $foo variable. These can
-     * also be of the form ${foo} so we deal with that case too.
+     * The <code>parseDollar</code> method parses a $foo
+     * variable. These can also be of the form ${foo} so that we can
+     * separate them from any surrounding text.
      * 
      * @param state
      *            a <code>ParseState</code> value

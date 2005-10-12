@@ -1,5 +1,9 @@
 # performance.hcl -- performance tests go here.
 
+# Move to the current working directory.
+cd [listtofile [lrange [filetolist [currentfile]] 0 -2]]
+
+
 proc stopwatch {name code} {
     global times
     puts $name

@@ -108,6 +108,10 @@ public class Interp {
         commands.put("lset", new ListCmd());
         commands.put("lrange", new ListCmd());
 
+        commands.put("and", new LogicCmd());
+        commands.put("not", new LogicCmd());
+        commands.put("or", new LogicCmd());
+
         commands.put("split", new JoinSplitCmd());
         commands.put("join", new JoinSplitCmd());
 
@@ -150,6 +154,8 @@ public class Interp {
         commands.put("for", new ForCmd());
 
         commands.put("time", new TimeCmd());
+
+        commands.put("exit", new ExitCmd());
     }
 
     /**
@@ -236,6 +242,7 @@ public class Interp {
      */
     public Thing getVar(String varname, int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
+	//System.out.println("getvar: " + varname + " " + level + " " + lookup);
 
         Thing res = (Thing) lookup.get(varname);
         if (res == null) {
@@ -254,7 +261,7 @@ public class Interp {
      *            a <code>Thing</code> value
      */
     public void setVar(Thing varname, Thing value) throws HeclException {
-        setVar(varname.getStringRep(), value);
+        setVar(varname.toString(), value);
     }
 
     /**
@@ -284,12 +291,20 @@ public class Interp {
     public void setVar(String varname, Thing value, int level) {
         Hashtable lookup = getVarhash(level);
 
-        if (lookup.containsKey(varname)) {
-            Thing oldval = (Thing) lookup.get(varname);
-            oldval.makeref(value);
-        } else {
-            lookup.put(varname, value);
-        }
+	/* Bump the cache number so that SubstThing.get refetches the
+	 * variable. */
+        cacheversion++;
+	if (lookup.containsKey(varname)) {
+	     Thing oldval = (Thing) lookup.get(varname);
+	     /* If Stanza has indicated that this value should be
+	      * copied if a write is attempted to it, don't use the
+	      * existing reference. */
+	     if (!oldval.copy) {
+		 oldval.makeref(value);
+		 return;
+	     }
+	 }
+	lookup.put(varname, value);
     }
 
     /**

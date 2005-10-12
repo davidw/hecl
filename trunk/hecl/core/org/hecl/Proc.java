@@ -66,6 +66,8 @@ class Proc implements Command {
                     + " has too many arguments");
         }
 
+	//System.out.println("CODE >>>" + code + "<<<<");
+
         try {
             Eval.eval(interp, code);
         } catch (HeclException e) {
@@ -74,7 +76,9 @@ class Proc implements Command {
                 throw e;
             }
         }
+
         /* We're done, pop the stack. */
-        interp.stackDecr();
+        Hashtable ht = interp.stackDecr();
+//	ht = null;
     }
 }

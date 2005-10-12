@@ -27,14 +27,18 @@ class GlobalCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 	for (int i = 1; i < argv.length; i ++) {
 	    String varname = argv[i].getStringRep();
+	    Thing newThing = null;
 
 	    if (!interp.existsVar(varname, 0)) {
-		Thing newThing = new Thing("");
-		interp.setVar(varname, newThing, 0);
-		interp.setVar(argv[i], newThing);
+		newThing = new Thing("");
 	    } else {
-		interp.setVar(argv[i], interp.getVar(varname, 0));
+		/* If it already exists, make a copy of it that is no
+		 * longer marked to be copied. */
+		Thing globalthing = interp.getVar(varname, 0);
+		newThing = globalthing.deepcopy();
 	    }
+	    interp.setVar(varname, newThing, 0);
+	    interp.setVar(argv[i], newThing);
 	}
     }
 }

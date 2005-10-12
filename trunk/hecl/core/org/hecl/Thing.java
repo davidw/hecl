@@ -28,6 +28,10 @@ import java.util.*;
 public class Thing extends Object {
     public RealThing val;
 
+    /* This flag is used by Stanza to indicate whether a Thing should
+     * be copied if something tries to write to it.  */
+    public boolean copy = false;
+
     protected String stringval;
 
     /* Used to keep track of nesting depth. */
@@ -131,14 +135,13 @@ public class Thing extends Object {
      */
 
     public void makeref(Thing newval) {
-        this.val = newval.val;
+	this.val = newval.val;
         this.stringval = newval.stringval;
     }
 
     /**
      * <code>toString</code> returns the String value of a Thing. FIXME this
-     * could probably be improved in terms of efficiency. FIXME this could also
-     * handle an exception better
+     * could probably be improved in terms of efficiency.
      * 
      * @return a <code>String</code> value
      */
@@ -147,11 +150,7 @@ public class Thing extends Object {
     }
 
     public String getStringRep() {
-        if (this instanceof RealThing) {
-            return ((RealThing) this).getStringRep();
-        } else {
-            return this.toString();
-        }
+	return val.getStringRep();
     }
 
     /**
@@ -171,6 +170,9 @@ public class Thing extends Object {
 	RealThing realthing = val.deepcopy();
 	/* We've done the deepcopy, we can lower the depth again. */
 	depth --;
+/* 	Thing retval = new Thing(realthing);
+	retval.copy = this.copy;
+	return retval;  */
 	return new Thing(realthing);
     }
 }

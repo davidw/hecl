@@ -296,7 +296,17 @@
     includes="script.hcl" update="true"/>
     <jar destfile="j2me/Hecl.jar" basedir="j2me/"
     includes="Hecl.png" update="true"/>
+  </target>
 
+  <target name="JadFile" depends="packageCommandline,packageJ2ME">
+    <java jar="Hecl.jar" fork="true">
+      <arg value="j2me/updatejad.hcl"/>
+      <arg value="j2me/Hecl.jad"/>
+      <arg value="j2me/Hecl.jar"/>
+    </java>
+  </target>
+
+  <target name="J2ME" depends="JadFile">
   </target>
 
   <!-- Docs -->
@@ -317,6 +327,10 @@
       <arg value="--stringparam" />
       <arg value="html.stylesheet" />
       <arg value="hecl.css" />
+      <arg value="--stringparam"/>
+      <arg value="generate.section.toc.level"/>
+      <arg value="5"/>
+      <!-- 5 is likely higher than we will need. -->
       <arg value="-o"/>
       <arg value="docs/" />
       <arg value="docs/chunk.xsl" />
