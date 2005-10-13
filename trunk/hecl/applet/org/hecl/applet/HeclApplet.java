@@ -168,6 +168,7 @@ public class HeclApplet extends Applet implements ActionListener {
                 output.setForeground(Color.red);
                 output.setText("Error while running script:\n"
                         + error.getMessage());
+		go.setEnabled(true);
                 return;
             }
             synchronized (resultString) {
