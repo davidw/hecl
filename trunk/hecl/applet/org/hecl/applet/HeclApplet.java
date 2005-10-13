@@ -14,9 +14,11 @@
  */
 
 package org.hecl.applet;
+
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.TextArea;
@@ -33,10 +35,11 @@ import org.hecl.Thing;
 
 
 /**
+ * <code>HeclApplet</code> implements an applet that lets you try out
+ * hecl.
+ *
  * @author zoro
- * 
- * TODO To change the template for this generated type comment go to Window -
- * Preferences - Java - Code Style - Code Templates
+ * @version 1.0
  */
 public class HeclApplet extends Applet implements ActionListener {
     TextArea input = new TextArea();
@@ -44,6 +47,8 @@ public class HeclApplet extends Applet implements ActionListener {
     Button go = new Button("Execute code");
     GridBagLayout gb;
     GridBagConstraints gbc = new GridBagConstraints();
+    Interp interp;
+    Runner runner;
 
     public HeclApplet() {
         gb = new GridBagLayout();
@@ -79,22 +84,30 @@ public class HeclApplet extends Applet implements ActionListener {
 
         go.addActionListener(this);
 
-        input.setText("for {set i 0} {< $i 10} {incr &i} {\n    puts \"I=$i\"\n}\n");
+	Font fixed = new Font("Monospaced", Font.PLAIN, 12);
+
+	input.setFont(fixed);
+	output.setFont(fixed);
+        input.setText("for {set i 0} {< &i 10} {incr &i} {\n    puts \"I = $i\"\n}\n");
+    }
+
+    public void start() {
+    }
+
+    public void stop() {
+	runner = null;
+	interp = null;
     }
 
     String resultString = "";
 
     public void actionPerformed(ActionEvent action) {
-        long t0, t1;
         String str = input.getText();
-        Interp interp;
-        Eval eval;
 
         if (action.getSource() == go) {
             output.setText("");
             try {
                 interp = new Interp();
-                eval = new Eval();
                 interp.commands.put("puts", new PutsCommand());
             } catch (HeclException error) {
                 output.setForeground(Color.red);
@@ -102,25 +115,12 @@ public class HeclApplet extends Applet implements ActionListener {
                         + error.getMessage());
                 return;
             }
-            try {
-                synchronized (resultString) {
-                    resultString = "";
-                }
-                t0 = new Date().getTime();
-                Eval.eval(interp, new Thing(new StringThing(str)));
-                t1 = new Date().getTime();
-            } catch (HeclException error) {
-                output.setForeground(Color.red);
-                output.setText("Error while running script:\n"
-                        + error.getMessage());
-                return;
-            }
-            synchronized (resultString) {
-                str = "Execution result: (time: " + (t1 - t0) + " ms)\n"
-                        + resultString;
-            }
-            output.setForeground(Color.black);
-            output.setText(str);
+
+	    go.setEnabled(false);
+	    runner = null;
+	    runner = new Runner();
+	    runner.setCode(new Thing(new StringThing(str)));
+	    runner.start();
             return;
         }
     }
@@ -132,8 +132,52 @@ public class HeclApplet extends Applet implements ActionListener {
                         "string");
             }
             synchronized (resultString) {
-                resultString += argv[1].getStringRep() + "\n";
+                resultString += argv[1].toString() + "\n";
+		output.setText(resultString);
             }
+        }
+    }
+
+
+
+    /**
+     * The <code>Runner</code> class provides a way to perform
+     * long-running scripts without blocking the GUI.
+     *
+     */
+    class Runner extends Thread {
+	Thing code;
+	public Runner() {
+	}
+
+	public void setCode (Thing c) {
+	    code = c;
+	}
+
+	public void run() {
+	    long t0, t1;
+	    String str = "";
+            try {
+                synchronized (resultString) {
+                    resultString = "";
+                }
+                t0 = new Date().getTime();
+		Eval.eval(interp, code);
+                t1 = new Date().getTime();
+            } catch (HeclException error) {
+                output.setForeground(Color.red);
+                output.setText("Error while running script:\n"
+                        + error.getMessage());
+                return;
+            }
+            synchronized (resultString) {
+                str = "Execution result: (time: " + (t1 - t0) + " ms)\n"
+		    + resultString;
+            }
+            output.setForeground(Color.black);
+            output.setText(str);
+	    go.setEnabled(true);
+	    return;
         }
     }
 }
