@@ -104,7 +104,8 @@ public class IntThing implements RealThing {
         RealThing realthing = thing.val;
 
         if (!(realthing instanceof IntThing)) {
-            /* Don't need to modify it. */
+            /* If it's not an intthing already, we make it from its
+	     * string rep. */
             thing.setVal(new IntThing(thing.getStringRep()));
         }
     }

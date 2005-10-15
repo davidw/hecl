@@ -117,11 +117,11 @@ public class Thing extends Object {
     /**
      * <code>isTrue</code> is a convenience function that lets us know if the
      * result of a calculation is true or false.
-     * 
-     * @param newval
-     *            a <code>Thing</code> value.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return a <code>boolean</code> value
+     * @exception HeclException if an error occurs
      */
-
     public static boolean isTrue(Thing thing) throws HeclException {
         return (IntThing.get(thing) != 0);
     }
@@ -133,7 +133,6 @@ public class Thing extends Object {
      * @param newval
      *            a <code>Thing</code> value.
      */
-
     public void makeref(Thing newval) {
 	this.val = newval.val;
         this.stringval = newval.stringval;

@@ -47,8 +47,8 @@ public class StringThing implements RealThing {
     /**
      * Creates a new <code>StringThing</code> instance from a stringbuffer.
      * 
-     * @param s
-     *            a <code>String</code> value
+     * @param sb
+     *            a <code>StringBuffer</code> value
      */
     public StringThing(StringBuffer sb) {
         val = sb;

@@ -78,7 +78,7 @@ public class HashThing implements RealThing {
      * <code>create</code> allocates and returns a new HashThing typed
      * Thing.
      *
-     * @param v a <code>Hashtable</code> value
+     * @param h a <code>Hashtable</code> value
      * @return a <code>Thing</code> value
      */
     public static Thing create(Hashtable h) {

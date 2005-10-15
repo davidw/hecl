@@ -39,8 +39,8 @@ public class ObjectThing implements RealThing {
     /**
      * Creates a new <code>ObjectThing</code> instance with value i.
      *
-     * @param i
-     *            an <code>int</code> value
+     * @param o
+     *            an <code>Object</code>.
      */
     public ObjectThing(Object o) {
         val = o;
@@ -50,8 +50,8 @@ public class ObjectThing implements RealThing {
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an ObjectThing internal representation.
      * 
-     * @param i
-     *            an <code>int</code> value
+     * @param o
+     *            an <code>Object</code>
      * @return a <code>Thing</code> value
      */
     public static Thing create(Object o) {

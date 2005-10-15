@@ -28,6 +28,10 @@
     <pathelement location="build/load"/>
   </path>
 
+  <path id="floatclasspath">
+    <pathelement location="build/float"/>
+  </path>
+
 
   <!--
   Additional classpath locations, specified in build.properties file
@@ -77,6 +81,16 @@
     <mkdir dir="build" />
     <mkdir dir="build/core" />
     <javac srcdir="core" destdir="build/core">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileFloat" depends="compileCore"
+  description="Compile floating point enabled code">
+    <mkdir dir="build/float" />
+    <javac srcdir="float" destdir="build/float">
+      <classpath refid="modulesclasspath"/>
+      <classpath refid="buildclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -161,11 +175,13 @@
   </target>
 
   <target name="compileCommandline"
-    depends="initCompile,compileCore,compileFiles,compileHttpStandard,compileLoad,compileModules"
+    depends="initCompile,compileCore,compileFiles,compileHttpStandard,compileLoad,compileModules,compileFloat"
     description="Compile Hecl command line support">
     <mkdir dir="build"/>
     <mkdir dir="build/commandline"/>
-    <javac srcdir="commandline" destdir="build/commandline" debug="true">
+    <javac srcdir="commandline" destdir="build/commandline"
+    debug="true">
+      <classpath refid="floatclasspath"/>
       <classpath refid="filesclasspath"/>
       <classpath refid="http_standardclasspath"/>
       <classpath refid="loadclasspath"/>
@@ -200,11 +216,12 @@
 
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
-  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttpStandard">
+  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttpStandard,compileFloat">
     <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/files" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/load" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/modules" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/float" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/commandline" includes="Hecl.class" update="true">
       <manifest>
         <attribute name="Main-Class" value="Hecl"/>
@@ -312,12 +329,26 @@
   <!-- Docs -->
 
   <target name="javadocs">
-    <javadoc packagenames="org.hecl"
-      sourcepath="core"
+    <javadoc packagenames="org.hecl,org.hecl.*"
       destdir="docs/jdocs"
       author="true"
       version="true"
       use="true">
+      <sourcepath>
+	<pathelement path="core"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="files"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="modules"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="http"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="float"/>
+      </sourcepath>
     </javadoc>
   </target>
 

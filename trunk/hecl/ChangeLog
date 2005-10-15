@@ -1,3 +1,21 @@
+2005-10-15  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Make jdocs for all the packages.
+
+	* float/org/hecl/IntThing.java: This version of IntThing knows
+	about doubles, so that it can transform DoubleThings into
+	IntThings without going through the string representation.
+
+	* float/org/hecl/FloatCmd.java: Initial commit of commands that
+	make use of floating point numbers, for now, "round".
+
+	* float/org/hecl/BasicMathCmd.java: Double enabled version of
+	basic math commands.
+
+	* float/org/hecl/DoubleThing.java: DoubleThing type to handle
+	large and/or floating point numbers.  This resides in its own
+	directory so that it's possible to include it separately.
+
 2005-10-13  David N. Welton  <davidw@dedasys.com>
 
 	* applet/org/hecl/applet/HeclApplet.java: Fixed up the applet
