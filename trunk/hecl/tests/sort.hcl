@@ -66,4 +66,4 @@ test sort-8 {
 	{g h 35}
     }
     sort $lol by proc command badsort
-} {{d e 1} {b c 2} {a b 4} {g h 20} {g h 35} {f g 100}}
+} {{a b 4} {b c 2} {d e 1} {f g 100} {g h 20} {g h 35}}
