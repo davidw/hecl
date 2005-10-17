@@ -1,7 +1,8 @@
 2005-10-17  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/GUICmds.java: Added a few more get/set prop option
-	implementations.
+	implementations.  Don't try and modify the widget if it doesn't
+	exist!
 
 2005-10-15  David N. Welton  <davidw@dedasys.com>
 

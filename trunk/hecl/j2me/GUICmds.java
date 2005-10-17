@@ -338,6 +338,12 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    }
 	}
 
+	/* The widget hasn't actually been created yet, so let's not
+	 * fiddle with it. */
+	if (widget == null) {
+	    return;
+	}
+
 	/* The commented out options below are not available in the
 	 * stock lcdui. */
 
