@@ -23,6 +23,10 @@ package org.hecl;
  */
 public class Compare {
 
+    public static final int INTCOMPARE = 1;
+    public static final int STRINGCOMPARE = 2;
+    public static final int PROCCOMPARE = 3;
+
     /**
      * <code>compareInt</code> exists to compare two Things as ints. Since it
      * is possible that one or both are not integers, we may throw a
@@ -83,4 +87,26 @@ public class Compare {
         }
     }
 
+
+    /**
+     * The <code>compareProc</code> method takes two things to
+     * compare, an interpreter, andthe name of a proc to compare the
+     * two things with.  It puts together a codething, runs it, and
+     * returns the result: 0 if the two things are equal, -1 if A is
+     * "less than" B, and 1 if 1 if A is "greater than" B.
+     *
+     * @param a a <code>Thing</code> value
+     * @param b a <code>Thing</code> value
+     * @param interp an <code>Interp</code> value
+     * @param sortproc a <code>Thing</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static int compareProc(Thing a, Thing b, Interp interp, Thing sortproc)
+	throws HeclException {
+	CodeThing ct = new CodeThing();
+	ct.addStanza(interp, new Thing[] {sortproc, a, b});
+	ct.run(interp);
+	return IntThing.get(interp.result);
+    }
 }

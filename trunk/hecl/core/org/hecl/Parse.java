@@ -95,7 +95,6 @@ public class Parse {
     public CodeThing parseToCode() throws HeclException {
         CodeThing code = new CodeThing();
         Command command = null;
-        String cmdName = null;
         int i = 0;
 	Vector cmd;
 	Thing[] argv;
@@ -113,19 +112,12 @@ public class Parse {
 		continue;
 	    }
 
-            cmdName = null;
             argv = new Thing[cmdsize];
             for (i = 0; i < cmdsize; i++) {
                 argv[i] = (Thing) cmd.elementAt(i);
             }
-	    cmdName = argv[0].getStringRep();
 
-            //System.out.println("CMD is " + cmdName);
-            //System.out.println("ARGS ARE " + Arrays.asList(argv));
-
-            command = (Command)interp.commands.get(cmdName);
-            code.addStanza(command, argv);
-            // command.cmdCode(interp, argv);
+            code.addStanza(interp, argv);
         }
         return code;
     }
@@ -305,11 +297,14 @@ public class Parse {
         if (ch == '{') {
             parseVarBlock(state);
         } else {
+	    boolean firstletter = true;
             /* Variable names use this range here. */
             while ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')
-                    || ch == '_') {
+                    || ch == '_' ||
+		   (ch >= '0' && ch <= '9' && !firstletter)) {
                 appendToCurrent(ch);
                 ch = state.nextchar();
+		firstletter = false;
             }
             if (!state.done()) {
                 state.rewind();

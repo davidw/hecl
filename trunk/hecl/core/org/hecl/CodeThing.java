@@ -195,15 +195,16 @@ public class CodeThing implements RealThing {
     /**
      * The <code>addStanza</code> method adds a new command and its arguments.
      * 
-     * @param command
-     *            <code>Command</code> value
+     * @param interp
+     *            <code>Interp</code> value
      * @param argv
      *            <code>Thing[]</code> value
      */
 
-    public void addStanza(Command command, Thing[] argv) {
-        Stanza sz = new Stanza(command, argv);
-        stanzas.addElement(sz);
+    public void addStanza(Interp interp, Thing []argv) {
+	stanzas.addElement(
+	    new Stanza((Command)interp.commands.get(argv[0].toString()),
+		       argv));
     }
 
     /**

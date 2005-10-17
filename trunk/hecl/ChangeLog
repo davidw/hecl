@@ -1,5 +1,17 @@
 2005-10-17  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Compare.java: Added a compareProc method that
+	takes an interp and a proc, and runs the proc with the two values
+	to perform the comparison.
+
+	* core/org/hecl/CodeThing.java: Changed addStanza just a bit.
+
+	* core/org/hecl/SortCmd.java: Added int, string and proc based
+	sort options.  Check for infinite loops before recursing.
+
+	* core/org/hecl/Parse.java: Let variable names contain numbers as
+	long as it's not the first character.
+
 	* j2me/GUICmds.java: Added a few more get/set prop option
 	implementations.  Don't try and modify the widget if it doesn't
 	exist!
