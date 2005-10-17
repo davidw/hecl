@@ -17,8 +17,20 @@ test math-4 {
 
 test math-5 {
     / 6 7
-} {0}
+} {0.8571428571428571}
 
 test math-6 {
     + 1 2 3
 } {6}
+
+test math-7 {
+    + 1.0 2.0
+} {3}
+
+test double-8 {
+    + 1 2.5
+} {3.5}
+
+test round-9 {
+    round [/ 10 3]
+} {3}

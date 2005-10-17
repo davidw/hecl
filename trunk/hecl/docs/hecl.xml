@@ -2161,6 +2161,8 @@ puts $foo
       </para>
 
       <programlisting>
+import org.hecl.files.HeclFile;
+
 import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
@@ -2207,6 +2209,14 @@ import org.hecl.HeclException;
 	<filename>HelloCmd.java</filename>.  The code would look
 	something like this:
       </para>
+
+      <programlisting>
+import org.hecl.Command;
+import org.hecl.HeclException;
+import org.hecl.Interp;
+      </programlisting>
+
+      <para>...</para>
 
       <programlisting>
 class HelloCmd implements Command {

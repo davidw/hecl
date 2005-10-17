@@ -191,23 +191,6 @@
     </javac>
   </target>
 
-
-  <!-- FIXME: still experimental -->
-  <target name="compileJFreeChart"
-    depends="initCompile,compileCore,compileModules"
-    description="Compile Hecl jfreechart support">
-    <mkdir dir="build"/>
-    <mkdir dir="build/jfreechart"/>
-    <javac srcdir="jfreechart" destdir="build/jfreechart" debug="true">
-      <classpath refid="modulesclasspath"/>
-      <classpath refid="buildclasspath"/>
-      <classpath refid="classpath"/>
-      <classpath>
-	<pathelement location="/home/davidw/downloads/jfreechart-1.0.0-rc1/lib/jfreechart-1.0.0-rc1.jar"/>
-      </classpath>
-    </javac>
-  </target>
-
   <!-- package targsts -->
   <target name="initPackage"
     description="Initialized packaging">

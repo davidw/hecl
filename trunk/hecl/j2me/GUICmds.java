@@ -338,6 +338,9 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    }
 	}
 
+	/* The commented out options below are not available in the
+	 * stock lcdui. */
+
 	switch (index) {
 	    case TEXTBOX + TEXT + SETPROP:
 		((TextBox)widget).setString(propval.toString());
@@ -345,15 +348,28 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case TEXTBOX + TEXT + GETPROP:
 		result = new Thing(((TextBox)widget).getString());
 		break;
+/* 	    case TEXTBOX + LABEL + SETPROP:
+	    case TEXTBOX + LABEL + GETPROP:  */
 	    case TEXTFIELD + TEXT + GETPROP:
 		result = new Thing(((TextField)widget).getString());
 		break;
+	    case TEXTFIELD + TEXT + SETPROP:
+		((TextField)widget).setString(propval.toString());
+		break;
+	    case TEXTFIELD + LABEL + SETPROP:
+		((TextField)widget).setLabel(propval.toString());
+		break;
+/* 	    case TEXTFIELD + LABEL + GETPROP: */
 	    case STRINGITEM + TEXT + GETPROP:
 		result = new Thing(((StringItem)widget).getText());
 		break;
 	    case STRINGITEM + TEXT + SETPROP:
 		((StringItem)widget).setText(propval.toString());
 		break;
+	    case STRINGITEM + LABEL + SETPROP:
+		((StringItem)widget).setLabel(propval.toString());
+		break;
+/* 	    case STRINGITEM + LABEL + SETPROP:  */
 	    default:
 		if (!ok) {
 		    throw new HeclException("Bad " +

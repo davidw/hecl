@@ -1,3 +1,8 @@
+2005-10-17  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added a few more get/set prop option
+	implementations.
+
 2005-10-15  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Make jdocs for all the packages.

@@ -19,12 +19,30 @@ import org.hecl.Interp;
 import org.hecl.HeclException;
 
 /**
- * Describe interface <code>HeclModule</code> here.
+ * The <code>HeclModule</code> interface describes what modules
+ * implement in order to be loaded into Hecl.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 public interface HeclModule {
+
+    /**
+     * The <code>loadModule</code> method usually takes care of
+     * creating commands that are present in this module.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void loadModule(Interp interp) throws HeclException;
+
+    /**
+     * The <code>unloadModule</code> method takes care of any clean up
+     * that's necessary, such as unloading commands created by this
+     * module.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void unloadModule(Interp interp) throws HeclException;
 }
