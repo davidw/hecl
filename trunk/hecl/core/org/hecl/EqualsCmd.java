@@ -30,7 +30,7 @@ class EqualsCmd implements Command {
 
         switch (cmd) {
             case '=' :
-                interp.setResult(IntThing.create(Compare.compareInt(argv[1],
+                interp.setResult(IntThing.create(IntThing.compare(argv[1],
                         argv[2]) == 0 ? 1 : 0));
                 break;
             case '>' :
@@ -48,7 +48,7 @@ class EqualsCmd implements Command {
 
      	    case '!':
                  interp.setResult(IntThing.create(
-				      Compare.compareInt(argv[1], argv[2]) == 0 ? 0 : 1));
+				      IntThing.compare(argv[1], argv[2]) == 0 ? 0 : 1));
                  break;
      	    case 'n':
                  interp.setResult(IntThing.create(
