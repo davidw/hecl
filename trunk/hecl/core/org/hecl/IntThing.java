@@ -154,4 +154,28 @@ public class IntThing implements RealThing {
         return Integer.toString(val);
     }
 
+    /**
+     * <code>compare</code> exists to compare two Things as ints. Since it
+     * is possible that one or both are not integers, we may throw a
+     * HeclException.
+     * 
+     * @param a
+     *            a <code>Thing</code> value
+     * @param b
+     *            a <code>Thing</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException
+     *                if an error occurs
+     */
+    public static int compare(Thing a, Thing b) throws HeclException {
+        int ia = IntThing.get(a);
+        int ib = IntThing.get(b);
+        if (ia == ib) {
+            return 0;
+        } else if (ia < ib) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }

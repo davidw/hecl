@@ -187,4 +187,23 @@ public class DoubleThing implements RealThing {
 	    return dval;
 	}
     }
+
+    /**
+     * The <code>argPromotion</code> method fills in an array of
+     * doubles with the values of their arguments.
+     *
+     * @param argv a <code>Thing[]</code> value
+     * @param dargv a <code>double[]</code> value
+     * @return a <code>boolean</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static void argPromotion(Thing[] argv, double [] dargv)
+	throws HeclException {
+
+	boolean promote = false;
+	for (int i = 1; i < argv.length; i++ ) {
+	    dargv[i-1] = promote(argv[i]);
+	}
+    }
+
 }

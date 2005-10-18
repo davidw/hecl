@@ -25,25 +25,6 @@ package org.hecl;
 class BasicMathCmd implements Command {
 
     /**
-     * The <code>argPromotion</code> method fills in an array of
-     * doubles with the values of their arguments.
-     *
-     * @param argv a <code>Thing[]</code> value
-     * @param dargv a <code>double[]</code> value
-     * @return a <code>boolean</code> value
-     * @exception HeclException if an error occurs
-     */
-    private void argPromotion(Thing[] argv, double [] dargv)
-	throws HeclException {
-
-	boolean promote = false;
-	for (int i = 1; i < argv.length; i++ ) {
-	    dargv[i-1] = DoubleThing.promote(argv[i]);
-	}
-    }
-
-
-    /**
      * The <code>cmdCode</code> method implements the basic math
      * commands present in Hecl, +, -, * and / - this is the floating
      * point version.
@@ -57,7 +38,7 @@ class BasicMathCmd implements Command {
 	double res = 0;
 	double[] dargv = new double[argv.length - 1];
 
-	argPromotion(argv, dargv);
+	DoubleThing.argPromotion(argv, dargv);
         switch (cmd) {
             case '+' :
 		res = 0;

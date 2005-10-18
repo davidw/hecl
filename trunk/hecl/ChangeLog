@@ -1,5 +1,11 @@
 2005-10-18  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/IntThing.java: With an eye to deprecating
+	Compare.java, moved compareInt to compare in IntThing.
+
+	* float/org/hecl/EqualsCmd.java: Created version of this file that
+	is FP enabled.
+
 	* commandline/StandaloneHecl.java: Use the FP stuff in the
 	Standalone jar.
 

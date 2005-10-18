@@ -77,10 +77,10 @@ class SortCmd implements Command {
         //  partition
         do {
 	    if (sortalgorithm == Compare.INTCOMPARE) {
-		while (Compare.compareInt((Thing)a.elementAt(i), x) < 0) {
+		while (IntThing.compare((Thing)a.elementAt(i), x) < 0) {
 		    i++;
 		}
-		while (Compare.compareInt((Thing)a.elementAt(j), x) > 0) {
+		while (IntThing.compare((Thing)a.elementAt(j), x) > 0) {
 		    j--;
 		}
 	    } else if (sortalgorithm == Compare.STRINGCOMPARE) {
