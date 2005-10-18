@@ -36,6 +36,7 @@ public class StandaloneHecl {
         try {
             Interp interp = new Interp();
 	    new HeclFile().loadModule(interp);
+	    new org.hecl.fp.HeclFloat().loadModule(interp);
 	    new HttpModule().loadModule(interp);
             Eval eval = new Eval();
             Eval.eval(interp, new Thing(script));

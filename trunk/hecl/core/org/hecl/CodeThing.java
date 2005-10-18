@@ -200,7 +200,6 @@ public class CodeThing implements RealThing {
      * @param argv
      *            <code>Thing[]</code> value
      */
-
     public void addStanza(Interp interp, Thing []argv) {
 	stanzas.addElement(
 	    new Stanza((Command)interp.commands.get(argv[0].toString()),

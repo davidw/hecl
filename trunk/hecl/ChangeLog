@@ -1,3 +1,10 @@
+2005-10-18  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/StandaloneHecl.java: Use the FP stuff in the
+	Standalone jar.
+
+	* build.xml: Fixed a few things for the Standalone build.
+
 2005-10-17  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Compare.java: Added a compareProc method that
