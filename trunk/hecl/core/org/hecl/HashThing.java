@@ -123,6 +123,15 @@ public class HashThing implements RealThing {
     public static Hashtable get(Thing thing) throws HeclException {
         setHashFromAny(thing);
         HashThing gethash = (HashThing) thing.val;
+
+	/* Like ListThings, if we are slated to be copied, then make
+	 * sure our elements are as well. */
+	if (thing.copy) {
+	    for (Enumeration e = gethash.val.elements(); e.hasMoreElements();) {
+		Thing te = (Thing) e.nextElement();
+		te.copy = true;
+	    }
+	}
         return gethash.val;
     }
 

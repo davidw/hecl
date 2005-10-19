@@ -107,7 +107,7 @@ public class ListThing implements RealThing {
         } else {
             newthing = new ListThing(realthing.getStringRep());
         }
-        thing.setVal(newthing);
+	thing.setVal(newthing);
     }
 
     /**
@@ -123,6 +123,16 @@ public class ListThing implements RealThing {
     public static Vector get(Thing thing) throws HeclException {
         setListFromAny(thing);
         ListThing getlist = (ListThing) thing.val;
+
+	/* If the thing is slated for copying, it's elements should be
+	 * as well. */
+	if (thing.copy) {
+	    for (Enumeration e = getlist.val.elements(); e.hasMoreElements();) {
+		Thing te = (Thing) e.nextElement();
+		te.copy = true;
+	    }
+	}
+
         return getlist.val;
     }
 

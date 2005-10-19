@@ -1,4 +1,20 @@
+2005-10-19  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/HashThing.java: If a HashThing is slated for
+	copying, its elements should be as well.
+
+	* core/org/hecl/ListThing.java: If a ListThing is slated for
+	copying, its elements should be as well.
+
+	* core/org/hecl/ParseList.java: Add escape ("\\") parsing to
+	ParseList.java.
+
+	* core/org/hecl/Stanza.java: Copy on write for GroupThings as
+	well.
+
 2005-10-18  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/EqualsCmd.java: Use IntThing.compare here too.
 
 	* core/org/hecl/IntThing.java: With an eye to deprecating
 	Compare.java, moved compareInt to compare in IntThing.

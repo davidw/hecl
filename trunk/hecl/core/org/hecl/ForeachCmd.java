@@ -38,24 +38,26 @@ class ForeachCmd implements Command {
 	}
         Vector varlist = ListThing.get(argv[1]);
         int i = 0;
-        boolean end = false;
-        while (true) {
+        boolean cont = true;
+
+        while (cont) {
             /*
              * This is for foreach loops where we have more than one variable to
              * set: foreach {m n} $somelist { code ... }
              */
             for (Enumeration e = varlist.elements(); e.hasMoreElements();) {
-                if (end == true) {
+                if (cont == false) {
                     throw new HeclException(
                             "Foreach argument list does not match list length");
                 }
 
                 Thing element = (Thing) list.elementAt(i);
                 String varname = ((Thing) e.nextElement()).getStringRep();
+
                 interp.setVar(varname, element);
                 i++;
                 if (i == list.size()) {
-                    end = true;
+                    cont = false;
                 }
             }
 
@@ -69,8 +71,6 @@ class ForeachCmd implements Command {
                     throw e;
                 }
             }
-            if (end == true)
-                break;
         }
     }
 }

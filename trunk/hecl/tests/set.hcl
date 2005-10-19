@@ -17,8 +17,20 @@ proc zealousref {} {
     return &myvar
 }
 
+proc zealousref2 {} {
+    set refvar "a b c d"
+    set refvar "more $refvar"
+    return &refvar
+}
+
 test set-3 {
     zealousref
     zealousref
     zealousref
 } {more }
+
+test set-4 {
+    zealousref2
+    zealousref2
+    zealousref2
+} {more a b c d}

@@ -69,6 +69,12 @@ public class ParseList extends Parse {
                     parseText(state);
                     addCurrent();
                     break;
+		case '\\':
+		    if (!parseEscape(state)) {
+			parseWord(state);
+			addCurrent();
+		    }
+		    break;
                 default :
                     appendToCurrent(ch);
                     parseWord(state);
@@ -96,11 +102,7 @@ public class ParseList extends Parse {
             }
             switch (ch) {
                 case '\\' :
-                    ch = state.nextchar();
-                    if (state.done()) {
-                        return;
-                    }
-                    appendToCurrent(ch);
+		    parseEscape(state);
                     break;
                 case '"' :
                     return;
@@ -144,11 +146,7 @@ public class ParseList extends Parse {
                  * break;
                  */
                 case '\\' :
-                    ch = state.nextchar();
-                    if (state.done()) {
-                        return;
-                    }
-                    appendToCurrent(ch);
+		    parseEscape(state);
                     break;
                 default :
                     appendToCurrent(ch);

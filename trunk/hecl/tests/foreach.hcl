@@ -43,3 +43,27 @@ test foreach-5 {
     set x 0
     foreach var {} { puts $var }
 } {}
+
+
+proc foreach6cmd {} {
+    global foreach6
+    foreach v {a b c d e} {
+	append &foreach6 "v is $v\n"
+    }
+    return &foreach6
+}
+
+test foreach-6 {
+    foreach6cmd
+    foreach6cmd
+} {v is a
+v is b
+v is c
+v is d
+v is e
+v is a
+v is b
+v is c
+v is d
+v is e
+}

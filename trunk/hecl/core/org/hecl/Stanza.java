@@ -138,13 +138,12 @@ class Stanza {
 	    realthing = argv[i].val;
 	    if (realthing instanceof GroupThing) {
 		newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
+		newargv[i].copy = true;
 	    } else if (realthing instanceof SubstThing) {
 		newargv[i] = CodeThing.doSubstSubst(interp, argv[i]);
 	    } else if (realthing instanceof CodeThing) {
 		newargv[i] = CodeThing.doCodeSubst(interp, argv[i]);
 	    } else {
-		/* FIXME - I do not like this as it is inefficient and gobbles memory. */
-//		newargv[i] = argv[i].deepcopy();
 		newargv[i] = argv[i];
 		newargv[i].copy = true;
 	    }

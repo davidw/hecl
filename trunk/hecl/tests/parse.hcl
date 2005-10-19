@@ -69,3 +69,9 @@ test parse-11 {
     set foo \u262f
 } \u262f
 
+test parse-12 {
+    set foo [list a "\n" b]
+    lindex &foo 1
+} {
+}
+
