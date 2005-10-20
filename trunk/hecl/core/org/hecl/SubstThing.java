@@ -103,6 +103,7 @@ public class SubstThing implements RealThing {
 		 * mess up the original.  See the set-3 test, for
 		 * example. */
 		Thing copy = getcopy.val.deepcopy();
+		copy.copy = false;
 		interp.setVar(getcopy.varName, copy);
 		return copy;
 	    }

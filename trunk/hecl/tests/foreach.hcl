@@ -67,3 +67,16 @@ v is c
 v is d
 v is e
 }
+
+proc fe7 {lst} {
+    foreach v &lst {
+    }
+}
+
+test foreach-7 {
+    set locallst {a b c d e}
+    fe7 &locallst
+    fe7 &locallst
+    fe7 &locallst
+    set locallst
+} {a b c d e}

@@ -40,6 +40,8 @@ class FilterCmd implements Command {
 
         for (int i = 0; i < sz; i++) {
             val = (Thing) list.elementAt(i);
+	    val.copy = true; /* Make sure that the original value
+			      * doesn't get fiddled with. */
             interp.setVar(varname, val);
             Eval.eval(interp, argv[3]);
 

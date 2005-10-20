@@ -40,6 +40,8 @@ class ForeachCmd implements Command {
         int i = 0;
         boolean cont = true;
 
+	//System.out.println("argv2 is " + argv[2] + " copy is " + argv[2].copy);
+
         while (cont) {
             /*
              * This is for foreach loops where we have more than one variable to
@@ -51,14 +53,18 @@ class ForeachCmd implements Command {
                             "Foreach argument list does not match list length");
                 }
 
-                Thing element = (Thing) list.elementAt(i);
-                String varname = ((Thing) e.nextElement()).getStringRep();
+		Thing element = (Thing) list.elementAt(i);
+		element.copy = true; /* Make sure that we don't fiddle
+				      * with the original value. */
+		String varname = ((Thing) e.nextElement()).getStringRep();
 
-                interp.setVar(varname, element);
-                i++;
-                if (i == list.size()) {
-                    cont = false;
-                }
+		//System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
+
+		interp.setVar(varname, element);
+		i++;
+		if (i == list.size()) {
+		    cont = false;
+		}
             }
 
             try {

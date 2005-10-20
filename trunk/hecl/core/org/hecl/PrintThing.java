@@ -66,29 +66,29 @@ public class PrintThing {
     public static void printThing(Thing t, int depth) throws HeclException {
         RealThing rt = t.val;
         if (rt instanceof IntThing) {
-            System.out.println(ws(depth * 4) + "INT: " + IntThing.get(t));
+            System.out.println(ws(depth * 4) + "INT: " + IntThing.get(t) + " (copy: " + t.copy +")");
         } else if (rt instanceof StringThing) {
-            System.out.println(ws(depth * 4) + "STR: " + StringThing.get(t));
+            System.out.println(ws(depth * 4) + "STR: " + StringThing.get(t) + " (copy: " + t.copy +")");
         } else if (rt instanceof SubstThing) {
             System.out.println(ws(depth * 4) + "SUBST: "
-                    + ((SubstThing) rt).getStringRep());
+                    + ((SubstThing) rt).getStringRep() + " (copy: " + t.copy +")");
         } else if (rt instanceof ListThing) {
             Vector v = ListThing.get(t);
-            System.out.println(ws(depth * 4) + "LIST START");
+            System.out.println(ws(depth * 4) + "LIST START" + " (copy: " + t.copy +")");
             for (Enumeration e = v.elements(); e.hasMoreElements();) {
                 PrintThing.printThing((Thing) e.nextElement(), depth + 1);
             }
             System.out.println(ws(depth * 4) + "LIST END");
         } else if (rt instanceof GroupThing) {
             Vector v = GroupThing.get(t);
-            System.out.println(ws(depth * 4) + "GROUP START " + v.size());
+            System.out.println(ws(depth * 4) + "GROUP START " + v.size() + " (copy: " + t.copy +")");
             for (Enumeration e = v.elements(); e.hasMoreElements();) {
                 PrintThing.printThing((Thing) e.nextElement(), depth + 1);
             }
             System.out.println(ws(depth * 4) + "GROUP END");
         } else if (rt instanceof HashThing) {
             Hashtable h = HashThing.get(t);
-            System.out.println(ws(depth * 4) + "HASH START");
+            System.out.println(ws(depth * 4) + "HASH START" + " (copy: " + t.copy +")");
             for (Enumeration e = h.keys(); e.hasMoreElements();) {
                 String key = (String) e.nextElement();
                 System.out.println(ws(depth * 4) + " KEY: " + key);
@@ -96,9 +96,9 @@ public class PrintThing {
             }
             System.out.println(ws(depth * 4) + "HASH END");
         } else if (rt instanceof CodeThing) {
-            System.out.println("CODE:" + t);
+            System.out.println("CODE:" + t + " (copy: " + t.copy +")");
         } else {
-            System.out.println("OTHER:" + t);
+            System.out.println("OTHER:" + t + " (copy: " + t.copy +")");
         }
     }
 }

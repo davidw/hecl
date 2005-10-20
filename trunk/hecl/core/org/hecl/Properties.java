@@ -28,7 +28,7 @@ import java.util.Hashtable;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-class Properties {
+public class Properties {
     private Hashtable props;
 
     /**
@@ -37,7 +37,7 @@ class Properties {
      *
      * @param defaultprops an <code>Object[]</code> value
      */
-    Properties (Object [] defaultprops) {
+    public Properties (Object [] defaultprops) {
 	props = new Hashtable();
 	for (int i = 0; i < defaultprops.length; i+=2) {
 	    props.put((String)defaultprops[i], (Thing)defaultprops[i+1]);

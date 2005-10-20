@@ -169,7 +169,7 @@ public class Thing extends Object {
 	RealThing realthing = val.deepcopy();
 	/* We've done the deepcopy, we can lower the depth again. */
 	depth --;
-/* 	Thing retval = new Thing(realthing);
+/*  	Thing retval = new Thing(realthing);
 	retval.copy = this.copy;
 	return retval;  */
 	return new Thing(realthing);
