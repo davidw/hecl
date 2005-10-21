@@ -1,3 +1,18 @@
+2005-10-21  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Major changes: Use a Properties class instead
+	of our own hashtable for properties.  Add 'List' widgets - you can
+	get the list of selected elements via the selected property.
+	Added setindex and getindex commands to fetch or change the item
+	or string (where possible) at a given index in a form or list.
+	Added 'noscreen' command which evaluates some code without a
+	screen present.  This is necessary for the getindex and setindex
+	commands, because most other commands use the currently set
+	screen.
+
+	* core/org/hecl/CodeThing.java: Change lists into codethings
+	without an intermediate string step.
+
 2005-10-20  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/FilterCmd.java: Make sure to copy elements so as

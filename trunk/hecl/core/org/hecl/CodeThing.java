@@ -55,15 +55,25 @@ public class CodeThing implements RealThing {
     private static void setCodeFromAny(Interp interp, Thing thing)
             throws HeclException {
         RealThing realthing = thing.val;
-
+	CodeThing newthing;
         /* FIXME - SubstThing? */
 
-        if (!(realthing instanceof CodeThing)) {
-            CodeThing newthing = null;
+        if (realthing instanceof CodeThing) {
+	    return;
+	} else if (realthing instanceof ListThing) {
+	    newthing = new CodeThing();
+	    Vector v = ListThing.get(thing);
+	    int sz = v.size();
+	    Thing []argv = new Thing[sz];
+	    for (int i = 0; i < sz; i++) {
+		argv[i] = (Thing)v.elementAt(i);
+	    }
+	    newthing.addStanza(interp, argv);
+	} else {
             Parse hp = new Parse(interp, thing.getStringRep());
             newthing = hp.parseToCode();
-            thing.setVal(newthing);
         }
+	thing.setVal(newthing);
     }
 
     /**

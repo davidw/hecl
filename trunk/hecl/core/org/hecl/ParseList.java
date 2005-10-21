@@ -53,7 +53,7 @@ public class ParseList extends Parse {
             if (state.done()) {
                 return;
             }
-            if (ch == ' ' || ch == '\t' || ch == '\n') {
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
                 continue;
             }
             switch (ch) {

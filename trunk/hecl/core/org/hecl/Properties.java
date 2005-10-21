@@ -32,6 +32,15 @@ public class Properties {
     private Hashtable props;
 
     /**
+     * Creates a new <code>Properties</code> instance with no default
+     * properties.
+     *
+     */
+    public Properties () {
+	props = new Hashtable();
+    }
+
+    /**
      * Creates a new <code>Properties</code> instance with default
      * properties and their values.
      *

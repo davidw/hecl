@@ -23,9 +23,6 @@ package org.hecl;
  */
 class IfCmd implements Command {
 
-    IfCmd() {
-    }
-
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 
         Eval.eval(interp, argv[1]);
