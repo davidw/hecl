@@ -17,11 +17,13 @@ import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
+import javax.microedition.lcdui.Choice;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
@@ -89,13 +91,18 @@ public class Hecl
 
 		interp.commands.put("form", cmds);
 		interp.commands.put("textbox", cmds);
+		interp.commands.put("listbox", cmds);
 		interp.commands.put("stringitem", cmds);
 		interp.commands.put("string", cmds);
 		interp.commands.put("cmd", cmds);
 		interp.commands.put("textfield", cmds);
 		interp.commands.put("getprop", cmds);
 		interp.commands.put("setprop", cmds);
+		interp.commands.put("getindex", cmds);
+		interp.commands.put("setindex", cmds);
 		interp.commands.put("setcurrent", cmds);
+		interp.commands.put("noscreen", cmds);
+		interp.commands.put("screenappend", cmds);
 		interp.commands.put("exit", cmds);
 
 		Eval.eval(interp, new Thing(script.toString()));
