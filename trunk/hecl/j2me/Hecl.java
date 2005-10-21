@@ -67,18 +67,28 @@ public class Hecl
 	if (!started) {
 	    int ch;
 	    StringBuffer script = new StringBuffer("");
+
+
+	    display = Display.getDisplay(this);
+	    Form f = new Form("Welcome to Hecl");
+	    display.setCurrent(f);
+	    f.append("Loading Hecl, please wait ");
+
+	    int i = 0;
 	    DataInputStream is =
 		new DataInputStream(this.getClass().getResourceAsStream("/script.hcl"));
 	    try {
 		while ((ch = is.read()) != -1) {
+		    i ++;
 		    script.append((char)ch);
+		    if (i % 100 == 0) {
+			f.append(".");
+		    }
 		}
 		is.close();
 	    } catch (IOException e) {
-		System.err.println("error reading init script: " + e.toString());
+		f.append("error reading init script: " + e.toString());
 	    }
-
-	    display = Display.getDisplay(this);
 
 	    started = true;
 	    try {
@@ -103,11 +113,14 @@ public class Hecl
 		interp.commands.put("setcurrent", cmds);
 		interp.commands.put("noscreen", cmds);
 		interp.commands.put("screenappend", cmds);
+		/* interp.commands.put("mem", cmds); */
 		interp.commands.put("exit", cmds);
 
 		Eval.eval(interp, new Thing(script.toString()));
+		script = null;
+		f = null;
 	    } catch (Exception e) {
-		System.err.println(e);
+		f.append(e.toString());
 	    }
 	}
     }

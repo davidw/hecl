@@ -1,5 +1,13 @@
 2005-10-21  David N. Welton  <davidw@dedasys.com>
 
+	* j2me/script.hcl: Squeezed 'script' into 900 characters, the max
+	size for TextBox's on my Nokia phone.
+
+	* j2me/GUICmds.java: Catch errors generated when putting too much
+	text into TextBoxes.
+
+	* j2me/Hecl.java: Added "splash" screen.
+
 	* j2me/GUICmds.java: Major changes: Use a Properties class instead
 	of our own hashtable for properties.  Add 'List' widgets - you can
 	get the list of selected elements via the selected property.

@@ -138,9 +138,15 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    properties.setProp("text", new Thing("")); /* default  */
 	    properties.setProp("code", new Thing("")); /* default  */
 	    properties.setProps(argv, 1);
-	    TextBox tb = new TextBox((properties.getProp("label")).toString(),
-				     (properties.getProp("text")).toString(),
-				     IntThing.get(properties.getProp("len")), TextField.ANY);
+	    TextBox tb;
+	    try {
+		tb = new TextBox((properties.getProp("label")).toString(),
+				 (properties.getProp("text")).toString(),
+				 IntThing.get(properties.getProp("len")), TextField.ANY);
+	    } catch (IllegalArgumentException e) {
+		throw new HeclException("textbox can't hold a string that big");
+	    }
+
 	    tb.setCommandListener(this);
 	    screen = (Screen)tb;
 	    Eval.eval(interp, properties.getProp("code"));
@@ -241,7 +247,11 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    Displayable widget = (Displayable)ObjectThing.get(argv[1]);
 	    display.setCurrent(widget);
 	    screen = (Screen)widget;
-	} else if (cmdname.equals("exit")) {
+	} /* else if (cmdname.equals("mem")) {
+	    Runtime r = Runtime.getRuntime();
+	    ((Form)screen).append(r.freeMemory() + " " + r.totalMemory());
+	}  */
+	else if (cmdname.equals("exit")) {
 	    midlet.exitApp();
 	}
 	interp.setResult(res);
@@ -389,7 +399,12 @@ class GUICmds implements org.hecl.Command, CommandListener {
 		result = new Thing(((Screen)widget).getTitle());
 		break;
 	    case TEXTBOX + TEXT + SETPROP:
-		((TextBox)widget).setString(propval.toString());
+		try {
+		    ((TextBox)widget).setString(propval.toString());
+		} catch (IllegalArgumentException e) {
+		    throw new HeclException("textbox can only hold " +
+					    ((TextBox)widget).getMaxSize() + " chars");
+		}
 		break;
 	    case TEXTBOX + TEXT + GETPROP:
 		result = new Thing(((TextBox)widget).getString());
