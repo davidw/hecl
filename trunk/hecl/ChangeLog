@@ -6,6 +6,7 @@
 	Lists or ChoiceGroups in particular.
 	(listbox): This command now accepts a 'list' argument like
 	choicegroup.  This ends up making code more compact and immediate.
+	Added 'gauge' command.
 
 2005-10-21  David N. Welton  <davidw@dedasys.com>
 

@@ -100,14 +100,16 @@ public class Hecl
 		cmds.midlet = this;
 
 		interp.commands.put("alert", cmds);
-		interp.commands.put("form", cmds);
-		interp.commands.put("textbox", cmds);
-		interp.commands.put("listbox", cmds);
-		interp.commands.put("stringitem", cmds);
-		interp.commands.put("string", cmds);
-		interp.commands.put("cmd", cmds);
 		interp.commands.put("choicegroup", cmds);
+		interp.commands.put("cmd", cmds);
+		interp.commands.put("form", cmds);
+		interp.commands.put("gauge", cmds);
+		interp.commands.put("listbox", cmds);
+		interp.commands.put("string", cmds);
+		interp.commands.put("stringitem", cmds);
+		interp.commands.put("textbox", cmds);
 		interp.commands.put("textfield", cmds);
+
 		interp.commands.put("getprop", cmds);
 		interp.commands.put("setprop", cmds);
 		interp.commands.put("getindex", cmds);

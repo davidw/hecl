@@ -59,6 +59,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
     static final int FORM = 5;
     static final int ALERT = 6;
     static final int CHOICEGROUP = 7;
+    static final int GAUGE = 8;
 
     /* These are the parameter types that describe different GUI elements. */
     static final int TEXT = 0;		/* Element's text */
@@ -69,6 +70,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
     static final int SELECTED = 5 << 8;	/* Which index is selected */
     static final int INDEX = 6 << 8;	/* Item index */
     static final int LIST = 7 << 8;	/* List of items for Choice's */
+    static final int VAL = 8 << 8;	/* Value (for gauges) */
 
     /* get or set? */
     static final int GETPROP = 0x1000000;
@@ -214,14 +216,32 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    /* The 'textfield' command. */
 	    properties.setProp("text", new Thing("")); /* default  */
 	    properties.setProp("len", IntThing.create(50)); /* default  */
+
 	    properties.setProps(argv, 1);
+
 	    TextField tf = new TextField((properties.getProp("label")).toString(),
 					 (properties.getProp("text")).toString(),
 					 IntThing.get(properties.getProp("len")), 0);
+
 	    if (screen != null) {
 		((Form)screen).append(tf);
 	    }
 	    res = ObjectThing.create(tf);
+	} else if (cmdname.equals("gauge")) {
+	    properties.setProp("maxval", IntThing.create(10)); /* default  */
+	    properties.setProp("val", IntThing.create(0)); /* default  */
+	    properties.setProp("interactive", IntThing.create(1)); /* default  */
+	    properties.setProps(argv, 1);
+
+	    Gauge g = new Gauge((properties.getProp("label")).toString(),
+				IntThing.get(properties.getProp("interactive")) == 1,
+				IntThing.get(properties.getProp("maxval")),
+				IntThing.get(properties.getProp("val")));
+
+	    if (screen != null) {
+		((Form)screen).append(g);
+	    }
+	    res = ObjectThing.create(g);
 	} else if (cmdname.equals("stringitem")) {
 	    /* The 'stringitem' command. Differs from a plain string
 	     * in that it can be modified, and it has both a label and
@@ -342,6 +362,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return CHOICEGROUP;
 	} else if (widget instanceof Alert) {
 	    return ALERT;
+	} else if (widget instanceof Gauge) {
+	    return GAUGE;
 	}
 	/* FIXME  */
 	return 0;
@@ -437,6 +459,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return TYPE;
 	} else if (prop.equals("list")) {
 	    return LIST;
+	} else if (prop.equals("val")) {
+	    return VAL;
 	} else if (prop.equals("index")) {
 	    return INDEX;
 	}
@@ -532,18 +556,23 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case TEXTFIELD + TEXT + SETPROP:
 		((TextField)widget).setString(propval.toString());
 		break;
+	    case CHOICEGROUP + LABEL + SETPROP:
+	    case GAUGE + LABEL + SETPROP:
+	    case STRINGITEM + LABEL + SETPROP:
 	    case TEXTFIELD + LABEL + SETPROP:
-		((TextField)widget).setLabel(propval.toString());
+		((Item)widget).setLabel(propval.toString());
 		break;
-/* 	    case TEXTFIELD + LABEL + GETPROP: */
+	    case CHOICEGROUP + LABEL + GETPROP:
+	    case GAUGE + LABEL + GETPROP:
+	    case STRINGITEM + LABEL + GETPROP:
+	    case TEXTFIELD + LABEL + GETPROP:
+		result = new Thing(((Item)widget).getLabel());
+		break;
 	    case STRINGITEM + TEXT + GETPROP:
 		result = new Thing(((StringItem)widget).getText());
 		break;
 	    case STRINGITEM + TEXT + SETPROP:
 		((StringItem)widget).setText(propval.toString());
-		break;
-	    case STRINGITEM + LABEL + SETPROP:
-		((StringItem)widget).setLabel(propval.toString());
 		break;
 	    case ALERT + TEXT + SETPROP:
 		((Alert)widget).setString(propval.toString());
@@ -551,7 +580,12 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case ALERT + TEXT + GETPROP:
 		result = new Thing(((Alert)widget).getString());
 		break;
-/* 	    case STRINGITEM + LABEL + SETPROP:  */
+	    case GAUGE + VAL + SETPROP:
+		((Gauge)widget).setValue(IntThing.get(propval));
+		break;
+	    case GAUGE + VAL + GETPROP:
+		result = IntThing.create(((Gauge)widget).getValue());
+		break;
 	    default:
 		if (!ok) {
 		    throw new HeclException("Bad " +
