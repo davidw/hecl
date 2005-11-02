@@ -57,6 +57,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
     static final int TEXTBOX = 3;
     static final int LISTBOX = 4;
     static final int FORM = 5;
+    static final int ALERT = 6;
+    static final int CHOICEGROUP = 7;
 
     /* These are the parameter types that describe different GUI elements. */
     static final int TEXT = 0;		/* Element's text */
@@ -66,6 +68,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
     static final int TYPE = 4 << 8;	/* Type or constraints of thing */
     static final int SELECTED = 5 << 8;	/* Which index is selected */
     static final int INDEX = 6 << 8;	/* Item index */
+    static final int LIST = 7 << 8;	/* List of items for Choice's */
 
     /* get or set? */
     static final int GETPROP = 0x1000000;
@@ -120,18 +123,74 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    screen = (Screen)f;
 	    Eval.eval(interp, properties.getProp("code"));
 	    res = ObjectThing.create(f);
+	} else if (cmdname.equals("alert")) {
+	    /* The Alert command. */
+	    properties.setProp("time", new Thing("")); /* default */
+	    properties.setProp("text", new Thing("")); /* default */
+	    properties.setProp("type", new Thing("info")); /* default */
+
+	    properties.setProps(argv, 1);
+	    Alert a = new Alert(properties.getProp("label").toString(),
+				properties.getProp("text").toString(),
+				null,
+				getAlertType(properties.getProp("type").toString()));
+	    screen = (Screen)a;
+
+	    Thing timeout = properties.getProp("time");
+	    if (!timeout.toString().equals("")) {
+		int tm = IntThing.get(timeout);
+		if (tm < 0) {
+		    tm = Alert.FOREVER;
+		}
+		a.setTimeout(tm);
+	    }
+
+	    res = ObjectThing.create(a);
 	} else if (cmdname.equals("listbox")) {
 	    /* These are actually called 'Lists', but that name is
 	     * already taken in Hecl.  */
 	    properties.setProp("type", new Thing("exclusive")); /* default */
 	    properties.setProp("code", new Thing("")); /* default  */
+	    properties.setProp("list", new Thing("")); /* default */
+
 	    properties.setProps(argv, 1);
+
+	    Vector v = ListThing.get(properties.getProp("list"));
+	    int sz = v.size();
+	    String []choices = new String[sz];
+	    for (int i = 0; i < sz; i++) {
+		choices[i] = ((Thing)v.elementAt(i)).toString();
+	    }
+
 	    List l = new List((properties.getProp("label")).toString(),
-			      getChoiceType((properties.getProp("type")).toString()));
+			      getChoiceType((properties.getProp("type")).toString()),
+			      choices,
+			      null);
 	    l.setCommandListener(this);
 	    screen = (Screen)l;
 	    Eval.eval(interp, properties.getProp("code"));
 	    res = ObjectThing.create(l);
+	} else if (cmdname.equals("choicegroup")) {
+	    properties.setProp("type", new Thing("exclusive")); /* default */
+	    properties.setProp("list", new Thing("")); /* default */
+	    properties.setProps(argv, 1);
+
+	    /* This is redundant with the code for listbox above. */
+	    Vector v = ListThing.get(properties.getProp("list"));
+	    int sz = v.size();
+	    String []choices = new String[sz];
+	    for (int i = 0; i < sz; i++) {
+		choices[i] = ((Thing)v.elementAt(i)).toString();
+	    }
+
+	    ChoiceGroup cg = new ChoiceGroup(properties.getProp("label").toString(),
+					     getChoiceType((properties.getProp("type")).toString()),
+					     choices,
+					     null);
+	    if (screen != null) {
+		((Form)screen).append(cg);
+	    }
+	    res = ObjectThing.create(cg);
 	} else if (cmdname.equals("textbox")) {
 	    /* The 'textbox' command.  Creates a textbox and evaluates its code. */
 	    properties.setProp("len", IntThing.create(400)); /* default  */
@@ -210,16 +269,16 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    int idx = IntThing.get(argv[2]);
 	    if (widget instanceof Form) {
 		((Form)widget).set(idx, (Item)ObjectThing.get(argv[3]));
-	    } else if (widget instanceof List) {
-		((List)widget).set(idx, argv[3].toString(), null);
+	    } else if (widget instanceof Choice) {
+		((Choice)widget).set(idx, argv[3].toString(), null);
 	    }
 	} else if (cmdname.equals("getindex")) {
 	    Object widget = ObjectThing.get(argv[1]);
 	    int idx = IntThing.get(argv[2]);
 	    if (widget instanceof Form) {
 		res = ObjectThing.create(((Form)widget).get(idx));
-	    } else if (widget instanceof List) {
-		res = new Thing(((List)widget).getString(idx));
+	    } else if (widget instanceof Choice) {
+		res = new Thing(((Choice)widget).getString(idx));
 	    }
 	} else if (cmdname.equals("screenappend")) {
 	    Object widget = ObjectThing.get(argv[1]);
@@ -230,8 +289,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 		} else {
 		    ((Form)widget).append((Item)item);
 		}
-	    } else if (widget instanceof List) {
-		((List)widget).append(item.toString(), null);
+	    } else if (widget instanceof Choice) {
+		((Choice)widget).append(item.toString(), null);
 	    }
 	} else if (cmdname.equals("noscreen")) {
 	    /* Run without a screen so that we can set indexes and
@@ -279,6 +338,10 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return LISTBOX;
 	} else if (widget instanceof StringItem) {
 	    return STRINGITEM;
+	} else if (widget instanceof ChoiceGroup) {
+	    return CHOICEGROUP;
+	} else if (widget instanceof Alert) {
+	    return ALERT;
 	}
 	/* FIXME  */
 	return 0;
@@ -330,6 +393,29 @@ class GUICmds implements org.hecl.Command, CommandListener {
     }
 
     /**
+     * THe <code>getAlertType</code> method returns an AlertType for
+     * the string passed in.
+     *
+     * @param type a <code>String</code> value
+     * @return an <code>AlertType</code> value
+     */
+    private AlertType getAlertType(String type) {
+	if (type.equals("alarm")) {
+	    return AlertType.ALARM;
+	} else if (type.equals("confirmation")) {
+	    return AlertType.CONFIRMATION;
+	} else if (type.equals("error")) {
+	    return AlertType.ERROR;
+	} else if (type.equals("info")) {
+	    return AlertType.INFO;
+	} else if (type.equals("warning")) {
+	    return AlertType.WARNING;
+	}
+	return null;
+    }
+
+
+    /**
      * The <code>getProp</code> method returns a numeric for the
      * property we are interested in.
      *
@@ -349,6 +435,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return SELECTED;
 	} else if (prop.equals("type")) {
 	    return TYPE;
+	} else if (prop.equals("list")) {
+	    return LIST;
 	} else if (prop.equals("index")) {
 	    return INDEX;
 	}
@@ -388,11 +476,13 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	 * stock lcdui. */
 
 	switch (index) {
+	    case ALERT + LABEL + SETPROP:
 	    case FORM + LABEL + SETPROP:
 	    case TEXTBOX + LABEL + SETPROP:
 	    case LISTBOX + LABEL + SETPROP:
 		((Screen)widget).setTitle(propval.toString());
 		break;
+	    case ALERT + LABEL + GETPROP:
 	    case FORM + LABEL + GETPROP:
 	    case TEXTBOX + LABEL + GETPROP:
 	    case LISTBOX + LABEL + GETPROP:
@@ -410,24 +500,26 @@ class GUICmds implements org.hecl.Command, CommandListener {
 		result = new Thing(((TextBox)widget).getString());
 		break;
 	    case LISTBOX + SELECTED + SETPROP:
+	    case CHOICEGROUP + SELECTED + SETPROP:
 	    {
-		List l = (List)widget;
-		int sz = l.size();
+		Choice c = (Choice)widget;
+		int sz = c.size();
 		Vector v = ListThing.get(propval);
 		boolean []flags = new boolean[sz];
 		for (int i = 0; i < sz; i++) {
 		    flags[i] = (IntThing.get((Thing)v.elementAt(i)) == 1);
 		}
-		l.setSelectedFlags(flags);
+		c.setSelectedFlags(flags);
 		break;
 	    }
 	    case LISTBOX + SELECTED + GETPROP:
+	    case CHOICEGROUP + SELECTED + GETPROP:
 	    {
-		List l = (List)widget;
-		int sz = l.size();
+		Choice c = (Choice)widget;
+		int sz = c.size();
 		Vector v = new Vector();
 		boolean []flags = new boolean[sz];
-		l.getSelectedFlags(flags);
+		c.getSelectedFlags(flags);
 		for (int i = 0; i < sz; i++) {
 		    v.addElement(IntThing.create(flags[i]));
 		}
@@ -453,11 +545,18 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case STRINGITEM + LABEL + SETPROP:
 		((StringItem)widget).setLabel(propval.toString());
 		break;
+	    case ALERT + TEXT + SETPROP:
+		((Alert)widget).setString(propval.toString());
+		break;
+	    case ALERT + TEXT + GETPROP:
+		result = new Thing(((Alert)widget).getString());
+		break;
 /* 	    case STRINGITEM + LABEL + SETPROP:  */
 	    default:
 		if (!ok) {
 		    throw new HeclException("Bad " +
-					    (getset == GETPROP ? "(get)" : "(set)") + " argument: " +
+					    (getset == GETPROP ?
+					     "(get)" : "(set)") + " argument: " +
 					    widgetthing.toString() + " " + index);
 		}
 	}

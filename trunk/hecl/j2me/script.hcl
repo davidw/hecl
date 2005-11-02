@@ -34,7 +34,7 @@ setcurrent [form code $bckbtn] }
 proc makelb {} {
 global bckbtn
 global bckbtn;
-setcurrent [listbox code { string "Rock" ; string "Paper" ; string "Scissors" ; eval $bckbtn } type exclusive]
+    setcurrent [listbox list { "Rock" "Paper" "Scissors" } code { eval $bckbtn } type exclusive]
 }
 set frm [form label hello code {
 stringitem label {Hecl Demo} text {}

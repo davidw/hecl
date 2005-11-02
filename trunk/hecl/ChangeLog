@@ -1,3 +1,12 @@
+2005-11-02  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added 'alert' command. Added 'changegroup'
+	command.
+	(get/setindex): Make these commands work on Choice's instead of
+	Lists or ChoiceGroups in particular.
+	(listbox): This command now accepts a 'list' argument like
+	choicegroup.  This ends up making code more compact and immediate.
+
 2005-10-21  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/script.hcl: Squeezed 'script' into 900 characters, the max
