@@ -79,7 +79,7 @@ public class Hecl {
 	BufferedReader buff = new
 	    BufferedReader(new InputStreamReader(System.in));
 	String line = null;
-	int availbytes = 0;
+
 	while (true) {
 	    System.out.print("hecl> ");
 	    System.out.flush();

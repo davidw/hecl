@@ -200,7 +200,6 @@ public class DoubleThing implements RealThing {
     public static void argPromotion(Thing[] argv, double [] dargv)
 	throws HeclException {
 
-	boolean promote = false;
 	for (int i = 1; i < argv.length; i++ ) {
 	    dargv[i-1] = promote(argv[i]);
 	}

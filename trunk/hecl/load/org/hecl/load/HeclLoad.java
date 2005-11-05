@@ -18,8 +18,6 @@ package org.hecl.load;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-import org.hecl.Thing;
-
 
 /**
  * The <code>HeclLoad</code> class implements a module that can load

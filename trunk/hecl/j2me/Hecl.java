@@ -14,18 +14,10 @@
 */
 
 import java.io.DataInputStream;
-import java.io.InputStream;
 import java.io.IOException;
 
-import javax.microedition.lcdui.Choice;
-import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
-import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.List;
-import javax.microedition.lcdui.TextBox;
-import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 
 import org.hecl.Eval;
@@ -46,7 +38,6 @@ public class Hecl
     private static Display display;
 
     private Interp interp;
-    private Eval eval;
 
     private boolean started = false;
 

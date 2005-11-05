@@ -27,7 +27,6 @@ class IfCmd implements Command {
 
         Eval.eval(interp, argv[1]);
         Thing result = interp.result;
-        int argnum = 0;
 
         if (Thing.isTrue(result)) {
             Eval.eval(interp, argv[2]);

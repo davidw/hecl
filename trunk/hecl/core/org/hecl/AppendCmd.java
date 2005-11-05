@@ -25,7 +25,6 @@ package org.hecl;
 
 class AppendCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        StringBuffer strb;
         Thing result = argv[1];
         StringThing.get(result);
         StringThing st = (StringThing) result.val;

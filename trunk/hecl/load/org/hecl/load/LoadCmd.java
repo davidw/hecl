@@ -19,13 +19,10 @@ import org.hecl.Command;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.ListThing;
-import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
 import org.hecl.files.HeclFile;
 import org.hecl.modules.HeclModule;
-
-import java.io.File;
 
 import java.net.URI;
 import java.net.URLClassLoader;

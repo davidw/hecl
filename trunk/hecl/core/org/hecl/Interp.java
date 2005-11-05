@@ -15,7 +15,6 @@
 
 package org.hecl;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;

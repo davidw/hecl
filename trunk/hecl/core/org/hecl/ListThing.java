@@ -180,7 +180,6 @@ public class ListThing implements RealThing {
      * @return a <code>String</code> value
      */
     public String getStringRep() {
-        String result = null;
         StringBuffer resbuf = new StringBuffer("");
         int sz = val.size();
         int i = 0;

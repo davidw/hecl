@@ -94,7 +94,6 @@ public class Parse {
 
     public CodeThing parseToCode() throws HeclException {
         CodeThing code = new CodeThing();
-        Command command = null;
         int i = 0;
 	Vector cmd;
 	Thing[] argv;

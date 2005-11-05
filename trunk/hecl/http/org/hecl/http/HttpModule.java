@@ -17,8 +17,6 @@ package org.hecl.http;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-import org.hecl.StringThing;
-import org.hecl.Thing;
 
 import org.hecl.modules.HeclModule;
 

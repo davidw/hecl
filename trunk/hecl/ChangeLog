@@ -1,3 +1,10 @@
+2005-11-05  David N. Welton  <davidw@dedasys.com>
+
+	* Various little fixes to eliminate compile time warnings.
+
+	* build.xml: Add preverify step so that we can compile with older
+	javac's.
+
 2005-11-02  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/GUICmds.java: Added 'alert' command. Added 'changegroup'

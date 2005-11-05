@@ -79,6 +79,6 @@ class Proc implements Command {
 
         /* We're done, pop the stack. */
         Hashtable ht = interp.stackDecr();
-//	ht = null;
+	ht = null;
     }
 }

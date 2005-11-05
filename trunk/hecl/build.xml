@@ -8,6 +8,8 @@
   -->
   <property file="build.properties"/>
 
+  <property name="midp_home" value="/home/davidw/install/WTK2.2"/>
+
   <path id="buildclasspath">
     <pathelement location="build/core"/>
   </path>
@@ -253,17 +255,16 @@
   <!-- NOTE: replace these with your own locations! -->
   <path id="j2mebootclasspath">
     <pathelement
-    location="/home/davidw/Desktop/WTK2.2/lib/cldcapi10.jar"/>
+    location="/home/davidw/install/WTK2.2/lib/cldcapi10.jar"/>
     <pathelement
-    location="/home/davidw/Desktop/WTK2.2/lib/midpapi10.jar"/>
+    location="/home/davidw/install/WTK2.2/lib/midpapi10.jar"/>
   </path>
 
   <target name="compileJ2MECore" description="Compile the core classes
     for J2ME">
     <mkdir dir="j2me/classes" />
     <javac srcdir="core"
-      destdir="j2me/classes" target="cldc1.0"
-      source="1.4">
+      destdir="j2me/classes" target="1.1">
       <bootclasspath refid="j2mebootclasspath"/>
     </javac>
   </target>
@@ -272,8 +273,7 @@
     description="Compile the J2ME specific stuff"
     depends ="compileJ2MECore">
     <javac srcdir="j2me"
-      target="cldc1.0"
-      source="1.4"
+      target="1.1"
       destdir="j2me/classes">
       <bootclasspath refid="j2mebootclasspath"/>
       <classpath>
@@ -282,8 +282,18 @@
     </javac>
   </target>
 
-  <target name="packageJ2ME" depends="compileJ2ME">
-    <jar destfile="j2me/Hecl.jar" basedir="j2me/classes"
+  <target name="preverify" description="Preverify j2me code" depends="compileJ2ME">
+    <mkdir dir="j2me/preverified"/>
+    <exec executable="${midp_home}/bin/preverify">
+      <arg line="-cldc"/>
+      <arg line="-classpath ${midp_home}/lib/midpapi10.jar:${midp_home}/lib/cldcapi10.jar"/>
+      <arg line="-d j2me/preverified"/>
+      <arg line="j2me/classes"/>
+    </exec>
+  </target>
+
+  <target name="packageJ2ME" depends="preverify">
+    <jar destfile="j2me/Hecl.jar" basedir="j2me/preverified"
     update="true" excludes="org/hecl/PrintThing.class">
       <manifest>
 	<attribute name="MIDlet-Name" value="Hecl"/>

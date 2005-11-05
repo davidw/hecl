@@ -64,7 +64,8 @@ public class HttpRequest implements HttpRequestClass {
         OutputStream os;
         InputStream is;
         ByteArrayOutputStream bos;
-        int code, bytesRead;
+        int code;
+	int bytesRead;
         try {
             conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);

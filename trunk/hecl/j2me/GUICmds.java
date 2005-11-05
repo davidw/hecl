@@ -48,7 +48,6 @@ class GUICmds implements org.hecl.Command, CommandListener {
     private static int uniqueid = 0;
 
     private static Screen screen;
-    private static Item item;
 
     /* no offset */
     static final int TEXTFIELD = 0;

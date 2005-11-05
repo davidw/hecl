@@ -15,7 +15,6 @@
 
 import org.hecl.Eval;
 import org.hecl.Interp;
-import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.http.*;
@@ -38,7 +37,6 @@ public class StandaloneHecl {
 	    new HeclFile().loadModule(interp);
 	    new org.hecl.fp.HeclFloat().loadModule(interp);
 	    new HttpModule().loadModule(interp);
-            Eval eval = new Eval();
             Eval.eval(interp, new Thing(script));
         } catch (Exception e) {
             e.printStackTrace();

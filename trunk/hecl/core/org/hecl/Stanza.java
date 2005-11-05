@@ -61,7 +61,6 @@ class Stanza {
      */
 
     public Stanza deepcopy () throws HeclException {
-	Stanza deststanza;
 	Thing[] destargv = new Thing[argv.length];
 
 	for (int i = 0; i < argv.length; i++) {
