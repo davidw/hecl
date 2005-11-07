@@ -24,6 +24,9 @@ import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
+import org.hecl.http.*;
+
+
 /**
  * <code>Hecl</code> is a small app to demonstrate the use of Hecl in
  * a j2me app.  The GUI is now written entirely in Hecl itself!
@@ -85,6 +88,10 @@ public class Hecl
 	    try {
 		interp = new Interp();
 
+
+		new HttpModule().loadModule(interp);
+
+
 		GUICmds cmds = new GUICmds();
 		cmds.display = display;
 		cmds.interp = interp;
@@ -93,6 +100,7 @@ public class Hecl
 		interp.commands.put("alert", cmds);
 		interp.commands.put("choicegroup", cmds);
 		interp.commands.put("cmd", cmds);
+		interp.commands.put("datefield", cmds);
 		interp.commands.put("form", cmds);
 		interp.commands.put("gauge", cmds);
 		interp.commands.put("listbox", cmds);

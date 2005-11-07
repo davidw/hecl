@@ -224,12 +224,16 @@ public class CodeThing implements RealThing {
      * @exception HeclException
      *                if an error occurs
      */
-    public void run(Interp interp) throws HeclException {
+    public synchronized void run(Interp interp) throws HeclException {
+/* 	level ++;
+	System.err.println("starting CodeThing run" + level);  */
         //System.out.println("RUNNING: " + this.getStringRep() + "</RUNNING>");
         for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
             Stanza s = (Stanza) e.nextElement();
             s.run(interp);
         }
+/* 	System.err.println("ending CodeThing run" + level);
+	level --;  */
     }
 
     /**

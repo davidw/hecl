@@ -87,4 +87,17 @@ public class Properties {
     public Thing getProp(String name) {
 	return (Thing)props.get(name);
     }
+
+
+    /**
+     * The <code>existsProp</code> method is used to determine if a
+     * property exists or not.
+     *
+     * @param name a <code>String</code> value
+     * @return a <code>boolean</code> value
+     */
+    public boolean existsProp(String name) {
+	return props.containsKey(name);
+    }
+
 }

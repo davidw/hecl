@@ -21,7 +21,6 @@ package org.hecl;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
-
 public class Eval {
 
     public Eval() {

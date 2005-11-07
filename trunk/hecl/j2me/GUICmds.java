@@ -35,19 +35,27 @@ import org.hecl.Thing;
  * @version 1.0
  */
 
-class GUICmds implements org.hecl.Command, CommandListener {
+class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateListener {
     public Display display;
     public Interp interp;
     public Hecl midlet;
 
     /* These are callbacks used to implement Commands. */
     private static Hashtable callbacks = new Hashtable();
+
+    /* And these are for item state changes. */
+    private static Hashtable itemcallbacks = new Hashtable();
+
     /* This is a temporary hash that is used for configuring/creating
      * widgets. */
     private static Properties properties;
     private static int uniqueid = 0;
 
     private static Screen screen;
+
+    /* Commands are run in a new thread so that if they block, they
+     * don't block the whole system. */
+    private Thread cmdThread;
 
     /* no offset */
     static final int TEXTFIELD = 0;
@@ -59,6 +67,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
     static final int ALERT = 6;
     static final int CHOICEGROUP = 7;
     static final int GAUGE = 8;
+    static final int DATEFIELD = 9;
 
     /* These are the parameter types that describe different GUI elements. */
     static final int TEXT = 0;		/* Element's text */
@@ -82,6 +91,38 @@ class GUICmds implements org.hecl.Command, CommandListener {
      */
     private void stdLabel(String type) {
 	properties.setProp("label", new Thing(type + uniqueid)); /* default  */
+    }
+
+    /**
+     * The <code>setItemCallback</code> method sets an itemcallback
+     * for the item in question, if the callback property has been
+     * defined.  This is used in calls to the itemStateChanged method.
+     *
+     * @param item an <code>Item</code> value
+     */
+    private void setItemCallback(Object item) {
+	if (properties.existsProp("callback")) {
+	    itemcallbacks.put(item, properties.getProp("callback"));
+	}
+    }
+
+    /**
+     * The <code>choicesFromList</code> method takes the 'list'
+     * property of a widget and turns into an array of strings
+     * suitable for passing to instantiate a new Choice derived widget
+     * with.
+     *
+     * @return a <code>String[]</code> value
+     * @exception HeclException if an error occurs
+     */
+    private String []choicesFromList() throws HeclException {
+	Vector v = ListThing.get(properties.getProp("list"));
+	int sz = v.size();
+	String []choices = new String[sz];
+	for (int i = 0; i < sz; i++) {
+	    choices[i] = ((Thing)v.elementAt(i)).toString();
+	}
+	return choices;
     }
 
 
@@ -118,6 +159,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    properties.setProps(argv, 1);
 	    Form f = new Form((properties.getProp("label")).toString());
 	    f.setCommandListener(this);
+	    f.setItemStateListener(this);
 	    /* We make sure that this screen is the default when we
 	     * evaluate the code.  This doesn't mean it's displayed,
 	     * though. */
@@ -126,7 +168,6 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    res = ObjectThing.create(f);
 	} else if (cmdname.equals("alert")) {
 	    /* The Alert command. */
-	    properties.setProp("time", new Thing("")); /* default */
 	    properties.setProp("text", new Thing("")); /* default */
 	    properties.setProp("type", new Thing("info")); /* default */
 
@@ -137,9 +178,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 				getAlertType(properties.getProp("type").toString()));
 	    screen = (Screen)a;
 
-	    Thing timeout = properties.getProp("time");
-	    if (!timeout.toString().equals("")) {
-		int tm = IntThing.get(timeout);
+	    if (properties.existsProp("time")) {
+		int tm = IntThing.get(properties.getProp("time"));
 		if (tm < 0) {
 		    tm = Alert.FOREVER;
 		}
@@ -156,38 +196,30 @@ class GUICmds implements org.hecl.Command, CommandListener {
 
 	    properties.setProps(argv, 1);
 
-	    Vector v = ListThing.get(properties.getProp("list"));
-	    int sz = v.size();
-	    String []choices = new String[sz];
-	    for (int i = 0; i < sz; i++) {
-		choices[i] = ((Thing)v.elementAt(i)).toString();
-	    }
+	    String []choices = choicesFromList();
 
-	    List l = new List((properties.getProp("label")).toString(),
-			      getChoiceType((properties.getProp("type")).toString()),
-			      choices,
-			      null);
-	    l.setCommandListener(this);
-	    screen = (Screen)l;
+	    int type = getChoiceType((properties.getProp("type")).toString());
+	    ListBox lb = new ListBox((properties.getProp("label")).toString(),
+				     type, choices);
+	    lb.setCommandListener(this);
+	    lb.setItemStateListener(this);
+	    setItemCallback(lb.cg);
+	    screen = (Screen)lb;
 	    Eval.eval(interp, properties.getProp("code"));
-	    res = ObjectThing.create(l);
+	    res = ObjectThing.create(lb);
 	} else if (cmdname.equals("choicegroup")) {
 	    properties.setProp("type", new Thing("exclusive")); /* default */
 	    properties.setProp("list", new Thing("")); /* default */
 	    properties.setProps(argv, 1);
 
 	    /* This is redundant with the code for listbox above. */
-	    Vector v = ListThing.get(properties.getProp("list"));
-	    int sz = v.size();
-	    String []choices = new String[sz];
-	    for (int i = 0; i < sz; i++) {
-		choices[i] = ((Thing)v.elementAt(i)).toString();
-	    }
+	    String []choices = choicesFromList();
 
 	    ChoiceGroup cg = new ChoiceGroup(properties.getProp("label").toString(),
 					     getChoiceType((properties.getProp("type")).toString()),
 					     choices,
 					     null);
+	    setItemCallback(cg);
 	    if (screen != null) {
 		((Form)screen).append(cg);
 	    }
@@ -222,6 +254,7 @@ class GUICmds implements org.hecl.Command, CommandListener {
 					 (properties.getProp("text")).toString(),
 					 IntThing.get(properties.getProp("len")), 0);
 
+	    setItemCallback(tf);
 	    if (screen != null) {
 		((Form)screen).append(tf);
 	    }
@@ -237,10 +270,23 @@ class GUICmds implements org.hecl.Command, CommandListener {
 				IntThing.get(properties.getProp("maxval")),
 				IntThing.get(properties.getProp("val")));
 
+	    setItemCallback(g);
 	    if (screen != null) {
 		((Form)screen).append(g);
 	    }
 	    res = ObjectThing.create(g);
+	} else if (cmdname.equals("datefield")) {
+	    /* The datefield command. */
+	    properties.setProp("type", new Thing("date_time"));
+
+	    DateField df = new DateField((properties.getProp("label")).toString(),
+					 getDateFieldType((properties.getProp("type")).toString()));
+
+	    setItemCallback(df);
+	    if (screen != null) {
+		((Form)screen).append(df);
+	    }
+	    res = ObjectThing.create(df);
 	} else if (cmdname.equals("stringitem")) {
 	    /* The 'stringitem' command. Differs from a plain string
 	     * in that it can be modified, and it has both a label and
@@ -273,8 +319,11 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    properties.setProps(argv, 1);
 	    String label = (properties.getProp("label")).toString();
 	    Command c = new Command(label, getCmdType((properties.getProp("type")).toString()), 0);
-	    screen.addCommand(c);
+	    if (screen != null) {
+		screen.addCommand(c);
+	    }
 	    callbacks.put(label, properties.getProp("code"));
+	    res = ObjectThing.create(c);
 	} else if (cmdname.equals("getprop")) {
 	    /* The 'getprop' command. Get a particular property of a
 	     * widget. */
@@ -349,12 +398,13 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return TEXTFIELD;
 	} else if (widget instanceof Command) {
 	    return COMMAND;
+	} else if (widget instanceof ListBox) {
+	    /* Comes before FORM because it's more specific. */
+	    return LISTBOX;
 	} else if (widget instanceof Form) {
 	    return FORM;
 	} else if (widget instanceof TextBox) {
 	    return TEXTBOX;
-	} else if (widget instanceof List) {
-	    return LISTBOX;
 	} else if (widget instanceof StringItem) {
 	    return STRINGITEM;
 	} else if (widget instanceof ChoiceGroup) {
@@ -363,6 +413,8 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    return ALERT;
 	} else if (widget instanceof Gauge) {
 	    return GAUGE;
+	} else if (widget instanceof DateField) {
+	    return DATEFIELD;
 	}
 	/* FIXME  */
 	return 0;
@@ -407,8 +459,21 @@ class GUICmds implements org.hecl.Command, CommandListener {
     private int getChoiceType(String type) {
 	if (type.equals("exclusive")) {
 	    return Choice.EXCLUSIVE;
+	} else if (type.equals("implicit")) {
+	    return Choice.IMPLICIT;
 	} else if (type.equals("multiple")) {
 	    return Choice.MULTIPLE;
+	}
+	return 0;
+    }
+
+    private int getDateFieldType(String type) {
+	if (type.equals("date")) {
+	    return DateField.DATE;
+	} else if (type.equals("date_time")) {
+	    return DateField.DATE_TIME;
+	} else if (type.equals("time")) {
+	    return DateField.TIME;
 	}
 	return 0;
     }
@@ -501,14 +566,14 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	switch (index) {
 	    case ALERT + LABEL + SETPROP:
 	    case FORM + LABEL + SETPROP:
-	    case TEXTBOX + LABEL + SETPROP:
 	    case LISTBOX + LABEL + SETPROP:
+	    case TEXTBOX + LABEL + SETPROP:
 		((Screen)widget).setTitle(propval.toString());
 		break;
 	    case ALERT + LABEL + GETPROP:
 	    case FORM + LABEL + GETPROP:
-	    case TEXTBOX + LABEL + GETPROP:
 	    case LISTBOX + LABEL + GETPROP:
+	    case TEXTBOX + LABEL + GETPROP:
 		result = new Thing(((Screen)widget).getTitle());
 		break;
 	    case TEXTBOX + TEXT + SETPROP:
@@ -525,7 +590,12 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case LISTBOX + SELECTED + SETPROP:
 	    case CHOICEGROUP + SELECTED + SETPROP:
 	    {
-		Choice c = (Choice)widget;
+		Choice c;
+		if (widgettype == LISTBOX) {
+		    c = (Choice)((ListBox)widget).cg;
+		} else {
+		    c = (Choice)widget;
+		}
 		int sz = c.size();
 		Vector v = ListThing.get(propval);
 		boolean []flags = new boolean[sz];
@@ -538,7 +608,12 @@ class GUICmds implements org.hecl.Command, CommandListener {
 	    case LISTBOX + SELECTED + GETPROP:
 	    case CHOICEGROUP + SELECTED + GETPROP:
 	    {
-		Choice c = (Choice)widget;
+		Choice c;
+		if (widgettype == LISTBOX) {
+		    c = (Choice)((ListBox)widget).cg;
+		} else {
+		    c = (Choice)widget;
+		}
 		int sz = c.size();
 		Vector v = new Vector();
 		boolean []flags = new boolean[sz];
@@ -556,12 +631,14 @@ class GUICmds implements org.hecl.Command, CommandListener {
 		((TextField)widget).setString(propval.toString());
 		break;
 	    case CHOICEGROUP + LABEL + SETPROP:
+	    case DATEFIELD + LABEL + SETPROP:
 	    case GAUGE + LABEL + SETPROP:
 	    case STRINGITEM + LABEL + SETPROP:
 	    case TEXTFIELD + LABEL + SETPROP:
 		((Item)widget).setLabel(propval.toString());
 		break;
 	    case CHOICEGROUP + LABEL + GETPROP:
+	    case DATEFIELD + LABEL + GETPROP:
 	    case GAUGE + LABEL + GETPROP:
 	    case STRINGITEM + LABEL + GETPROP:
 	    case TEXTFIELD + LABEL + GETPROP:
@@ -604,15 +681,62 @@ class GUICmds implements org.hecl.Command, CommandListener {
      * @param s a <code>Displayable</code> value
      */
     public void commandAction(Command c, Displayable s) {
-	Thing code = (Thing)callbacks.get(c.getLabel());
+	synchronized (code) {
+	    code = (Thing)callbacks.get(c.getLabel());
+	}
+	/* I guess we could use some kind of queue instead of just
+	 * popping off a new thread each time... FIXME */
+	cmdThread = new Thread(this);
+	cmdThread.start();
+    }
+
+    /* This is to share between threads... */
+    Thing code = new Thing("");
+
+
+    /**
+     * The <code>run</code> method is where a 'cmd's callback is
+     * evaluated.
+     *
+     */
+    public void run() {
 	try {
-	    Eval.eval(interp, code);
+	    synchronized (code) {
+		Eval.eval(interp, code);
+	    }
 	} catch (Exception e) {
 	    System.err.println(e.toString());
 	    e.printStackTrace();
 	    /* FIXME - perhaps we could call a 'bgerror' command if
 	     * it's defined, like in Tk? */
-//	    Hecl.displayError(e.toString());
+	    // Hecl.displayError(e.toString());
+	}
+	try {
+	    /* It's done evaluating - time to go away. */
+	    cmdThread.join();
+	} catch (InterruptedException e) {
+	    System.err.println(e.toString());
 	}
     }
+
+    /**
+     * The <code>itemStateChanged</code> method runs callbacks for
+     * items that have defined them when their state changes.
+     *
+     * @param item an <code>Item</code> value
+     */
+    public void itemStateChanged(Item item) {
+	if (itemcallbacks.isEmpty()) {
+	    return;
+	}
+	if (itemcallbacks.containsKey(item)) {
+	    Thing code = (Thing)itemcallbacks.get(item);
+	    try {
+		Eval.eval(interp, code);
+	    } catch (Exception e) {
+		System.out.println(e.toString());
+	    }
+	}
+    }
+
 }

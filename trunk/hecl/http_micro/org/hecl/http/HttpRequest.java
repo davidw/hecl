@@ -52,16 +52,18 @@ public class HttpRequest implements HttpRequestClass {
         byte[] rc = null;
         HttpConnection conn;
         int code, len, bytesRead;
+
         try {
-            conn = (HttpConnection) Connector.open(url);
+	    //System.err.println("Trying to connect to " +  url + " with data " +data);
+
+            conn = (HttpConnection) Connector.open(url, Connector.READ_WRITE, true);
 
             if (data != null) {
                 conn.setRequestMethod(HttpConnection.POST);
-                conn.setRequestProperty("Content-Type",
-                queryType);
+                conn.setRequestProperty("Content-Type", queryType);
                 conn.setRequestProperty("Content-Length", Integer
                         .toString(data.length));
-                
+
                 os = conn.openOutputStream();
                 os.write(data);
                 os.flush();
@@ -72,6 +74,9 @@ public class HttpRequest implements HttpRequestClass {
             }
 
             code = conn.getResponseCode();
+
+	    //System.out.println("CODE is " + code);
+
             if (code == HttpConnection.HTTP_OK) {
                 is = conn.openInputStream();
                 bos = new ByteArrayOutputStream();
@@ -83,6 +88,7 @@ public class HttpRequest implements HttpRequestClass {
         } catch (ClassCastException io) {
             errorMessage = "Unknown protocol";
         } catch (IOException io) {
+	    System.err.println(io.toString());
 	    /* FIXME  */
         } finally {
             try {

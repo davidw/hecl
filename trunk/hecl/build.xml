@@ -160,22 +160,6 @@
     </javac>
   </target>
 
-
-  <target name="compileHttpMicro"
-    depends="initCompile,compileCore"
-    description="Compile J2ME Hecl http support">
-    <mkdir dir="build"/>
-    <mkdir dir="build/http_micro"/>
-
-    <javac destdir="build/http_micro" debug="true">
-      <src path="http"/>
-      <src path="http_micro"/>
-      <classpath refid="buildclasspath"/>
-      <classpath refid="classpath"/>
-      <classpath refid="modulesclasspath"/>
-    </javac>
-  </target>
-
   <target name="compileCommandline"
     depends="initCompile,compileCore,compileFiles,compileHttpStandard,compileLoad,compileModules,compileFloat"
     description="Compile Hecl command line support">
@@ -260,6 +244,22 @@
     location="/home/davidw/install/WTK2.2/lib/midpapi10.jar"/>
   </path>
 
+  <target name="compileHttpMicro"
+    depends="initCompile,compileCore"
+    description="Compile J2ME Hecl http support">
+    <mkdir dir="build"/>
+    <mkdir dir="build/http_micro"/>
+
+    <javac destdir="build/http_micro" debug="true" target="1.1">
+      <src path="http"/>
+      <src path="http_micro"/>
+      <bootclasspath refid="j2mebootclasspath"/>
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+      <classpath refid="modulesclasspath"/>
+    </javac>
+  </target>
+
   <target name="compileJ2MECore" description="Compile the core classes
     for J2ME">
     <mkdir dir="j2me/classes" />
@@ -282,7 +282,21 @@
     </javac>
   </target>
 
-  <target name="preverify" description="Preverify j2me code" depends="compileJ2ME">
+  <target name="compileJ2MEextras" description="Compile in extras for
+    J2ME" depends="compileHttpMicro">
+
+    <javac srcdir="modules" destdir="j2me/classes" debug="true">
+      <bootclasspath refid="j2mebootclasspath"/>
+      <classpath refid="buildclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+
+    <copy todir="j2me/classes">
+      <fileset dir="build/http_micro"/>
+    </copy>
+  </target>
+
+  <target name="preverify" description="Preverify j2me code" depends="compileJ2ME,compileJ2MEextras">
     <mkdir dir="j2me/preverified"/>
     <exec executable="${midp_home}/bin/preverify">
       <arg line="-cldc"/>

@@ -23,23 +23,22 @@ import org.hecl.Thing;
 
 public class HttpCommand implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        String url, data, type;
+        String url;
+	String data = null;
+	String type = null;
         if ((argv.length < 2) || (argv.length > 4)) {
             throw HeclException.createWrongNumArgsException(argv, 1,
                     "url ?postData? ?type?");
         }
-        url = argv[1].getStringRep();
+        url = argv[1].toString();
         if (argv.length > 2) {
-            data = argv[2].getStringRep();
-        } else {
-            data = null;
-	}
+            data = argv[2].toString();
+        }
 
         if (argv.length > 3) {
             type = argv[3].getStringRep();
-        } else {
-            type = null;
-	}
+        }
+
         data = HttpCommand.executeQuery(url, data, type);
         interp.result = new Thing(new StringThing(data));
     }
