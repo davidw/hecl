@@ -311,10 +311,11 @@
     update="true" excludes="org/hecl/PrintThing.class">
       <manifest>
 	<attribute name="MIDlet-Name" value="Hecl"/>
-	<attribute name="MIDlet-Vendor" value="Dedasys"/>
+	<attribute name="MIDlet-Vendor" value="DedaSys"/>
 	<attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
 	<attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
 	<attribute name="MIDlet-Version" value="1.0"/>
+	<attribute name="MIDlet-Jar-URL" value="Hecl.jar"/>
 	<attribute name="MicroEdition-Profile" value="MIDP-1.0"/>
 	<attribute name="MicroEdition-Configuration" value="CLDC-1.0"/>
       </manifest>

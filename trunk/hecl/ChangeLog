@@ -1,3 +1,8 @@
+2005-11-13  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added a getTextType method in order to be
+	able to do 'type numeric' for textboxes and texfields.
+
 2005-11-07  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/Hecl.java: Build the http module in.

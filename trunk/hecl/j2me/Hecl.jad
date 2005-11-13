@@ -1,7 +1,9 @@
 MIDlet-1: Hecl, Hecl.png, Hecl
 MIDlet-Info-URL: http://www.hecl.org
-MIDlet-Jar-Size: 55218
+MIDlet-Jar-Size: 55317
 MIDlet-Jar-URL: Hecl.jar
 MIDlet-Name: Hecl
 MIDlet-Vendor: DedaSys
 MIDlet-Version: 1.0
+MicroEdition-Profile: MIDP-1.0
+MicroEdition-Configuration: CLDC-1.0

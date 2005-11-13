@@ -229,12 +229,14 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    properties.setProp("len", IntThing.create(400)); /* default  */
 	    properties.setProp("text", new Thing("")); /* default  */
 	    properties.setProp("code", new Thing("")); /* default  */
+	    properties.setProp("type", new Thing("any")); /* default  */
 	    properties.setProps(argv, 1);
 	    TextBox tb;
 	    try {
 		tb = new TextBox((properties.getProp("label")).toString(),
 				 (properties.getProp("text")).toString(),
-				 IntThing.get(properties.getProp("len")), TextField.ANY);
+				 IntThing.get(properties.getProp("len")),
+				 getTextType((properties.getProp("type")).toString()));
 	    } catch (IllegalArgumentException e) {
 		throw new HeclException("textbox can't hold a string that big");
 	    }
@@ -247,12 +249,14 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    /* The 'textfield' command. */
 	    properties.setProp("text", new Thing("")); /* default  */
 	    properties.setProp("len", IntThing.create(50)); /* default  */
-
+	    properties.setProp("type", new Thing("any")); /* default  */
 	    properties.setProps(argv, 1);
 
-	    TextField tf = new TextField((properties.getProp("label")).toString(),
-					 (properties.getProp("text")).toString(),
-					 IntThing.get(properties.getProp("len")), 0);
+	    TextField tf =
+		new TextField((properties.getProp("label")).toString(),
+			      (properties.getProp("text")).toString(),
+			      IntThing.get(properties.getProp("len")),
+			      getTextType((properties.getProp("type")).toString()));
 
 	    setItemCallback(tf);
 	    if (screen != null) {
@@ -467,6 +471,14 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	return 0;
     }
 
+
+    /**
+     * The <code>getDateFieldType</code> method returns a DateField
+     * type, given a string describing the type.
+     *
+     * @param type a <code>String</code> value
+     * @return an <code>int</code> value
+     */
     private int getDateFieldType(String type) {
 	if (type.equals("date")) {
 	    return DateField.DATE;
@@ -479,7 +491,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
     }
 
     /**
-     * THe <code>getAlertType</code> method returns an AlertType for
+     * The <code>getAlertType</code> method returns an AlertType for
      * the string passed in.
      *
      * @param type a <code>String</code> value
@@ -500,6 +512,29 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	return null;
     }
 
+    /**
+     * The <code>getTextType</code> method returns the type of text to
+     * use, given a string.  Used in textfields and textboxes.
+     *
+     * @param type a <code>String</code> value
+     * @return an <code>int</code> value
+     */
+    private int getTextType(String type) {
+	if (type.equals("any")) {
+	    return TextField.ANY;
+	} else if (type.equals("emailaddr")) {
+	    return TextField.EMAILADDR;
+	} else if (type.equals("numeric")) {
+	    return TextField.NUMERIC;
+	} else if (type.equals("phonenumber")) {
+	    return TextField.PHONENUMBER;
+	} else if (type.equals("password")) {
+	    return TextField.PASSWORD;
+	} else if (type.equals("url")) {
+	    return TextField.URL;
+	}
+	return TextField.ANY;
+    }
 
     /**
      * The <code>getProp</code> method returns a numeric for the
