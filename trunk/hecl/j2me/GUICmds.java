@@ -78,7 +78,8 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
     static final int SELECTED = 5 << 8;	/* Which index is selected */
     static final int INDEX = 6 << 8;	/* Item index */
     static final int LIST = 7 << 8;	/* List of items for Choice's */
-    static final int VAL = 8 << 8;	/* Value (for gauges) */
+    static final int VAL = 8 << 8;	/* Value - for gauges */
+    static final int DATE = 9 << 8;	/* Date - for datefields */
 
     /* get or set? */
     static final int GETPROP = 0x1000000;
@@ -283,8 +284,9 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    /* The datefield command. */
 	    properties.setProp("type", new Thing("date_time"));
 
-	    DateField df = new DateField((properties.getProp("label")).toString(),
-					 getDateFieldType((properties.getProp("type")).toString()));
+	    DateField df = new DateField(
+		(properties.getProp("label")).toString(),
+		getDateFieldType((properties.getProp("type")).toString()));
 
 	    setItemCallback(df);
 	    if (screen != null) {
@@ -560,6 +562,8 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    return LIST;
 	} else if (prop.equals("val")) {
 	    return VAL;
+	} else if (prop.equals("date")) {
+	    return DATE;
 	} else if (prop.equals("index")) {
 	    return INDEX;
 	}
@@ -696,6 +700,13 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 		break;
 	    case GAUGE + VAL + GETPROP:
 		result = IntThing.create(((Gauge)widget).getValue());
+		break;
+	    case DATEFIELD + DATE + GETPROP:
+		result = IntThing.create(
+		    (int)(((DateField)widget).getDate().getTime() / 1000));
+		break;
+	    case DATEFIELD + DATE + SETPROP:
+		((DateField)widget).setDate(new java.util.Date((long)IntThing.get(propval) * 1000));
 		break;
 	    default:
 		if (!ok) {

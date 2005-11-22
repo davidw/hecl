@@ -1,3 +1,14 @@
+2005-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Thanks to a suggestion by Kevin Kenny, we
+	simply divide by 1000 to get a number we can use when we get a
+	"datefield"'s date, and then multiply by 1000 when we set.  We
+	lose out on some granularity, but frankly I think we can live with
+	it.  The alternative might be to implement the Double stuff in the
+	core, with the understanding that it uses longs by default and
+	real doubles only in the j2se version.  That sounds confusing and
+	is likely to be confusing.
+
 2005-11-13  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/GUICmds.java: Added a getTextType method in order to be
