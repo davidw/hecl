@@ -1,5 +1,5 @@
 org.hecl
 org.hecl.files
-org.hecl.fp
-org.hecl.http
 org.hecl.modules
+org.hecl.http
+org.hecl.fp

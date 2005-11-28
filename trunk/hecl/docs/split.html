@@ -1,13 +1,13 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>split</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><link rel="start" href="index.html" title="
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>split</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="
       
 	Hecl Programming Language
       
-    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="sort.html" title="sort"><link rel="next" href="time.html" title="time"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">split</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="sort.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="time.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="split"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>split &#8212; Split a string into a list.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><tt class="command">split</tt>  <i class="replaceable"><tt>string</tt></i> ?<i class="replaceable"><tt>splitstring</tt></i>?</p></div></div><div class="refsect1" lang="en"><a name="id2526065"></a><h2>Description</h2><p>
-	  The <span><b class="command">split</b></span> command takes a string and
+    "><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="sort.html" title="sort"><link rel="next" href="time.html" title="time"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">split</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="sort.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="time.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="split"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>split &#8212; Split a string into a list.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">split</code>  <em class="replaceable"><code>string</code></em> ?<em class="replaceable"><code>splitstring</code></em>?</p></div></div><div class="refsect1" lang="en"><a name="id2515050"></a><h2>Description</h2><p>
+	  The <span><strong class="command">split</strong></span> command takes a string and
 	  splits it into a list, divided by
-	  <tt class="option"><i class="replaceable"><tt>splitstring</tt></i></tt>,
+	  <code class="option"><em class="replaceable"><code>splitstring</code></em></code>,
 	  which defaults to " " if not present.
-	</p></div><div class="refsect1" lang="en"><a name="id2526088"></a><h2>Example</h2><pre class="programlisting">
+	</p></div><div class="refsect1" lang="en"><a name="id2515072"></a><h2>Example</h2><pre class="programlisting">
 puts [split "aaa;bbb;ccc" ";"]
 puts [split "aaa bbb ccc"]
 puts [split "aaaxbbbycccxyddd" "xy"]

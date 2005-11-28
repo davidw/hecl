@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and J2ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.66.1"><link rel="start" href="index.html" title="
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and J2ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.68.1"><link rel="start" href="index.html" title="
       
 	Hecl Programming Language
       
@@ -16,32 +16,32 @@
 	with the phone.  FIXME: more soon!
       </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="heclapps"></a>Creating your own Hecl apps</h3></div></div></div><p>
 	Creating new hecl applications is relatively easy.  Everything
-	you need is in the <tt class="filename">j2me/</tt> directory.  The
-	<tt class="filename">GUICmds.java</tt> file contains most of the
+	you need is in the <code class="filename">j2me/</code> directory.  The
+	<code class="filename">GUICmds.java</code> file contains most of the
 	functionality that maps J2ME functionality to Hecl and back.
-	The <tt class="filename">Hecl.java</tt> file contains the code that
+	The <code class="filename">Hecl.java</code> file contains the code that
 	starts up Hecl on the cell phone.
       </p><p>
 	If you are just looking to write an application, though, the
-	most important file is <tt class="filename">script.hcl</tt>, which
+	most important file is <code class="filename">script.hcl</code>, which
 	is what gets loaded up and executed at runtime.  The sample
 	application contained therein is a good guide to how to make
 	your own apps.  If you want to modify it, make a backup copy
 	for use as a reference, and then get started!
       </p><div class="procedure"><ol type="1"><li><p>
 	    If you are interested in recompiling the Hecl J2ME Java
-	    files, change the <tt class="varname">j2mebootclasspath</tt>
-	    variable in the <tt class="filename">build.xml</tt> Ant build
-	    file.  To compile, you can then run <span><b class="command">ant
-	    packageJ2ME</b></span> from the hecl directory.
+	    files, change the <code class="varname">j2mebootclasspath</code>
+	    variable in the <code class="filename">build.xml</code> Ant build
+	    file.  To compile, you can then run <span><strong class="command">ant
+	    packageJ2ME</strong></span> from the hecl directory.
 	  </p></li><li><p>
 	    If you have recompiled the J2ME java files, you can simply
-	    use the <span><b class="command">ant J2ME</b></span> command to create the
+	    use the <span><strong class="command">ant J2ME</strong></span> command to create the
 	    .jar and .jad files for you, including your version of
 	    script.hcl.
 	  </p><p>
 	    Otherwise, it's still pretty easy.  Once you've finished
-	    editing <tt class="filename">script.hcl</tt>, update the jar
+	    editing <code class="filename">script.hcl</code>, update the jar
 	    file with your new copy:
 	    </p><pre class="programlisting">jar uf Hecl.jar script.hcl</pre><p>
 	    Then, make sure to update the .jad so that it has the
@@ -76,18 +76,18 @@ setcurrent $mainform
 </pre><p>
 	This program is pretty simple.  It displays a form, which
 	contains a textfield and a stringitem, and two commands,
-	<span><b class="command">Reverse</b></span> and <span><b class="command">Exit</b></span>.  When
-	you select <span><b class="command">Reverse</b></span>, the text contained in
+	<span><strong class="command">Reverse</strong></span> and <span><strong class="command">Exit</strong></span>.  When
+	you select <span><strong class="command">Reverse</strong></span>, the text contained in
 	the textfield is reversed, and displayed in the stringitem.
 	Exit does what you might expect.
       </p><p>
 	The code is fairly self-explanatory, with a few key points
-	worth noting.  Within the <span><b class="command">reverse</b></span> proc,
-	<span><b class="command">getprop</b></span> and <span><b class="command">setprop</b></span> are
+	worth noting.  Within the <span><strong class="command">reverse</strong></span> proc,
+	<span><strong class="command">getprop</strong></span> and <span><strong class="command">setprop</strong></span> are
 	used to fetch and set properties of the textfield and
 	stringitem.  All the GUI elements have fairly similar
-	arguments, for instance <tt class="option">label</tt> for the label,
-	and <tt class="option">code</tt> for the code associated with them.
+	arguments, for instance <code class="option">label</code> for the label,
+	and <code class="option">code</code> for the code associated with them.
 	Note thouth that the code associated with the form is
 	evaluated immediately, whereas that associated with the
 	commands is only evaluated when they are selected.  Lastly, to
@@ -95,5 +95,5 @@ setcurrent $mainform
 	form as the screen item currently displayed.
       </p><p>The program looks more or less like this when run:
 
-      </p><div class="figure"><a name="id2527617"></a><p class="title"><b>Figure 1. "reverse" screen shot</b></p><div class="mediaobject"><img src="reverse-screen.png" alt='"reverse" screenshot, with textfield,
-	      stringitem, and two commands, Reverse and Exit'></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="index.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
+      </p><div class="figure"><a name="id2516603"></a><p class="title"><b>Figure 1. "reverse" screen shot</b></p><div class="mediaobject"><img src="reverse-screen.png" alt='"reverse" screenshot, with textfield,
+	      stringitem, and two commands, Reverse and Exit'></div></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

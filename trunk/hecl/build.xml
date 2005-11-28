@@ -26,6 +26,10 @@
     <pathelement location="build/http_standard"/>
   </path>
 
+  <path id="http_microclasspath">
+    <pathelement location="build/http_micro"/>
+  </path>
+
   <path id="loadclasspath">
     <pathelement location="build/load"/>
   </path>
@@ -261,7 +265,7 @@
   </target>
 
   <target name="compileJ2MECore" description="Compile the core classes
-    for J2ME">
+    for J2ME" depends="compileHttpMicro">
     <mkdir dir="j2me/classes" />
     <javac srcdir="core"
       destdir="j2me/classes" target="1.1">
@@ -279,6 +283,7 @@
       <classpath>
 	<pathelement location="j2me/classes/" />
       </classpath>
+      <classpath refid="http_microclasspath"/>
     </javac>
   </target>
 

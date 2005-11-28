@@ -1,3 +1,8 @@
+2005-11-28  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added a few things to build http_micro cleanly into
+	the j2me version.
+
 2005-11-22  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/GUICmds.java: Thanks to a suggestion by Kevin Kenny, we
