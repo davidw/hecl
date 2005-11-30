@@ -1,3 +1,18 @@
+2005-11-30  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added the necessary build instructions for record
+	stores.
+
+	* j2me/Hecl.java: Added recordstore module.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmd.java: Implemented three very
+	simply recordstore commands: rs_list, which lists all the
+	recordstores available, rs_get, which fetches a names recordstore
+	as a Thing, and rs_put, which puts a Thing into a named
+	RecordStore.
+
+	* rms/org/hecl/rms/RMSModule.java: Module for RecordStore.
+
 2005-11-28  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added a few things to build http_micro cleanly into

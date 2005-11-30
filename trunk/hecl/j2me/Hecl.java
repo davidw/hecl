@@ -25,6 +25,7 @@ import org.hecl.Interp;
 import org.hecl.Thing;
 
 import org.hecl.http.*;
+import org.hecl.rms.*;
 
 
 /**
@@ -88,8 +89,8 @@ public class Hecl
 	    try {
 		interp = new Interp();
 
-
 		new HttpModule().loadModule(interp);
+		new RMSModule().loadModule(interp);
 
 
 		GUICmds cmds = new GUICmds();
