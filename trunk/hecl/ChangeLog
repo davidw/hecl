@@ -1,3 +1,9 @@
+2005-12-26  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Added some code from Wolfgang
+	S. Kechel <wolfgang.kechel@data2c.com> that improves the parser,
+	allowing it to handle more punctuation.
+
 2005-11-30  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added the necessary build instructions for record

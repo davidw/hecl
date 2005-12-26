@@ -92,7 +92,6 @@ public class Hecl
 		new HttpModule().loadModule(interp);
 		new RMSModule().loadModule(interp);
 
-
 		GUICmds cmds = new GUICmds();
 		cmds.display = display;
 		cmds.interp = interp;

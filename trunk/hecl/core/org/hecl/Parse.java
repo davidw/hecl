@@ -277,6 +277,20 @@ public class Parse {
         }
     }
 
+    /* Various bits and pieces utilized by parseDollar, below.  */
+
+    private static String allowed = "_/@";
+    private static boolean isLetter(char ch) {
+	return ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'));
+    }
+    private static boolean isDigit(char ch) {
+	return (ch >= '0' && ch <= '9');
+    }
+
+    private static boolean isPunct(char ch) {
+	return allowed.indexOf(ch) >= 0;
+    }
+
     /**
      * The <code>parseDollar</code> method parses a $foo
      * variable. These can also be of the form ${foo} so that we can
@@ -289,32 +303,30 @@ public class Parse {
      * @exception HeclException
      *                if an error occurs
      */
+
     private void parseDollar(ParseState state, boolean docopy)
-            throws HeclException {
-        char ch;
-        ch = state.nextchar();
-        if (ch == '{') {
-            parseVarBlock(state);
-        } else {
-	    boolean firstletter = true;
-            /* Variable names use this range here. */
-            while ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')
-                    || ch == '_' ||
-		   (ch >= '0' && ch <= '9' && !firstletter)) {
-                appendToCurrent(ch);
-                ch = state.nextchar();
-		firstletter = false;
-            }
-            if (!state.done()) {
-                state.rewind();
-            }
-        }
-        /*
-         * System.out.println("parser vvvv"); Thing.printThing(argv[1]);
-         * System.out.println("parser ^^^^");
-         */
-        Thing strcopy = currentOut.deepcopy();
-        currentOut.setVal(new SubstThing(strcopy.getStringRep(), !docopy));
+	throws HeclException {
+	char ch;
+	ch = state.nextchar();
+	if (ch == '{') {
+	    parseVarBlock(state);
+	} else {
+	    /* Variable names use this range here. */
+	    while((isLetter(ch) || isDigit(ch) || isPunct(ch))
+		) {
+		appendToCurrent(ch);
+		ch = state.nextchar();
+	    }
+	    if (!state.done()) {
+		state.rewind();
+	    }
+	}
+	/*
+	 * System.out.println("parser vvvv"); Thing.printThing(argv[1]);
+	 * System.out.println("parser ^^^^");
+	 */
+	Thing strcopy = currentOut.deepcopy();
+	currentOut.setVal(new SubstThing(strcopy.getStringRep(), !docopy));
     }
 
     /**
