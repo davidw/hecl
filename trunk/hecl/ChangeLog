@@ -1,3 +1,12 @@
+2006-01-03  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/JarHack.java: This code takes a .jar file and
+	transforms it into a new .jar file with a modified MANIFEST.MF
+	file, in order to be able to put multiple Hecl applications on a
+	phone without recompiling them.
+
+	* build.xml: Added instructions to buile JarHack.
+
 2005-12-26  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Parse.java: Added some code from Wolfgang

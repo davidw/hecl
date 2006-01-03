@@ -185,7 +185,15 @@
     </javac>
   </target>
 
-  <!-- package targsts -->
+  <target name="packageJarHack" depends="compileCommandline">
+    <jar destfile="JarHack.jar" basedir="build/commandline" includes="JarHack.class">
+      <manifest>
+	<attribute name="Main-Class" value="JarHack"></attribute>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- package targets -->
   <target name="initPackage"
     description="Initialized packaging">
     <mkdir dir="out"/>
