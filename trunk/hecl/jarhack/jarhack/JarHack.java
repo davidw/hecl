@@ -17,9 +17,11 @@ package jarhack;
 
 import java.io.IOException;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -110,6 +112,32 @@ public class JarHack {
         jof.flush();
         jof.close();
         jif.close();
+    }
+
+    /**
+     * The <code>createJadForJar</code> method creates a new .jad file
+     * that matches the .jar file passed to it.  appname is the name
+     * of the new application.
+     *
+     * @param jarfile a <code>String</code> value
+     * @param appname a <code>String</code> value
+     * @exception IOException if an error occurs
+     */
+    public static void createJadForJar(String jarfile, String appname) throws IOException {
+	File jf = new File(jarfile);
+	String parent = jf.getParent();
+	File jadfile = new File(parent + File.separatorChar + appname + ".jad");
+	FileWriter of = new FileWriter(jadfile);
+	of.write("MIDlet-1: "+appname+", Hecl.png, Hecl" + "\n" +
+		 "MIDlet-Info-URL: http://www.hecl.org" + "\n" +
+		 "MIDlet-Jar-Size: " + jf.length() + "\n" +
+		 "MIDlet-Jar-URL: "+appname+".jar" + "\n" +
+		 "MIDlet-Name: " + appname + "\n" +
+		 "MIDlet-Vendor: DedaSys" + "\n" +
+		 "MIDlet-Version: 1.0" + "\n" +
+		 "MicroEdition-Profile: MIDP-1.0" + "\n" +
+		 "MicroEdition-Configuration: CLDC-1.0");
+	of.close();
     }
 
     public static void main(String[] args) {
