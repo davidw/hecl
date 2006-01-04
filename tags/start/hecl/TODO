@@ -1,0 +1,20 @@
+2004-10-22  David N. Welton  <davidw@dedasys.com>
+
+	* Commands: binary, switch, error, exit, ?expr?, for, format,
+	incr, join, linsert, lreplace, lsearch, lset, scan, split, subst,
+	?time?.
+
+2004-10-02  David N. Welton  <davidw@dedasys.com>
+
+	* Add a method to dispose of unwanted commands.  Maybe 'rename'?
+
+2004-10-01  David N. Welton  <davidw@dedasys.com>
+
+	* Select loop style mechanism, if it's feasible.
+
+2004-09-15  David N. Welton  <davidw@dedasys.com>
+
+	* GC of some sort... maybe Java's is enough?
+
+	* Byte compilation.
+
