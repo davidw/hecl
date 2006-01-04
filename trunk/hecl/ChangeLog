@@ -1,5 +1,8 @@
 2006-01-05  David N. Welton  <davidw@dedasys.com>
 
+	* HeclBuilder.jar: mini-IDE that can be used to create Hecl J2ME
+	applications.
+
 	* build.xml: support for building HeclBuilder.
 
 2006-01-04  David N. Welton  <davidw@dedasys.com>
