@@ -13,9 +13,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+package jarhack;
+
 import java.io.IOException;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.FileOutputStream;
 
 import java.util.Iterator;
@@ -24,9 +27,8 @@ import java.util.Set;
 import java.util.jar.*;
 
 
-
 /**
- * <code>JarHack</code> 
+ * <code>JarHack</code>
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -40,13 +42,16 @@ public class JarHack {
      * usually) is overridden with the new name, and the new .jar file
      * is written to the specified outfile.
      *
-     * @param infile a <code>String</code> value
+     * @param infile a <code>FileInputStream</code> value
      * @param outfile a <code>String</code> value
      * @param newname a <code>String</code> value
      * @exception IOException if an error occurs
      */
-    public static void substHecl(String infile, String outfile, String newname) throws IOException {
-	JarInputStream jif = new JarInputStream(new FileInputStream(infile));
+    public static void substHecl(InputStream infile, String outfile,
+				 String newname, String scriptfile)
+	throws IOException {
+
+	JarInputStream jif = new JarInputStream(infile);
 	Manifest mf = jif.getManifest();
 	Attributes attrs = mf.getMainAttributes();
 
@@ -77,16 +82,27 @@ public class JarHack {
 
 	/* Go through the various entries. */
         JarEntry entry;
+	int read;
         while ((entry = jif.getNextJarEntry()) != null) {
 
 	    /* Don't copy the manifest file. */
             if ("META-INF/MANIFEST.MF".equals(entry.getName())) continue;
 
-            jof.putNextEntry(entry);
-            int read;
-            while ((read = jif.read(buf)) != -1) {
-                jof.write(buf, 0, read);
-            }
+	    /* Insert our own copy of the script file. */
+	    if ("script.hcl".equals(entry.getName())) {
+		jof.putNextEntry(new JarEntry("script.hcl"));
+		FileInputStream inf = new FileInputStream(scriptfile);
+		while ((read = inf.read(buf)) != -1) {
+		    jof.write(buf, 0, read);
+		}
+		inf.close();
+	    } else {
+		/* Otherwise, just copy the entry. */
+		jof.putNextEntry(entry);
+		while ((read = jif.read(buf)) != -1) {
+		    jof.write(buf, 0, read);
+		}
+	    }
 
             jof.closeEntry();
         }
@@ -101,7 +117,8 @@ public class JarHack {
 	String newfn = "/tmp/" + args[1] + ".jar";
 
 	try {
-	    substHecl(args[0], newfn, args[1]);
+	    FileInputStream infile = new FileInputStream(args[0]);
+	    substHecl(infile, newfn, args[1], args[2]);
 	} catch (Exception e) {
 	    System.err.println("Error: " + e);
 	}

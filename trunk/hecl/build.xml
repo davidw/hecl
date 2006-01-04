@@ -185,10 +185,14 @@
     </javac>
   </target>
 
-  <target name="packageJarHack" depends="compileCommandline">
-    <jar destfile="JarHack.jar" basedir="build/commandline" includes="JarHack.class">
+  <target name="packageJarHack">
+    <mkdir dir="build" />
+    <mkdir dir="build/jarhack" />
+    <javac srcdir="jarhack" destdir="build/jarhack">
+    </javac>
+    <jar destfile="JarHack.jar" basedir="build/jarhack">
       <manifest>
-	<attribute name="Main-Class" value="JarHack"></attribute>
+	<attribute name="Main-Class" value="jarhack/JarHack"></attribute>
       </manifest>
     </jar>
   </target>
