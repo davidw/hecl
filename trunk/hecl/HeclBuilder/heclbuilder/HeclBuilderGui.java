@@ -237,6 +237,16 @@ public class HeclBuilderGui extends javax.swing.JFrame {
         System.exit(1);
     }
 
+    private void selectScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        scriptFileChooser = new JFileChooser(System.getProperty("user.dir"));
+	scriptFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int retval = scriptFileChooser.showOpenDialog(this);
+        if (retval == JFileChooser.APPROVE_OPTION) {
+            File file = scriptFileChooser.getSelectedFile();
+            scriptTextField.setText(file.toString());
+        }
+    }
+
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String filename = null;
         File fl = new File(scriptTextField.getText());
@@ -264,15 +274,6 @@ public class HeclBuilderGui extends javax.swing.JFrame {
         }
     }
 
-    private void selectScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        scriptFileChooser = new JFileChooser();
-	scriptFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        int retval = scriptFileChooser.showOpenDialog(this);
-        if (retval == JFileChooser.APPROVE_OPTION) {
-            File file = scriptFileChooser.getSelectedFile();
-            scriptTextField.setText(file.toString());
-        }
-    }
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {

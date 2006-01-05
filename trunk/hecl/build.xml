@@ -65,7 +65,7 @@
     depends="compileCore,compileCommandline,compileApplet"/>
 
   <target name="package" description="Package things into JARs"
-    depends="packageJARs,packageApplet"/>
+    depends="packageJARs,packageApplet,HeclBuilderJar"/>
 
   <!-- clean targets -->
   <target name="cleanOut" description="Clean out directory">
@@ -447,7 +447,7 @@
     </javac>
   </target>
 
-  <target name="HeclBuilderJar" depends="HeclBuilder">
+  <target name="HeclBuilderJar" depends="HeclBuilder,J2ME">
     <jar destfile="HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
 	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />

@@ -1,5 +1,13 @@
 2006-01-05  David N. Welton  <davidw@dedasys.com>
 
+	* j2me/examples/recordstore.hcl: Added recordstore example script.
+
+	* j2me/examples/listbox.hcl: Added listbox example script.
+
+	* j2me/examples/gauge.hcl: Added gauge example script.
+
+	* j2me/examples/datefield.hcl: Added datefield example script.
+
 	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Use user's home
 	directory as initial directory for output location.
 

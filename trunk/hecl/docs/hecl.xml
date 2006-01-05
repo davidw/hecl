@@ -2452,7 +2452,13 @@ class HelloCmd implements Command {
 	    .  I run it like this:
 	  </para>
 
-	  <screen>~/Desktop/WTK2.2/bin/emulator -classpath Hecl.jar Hecl</screen>
+	  <screen>~/Desktop/WTK2.2/bin/emulator -classpath MyApp.jar Hecl</screen>
+
+	  <para>
+	    Note that <option>Hecl</option> above will not change,
+	    because that is always the main class, even if the
+	    application itself has a different name.
+	  </para>
 
 	</step>
       </procedure>

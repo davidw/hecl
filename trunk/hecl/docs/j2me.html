@@ -6,7 +6,7 @@
       
 	Hecl Programming Language
       
-    "><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and J2ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> </td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and J2ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#j2mecommands">Hecl J2ME Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl J2ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#id2516537">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#id2516656">Hacking Hecl's J2ME code</a></span></dt></dl></div><p>
+    "><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and J2ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> </td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and J2ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#j2mecommands">Hecl J2ME Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl J2ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#id2516546">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#id2516666">Hacking Hecl's J2ME code</a></span></dt></dl></div><p>
       Hecl is designed to be small enough to run on mobile devices
       such as cell phones.  This means that for the Hecl core, has
       been necessary to limit ourselves to Java API's that work with
@@ -50,7 +50,11 @@
 	    application before running it on your phone.  You can get
 	    that is free (if not open source) from Sun here: <a href="http://java.sun.com/products/sjwtoolkit/" target="_top">http://java.sun.com/products/sjwtoolkit/</a>
 	    .  I run it like this:
-	  </p><pre class="screen">~/Desktop/WTK2.2/bin/emulator -classpath Hecl.jar Hecl</pre></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2516537"></a>Example application</h3></div></div></div><p>
+	  </p><pre class="screen">~/Desktop/WTK2.2/bin/emulator -classpath MyApp.jar Hecl</pre><p>
+	    Note that <code class="option">Hecl</code> above will not change,
+	    because that is always the main class, even if the
+	    application itself has a different name.
+	  </p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2516546"></a>Example application</h3></div></div></div><p>
 	For example, let's create a simple form with a text entry
 	widget and a command that acts on it:
       </p><pre class="programlisting">proc reverse {tf results} {
@@ -99,7 +103,7 @@ setcurrent $mainform
       </p><div class="screenshot"><div class="mediaobject"><img src="reverse-screen.png"><div class="caption">
 	    "reverse" screenshot, with textfield, stringitem, and two
 	    commands, Reverse and Exit
-	  </div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2516656"></a>Hacking Hecl's J2ME code</h3></div></div></div><p>
+	  </div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2516666"></a>Hacking Hecl's J2ME code</h3></div></div></div><p>
 	Should you need to "look under the hood" (and you are
 	encouraged to do so!), everything you need is in the
 	<code class="filename">j2me/</code> directory.  The
