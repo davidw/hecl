@@ -131,7 +131,7 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 
         outputLabel.setText("Output directory");
 
-        outputTextField.setText("/tmp");
+        outputTextField.setText(System.getProperty("user.home"));
 
         outputSelectButton.setText("...");
         outputSelectButton.addActionListener(new java.awt.event.ActionListener() {
