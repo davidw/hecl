@@ -111,7 +111,7 @@ public class HeclBuilderGui extends javax.swing.JFrame {
             }
         });
 
-        runButton.setText("Go");
+        runButton.setText("Create .jar/.jad files");
         runButton.setToolTipText("Select a script and MIDlet name to activate this button");
         runButton.setEnabled(false);
         runButton.addActionListener(new java.awt.event.ActionListener() {

@@ -216,10 +216,11 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    /* This is redundant with the code for listbox above. */
 	    String []choices = choicesFromList();
 
-	    ChoiceGroup cg = new ChoiceGroup(properties.getProp("label").toString(),
-					     getChoiceType((properties.getProp("type")).toString()),
-					     choices,
-					     null);
+	    ChoiceGroup cg = new ChoiceGroup(
+		properties.getProp("label").toString(),
+		getChoiceType((properties.getProp("type")).toString()),
+		choices, null);
+
 	    setItemCallback(cg);
 	    if (screen != null) {
 		((Form)screen).append(cg);
@@ -324,7 +325,8 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    properties.setProp("type", new Thing("screen"));
 	    properties.setProps(argv, 1);
 	    String label = (properties.getProp("label")).toString();
-	    Command c = new Command(label, getCmdType((properties.getProp("type")).toString()), 0);
+	    Command c = new Command(
+		label, getCmdType((properties.getProp("type")).toString()), 0);
 	    if (screen != null) {
 		screen.addCommand(c);
 	    }

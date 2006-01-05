@@ -69,6 +69,7 @@ public class Hecl
 	    display.setCurrent(f);
 	    f.append("Loading Hecl, please wait ");
 
+	    /* Fetch the script. */
 	    int i = 0;
 	    DataInputStream is =
 		new DataInputStream(this.getClass().getResourceAsStream("/script.hcl"));
