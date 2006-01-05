@@ -28,9 +28,11 @@ import java.util.Set;
 
 import java.util.jar.*;
 
-
 /**
- * <code>JarHack</code>
+ * <code>JarHack</code> -- this class provides several static methods
+ * that can be used to create .jar and .jad files from a template
+ * Hecl.jar and some user supplied information, such as the output
+ * file, and the name of the new application.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0

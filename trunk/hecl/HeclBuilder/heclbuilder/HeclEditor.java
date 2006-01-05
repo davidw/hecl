@@ -22,6 +22,14 @@ import javax.swing.JOptionPane;
 import org.hecl.HeclException;
 import org.hecl.files.HeclFile;
 
+
+/**
+ * <code>HeclEditor</code> -- This class provides a very, very crude
+ * editor/viewer for Hecl scripts.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class HeclEditor extends javax.swing.JFrame {
 
     private javax.swing.JMenu editMenu;

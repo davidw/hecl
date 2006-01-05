@@ -28,7 +28,9 @@ import org.jdesktop.layout.GroupLayout;
 import org.jdesktop.layout.LayoutStyle;
 
 /**
- * <code>HeclBuilderGui</code>
+ * <code>HeclBuilderGui</code> -- a gui for the creation of J2ME Hecl
+ * apps.  Utilizes an internal copy of j2me/Hecl.jar as a sort of
+ * "template" that is combined with a user-supplied script.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -52,7 +54,10 @@ public class HeclBuilderGui extends javax.swing.JFrame {
     private javax.swing.JButton selectScriptButton;
     private javax.swing.JLabel selectLabel;
 
-    /** Creates new form HeclBuilderGui */
+    /**
+     * Creates a new <code>HeclBuilderGui</code> instance.
+     *
+     */
     public HeclBuilderGui() {
         initComponents();
     }
@@ -63,8 +68,6 @@ public class HeclBuilderGui extends javax.swing.JFrame {
      *
      */
     private void initComponents() {
-/*         scriptFileChooser = new javax.swing.JFileChooser();
-	outputDirChooser = new javax.swing.JFileChooser();  */
         selectLabel = new javax.swing.JLabel();
         midletLabel = new javax.swing.JLabel();
         outputLabel = new javax.swing.JLabel();
@@ -200,6 +203,7 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 
 	pack();
     }
+
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
         InputStream in = this.getClass().getResourceAsStream("/j2me/Hecl.jar");

@@ -53,6 +53,9 @@
   <target name="clean" description="Clean the build"
     depends="cleanOut,cleanBuild,cleanClasses,cleanJ2ME">
     <delete file="Hecl.jar"/>
+    <delete file="JarHack.jar"/>
+    <delete file="HeclBuilder.jar"/>
+    <delete file="StandaloneHecl.jar"/>
   </target>
 
   <target name="build" description="Complete build"
@@ -376,7 +379,7 @@
   <!-- Docs -->
 
   <target name="javadocs">
-    <javadoc packagenames="org.hecl,org.hecl.*"
+    <javadoc packagenames="org.hecl,org.hecl.*,jarhack,heclbuilder"
       destdir="docs/jdocs"
       author="true"
       version="true"
@@ -395,6 +398,12 @@
       </sourcepath>
       <sourcepath>
 	<pathelement path="float"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="HeclBuilder"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="jarhack"/>
       </sourcepath>
     </javadoc>
   </target>

@@ -1,5 +1,7 @@
 2006-01-05  David N. Welton  <davidw@dedasys.com>
 
+	* build.xml: Make sure to clean up everything with 'ant clean'.
+
 	* docs/hecl.css: Centered the screenshots.
 
 	* docs/hecl.xml: Discuss use of HeclBuilder.

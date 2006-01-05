@@ -3,3 +3,5 @@ org.hecl.files
 org.hecl.modules
 org.hecl.http
 org.hecl.fp
+heclbuilder
+jarhack
