@@ -1,5 +1,9 @@
 2006-01-05  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.css: Centered the screenshots.
+
+	* docs/hecl.xml: Discuss use of HeclBuilder.
+
 	* HeclBuilder.jar: mini-IDE that can be used to create Hecl J2ME
 	applications.
 

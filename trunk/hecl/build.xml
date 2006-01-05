@@ -447,7 +447,11 @@
       <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
       includes="org/jdesktop/layout/*.class"/>
       <zipfileset src="JarHack.jar" includes="jarhack/*.class"/>
-
+      <zipfileset src="Hecl.jar" includes="org/hecl/*.class"/>
+      <zipfileset src="Hecl.jar" includes="org/hecl/files/*.class"/>
+      <zipfileset src="Hecl.jar" includes="org/hecl/fp/*.class"/>
+      <zipfileset src="Hecl.jar" includes="org/hecl/load/*.class"/>
+      <zipfileset src="Hecl.jar" includes="org/hecl/modules/*.class"/>
     </jar>
 
     <jar destfile="HeclBuilder.jar" basedir="." includes="j2me/Hecl.jar"

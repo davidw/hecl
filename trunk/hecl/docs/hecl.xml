@@ -2371,56 +2371,96 @@ class HelloCmd implements Command {
     </section>
 
     <section id="heclapps">
-      <title>Creating your own Hecl apps</title>
+      <title>Creating your own Hecl J2ME apps</title>
 
       <para>
-	Creating new hecl applications is relatively easy.  Everything
-	you need is in the <filename>j2me/</filename> directory.  The
-	<filename>GUICmds.java</filename> file contains most of the
-	functionality that maps J2ME functionality to Hecl and back.
-	The <filename>Hecl.java</filename> file contains the code that
-	starts up Hecl on the cell phone.
-      </para>
-      <para>
-	If you are just looking to write an application, though, the
-	most important file is <filename>script.hcl</filename>, which
-	is what gets loaded up and executed at runtime.  The sample
-	application contained therein is a good guide to how to make
-	your own apps.  If you want to modify it, make a backup copy
-	for use as a reference, and then get started!
+	Creating new hecl applications is relatively easy using the
+	<application>HeclBuilder</application> application.
       </para>
 
       <procedure>
 	<step>
+
 	  <para>
-	    If you are interested in recompiling the Hecl J2ME Java
-	    files, change the <varname>j2mebootclasspath</varname>
-	    variable in the <filename>build.xml</filename> Ant build
-	    file.  To compile, you can then run <command>ant
-	    packageJ2ME</command> from the hecl directory.
+	    Launch it like so:
+	  </para>
+
+	  <screen>java -jar HeclBuilder.jar</screen>
+
+	  <para>
+	    It should look something like this:
+	  </para>
+
+	  <screenshot>
+	    <mediaobject>
+	      <imageobject>
+		<imagedata fileref="heclbuilder-screen.png" format="PNG"/>
+	      </imageobject>
+	      <caption>
+		HeclBuilder in action
+	      </caption>
+	    </mediaobject>
+	  </screenshot>
+
+	</step>
+
+	<step>
+	  <para>
+	    First, you must select a script to use for your Hecl
+	    application.  We recommend that you create this yourself
+	    using your favorite editor (if it has a Tcl mode, that
+	    will make things even easier).  The provided editor is not
+	    yet really worthy of the name!
 	  </para>
 	</step>
 
 	<step>
 	  <para>
-	    If you have recompiled the J2ME java files, you can simply
-	    use the <command>ant J2ME</command> command to create the
-	    .jar and .jad files for you, including your version of
-	    script.hcl.
-	  </para>
-	  <para>
-	    Otherwise, it's still pretty easy.  Once you've finished
-	    editing <filename>script.hcl</filename>, update the jar
-	    file with your new copy:
-	    <programlisting>jar uf Hecl.jar script.hcl</programlisting>
-	    Then, make sure to update the .jad so that it has the
-	    correct size for the .jar file.  You can do this
-	    automatically with a Hecl script:
-	    <programlisting>java -jar ../Hecl.jar updatejad.hcl \
-	    Hecl.jad Hecl.jar</programlisting>
+	    The next field (<guilabel>MIDlet name</guilabel>) is the
+	    name of your Hecl application.  This will be used both as
+	    the name visible on the cell phone, as well as the name of
+	    the .jar file.
 	  </para>
 	</step>
+
+	<step>
+	  <para>
+	    Select a directory where the resulting .jar and .jad files
+	    will be placed.
+	  </para>
+	</step>
+
+	<step>
+	  <para>
+	    At this point, all you have to do is press the "Go"
+	    button, and the .jar and .jad files will be created for
+	    you.  All that's left is to move them on to the cell
+	    phone, but we can't do that for you, as there is no
+	    standard method - each phone manufacturer provides their
+	    own way.  On Linux, I use the following command:
+	  </para>
+	  <screen>gammu nothing --nokiaaddfile Application Hecl</screen>
+	</step>
+
+	<step performance="optional">
+	  <para>
+	    If you have some sort of J2ME SDK that includes an
+	    emulator, now would be a good time to try out your
+	    application before running it on your phone.  You can get
+	    that is free (if not open source) from Sun here: <ulink
+	    url="http://java.sun.com/products/sjwtoolkit/">http://java.sun.com/products/sjwtoolkit/</ulink>
+	    .  I run it like this:
+	  </para>
+
+	  <screen>~/Desktop/WTK2.2/bin/emulator -classpath Hecl.jar Hecl</screen>
+
+	</step>
       </procedure>
+
+    </section>
+
+    <section>
+      <title>Example application</title>
 
       <para>
 	For example, let's create a simple form with a text entry
@@ -2428,7 +2468,7 @@ class HelloCmd implements Command {
       </para>
 
       <programlisting><xi:include href="reverse.hcl" parse="text"
-	xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
+	  xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
 
       <para>
 	This program is pretty simple.  It displays a form, which
@@ -2458,17 +2498,38 @@ class HelloCmd implements Command {
 
       </para>
 
-      <figure><title>"reverse" screen shot</title>
-          <mediaobject>
-	  <imageobject><imagedata fileref="reverse-screen.png" format="PNG"/></imageobject>
-	  <textobject><phrase>"reverse" screenshot, with textfield,
-	      stringitem, and two commands, Reverse and Exit</phrase></textobject>
+      <screenshot>
+	<mediaobject>
+	  <imageobject><imagedata fileref="reverse-screen.png"
+	  format="PNG"/></imageobject>
+	  <caption>
+	    "reverse" screenshot, with textfield, stringitem, and two
+	    commands, Reverse and Exit
+	  </caption>
 	</mediaobject>
-      </figure>
-
+      </screenshot>
 
     </section>
 
-  </section>
+    <section>
+      <title>Hacking Hecl's J2ME code</title>
 
+      <para>
+	Should you need to "look under the hood" (and you are
+	encouraged to do so!), everything you need is in the
+	<filename>j2me/</filename> directory.  The
+	<filename>GUICmds.java</filename> file contains most of the
+	functionality that maps J2ME functionality to Hecl and back.
+	The <filename>Hecl.java</filename> file contains the code that
+	starts up Hecl on the cell phone.
+      </para>
+
+      <para>
+	If you want to recompile the standard Hecl.jar and .jad,
+	simply use the <command>ant J2ME</command> command to create
+	the .jar and .jad files for you, including your version of
+	script.hcl.
+      </para>
+    </section>
+  </section>
 </article>

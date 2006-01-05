@@ -151,6 +151,9 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 
         setJMenuBar(mainMenuBar);
 
+	/* This layout manager comes from here:
+	 * https://swing-layout.dev.java.net/ */
+
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
 
@@ -243,7 +246,6 @@ public class HeclBuilderGui extends javax.swing.JFrame {
             }
             filename = fl.toString();
         }
-        System.out.println(filename);
         HeclEditor he = new HeclEditor(filename);
         he.setVisible(true);
     }
@@ -268,9 +270,6 @@ public class HeclBuilderGui extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

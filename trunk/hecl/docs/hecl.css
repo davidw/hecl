@@ -49,5 +49,24 @@ A.top:visited {
 div.mediaobject img {
     background-color: #777777;
     padding: 1em;
-    width: auto;
+    margin: auto;
+}
+
+div.screenshot {
+    margin: auto;
+}
+
+div.mediaobject {
+    margin: auto;
+    text-align: center;
+}
+
+div.caption {
+    font-size: smaller;
+    font-weight: bold;
+}
+
+div.section {
+    margin-left: 40px;
+    margin-right: 40px;
 }
