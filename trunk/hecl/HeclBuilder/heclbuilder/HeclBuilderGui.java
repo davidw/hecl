@@ -91,7 +91,7 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 
         createLabel.setText("Create .jar and .jad files");
 
-        scriptTextField.setColumns(30);
+        scriptTextField.setColumns(40);
         scriptTextField.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 scriptTextFieldCaretUpdate(evt);

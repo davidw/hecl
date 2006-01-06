@@ -27,10 +27,14 @@
   <xsl:param name="generate.section.toc.level" select="1"/>
   <xsl:param name="refentry.separator" select="1"/>
 
+<!--
   <xsl:variable name="arg.choice.opt.open.str">?</xsl:variable>
   <xsl:variable name="arg.choice.opt.close.str">?</xsl:variable>
+-->
+
   <xsl:variable name="arg.choice.req.open.str"></xsl:variable>
   <xsl:variable name="arg.choice.req.close.str"></xsl:variable>
+<!--
   <xsl:variable name="group.choice.opt.open.str">(</xsl:variable>
   <xsl:variable name="group.choice.opt.close.str">)</xsl:variable>
 
@@ -40,10 +44,11 @@
   <xsl:variable name="group.choice.def.close.str"></xsl:variable>
   <xsl:variable name="group.choice.req.open.str">(</xsl:variable>
   <xsl:variable name="group.choice.req.close.str">)</xsl:variable>
+-->
 
   <xsl:variable name="group.rep.repeat.str">...</xsl:variable>
 
-  <xsl:variable name="arg.or.sep"> </xsl:variable>
+  <xsl:variable name="arg.or.sep"> | </xsl:variable>
 
 
 </xsl:stylesheet>

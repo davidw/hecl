@@ -2366,8 +2366,516 @@ class HelloCmd implements Command {
       <title>Hecl J2ME Commands</title>
       <para>
 	Commands available in the J2ME version of Hecl to interact
-	with the phone.  FIXME: more soon!
+	with the phone.  Look in the
+	<filename>j2me/examples</filename> directory for examples of
+	these commands and widgets in use.
       </para>
+
+      <refentry id="alert">
+	<refnamediv>
+	  <refname>alert</refname>
+	  <refpurpose>Creates an alert</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>alert</command>
+	    <arg choice="opt">label <replaceable>title</replaceable></arg>
+	    <arg choice="opt">text <replaceable>text</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">alarm</arg>
+		<arg choice="req">confirmation</arg>
+		<arg choice="req">error</arg>
+		<arg choice="req">error</arg>
+		<arg choice="req">info</arg>
+		<arg choice="req">warning</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>Alert</classname> class.  You must
+	    call <command>setcurrent</command> to actually display the
+	    alert.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="choicegroup">
+	<refnamediv>
+	  <refname>choicegroup</refname>
+	  <refpurpose>Displays a choicegroup in the current form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>choicegroup</command>
+	    <arg choice="opt">label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">exclusive</arg>
+		<arg choice="req">implicit</arg>
+		<arg choice="req">multiple</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">list <replaceable>list</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>ChoiceGroup</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="datefield">
+	<refnamediv>
+	  <refname>datefield</refname>
+	  <refpurpose>Displays an datefield in the current form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>datefield</command>
+	    <arg choice="opt">label</arg>
+	    <arg choice="opt">typ
+	      <group>
+		<arg choice="req">date_time</arg>
+		<arg choice="req">date</arg>
+		<arg choice="req">time</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>DateField</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="form">
+	<refnamediv>
+	  <refname>form</refname>
+	  <refpurpose>Creates a form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>form</command>
+	    <arg choice="opt">label <replaceable>title</replaceable></arg>
+	    <arg choice="opt">code <replaceable>code</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>Form</classname> class.  Note that in
+	    order to actually display the newly created form, you must
+	    call the <command>setcurrent</command> command with a
+	    reference to the form as an argument.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="gauge">
+	<refnamediv>
+	  <refname>gauge</refname>
+	  <refpurpose>Displays an gauge in the current form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>gauge</command>
+	    <arg choice="opt">label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">maxval
+	    <replaceable>maximum_value</replaceable></arg>
+	    <arg choice="opt">val
+	    <replaceable>initial_value</replaceable></arg>
+	    <arg choice="opt">interactive
+	      <group>
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>Gauge</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="listbox">
+	<refnamediv>
+	  <refname>listbox</refname>
+	  <refpurpose>Creates a listbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>listbox</command>
+	    <arg choice="opt">label <replaceable>title</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">exclusive</arg>
+		<arg choice="req">implicit</arg>
+		<arg choice="req">multiple</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">code
+	    <replaceable>code</replaceable></arg>
+	    <arg choice="opt">callback <replaceable>code</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Similar to the lcdui <classname>ListBox</classname> class,
+	    but implemented as a class that extends
+	    <classname>Form</classname>, in order to enable the use of
+	    callbacks.  Like forms and textboxes, it is necessary to
+	    use the <command>setcurrent</command> command to actually
+	    display a listbox.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="string">
+	<refnamediv>
+	  <refname>string</refname>
+	  <refpurpose>Adds a string to the current form.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>string</command>
+	    <arg choice="req"><replaceable>string</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Appends the specified
+	    <option><replaceable>string</replaceable></option> to the
+	    current form.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="stringitem">
+	<refnamediv>
+	  <refname>stringitem</refname>
+	  <refpurpose>Displays a stringitem in the current form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>stringitem</command>
+	    <arg choice="opt">label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">text <replaceable>text</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>StringItem</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="textbox">
+	<refnamediv>
+	  <refname>textbox</refname>
+	  <refpurpose>Creates a textbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>textbox</command>
+	    <arg choice="opt">label <replaceable>title</replaceable></arg>
+	    <arg choice="opt">len <replaceable>length_in_characters</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">any</arg>
+		<arg choice="req">emailaddr</arg>
+		<arg choice="req">numeric</arg>
+		<arg choice="req">phonenumber</arg>
+		<arg choice="req">passwd</arg>
+		<arg choice="req">url</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">text
+	    <replaceable>text</replaceable></arg>
+	    <arg choice="opt">code <replaceable>code</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>TextBox</classname> class.  To
+	    display a textbox, you must use the
+	    <command>setcurrent</command> command.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="textfield">
+	<refnamediv>
+	  <refname>textfield</refname>
+	  <refpurpose>Displays a textfield in the current form</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>textfield</command>
+	    <arg choice="opt">label
+	    <replaceable>label</replaceable></arg>
+	    <arg choice="opt">len <replaceable>length_in_characters</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">any</arg>
+		<arg choice="req">emailaddr</arg>
+		<arg choice="req">numeric</arg>
+		<arg choice="req">phonenumber</arg>
+		<arg choice="req">passwd</arg>
+		<arg choice="req">url</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">text <replaceable>text</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The lcdui <classname>TextField</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="cmd">
+	<refnamediv>
+	  <refname>cmd</refname>
+	  <refpurpose>Adds a command to a form/listbox/textbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>cmd</command>
+	    <arg choice="opt">label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">type
+	      <group>
+		<arg choice="req">back</arg>
+		<arg choice="req">cancel</arg>
+		<arg choice="req">exit</arg>
+		<arg choice="req">help</arg>
+		<arg choice="req">item</arg>
+		<arg choice="req">ok</arg>
+		<arg choice="req">screen</arg>
+		<arg choice="req">stop</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">code <replaceable>code</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    This is used to create and associate commands with a
+	    screen widget (form, listbox, textbox). The lcdui
+	    <classname>Command</classname> class.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="getprop">
+	<refnamediv>
+	  <refname>getprop</refname>
+	  <refpurpose>Fetches the value of a given property from a widget</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>getprop</command>
+	    <arg choice="req"><replaceable>widget</replaceable></arg>
+	    <arg choice="req"><replaceable>property</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Fetches the value of a given property.  For example:
+	  </para>
+	  <programlisting>
+	    set tf [textfield label "Insert text:"]
+	    ...
+	    set inserted_text [getprop &amp;tf text]
+	  </programlisting>
+	  <para>
+	    In this example, <command>getprop</command> fetches the
+	    text that has been inserted in the textfield.
+	    <option><replaceable>property</replaceable></option> must
+	    be a valid property for the given widget.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="setprop">
+	<refnamediv>
+	  <refname>setprop</refname>
+	  <refpurpose>Sets a given property of a widget</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>setprop</command>
+	    <arg choice="req"><replaceable>widget</replaceable></arg>
+	    <arg
+	    choice="req"><replaceable>property</replaceable></arg>
+	    <arg choice="req"><replaceable>new_value</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Sets the value of a given widget's property.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="getindex">
+	<refnamediv>
+	  <refname>getindex</refname>
+	  <refpurpose>Fetches a reference to the N'th element in a
+	  given form/listbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>getindex</command>
+	    <arg choice="req"><replaceable>widget</replaceable></arg>
+	    <arg choice="req"><replaceable>index</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Fetches the N'th element in a form.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="setindex">
+	<refnamediv>
+	  <refname>setindex</refname>
+
+	  <refpurpose>
+	    Sets the
+	    <option><replaceable>index</replaceable></option>th
+	    element in a form/listbox to specified item</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>setindex</command>
+	    <arg choice="req"><replaceable>widget</replaceable></arg>
+	    <arg choice="req"><replaceable>index</replaceable></arg>
+	    <arg choice="req"><replaceable>newitem</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Sets the
+	    <option><replaceable>index</replaceable></option>'th item
+	    of a form/listbox to item
+	    <option><replaceable>newitem</replaceable></option>.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="setcurrent">
+	<refnamediv>
+	  <refname>setcurrent</refname>
+	  <refpurpose>Displays an alert/form/listbox/textbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>setcurrent</command>
+	    <arg choice="req">screen_widget</arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Screen widgets (alerts, forms, listboxes and textboxes),
+	    are not displayed when created.
+	    <command>setcurrent</command> displays them.  For example:
+	  </para>
+	  <programlisting>
+	    set f [form label "New Form"]
+	    setcurrent &amp;f
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="noscreen">
+	<refnamediv>
+	  <refname>noscreen</refname>
+	  <refpurpose>Runs without a current screen widget</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>noscreen</command>
+	    <arg choice="req">code</arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Normally, there is almost always a default screen widget
+	    present, so that when items are created, they are
+	    automatically added to the screen widget that is in
+	    effect.  The <command>noscreen</command> command executes
+	    the code passed to it without a default screen widget.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="screenappend">
+	<refnamediv>
+	  <refname>screenappend</refname>
+	  <refpurpose>Appends an item to a form or listbox</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>screenappend</command>
+	    <arg
+	    choice="req"><replaceable>screen_widget</replaceable></arg>
+	    <arg choice="req"><replaceable>widget</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Appends an
+	    <option><replaceable>widget</replaceable></option> to the
+	    form or listbox
+	    <option><replaceable>screen_widget</replaceable></option>.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="j2me_exit">
+	<refnamediv>
+	  <refname>exit</refname>
+	  <refpurpose>Exits the application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>exit</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Exits the application.
+	  </para>
+	</refsect1>
+      </refentry>
+
     </section>
 
     <section id="heclapps">
@@ -2462,6 +2970,13 @@ class HelloCmd implements Command {
 
 	</step>
       </procedure>
+
+      <para>
+	This leads to a very quick development cycle - if you leave
+	HeclBuilder open, all you have to do to update your .jar and
+	.jad files after you have edited your Hecl script, is to click
+	the <guibutton>Create .jar/.jad files</guibutton> button!
+      </para>
 
     </section>
 

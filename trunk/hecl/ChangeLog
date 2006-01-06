@@ -1,3 +1,10 @@
+2006-01-06  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added lcdui commands.
+
+	* j2me/examples/form.hcl: Added form example, with dynamically
+	created elements.
+
 2006-01-05  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/examples/textbox.hcl: Added textbox example
@@ -5,6 +12,8 @@
 	* j2me/examples/recordstore.hcl: Added recordstore example script.
 
 	* j2me/examples/listbox.hcl: Added listbox example script.
+
+	* j2me/examples/choicegroup.hcl: Added choicegroup example script.
 
 	* j2me/examples/gauge.hcl: Added gauge example script.
 

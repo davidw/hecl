@@ -1,26 +1,6 @@
 			      J2ME Hecl
 			      =========
 
-This code is an example J2ME application that is written in Hecl
-itself.  To build it, you need the Sun Java Wireless Toolkit:
-
-http://java.sun.com/products/sjwtoolkit/
-
-0) Change the <path id="j2mebootclasspath"> locations to those on your
-   system.
-
-1) From the top level directory, run 'ant packageJ2ME'.
-
-2) If you want to modify the Hecl code, it's in the 'script.hcl'
-   file.  Type 'make' again to recreate the .jar file.
-
-On Linux, I use gammu to upload the application to my phone:
-
-gammu nothing --nokiaaddfile Application Hecl
-
-You can use the emulator to test out your code if you have the sun
-java wireless toolkit:
-
-~/Desktop/WTK2.2/bin/emulator -classpath Hecl.jar Hecl
+The J2ME version of Hecl is documented in the Hecl documentation.
 
 $Id$
