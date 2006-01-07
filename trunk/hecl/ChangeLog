@@ -1,5 +1,10 @@
 2006-01-08  David N. Welton  <davidw@dedasys.com>
 
+	* j2me/GUICmds.java: ChoiceGroups and Listboxes now operate with a
+	list of indices for elements that are on or off.  For instance,
+	setprop &choicegroup {1 5} turns on elements 1 and 5 (if the
+	ChoiceGroup is not exclusive).
+
 	* float/org/hecl/BasicMathCmd.java: Added multiple arguments to
 	math commands.
 

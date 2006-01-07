@@ -15,6 +15,7 @@ limitations under the License.
 
 import javax.microedition.lcdui.*;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -640,8 +641,10 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 		int sz = c.size();
 		Vector v = ListThing.get(propval);
 		boolean []flags = new boolean[sz];
-		for (int i = 0; i < sz; i++) {
-		    flags[i] = (IntThing.get((Thing)v.elementAt(i)) == 1);
+		int i;
+		for (Enumeration e = v.elements(); e.hasMoreElements();) {
+		    i = IntThing.get((Thing)e.nextElement());
+		    flags[i] = true;
 		}
 		c.setSelectedFlags(flags);
 		break;
@@ -660,7 +663,9 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 		boolean []flags = new boolean[sz];
 		c.getSelectedFlags(flags);
 		for (int i = 0; i < sz; i++) {
-		    v.addElement(IntThing.create(flags[i]));
+		    if (flags[i] == true) {
+			v.addElement(IntThing.create(i));
+		    }
 		}
 		result = ListThing.create(v);
 		break;
