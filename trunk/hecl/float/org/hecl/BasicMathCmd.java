@@ -47,14 +47,35 @@ class BasicMathCmd implements Command {
 		}
                 break;
             case '-' :
-		res = dargv[0] - dargv[1];
+		res = dargv[0];
+		for (int i = 1; i < dargv.length; i ++) {
+		    res -= dargv[i];
+		}
                 break;
             case '*' :
-		res = dargv[0] * dargv[1];
+		res = 1;
+		for (int i = 0; i < dargv.length; i ++) {
+		    res *= dargv[i];
+		}
                 break;
             case '/' :
-		res = dargv[0] / dargv[1];
+		if(dargv.length < 3) {
+		    HeclException.createWrongNumArgsException(
+			argv, 3, "/ needs at least 2 arguments");
+		}
+		res = dargv[0];
+		for (int i = 1; i < dargv.length; i ++) {
+		    res /= dargv[i];
+		}
                 break;
+	    case '%':
+		if(dargv.length != 3) {
+		    HeclException.createWrongNumArgsException(
+			argv, 3, "% needs exactly 2 arguments");
+		}
+		res = dargv[0] % dargv[1];
+		break;
+
         }
 
 	/* If it's been promoted, return it as a double, otherwise

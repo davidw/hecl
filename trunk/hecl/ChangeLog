@@ -1,3 +1,13 @@
+2006-01-08  David N. Welton  <davidw@dedasys.com>
+
+	* float/org/hecl/BasicMathCmd.java: Added multiple arguments to
+	math commands.
+
+2006-01-07  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/BasicMathCmd.java: Added Wolfgang Kechel's changes
+	to allow more than two arguments to all math commands.
+
 2006-01-06  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added lcdui commands.

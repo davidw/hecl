@@ -98,7 +98,7 @@ public class Interp {
         commands.put("*", new BasicMathCmd());
         commands.put("/", new BasicMathCmd());
 
-        commands.put("/", new BasicMathCmd());
+        commands.put("%", new BasicMathCmd());
 
         commands.put("list", new ListCmd());
         commands.put("llen", new ListCmd());

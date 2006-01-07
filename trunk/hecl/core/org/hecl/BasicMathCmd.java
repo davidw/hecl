@@ -26,27 +26,43 @@ class BasicMathCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         char cmd = (argv[0].getStringRep()).charAt(0);
-	int res;
+	int res = 0;
         switch (cmd) {
             case '+' :
 		res = 0;
 		for (int i = 1; i < argv.length; i ++) {
 		    res += IntThing.get(argv[i]);
 		}
-		interp.setResult(IntThing.create(res));
                 break;
             case '-' :
-                interp.setResult(IntThing.create(IntThing.get(argv[1])
-                        - IntThing.get(argv[2])));
+		res = IntThing.get(argv[1]);
+		for (int i = 2; i < argv.length; i ++) {
+		    res -= IntThing.get(argv[i]);
+		}
                 break;
             case '*' :
-                interp.setResult(IntThing.create(IntThing.get(argv[1])
-                        * IntThing.get(argv[2])));
+		res = 1;
+		for (int i = 1; i < argv.length; i ++) {
+		    res *= IntThing.get(argv[i]);
+		}
                 break;
             case '/' :
-                interp.setResult(IntThing.create(IntThing.get(argv[1])
-                        / IntThing.get(argv[2])));
+		if(argv.length < 3) {
+		    HeclException.createWrongNumArgsException(
+			argv, 3, "/ needs at least 2 arguments");
+		}
+		res = IntThing.get(argv[1]);
+		for (int i = 2; i < argv.length; i ++) {
+		    res /= IntThing.get(argv[i]);
+		}
                 break;
+	    case '%':
+		if(argv.length != 3)
+		    HeclException.createWrongNumArgsException(
+			argv, 3, "% needs exactly 2 arguments");
+		res = IntThing.get(argv[1]) % IntThing.get(argv[2]);
+		break;
         }
+	interp.setResult(IntThing.create(res));
     }
 }
