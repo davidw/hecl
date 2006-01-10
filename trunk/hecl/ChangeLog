@@ -1,3 +1,8 @@
+2006-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Properties.java: Added two functions, delProp and
+	getProps for Wolfgang Kechel's new Hecl J2ME UI.
+
 2006-01-08  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/GUICmds.java: ChoiceGroups and Listboxes now operate with a

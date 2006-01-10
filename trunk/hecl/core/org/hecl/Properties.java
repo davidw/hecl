@@ -1,4 +1,4 @@
-/* Copyright 2005 David N. Welton
+/* Copyright 2005-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
 
 package org.hecl;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
-
 
 /**
  * The <code>Properties</code> class is used to parse command line
@@ -100,4 +100,34 @@ public class Properties {
 	return props.containsKey(name);
     }
 
+
+    /**
+     * <code>delProp</code> removes a property from the property set.
+     *
+     * @param name a <code>String</code> value
+     */
+    public void delProp(String name) {
+	props.remove(name);
+    }
+
+    /**
+     * <code>getProps</code> connverts the properties back into an array of
+     * <code>Thing</code>.
+     *
+     * @return Ab array of <code>Thing</code>s, being property name and
+     * property value.
+     */
+    public Thing[] getProps() {
+	int n = props.size();
+	Thing[] t = new Thing[2*n];
+
+	Enumeration names = props.keys();
+	Enumeration vals = props.elements();
+	int i = 0;
+	while(names.hasMoreElements()) {
+	    t[i++] = new Thing((String)names.nextElement());
+	    t[i++] = (Thing)vals.nextElement();
+	}
+	return t;
+    }
 }
