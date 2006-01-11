@@ -1,3 +1,23 @@
+2006-01-12  David N. Welton  <davidw@dedasys.com>
+
+	* float/org/hecl/BasicMathCmd.java: Throw the exceptions, adjusted
+	numbers of required arguments.
+
+	* core/org/hecl/ProcCmd.java: Throw an exception for the wrong
+	number of arguments.
+
+	* core/org/hecl/BasicMathCmd.java:
+	HeclException.createWrongNumArgsException needs to be thrown.
+
+2006-01-11  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl: Test to make sure the fix to Stanza.java below
+	works.
+
+	* core/org/hecl/Stanza.java: Fixed bug caught by Wolfgang Kechel.
+	If a stanza's argv[0] is something that gets substituted, it
+	shouldn't be saved, so we don't.
+
 2006-01-10  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Properties.java: Added two functions, delProp and

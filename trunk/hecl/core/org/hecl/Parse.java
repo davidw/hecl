@@ -292,7 +292,7 @@ public class Parse {
     }
 
     /**
-     * The <code>parseDollar</code> method parses a $foo
+     * The <code>parseDollar</code> method parses a $foo (or &foo)
      * variable. These can also be of the form ${foo} so that we can
      * separate them from any surrounding text.
      * 

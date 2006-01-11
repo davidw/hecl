@@ -18,3 +18,13 @@ test proc-3 {
     proc badcommand {a b} {}
     badcommand a
 } {{ERROR {proc badcommand doesn't have enough arguments}} badcommand}
+
+test proc-4 {
+    proc f1 {} {return hello}
+    proc f2 {} {return world}
+    proc f3 {f} {&f}
+    set res ""
+    append &res [f3 f1]
+    append &res [f3 f2]
+    set res
+} {helloworld}

@@ -150,9 +150,8 @@ public class HeclException extends Exception {
 
     public static HeclException createWrongNumArgsException(Thing argv[],
             int count, String message) throws HeclException {
-        int i;
         StringBuffer str = new StringBuffer();
-        for (i = 0; i < count; i++) {
+        for (int i = 0; i < count && i < argv.length; i++) {
             str.append(argv[i].getStringRep());
             str.append(" ");
         }

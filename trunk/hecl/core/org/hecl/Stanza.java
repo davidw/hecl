@@ -81,6 +81,7 @@ class Stanza {
      */
     public void run(Interp interp) throws HeclException {
 	RealThing realthing = null;
+	Command tmpcommand = null;
 
 	/* These are the three most common argv lengths. */
 	switch (argv.length) {
@@ -97,6 +98,10 @@ class Stanza {
 	    newargv = new Thing[argv.length];
 	}
 
+	/* If we have a CodeThing, GroupThing or SubstThing as
+	 * argv[0], we don't want to save 'command'. */
+	boolean saveit = false;
+
 	realthing = argv[0].val;
 	if (command == null) {
 	    String cmdName = null;
@@ -111,13 +116,19 @@ class Stanza {
 	    } else if (realthing instanceof SubstThing) {
 		cmdName = CodeThing.doSubstSubst(interp, argv[0]).getStringRep();
 	    } else {
+		saveit = true;
 		cmdName = argv[0].getStringRep();
 	    }
-	    command = (Command)interp.commands.get(cmdName);
-	    if (command == null) {
+
+	    //System.out.println("cmdname = " + cmdName);
+
+	    tmpcommand = (Command)interp.commands.get(cmdName);
+	    if (tmpcommand == null) {
 		throw new HeclException("Command " + cmdName
 					+ " does not exist");
 	    }
+	} else {
+	    tmpcommand = command;
 	}
 
 	/* DEBUG - before. */
@@ -160,7 +171,7 @@ class Stanza {
 
 	try {
 	    interp.result = new Thing("");
-	    command.cmdCode(interp, newargv);
+	    tmpcommand.cmdCode(interp, newargv);
 	} catch (HeclException e) {
 	    /* Uh oh, an "issue"! */
 	    if (newargv[0] != null) {
@@ -190,6 +201,10 @@ class Stanza {
 	    throw new HeclException(msg);
 	}
 
+	/* Go ahead and save the command. */
+	if (saveit) {
+	    command = tmpcommand;
+	}
     }
 
     /**

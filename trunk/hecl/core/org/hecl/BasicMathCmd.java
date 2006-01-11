@@ -48,8 +48,8 @@ class BasicMathCmd implements Command {
                 break;
             case '/' :
 		if(argv.length < 3) {
-		    HeclException.createWrongNumArgsException(
-			argv, 3, "/ needs at least 2 arguments");
+		    throw HeclException.createWrongNumArgsException(
+			argv, 1, "/ arg arg ?arg ...?");
 		}
 		res = IntThing.get(argv[1]);
 		for (int i = 2; i < argv.length; i ++) {
@@ -57,9 +57,10 @@ class BasicMathCmd implements Command {
 		}
                 break;
 	    case '%':
-		if(argv.length != 3)
-		    HeclException.createWrongNumArgsException(
-			argv, 3, "% needs exactly 2 arguments");
+		if(argv.length != 3) {
+		    throw HeclException.createWrongNumArgsException(
+			argv, 1, "% arg arg");
+		}
 		res = IntThing.get(argv[1]) % IntThing.get(argv[2]);
 		break;
         }

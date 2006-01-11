@@ -66,7 +66,7 @@ class Proc implements Command {
                     + " has too many arguments");
         }
 
-	//System.out.println("CODE >>>" + code + "<<<<");
+	//PrintThing.printThing(code);
 
         try {
             Eval.eval(interp, code);
