@@ -1,3 +1,11 @@
+2006-01-15  David N. Welton  <davidw@dedasys.com>
+
+	* tests/math.hcl: Added tests for the subtraction code in
+	BasicMathCmd.
+
+	* BasicMathCmd.java: (both versions) - added code from Wolfgang to
+	make the - command work with just one argument.
+
 2006-01-12  David N. Welton  <davidw@dedasys.com>
 
 	* float/org/hecl/BasicMathCmd.java: Throw the exceptions, adjusted

@@ -47,9 +47,13 @@ class BasicMathCmd implements Command {
 		}
                 break;
             case '-' :
-		res = dargv[0];
-		for (int i = 1; i < dargv.length; i ++) {
-		    res -= dargv[i];
+		if (dargv.length == 1) {
+		    res = -dargv[0];
+		} else {
+		    res = dargv[0];
+		    for (int i = 1; i < dargv.length; i ++) {
+			res -= dargv[i];
+		    }
 		}
                 break;
             case '*' :

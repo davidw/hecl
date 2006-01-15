@@ -34,3 +34,11 @@ test double-8 {
 test round-9 {
     round [/ 10 3]
 } {3}
+
+test subtract-1 {
+    - 10
+} {-10}
+
+test subtract-2 {
+    - 10 1 2
+} {7}
