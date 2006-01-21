@@ -36,7 +36,7 @@ class TimeCmd implements Command {
         }
         long now = new Date().getTime();
         while (times > 0) {
-            Eval.eval(interp, argv[1]);
+            interp.eval(argv[1]);
             times--;
         }
         long done = new Date().getTime();

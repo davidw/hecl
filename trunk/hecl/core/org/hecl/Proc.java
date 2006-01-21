@@ -69,7 +69,7 @@ class Proc implements Command {
 	//PrintThing.printThing(code);
 
         try {
-            Eval.eval(interp, code);
+            interp.eval(code);
         } catch (HeclException e) {
             /* Don't pop the stack here. */
             if (e.code != HeclException.RETURN) {

@@ -19,7 +19,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.hecl.Eval;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -166,7 +165,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	     * evaluate the code.  This doesn't mean it's displayed,
 	     * though. */
 	    screen = (Screen)f;
-	    Eval.eval(interp, properties.getProp("code"));
+	    interp.eval(properties.getProp("code"));
 	    res = ObjectThing.create(f);
 	} else if (cmdname.equals("alert")) {
 	    /* The Alert command. */
@@ -207,7 +206,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	    lb.setItemStateListener(this);
 	    setItemCallback(lb.cg);
 	    screen = (Screen)lb;
-	    Eval.eval(interp, properties.getProp("code"));
+	    interp.eval(properties.getProp("code"));
 	    res = ObjectThing.create(lb);
 	} else if (cmdname.equals("choicegroup")) {
 	    properties.setProp("type", new Thing("exclusive")); /* default */
@@ -246,7 +245,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 
 	    tb.setCommandListener(this);
 	    screen = (Screen)tb;
-	    Eval.eval(interp, properties.getProp("code"));
+	    interp.eval(properties.getProp("code"));
 	    res = ObjectThing.create(tb);
 	} else if (cmdname.equals("textfield")) {
 	    /* The 'textfield' command. */
@@ -374,7 +373,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	     * stuff like that. */
 	    Screen oldscreen = screen;
 	    screen = null;
-	    Eval.eval(interp, argv[1]);
+	    interp.eval(argv[1]);
 	    screen = oldscreen;
 	} else if (cmdname.equals("setcurrent")) {
 	    /* The 'setcurrent' command.  Set the current widget to be
@@ -755,7 +754,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
     public void run() {
 	try {
 	    synchronized (code) {
-		Eval.eval(interp, code);
+		interp.eval(code);
 	    }
 	} catch (Exception e) {
 	    System.err.println(e.toString());
@@ -785,7 +784,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	if (itemcallbacks.containsKey(item)) {
 	    Thing code = (Thing)itemcallbacks.get(item);
 	    try {
-		Eval.eval(interp, code);
+		interp.eval(code);
 	    } catch (Exception e) {
 		System.out.println(e.toString());
 	    }

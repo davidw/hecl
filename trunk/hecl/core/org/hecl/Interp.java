@@ -67,6 +67,22 @@ public class Interp {
 
         initInterp();
     }
+    /**
+     * The <code>eval</code> method evaluates some Hecl code passed to it.
+     * 
+     * @param interp
+     *            an <code>Interp</code>.
+     * @param in
+     *            a <code>Thing</code> value representing the text to
+     *            evaluate.
+     * @return a <code>Thing</code> value - the result of the evaluation.
+     * @exception HeclException
+     *                if an error occurs.
+     */
+    public Thing eval(Thing in) throws HeclException {
+	CodeThing.get(this, in).run(this);
+	return result;
+    }
 
     /**
      * The <code>initCommands</code> method initializes all the built in

@@ -25,6 +25,6 @@ package org.hecl;
 class EvalCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        interp.result = Eval.eval(interp, argv[1]);
+        interp.eval(argv[1]);
     }
 }

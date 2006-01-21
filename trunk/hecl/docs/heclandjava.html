@@ -37,7 +37,7 @@ import org.hecl.HeclException;
 	    HeclFile.sourceFile(interp, args[0]);
 	    /* Evaluate some code in a string.  */
 	    String helloworld = new String("puts {Hello, world!}");
-	    Eval.eval(interp, new Thing(helloworld));
+	    interp.eval(new Thing(helloworld));
 	} catch (Exception e) {
 	    System.err.println(e);
 	}
@@ -46,7 +46,7 @@ import org.hecl.HeclException;
 	instantiates the HeclFile system.  This isn't part of the Hecl
 	core, because some systems, like J2ME, may not have files.  If
 	you don't have files, you can still use
-	<code class="methodname">Eval.eval</code> to evaluate some code,
+	<code class="methodname">interp.eval</code> to evaluate some code,
 	which could come from whatever source you desire.
       </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2515957"></a>Creating new Hecl commands</h3></div></div></div><p>
 	Creating new Hecl commands is relatively simple.  The first

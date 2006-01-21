@@ -20,7 +20,6 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Form;
 import javax.microedition.midlet.MIDlet;
 
-import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
@@ -120,7 +119,7 @@ public class Hecl
 		/* interp.commands.put("mem", cmds); */
 		interp.commands.put("exit", cmds);
 
-		Eval.eval(interp, new Thing(script.toString()));
+		interp.eval(new Thing(script.toString()));
 		script = null;
 		f = null;
 	    } catch (Exception e) {

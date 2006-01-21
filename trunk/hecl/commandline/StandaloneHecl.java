@@ -13,7 +13,6 @@
  limitations under the License.
  */
 
-import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
@@ -37,7 +36,7 @@ public class StandaloneHecl {
 	    new HeclFile().loadModule(interp);
 	    new org.hecl.fp.HeclFloat().loadModule(interp);
 	    new HttpModule().loadModule(interp);
-            Eval.eval(interp, new Thing(script));
+            interp.eval(new Thing(script));
         } catch (Exception e) {
             e.printStackTrace();
         }

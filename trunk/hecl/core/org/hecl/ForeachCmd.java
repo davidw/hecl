@@ -68,7 +68,7 @@ class ForeachCmd implements Command {
             }
 
             try {
-                Eval.eval(interp, argv[3]);
+                interp.eval(argv[3]);
             } catch (HeclException e) {
                 if (e.code == HeclException.BREAK) {
                     break;

@@ -133,7 +133,7 @@ public class CodeThing implements RealThing {
         Thing newthing = null;
 
         if (((CodeThing) realthing).marksubst) {
-            Eval.eval(interp, thing);
+            interp.eval(thing);
             newthing = interp.result;
         } else {
             newthing = thing;

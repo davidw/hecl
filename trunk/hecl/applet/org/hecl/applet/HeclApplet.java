@@ -162,7 +162,7 @@ public class HeclApplet extends Applet implements ActionListener {
                     resultString = "";
                 }
                 t0 = new Date().getTime();
-		Eval.eval(interp, code);
+		interp.eval(code);
                 t1 = new Date().getTime();
             } catch (HeclException error) {
                 output.setForeground(Color.red);

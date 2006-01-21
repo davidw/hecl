@@ -25,11 +25,11 @@ class IfCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 
-        Eval.eval(interp, argv[1]);
+        interp.eval(argv[1]);
         Thing result = interp.result;
 
         if (Thing.isTrue(result)) {
-            Eval.eval(interp, argv[2]);
+            interp.eval(argv[2]);
             return;
         }
 
@@ -41,17 +41,17 @@ class IfCmd implements Command {
             for (int i = 3; i <= argv.length; i += 3) {
                 if (argv[i].getStringRep().equals("else")) {
                     /* It's an else block, evaluate it and return. */
-                    Eval.eval(interp, argv[i + 1]);
+                    interp.eval(argv[i + 1]);
                     return;
                 } else if (argv[i].getStringRep().equals("elseif")) {
                     /*
                      * elseif - check and see if the condition is true, if so
                      * evaluate it and return.
                      */
-                    Eval.eval(interp, argv[i + 1]);
+                    interp.eval(argv[i + 1]);
                     result = interp.result;
                     if (Thing.isTrue(result)) {
-                        Eval.eval(interp, argv[i + 2]);
+                        interp.eval(argv[i + 2]);
                         return;
                     }
                 }

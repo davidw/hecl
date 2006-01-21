@@ -27,9 +27,9 @@ class WhileCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 
-        while (Thing.isTrue(Eval.eval(interp, argv[1]))) {
+        while (Thing.isTrue(interp.eval(argv[1]))) {
             try {
-                Eval.eval(interp, argv[2]);
+                interp.eval(argv[2]);
             } catch (HeclException e) {
                 if (e.code == HeclException.BREAK) {
                     break;

@@ -30,13 +30,13 @@ class ForCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
 
         /* start */
-        Eval.eval(interp, argv[1]);
+        interp.eval(argv[1]);
 
         /* test */
-        while (Thing.isTrue(Eval.eval(interp, argv[2]))) {
+        while (Thing.isTrue(interp.eval(argv[2]))) {
             try {
                 /* body */
-                Eval.eval(interp, argv[4]);
+                interp.eval(argv[4]);
             } catch (HeclException e) {
                 if (e.code == HeclException.BREAK) {
                     break;
@@ -46,7 +46,7 @@ class ForCmd implements Command {
                 }
             }
             /* next */
-            Eval.eval(interp, argv[3]);
+            interp.eval(argv[3]);
         }
     }
 }

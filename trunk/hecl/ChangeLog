@@ -1,3 +1,15 @@
+2006-01-21  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java, commandline/Hecl.java,
+	commandline/StandaloneHecl.java, core/org/hecl/CatchCmd.java,
+	core/org/hecl/CodeThing.java, core/org/hecl/EvalCmd.java,
+	core/org/hecl/FilterCmd.java, core/org/hecl/ForCmd.java,
+	core/org/hecl/ForeachCmd.java, core/org/hecl/IfCmd.java,
+	core/org/hecl/Interp.java, core/org/hecl/Proc.java,
+	core/org/hecl/TimeCmd.java, core/org/hecl/UpCmd.java,
+	core/org/hecl/WhileCmd.java, files/org/hecl/files/HeclFile.java,
+	j2me/GUICmds.java: Use interp.eval instead of Eval.eval.
+
 2006-01-15  David N. Welton  <davidw@dedasys.com>
 
 	* tests/math.hcl: Added tests for the subtraction code in

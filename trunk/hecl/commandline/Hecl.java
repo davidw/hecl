@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import org.hecl.Compare;
-import org.hecl.Eval;
 import org.hecl.Interp;
 import org.hecl.Thing;
 import org.hecl.ListThing;
@@ -89,7 +88,7 @@ public class Hecl {
 		System.exit(0);
 	    }
 	    try {
-		Eval.eval(interp, new Thing(line));
+		interp.eval(new Thing(line));
 		if (interp.result != null &&
 		    Compare.compareString(interp.result, new Thing("")) != 0) {
 		    System.out.println(interp.result);

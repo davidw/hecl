@@ -25,7 +25,6 @@ import java.io.IOException;
 
 import java.util.Vector;
 
-import org.hecl.Eval;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Thing;
@@ -218,7 +217,7 @@ public class HeclFile implements org.hecl.modules.HeclModule {
 	File realfn = new File(filename).getAbsoluteFile();
 	currentFile = realfn.toString();
 
-        Eval.eval(interp, new Thing(readFile(filename)));
+        interp.eval(new Thing(readFile(filename)));
     }
 
     public void loadModule(Interp interp) throws HeclException {

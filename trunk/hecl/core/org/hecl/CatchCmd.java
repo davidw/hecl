@@ -28,7 +28,7 @@ class CatchCmd implements Command {
         Thing result;
         int retval;
         try {
-            Eval.eval(interp, argv[1]);
+            interp.eval(argv[1]);
             result = interp.result;
             retval = 0;
         } catch (HeclException e) {

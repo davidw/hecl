@@ -43,7 +43,7 @@ class FilterCmd implements Command {
 	    val.copy = true; /* Make sure that the original value
 			      * doesn't get fiddled with. */
             interp.setVar(varname, val);
-            Eval.eval(interp, argv[3]);
+            interp.eval(argv[3]);
 
             if (IntThing.get(interp.getResult()) != 0) {
                 results.addElement(val);
