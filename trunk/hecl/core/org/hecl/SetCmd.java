@@ -27,10 +27,15 @@ package org.hecl;
 class SetCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+	String cmdname = argv[0].getStringRep();
 
-        if (argv.length == 3) {
-            interp.setVar(argv[1], argv[2]);
-        }
-        interp.setResult(interp.getVar(argv[1]));
+        if (cmdname.equals("set")) {
+	    if (argv.length == 3) {
+		interp.setVar(argv[1], argv[2]);
+	    }
+	    interp.setResult(interp.getVar(argv[1]));
+	} else {
+	    interp.unSetVar(argv[1]);
+	}
     }
 }

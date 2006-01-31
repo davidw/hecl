@@ -95,6 +95,7 @@ public class Interp {
      */
     private void initInterp() throws HeclException {
         commands.put("set", new SetCmd());
+        commands.put("unset", new SetCmd());
 
         commands.put("puts", new PutsCmd());
 
@@ -321,6 +322,28 @@ public class Interp {
 	 }
 	lookup.put(varname, value);
     }
+
+
+    /**
+     * <code>unSetVar</code> unsets a variable in the current stack
+     * frame.
+     *
+     * @param varname
+     *            a <code>Thing</code> value
+     */
+    public void unSetVar(Thing varname) throws HeclException {
+        Hashtable lookup = getVarhash(-1);
+	String vn = varname.toString();
+	/* Bump the cache number so that SubstThing.get refetches the
+	 * variable. */
+        cacheversion++;
+	if (lookup.containsKey(vn)) {
+	    lookup.remove(vn);
+	} else {
+            throw new HeclException("Variable " + vn + " does not exist");
+	}
+    }
+
 
     /**
      * <code>existsVar</code> returns <code>true</code> if the given

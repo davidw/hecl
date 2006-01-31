@@ -1832,6 +1832,26 @@ if { true } {
     </refentry>
 
     <!-- upeval -->
+    <refentry id="unset">
+      <refnamediv>
+	<refname>unset</refname>
+	<refpurpose>Unset a variable.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>unset</command>
+	  <arg choice="req"><replaceable>varname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>unset</command> command unsets a variable.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <!-- upeval -->
     <refentry id="upeval">
       <refnamediv>
 	<refname>upeval</refname>

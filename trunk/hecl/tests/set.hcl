@@ -34,3 +34,9 @@ test set-4 {
     zealousref2
     zealousref2
 } {more a b c d}
+
+test unset-1 {
+    set a 1
+    unset a
+    set a
+} {{ERROR {Variable a does not exist}} set}
