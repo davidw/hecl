@@ -43,7 +43,7 @@ public class HeclRecordStoreCmd implements Command {
 	    Vector v = new Vector();
 	    String[] names = RecordStore.listRecordStores();
 	    if (names == null) {
-		interp.setResult(new Thing(""));
+		interp.setResult("");
 	    } else {
 		for (int i = 0; i < names.length; i++) {
 		    v.addElement(new Thing(names[i]));
@@ -59,7 +59,7 @@ public class HeclRecordStoreCmd implements Command {
 	    } catch (Exception e) {
 		throw new HeclException(e.toString());
 	    }
-	    interp.setResult(new Thing(new String(data)));
+	    interp.setResult(new String(data));
 	} else if (cmdname.equals("rs_put")) {
 	    byte[] data = argv[2].toString().getBytes();
 	    String name = argv[1].toString();
@@ -76,7 +76,7 @@ public class HeclRecordStoreCmd implements Command {
 	    } catch (Exception e) {
 		throw new HeclException(e.toString());
 	    }
-	    interp.setResult(IntThing.create(data.length));
+	    interp.setResult(data.length);
 	}
 	return;
     }

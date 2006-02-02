@@ -34,7 +34,7 @@ class FloatCmd implements Command {
 	double arg = DoubleThing.get(argv[1]);
 
 	if (cmd.equals("round")) {
-	    interp.setResult(IntThing.create((int)Math.rint(arg)));
+	    interp.setResult((int)Math.rint(arg));
 	}
     }
 }

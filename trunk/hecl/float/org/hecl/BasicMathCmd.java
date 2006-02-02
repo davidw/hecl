@@ -87,7 +87,7 @@ class BasicMathCmd implements Command {
 	if (res != Math.rint(res)) {
 	    interp.setResult(DoubleThing.create(res));
 	} else {
-	    interp.setResult(IntThing.create((int)res));
+	    interp.setResult((int)res);
 	}
     }
 }

@@ -27,7 +27,7 @@ class EqualsCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         char cmd = (argv[0].getStringRep()).charAt(0);
-	Thing result = null;
+	boolean result = false;
 	double l = 0;
 	double r = 0;
 
@@ -43,29 +43,23 @@ class EqualsCmd implements Command {
 
         switch (cmd) {
             case '=' :
-                result = IntThing.create(
-		    l == r ? 1 : 0);
+                result = l == r;
                 break;
             case '>' :
-                result = IntThing.create(
-		    l > r);
+                result = l > r;
                 break;
             case '<' :
-                result = IntThing.create(
-		    l < r);
+                result = l < r;
                 break;
             case 'e' :
-		result = IntThing.create(
-		    Compare.compareString(argv[1], argv[2]) == 0 ? 1 : 0);
+		result = Compare.compareString(argv[1], argv[2]) == 0;
 		break;
      	    case '!':
-		result = IntThing.create(
-		    l == r ? 0 : 1);
+		result = l == r;
                  break;
      	    case 'n':
-                 result = IntThing.create(
-		     Compare.compareString(argv[1], argv[2]) == 0 ? 0 : 1);
-                 break;
+		result = Compare.compareString(argv[1], argv[2]) == 0;
+		break;
 
         }
 	interp.setResult(result);

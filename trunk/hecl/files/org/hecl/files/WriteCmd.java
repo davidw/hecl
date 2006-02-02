@@ -41,7 +41,7 @@ class WriteCmd implements Command {
 	    String fn = argv[1].toString();
 	    String data = argv[2].toString();
 	    HeclFile.writeFile(fn, data);
-	    interp.setResult(IntThing.create(data.length()));
+	    interp.setResult(data.length());
 	}
     }
 }

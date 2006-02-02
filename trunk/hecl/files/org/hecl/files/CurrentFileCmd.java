@@ -29,6 +29,6 @@ import org.hecl.*;
 class CurrentFileCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	interp.setResult(new Thing(HeclFile.currentFile));
+	interp.setResult(HeclFile.currentFile);
     }
 }

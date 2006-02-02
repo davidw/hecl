@@ -34,7 +34,7 @@ class InfoCmd implements Command {
 	if (cmd.equals("filesize")) {
 	    File fl = new File(argv[1].toString()).getAbsoluteFile();
 	    int len = (int)fl.length();
-	    interp.setResult(IntThing.create(len));
+	    interp.setResult(len);
 	}
     }
 }
