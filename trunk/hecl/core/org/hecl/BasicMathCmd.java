@@ -68,6 +68,6 @@ class BasicMathCmd implements Command {
 		res = IntThing.get(argv[1]) % IntThing.get(argv[2]);
 		break;
         }
-	interp.setResult(IntThing.create(res));
+	interp.setResult(res);
     }
 }

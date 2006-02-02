@@ -199,7 +199,7 @@ public class CodeThing implements RealThing {
                 }
             }
         }
-        return new Thing(new StringThing(result));
+        return new Thing(result.toString());
     }
 
     /**

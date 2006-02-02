@@ -46,6 +46,6 @@ class LogicCmd implements Command {
 		res |= IntThing.get(argv[i]);
 	    }
 	}
-	interp.setResult(IntThing.create(res));
+	interp.setResult(res);
     }
 }

@@ -29,16 +29,16 @@ class StringCmd implements Command {
         String str = argv[1].getStringRep();
 
         if (cmd.equals("slen")) {
-            interp.setResult(IntThing.create(str.length()));
+            interp.setResult(str.length());
             return;
         } else if (cmd.equals("sindex")) {
             int idx = IntThing.get(argv[2]);
             try {
                 char chars[] = new char[1];
                 chars[0] = str.charAt(idx);
-                interp.setResult(new Thing(new String(chars)));
+                interp.setResult(new String(chars));
             } catch (StringIndexOutOfBoundsException e) {
-                interp.setResult(new Thing(""));
+                interp.setResult("");
             }
             return;
         }

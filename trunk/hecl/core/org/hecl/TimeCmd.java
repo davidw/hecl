@@ -41,6 +41,6 @@ class TimeCmd implements Command {
         }
         long done = new Date().getTime();
 
-        interp.setResult(IntThing.create((int) (done - now)));
+        interp.setResult((int) (done - now));
     }
 }

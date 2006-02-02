@@ -49,7 +49,7 @@ class JoinSplitCmd implements Command {
                 }
                 result.append(((Thing) e.nextElement()).getStringRep());
             }
-            interp.setResult(new Thing(new StringThing(result)));
+            interp.setResult(result.toString());
         } else if (cmdname.equals("split")) {
             Vector result = new Vector();
             String str = argv[1].getStringRep();

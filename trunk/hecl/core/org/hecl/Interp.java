@@ -402,12 +402,42 @@ public class Interp {
     /**
      * <code>setResult</code> sets the interpreter result of the most recent
      * command.
-     * 
+     *
      * @param newresult
      *            a <code>Thing</code> value
      */
     public void setResult(Thing newresult) {
         result = newresult;
+    }
+
+    /**
+     * <code>setResult</code> sets the interpreter result of the most recent
+     * command.
+     *
+     * @param newresult a <code>String</code> value
+     */
+    public void setResult(String newresult) {
+	result = new Thing(newresult);
+    }
+
+    /**
+     * <code>setResult</code> sets the interpreter result of the most recent
+     * command.
+     *
+     * @param newresult an <code>int</code> value
+     */
+    public void setResult(int newresult) {
+	result = IntThing.create(newresult);
+    }
+
+    /**
+     * <code>setResult</code> sets the interpreter result of the most recent
+     * command.
+     *
+     * @param newresult a <code>boolean</code> value
+     */
+    public void setResult(boolean newresult) {
+	result = IntThing.create(newresult ? 1 : 0);
     }
 
     /**

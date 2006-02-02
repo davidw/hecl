@@ -38,12 +38,12 @@ class ListCmd implements Command {
             interp.setResult(ListThing.create(result));
         } else if (cmdname.equals("llen")) {
             Vector list = ListThing.get(argv[1]);
-            interp.setResult(IntThing.create(list.size()));
+            interp.setResult(list.size());
         } else if (cmdname.equals("lindex")) {
             Vector list = ListThing.get(argv[1]);
             int idx = IntThing.get(argv[2]);
             if (idx >= list.size()) {
-                interp.setResult(new Thing(""));
+                interp.setResult("");
             } else {
                 /* Count backwards from the end of the list. */
                 if (idx < 0) {
@@ -92,7 +92,7 @@ class ListCmd implements Command {
 	    }
 
 	    if (last <= first || last >= ls || first >= ls) {
-                interp.setResult(new Thing(""));
+                interp.setResult("");
 	    }
 	    Vector resultv = new Vector();
             for (int i = first; i <= last; i++) {

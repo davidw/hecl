@@ -41,6 +41,6 @@ class CatchCmd implements Command {
             interp.setVar(argv[2].toString(), result);
         }
 
-        interp.setResult(IntThing.create(retval));
+        interp.setResult(retval);
     }
 }
