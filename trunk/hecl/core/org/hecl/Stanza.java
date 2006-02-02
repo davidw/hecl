@@ -105,6 +105,7 @@ class Stanza {
 	realthing = argv[0].val;
 	if (command == null) {
 	    String cmdName = null;
+
 	    /*
 	     * If the argv[0] is a substitution waiting to happen,
 	     * substitute it to get the name.

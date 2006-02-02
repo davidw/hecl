@@ -26,11 +26,17 @@ package org.hecl;
 class ProcCmd implements Command {
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	if (argv.length != 4) {
-	    throw HeclException.createWrongNumArgsException(
-		argv, 1, "procname argumentnames code");
-	}
+	String cmdname = argv[0].toString();
 
-        interp.commands.put(argv[1].getStringRep(), new Proc(argv[2], argv[3]));
+        if (cmdname.equals("proc")) {
+	    if (argv.length != 4) {
+		throw HeclException.createWrongNumArgsException(
+		    argv, 1, "procname argumentnames code");
+	    }
+
+	    interp.commands.put(argv[1].toString(), new Proc(argv[2], argv[3]));
+	} else if(cmdname.equals("rename")) {
+	    interp.cmdRename(argv[1].toString(), argv[2].toString());
+	}
     }
 }

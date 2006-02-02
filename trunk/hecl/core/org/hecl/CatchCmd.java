@@ -27,6 +27,7 @@ class CatchCmd implements Command {
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Thing result;
         int retval;
+
         try {
             interp.eval(argv[1]);
             result = interp.result;
@@ -37,7 +38,7 @@ class CatchCmd implements Command {
         }
 
         if (argv.length == 3) {
-            interp.setVar(argv[2].getStringRep(), result);
+            interp.setVar(argv[2].toString(), result);
         }
 
         interp.setResult(IntThing.create(retval));

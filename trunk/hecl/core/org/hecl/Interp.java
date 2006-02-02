@@ -17,7 +17,6 @@ package org.hecl;
 
 import java.util.Hashtable;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * <code>Interp</code> is the Hecl interpreter, the class responsible for
@@ -45,10 +44,6 @@ public class Interp {
     public Thing result;
 
     Stack error;
-
-    Vector getters = new Vector();
-
-    String currentfile = null;
 
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
@@ -132,6 +127,7 @@ public class Interp {
         commands.put("join", new JoinSplitCmd());
 
         commands.put("proc", new ProcCmd());
+        commands.put("rename", new ProcCmd());
 
         commands.put("foreach", new ForeachCmd());
         commands.put("filter", new FilterCmd());
@@ -172,6 +168,22 @@ public class Interp {
         commands.put("time", new TimeCmd());
 
         commands.put("exit", new ExitCmd());
+    }
+
+    /**
+     * The <code>cmdRename</code> method renames a command, or throws
+     * an error if the original command didn't exist.
+     *
+     * @param oldname a <code>String</code> value
+     * @param newname a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
+    public void cmdRename(String oldname, String newname) throws HeclException {
+	Command tmp = (Command)commands.get(oldname);
+	if (tmp == null) {
+            throw new HeclException("Command " + oldname + " does not exist");
+	}
+	commands.put(newname, tmp);
     }
 
     /**
@@ -319,7 +331,7 @@ public class Interp {
 		 oldval.makeref(value);
 		 return;
 	     }
-	 }
+	}
 	lookup.put(varname, value);
     }
 

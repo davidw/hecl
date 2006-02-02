@@ -1,3 +1,18 @@
+2006-02-02  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Removed some unneeded variables,
+	thanks to Wolfgang for catching this.
+
+	* core/org/hecl/CodeThing.java: addStanza now adds a stanza with a
+	null command so as not to prematurely assign a command.  This was
+	causing problems in highly dynamic code.
+
+2006-02-01  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ProcCmd.java: Added "rename" command.
+
+	* core/org/hecl/Interp.java: Added method to rename commands.
+
 2006-01-31  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added unset snippet in the docs.

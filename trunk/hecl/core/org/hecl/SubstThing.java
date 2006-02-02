@@ -92,6 +92,7 @@ public class SubstThing implements RealThing {
         if (getcopy.cacheversion != interp.cacheversion) {
             getcopy.cacheversion = interp.cacheversion;
             getcopy.val = interp.getVar(getcopy.varName);
+
         } /* else {
 	    System.out.println("CACHE HIT");
 	}  */

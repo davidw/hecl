@@ -26,7 +26,6 @@ import java.util.*;
 
 class Proc implements Command {
     private Thing vars;
-
     private Thing code;
 
     /**
@@ -56,8 +55,8 @@ class Proc implements Command {
                 throw new HeclException("proc " + argv[0]
                         + " doesn't have enough arguments");
             }
-            interp.setVar(((Thing) varnames.elementAt(i)).getStringRep(),
-                    argv[i + 1]);
+            interp.setVar(((Thing) varnames.elementAt(i)).toString(),
+			  argv[i + 1]);
         }
 
         if (i != argv.length - 1) {
@@ -65,8 +64,6 @@ class Proc implements Command {
             throw new HeclException("proc " + argv[0]
                     + " has too many arguments");
         }
-
-	//PrintThing.printThing(code);
 
         try {
             interp.eval(code);

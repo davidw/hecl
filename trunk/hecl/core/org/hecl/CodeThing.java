@@ -70,7 +70,7 @@ public class CodeThing implements RealThing {
 	    }
 	    newthing.addStanza(interp, argv);
 	} else {
-            Parse hp = new Parse(interp, thing.getStringRep());
+	    Parse hp = new Parse(interp, thing.toString());
             newthing = hp.parseToCode();
         }
 	thing.setVal(newthing);
@@ -211,9 +211,7 @@ public class CodeThing implements RealThing {
      *            <code>Thing[]</code> value
      */
     public void addStanza(Interp interp, Thing []argv) {
-	stanzas.addElement(
-	    new Stanza((Command)interp.commands.get(argv[0].toString()),
-		       argv));
+	stanzas.addElement(new Stanza(null, argv));
     }
 
     /**

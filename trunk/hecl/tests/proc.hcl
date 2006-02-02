@@ -28,3 +28,11 @@ test proc-4 {
     append &res [f3 f2]
     set res
 } {helloworld}
+
+test rename-1 {
+    proc f1 {} {return fred}
+    set r [f1]
+    rename f1 newcmd
+    append &r [newcmd]
+    set r
+} {fredfred}
