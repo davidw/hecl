@@ -1,3 +1,8 @@
+2006-02-04  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Added auxdata Hashtable to attach
+	random data to an Interp.
+
 2006-02-02  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: added setResult methods for boolean,

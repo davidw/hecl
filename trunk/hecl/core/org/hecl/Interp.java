@@ -33,9 +33,23 @@ public class Interp {
 
     public long cacheversion = 0;
 
-    /* Save some space by making this public and removing the
-     * accessors. */
+    /**
+     * The <code>commands</code> <code>Hashtable</code> provides the
+     * mapping from the strings containing command names to the code
+     * implementing the commands.
+     *
+     * We save some space by making this public and removing the
+     * accessors.
+     *
+     */
     public Hashtable commands;
+
+    /**
+     * The <code>auxdata</code> <code>Hashtable</code> is a place to
+     * store extra information about the state of the program.
+     *
+     */
+    public Hashtable auxdata;
 
     Stack stack;
 
@@ -54,6 +68,7 @@ public class Interp {
      */
     public Interp() throws HeclException {
         commands = new Hashtable();
+	auxdata = new Hashtable();
         stack = new Stack();
         error = new Stack();
 
