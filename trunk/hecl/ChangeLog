@@ -1,3 +1,11 @@
+2006-02-16  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Hacky 'touch' makes sure that j2se files are always
+	compiled for j2se version of Hecl.
+
+	* core/org/hecl/Stanza.java: Removed some extraneous code when
+	catching exceptions.
+
 2006-02-04  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Added auxdata Hashtable to attach

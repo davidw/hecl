@@ -363,8 +363,8 @@ public class Interp {
 	String vn = varname.toString();
 	/* Bump the cache number so that SubstThing.get refetches the
 	 * variable. */
-        cacheversion++;
 	if (lookup.containsKey(vn)) {
+	    cacheversion++;
 	    lookup.remove(vn);
 	} else {
             throw new HeclException("Variable " + vn + " does not exist");

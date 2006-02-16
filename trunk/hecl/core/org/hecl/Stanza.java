@@ -177,16 +177,9 @@ class Stanza {
 	    /* Uh oh, an "issue"! */
 	    if (newargv[0] != null) {
 		/* Let the exception know where we are. */
-		e.where(newargv[0].getStringRep());
+		e.where(newargv[0].toString());
 	    }
-	    switch (e.code) {
-	    case HeclException.BREAK :
-	    case HeclException.CONTINUE :
-	    case HeclException.RETURN :
-	    case HeclException.ERROR :
-		/* Automatically fall through. */
-		throw e;
-	    }
+	    throw e;
 	} catch (Exception e) {
 	    String msg;
 	    /*

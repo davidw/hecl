@@ -101,6 +101,11 @@
   <target name="compileFloat" depends="compileCore"
   description="Compile floating point enabled code">
     <mkdir dir="build/float" />
+    <touch>
+      <fileset dir="float/org/hecl/">
+	<include name="*.java"/>
+      </fileset>
+    </touch>
     <javac srcdir="float" destdir="build/float">
       <classpath refid="modulesclasspath"/>
       <classpath refid="buildclasspath"/>
@@ -209,7 +214,7 @@
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
   <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttpStandard,compileFloat">
-    <jar destfile="Hecl.jar" basedir="build/core" update="true"/>
+    <jar destfile="Hecl.jar" basedir="build/core" update="true" />
     <jar destfile="Hecl.jar" basedir="build/files" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/load" update="true"/>
     <jar destfile="Hecl.jar" basedir="build/modules" update="true"/>
