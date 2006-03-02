@@ -104,85 +104,96 @@ public class Interp {
      *                if an error occurs
      */
     private void initInterp() throws HeclException {
-        commands.put("set", new SetCmd());
-        commands.put("unset", new SetCmd());
+	/* Do not use the 'Facade' style commands as an example if you
+	 * just have to add a simple command or two.  The pattern
+	 * works best when you need to add several commands with
+	 * related functionality. */
 
-        commands.put("puts", new PutsCmd());
+	/* Commands that manipulate interp data structures -
+	 * variables, procs, commands, and so forth.  */
+        commands.put("set", new InterpCmdFacade(InterpCmds.SET));
+        commands.put("unset", new InterpCmdFacade(InterpCmds.UNSET));
 
-        commands.put("=", new EqualsCmd());
-        commands.put("eq", new EqualsCmd());
-        commands.put(">", new EqualsCmd());
-        commands.put("<", new EqualsCmd());
-	commands.put("!=", new EqualsCmd());
-	commands.put("ne", new EqualsCmd());
+        commands.put("proc", new InterpCmdFacade(InterpCmds.PROC));
+        commands.put("rename", new InterpCmdFacade(InterpCmds.RENAME));
 
-        commands.put("if", new IfCmd());
+        commands.put("eval", new InterpCmdFacade(InterpCmds.EVAL));
+        commands.put("global", new InterpCmdFacade(InterpCmds.GLOBAL));
 
-        commands.put("while", new WhileCmd());
+        commands.put("intro", new InterpCmdFacade(InterpCmds.INTROSPECT));
 
-        commands.put("+", new BasicMathCmd());
-        commands.put("-", new BasicMathCmd());
-        commands.put("*", new BasicMathCmd());
-        commands.put("/", new BasicMathCmd());
+        commands.put("return", new InterpCmdFacade(InterpCmds.RETURN));
 
-        commands.put("%", new BasicMathCmd());
 
-        commands.put("list", new ListCmd());
-        commands.put("llen", new ListCmd());
-        commands.put("lappend", new ListCmd());
-        commands.put("lindex", new ListCmd());
-        commands.put("lset", new ListCmd());
-        commands.put("lrange", new ListCmd());
+	/* Math and logic commands. */
+        commands.put("=", new MathCmdFacade(MathCmds.EQ));
+        commands.put("eq", new MathCmdFacade(MathCmds.STREQ));
+        commands.put(">", new MathCmdFacade(MathCmds.GT));
+        commands.put("<", new MathCmdFacade(MathCmds.LT));
+	commands.put("!=", new MathCmdFacade(MathCmds.NE));
+	commands.put("ne", new MathCmdFacade(MathCmds.STRNE));
 
-        commands.put("and", new LogicCmd());
-        commands.put("not", new LogicCmd());
-        commands.put("or", new LogicCmd());
+        commands.put("+", new MathCmdFacade(MathCmds.ADD));
+        commands.put("-", new MathCmdFacade(MathCmds.SUB));
+        commands.put("*", new MathCmdFacade(MathCmds.MUL));
+        commands.put("/", new MathCmdFacade(MathCmds.DIV));
+        commands.put("%", new MathCmdFacade(MathCmds.MOD));
 
-        commands.put("split", new JoinSplitCmd());
-        commands.put("join", new JoinSplitCmd());
+        commands.put("and", new MathCmdFacade(MathCmds.AND));
+        commands.put("not", new MathCmdFacade(MathCmds.NOT));
+        commands.put("or", new MathCmdFacade(MathCmds.OR));
 
-        commands.put("proc", new ProcCmd());
-        commands.put("rename", new ProcCmd());
+        commands.put("incr", new MathCmdFacade(MathCmds.INCR));
 
-        commands.put("foreach", new ForeachCmd());
-        commands.put("filter", new FilterCmd());
-        commands.put("search", new FilterCmd());
+        commands.put("true", new MathCmdFacade(MathCmds.TRUE));
 
-        commands.put("break", new BreakCmd());
-        commands.put("continue", new BreakCmd());
+	/* List related commands. */
+        commands.put("list", new ListCmdFacade(ListCmds.LIST));
+        commands.put("llen", new ListCmdFacade(ListCmds.LLEN));
+        commands.put("lappend", new ListCmdFacade(ListCmds.LAPPEND));
+        commands.put("lindex", new ListCmdFacade(ListCmds.LINDEX));
+        commands.put("lset", new ListCmdFacade(ListCmds.LSET));
+        commands.put("lrange", new ListCmdFacade(ListCmds.LRANGE));
 
-        commands.put("true", new TrueCmd());
+        commands.put("filter", new ListCmdFacade(ListCmds.FILTER));
+        commands.put("search", new ListCmdFacade(ListCmds.SEARCH));
+
+        commands.put("join", new ListCmdFacade(ListCmds.JOIN));
+        commands.put("split", new ListCmdFacade(ListCmds.SPLIT));
+
+	/* Control commands. */
+        commands.put("if", new ControlCmdFacade(ControlCmds.IF));
+        commands.put("for", new ControlCmdFacade(ControlCmds.WHILE));
+        commands.put("foreach", new ControlCmdFacade(ControlCmds.FOREACH));
+        commands.put("while", new ControlCmdFacade(ControlCmds.WHILE));
+
+        commands.put("break", new ControlCmdFacade(ControlCmds.BREAK));
+        commands.put("continue", new ControlCmdFacade(ControlCmds.CONTINUE));
+
+
+	/* String commands. */
+        commands.put("append", new StringCmdFacade(StringCmds.APPEND));
+        commands.put("slen", new StringCmdFacade(StringCmds.SLEN));
+        commands.put("sindex", new StringCmdFacade(StringCmds.SINDEX));
+
+
+	/* Hash table commands. */
+        commands.put("hash", new HashCmdFacade(HashCmds.HASH));
+        commands.put("hget", new HashCmdFacade(HashCmds.HGET));
+        commands.put("hset", new HashCmdFacade(HashCmds.HSET));
+
 
         commands.put("catch", new CatchCmd());
 
-        commands.put("intro", new IntrospectCmd());
+        commands.put("exit", new ExitCmd());
 
-        commands.put("upeval", new UpCmd());
+        commands.put("puts", new PutsCmd());
 
         commands.put("sort", new SortCmd());
 
-        commands.put("append", new AppendCmd());
-
-        commands.put("slen", new StringCmd());
-        commands.put("sindex", new StringCmd());
-
-        commands.put("hash", new HashCmd());
-        commands.put("hget", new HashCmd());
-        commands.put("hset", new HashCmd());
-
-        commands.put("eval", new EvalCmd());
-
-        commands.put("global", new GlobalCmd());
-
-        commands.put("return", new ReturnCmd());
-
-        commands.put("incr", new IncrCmd());
-
-        commands.put("for", new ForCmd());
-
         commands.put("time", new TimeCmd());
 
-        commands.put("exit", new ExitCmd());
+        commands.put("upeval", new UpCmd());
     }
 
     /**

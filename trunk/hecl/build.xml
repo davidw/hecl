@@ -80,6 +80,7 @@
   <target name="cleanJ2ME" description="Clean J2ME classes">
     <delete dir="j2me/classes"/>
     <delete file="j2me/Hecl.jar"/>
+    <delete dir="j2me/preverified"/>
   </target>
 
 

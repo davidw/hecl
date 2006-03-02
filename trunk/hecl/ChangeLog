@@ -1,3 +1,19 @@
+2006-03-03  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Use new Facade style command groups
+	where appropriate.
+
+	* ControlCmdFacade.java, InterpCmdFacade.java, MathCmdFacade.java,
+	HashCmdFacade.java, ListCmdFacade.java, StringCmdFacade.java: Add
+	new 'facade' style commands.
+
+	* ControlCmds.java, InterpCmds.java, MathCmds.java, HashCmds.java,
+	ListCmds.java, StringCmds.java: Added new command collections.
+
+2006-03-01  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Delete preverified directory during J2ME clean.
+
 2006-02-16  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Hacky 'touch' makes sure that j2se files are always

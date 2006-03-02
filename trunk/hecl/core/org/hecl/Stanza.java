@@ -100,6 +100,9 @@ class Stanza {
 
 	/* If we have a CodeThing, GroupThing or SubstThing as
 	 * argv[0], we don't want to save 'command'. */
+
+	/* FIXME - this could get all messed up by renaming
+	 * commands. */
 	boolean saveit = false;
 
 	realthing = argv[0].val;
