@@ -29,13 +29,13 @@ import org.hecl.Thing;
 
 
 /**
- * <code>GUICmds</code> implements the high level lcdui commands.
+ * <code>GUI</code> implements the high level lcdui commands.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 
-class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateListener {
+class GUI implements CommandListener, Runnable, ItemStateListener {
     public Display display;
     public Interp interp;
     public Hecl midlet;
@@ -52,6 +52,28 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
     private static int uniqueid = 0;
 
     private static Screen screen;
+
+    /* Command types  */
+    public static final int ALERTCMD = 0;
+    public static final int CHOICEGROUPCMD = 1;
+    public static final int CMDCMD = 2;
+    public static final int DATEFIELDCMD = 3;
+    public static final int FORMCMD = 4;
+    public static final int GAUGECMD = 5;
+    public static final int LISTBOXCMD = 6;
+    public static final int STRINGCMD = 7;
+    public static final int STRINGITEMCMD = 8;
+    public static final int TEXTBOXCMD = 9;
+    public static final int TEXTFIELDCMD = 10;
+
+    public static final int GETPROPCMD = 11;
+    public static final int SETPROPCMD = 12;
+    public static final int GETINDEXCMD = 13;
+    public static final int SETINDEXCMD = 14;
+    public static final int SETCURRENTCMD = 15;
+    public static final int NOSCREENCMD = 16;
+    public static final int SCREENAPPENDCMD = 17;
+    public static final int EXITCMD = 18;
 
     /* Commands are run in a new thread so that if they block, they
      * don't block the whole system. */
@@ -126,268 +148,297 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
 	return choices;
     }
 
-
-    /**
-     * The <code>cmdCode</code> method implements the commands
-     * themselves.
-     *
-     * @param interp an <code>Interp</code> value
-     * @param argv a <code>Thing[]</code> value
-     * @exception HeclException if an error occurs
-     */
-    public void cmdCode(Interp interp, Thing[] argv)
+    public void dispatch(int cmd, Thing[] argv)
 	throws HeclException {
 
-        String cmdname = argv[0].getStringRep();
 	properties = new Properties();
 
 	/* Each widget has a unique id. */
 	uniqueid ++;
 
 	/* Set the standard widget label. */
-	stdLabel(cmdname);
+	stdLabel(argv[0].toString());
 
 	Thing res = new Thing("");
-	if (cmdname.equals("form")) {
-	    /* The 'form' command.  Creates a form and evaluates its code. */
+	String []choices;
+	Object widget;
+	int idx;
 
-	    /* In this and other commands, we first set up default
-	     * properties in the hash table, so that they are not
-	     * empty when the widget is created. */
-	    properties.setProp("code", new Thing("")); /* default  */
+	switch (cmd) {
 
-	    /* Then we set the properties passed to us on the command line. */
-	    properties.setProps(argv, 1);
-	    Form f = new Form((properties.getProp("label")).toString());
-	    f.setCommandListener(this);
-	    f.setItemStateListener(this);
-	    /* We make sure that this screen is the default when we
-	     * evaluate the code.  This doesn't mean it's displayed,
-	     * though. */
-	    screen = (Screen)f;
-	    interp.eval(properties.getProp("code"));
-	    res = ObjectThing.create(f);
-	} else if (cmdname.equals("alert")) {
-	    /* The Alert command. */
-	    properties.setProp("text", new Thing("")); /* default */
-	    properties.setProp("type", new Thing("info")); /* default */
+	    case FORMCMD:
+		/* The 'form' command.  Creates a form and evaluates its code. */
 
-	    properties.setProps(argv, 1);
-	    Alert a = new Alert(properties.getProp("label").toString(),
-				properties.getProp("text").toString(),
-				null,
-				getAlertType(properties.getProp("type").toString()));
-	    screen = (Screen)a;
+		/* In this and other commands, we first set up default
+		 * properties in the hash table, so that they are not
+		 * empty when the widget is created. */
+		properties.setProp("code", new Thing("")); /* default  */
 
-	    if (properties.existsProp("time")) {
-		int tm = IntThing.get(properties.getProp("time"));
-		if (tm < 0) {
-		    tm = Alert.FOREVER;
+		/* Then we set the properties passed to us on the command line. */
+		properties.setProps(argv, 1);
+		Form f = new Form((properties.getProp("label")).toString());
+		f.setCommandListener(this);
+		f.setItemStateListener(this);
+		/* We make sure that this screen is the default when we
+		 * evaluate the code.  This doesn't mean it's displayed,
+		 * though. */
+		screen = (Screen)f;
+		interp.eval(properties.getProp("code"));
+		res = ObjectThing.create(f);
+		break;
+
+	    case ALERTCMD:
+		/* The Alert command. */
+		properties.setProp("text", new Thing("")); /* default */
+		properties.setProp("type", new Thing("info")); /* default */
+
+		properties.setProps(argv, 1);
+		Alert a = new Alert(properties.getProp("label").toString(),
+				    properties.getProp("text").toString(),
+				    null,
+				    getAlertType(properties.getProp("type").toString()));
+		screen = (Screen)a;
+
+		if (properties.existsProp("time")) {
+		    int tm = IntThing.get(properties.getProp("time"));
+		    if (tm < 0) {
+			tm = Alert.FOREVER;
+		    }
+		    a.setTimeout(tm);
 		}
-		a.setTimeout(tm);
-	    }
 
-	    res = ObjectThing.create(a);
-	} else if (cmdname.equals("listbox")) {
-	    /* These are actually called 'Lists', but that name is
-	     * already taken in Hecl.  */
-	    properties.setProp("type", new Thing("exclusive")); /* default */
-	    properties.setProp("code", new Thing("")); /* default  */
-	    properties.setProp("list", new Thing("")); /* default */
+		res = ObjectThing.create(a);
+		break;
 
-	    properties.setProps(argv, 1);
+	    case LISTBOXCMD:
+		/* These are actually called 'Lists', but that name is
+		 * already taken in Hecl.  */
+		properties.setProp("type", new Thing("exclusive")); /* default */
+		properties.setProp("code", new Thing("")); /* default  */
+		properties.setProp("list", new Thing("")); /* default */
 
-	    String []choices = choicesFromList();
+		properties.setProps(argv, 1);
 
-	    int type = getChoiceType((properties.getProp("type")).toString());
-	    ListBox lb = new ListBox((properties.getProp("label")).toString(),
-				     type, choices);
-	    lb.setCommandListener(this);
-	    lb.setItemStateListener(this);
-	    setItemCallback(lb.cg);
-	    screen = (Screen)lb;
-	    interp.eval(properties.getProp("code"));
-	    res = ObjectThing.create(lb);
-	} else if (cmdname.equals("choicegroup")) {
-	    properties.setProp("type", new Thing("exclusive")); /* default */
-	    properties.setProp("list", new Thing("")); /* default */
-	    properties.setProps(argv, 1);
+		choices = choicesFromList();
 
-	    /* This is redundant with the code for listbox above. */
-	    String []choices = choicesFromList();
+		int type = getChoiceType((properties.getProp("type")).toString());
+		ListBox lb = new ListBox((properties.getProp("label")).toString(),
+					 type, choices);
+		lb.setCommandListener(this);
+		lb.setItemStateListener(this);
+		setItemCallback(lb.cg);
+		screen = (Screen)lb;
+		interp.eval(properties.getProp("code"));
+		res = ObjectThing.create(lb);
+		break;
 
-	    ChoiceGroup cg = new ChoiceGroup(
-		properties.getProp("label").toString(),
-		getChoiceType((properties.getProp("type")).toString()),
-		choices, null);
+	    case CHOICEGROUPCMD:
+		properties.setProp("type", new Thing("exclusive")); /* default */
+		properties.setProp("list", new Thing("")); /* default */
+		properties.setProps(argv, 1);
 
-	    setItemCallback(cg);
-	    if (screen != null) {
-		((Form)screen).append(cg);
-	    }
-	    res = ObjectThing.create(cg);
-	} else if (cmdname.equals("textbox")) {
-	    /* The 'textbox' command.  Creates a textbox and evaluates its code. */
-	    properties.setProp("len", IntThing.create(400)); /* default  */
-	    properties.setProp("text", new Thing("")); /* default  */
-	    properties.setProp("code", new Thing("")); /* default  */
-	    properties.setProp("type", new Thing("any")); /* default  */
-	    properties.setProps(argv, 1);
-	    TextBox tb;
-	    try {
-		tb = new TextBox((properties.getProp("label")).toString(),
-				 (properties.getProp("text")).toString(),
-				 IntThing.get(properties.getProp("len")),
-				 getTextType((properties.getProp("type")).toString()));
-	    } catch (IllegalArgumentException e) {
-		throw new HeclException("textbox can't hold a string that big");
-	    }
+		/* This is redundant with the code for listbox above. */
+		choices = choicesFromList();
 
-	    tb.setCommandListener(this);
-	    screen = (Screen)tb;
-	    interp.eval(properties.getProp("code"));
-	    res = ObjectThing.create(tb);
-	} else if (cmdname.equals("textfield")) {
-	    /* The 'textfield' command. */
-	    properties.setProp("text", new Thing("")); /* default  */
-	    properties.setProp("len", IntThing.create(50)); /* default  */
-	    properties.setProp("type", new Thing("any")); /* default  */
-	    properties.setProps(argv, 1);
+		ChoiceGroup cg = new ChoiceGroup(
+		    properties.getProp("label").toString(),
+		    getChoiceType((properties.getProp("type")).toString()),
+		    choices, null);
 
-	    TextField tf =
-		new TextField((properties.getProp("label")).toString(),
-			      (properties.getProp("text")).toString(),
-			      IntThing.get(properties.getProp("len")),
-			      getTextType((properties.getProp("type")).toString()));
-
-	    setItemCallback(tf);
-	    if (screen != null) {
-		((Form)screen).append(tf);
-	    }
-	    res = ObjectThing.create(tf);
-	} else if (cmdname.equals("gauge")) {
-	    properties.setProp("maxval", IntThing.create(10)); /* default  */
-	    properties.setProp("val", IntThing.create(0)); /* default  */
-	    properties.setProp("interactive", IntThing.create(1)); /* default  */
-	    properties.setProps(argv, 1);
-
-	    Gauge g = new Gauge((properties.getProp("label")).toString(),
-				IntThing.get(properties.getProp("interactive")) == 1,
-				IntThing.get(properties.getProp("maxval")),
-				IntThing.get(properties.getProp("val")));
-
-	    setItemCallback(g);
-	    if (screen != null) {
-		((Form)screen).append(g);
-	    }
-	    res = ObjectThing.create(g);
-	} else if (cmdname.equals("datefield")) {
-	    /* The datefield command. */
-	    properties.setProp("type", new Thing("date_time"));
-
-	    DateField df = new DateField(
-		(properties.getProp("label")).toString(),
-		getDateFieldType((properties.getProp("type")).toString()));
-
-	    setItemCallback(df);
-	    if (screen != null) {
-		((Form)screen).append(df);
-	    }
-	    res = ObjectThing.create(df);
-	} else if (cmdname.equals("stringitem")) {
-	    /* The 'stringitem' command. Differs from a plain string
-	     * in that it can be modified, and it has both a label and
-	     * text. */
-	    properties.setProp("text", new Thing("")); /* default  */
-	    properties.setProps(argv, 1);
-	    StringItem si = new StringItem((properties.getProp("label")).toString(),
-					   (properties.getProp("text")).toString());
-	    if (screen != null) {
-		((Form)screen).append(si);
-	    }
-	    res = ObjectThing.create(si);
-	} else if (cmdname.equals("string")) {
-	    /* The 'string' command. Plain old string to append to a
-	     * form. */
-	    String s = argv[1].toString();
-	    if (screen != null) {
-		if (screen instanceof Form) {
-		    ((Form)screen).append(s);
-		} else if (screen instanceof List) {
-		    ((List)screen).append(s, null);
+		setItemCallback(cg);
+		if (screen != null) {
+		    ((Form)screen).append(cg);
 		}
-	    }
-	    res = ObjectThing.create(s);
-	} else if (cmdname.equals("cmd")) {
-	    /* The 'cmd' command.  Adds a command to the current
-	     * screen (form, textbox and the like). */
-	    properties.setProp("code", new Thing(""));
-	    properties.setProp("type", new Thing("screen"));
-	    properties.setProps(argv, 1);
-	    String label = (properties.getProp("label")).toString();
-	    Command c = new Command(
-		label, getCmdType((properties.getProp("type")).toString()), 0);
-	    if (screen != null) {
-		screen.addCommand(c);
-	    }
-	    callbacks.put(label, properties.getProp("code"));
-	    res = ObjectThing.create(c);
-	} else if (cmdname.equals("getprop")) {
-	    /* The 'getprop' command. Get a particular property of a
-	     * widget. */
-	    res = widgetGetSet(interp, argv[1], argv[2].toString(), null, GETPROP);
-	} else if (cmdname.equals("setprop")) {
-	    /* The 'setprop' command. Set a particular property of a
-	     * widget. */
-	    res = widgetGetSet(interp, argv[1], argv[2].toString(), argv[3], SETPROP);
-	} else if (cmdname.equals("setindex")) {
-	    Object widget = ObjectThing.get(argv[1]);
-	    int idx = IntThing.get(argv[2]);
-	    if (widget instanceof Form) {
-		((Form)widget).set(idx, (Item)ObjectThing.get(argv[3]));
-	    } else if (widget instanceof Choice) {
-		((Choice)widget).set(idx, argv[3].toString(), null);
-	    }
-	} else if (cmdname.equals("getindex")) {
-	    Object widget = ObjectThing.get(argv[1]);
-	    int idx = IntThing.get(argv[2]);
-	    if (widget instanceof Form) {
-		res = ObjectThing.create(((Form)widget).get(idx));
-	    } else if (widget instanceof Choice) {
-		res = new Thing(((Choice)widget).getString(idx));
-	    }
-	} else if (cmdname.equals("screenappend")) {
-	    Object widget = ObjectThing.get(argv[1]);
-	    Object item = ObjectThing.get(argv[2]);
-	    if (widget instanceof Form) {
-		if (item instanceof String) {
-		    ((Form)widget).append(item.toString());
-		} else {
-		    ((Form)widget).append((Item)item);
+		res = ObjectThing.create(cg);
+		break;
+
+	    case TEXTBOXCMD:
+		/* The 'textbox' command.  Creates a textbox and evaluates its code. */
+		properties.setProp("len", IntThing.create(400)); /* default  */
+		properties.setProp("text", new Thing("")); /* default  */
+		properties.setProp("code", new Thing("")); /* default  */
+		properties.setProp("type", new Thing("any")); /* default  */
+		properties.setProps(argv, 1);
+		TextBox tb;
+		try {
+		    tb = new TextBox((properties.getProp("label")).toString(),
+				     (properties.getProp("text")).toString(),
+				     IntThing.get(properties.getProp("len")),
+				     getTextType((properties.getProp("type")).toString()));
+		} catch (IllegalArgumentException e) {
+		    throw new HeclException("textbox can't hold a string that big");
 		}
-	    } else if (widget instanceof Choice) {
-		((Choice)widget).append(item.toString(), null);
-	    }
-	} else if (cmdname.equals("noscreen")) {
-	    /* Run without a screen so that we can set indexes and
-	     * stuff like that. */
-	    Screen oldscreen = screen;
-	    screen = null;
-	    interp.eval(argv[1]);
-	    screen = oldscreen;
-	} else if (cmdname.equals("setcurrent")) {
-	    /* The 'setcurrent' command.  Set the current widget to be
-	     * the displayed widget.  Used with form, textbox and the
-	     * like. */
-	    Displayable widget = (Displayable)ObjectThing.get(argv[1]);
-	    display.setCurrent(widget);
-	    screen = (Screen)widget;
-	} /* else if (cmdname.equals("mem")) {
-	    Runtime r = Runtime.getRuntime();
-	    ((Form)screen).append(r.freeMemory() + " " + r.totalMemory());
-	}  */
-	else if (cmdname.equals("exit")) {
-	    midlet.exitApp();
+
+		tb.setCommandListener(this);
+		screen = (Screen)tb;
+		interp.eval(properties.getProp("code"));
+		res = ObjectThing.create(tb);
+		break;
+
+	    case TEXTFIELDCMD:
+		/* The 'textfield' command. */
+		properties.setProp("text", new Thing("")); /* default  */
+		properties.setProp("len", IntThing.create(50)); /* default  */
+		properties.setProp("type", new Thing("any")); /* default  */
+		properties.setProps(argv, 1);
+
+		TextField tf =
+		    new TextField((properties.getProp("label")).toString(),
+				  (properties.getProp("text")).toString(),
+				  IntThing.get(properties.getProp("len")),
+				  getTextType((properties.getProp("type")).toString()));
+
+		setItemCallback(tf);
+		if (screen != null) {
+		    ((Form)screen).append(tf);
+		}
+		res = ObjectThing.create(tf);
+		break;
+
+	    case GAUGECMD:
+		properties.setProp("maxval", IntThing.create(10)); /* default  */
+		properties.setProp("val", IntThing.create(0)); /* default  */
+		properties.setProp("interactive", IntThing.create(1)); /* default  */
+		properties.setProps(argv, 1);
+
+		Gauge g = new Gauge((properties.getProp("label")).toString(),
+				    IntThing.get(properties.getProp("interactive")) == 1,
+				    IntThing.get(properties.getProp("maxval")),
+				    IntThing.get(properties.getProp("val")));
+
+		setItemCallback(g);
+		if (screen != null) {
+		    ((Form)screen).append(g);
+		}
+		res = ObjectThing.create(g);
+		break;
+
+	    case DATEFIELDCMD:
+		/* The datefield command. */
+		properties.setProp("type", new Thing("date_time"));
+
+		DateField df = new DateField(
+		    (properties.getProp("label")).toString(),
+		    getDateFieldType((properties.getProp("type")).toString()));
+
+		setItemCallback(df);
+		if (screen != null) {
+		    ((Form)screen).append(df);
+		}
+		res = ObjectThing.create(df);
+		break;
+
+	    case STRINGITEMCMD:
+		/* The 'stringitem' command. Differs from a plain string
+		 * in that it can be modified, and it has both a label and
+		 * text. */
+		properties.setProp("text", new Thing("")); /* default  */
+		properties.setProps(argv, 1);
+		StringItem si = new StringItem((properties.getProp("label")).toString(),
+					       (properties.getProp("text")).toString());
+		if (screen != null) {
+		    ((Form)screen).append(si);
+		}
+		res = ObjectThing.create(si);
+		break;
+
+	    case STRINGCMD:
+		/* The 'string' command. Plain old string to append to a
+		 * form. */
+		String s = argv[1].toString();
+		if (screen != null) {
+		    if (screen instanceof Form) {
+			((Form)screen).append(s);
+		    } else if (screen instanceof List) {
+			((List)screen).append(s, null);
+		    }
+		}
+		res = ObjectThing.create(s);
+		break;
+
+	    case CMDCMD:
+		/* The 'cmd' command.  Adds a command to the current
+		 * screen (form, textbox and the like). */
+		properties.setProp("code", new Thing(""));
+		properties.setProp("type", new Thing("screen"));
+		properties.setProps(argv, 1);
+		String label = (properties.getProp("label")).toString();
+		Command c = new Command(
+		    label, getCmdType((properties.getProp("type")).toString()), 0);
+		if (screen != null) {
+		    screen.addCommand(c);
+		}
+		callbacks.put(label, properties.getProp("code"));
+		res = ObjectThing.create(c);
+		break;
+
+	    case GETPROPCMD:
+		/* The 'getprop' command. Get a particular property of a
+		 * widget. */
+		res = widgetGetSet(interp, argv[1], argv[2].toString(), null, GETPROP);
+		break;
+
+	    case SETPROPCMD:
+		/* The 'setprop' command. Set a particular property of a
+		 * widget. */
+		res = widgetGetSet(interp, argv[1], argv[2].toString(), argv[3], SETPROP);
+		break;
+
+	    case SETINDEXCMD:
+		widget = ObjectThing.get(argv[1]);
+		idx = IntThing.get(argv[2]);
+		if (widget instanceof Form) {
+		    ((Form)widget).set(idx, (Item)ObjectThing.get(argv[3]));
+		} else if (widget instanceof Choice) {
+		    ((Choice)widget).set(idx, argv[3].toString(), null);
+		}
+		break;
+
+	    case GETINDEXCMD:
+		widget = ObjectThing.get(argv[1]);
+		idx = IntThing.get(argv[2]);
+		if (widget instanceof Form) {
+		    res = ObjectThing.create(((Form)widget).get(idx));
+		} else if (widget instanceof Choice) {
+		    res = new Thing(((Choice)widget).getString(idx));
+		}
+		break;
+
+	    case SCREENAPPENDCMD:
+		widget = ObjectThing.get(argv[1]);
+		Object item = ObjectThing.get(argv[2]);
+		if (widget instanceof Form) {
+		    if (item instanceof String) {
+			((Form)widget).append(item.toString());
+		    } else {
+			((Form)widget).append((Item)item);
+		    }
+		} else if (widget instanceof Choice) {
+		    ((Choice)widget).append(item.toString(), null);
+		}
+		break;
+
+	    case NOSCREENCMD:
+		/* Run without a screen so that we can set indexes and
+		 * stuff like that. */
+		Screen oldscreen = screen;
+		screen = null;
+		interp.eval(argv[1]);
+		screen = oldscreen;
+		break;
+
+	    case SETCURRENTCMD:
+		/* The 'setcurrent' command.  Set the current widget to be
+		 * the displayed widget.  Used with form, textbox and the
+		 * like. */
+		Displayable disp = (Displayable)ObjectThing.get(argv[1]);
+		display.setCurrent(disp);
+		screen = (Screen)disp;
+		break;
+
+	    case EXITCMD:
+		midlet.exitApp();
+		break;
 	}
 	interp.setResult(res);
 
@@ -588,7 +639,7 @@ class GUICmds implements org.hecl.Command, CommandListener, Runnable, ItemStateL
      * @exception HeclException if an error occurs
      */
     private Thing widgetGetSet(Interp interp, Thing widgetthing, String propname,
-			      Thing propval, int getset)
+			       Thing propval, int getset)
 	throws HeclException {
 
 //	Object widget = widgets.get(widgetid);

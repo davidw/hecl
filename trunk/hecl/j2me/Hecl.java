@@ -1,16 +1,16 @@
 /* Copyright 2004-2006 David N. Welton
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-   	http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 */
 
 import java.io.DataInputStream;
@@ -91,32 +91,51 @@ public class Hecl extends MIDlet {
 		new HttpModule().loadModule(interp);
 		new RMSModule().loadModule(interp);
 
-		GUICmds cmds = new GUICmds();
+		GUI cmds = new GUI();
 		cmds.display = display;
 		cmds.interp = interp;
 		cmds.midlet = this;
 
-		interp.commands.put("alert", cmds);
-		interp.commands.put("choicegroup", cmds);
-		interp.commands.put("cmd", cmds);
-		interp.commands.put("datefield", cmds);
-		interp.commands.put("form", cmds);
-		interp.commands.put("gauge", cmds);
-		interp.commands.put("listbox", cmds);
-		interp.commands.put("string", cmds);
-		interp.commands.put("stringitem", cmds);
-		interp.commands.put("textbox", cmds);
-		interp.commands.put("textfield", cmds);
+		interp.commands.put("alert",
+				    new GUICmdFacade(GUI.ALERTCMD, cmds));
+		interp.commands.put("choicegroup",
+				    new GUICmdFacade(GUI.CHOICEGROUPCMD, cmds));
+		interp.commands.put("cmd",
+				    new GUICmdFacade(GUI.CMDCMD, cmds));
+		interp.commands.put("datefield",
+				    new GUICmdFacade(GUI.DATEFIELDCMD, cmds));
+		interp.commands.put("form",
+				    new GUICmdFacade(GUI.FORMCMD, cmds));
+		interp.commands.put("gauge",
+				    new GUICmdFacade(GUI.GAUGECMD, cmds));
+		interp.commands.put("listbox",
+				    new GUICmdFacade(GUI.LISTBOXCMD, cmds));
+		interp.commands.put("string",
+				    new GUICmdFacade(GUI.STRINGCMD, cmds));
+		interp.commands.put("stringitem",
+				    new GUICmdFacade(GUI.STRINGITEMCMD, cmds));
+		interp.commands.put("textbox",
+				    new GUICmdFacade(GUI.TEXTBOXCMD, cmds));
+		interp.commands.put("textfield",
+				    new GUICmdFacade(GUI.TEXTFIELDCMD, cmds));
 
-		interp.commands.put("getprop", cmds);
-		interp.commands.put("setprop", cmds);
-		interp.commands.put("getindex", cmds);
-		interp.commands.put("setindex", cmds);
-		interp.commands.put("setcurrent", cmds);
-		interp.commands.put("noscreen", cmds);
-		interp.commands.put("screenappend", cmds);
+		interp.commands.put("getprop",
+				    new GUICmdFacade(GUI.GETPROPCMD, cmds));
+		interp.commands.put("setprop",
+				    new GUICmdFacade(GUI.SETPROPCMD, cmds));
+		interp.commands.put("getindex",
+				    new GUICmdFacade(GUI.GETINDEXCMD, cmds));
+		interp.commands.put("setindex",
+				    new GUICmdFacade(GUI.SETINDEXCMD, cmds));
+		interp.commands.put("setcurrent",
+				    new GUICmdFacade(GUI.SETCURRENTCMD, cmds));
+		interp.commands.put("noscreen",
+				    new GUICmdFacade(GUI.NOSCREENCMD, cmds));
+		interp.commands.put("screenappend",
+				    new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
 		/* interp.commands.put("mem", cmds); */
-		interp.commands.put("exit", cmds);
+		interp.commands.put("exit",
+				    new GUICmdFacade(GUI.EXITCMD, cmds));
 
 		interp.eval(new Thing(script.toString()));
 		script = null;
