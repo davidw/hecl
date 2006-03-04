@@ -1,5 +1,8 @@
 2006-03-04  David N. Welton  <davidw@dedasys.com>
 
+	* float/org/hecl/fp/FloatCmds.java: Brought the floating point
+	commands up to date with a Facade command interface.
+
 	* j2me/GUI.java: Use Facade style commands.  Renamed GUICmds to
 	GUI.
 

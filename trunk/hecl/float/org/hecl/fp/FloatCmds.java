@@ -1,4 +1,4 @@
-/* Copyright 2004-2006 David N. Welton
+/* Copyright 2005 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -13,40 +13,53 @@
  limitations under the License.
  */
 
-package org.hecl;
+package org.hecl.fp;
+
+import org.hecl.DoubleThing;
+import org.hecl.HeclException;
+import org.hecl.Interp;
+import org.hecl.Thing;
+
 
 /**
- * <code>BasicMathCmd</code> implements the basic math commands, +, -, *, and /.
+ * <code>FloatCmds</code> implements a variety of commands for the
+ * floating point system.
  * 
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
 
-class BasicMathCmd implements Command {
+class FloatCmds {
 
-    /**
-     * The <code>cmdCode</code> method implements the basic math
-     * commands present in Hecl, +, -, * and / - this is the floating
-     * point version.
-     *
-     * @param interp an <code>Interp</code> value
-     * @param argv a <code>Thing[]</code> value
-     * @exception HeclException if an error occurs
-     */
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-        char cmd = (argv[0].getStringRep()).charAt(0);
+    public static final int ADD = 1;
+    public static final int SUB = 2;
+    public static final int MUL = 3;
+    public static final int DIV = 4;
+    public static final int MOD = 5;
+
+    public static final int EQ =  9;
+    public static final int NE =  10;
+    public static final int GT =  11;
+    public static final int LT =  12;
+
+    public static final int ROUND = 13;
+
+
+    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	double res = 0;
 	double[] dargv = new double[argv.length - 1];
 
 	DoubleThing.argPromotion(argv, dargv);
-        switch (cmd) {
-            case '+' :
+
+	switch (cmd) {
+
+            case ADD:
 		res = 0;
 		for (int i = 0; i < dargv.length; i ++) {
 		    res += dargv[i];
 		}
                 break;
-            case '-' :
+            case SUB:
 		if (dargv.length == 1) {
 		    res = -dargv[0];
 		} else {
@@ -56,13 +69,14 @@ class BasicMathCmd implements Command {
 		    }
 		}
                 break;
-            case '*' :
+            case MUL:
 		res = 1;
 		for (int i = 0; i < dargv.length; i ++) {
 		    res *= dargv[i];
 		}
                 break;
-            case '/' :
+
+            case DIV:
 		if(dargv.length < 2) {
 		    throw HeclException.createWrongNumArgsException(
 			argv, 3, "/ arg arg ?args ...?");
@@ -72,7 +86,8 @@ class BasicMathCmd implements Command {
 		    res /= dargv[i];
 		}
                 break;
-	    case '%':
+
+	    case MOD:
 		if(dargv.length != 2) {
 		    throw HeclException.createWrongNumArgsException(
 			argv, 3, "% needs exactly 2 arguments");
@@ -80,7 +95,38 @@ class BasicMathCmd implements Command {
 		res = dargv[0] % dargv[1];
 		break;
 
-        }
+
+	    case EQ:
+	    case GT:
+	    case NE:
+	    case LT:
+		boolean result = false;
+		double l = 0;
+		double r = 0;
+		l = DoubleThing.promote(argv[1]);
+		r = DoubleThing.promote(argv[2]);
+		switch (cmd) {
+		    case EQ:
+			result = l == r;
+			break;
+		    case GT:
+			result = l > r;
+			break;
+		    case LT:
+			result = l < r;
+			break;
+		    case NE:
+			result = l != r;
+			break;
+		}
+		interp.setResult(result);
+		return;
+
+	    case ROUND:
+		interp.setResult((int)Math.rint(DoubleThing.get(argv[1])));
+		return;
+
+	}
 
 	/* If it's been promoted, return it as a double, otherwise
 	 * turn it back into an integer. */

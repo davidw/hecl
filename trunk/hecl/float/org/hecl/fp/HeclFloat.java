@@ -27,9 +27,28 @@ import org.hecl.*;
 public class HeclFloat implements org.hecl.modules.HeclModule {
 
     public void loadModule(Interp interp) throws HeclException {
-        interp.commands.put("round", new FloatCmd());
+        interp.commands.put("round", new FloatCmdFacade(FloatCmds.ROUND));
+
+        interp.commands.put("=", new FloatCmdFacade(FloatCmds.EQ));
+        interp.commands.put(">", new FloatCmdFacade(FloatCmds.GT));
+        interp.commands.put("<", new FloatCmdFacade(FloatCmds.LT));
+	interp.commands.put("!=", new FloatCmdFacade(FloatCmds.NE));
+
+        interp.commands.put("+", new FloatCmdFacade(FloatCmds.ADD));
+        interp.commands.put("-", new FloatCmdFacade(FloatCmds.SUB));
+        interp.commands.put("*", new FloatCmdFacade(FloatCmds.MUL));
+        interp.commands.put("/", new FloatCmdFacade(FloatCmds.DIV));
+        interp.commands.put("%", new FloatCmdFacade(FloatCmds.MOD));
     }
 
+    /**
+     * The <code>unloadModule</code> method gets rid of commands
+     * specific to the floating point module.  *However*, we don't get
+     * rid of the basic math commands, because those aren't 'extras'.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
     public void unloadModule(Interp interp) throws HeclException {
         interp.commands.remove("round");
     }

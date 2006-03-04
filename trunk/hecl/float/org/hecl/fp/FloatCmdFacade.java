@@ -13,23 +13,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package org.hecl;
+package org.hecl.fp;
+
+import org.hecl.Command;
+import org.hecl.HeclException;
+import org.hecl.Interp;
+import org.hecl.Thing;
 
 /**
- * <code>MathCmdFacade</code> provides the interface to the commands
- * in MathCmds.
+ * <code>FloatCmdFacade</code> provides the interface to the commands
+ * in FloatCmds
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-class MathCmdFacade implements Command {
+class FloatCmdFacade implements Command {
     private int cmdtype;
 
-    public MathCmdFacade(int cmd) {
+    public FloatCmdFacade(int cmd) {
 	cmdtype = cmd;
     }
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	MathCmds.dispatch(cmdtype, interp, argv);
+	FloatCmds.dispatch(cmdtype, interp, argv);
     }
 }
