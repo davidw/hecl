@@ -1,3 +1,13 @@
+2006-03-04  David N. Welton  <davidw@dedasys.com>
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Redid RecordStore
+	using Facade commands.
+
+	* files/org/hecl/files/HeclFile.java: Reworked the files subsystem
+	to use the new Facade style command groups.  Space savings isn't
+	really important here, because it's likely to be used on J2SE
+	systems, but I went ahead and did it anyway.
+
 2006-03-03  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Use new Facade style command groups

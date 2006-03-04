@@ -18,6 +18,13 @@ package org.hecl;
 import java.util.Enumeration;
 import java.util.Vector;
 
+/**
+ * <code>ControlCmds</code> implements 'control' constructs like if,
+ * while, for, foreach, and so on.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 class ControlCmds {
 
     public static final int IF = 1;
@@ -30,6 +37,8 @@ class ControlCmds {
 
     static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
+
+	    /* The 'if' command. */
 	    case IF:
 		interp.eval(argv[1]);
 		Thing result = interp.result;
@@ -65,6 +74,7 @@ class ControlCmds {
 		}
 		return;
 
+		/* The 'for' command. */
 	    case FOR:
 		/* start */
 		interp.eval(argv[1]);
@@ -87,6 +97,7 @@ class ControlCmds {
 		}
 		return;
 
+		/* The 'foreach' command. */
 	    case FOREACH:
 		Vector list = ListThing.get(argv[2]);
 		if (list.size() == 0) {
@@ -136,6 +147,7 @@ class ControlCmds {
 		}
 		return;
 
+		/* The 'while' command. */
 	    case WHILE:
 		while (Thing.isTrue(interp.eval(argv[1]))) {
 		    try {
@@ -151,9 +163,11 @@ class ControlCmds {
 		}
 		return;
 
+		/* The 'break' command. */
 	    case BREAK:
 		throw new HeclException(HeclException.BREAK);
 
+		/* The 'continue' command. */
 	    case CONTINUE:
 		throw new HeclException(HeclException.CONTINUE);
 	}

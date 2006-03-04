@@ -30,10 +30,12 @@ import org.hecl.modules.HeclModule;
 public class RMSModule implements HeclModule {
 
     public void loadModule(Interp interp) throws HeclException {
-	HeclRecordStoreCmd hrs = new HeclRecordStoreCmd();
-        interp.commands.put("rs_list", hrs);
-        interp.commands.put("rs_get", hrs);
-        interp.commands.put("rs_put", hrs);
+        interp.commands.put("rs_list",
+			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_LIST));
+        interp.commands.put("rs_get",
+			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_GET));
+        interp.commands.put("rs_put",
+			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_PUT));
     }
 
     public void unloadModule(Interp interp) throws HeclException {

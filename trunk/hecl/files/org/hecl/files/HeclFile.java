@@ -221,15 +221,14 @@ public class HeclFile implements org.hecl.modules.HeclModule {
     }
 
     public void loadModule(Interp interp) throws HeclException {
-	PathCmd pc = new PathCmd();
-        interp.commands.put("cd", new ChangeDirCmd());
-        interp.commands.put("currentfile", new CurrentFileCmd());
-        interp.commands.put("filesize", new InfoCmd());
-        interp.commands.put("filetolist", pc);
-        interp.commands.put("listtofile", pc);
-        interp.commands.put("readall", new ReadCmd());
-        interp.commands.put("write", new WriteCmd());
-        interp.commands.put("source", new SourceCmd());
+        interp.commands.put("cd", new FileCmdFacade(FileCmds.CD));
+        interp.commands.put("currentfile", new FileCmdFacade(FileCmds.CURRENTFILE));
+        interp.commands.put("filesize", new FileCmdFacade(FileCmds.FILESIZE));
+        interp.commands.put("filetolist", new FileCmdFacade(FileCmds.FILETOLIST));
+        interp.commands.put("listtofile", new FileCmdFacade(FileCmds.LISTTOFILE));
+        interp.commands.put("readall", new FileCmdFacade(FileCmds.READALL));
+        interp.commands.put("write", new FileCmdFacade(FileCmds.WRITE));
+        interp.commands.put("source", new FileCmdFacade(FileCmds.SOURCE));
     }
 
     public void unloadModule(Interp interp) throws HeclException {

@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -28,15 +28,14 @@ import org.hecl.rms.*;
 
 
 /**
- * <code>Hecl</code> is a small app to demonstrate the use of Hecl in
- * a j2me app.  The GUI is now written entirely in Hecl itself!
+ * <code>Hecl</code> is the entry point into the main version of the
+ * J2ME code.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 
-public class Hecl
-    extends MIDlet {
+public class Hecl extends MIDlet {
 
     private static Display display;
 

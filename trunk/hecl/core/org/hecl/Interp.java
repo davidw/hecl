@@ -163,7 +163,7 @@ public class Interp {
 
 	/* Control commands. */
         commands.put("if", new ControlCmdFacade(ControlCmds.IF));
-        commands.put("for", new ControlCmdFacade(ControlCmds.WHILE));
+        commands.put("for", new ControlCmdFacade(ControlCmds.FOR));
         commands.put("foreach", new ControlCmdFacade(ControlCmds.FOREACH));
         commands.put("while", new ControlCmdFacade(ControlCmds.WHILE));
 
