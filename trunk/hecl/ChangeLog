@@ -1,3 +1,10 @@
+2006-03-06  David N. Welton  <davidw@dedasys.com>
+
+	* jarhack/jarhack/JarHack.java: Improved command line
+	functionality - replaced String.split call with our own function
+	so as to be compatible with older versions of GCJ that I still
+	need to use.
+
 2006-03-04  David N. Welton  <davidw@dedasys.com>
 
 	* float/org/hecl/fp/FloatCmds.java: Brought the floating point
