@@ -21,6 +21,9 @@ class StringCmds {
     public static final int SLEN = 2;
     public static final int SINDEX = 3;
 
+    public static final int STREQ =  4;
+    public static final int STRNE =  5;
+
     static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String str = argv[1].toString();
 
@@ -49,6 +52,14 @@ class StringCmds {
 		} catch (StringIndexOutOfBoundsException e) {
 		    interp.setResult("");
 		}
+		break;
+
+            case STREQ:
+                interp.setResult(Compare.compareString(argv[1], argv[2]) == 0 ? 1 : 0);
+		break;
+
+     	    case STRNE:
+		interp.setResult(Compare.compareString(argv[1], argv[2]) == 0 ? 0 : 1);
 		break;
 	}
     }

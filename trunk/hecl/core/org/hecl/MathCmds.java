@@ -29,12 +29,11 @@ class MathCmds {
     public static final int NOT = 7;
     public static final int OR =  8;
 
-    public static final int EQ =  9;
-    public static final int NE =  10;
+    public static final int EQ = 9;
+    public static final int NE = 10;
+
     public static final int GT =  11;
     public static final int LT =  12;
-    public static final int STREQ = 13;
-    public static final int STRNE = 14;
 
     public static final int INCR = 15;
     public static final int TRUE = 16;
@@ -101,23 +100,21 @@ class MathCmds {
 		    res |= IntThing.get(argv[i]);
 		}
 		break;
+
             case EQ:
                 res = IntThing.compare(argv[1], argv[2]) == 0 ? 1 : 0;
                 break;
+
             case GT:
                 res = IntThing.get(argv[1]) > IntThing.get(argv[2]) == true ? 1 : 0;
                 break;
+
             case LT:
                 res = IntThing.get(argv[1]) < IntThing.get(argv[2]) == true ? 1 : 0;
+
                 break;
-            case STREQ:
-                res = Compare.compareString(argv[1], argv[2]) == 0 ? 1 : 0;
-		break;
      	    case NE:
 		res = IntThing.compare(argv[1], argv[2]) == 0 ? 0 : 1;
-		break;
-     	    case STRNE:
-		res = Compare.compareString(argv[1], argv[2]) == 0 ? 0 : 1;
 		break;
 
 	    case INCR:

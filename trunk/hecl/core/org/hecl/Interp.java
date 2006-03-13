@@ -127,11 +127,9 @@ public class Interp {
 
 	/* Math and logic commands. */
         commands.put("=", new MathCmdFacade(MathCmds.EQ));
-        commands.put("eq", new MathCmdFacade(MathCmds.STREQ));
         commands.put(">", new MathCmdFacade(MathCmds.GT));
         commands.put("<", new MathCmdFacade(MathCmds.LT));
 	commands.put("!=", new MathCmdFacade(MathCmds.NE));
-	commands.put("ne", new MathCmdFacade(MathCmds.STRNE));
 
         commands.put("+", new MathCmdFacade(MathCmds.ADD));
         commands.put("-", new MathCmdFacade(MathCmds.SUB));
@@ -175,7 +173,8 @@ public class Interp {
         commands.put("append", new StringCmdFacade(StringCmds.APPEND));
         commands.put("slen", new StringCmdFacade(StringCmds.SLEN));
         commands.put("sindex", new StringCmdFacade(StringCmds.SINDEX));
-
+        commands.put("eq", new StringCmdFacade(StringCmds.STREQ));
+	commands.put("ne", new StringCmdFacade(StringCmds.STRNE));
 
 	/* Hash table commands. */
         commands.put("hash", new HashCmdFacade(HashCmds.HASH));
