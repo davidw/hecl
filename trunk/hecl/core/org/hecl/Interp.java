@@ -124,6 +124,8 @@ public class Interp {
 
         commands.put("return", new InterpCmdFacade(InterpCmds.RETURN));
 
+        commands.put("classof", new InterpCmdFacade(InterpCmds.CLASSNAME));
+
 
 	/* Math and logic commands. */
         commands.put("=", new MathCmdFacade(MathCmds.EQ));

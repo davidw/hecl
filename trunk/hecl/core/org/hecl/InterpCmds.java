@@ -31,6 +31,8 @@ class InterpCmds {
 
     public static final int RETURN = 8;
 
+    public static final int CLASSNAME = 9;
+
     static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
 	    case SET:
@@ -96,6 +98,13 @@ class InterpCmds {
 		    interp.setResult(argv[1]);
 		}
 		throw new HeclException(HeclException.RETURN);
+
+		/* Gets the class name of the RealThing behind the
+		 * Thing in question. */
+	    case CLASSNAME:
+		Class c = argv[1].val.getClass();
+		interp.setResult(new Thing(c.getName()));
+		return;
 	}
     }
 }
