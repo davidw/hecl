@@ -633,6 +633,44 @@ set foo
       </refsect1>
     </refentry>
 
+    <!-- classof -->
+    <refentry id="classof">
+      <refnamediv>
+	<refname>classof</refname>
+	<refpurpose>
+	  Returns the name of the internal class of a Hecl Thing.
+	</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>classof</command>
+	  <arg choice="req"><replaceable>variable</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The classof command returns a string containing the Java
+	  name of the class that the Hecl variable contains
+	  internally.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+classof [+ 1 2]
+
+classof "foo"
+	  </programlisting>
+	  <para>Produces:</para>
+	<screen>
+org.hecl.IntThing
+
+org.hecl.StringThing
+	</screen>
+      </refsect1>
+    </refentry>
+
 
     <!-- continue -->
     <refentry id="continue">
