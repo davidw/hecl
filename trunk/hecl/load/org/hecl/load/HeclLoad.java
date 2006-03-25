@@ -26,7 +26,7 @@ import org.hecl.Interp;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HeclLoad implements org.hecl.modules.HeclModule {
+public class HeclLoad implements org.hecl.HeclModule {
 
     /**
      * The <code>loadModule</code> method initializes the 'load'

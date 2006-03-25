@@ -18,7 +18,7 @@ package org.hecl.http;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 
-import org.hecl.modules.HeclModule;
+import org.hecl.HeclModule;
 
 /**
  * The <code>HttpModule</code> implements HeclModule so that this code

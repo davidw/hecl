@@ -292,8 +292,8 @@ public class Parse {
     }
 
     /**
-     * The <code>parseDollar</code> method parses a $foo (or &foo)
-     * variable. These can also be of the form ${foo} so that we can
+     * The <code>parseDollar</code> method parses a $\ foo (or &foo)
+     * variable. These can also be of the form $\ {foo} so that we can
      * separate them from any surrounding text.
      * 
      * @param state
@@ -397,7 +397,7 @@ public class Parse {
                 if (block || parselist) {
 		    ch = state.nextchar();
 		    /* If we are not dealing with a variable parse
-		     * such as ${foo}, and the next character
+		     * such as $\ {foo}, and the next character
 		     * isn't a space, we have a problem. */
 		    if (!invar && ch != ' ' && ch != '	' &&
 			ch != '\n' && ch != '\n' && ch != ';' && ch != 0) {

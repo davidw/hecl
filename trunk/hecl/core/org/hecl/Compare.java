@@ -23,7 +23,7 @@ package org.hecl;
  */
 public class Compare {
 
-    public static final int INTCOMPARE = 1;
+    public static final int NUMCOMPARE = 1;
     public static final int STRINGCOMPARE = 2;
     public static final int PROCCOMPARE = 3;
 

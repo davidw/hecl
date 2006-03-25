@@ -26,7 +26,8 @@ package org.hecl;
  * @version 1.0
  */
 public abstract interface RealThing {
-
+    public String thingclass();
+    
     /**
      * The <code>deepcopy</code> method must copy a RealThing and any values
      * it contains.

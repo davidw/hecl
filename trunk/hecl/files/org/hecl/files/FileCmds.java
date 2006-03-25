@@ -19,10 +19,15 @@ import java.io.File;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.LongThing;
+import org.hecl.Operator;
+import org.hecl.RealThing;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
-class FileCmds {
+class FileCmds extends Operator {
     public static final int CD = 1;
     public static final int CURRENTFILE = 2;
     public static final int READALL = 3;
@@ -34,45 +39,66 @@ class FileCmds {
     public static final int FILETOLIST = 7;
     public static final int LISTTOFILE = 8;
 
-    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
-
+    private FileCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+    
+    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
-	    case CD:
-		HeclFile.changeDir(argv[1].toString());
-		return;
+	  case CD:
+	    HeclFile.changeDir(argv[1].toString());
+	    break;
+	    
+	  case CURRENTFILE:
+	    return new StringThing(HeclFile.currentFile);
+	    
+	  case FILESIZE:
+	    File fl = new File(argv[1].toString()).getAbsoluteFile();
+	    return new LongThing(fl.length());
+	    
+	  case FILETOLIST:
+	    return new ListThing(HeclFile.fileToList(argv[1].toString()));
+	    
+	  case LISTTOFILE:
+	    return new StringThing(HeclFile.listToFile(ListThing.get(argv[1])));
+	    
+	  case READALL:
+	    return new StringThing(HeclFile.readFile(argv[1].toString()));
+	    
+	  case WRITE:
+	    String fn = argv[1].toString();
+	    String data = argv[2].toString();
+	    HeclFile.writeFile(fn, data);
+	    return new IntThing(data.length());
 
-	    case CURRENTFILE:
-		interp.setResult(HeclFile.currentFile);
-		return;
+	  case SOURCE:
+	    HeclFile.sourceFile(interp, argv[1].toString());
+	    break;
 
-	    case FILESIZE:
-		File fl = new File(argv[1].toString()).getAbsoluteFile();
-		interp.setResult((int)fl.length());
-		return;
-
-	    case FILETOLIST:
-		interp.setResult(ListThing.create(
-				     HeclFile.fileToList(argv[1].toString())));
-		return;
-
-	    case LISTTOFILE:
-		interp.setResult(new Thing(HeclFile.listToFile(ListThing.get(argv[1]))));
-		return;
-
-	    case READALL:
-		interp.setResult(new Thing(HeclFile.readFile(argv[1].toString())));
-		return;
-
-	    case WRITE:
-		String fn = argv[1].toString();
-		String data = argv[2].toString();
-		HeclFile.writeFile(fn, data);
-		interp.setResult(data.length());
-		return;
-
-	    case SOURCE:
-		HeclFile.sourceFile(interp, argv[1].toString());
-		return;
+	  default:
+	    throw new HeclException("Unknown file command '"
+				    + argv[0].toString() + "' with code '"
+				    + cmd + "'.");
 	}
+	return null;
+    }
+
+    public static void load(Interp ip) throws HeclException {
+	Operator.load(ip);
+    }
+
+    public static void unload(Interp ip) throws HeclException {
+	Operator.unload(ip);
+    }
+
+    static {
+        cmdtable.put("cd", new FileCmds(CD,1,1));
+        cmdtable.put("currentfile", new FileCmds(CURRENTFILE,0,0));
+        cmdtable.put("filesize", new FileCmds(FILESIZE,1,1));
+        cmdtable.put("filetolist", new FileCmds(FILETOLIST,1,1));
+        cmdtable.put("listtofile", new FileCmds(LISTTOFILE,1,1));
+        cmdtable.put("readall", new FileCmds(READALL,1,1));
+        cmdtable.put("write", new FileCmds(WRITE,2,2));
+        cmdtable.put("source", new FileCmds(SOURCE,1,1));
     }
 }

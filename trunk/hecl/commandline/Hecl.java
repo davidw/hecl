@@ -44,7 +44,6 @@ public class Hecl {
             Interp interp = new Interp();
 	    /* Add the standard packages in. */
 	    new HeclFile().loadModule(interp);
-	    new org.hecl.fp.HeclFloat().loadModule(interp);
 	    new org.hecl.load.HeclLoad().loadModule(interp);
 	    Vector argv = new Vector();
 

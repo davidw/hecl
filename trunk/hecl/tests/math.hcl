@@ -1,44 +1,59 @@
+test plus {
+     +
+} {0}
 
-test math-1 {
+test imath-1 {
     + 1 1
 } {2}
 
-test math-2 {
+test imath-2 {
     + -1 1
 } {0}
 
-test math-3 {
+test imath-3 {
     - 10 5
 } {5}
 
-test math-4 {
+test imath-4 {
     * 6 7
 } {42}
 
-test math-5 {
+test imath-5 {
     / 6 7
-} {0.8571428571428571}
+} {0}
 
-test math-6 {
+test imath-6 {
     + 1 2 3
 } {6}
 
-test math-7 {
+test double-5 {
+    / 6 7.0
+} {0.8571428571428571}
+
+test double-7 {
     + 1.0 2.0
-} {3}
+} {3.0}
 
 test double-8 {
     + 1 2.5
 } {3.5}
 
 test round-9 {
-    round [/ 10 3]
+    round [/ 10. 3]
 } {3}
 
-test subtract-1 {
+test sub-1 {
+     -
+} {0}
+
+test sub-2 {
     - 10
 } {-10}
 
-test subtract-2 {
+test sub-3 {
+     - 10 1
+} {9}
+
+test sub-3 {
     - 10 1 2
 } {7}

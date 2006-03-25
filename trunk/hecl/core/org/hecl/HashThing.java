@@ -74,6 +74,10 @@ public class HashThing implements RealThing {
         }
     }
 
+    public String thingclass() {
+	return "hash";
+    }
+
     /**
      * <code>create</code> allocates and returns a new HashThing typed
      * Thing.

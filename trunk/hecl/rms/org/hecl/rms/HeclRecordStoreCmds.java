@@ -15,12 +15,16 @@ limitations under the License.
 
 package org.hecl.rms;
 
+import java.util.Vector;
+
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.Operator;
+import org.hecl.RealThing;
+import org.hecl.StringThing;
 import org.hecl.Thing;
-
-import java.util.Vector;
 
 import javax.microedition.rms.RecordStore;
 
@@ -31,58 +35,77 @@ import javax.microedition.rms.RecordStore;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HeclRecordStoreCmds {
+public class HeclRecordStoreCmds extends Operator {
     public static final int RS_LIST = 1;
     public static final int RS_GET = 2;
     public static final int RS_PUT = 3;
 
-    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    protected HeclRecordStoreCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
+    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	RecordStore rs;
 	byte[] data;
-
+	
 	switch (cmd) {
-	    case RS_LIST:
-		Vector v = new Vector();
-		String[] names = RecordStore.listRecordStores();
-		if (names == null) {
-		    interp.setResult("");
-		} else {
-		    for (int i = 0; i < names.length; i++) {
-			v.addElement(new Thing(names[i]));
-		    }
-		    interp.setResult(ListThing.create(v));
+	  case RS_LIST:
+	    Vector v = new Vector();
+	    String[] names = RecordStore.listRecordStores();
+	    if (names != null) {
+		for (int i = 0; i < names.length; i++) {
+		    v.addElement(new Thing(names[i]));
 		}
-		break;
+	    }
+	    return new ListThing(v);
+	    
+	  case RS_GET:
+	    try {
+		rs =  RecordStore.openRecordStore(argv[1].toString(), false);
+		data = rs.getRecord(1); /* The first one. */
+		rs.closeRecordStore();
+	    } catch (Exception e) {
+		throw new HeclException(e.toString());
+	    }
+	    return new StringThing(new String(data));
+	    
+	  case RS_PUT:
+	    data = argv[2].toString().getBytes();
+	    String name = argv[1].toString();
+	    try {
+		RecordStore.deleteRecordStore(name);
+	    } catch (Exception e) {
+		/* Ignore it - we just want to start with a fresh one. */
+	    }
+	    try {
+		rs =  RecordStore.openRecordStore(name, true);
+		rs.addRecord(data, 0, data.length);
+		rs.closeRecordStore();
+	    } catch (Exception e) {
+		throw new HeclException(e.toString());
+	    }
+	    return new IntThing(data.length);
 
-	    case RS_GET:
-		try {
-		    rs =  RecordStore.openRecordStore(argv[1].toString(), false);
-		    data = rs.getRecord(1); /* The first one. */
-		    rs.closeRecordStore();
-		} catch (Exception e) {
-		    throw new HeclException(e.toString());
-		}
-		interp.setResult(new String(data));
-		break;
-
-	    case RS_PUT:
-		data = argv[2].toString().getBytes();
-		String name = argv[1].toString();
-		try {
-		    RecordStore.deleteRecordStore(name);
-		} catch (Exception e) {
-		    /* Ignore it - we just want to start with a fresh
-		     * one. */
-		}
-		try {
-		    rs =  RecordStore.openRecordStore(name, true);
-		    rs.addRecord(data, 0, data.length);
-		    rs.closeRecordStore();
-		} catch (Exception e) {
-		    throw new HeclException(e.toString());
-		}
-		interp.setResult(data.length);
-		break;
+	  default:
+	    throw new HeclException("Unknown rms command '"
+				    + argv[0].toString() + "' with code '"
+				    + cmd + "'.");
 	}
+	// notreached
+	// return null;
     }
-}
+    
+    public static void load(Interp ip) throws HeclException {
+	Operator.load(ip);
+    }
+
+    public static void unload(Interp ip) throws HeclException {
+	Operator.unload(ip);
+    }
+    
+    static {
+        cmdtable.put("rs_list", new HeclRecordStoreCmds(RS_LIST,0,0));
+        cmdtable.put("rs_get", new HeclRecordStoreCmds(RS_GET,1,1));
+        cmdtable.put("rs_put", new HeclRecordStoreCmds(RS_PUT,2,2));
+    }
+ }

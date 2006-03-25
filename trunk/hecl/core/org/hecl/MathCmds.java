@@ -1,4 +1,4 @@
-/* Copyright 2006 David N. Welton
+/* Copyright 2006 Wolfgang S. Kechel
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,122 +15,502 @@ limitations under the License.
 
 package org.hecl;
 
+import java.util.Enumeration;
+import java.util.Hashtable;
 
-class MathCmds {
-    static final Thing trueval = IntThing.create(true);
+public abstract class MathCmds implements RealThing {
+//#ifndef ant:cldc1.0
+    public static final Thing E = new Thing(new DoubleThing(Math.E));
+    public static final Thing PI = new Thing(new DoubleThing(Math.PI));
+//#endif
 
-    public static final int ADD = 1;
-    public static final int SUB = 2;
-    public static final int MUL = 3;
-    public static final int DIV = 4;
-    public static final int MOD = 5;
+    public static final int CASTINT = 1;
+    public static final int CASTLONG = 2; 
+    public static final int CASTFLOAT = 3; 
+    public static final int CASTDOUBLE = 4; 
+    public static final int TODEGREES = 5; 
+    public static final int TORADIANS = 6;
+    public static final int ABS = 7; 
+    public static final int SIGNUM = 8; 
+    public static final int CBRT = 9;
+    public static final int SQRT = 10;
+    public static final int LOG = 11; 
+    public static final int LOG10 = 12; 
+    public static final int LOG1P = 13; 
+    public static final int SIN = 14; 
+    public static final int COS = 15; 
+    public static final int TAN = 16; 
+    public static final int SINH = 17; 
+    public static final int COSH = 18; 
+    public static final int TANH = 19; 
+    public static final int ASIN = 20; 
+    public static final int ACOS = 21; 
+    public static final int ATAN = 22; 
+    public static final int EXP = 23; 
+    public static final int EXPM1 = 24; 
+    public static final int FLOOR = 25; 
+    public static final int CEIL = 26; 
+    public static final int POW = 27; 
+    public static final int HYPOT = 28; 
+    public static final int RANDOM = 29;
+    public static final int ROUND = 30;
+    public static final int MIN = 31;
+    public static final int MAX = 32;
+    
+    public static final int INCR = 50; 
+    public static final int DECR = 51; 
+    public static final int TRUE = 52; 
+    public static final int FALSE = 53; 
 
-    public static final int AND = 6;
-    public static final int NOT = 7;
-    public static final int OR =  8;
+    public static final int NOT = 80; 
+    public static final int AND = 81; 
+    public static final int OR = 82; 
 
-    public static final int EQ = 9;
-    public static final int NE = 10;
+    public static final int EQ = 90; 
+    public static final int NEQ = 91; 
+    public static final int LT = 92; 
+    public static final int LE = 93; 
+    public static final int GT = 94; 
+    public static final int GE = 95; 
 
-    public static final int GT =  11;
-    public static final int LT =  12;
+    public static final int BINADD = 100;
+    public static final int BINSUB = 101;
+    public static final int BINMUL = 102; 
+    public static final int BINDIV = 103; 
+    public static final int MOD = 104; 
+    public static final int PLUS = 105; 
+    public static final int MINUS = 106; 
+    public static final int MUL = 107; 
+    
+    // Comparison
+    public static int compare(Thing a,Thing b) {
+	return compare(NumberThing.asNumber(a),NumberThing.asNumber(b));
+    }
 
-    public static final int INCR = 15;
-    public static final int TRUE = 16;
-
-    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
-	int res = 0;
-	int n = argv.length;
-        switch (cmd) {
-	    case ADD:
-		res = 0;
-		for (int i = 1; i < n; ++i) {
-		    res += IntThing.get(argv[i]);
-		}
-		break;
-	    case SUB:
-		if (n == 2) {
-		    res = -IntThing.get(argv[1]);
-		} else {
-		    for (int i = 1; i < n; ++i) {
-			res -= IntThing.get(argv[i]);
-		    }
-		}
-		break;
-	    case MUL:
-		res = 1;
-		for (int i = 1; i < n; ++i) {
-		    res *= IntThing.get(argv[i]);
-		}
-		break;
-	    case DIV:
-		if (n < 3) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, 1, "/ arg arg ?arg ...?");
-		}
-		res = IntThing.get(argv[1]);
-		for (int i = 2; i < argv.length; ++i) {
-		    res /= IntThing.get(argv[i]);
-		}
-		break;
-	    case MOD:
-		if (n != 3) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, 1, "% arg arg");
-		}
-		res = IntThing.get(argv[1]) % IntThing.get(argv[2]);
-		break;
-
-	    case AND:
-		res = IntThing.get(argv[1]);
-		for (int i = 2; i < argv.length; i ++) {
-		    res &= IntThing.get(argv[i]);
-		}
-		break;
-	    case NOT:
-		res = IntThing.get(argv[1]);
-		if (res == 0) {
-		    res = 1;
-		} else {
-		    res = 0;
-		}
-		break;
-	    case OR:
-		for (int i = 1; i < argv.length; i ++) {
-		    res |= IntThing.get(argv[i]);
-		}
-		break;
-
-            case EQ:
-                res = IntThing.compare(argv[1], argv[2]) == 0 ? 1 : 0;
-                break;
-
-            case GT:
-                res = IntThing.get(argv[1]) > IntThing.get(argv[2]) == true ? 1 : 0;
-                break;
-
-            case LT:
-                res = IntThing.get(argv[1]) < IntThing.get(argv[2]) == true ? 1 : 0;
-
-                break;
-     	    case NE:
-		res = IntThing.compare(argv[1], argv[2]) == 0 ? 0 : 1;
-		break;
-
-	    case INCR:
-		int x = IntThing.get(argv[1]);
-		int y = 1;
-		if (argv.length > 2) {
-		    y = IntThing.get(argv[2]);
-		}
-		((IntThing) argv[1].val).set(x + y);
-		interp.result = argv[1];
-		return;
-
-	    case TRUE:
-		interp.result = trueval;
-		return;
+    public static int compare(NumberThing a,NumberThing b) {
+//#ifndef ant:cldc1.0
+	if(a.isIntegral() && b.isIntegral()) {
+//#endif
+	    if(((IntegralThing)a).isLong() || ((IntegralThing)b).isLong()) {
+		return compare(a.longValue(),b.longValue());
+	    }
+	    return compare(a.intValue(),b.intValue());
+//#ifndef ant:cldc1.0
 	}
-	interp.setResult(res);
+	return compare(a.doubleValue(),b.doubleValue());
+//#endif
+    }
+
+    public static RealThing unary(int cmdcode,Interp ip,NumberThing a)
+	throws HeclException {
+	switch(cmdcode) {
+	  case CASTINT:
+	    return new IntThing(a.intValue());
+	  case CASTLONG:
+	    return new LongThing(a.longValue());
+//#ifndef ant:cldc1.0
+	  case CASTFLOAT:
+	  case CASTDOUBLE:
+	    return new DoubleThing(a.doubleValue());
+	  case TODEGREES:
+	    return new DoubleThing(Math.toDegrees(a.doubleValue()));
+	  case TORADIANS:    
+	    return new DoubleThing(Math.toRadians(a.doubleValue()));
+//#endif
+	  case ABS:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral()) {
+//#endif
+		IntegralThing i = (IntegralThing)a;
+		if(i.isLong())
+		    return new LongThing(Math.abs(i.longValue()));
+		return new IntThing(Math.abs(i.intValue()));
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(Math.abs(a.doubleValue()));
+//#endif
+//#ifndef ant:cldc1.0
+	  case SIN:
+	    return new DoubleThing(Math.sin(a.doubleValue()));
+	  case COS:
+	    return new DoubleThing(Math.cos(a.doubleValue()));
+	  case TAN:
+	    return new DoubleThing(Math.tan(a.doubleValue()));
+	  case FLOOR:
+	    return new DoubleThing(Math.floor(a.doubleValue()));
+	  case CEIL:
+	    return new DoubleThing(Math.ceil(a.doubleValue()));
+//#endif
+	  case INCR:
+	    return binary(BINADD,ip,a,IntThing.ONE);
+	  case DECR:
+	    return binary(BINSUB,ip,a,IntThing.ONE);
+	  case NOT:
+	    return a.intValue() != 0 ? IntThing.ZERO : IntThing.ONE;
+//#ifdef ant:j2se
+	  case ROUND:    
+	    if(a.isIntegral()) {
+		return a.deepcopy();
+	    } else {
+		long l = Math.round(a.doubleValue());
+		if(l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
+		    return new IntThing((int)l);
+		}
+		return new LongThing(Math.round(a.doubleValue()));
+	    }
+	  case CBRT:
+	    return new DoubleThing(Math.cbrt(a.doubleValue()));
+	  case SQRT:
+	    return new DoubleThing(Math.sqrt(a.doubleValue()));
+	  case LOG:
+	    return new DoubleThing(Math.log(a.doubleValue()));
+	  case LOG10:
+	    return new DoubleThing(Math.log10(a.doubleValue()));
+	  case LOG1P:
+	    return new DoubleThing(Math.log1p(a.doubleValue()));
+	  case SIGNUM:
+	    return new DoubleThing(Math.signum(a.doubleValue()));
+	  case SINH:
+	    return new DoubleThing(Math.sinh(a.doubleValue()));
+	  case COSH:
+	    return new DoubleThing(Math.cosh(a.doubleValue()));
+	  case TANH:
+	    return new DoubleThing(Math.tanh(a.doubleValue()));
+	  case ASIN:
+	    return new DoubleThing(Math.asin(a.doubleValue()));
+	  case ACOS:
+	    return new DoubleThing(Math.acos(a.doubleValue()));
+	  case ATAN:
+	    return new DoubleThing(Math.atan(a.doubleValue()));
+	  case EXP:
+	    return new DoubleThing(Math.exp(a.doubleValue()));
+	  case EXPM1:
+	    return new DoubleThing(Math.expm1(a.doubleValue()));
+//#endif
+	}
+	throw new HeclException("Unknown unary mathcmdcode '"+cmdcode+"'.");
+    }
+    
+    
+    public static RealThing binary(int cmdcode,Interp ip,NumberThing a,NumberThing b)
+	throws HeclException {
+	switch(cmdcode) {
+	  case BINADD:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue()+b.longValue());
+		}
+		return new IntThing(a.intValue()+b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(a.doubleValue()+b.doubleValue());
+//#endif
+	  case BINSUB:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue()-b.longValue());
+		}
+		return new IntThing(a.intValue()-b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(a.doubleValue()-b.doubleValue());
+//#endif
+	  case BINMUL:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue()*b.longValue());
+		}
+		return new IntThing(a.intValue()*b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(a.doubleValue()*b.doubleValue());
+//#endif
+	  case BINDIV:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue()/b.longValue());
+		}
+		return new IntThing(a.intValue()/b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(a.doubleValue()/b.doubleValue());
+//#endif
+	  case MOD:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue()%b.longValue());
+		}
+		return new IntThing(a.intValue()%b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    return new DoubleThing(a.doubleValue()%b.doubleValue());
+//#endif
+	  case AND:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue() & b.longValue());
+		}
+		return new IntThing(a.intValue() & b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    throw new HeclException("Integral argument required.");
+//#endif
+	  case OR:
+//#ifndef ant:cldc1.0
+	    if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		if(((IntegralThing)a).isLong()
+		   || ((IntegralThing)b).isLong()) {
+		    return new LongThing(a.longValue() | b.longValue());
+		}
+		return new IntThing(a.intValue() | b.intValue());
+//#ifndef ant:cldc1.0
+	    }
+	    throw new HeclException("Integral argument required.");
+//#endif
+
+//#ifdef ant:j2se
+	  case POW:
+	    return new DoubleThing(Math.pow(a.doubleValue(), b.doubleValue()));
+	  case HYPOT:
+	    return new DoubleThing(Math.hypot(a.doubleValue(), b.doubleValue()));
+//#endif
+	  case EQ:
+	    return compare(a,b) == 0 ? IntThing.ONE : IntThing.ZERO;
+	  case NEQ:
+	    return compare(a,b) != 0 ? IntThing.ONE : IntThing.ZERO;
+	  case LT:
+	    return compare(a,b) < 0 ? IntThing.ONE : IntThing.ZERO;
+	  case LE:
+	    return compare(a,b) <= 0 ? IntThing.ONE : IntThing.ZERO;
+	  case GT:
+	    return compare(a,b) > 0 ? IntThing.ONE : IntThing.ZERO;
+	  case GE:
+	    return compare(a,b) >= 0 ? IntThing.ONE : IntThing.ZERO;
+	}
+	throw new HeclException("Unknown binary mathcmdcode '"+cmdcode+"'.");
+    }
+    
+    public static RealThing operate(int cmdcode,Interp ip,Thing[] argv)
+	throws HeclException {
+	NumberThing num = null;
+	
+	switch(cmdcode) {
+	  case PLUS:
+	    num = IntThing.ZERO;
+	    for(int i=1; i<argv.length; ++i) {
+		num = (NumberThing)binary(BINADD,ip,num,NumberThing.asNumber(argv[i]));
+	    }
+	    return num;
+	  case MINUS:
+	    switch(argv.length) {
+	      case 1:
+		return IntThing.ZERO;
+	      case 2:
+		return binary(BINSUB,ip,IntThing.ZERO,NumberThing.asNumber(argv[1]));
+	      default:
+		num = NumberThing.asNumber(argv[1]);
+		for(int i=2; i<argv.length; ++i) {
+		    num = (NumberThing)binary(BINSUB,ip,
+					      num,NumberThing.asNumber(argv[i]));
+		}
+		return num;
+	    }
+	  case MUL:
+	    num = IntThing.ONE;
+	    for(int i=1; i<argv.length; ++i) {
+		num = (NumberThing)binary(BINMUL,ip,num,NumberThing.asNumber(argv[i]));
+	    }
+	    return num;
+//#ifdef ant:j2se
+	  case RANDOM:
+	    return new DoubleThing(Math.random());
+//#endif
+	  case TRUE:
+	    return IntThing.ONE;
+	  case FALSE:
+	    return IntThing.ZERO;
+	  case AND:
+	    num = NumberThing.asNumber(argv[1]);
+	    for(int i=2; i<argv.length; ++i) {
+		num = (NumberThing)binary(AND,ip,num,NumberThing.asNumber(argv[i]));
+	    }
+	    return num;
+	  case OR:
+	    num = NumberThing.asNumber(argv[1]);
+	    for(int i=2; i<argv.length; ++i) {
+		num = (NumberThing)binary(OR,ip,num,NumberThing.asNumber(argv[i]));
+	    }
+	    return num;
+	  case INCR:
+	    num = NumberThing.asNumber(argv[1]);
+	    if(!num.isIntegral()) {
+		throw new HeclException("Argument '" + argv[1].toString()
+					+ "' not an integer.");
+	    }
+	    NumberThing offset = argv.length > 2 ? NumberThing.asNumber(argv[2]) : IntThing.ONE;
+	    if(((IntegralThing)num).isLong()) {
+		num = new LongThing(num.longValue()+offset.longValue());
+	    } else {
+		num = new IntThing(num.intValue()+offset.intValue());
+	    }
+	    argv[1].setVal(num);
+	    ip.setResult(argv[1]);
+	    return null;
+	  default:
+	    /*
+	    Command c = extensions.get(cmdcode);
+	    if(c != null) {
+		c.
+	    }
+	    
+	    if(extensions.get(cmdcode)) {
+	    }
+	    */
+	}
+	throw new HeclException("Unknown math operator '"
+				+ argv[0].toString() + "' with code '"
+				+ cmdcode + "'.");
+    }
+    
+    public static void load(Interp ip) throws HeclException {
+	Enumeration e = vars.keys();
+	while(e.hasMoreElements()) {
+	    String k = (String)e.nextElement();
+	    ip.setVar(k,(Thing)vars.get(k));
+	}
+	e = cmds.keys();
+	while(e.hasMoreElements()) {
+	    String k = (String)e.nextElement();
+	    ip.addCommand(k,(Command)cmds.get(k));
+	}
+    }
+    public static void unload(Interp ip) throws HeclException {
+	Enumeration e = vars.keys();
+	while(e.hasMoreElements()) {
+	    ip.unSetVar((String)e.nextElement());
+	}
+	e = cmds.keys();
+	while(e.hasMoreElements()) {
+	    ip.removeCommand((String)e.nextElement());
+	}
+    }
+
+    protected static int compare(int v1,int v2) {
+	return v1 < v2 ? -1 : (v1 == v2) ? 0 : 1;
+    }
+
+    protected static int compare(long v1,long v2) {
+	return v1 < v2 ? -1 : (v1 == v2) ? 0 : 1;
+    }
+
+    protected static int compare(double v1,double v2) {
+	return v1 < v2 ? -1 : (v1 == v2) ? 0 : 1;
+    }
+    
+
+    private static int nextop = 1000;
+    private static Hashtable vars = new Hashtable();
+    private static Hashtable cmds = new Hashtable();
+    private static Hashtable extensions = new Hashtable();
+    
+    static {
+	cmds.put("true",new NumOp(TRUE,0,0));
+	cmds.put("false",new NumOp(FALSE,0,0));
+	cmds.put("and",new NumOp(AND,1,-1));
+	cmds.put("or",new NumOp(OR,1,-1));
+
+	cmds.put("1+",new NumUnOp(INCR));
+	cmds.put("1-",new NumUnOp(DECR));
+	cmds.put("incr",new NumOp(INCR,1,2));
+		  
+	// cast operators
+	cmds.put("int",new NumUnOp(CASTINT));
+	cmds.put("long",new NumUnOp(CASTLONG));
+	
+	// unary operators
+	cmds.put("abs",new NumUnOp(ABS));
+	cmds.put("signum",new NumUnOp(SIGNUM));
+	cmds.put("not",new NumUnOp(NOT));
+	
+	// binary operators
+	cmds.put("+",new NumOp(PLUS,-1,-1)); 
+	cmds.put("-",new NumOp(MINUS,-1,-1)); 
+	cmds.put("*",new NumOp(MUL,-1,-1)); 
+	cmds.put("/", new NumBinOp(BINDIV)); 
+	cmds.put("%", new NumBinOp(MOD)); 
+
+	// comparison
+	cmds.put("=",new NumBinOp(EQ)); 
+	cmds.put("!=",new NumBinOp(NEQ)); 
+	cmds.put("<",new NumBinOp(LT)); 
+	cmds.put("<=",new NumBinOp(LE)); 
+	cmds.put(">",new NumBinOp(GT)); 
+	cmds.put(">=",new NumBinOp(GE)); 
+	
+	// stuff not available in cldc 1.0
+//#ifndef ant:cldc1.0
+	vars.put("pi",PI);
+	vars.put("e",E);
+	cmds.put("float",new NumUnOp(CASTFLOAT));
+	cmds.put("double",new NumUnOp(CASTDOUBLE));
+	cmds.put("toDegrees",new NumUnOp(TODEGREES)); 
+	cmds.put("toRadians",new NumUnOp(TORADIANS));
+//#endif
+
+	// Stuff available only in j2se
+//#ifdef ant:j2se
+	cmds.put("random",new NumOp(RANDOM,-1,-1));
+	cmds.put("pow", new NumBinOp(POW));
+	cmds.put("hypot", new NumBinOp(HYPOT));
+	cmds.put("cbrt",new NumUnOp(CBRT));
+	cmds.put("sqrt",new NumUnOp(SQRT));
+	cmds.put("log",new NumUnOp(LOG));
+	cmds.put("log10",new NumUnOp(LOG10));
+	cmds.put("log1p",new NumUnOp(LOG1P));
+	cmds.put("sin",new NumUnOp(SIN));
+	cmds.put("cos",new NumUnOp(COS));
+	cmds.put("tan",new NumUnOp(TAN));
+	cmds.put("sinh",new NumUnOp(SINH));
+	cmds.put("cosh",new NumUnOp(COSH));
+	cmds.put("tanh",new NumUnOp(TANH));
+	cmds.put("asin",new NumUnOp(ASIN));
+	cmds.put("acos",new NumUnOp(ACOS));
+	cmds.put("atan",new NumUnOp(ATAN));
+	cmds.put("exp",new NumUnOp(EXP));
+	cmds.put("expm1",new NumUnOp(EXPM1));
+	cmds.put("floor",new NumUnOp(FLOOR));
+	cmds.put("ceil",new NumUnOp(CEIL));
+	cmds.put("round",new NumUnOp(ROUND));
+//#endif
+
+	/*
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	cmds.put("+",new NumBinOp(PLUS)); 
+	*/
     }
 }

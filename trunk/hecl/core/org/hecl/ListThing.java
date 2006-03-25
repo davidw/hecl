@@ -65,6 +65,10 @@ public class ListThing implements RealThing {
         }
     }
 
+    public String thingclass() {
+	return "list";
+    }
+
     /**
      * <code>create</code> allocates and returns a new ListThing typed Thing.
      * 

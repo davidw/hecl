@@ -17,8 +17,7 @@ package org.hecl.rms;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-
-import org.hecl.modules.HeclModule;
+import org.hecl.HeclModule;
 
 /**
  * The <code>RMSModule</code> class takes care of setup and tear-down
@@ -30,17 +29,10 @@ import org.hecl.modules.HeclModule;
 public class RMSModule implements HeclModule {
 
     public void loadModule(Interp interp) throws HeclException {
-        interp.commands.put("rs_list",
-			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_LIST));
-        interp.commands.put("rs_get",
-			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_GET));
-        interp.commands.put("rs_put",
-			    new HeclRecordStoreCmdFacade(HeclRecordStoreCmds.RS_PUT));
+	HeclRecordStoreCmds.load(interp);
     }
 
     public void unloadModule(Interp interp) throws HeclException {
-        interp.commands.remove("rs_list");
-        interp.commands.remove("rs_get");
-        interp.commands.remove("rs_put");
+	HeclRecordStoreCmds.unload(interp);
     }
 }

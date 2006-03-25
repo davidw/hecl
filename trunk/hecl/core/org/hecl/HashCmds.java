@@ -17,37 +17,54 @@ package org.hecl;
 
 import java.util.Hashtable;
 
-class HashCmds {
-
+class HashCmds extends Operator {
     public static final int HASH = 1;
     public static final int HGET = 2;
     public static final int HSET = 3;
 
-    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    private HashCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
+    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Thing result = null;
 	Hashtable hash;
 	String key;
 
 	switch (cmd) {
-
-	    case HASH:
-		result = argv[1];
-		HashThing.get(result);
-		break;
-
-	    case HGET:
-		hash = HashThing.get(argv[1]);
-		key = argv[2].toString();
-		result = (Thing) hash.get(key);
-		break;
-
-	    case HSET:
-		hash = HashThing.get(argv[1]);
-		key = argv[2].toString();
-		result = argv[3];
-		hash.put(key, result);
-		break;
+	  case HASH:
+	    result = argv[1];
+	    HashThing.get(result);
+	    break;
+	    
+	  case HGET:
+	    hash = HashThing.get(argv[1]);
+	    key = argv[2].toString();
+	    result = (Thing)hash.get(key);
+	    break;
+	    
+	  case HSET:
+	    hash = HashThing.get(argv[1]);
+	    key = argv[2].toString();
+	    result = argv[3];
+	    hash.put(key, result);
+	    break;
 	}
 	interp.setResult(result);
+	return null;
+    }
+    
+    public static void load(Interp ip) throws HeclException {
+	Operator.load(ip);
+    }
+
+    public static void unload(Interp ip) throws HeclException {
+	Operator.unload(ip);
+    }
+
+    static {
+        cmdtable.put("hash", new HashCmds(HASH,1,1));
+        cmdtable.put("hget", new HashCmds(HGET,2,2));
+        cmdtable.put("hset", new HashCmds(HSET,3,3));
     }
 }

@@ -37,7 +37,7 @@ import org.hecl.Thing;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HeclFile implements org.hecl.modules.HeclModule {
+public class HeclFile implements org.hecl.HeclModule {
     /* Keep track of the file currently being run. */
     public static String currentFile = new String("");
 
@@ -221,24 +221,10 @@ public class HeclFile implements org.hecl.modules.HeclModule {
     }
 
     public void loadModule(Interp interp) throws HeclException {
-        interp.commands.put("cd", new FileCmdFacade(FileCmds.CD));
-        interp.commands.put("currentfile", new FileCmdFacade(FileCmds.CURRENTFILE));
-        interp.commands.put("filesize", new FileCmdFacade(FileCmds.FILESIZE));
-        interp.commands.put("filetolist", new FileCmdFacade(FileCmds.FILETOLIST));
-        interp.commands.put("listtofile", new FileCmdFacade(FileCmds.LISTTOFILE));
-        interp.commands.put("readall", new FileCmdFacade(FileCmds.READALL));
-        interp.commands.put("write", new FileCmdFacade(FileCmds.WRITE));
-        interp.commands.put("source", new FileCmdFacade(FileCmds.SOURCE));
+	FileCmds.load(interp);
     }
 
     public void unloadModule(Interp interp) throws HeclException {
-        interp.commands.remove("cd");
-        interp.commands.remove("currentfile");
-        interp.commands.remove("filesize");
-        interp.commands.remove("filetolist");
-        interp.commands.remove("listtofile");
-        interp.commands.remove("readall");
-        interp.commands.remove("write");
-        interp.commands.remove("source");
+	FileCmds.unload(interp);
     }
 }

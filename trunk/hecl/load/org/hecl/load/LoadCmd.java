@@ -22,7 +22,7 @@ import org.hecl.ListThing;
 import org.hecl.Thing;
 
 import org.hecl.files.HeclFile;
-import org.hecl.modules.HeclModule;
+import org.hecl.HeclModule;
 
 import java.net.URI;
 import java.net.URLClassLoader;

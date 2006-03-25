@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -49,15 +49,12 @@ public class Interp {
      * store extra information about the state of the program.
      *
      */
-    public Hashtable auxdata;
-
-    Stack stack;
-
-    int stacklevel;
+    protected Hashtable auxdata;
 
     public Thing result;
-
-    Stack error;
+    protected Stack stack;
+    protected int stacklevel;
+    protected Stack error;
 
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
@@ -77,6 +74,61 @@ public class Interp {
 
         initInterp();
     }
+
+
+    /**
+     * Add a new command to an <code>Interp</code>.
+     *
+     * @param name
+     *            the name of the command to add.
+     * @param c
+     *            the command to add.
+     */
+    public String addCommand(String name,Command c) {
+	commands.put(name,c);
+	return name;
+    }
+    
+
+    /**
+     * Remove a command from an <code>Interp</code>.
+     *
+     * @param name
+     *            the name of the command to add.
+     */
+    public void removeCommand(String name) {
+	commands.remove(name);
+    }
+
+
+    /**
+     * Attach auxiliary data to an <code>Interp</code>.
+     */
+    public void setAuxData(String key,Object value) {
+	auxdata.put(key,value);
+    }
+    
+    
+    /**
+     * Retrieve auxiliary data from an <code>Interp</code>.
+     *
+     * @return a <code>Object</code> value or <code>null</code> when no
+     * auxiliary data under the given key is attached to the interpreter.
+     */
+    public Object getAuxData(String key) {
+	return auxdata.get(key);
+    }
+    
+    
+    /**
+     * Remove auxiliary data from an <code>Interp</code>.
+     */
+    public void removeAuxData(String key) {
+	auxdata.remove(key);
+    }
+
+    
+    
     /**
      * The <code>eval</code> method evaluates some Hecl code passed to it.
      * 
@@ -111,90 +163,25 @@ public class Interp {
 
 	/* Commands that manipulate interp data structures -
 	 * variables, procs, commands, and so forth.  */
-        commands.put("set", new InterpCmdFacade(InterpCmds.SET));
-        commands.put("unset", new InterpCmdFacade(InterpCmds.UNSET));
-
-        commands.put("proc", new InterpCmdFacade(InterpCmds.PROC));
-        commands.put("rename", new InterpCmdFacade(InterpCmds.RENAME));
-
-        commands.put("eval", new InterpCmdFacade(InterpCmds.EVAL));
-        commands.put("global", new InterpCmdFacade(InterpCmds.GLOBAL));
-
-        commands.put("intro", new InterpCmdFacade(InterpCmds.INTROSPECT));
-
-        commands.put("return", new InterpCmdFacade(InterpCmds.RETURN));
-
-        commands.put("classof", new InterpCmdFacade(InterpCmds.CLASSNAME));
-
+	InterpCmds.load(this);
 
 	/* Math and logic commands. */
-        commands.put("=", new MathCmdFacade(MathCmds.EQ));
-        commands.put(">", new MathCmdFacade(MathCmds.GT));
-        commands.put("<", new MathCmdFacade(MathCmds.LT));
-	commands.put("!=", new MathCmdFacade(MathCmds.NE));
-
-        commands.put("+", new MathCmdFacade(MathCmds.ADD));
-        commands.put("-", new MathCmdFacade(MathCmds.SUB));
-        commands.put("*", new MathCmdFacade(MathCmds.MUL));
-        commands.put("/", new MathCmdFacade(MathCmds.DIV));
-        commands.put("%", new MathCmdFacade(MathCmds.MOD));
-
-        commands.put("and", new MathCmdFacade(MathCmds.AND));
-        commands.put("not", new MathCmdFacade(MathCmds.NOT));
-        commands.put("or", new MathCmdFacade(MathCmds.OR));
-
-        commands.put("incr", new MathCmdFacade(MathCmds.INCR));
-
-        commands.put("true", new MathCmdFacade(MathCmds.TRUE));
-
+	MathCmds.load(this);
+	
 	/* List related commands. */
-        commands.put("list", new ListCmdFacade(ListCmds.LIST));
-        commands.put("llen", new ListCmdFacade(ListCmds.LLEN));
-        commands.put("lappend", new ListCmdFacade(ListCmds.LAPPEND));
-        commands.put("lindex", new ListCmdFacade(ListCmds.LINDEX));
-        commands.put("lset", new ListCmdFacade(ListCmds.LSET));
-        commands.put("lrange", new ListCmdFacade(ListCmds.LRANGE));
-
-        commands.put("filter", new ListCmdFacade(ListCmds.FILTER));
-        commands.put("search", new ListCmdFacade(ListCmds.SEARCH));
-
-        commands.put("join", new ListCmdFacade(ListCmds.JOIN));
-        commands.put("split", new ListCmdFacade(ListCmds.SPLIT));
-
+	ListCmds.load(this);
+	
 	/* Control commands. */
-        commands.put("if", new ControlCmdFacade(ControlCmds.IF));
-        commands.put("for", new ControlCmdFacade(ControlCmds.FOR));
-        commands.put("foreach", new ControlCmdFacade(ControlCmds.FOREACH));
-        commands.put("while", new ControlCmdFacade(ControlCmds.WHILE));
-
-        commands.put("break", new ControlCmdFacade(ControlCmds.BREAK));
-        commands.put("continue", new ControlCmdFacade(ControlCmds.CONTINUE));
-
+	ControlCmds.load(this);
 
 	/* String commands. */
-        commands.put("append", new StringCmdFacade(StringCmds.APPEND));
-        commands.put("slen", new StringCmdFacade(StringCmds.SLEN));
-        commands.put("sindex", new StringCmdFacade(StringCmds.SINDEX));
-        commands.put("eq", new StringCmdFacade(StringCmds.STREQ));
-	commands.put("ne", new StringCmdFacade(StringCmds.STRNE));
+	StringCmds.load(this);
 
 	/* Hash table commands. */
-        commands.put("hash", new HashCmdFacade(HashCmds.HASH));
-        commands.put("hget", new HashCmdFacade(HashCmds.HGET));
-        commands.put("hset", new HashCmdFacade(HashCmds.HSET));
-
-
-        commands.put("catch", new CatchCmd());
-
-        commands.put("exit", new ExitCmd());
+	HashCmds.load(this);
 
         commands.put("puts", new PutsCmd());
-
         commands.put("sort", new SortCmd());
-
-        commands.put("time", new TimeCmd());
-
-        commands.put("upeval", new UpCmd());
     }
 
     /**
@@ -371,15 +358,18 @@ public class Interp {
      *            a <code>Thing</code> value
      */
     public void unSetVar(Thing varname) throws HeclException {
+	unSetVar(varname.toString());
+    }
+
+    public void unSetVar(String varname) throws HeclException {
         Hashtable lookup = getVarhash(-1);
-	String vn = varname.toString();
 	/* Bump the cache number so that SubstThing.get refetches the
 	 * variable. */
-	if (lookup.containsKey(vn)) {
+	if (lookup.containsKey(varname)) {
 	    cacheversion++;
-	    lookup.remove(vn);
+	    lookup.remove(varname);
 	} else {
-            throw new HeclException("Variable " + vn + " does not exist");
+            throw new HeclException("Variable " + varname + " does not exist");
 	}
     }
 

@@ -51,6 +51,10 @@ public class SubstThing implements RealThing {
         varName = s;
     }
 
+    public String thingclass() {
+	return "subst";
+    }
+
     /**
      * <code>setSubstFromAny</code> creates a Subst object from another type.
      * 
@@ -132,8 +136,8 @@ public class SubstThing implements RealThing {
     public String getStringRep() {
         if (ref) {
             return "&{" + varName + "}";
-        } else {
-            return "${" + varName + "}";
         }
+	// Tricky: make wtkpreprocess happy by splitting the $ and the {
+	return "$"+"{" + varName + "}";
     }
 }

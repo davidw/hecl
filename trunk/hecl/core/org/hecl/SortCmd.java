@@ -41,7 +41,7 @@ class SortCmd implements Command {
 
 	String sortby = ((Thing)p.getProp("by")).toString();
 	if (sortby.equals("int")) {
-	    sortalgorithm = Compare.INTCOMPARE;
+	    sortalgorithm = Compare.NUMCOMPARE;
 	} else if (sortby.equals("proc")) {
 	    sortalgorithm = Compare.PROCCOMPARE;
 	    sortproc = p.getProp("command");
@@ -76,11 +76,11 @@ class SortCmd implements Command {
 
         //  partition
         do {
-	    if (sortalgorithm == Compare.INTCOMPARE) {
-		while (IntThing.compare((Thing)a.elementAt(i), x) < 0) {
+	    if (sortalgorithm == Compare.NUMCOMPARE) {
+		while (MathCmds.compare((Thing)a.elementAt(i), x) < 0) {
 		    i++;
 		}
-		while (IntThing.compare((Thing)a.elementAt(j), x) > 0) {
+		while (MathCmds.compare((Thing)a.elementAt(j), x) > 0) {
 		    j--;
 		}
 	    } else if (sortalgorithm == Compare.STRINGCOMPARE) {

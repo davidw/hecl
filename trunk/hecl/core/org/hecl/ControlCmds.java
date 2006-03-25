@@ -25,7 +25,7 @@ import java.util.Vector;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-class ControlCmds {
+class ControlCmds extends Operator {
 
     public static final int IF = 1;
     public static final int FOR = 2;
@@ -35,141 +35,166 @@ class ControlCmds {
     public static final int BREAK = 5;
     public static final int CONTINUE = 6;
 
-    static void dispatch(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    private ControlCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
+    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
-
 	    /* The 'if' command. */
-	    case IF:
-		interp.eval(argv[1]);
-		Thing result = interp.result;
-
-		if (Thing.isTrue(result)) {
-		    interp.eval(argv[2]);
-		    return;
-		}
-
-		/*
-		 * We loop through to capture all else if...else if...else
+	  case IF:
+	    interp.eval(argv[1]);
+	    Thing result = interp.result;
+	    
+	    if (Thing.isTrue(result)) {
+		interp.eval(argv[2]);
+		    return null;
+	    }
+	    
+	    /*
+	     * We loop through to capture all else if...else if...else
 		 * possibilities.
 		 */
-		if (argv.length > 3) {
-		    for (int i = 3; i <= argv.length; i += 3) {
-			if (argv[i].getStringRep().equals("else")) {
-			    /* It's an else block, evaluate it and return. */
-			    interp.eval(argv[i + 1]);
-			    return;
-			} else if (argv[i].getStringRep().equals("elseif")) {
-			    /*
-			     * elseif - check and see if the condition is true, if so
-			     * evaluate it and return.
-			     */
-			    interp.eval(argv[i + 1]);
-			    result = interp.result;
-			    if (Thing.isTrue(result)) {
-				interp.eval(argv[i + 2]);
-				return;
-			    }
+	    if (argv.length > 3) {
+		for (int i = 3; i <= argv.length; i += 3) {
+		    if (argv[i].getStringRep().equals("else")) {
+			/* It's an else block, evaluate it and return. */
+			interp.eval(argv[i + 1]);
+			return null;
+		    } else if (argv[i].getStringRep().equals("elseif")) {
+			/*
+			 * elseif - check and see if the condition is true, if so
+			 * evaluate it and return.
+			 */
+			interp.eval(argv[i + 1]);
+			result = interp.result;
+			if (Thing.isTrue(result)) {
+			    interp.eval(argv[i + 2]);
+			    return null;
 			}
 		    }
 		}
-		return;
-
-		/* The 'for' command. */
-	    case FOR:
-		/* start */
-		interp.eval(argv[1]);
-
-		/* test */
-		while (Thing.isTrue(interp.eval(argv[2]))) {
-		    try {
-			/* body */
-			interp.eval(argv[4]);
-		    } catch (HeclException e) {
-			if (e.code == HeclException.BREAK) {
-			    break;
-			} else if (e.code == HeclException.CONTINUE) {
-			} else {
-			    throw e;
-			}
+	    }
+	    break;
+	    
+	    /* The 'for' command. */
+	  case FOR:
+	    /* start */
+	    interp.eval(argv[1]);
+	    
+	    /* test */
+	    while (Thing.isTrue(interp.eval(argv[2]))) {
+		try {
+		    /* body */
+		    interp.eval(argv[4]);
+		} catch (HeclException e) {
+		    if (e.code == HeclException.BREAK) {
+			break;
+		    } else if (e.code == HeclException.CONTINUE) {
+		    } else {
+			throw e;
 		    }
-		    /* next */
-		    interp.eval(argv[3]);
 		}
-		return;
-
-		/* The 'foreach' command. */
-	    case FOREACH:
-		Vector list = ListThing.get(argv[2]);
-		if (list.size() == 0) {
-		    return;
-		}
-		Vector varlist = ListThing.get(argv[1]);
-		int i = 0;
-		boolean cont = true;
-
-		//System.out.println("argv2 is " + argv[2] + " copy is " + argv[2].copy);
-
-		while (cont) {
-		    /*
-		     * This is for foreach loops where we have more than one variable to
-		     * set: foreach {m n} $somelist { code ... }
+		/* next */
+		interp.eval(argv[3]);
+	    }
+	    break;
+	    
+	    /* The 'foreach' command. */
+	  case FOREACH:
+	    Vector list = ListThing.get(argv[2]);
+	    if (list.size() == 0) {
+		break;
+	    }
+	    Vector varlist = ListThing.get(argv[1]);
+	    int i = 0;
+	    boolean cont = true;
+	    
+	    //System.out.println("argv2 is " + argv[2] + " copy is " + argv[2].copy);
+	    
+	    while (cont) {
+		/*
+		 * This is for foreach loops where we have more than one variable to
+		 * set: foreach {m n} $somelist { code ... }
 		     */
-		    for (Enumeration e = varlist.elements(); e.hasMoreElements();) {
-			if (cont == false) {
-			    throw new HeclException(
-				"Foreach argument list does not match list length");
-			}
-
-			Thing element = (Thing) list.elementAt(i);
-			element.copy = true; /* Make sure that we don't fiddle
-					      * with the original value. */
-			String varname = ((Thing) e.nextElement()).getStringRep();
-
-			//System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
-
-			interp.setVar(varname, element);
-			i++;
-			if (i == list.size()) {
-			    cont = false;
-			}
+		for (Enumeration e = varlist.elements(); e.hasMoreElements();) {
+		    if (cont == false) {
+			throw new HeclException(
+			    "Foreach argument list does not match list length");
 		    }
-
-		    try {
-			interp.eval(argv[3]);
-		    } catch (HeclException e) {
-			if (e.code == HeclException.BREAK) {
-			    break;
-			} else if (e.code == HeclException.CONTINUE) {
-			} else {
-			    throw e;
-			}
+		    
+		    Thing element = (Thing) list.elementAt(i);
+		    element.copy = true; /* Make sure that we don't fiddle
+					  * with the original value. */
+		    String varname = ((Thing) e.nextElement()).getStringRep();
+		    
+		    //System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
+		    
+		    interp.setVar(varname, element);
+		    i++;
+		    if (i == list.size()) {
+			cont = false;
 		    }
 		}
-		return;
-
-		/* The 'while' command. */
-	    case WHILE:
-		while (Thing.isTrue(interp.eval(argv[1]))) {
-		    try {
-			interp.eval(argv[2]);
-		    } catch (HeclException e) {
-			if (e.code == HeclException.BREAK) {
-			    break;
-			} else if (e.code == HeclException.CONTINUE) {
-			} else {
-			    throw e;
-			}
+		
+		try {
+		    interp.eval(argv[3]);
+		} catch (HeclException e) {
+		    if (e.code == HeclException.BREAK) {
+			break;
+		    } else if (e.code == HeclException.CONTINUE) {
+		    } else {
+			throw e;
 		    }
 		}
-		return;
+	    }
+	    break;
 
-		/* The 'break' command. */
-	    case BREAK:
-		throw new HeclException(HeclException.BREAK);
-
-		/* The 'continue' command. */
-	    case CONTINUE:
-		throw new HeclException(HeclException.CONTINUE);
+	  case WHILE:
+	    /* The 'while' command. */
+	    while (Thing.isTrue(interp.eval(argv[1]))) {
+		try {
+		    interp.eval(argv[2]);
+		} catch (HeclException e) {
+		    if (e.code == HeclException.BREAK) {
+			break;
+		    } else if (e.code == HeclException.CONTINUE) {
+		    } else {
+			throw e;
+		    }
+		}
+	    }
+	    break;
+	    
+	  case BREAK:
+	    /* The 'break' command. */
+	    throw new HeclException(HeclException.BREAK);
+	    
+	  case CONTINUE:
+	    /* The 'continue' command. */
+	    throw new HeclException(HeclException.CONTINUE);
+	  default:
+	    throw new HeclException("Unknown list command '"
+				    + argv[0].toString() + "' with code '"
+				    + cmd + "'.");
 	}
+	return null;
+    }
+
+    public static void load(Interp ip) throws HeclException {
+	Operator.load(ip);
+    }
+
+    public static void unload(Interp ip) throws HeclException {
+	Operator.unload(ip);
+    }
+
+    static { 
+        cmdtable.put("if", new ControlCmds(IF,2,-1));
+        cmdtable.put("for", new ControlCmds(FOR,4,4));
+        cmdtable.put("foreach", new ControlCmds(FOREACH,3,3));
+        cmdtable.put("while", new ControlCmds(WHILE,2,2));
+        cmdtable.put("break", new ControlCmds(BREAK,0,0));
+        cmdtable.put("continue", new ControlCmds(CONTINUE,0,0));
     }
 }

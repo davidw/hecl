@@ -50,6 +50,10 @@ public class GroupThing implements RealThing {
         val.addElement(new Thing(new StringThing(s)));
     }
 
+    public String thingclass() {
+	return "group";
+    }
+
     /**
      * <code>setGroupFromAny</code> creates a group from another type of
      * Thing.

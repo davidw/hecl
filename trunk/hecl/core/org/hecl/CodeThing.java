@@ -41,6 +41,10 @@ public class CodeThing implements RealThing {
 	stanzas = newstanzas;
     }
 
+    public String thingclass() {
+	return "code";
+    }
+    
     /**
      * The <code>setCodeFromAny</code> method makes the Thing passed to it
      * into a CodeThing representation.

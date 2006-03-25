@@ -46,6 +46,10 @@ public class ObjectThing implements RealThing {
         val = o;
     }
 
+    public String thingclass() {
+	return "object";
+    }
+
     /**
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an ObjectThing internal representation.

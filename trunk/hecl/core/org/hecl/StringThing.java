@@ -54,6 +54,10 @@ public class StringThing implements RealThing {
         val = sb;
     }
 
+    public String thingclass() {
+	return "string";
+    }
+
     /**
      * The <code>setStringFromAny</code> method transforms the Thing into a
      * string type.

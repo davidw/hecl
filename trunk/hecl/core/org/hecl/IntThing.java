@@ -1,39 +1,22 @@
-/* Copyright 2004-2005 David N. Welton
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
- http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
- */
-
-/* $Id$ */
-
-/* Integer things. */
-
 package org.hecl;
 
 /**
  * The <code>IntThing</code> class represents an integer Thing.
  * 
- * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
+ * @author <a href="mailto:wolfgang.kechel@data2c.com">Wolfgang S. Kechel</a>
  * @version 1.0
  */
-public class IntThing implements RealThing {
-    private int val;
+public class IntThing extends IntegralThing {
+    public static IntThing ZERO = new IntThing(0);
+    public static IntThing ONE = new IntThing(1);
+    public static IntThing NEGONE = new IntThing(-1);
 
     /**
      * Creates a new <code>IntThing</code> instance equal to 0.
      *  
      */
     public IntThing() {
-        val = 0;
+	val = 0;
     }
 
     /**
@@ -43,7 +26,7 @@ public class IntThing implements RealThing {
      *            an <code>int</code> value
      */
     public IntThing(int i) {
-        val = i;
+	val = i;
     }
 
     /**
@@ -54,7 +37,7 @@ public class IntThing implements RealThing {
      *            a <code>boolean</code> value
      */
     public IntThing(boolean b) {
-        val = (b == true ? 1 : 0);
+        val = b == true ? 1 : 0;
     }
 
     /**
@@ -64,7 +47,11 @@ public class IntThing implements RealThing {
      *            a <code>String</code> value
      */
     public IntThing(String s) {
-        val = Integer.parseInt(s);
+        set(Integer.parseInt(s));
+    }
+
+    public String thingclass() {
+	return "int";
     }
 
     /**
@@ -100,10 +87,16 @@ public class IntThing implements RealThing {
      * @exception HeclException
      *                if an error occurs
      */
-    private static void setIntFromAny(Thing thing) throws HeclException {
+    private static void set(Thing thing) throws HeclException {
         RealThing realthing = thing.val;
 
-        if (!(realthing instanceof IntThing)) {
+        if (realthing instanceof IntThing)
+	    return;
+	
+	if(NumberThing.isNumber(thing)) {
+	    // It's already a number
+	    thing.setVal(new IntThing(((IntThing)realthing).intValue()));
+	} else {
             /* If it's not an intthing already, we make it from its
 	     * string rep. */
             thing.setVal(new IntThing(thing.getStringRep()));
@@ -120,9 +113,31 @@ public class IntThing implements RealThing {
      *                if an error occurs
      */
     public static int get(Thing thing) throws HeclException {
-        setIntFromAny(thing);
-        IntThing getint = (IntThing) thing.val;
-        return getint.val;
+        return NumberThing.asNumber(thing).intValue();
+    }
+
+    public byte byteValue() {
+	return (byte)val;
+    }
+    
+    public short shortValue() {
+	return (short)val;
+    }
+    
+    public int intValue() {
+	return val;
+    }
+    
+    public long longValue() {
+	return (long)val;
+    }
+    
+    public float floatValue() {
+	return (float)val;
+    }
+    
+    public double doubleValue() {
+	return (double)val;
     }
 
     /**
@@ -154,28 +169,5 @@ public class IntThing implements RealThing {
         return Integer.toString(val);
     }
 
-    /**
-     * <code>compare</code> exists to compare two Things as ints. Since it
-     * is possible that one or both are not integers, we may throw a
-     * HeclException.
-     * 
-     * @param a
-     *            a <code>Thing</code> value
-     * @param b
-     *            a <code>Thing</code> value
-     * @return an <code>int</code> value
-     * @exception HeclException
-     *                if an error occurs
-     */
-    public static int compare(Thing a, Thing b) throws HeclException {
-        int ia = IntThing.get(a);
-        int ib = IntThing.get(b);
-        if (ia == ib) {
-            return 0;
-        } else if (ia < ib) {
-            return -1;
-        } else {
-            return 1;
-        }
-    }
+    private int val;
 }
