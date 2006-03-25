@@ -1,8 +1,23 @@
+/* Copyright 2004-2006 David N. Welton, Wolfgang S. Kechel
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
+
 package org.hecl;
 
 /**
  * The <code>IntThing</code> class represents an integer Thing.
- * 
+ *
  * @author <a href="mailto:wolfgang.kechel@data2c.com">Wolfgang S. Kechel</a>
  * @version 1.0
  */
@@ -13,7 +28,7 @@ public class IntThing extends IntegralThing {
 
     /**
      * Creates a new <code>IntThing</code> instance equal to 0.
-     *  
+     *
      */
     public IntThing() {
 	val = 0;
@@ -21,7 +36,7 @@ public class IntThing extends IntegralThing {
 
     /**
      * Creates a new <code>IntThing</code> instance with value i.
-     * 
+     *
      * @param i
      *            an <code>int</code> value
      */
@@ -32,7 +47,7 @@ public class IntThing extends IntegralThing {
     /**
      * Creates a new <code>IntThing</code> instance from boolean b where true
      * is 1 and false is 0.
-     * 
+     *
      * @param b
      *            a <code>boolean</code> value
      */
@@ -42,7 +57,7 @@ public class IntThing extends IntegralThing {
 
     /**
      * Creates a new <code>IntThing</code> instance from string s.
-     * 
+     *
      * @param s
      *            a <code>String</code> value
      */
@@ -57,7 +72,7 @@ public class IntThing extends IntegralThing {
     /**
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an IntThing internal representation.
-     * 
+     *
      * @param i
      *            an <code>int</code> value
      * @return a <code>Thing</code> value
@@ -69,7 +84,7 @@ public class IntThing extends IntegralThing {
     /**
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an IntThing internal representation.
-     * 
+     *
      * @param b
      *            an <code>boolean</code> value
      * @return a <code>Thing</code> value
@@ -81,7 +96,7 @@ public class IntThing extends IntegralThing {
     /**
      * <code>setIntFromAny</code> transforms the given Thing into an IntThing,
      * internally.
-     * 
+     *
      * @param thing
      *            a <code>Thing</code> value
      * @exception HeclException
@@ -92,7 +107,7 @@ public class IntThing extends IntegralThing {
 
         if (realthing instanceof IntThing)
 	    return;
-	
+
 	if(NumberThing.isNumber(thing)) {
 	    // It's already a number
 	    thing.setVal(new IntThing(((IntThing)realthing).intValue()));
@@ -105,7 +120,7 @@ public class IntThing extends IntegralThing {
 
     /**
      * <code>get</code> attempts to fetch an integer value from a Thing.
-     * 
+     *
      * @param thing
      *            a <code>Thing</code> value
      * @return an <code>int</code> value
@@ -119,30 +134,30 @@ public class IntThing extends IntegralThing {
     public byte byteValue() {
 	return (byte)val;
     }
-    
+
     public short shortValue() {
 	return (short)val;
     }
-    
+
     public int intValue() {
 	return val;
     }
-    
+
     public long longValue() {
 	return (long)val;
     }
-    
+
     public float floatValue() {
 	return (float)val;
     }
-    
+
     public double doubleValue() {
 	return (double)val;
     }
 
     /**
      * <code>set</code> sets the internal value of an IntThing to i.
-     * 
+     *
      * @param i
      *            an <code>int</code> value
      */
@@ -152,7 +167,7 @@ public class IntThing extends IntegralThing {
 
     /**
      * <code>deepcopy</code> makes a copy.
-     * 
+     *
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
@@ -162,7 +177,7 @@ public class IntThing extends IntegralThing {
     /**
      * <code>getStringRep</code> creates a string representation of the
      * IntThing.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String getStringRep() {

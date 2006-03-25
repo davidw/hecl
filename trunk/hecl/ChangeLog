@@ -1,5 +1,12 @@
 2006-03-25  David N. Welton  <davidw@dedasys.com>
 
+	* build-tools/antenna-bin-0.9.13.jar: Added a copy of antenna to
+	make building Hecl work out of the box.
+
+	* core/org/hecl/MathCmds.java: Commented out some 1.5 specific
+	commands.  Perhaps it's possible to use Antenna to deal with
+	them...
+
 	* *: Big code dump from Wolfgang.  Salient points include: use of
 	Antenna for compilation.  Extended numeric system that is
 	conditionally compiled instead of being present in different

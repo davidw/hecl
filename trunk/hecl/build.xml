@@ -52,8 +52,8 @@
   <!-- default: varies -->
   <!--<property name="wtk.midpapi" value=""/>-->
 
-  <!--  <taskdef resource="antenna.properties" classpath="ant-antenna.jar"/>-->
-  <taskdef resource="antenna.properties"/>
+  <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-0.9.13.jar"/>
+  <!-- <taskdef resource="antenna.properties"/> -->
 
   <!-- properties for the build base directorries -->
   <property name="j2se.build" value="build/j2se/final"/>
@@ -151,11 +151,8 @@
     <mkdir dir="${j2se.build}/core" />
     <mkdir dir="${j2se.pre}/core"/>
 
-    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core"
-     symbols="ant:j2se"/>
-    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}/core"
-     debug="true"
-     >
+    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="ant:j2se"/>
+    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}/core" debug="true">
       <classpath refid="classpath"/>
     </javac>
   </target>

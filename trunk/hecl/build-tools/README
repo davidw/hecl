@@ -1,0 +1,7 @@
+Build Tools
+===========
+
+These tools are necessary to build Hecl.  Antenna helps us compile
+things conditionally for all the various targets we want to build for.
+
+They may not be under as liberal a license as Hecl itself is.
