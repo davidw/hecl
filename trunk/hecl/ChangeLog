@@ -1,3 +1,11 @@
+2006-03-26  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: In the final/ directory, http and rms shouldn't go
+	into separate subdirectories, or else they are included as
+	http/org/hecl/http/ in the .jar, which breaks things. I also
+	turned off obfuscation, and turned on preverification (which now
+	works, with the files in the proper location).
+
 2006-03-25  David N. Welton  <davidw@dedasys.com>
 
 	* build-tools/antenna-bin-0.9.13.jar: Added a copy of antenna to
