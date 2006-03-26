@@ -16,7 +16,6 @@ limitations under the License.
 package org.hecl;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Vector;
 
 class ListCmds extends Operator {
@@ -41,7 +40,7 @@ class ListCmds extends Operator {
 	int last = 0;
 	Vector list;
 	Vector result;
-	
+
 	switch (cmd) {
 	  case LIST:
 	    result = new Vector();
@@ -49,11 +48,11 @@ class ListCmds extends Operator {
 		result.addElement(argv[i]);
 	    }
 	    return new ListThing(result);
-	    
+
 	  case LLEN:
 	    list = ListThing.get(argv[1]);
 	    return new IntThing(list.size());
-	    
+
 	  case LINDEX:
 	    list = ListThing.get(argv[1]);
 	    idx = NumberThing.asNumber(argv[2]).intValue();
@@ -67,7 +66,7 @@ class ListCmds extends Operator {
 		interp.setResult((Thing)list.elementAt(idx));
 	    }
 	    break;
-	    
+
 	  case LINSERT:
 	    list = ListThing.get(argv[1]);
 	    idx = NumberThing.asNumber(argv[2]).intValue();
@@ -77,7 +76,7 @@ class ListCmds extends Operator {
 	    list.insertElementAt(argv[3], idx);
 	    interp.setResult(argv[1]);
 	    break;
-	    
+
 	  case LSET:
 	    list = ListThing.get(argv[1]);
 	    idx = NumberThing.asNumber(argv[2]).intValue();
@@ -91,20 +90,20 @@ class ListCmds extends Operator {
 	    }
 	    interp.setResult(argv[1]);
 	    break;
-	    
+
 	  case LRANGE:
 	    list = ListThing.get(argv[1]);
 	    int first = NumberThing.asNumber(argv[2]).intValue();
 	    last = NumberThing.asNumber(argv[3]).intValue();
 	    int ls = list.size();
-	    
+
 	    if (first < 0) {
 		first += ls;
 	    }
 	    if (last < 0) {
 		last += ls;
 	    }
-	    
+
 	    if (last <= first || last >= ls || first >= ls) {
 		interp.setResult("");
 	    }
@@ -121,7 +120,7 @@ class ListCmds extends Operator {
 	    }
 	    interp.setResult(argv[1]);
 	    break;
-	    
+
 	  case FILTER:
 	  case SEARCH:
 	    list = ListThing.get(argv[1]);
@@ -130,18 +129,18 @@ class ListCmds extends Operator {
 	    int sz = list.size();
 	    Thing val;
 	    boolean brk = false;
-	    
+
 	    if (cmd == SEARCH) {
 		brk = true;
 	    }
-	    
+
 	    for (int i = 0; i < sz; i++) {
 		val = (Thing) list.elementAt(i);
 		val.copy = true; /* Make sure that the original value
 				  * doesn't get fiddled with. */
 		interp.setVar(varname, val);
 		interp.eval(argv[3]);
-		
+
 		if (IntThing.get(interp.getResult()) != 0) {
 		    results.addElement(val);
 		    if (brk == true) {
@@ -150,7 +149,7 @@ class ListCmds extends Operator {
 		}
 	    }
 	    return new ListThing(results);
-	    
+
 	  case JOIN:
 	    list = ListThing.get(argv[1]);
 	    StringBuffer strres = new StringBuffer("");
@@ -161,7 +160,7 @@ class ListCmds extends Operator {
 	    } else {
 		joinstr = " ";
 	    }
-	    
+
 	    for (Enumeration e = list.elements(); e.hasMoreElements();) {
 		if (firstone == false) {
 		    strres.append(joinstr);
@@ -171,7 +170,7 @@ class ListCmds extends Operator {
 		strres.append(((Thing) e.nextElement()).toString());
 	    }
 	    return new StringThing(strres);
-	    
+
 	  case SPLIT:
 	    result = new Vector();
 	    String str = argv[1].toString();
@@ -182,7 +181,7 @@ class ListCmds extends Operator {
 		/* By default, we split on spaces. */
 		splitstr = " ";
 	    }
-	    
+
 	    idx = str.indexOf(splitstr);
 	    while (idx >= 0) {
 		result.addElement(new Thing(str.substring(last, idx)));
@@ -199,7 +198,7 @@ class ListCmds extends Operator {
 	}
 	return null;
     }
-       
+
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }
@@ -219,5 +218,4 @@ class ListCmds extends Operator {
         cmdtable.put("join", new ListCmds(JOIN,1,2));
         cmdtable.put("split", new ListCmds(SPLIT,1,2));
     }
-    
 }
