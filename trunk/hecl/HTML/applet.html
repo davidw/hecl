@@ -3,55 +3,38 @@
 <html>
   <head>
     <title>Hecl interpreter in an applet</title>
-    <link rel="stylesheet" href="/style.css">
+    <script>
+function runHecl() {
+    s = document.sf.scriptin.value;
+    applet = document.getElementById("heclet");
+    applet.runScript(s);
+}
+// -->
+    </script>
+
   </head>
+
   <body>
 
-    <div class="title">
-      <h1 align="center">Hecl Programming Language</h1>
-    </div>
+    <h1 align="center">Hecl Applet</h1>
 
-    <div class="nav">
-      <br/>
-      <b>Links:</b>
-      <ul>
-	<li><a href="/">Home</a></li>
-	<li><a href="/docs/">Documentation</a></li>
-	<li><a href="hecl_examples.html">Examples</a></li>
-	<li>Applet</li>
-      </ul>
-      <ul>
-	<li><a
-	    href="http://sourceforge.net/projects/hecl/">SourceForge Project</a></li>
-	<li>
-	  <a
-	    href="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Mailing
-	    List</a>
-	</li>
-	<li>
-	  <a href="http://sourceforge.net/project/showfiles.php?group_id=122383&package_id=133643&release_id=360830">Download</a>
-	</li>
-      </ul>
-    </div>
+    <p>Enter text in the first box, and click to see it run.</p>
 
-    <table class="applet">
-      <tbody>
-	<tr>
-	  <td>
-	    <applet code="org/hecl/applet/HeclApplet.class" archive="heclCore.jar, heclApplet.jar" width="600" height="450">
-	    </applet>
-	  </td>
-	</tr>
+    <b>Script:</b><br/>
+    <form name="sf" action="">
+      <p>
+	<textarea name="scriptin" rows="20" cols="80" style="width: 100%">set i 0
+while {< &i 10} {
+    puts "i is $i"
+    incr &i
+}</textarea><br/>
+	<input onclick="runHecl()" type="button" value="Evaluate Script"/>
+      </p>
+    </form>
 
-	<tr>
-	  <td>
-	    The applet may seem a bit slow because of the way it
-	    prints to the screen and refreshes after each <b>puts</b>
-	    - it runs a lot faster if you don't print each iteration.
-	  </td>
-	</tr>
-      </tbody>
-    </table>
+    <applet id="heclet" name="heclApplet" code="org.hecl.applet.HeclApplet"
+      archive="HeclApplet.jar" width="600" height="200">
+    </applet>
 
   </body>
 </html>

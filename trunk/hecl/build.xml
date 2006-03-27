@@ -167,12 +167,14 @@
     depends="initCompile,compileCore"
     description="Compile Hecl applet">
     <mkdir dir="${j2se.build}/applet"/>
+
     <javac srcdir="applet"
       destdir="${j2se.build}/applet"
       debug="${hecldebug}">
       <classpath refid="coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
+
   </target>
 
   <target name="compileFiles"
@@ -249,12 +251,6 @@
     </jar>
   </target>
 
-  <!-- package targets -->
-  <target name="initPackage"
-    description="Initialized packaging">
-    <mkdir dir="out"/>
-  </target>
-
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
   <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttp">
@@ -284,7 +280,7 @@
   </target>
 
   <target name="packageJARs" description="Create Jar distributions of the sources"
-    depends="compile,initPackage">
+    depends="compile">
     <jar destfile="out/heclCore.jar" basedir="build/core"/>
     <jar destfile="out/heclApplet.jar" basedir="build/applet"/>
     <jar destfile="out/heclFiles.jar" basedir="build/files"/>
@@ -292,17 +288,18 @@
     <jar destfile="out/heclLoad.jar" basedir="build/load"/>
   </target>
 
-  <target name="packageApplet" description="Create HTML applet structure"
-    depends="initPackage,packageJARs">
-    <mkdir dir="out/applet"/>
-    <copy file="out/heclCore.jar" tofile="out/applet/heclCore.jar"/>
-    <copy file="out/heclApplet.jar" tofile="out/applet/heclApplet.jar"/>
-    <copy file="out/heclFiles.jar" tofile="out/applet/heclFiles.jar"/>
-    <!--     <copy file="out/heclHttp.jar" tofile="out/applet/heclHttp.jar"/> -->
-    <copy file="HTML/applet.html" tofile="out/applet/index.html"/>
+  <target name="packageApplet" description="Create HTML applet structure">
+    <mkdir dir="${j2se.build}"/>
+
+    <jar destfile="${j2se.build}/HeclApplet.jar"
+      basedir="${j2se.build}/core" update="true"/>
+    <jar destfile="${j2se.build}/HeclApplet.jar"
+      basedir="${j2se.build}/files" update="true"/>
+    <jar destfile="${j2se.build}/HeclApplet.jar"
+      basedir="${j2se.build}/applet" update="true"/>
+
+    <copy file="HTML/applet.html" tofile="${j2se.build}/applet.html"/>
   </target>
-
-
 
   <!-- J2ME versions -->
   <target name="midlet10" description="Build MIDlet for CLDC-1.0">
@@ -408,7 +405,7 @@
       jarfile="${j2me.build}/${j2me.app}.jar"
       jadfile="${j2me.build}/${j2me.app}.jad"
       cldc="false"
-      preverify="false"
+      preverify="true"
       obfuscate="false"
       verbose="true">
 
