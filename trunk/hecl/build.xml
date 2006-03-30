@@ -56,33 +56,35 @@
   <!-- default: varies -->
   <!--<property name="wtk.midpapi" value=""/>-->
 
+  <!--
   <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-0.9.13.jar"/>
-  <!-- <taskdef resource="antenna.properties"/> -->
+  -->
+  <taskdef resource="antenna.properties"/>
 
-  <!-- properties for the build base directorries -->
+  <!-- J2SE ************************************** -->
+  <!-- properties for the build base directorries  -->
   <property name="j2se.build" value="build/j2se/final"/>
-  <property name="j2se.pre" value="build/j2se/pre/all"/>
+  <property name="j2se.pre" value="build/j2se/pre"/>
 
+  <property name="j2se.coreclasspath" value="${j2se.build}"/>
+  <path id="j2se.coreclasspath">
+    <pathelement location="${j2se.build}"/>
+  </path>
+  
+  <property name="j2se.hecl.jar" value="${j2se.build}/Hecl.jar"/>
+  <property name="j2se.hecl.lib.jar" value="${j2se.build}/Hecllib.jar"/>
+  <property name="j2se.hecl.stand.jar" value="${j2se.build}/Heclstand.jar"/>
+  <property name="j2se.hecl.applet.jar" value="${j2se.build}/HeclApplet.jar"/>
+
+
+  <!-- J2ME ************************************** -->
+  <!-- build base dirs -->
   <property name="j2me.build" value="build/j2me/final/${wtk.cldc.version}"/>
   <property name="j2me.pre" value="build/j2me/pre/${wtk.cldc.version}"/>
   <property name="cldc" value="cldc${wtk.cldc.version}"/>
 
-  <path id="coreclasspath">
-    <pathelement location="${j2se.build}/core"/>
-  </path>
-  <path id="httpclasspath">
-    <pathelement location="${j2se.build}/http"/>
-  </path>
-  <path id="filesclasspath">
-    <pathelement location="${j2se.build}/files"/>
-  </path>
-  <path id="loadclasspath">
-    <pathelement location="${j2se.build}/load"/>
-  </path>
-
-  <!-- J2ME stuff -->
   <property name="j2me.app" value="Hecl"/>
-  <property name="j2me.appversion" value="1.01"/>
+  <property name="j2me.appversion" value="1.1"/>
   <property name="j2me.entryclass" value="Hecl"/>
   <property name="j2me.vendor" value="dedasys.com"/>
 
@@ -90,25 +92,21 @@
   <path id="j2me.coreclasspath">
     <pathelement location="${j2me.coreclasspath}"/>
   </path>
-
   <property name="j2me.httpclasspath" value="${j2me.build}"/>
   <path id="j2me.httpclasspath">
     <pathelement location="${j2me.httpclasspath}"/>
   </path>
-
   <property name="j2me.rmsclasspath" value="${j2me.build}"/>
   <path id="j2me.rmsclasspath">
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
-  <!--
-  Additional classpath locations, specified in build.properties file
-  -->
+  <!-- Additional classpath locations, specified in build.properties file -->
   <path id="classpath">
   </path>
 
   <target name="showenv">
     <exec executable="/usr/bin/env">
-    </exec>
+      </exec>
   </target>
 
   <!-- virtual targets -->
@@ -124,7 +122,7 @@
     depends="compile,package"/>
 
   <target name="compile" description="Complete everything"
-    depends="compileCore,compileCommandline,compileApplet"/>
+    depends="packageCommandline,packageStandalone,compileApplet"/>
 
   <target name="package" description="Package things into JARs"
     depends="packageJARs,packageApplet,HeclBuilderJar"/>
@@ -154,11 +152,12 @@
   <target name="compileCore"
     depends="initCompile"
     description="Compile core Hecl functionality">
-    <mkdir dir="${j2se.build}/core" />
     <mkdir dir="${j2se.pre}/core"/>
-
-    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="ant:j2se"/>
-    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}/core" debug="${hecldebug}">
+    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core"
+     symbols="ant:j2se"/>
+    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}"
+     debug="${hecldebug}"
+     >
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -166,26 +165,24 @@
   <target name="compileApplet"
     depends="initCompile,compileCore"
     description="Compile Hecl applet">
-    <mkdir dir="${j2se.build}/applet"/>
 
     <javac srcdir="applet"
-      destdir="${j2se.build}/applet"
-      debug="${hecldebug}">
-      <classpath refid="coreclasspath"/>
-      <classpath refid="classpath"/>
+     destdir="${j2se.build}"
+     debug="${hecldebug}"
+     >
+     <classpath refid="j2se.coreclasspath"/>
+     <classpath refid="classpath"/>
     </javac>
-
   </target>
 
   <target name="compileFiles"
     depends="initCompile,compileCore"
     description="Compile Hecl files support">
-    <mkdir dir="${j2se.build}/files"/>
-
     <javac srcdir="files"
-      destdir="${j2se.build}/files"
-      debug="${hecldebug}">
-      <classpath refid="coreclasspath"/>
+     destdir="${j2se.build}"
+     debug="${hecldebug}"
+     >
+      <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -194,16 +191,14 @@
     depends="initCompile,compileCore"
     description="Compile Hecl load (classloader) support">
     <mkdir dir="${j2se.build}/load"/>
-    <mkdir dir="${j2se.pre}/load"/>
+    <mkdir dir="${j2se.pre}"/>
     <wtkpreprocess srcdir="load" destdir="${j2se.pre}/load"
-      symbols="ant:j2se"/>
-
+     symbols="ant:j2se"/>
     <javac srcdir="${j2se.pre}/load"
-      destdir="${j2se.build}/load"
-      debug="${hecldebug}">
-
-      <classpath refid="coreclasspath"/>
-      <classpath refid="filesclasspath"/>
+     destdir="${j2se.build}"
+     debug="${hecldebug}"
+     >
+      <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -211,16 +206,16 @@
   <target name="compileHttp"
     description="Compile J2SE Hecl http support"
     depends="initCompile,compileCore">
-    <mkdir dir="${j2se.build}/http"/>
+    <mkdir dir="${j2se.build}"/>
     <mkdir dir="${j2se.pre}/http"/>
     <wtkpreprocess srcdir="http" destdir="${j2se.pre}/http"
-      symbols="ant:j2se"/>
+     symbols="ant:j2se"/>
     <wtkpreprocess srcdir="http_standard" destdir="${j2se.pre}/http"
-      symbols="ant:j2se"/>
+     symbols="ant:j2se"/>
     <javac srcdir="${j2se.pre}/http"
-      destdir="${j2se.build}/http"
-      debug="${hecldebug}">
-      <classpath refid="coreclasspath"/>
+     destdir="${j2se.build}"
+     debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -228,14 +223,10 @@
   <target name="compileCommandline"
     description="Compile Hecl command line support"
     depends="initCompile,compileCore,compileFiles,compileHttp,compileLoad">
-    <mkdir dir="${j2se.build}/commandline"/>
     <javac srcdir="commandline"
-      destdir="${j2se.build}/commandline"
-      debug="${hecldebug}">
-      <classpath refid="coreclasspath"/>
-      <classpath refid="filesclasspath"/>
-      <classpath refid="httpclasspath"/>
-      <classpath refid="loadclasspath"/>
+     destdir="${j2se.build}"
+     debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -251,99 +242,119 @@
     </jar>
   </target>
 
+  <!-- package targets -->
+  <target name="initPackage"
+    description="Initialized packaging">
+    <mkdir dir="out"/>
+  </target>
+
+  
+  <!-- Build a jar containing the hecl core. -->
+  <target name="packageLib"
+   description="Create Jar for Hecl lib"
+   depends="compileCommandline,compileHttp"
+   >
+    <jar destfile="${j2se.hecl.lib.jar}"
+     basedir="${j2se.build}"
+     excludes="**jad,**jar,Hecl.class,StandaloneHecl.class,*html"
+     update="true">
+     <manifest>
+      <attribute name="Main-Class" value="notused"/>
+     </manifest>
+    </jar>
+  </target>
+
   <!-- Build the command line package.  We first add the core stuff,
   then add the Hecl command line target. -->
-  <target name="packageCommandline" description="Create Jar for command line Hecl" depends="compileCommandline,compileHttp">
-    <jar destfile="Hecl.jar" basedir="${j2se.build}/core" update="true" />
-    <jar destfile="Hecl.jar" basedir="${j2se.build}/files" update="true"/>
-    <jar destfile="Hecl.jar" basedir="${j2se.build}/load" update="true"/>
-    <!--
-    <jar destfile="Hecl.jar" basedir="build/float" update="true"/>
-    -->
-    <jar destfile="Hecl.jar" basedir="${j2se.build}/commandline" includes="Hecl.class" update="true">
-      <manifest>
-        <attribute name="Main-Class" value="Hecl"/>
-      </manifest>
+  <target name="packageCommandline"
+   description="Create Jar for command line Hecl"
+   depends="compileCommandline,compileHttp,packageLib"
+   >
+    <jar destfile="${j2se.hecl.jar}"
+     basedir="${j2se.build}"
+     excludes="**jad,**jar,StandaloneHecl.class,*html,**/applet/**"
+     update="true">
+     <manifest>
+      <attribute name="Main-Class" value="Hecl"/>
+     </manifest>
     </jar>
   </target>
 
-  <target name="packageStandalone" description="Create Jar for
-    standalone Hecl" depends="compileCommandline,compileHttp">
-    <jar destfile="StandaloneHecl.jar" basedir="${j2se.build}/core" update="true"/>
-    <jar destfile="StandaloneHecl.jar" basedir="${j2se.build}/files" update="true"/>
-    <jar destfile="StandaloneHecl.jar" basedir="${j2se.build}/http" update="true"/>
-    <jar destfile="StandaloneHecl.jar" basedir="build_j2se/commandline" includes="StandaloneHecl.class" update="true">
-      <manifest>
-        <attribute name="Main-Class" value="StandaloneHecl"/>
-      </manifest>
+  <target name="packageStandalone"
+   description="Create Jar for standalone Hecl"
+   depends="compileCommandline,compileHttp,packageLib">
+    <jar destfile="${j2se.hecl.stand.jar}"
+     basedir="${j2se.build}"
+     excludes="**jad,**jar,Hecl.class,*html,**/applet/**"
+     update="true">
+     <manifest>
+      <attribute name="Main-Class" value="StandaloneHecl"/>
+     </manifest>
     </jar>
   </target>
+
 
   <target name="packageJARs" description="Create Jar distributions of the sources"
-    depends="compile">
-    <jar destfile="out/heclCore.jar" basedir="build/core"/>
-    <jar destfile="out/heclApplet.jar" basedir="build/applet"/>
-    <jar destfile="out/heclFiles.jar" basedir="build/files"/>
-    <jar destfile="out/heclHttp.jar" basedir="build/http_standard/"/>
-    <jar destfile="out/heclLoad.jar" basedir="build/load"/>
+    depends="packageCommandline,packageStandalone">
   </target>
 
-  <target name="packageApplet" description="Create HTML applet structure">
-    <mkdir dir="${j2se.build}"/>
-
-    <jar destfile="${j2se.build}/HeclApplet.jar"
-      basedir="${j2se.build}/core" update="true"/>
-    <jar destfile="${j2se.build}/HeclApplet.jar"
-      basedir="${j2se.build}/files" update="true"/>
-    <jar destfile="${j2se.build}/HeclApplet.jar"
-      basedir="${j2se.build}/applet" update="true"/>
-
+  <!-- !!! next target needs some work !!! -->
+  <!-- !!! really needed? !!! -->
+  <target name="packageApplet" description="Create HTML applet structure"
+    depends="initPackage,packageJARs,compileApplet"
+    >
+    <jar destfile="${j2se.hecl.applet.jar}"
+      basedir="${j2se.build}" update="true"
+      excludes="**jad,**jar,*class,*html"
+      />
     <copy file="HTML/applet.html" tofile="${j2se.build}/applet.html"/>
   </target>
 
+
+
   <!-- J2ME versions -->
   <target name="midlet10" description="Build MIDlet for CLDC-1.0">
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-    </antcall>
+   <antcall target="midlet" inheritAll="false">
+    <param name="wtk.cldc.version" value="1.0"/>
+   </antcall>
   </target>
 
   <target name="midlet11" description="Build MIDlet for CLDC-1.1">
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.1"/>
-    </antcall>
+   <antcall target="midlet" inheritAll="false">
+    <param name="wtk.cldc.version" value="1.1"/>
+   </antcall>
   </target>
 
   <target name="compileJ2MECore"
-    description="Compile the core classes for J2ME"
-    depends="initCompile">
-
-    <mkdir dir="${j2me.build}"/>
-    <mkdir dir="${j2me.coreclasspath}"/>
-    <mkdir dir="${j2me.pre}/core"/>
-    <wtkpreprocess srcdir="core"
-      symbols="ant:j2me,ant:${cldc}"
-      destdir="${j2me.pre}/core"
-      verbose="true"/>
-    <wtkbuild srcdir="${j2me.pre}/core" target="1.1" source="1.2"
-      verbose="true" debug="${hecldebug}"
-      cldc="false" destdir="${j2me.coreclasspath}">
-      <classpath refid="j2me.coreclasspath"/>
-    </wtkbuild>
+   description="Compile the core classes for J2ME"
+   depends="initCompile"
+   >
+   <mkdir dir="${j2me.build}"/>
+   <mkdir dir="${j2me.coreclasspath}" />
+   <mkdir dir="${j2me.pre}/core"/>
+   <wtkpreprocess srcdir="core"
+    symbols="ant:j2me,ant:${cldc}"
+    destdir="${j2me.pre}/core"
+    verbose="true"
+    />
+   <wtkbuild srcdir="${j2me.pre}/core" target="1.1" source="1.2"
+    verbose="true" debug="${hecldebug}"
+    cldc="false"
+    destdir="${j2me.coreclasspath}">
+    <classpath refid="j2me.coreclasspath"/>
+   </wtkbuild>
   </target>
 
   <target name="compileJ2MErms" description="Compile Hecl RecordStore"
-    depends="initCompile,compileJ2MECore">
-
+   depends="initCompile,compileJ2MECore"
+   >
     <mkdir dir="${j2me.rmsclasspath}"/>
     <mkdir dir="${j2me.pre}/rms"/>
-
     <wtkpreprocess srcdir="rms" destdir="${j2me.pre}/rms"
-      symbols="ant:j2me,ant:${cldc}"/>
-
+     symbols="ant:j2me,ant:${cldc}"/>
     <wtkbuild srcdir="${j2me.pre}/rms"  target="1.1" source="1.2"
-      destdir="${j2me.rmsclasspath}">
-      <classpath refid="j2me.coreclasspath"/>
+     destdir="${j2me.rmsclasspath}">
+     <classpath refid="j2me.coreclasspath"/>
     </wtkbuild>
   </target>
 
@@ -353,27 +364,25 @@
     <mkdir dir="${j2me.httpclasspath}"/>
     <mkdir dir="${j2me.pre}/http"/>
     <wtkpreprocess srcdir="http_micro" destdir="${j2me.pre}/http"
-      symbols="ant:j2me,ant:${cldc}">
+     symbols="ant:j2me,ant:${cldc}">
     </wtkpreprocess>
     <wtkpreprocess srcdir="http" destdir="${j2me.pre}/http"
-      symbols="ant:j2me,ant:${cldc}">
+     symbols="ant:j2me,ant:${cldc}">
     </wtkpreprocess>
     <wtkbuild srcdir="${j2me.pre}/http" target="1.1" source="1.2"
-      destdir="${j2me.httpclasspath}">
+     destdir="${j2me.httpclasspath}">
       <classpath refid="j2me.coreclasspath"/>
     </wtkbuild>
   </target>
 
   <target name="compileJ2ME"
     description="Compile the J2ME specific stuff"
-    depends ="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
-
-    <!--
-    -->
+    depends ="compileJ2MECore,compileJ2MEHttp,compileJ2MErms"
+    >
     <mkdir dir="${j2me.build}/stand"/>
     <mkdir dir="${j2me.pre}/stand"/>
     <wtkpreprocess srcdir="j2me" destdir="${j2me.pre}/stand"
-      symbols="ant:j2me,ant:${cldc}"/>
+     symbols="ant:j2me,ant:${cldc}"/>
     <wtkbuild srcdir="${j2me.pre}/stand" target="1.1" source="1.2"
       destdir="${j2me.build}" debug="${hecldebug}">
       <classpath refid="j2me.coreclasspath"/>
@@ -382,46 +391,87 @@
     </wtkbuild>
   </target>
 
-  <target name="midlet" depends="compileJ2ME">
+  <target name="j2melib"
+   description="Stuff the j2me class files into a jar for later use
+   as embedded language in external projects"
+   depends="compileJ2ME"
+  >
 
-    <wtkjad jadfile="${j2me.build}/${j2me.app}.jad"
-      jarfile="${j2me.build}/${j2me.app}.jar"
-      name="${j2me.app}"
-      version="${j2me.appversion}"
-      vendor="${j2me.vendor}">
+   <wtkjad jadfile="${j2me.build}/${j2me.app}lib.jad"
+     jarfile="${j2me.build}/${j2me.app}lib.jar"
+     name="${j2me.app}"
+     version="${j2me.appversion}"
+     vendor="${j2me.vendor}"
+     >
+     <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+     <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+   </wtkjad>
+   <wtkpackage
+    basedir="${j2me.build}"
+    excludes="**jad,**jar,**hcl,**png,*.class,script.hcl"
+    jarfile="${j2me.build}/${j2me.app}lib.jar"
+    jadfile="${j2me.build}/${j2me.app}lib.jad"
+    cldc="false"
+    preverify="true"
+    >
 
-      <midlet name="${j2me.app}" class="${j2me.entryclass}"/>
-      <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
-      <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
-    </wtkjad>
+    <manifest>
+     <attribute name="MIDlet-Name" value="Hecl"/>
+     <attribute name="MIDlet-Vendor" value="dedasys"/>
+     <attribute name="MIDlet-Version" value="1.1"/>
+     <attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
+     <!--
+     <attribute name="MIDlet-1" value="Hecllib, Hecl.png, Hecllib"/>
+     -->
+     <attribute name="MIDlet-Jar-URL" value="Hecllib.jar"/>
+     <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+     <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+    </manifest>
+   </wtkpackage>
+  </target>
 
-    <copy file="j2me/script.hcl" todir="${j2me.build}" overwrite="true"/>
-    <copy file="j2me/Hecl.png" todir="${j2me.build}" overwrite="true"/>
+  <target name="midlet"
+   depends="compileJ2ME,j2melib"
+  >
+   <wtkjad jadfile="${j2me.build}/${j2me.app}.jad"
+     jarfile="${j2me.build}/${j2me.app}.jar"
+     name="${j2me.app}"
+     version="${j2me.appversion}"
+     vendor="${j2me.vendor}"
+     >
+     <midlet name="${j2me.app}" class="${j2me.entryclass}"/>
+     <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+     <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+   </wtkjad>
 
-    <wtkpackage
-      basedir="${j2me.build}"
-      excludes="pre/**,**jad,**jar"
+   <copy file="j2me/script.hcl" todir="${j2me.build}" overwrite="true"/>
+   <copy file="j2me/Hecl.png" todir="${j2me.build}" overwrite="true"/>
 
-      jarfile="${j2me.build}/${j2me.app}.jar"
-      jadfile="${j2me.build}/${j2me.app}.jad"
-      cldc="false"
-      preverify="true"
-      obfuscate="false"
-      verbose="true">
+   <wtkpackage
+    basedir="${j2me.build}"
+    excludes="pre/**,**jad,**jar"
+    
+    jarfile="${j2me.build}/${j2me.app}.jar"
+    jadfile="${j2me.build}/${j2me.app}.jad"
+    cldc="false"
+    preverify="true"
+    obfuscate="true"
+    verbose="true"
+    >
 
-      <manifest>
-	<attribute name="MIDlet-Name" value="Hecl"/>
-	<attribute name="MIDlet-Vendor" value="dedasys"/>
-	<attribute name="MIDlet-Version" value="1.1"/>
-	<attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
-	<!--
-	<attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
-	-->
-	<attribute name="MIDlet-Jar-URL" value="Hecl.jar"/>
-	<attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
-	<attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
-      </manifest>
-    </wtkpackage>
+    <manifest>
+     <attribute name="MIDlet-Name" value="Hecl"/>
+     <attribute name="MIDlet-Vendor" value="dedasys"/>
+     <attribute name="MIDlet-Version" value="1.1"/>
+     <attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
+     <!--
+     <attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
+     -->
+     <attribute name="MIDlet-Jar-URL" value="Hecl.jar"/>
+     <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+     <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+    </manifest>
+   </wtkpackage>
   </target>
 
 
@@ -483,12 +533,12 @@
 
 
   <target name="HeclBuilder" depends="packageCommandline,
-    packageJarHack">
+      packageJarHack">
     <mkdir dir="build/heclbuilder" />
     <javac srcdir="HeclBuilder" destdir="build/heclbuilder">
       <classpath refid="classpath" />
       <classpath path="HeclBuilder/swing-layout-1.0.jar" />
-      <classpath path="Hecl.jar" />
+      <classpath path="${j2se.hecl.lib.jar}" />
       <classpath path="JarHack.jar" />
     </javac>
   </target>
@@ -500,7 +550,7 @@
       </manifest>
 
       <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
-	includes="org/jdesktop/layout/*.class"/>
+      includes="org/jdesktop/layout/*.class"/>
       <zipfileset src="JarHack.jar" includes="jarhack/*.class"/>
       <zipfileset src="Hecl.jar" includes="org/hecl/*.class"/>
       <zipfileset src="Hecl.jar" includes="org/hecl/files/*.class"/>

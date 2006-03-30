@@ -1,3 +1,35 @@
+2006-03-30  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
+
+	* build.xml: Modified build process, added more properties,
+	simplified jar file generation. j2me versions robust now, applet
+	target should be checked by somebody else.
+
+	* core/org/hecl/Interp.java: setResult(boolean) now uses
+	well-known static IntThings to create the result.
+
+	* core/org/hecl/HashCmds.java (http): Added new commands
+	hkeys, hclear, hremove. Simplified code.
+
+	* core/org/hecl/Ensemble.java: Added newline at end of file to
+	avoid complaints of scn/diff.
+
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/IntegralThing.java: 
+	* core/org/hecl/ControlCmds.java: 
+	* core/org/hecl/ListCmds.java: 
+	* core/org/hecl/NumberThing.java: 
+	* core/org/hecl/StringCmds.java: Beautification.
+
+	* core/org/hecl/HashThing.java: Experimental new representation as
+	string. Properly working converion to list, passes tests.
+
+	* core/org/hecl/ListThing.java: Experimental new implementation of get.
+
+	* core/org/hecl/MathCmds.java: Enhancements, get rid of some
+	unnecessary classes.
+
+	* core/org/hecl/ControlCmds.java (http): Made constructor protected.
+
 2006-03-27  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Get the Applet build process working again.
