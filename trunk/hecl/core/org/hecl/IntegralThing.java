@@ -19,6 +19,7 @@ public abstract class IntegralThing extends NumberThing {
     public boolean isIntegral() {
 	return true;
     }
+
     public boolean isFractional() {
 	return false;
     }

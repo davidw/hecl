@@ -27,7 +27,7 @@ public abstract class NumberThing implements RealThing {
     public static boolean isNumber(Thing t) {
 	return t.val instanceof NumberThing;
     }
-
+    
     public static boolean isIntegral(Thing t) {
 	return isNumber(t) && ((NumberThing)t.val).isIntegral();
     }
@@ -35,11 +35,10 @@ public abstract class NumberThing implements RealThing {
     public static boolean isFractional(Thing t) {
 	return isNumber(t) && ((NumberThing)t.val).isFractional();
     }
-
+    
     public abstract boolean isIntegral();
-
     public abstract boolean isFractional();
-
+    
     // Accessors
     public abstract byte byteValue();
     public abstract short shortValue();

@@ -99,19 +99,27 @@ public class HashThing implements RealThing {
      *                if an error occurs
      */
     private static void setHashFromAny(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
-        Vector list = null;
-        HashThing newthing = null;
+	if(true) {
+	    RealThing realthing = thing.val;
 
-        if (realthing instanceof HashThing) {
-            /* Nothing to be done. */
-            return;
-        }
-
-        list = ListThing.get(thing);
-
-        newthing = new HashThing(list);
-        thing.setVal(newthing);
+	    if (realthing instanceof HashThing) {
+		/* Nothing to be done. */
+		return;
+	    }
+	    thing.setVal(new HashThing(ListThing.get(thing)));
+	} else {
+	    RealThing realthing = thing.val;
+	    Vector list = null;
+	    HashThing newthing = null;
+	    
+	    if (realthing instanceof HashThing) {
+		/* Nothing to be done. */
+		return;
+	    }
+	    list = ListThing.get(thing);
+	    newthing = new HashThing(list);
+	    thing.setVal(newthing);
+	}
     }
 
     /**
@@ -166,15 +174,19 @@ public class HashThing implements RealThing {
      *                if an error occurs
      */
     public String getStringRep() {
-	ListThing newthing = null;
-	try {
-	    Vector v = ListThing.get(new Thing(new HashThing(val)));
-	    newthing = new ListThing(v);
-	} catch (HeclException he) {
-	    /* We should never get here because a hash is always a
-	     * well formed list. */
+	if (true) {
+	    return "<#hash-" + val.hashCode() + ">";
+	} else {
+	    ListThing newthing = null;
+	    try {
+		Vector v = ListThing.get(new Thing(new HashThing(val)));
+		newthing = new ListThing(v);
+	    } catch (HeclException he) {
+		/* We should never get here because a hash is always a
+		 * well formed list. */
+	    }
+	    return newthing.getStringRep();
 	}
-        return newthing.getStringRep();
     }
 
 }

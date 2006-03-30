@@ -31,9 +31,6 @@ class ListCmds extends Operator {
     public static final int JOIN = 10;
     public static final int SPLIT = 11;
 
-    private ListCmds(int cmdcode,int minargs,int maxargs) {
-	super(cmdcode,minargs,maxargs);
-    }
 
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	int idx = 0;
@@ -199,12 +196,21 @@ class ListCmds extends Operator {
 	return null;
     }
 
+
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }
+
+
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip);
     }
+
+
+    protected ListCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
 
     static {
 	cmdtable.put("list", new ListCmds(LIST,-1,-1));

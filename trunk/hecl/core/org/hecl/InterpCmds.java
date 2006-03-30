@@ -36,9 +36,6 @@ class InterpCmds extends Operator {
 
     public static final int CLASSINFO = 20;
 
-    private InterpCmds(int cmdcode,int minargs,int maxargs) {
-	super(cmdcode,minargs,maxargs);
-    }
 
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Thing result = null;
@@ -158,13 +155,21 @@ class InterpCmds extends Operator {
 	return null;
     }
 
+
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }
 
+
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip);
     }
+
+
+    private InterpCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
 
     static {
 	cmdtable.put("set", new InterpCmds(SET, 1 ,2));

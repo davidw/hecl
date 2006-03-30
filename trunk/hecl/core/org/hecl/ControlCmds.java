@@ -31,13 +31,9 @@ class ControlCmds extends Operator {
     public static final int FOR = 2;
     public static final int FOREACH = 3;
     public static final int WHILE = 4;
-
     public static final int BREAK = 5;
     public static final int CONTINUE = 6;
 
-    private ControlCmds(int cmdcode,int minargs,int maxargs) {
-	super(cmdcode,minargs,maxargs);
-    }
 
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
@@ -181,13 +177,21 @@ class ControlCmds extends Operator {
 	return null;
     }
 
+
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }
 
+
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip);
     }
+
+
+    protected ControlCmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+
 
     static { 
         cmdtable.put("if", new ControlCmds(IF,2,-1));

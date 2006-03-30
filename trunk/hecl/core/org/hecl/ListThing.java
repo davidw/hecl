@@ -89,11 +89,11 @@ public class ListThing implements RealThing {
      * @exception HeclException
      *                if an error occurs
      */
+    /*
     private static void setListFromAny(Thing thing) throws HeclException {
         RealThing realthing = thing.val;
 
         if (realthing instanceof ListThing) {
-            /* Nothing to be done. */
             return;
         }
 
@@ -113,6 +113,7 @@ public class ListThing implements RealThing {
         }
 	thing.setVal(newthing);
     }
+    */
 
     /**
      * <code>get</code> attempts to transform the given Thing into a List, and
@@ -125,8 +126,30 @@ public class ListThing implements RealThing {
      *                if an error occurs
      */
     public static Vector get(Thing thing) throws HeclException {
+	ListThing getlist = null;
+        RealThing realthing = thing.val;
+
+        if (! (realthing instanceof ListThing)) {
+	    Vector newval = new Vector();
+	    if (realthing instanceof HashThing) {
+		Hashtable h = HashThing.get(thing);
+		for (Enumeration e = h.keys(); e.hasMoreElements();) {
+		    String key = (String) e.nextElement();
+		    newval.addElement(new Thing(key));
+		    newval.addElement(h.get(key));
+		}
+		getlist = new ListThing(newval);
+	    } else {
+		getlist = new ListThing(realthing.getStringRep());
+	    }
+	} else
+	    getlist = (ListThing)realthing;
+	
+
+	/*
         setListFromAny(thing);
         ListThing getlist = (ListThing) thing.val;
+	*/
 
 	/* If the thing is slated for copying, it's elements should be
 	 * as well. */

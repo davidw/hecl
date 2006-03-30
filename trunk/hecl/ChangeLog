@@ -1,8 +1,13 @@
 2006-03-30  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
 
+	* tests/hash.hcl: Modified hashtable test to check behavior of
+	join with hashtable as argument. The former test check the printed
+	representation.
+	
 	* build.xml: Modified build process, added more properties,
 	simplified jar file generation. j2me versions robust now, applet
 	target should be checked by somebody else.
+	Bumped midlet version number to 1.1.
 
 	* core/org/hecl/Interp.java: setResult(boolean) now uses
 	well-known static IntThings to create the result.

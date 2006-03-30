@@ -454,7 +454,7 @@ public class Interp {
      * @param newresult a <code>boolean</code> value
      */
     public void setResult(boolean newresult) {
-	result = IntThing.create(newresult ? 1 : 0);
+	result = new Thing(newresult ? IntThing.ONE : IntThing.ZERO);
     }
 
     /**
