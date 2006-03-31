@@ -1,3 +1,11 @@
+2006-03-31  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
+
+	* build.xml: Put final result underneath the 'jars' subdirectory.
+	Added some more comments, highlighted customizable settings.
+
+	* core/org/hecl/MathCmds.java: Disabled java1.5 function by
+	default, see build.xml about how to enable them.
+
 2006-03-31  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/MathCmds.java: Commented out 1.5-only commands
