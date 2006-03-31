@@ -93,10 +93,23 @@
  
  <!-- J2SE ************************************** -->
  <!-- properties for the build base directorries  -->
+ <condition property="javamail.complete">
+    <and>
+      <available classname="javax.activation.DataHandler"/>
+      <available classname="javax.mail.Transport"/>
+    </and>
+  </condition>
+
+ <condition property="j2se.java15">
+  <equals arg1="1.5" arg2="${ant.java.version}"/>
+ </condition>
+
  <property name="j2se.defines" value="ant:j2se"/>
- <!--
- <property name="j2se.defines" value="ant:j2se,j2se.java15"/>
- -->
+
+ <target name="echo">
+  <echo message="harry ${ant.java.version}, defines=--${j2se.defines}--"/>
+ </target>
+
 
  <property name="j2se.build" value="${buildprefix}/j2se/final"/>
  <property name="j2se.pre" value="${buildprefix}/j2se/pre"/>

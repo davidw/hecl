@@ -174,7 +174,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return new DoubleThing(Math.atan(a.doubleValue()));
 	  case EXP:
 	    return new DoubleThing(Math.exp(a.doubleValue()));
-//#ifdef j2se.java15
+//#ifdef ${j2se.java15}
 	  case SIGNUM:
 	    return new DoubleThing(Math.signum(a.doubleValue()));
 	  case CBRT:
@@ -296,7 +296,7 @@ public class MathCmds extends org.hecl.Operator {
 //#ifdef ant:j2se
 	  case POW:
 	    return new DoubleThing(Math.pow(a.doubleValue(), b.doubleValue()));
-//#ifdef j2se.java15
+//#ifdef ${j2se.java15}
 	  case HYPOT:
 	    return new DoubleThing(Math.hypot(a.doubleValue(), b.doubleValue()));
 //#endif
@@ -453,6 +453,7 @@ public class MathCmds extends org.hecl.Operator {
     
     static {
 	System.out.println("java version="+"${ant.java.version}");
+	System.out.println("harry="+"${j2se.java15}");
 	
 	cmdtable.put("true",new MathCmds(TRUE,0,0));
 	cmdtable.put("false",new MathCmds(FALSE,0,0));
