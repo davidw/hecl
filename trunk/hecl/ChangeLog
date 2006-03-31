@@ -1,3 +1,9 @@
+2006-03-31  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added a bit of logic in the build system to fail
+	gracefully if the WTK isn't present, and all the user is trying to
+	do is run packageCommandline (j2se).
+
 2006-03-31  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
 
 	* build.xml: Put final result underneath the 'jars' subdirectory.

@@ -452,8 +452,6 @@ public class MathCmds extends org.hecl.Operator {
     private static Hashtable extensions = new Hashtable();
     
     static {
-	System.out.println("java version="+"${ant.java.version}");
-	System.out.println("harry="+"${j2se.java15}");
 	
 	cmdtable.put("true",new MathCmds(TRUE,0,0));
 	cmdtable.put("false",new MathCmds(FALSE,0,0));

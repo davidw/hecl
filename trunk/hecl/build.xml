@@ -24,8 +24,7 @@
 
  <!-- General WTk settings -->
  <!-- make it fit for your local installation -->
- <property name="wtk.home" value="/opt/WTK2.2"/>
-
+ <property name="my.wtk.home" value="/opt/WTK2.2"/>
 
  <!-- *************************************************** -->
  <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
@@ -39,9 +38,17 @@
 
       To create a midlet for CLDC1.0, use
       ant midlet10
-      
+
   -->
  <!-- *************************************************** -->
+
+  <!-- This allows us to fail gracefully if my.wtk.home isn't set to
+  something valid above. -->
+  <condition property="wtk.home" value="${my.wtk.home}" else="/">
+    <and>
+      <available file="${my.wtk.home}"/>
+    </and>
+  </condition>
 
  <!-- Specifies the version of MIDP to use. 	2.0+ -->
  <!-- default: 1.0 -->
@@ -107,9 +114,9 @@
  <property name="j2se.defines" value="ant:j2se"/>
 
  <target name="echo">
-  <echo message="harry ${ant.java.version}, defines=--${j2se.defines}--"/>
+  <echo message="Java version: ${ant.java.version}, defines=--${j2se.defines}--"/>
+  <echo message="WTK Home: ${wtk.home}"/>
  </target>
-
 
  <property name="j2se.build" value="${buildprefix}/j2se/final"/>
  <property name="j2se.pre" value="${buildprefix}/j2se/pre"/>
