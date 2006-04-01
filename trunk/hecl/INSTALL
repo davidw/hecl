@@ -10,9 +10,10 @@ How to compile and run simple Hecl programs.
 
    ant packageCommandline
 
-3) At this point, you have a Hecl.jar file, and can run it like so:
+3) At this point, you have a Hecl.jar file in the directory
+   build/j2se/final/Hecl.jar
 
-   java -jar Hecl.jar
+   java -jar build/j2se/final/Hecl.jar
    hecl> puts "hello world"
 hello world
 
@@ -35,8 +36,9 @@ hello world
 
    or, using standard Java:
 
-   java -jar Hecl.jar tests/suite.hcl
+   java -jar build/j2se/final/Hecl.jar tests/suite.hcl
 
-6) J2ME Hecl.  Look at README in the j2me directory.
+6) J2ME Hecl.  Look at README in the j2me directory, in addition to
+   the documentation in the docs/ directory.
 
 $Id$
