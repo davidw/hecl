@@ -2,7 +2,9 @@
 
 	* build.xml: Added proguard.jar to repository, and a line in
 	build.xml specifying where proguard is located.  There may be a
-	better way to do this.
+	better way to do this.  Added a property to control obfuscation.
+	Sometimes it's useful to turn this off so as to have a look at the
+	resulting .jar produced.
 
 2006-03-31  David N. Welton  <davidw@dedasys.com>
 

@@ -29,6 +29,10 @@
  <!-- ProGuard location -->
  <property name="wtk.proguard.home" value="build-tools/"/>
 
+ <!-- Obfuscate or not? -->
+ <!-- default: true -->
+ <property name="obfuscate" value="true"/>
+
  <!-- *************************************************** -->
  <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
  <!--
@@ -518,7 +522,7 @@
    jarfile="${j2me.hecl.jar}"
    cldc="false"
    preverify="true"
-   obfuscate="true"
+   obfuscate="${obfuscate}"
    verbose="true"
    >
 
