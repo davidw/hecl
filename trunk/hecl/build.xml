@@ -26,6 +26,9 @@
  <!-- make it fit for your local installation -->
  <property name="my.wtk.home" value="/opt/WTK2.2"/>
 
+ <!-- ProGuard location -->
+ <property name="wtk.proguard.home" value="build-tools/"/>
+
  <!-- *************************************************** -->
  <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
  <!--

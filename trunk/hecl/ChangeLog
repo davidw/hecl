@@ -1,3 +1,9 @@
+2006-04-01  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added proguard.jar to repository, and a line in
+	build.xml specifying where proguard is located.  There may be a
+	better way to do this.
+
 2006-03-31  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added a bit of logic in the build system to fail
