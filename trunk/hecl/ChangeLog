@@ -1,3 +1,15 @@
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Parse.java: New isXDigit, extended set of
+	characters allows in variable names (:-.).
+
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Parse.java: New isXDigit, extended set of
+	characters allows in variable names (:-.).
+	
+
+=======
 2006-04-01  David N. Welton  <davidw@dedasys.com>
 
 	* build.xml: Added proguard.jar to repository, and a line in
@@ -12,6 +24,7 @@
 	gracefully if the WTK isn't present, and all the user is trying to
 	do is run packageCommandline (j2se).
 
+>>>>>>> .r197
 2006-03-31  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
 
 	* build.xml: Put final result underneath the 'jars' subdirectory.
