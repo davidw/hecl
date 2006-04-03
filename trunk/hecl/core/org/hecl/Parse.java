@@ -279,15 +279,18 @@ public class Parse {
 
     /* Various bits and pieces utilized by parseDollar, below.  */
 
-    private static String allowed = "_/@";
+    private static String allowed = "_/@:-.";
+    private static String xchars="0123456789ABCDEFabcdef";
     private static boolean isLetter(char ch) {
 	return ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'));
     }
     private static boolean isDigit(char ch) {
 	return (ch >= '0' && ch <= '9');
     }
-
-    private static boolean isPunct(char ch) {
+    private static boolean isXDigit(char ch) {
+	return xchars.indexOf(ch) >= 0;
+    }
+    private static boolean isValidVarPunct(char ch) {
 	return allowed.indexOf(ch) >= 0;
     }
 
@@ -312,8 +315,7 @@ public class Parse {
 	    parseVarBlock(state);
 	} else {
 	    /* Variable names use this range here. */
-	    while((isLetter(ch) || isDigit(ch) || isPunct(ch))
-		) {
+	    while((isLetter(ch) || isDigit(ch) || isValidVarPunct(ch))) {
 		appendToCurrent(ch);
 		ch = state.nextchar();
 	    }
@@ -544,10 +546,7 @@ public class Parse {
 		    if (state.done()) {
 			return true;
 		    }
-		    if ((nextc < '0' || nextc > '9') &&
-			(nextc < 'a' || nextc > 'f') &&
-			(nextc < 'A' || nextc > 'F')) {
-
+		    if (!isXDigit(nextc)) {
 			state.rewind();
 			break;
 		    }
