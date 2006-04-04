@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Vector;
 
 /**
  * The <code>Parse</code> class takes care of parsing Hecl scripts.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -42,7 +42,7 @@ public class Parse {
     /**
      * The <code>more</code> method returns a boolean value indicating whether
      * there is more text to be parsed or not.
-     * 
+     *
      * @return a <code>boolean</code> value
      */
     public boolean more() {
@@ -52,14 +52,14 @@ public class Parse {
     /**
      * Creates a new <code>Parse</code> instance. Not actually used by
      * anything.
-     *  
+     *
      */
     public Parse() {
     }
 
     /**
      * Creates a new <code>Parse</code> instance.
-     * 
+     *
      * @param interp_in
      *            a <code>Interp</code> value
      * @param in_in
@@ -74,7 +74,7 @@ public class Parse {
     /**
      * The <code>parse</code> method runs the parser on the text added by
      * creating a new Parse instance.
-     * 
+     *
      * @return a <code>Vector</code> value
      * @exception HeclException
      *                if an error occurs
@@ -124,7 +124,7 @@ public class Parse {
     /**
      * The <code>addCurrent</code> method adds a new element to the command
      * parsed.
-     *  
+     *
      */
     protected void addCurrent() {
         outList.addElement(currentOut);
@@ -134,7 +134,7 @@ public class Parse {
     /**
      * The <code>appendToCurrent</code> method adds a character to the group
      * object.
-     * 
+     *
      * @param ch
      *            a <code>char</code>
      */
@@ -148,7 +148,7 @@ public class Parse {
     /**
      * The <code>addCurrent</code> method adds a new Thing to the out list,
      * and sets the current output collector to an empty Thing.
-     * 
+     *
      * @param newthing
      *            a <code>Thing</code> value
      */
@@ -160,7 +160,7 @@ public class Parse {
     /**
      * The <code>addCommand</code> method adds a command to the current
      * output.
-     * 
+     *
      * @exception HeclException
      *                if an error occurs
      */
@@ -176,7 +176,7 @@ public class Parse {
     /**
      * The <code>addDollar</code> method adds a $var lookup to the current
      * output.
-     * 
+     *
      * @param docopy
      *            a <code>boolean</code> value
      * @exception HeclException
@@ -194,7 +194,7 @@ public class Parse {
     /**
      * The <code>parseLine</code> method is where parsing starts on a new
      * line.
-     * 
+     *
      * @param in
      *            a <code>String</code> value
      * @param state
@@ -263,7 +263,7 @@ public class Parse {
     /**
      * The <code>parseComment</code> method keeps reading until a newline,
      * this 'eating' the comment.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      */
@@ -279,7 +279,7 @@ public class Parse {
 
     /* Various bits and pieces utilized by parseDollar, below.  */
 
-    private static String allowed = "_/@:-.";
+    private static String allowed = "_/@:-";
     private static String xchars="0123456789ABCDEFabcdef";
     private static boolean isLetter(char ch) {
 	return ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'));
@@ -298,7 +298,7 @@ public class Parse {
      * The <code>parseDollar</code> method parses a $\ foo (or &foo)
      * variable. These can also be of the form $\ {foo} so that we can
      * separate them from any surrounding text.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @param docopy
@@ -333,7 +333,7 @@ public class Parse {
 
     /**
      * <code>parseBlock</code> parses a {} block.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException
@@ -349,7 +349,7 @@ public class Parse {
 
     /**
      * <code>parseCommand</code> parses a [] command.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException
@@ -362,7 +362,7 @@ public class Parse {
     /**
      * <code>parseBlockOrCommand</code> is what parseCommand and parseBlock
      * use internally.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @param block
@@ -387,7 +387,8 @@ public class Parse {
         while (true) {
             ch = state.nextchar();
             if (state.done()) {
-                return;
+		throw new HeclException("Unbalanced " +
+		    (block ? "{}" : "[]"), 10);
             }
             if (ch == ldelim) {
                 level++;
@@ -424,7 +425,7 @@ public class Parse {
 
     /**
      * <code>parseText</code> parses a "string in quotes".
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException
@@ -461,7 +462,7 @@ public class Parse {
 
     /**
      * <code>parseWord</code> parses a regular word not in quotes.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException

@@ -1,3 +1,12 @@
+2006-04-05  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: If parsing ends in the middle of a
+	block or command, throw an exception.
+
+	* core/org/hecl/HeclException.java: Print the numerical
+	representation of the errorcode if it's not one of the build in
+	codes.
+
 2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@prs.de>
 
 	* core/org/hecl/Parse.java: New isXDigit, extended set of
@@ -7,10 +16,10 @@
 
 	* core/org/hecl/Parse.java: New isXDigit, extended set of
 	characters allows in variable names (:-.).
-	
 
-=======
 2006-04-01  David N. Welton  <davidw@dedasys.com>
+
+	* INSTALL: Updated.
 
 	* build.xml: Added proguard.jar to repository, and a line in
 	build.xml specifying where proguard is located.  There may be a
@@ -24,7 +33,6 @@
 	gracefully if the WTK isn't present, and all the user is trying to
 	do is run packageCommandline (j2se).
 
->>>>>>> .r197
 2006-03-31  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
 
 	* build.xml: Put final result underneath the 'jars' subdirectory.

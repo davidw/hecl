@@ -81,7 +81,7 @@ public class HeclApplet extends Applet implements ActionListener {
         gbc.weightx = 1;
         gbc.weighty = 0;
 
-	Font fixed = new Font("Monospaced", Font.PLAIN, 12);
+	Font fixed = new Font("Monospaced", Font.PLAIN, 10);
 	output.setFont(fixed);
     }
 

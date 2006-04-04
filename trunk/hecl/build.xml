@@ -367,12 +367,12 @@
  <!-- !!! next target needs some work !!! -->
  <!-- !!! really needed? !!! -->
  <target name="packageApplet" description="Create HTML applet structure"
-  depends="packageJARs,compileApplet"
-  >
+  depends="packageJARs,compileApplet">
+
   <jar destfile="${j2se.hecl.applet.jar}"
    basedir="${j2se.build}" update="true"
-   excludes="**jad,**jar,*class,*html"
-  />
+   excludes="**jad,**jar,*class,*html"/>
+
   <copy file="HTML/applet.html" tofile="${j2se.build}/applet.html"/>
   <copy file="HTML/applet.html" todir="${j2se.rel}"/>
   <copy file="${j2se.hecl.applet.jar}" todir="${j2se.rel}"/>
@@ -402,8 +402,8 @@
   <wtkpreprocess srcdir="core"
    symbols="ant:j2me,ant:${cldc}"
    destdir="${j2me.pre}/core"
-   verbose="true"
-   />
+   verbose="true" />
+
   <wtkbuild srcdir="${j2me.pre}/core" target="1.1" source="1.2"
    verbose="true" debug="${hecldebug}"
    cldc="false"

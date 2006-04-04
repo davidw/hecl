@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.util.Vector;
 
 /**
  * The <code>HeclException</code> class implements exceptions for Hecl.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -42,9 +42,8 @@ public class HeclException extends Exception {
 
     /**
      * Creates a new <code>HeclException</code> instance.
-     * 
-     * @param s
-     *            a <code>String</code> value
+     *
+     * @params a <code>String</code> value
      */
 
     public HeclException(String s) {
@@ -56,7 +55,7 @@ public class HeclException extends Exception {
 
     /**
      * Creates a new <code>HeclException</code> instance.
-     * 
+     *
      * @param s
      *            a <code>String</code> value describing the error.
      * @param exception_code
@@ -71,7 +70,7 @@ public class HeclException extends Exception {
 
     /**
      * Creates a new <code>HeclException</code> instance.
-     * 
+     *
      * @param exception_code
      *            an <code>int</code> value
      */
@@ -84,7 +83,7 @@ public class HeclException extends Exception {
 
     /**
      * <code>pushException</code> adds to the exception stack.
-     *  
+     *
      */
     private void pushException() {
         stack = new Stack();
@@ -98,7 +97,7 @@ public class HeclException extends Exception {
     /**
      * The <code>where</code> method tells the exception what command it
      * occurred in.
-     * 
+     *
      * @param cmd
      *            a <code>String</code> containing the command name.
      */
@@ -109,7 +108,7 @@ public class HeclException extends Exception {
     /**
      * The <code>codeToString</code> method returns a string that describes
      * the error code.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String codeToString() {
@@ -123,14 +122,14 @@ public class HeclException extends Exception {
             case ERROR :
                 return "ERROR";
             default :
-                return "BOGUS ERROR!";
+                return "" + code;
         }
     }
 
     /**
      * The <code>toString</code> method turns the exception stack into a
      * string.
-     * 
+     *
      * @return a <code>String</code> value
      */
 
@@ -140,7 +139,7 @@ public class HeclException extends Exception {
 
     /**
      * The <code>getStack</code> method returns the exception as a Thing.
-     * 
+     *
      * @return a <code>Thing</code> value
      */
 
@@ -158,7 +157,7 @@ public class HeclException extends Exception {
         return new HeclException("wrong # args: should be \"" + str + message + "\"");
     }
     /**
-     * 
+     *
      * @param param
      *            <code>Thing</code> specifying the actual parameter.
      * @param type
