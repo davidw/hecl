@@ -1,3 +1,8 @@
+2006-04-09  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListThing.java: Restored older 'destructive'
+	version for the time being.
+
 2006-04-05  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Parse.java: If parsing ends in the middle of a
