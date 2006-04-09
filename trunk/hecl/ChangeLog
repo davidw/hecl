@@ -1,5 +1,8 @@
 2006-04-09  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/HashThing.java: Reverted HashThing changes.
+	Changed hash table size calculations to save memory.
+
 	* core/org/hecl/ListThing.java: Restored older 'destructive'
 	version for the time being.
 

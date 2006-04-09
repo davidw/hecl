@@ -24,5 +24,5 @@ test hash-5 {
     set foo [hash {a b c d}]
     hset $foo a 1
     hset $foo x y
-    join &foo
+    sort [join &foo]
 } {a b c d}
