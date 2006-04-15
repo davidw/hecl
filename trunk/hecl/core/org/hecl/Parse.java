@@ -74,8 +74,7 @@ public class Parse {
      * creating a new Parse instance.
      *
      * @return a <code>Vector</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public Vector parse() throws HeclException {
         outList = new Vector();
@@ -154,8 +153,7 @@ public class Parse {
      * The <code>addCurrent</code> method adds a new Thing to the out list,
      * and sets the current output collector to an empty Thing.
      *
-     * @param newthing
-     *            a <code>Thing</code> value
+     * @param newthing a <code>Thing</code> value
      */
     protected void addCurrent(Thing newthing) {
         outList.addElement(newthing);
@@ -166,8 +164,7 @@ public class Parse {
      * The <code>addCommand</code> method adds a command to the current
      * output.
      *
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     protected void addCommand() throws HeclException {
         Thing saveout = currentOut;
@@ -182,10 +179,8 @@ public class Parse {
      * The <code>addDollar</code> method adds a $var lookup to the current
      * output.
      *
-     * @param docopy
-     *            a <code>boolean</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param docopy a <code>boolean</code> value
+     * @exception HeclException if an error occurs
      */
     public void addDollar(boolean docopy) throws HeclException {
         Thing saveout = currentOut;
@@ -200,12 +195,9 @@ public class Parse {
      * The <code>parseLine</code> method is where parsing starts on a new
      * line.
      *
-     * @param in
-     *            a <code>String</code> value
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param in a <code>String</code> value
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     public void parseLine(String in, ParseState state) throws HeclException {
         char ch;
@@ -304,12 +296,9 @@ public class Parse {
      * variable. These can also be of the form $\ {foo} so that we can
      * separate them from any surrounding text.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @param docopy
-     *            a <code>boolean</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @param docopy a <code>boolean</code> value
+     * @exception HeclException if an error occurs
      */
 
     private void parseDollar(ParseState state, boolean docopy)
@@ -339,10 +328,8 @@ public class Parse {
     /**
      * <code>parseBlock</code> parses a {} block.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     protected void parseBlock(ParseState state) throws HeclException {
         parseBlockOrCommand(state, true, false);
@@ -393,7 +380,7 @@ public class Parse {
             ch = state.nextchar();
             if (state.done()) {
 		throw new HeclException("Unbalanced " +
-		    (block ? "{}" : "[]"), 10);
+		    (block ? "{}" : "[]"), "PARSE_ERROR");
             }
             if (ch == ldelim) {
                 level++;

@@ -16,4 +16,4 @@ test break-2 {
     break
     set res "${res}y"
     set res
-} {{BREAK ???} break}
+} {{BREAK } break}

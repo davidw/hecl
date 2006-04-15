@@ -26,19 +26,19 @@ import java.util.Vector;
  */
 
 public class HeclException extends Exception {
-    int code = 0;
+    public String code = null;
 
     Stack stack;
 
     String txt;
 
-    static final int BREAK = 1;
+    static final String BREAK = "BREAK";
 
-    static final int CONTINUE = 2;
+    static final String CONTINUE = "CONT";
 
-    static final int RETURN = 3;
+    static final String RETURN = "RETURN";
 
-    static final int ERROR = 4;
+    static final String ERROR = "ERROR";
 
     /**
      * Creates a new <code>HeclException</code> instance.
@@ -62,22 +62,9 @@ public class HeclException extends Exception {
      *            an <code>int</code> value
      */
 
-    public HeclException(String s, int exception_code) {
+    public HeclException(String s, String exception_code) {
         code = exception_code;
         txt = s;
-        pushException();
-    }
-
-    /**
-     * Creates a new <code>HeclException</code> instance.
-     *
-     * @param exception_code
-     *            an <code>int</code> value
-     */
-
-    public HeclException(int exception_code) {
-        code = exception_code;
-        txt = "???";
         pushException();
     }
 
@@ -88,7 +75,7 @@ public class HeclException extends Exception {
     private void pushException() {
         stack = new Stack();
         Vector lst = new Vector();
-        lst.addElement(new Thing(codeToString()));
+        lst.addElement(new Thing(code));
         lst.addElement(new Thing(txt));
 
         stack.push(new Thing(new ListThing(lst)));
@@ -103,27 +90,6 @@ public class HeclException extends Exception {
      */
     public void where(String cmd) {
         stack.push(new Thing(cmd));
-    }
-
-    /**
-     * The <code>codeToString</code> method returns a string that describes
-     * the error code.
-     *
-     * @return a <code>String</code> value
-     */
-    public String codeToString() {
-        switch (code) {
-            case BREAK :
-                return "BREAK";
-            case CONTINUE :
-                return "CONTINUE";
-            case RETURN :
-                return "RETURN";
-            case ERROR :
-                return "ERROR";
-            default :
-                return "" + code;
-        }
     }
 
     /**

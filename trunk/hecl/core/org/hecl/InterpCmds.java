@@ -107,7 +107,7 @@ class InterpCmds extends Operator {
 		if (argv.length > 1) {
 		    interp.setResult(argv[1]);
 		}
-		throw new HeclException(HeclException.RETURN);
+		throw new HeclException("", HeclException.RETURN);
 
 	    case CATCH:
 		try {

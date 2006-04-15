@@ -1,5 +1,11 @@
 2006-04-15  David N. Welton  <davidw@dedasys.com>
 
+	* commandline/Hecl.java: On exception code PARSE_ERROR, assume
+	that the {} or [] are not balanced, and wait till the command is
+	complete.
+
+	* core/org/hecl/HeclException.java: Use strings for errors.
+
 	* General cleanup, killed trailing whitespace, added javadoc.
 	There should be no functional changes!
 

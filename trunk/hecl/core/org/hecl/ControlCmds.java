@@ -84,9 +84,9 @@ class ControlCmds extends Operator {
 		    /* body */
 		    interp.eval(argv[4]);
 		} catch (HeclException e) {
-		    if (e.code == HeclException.BREAK) {
+		    if (e.code.equals(HeclException.BREAK)) {
 			break;
-		    } else if (e.code == HeclException.CONTINUE) {
+		    } else if (e.code.equals(HeclException.CONTINUE)) {
 		    } else {
 			throw e;
 		    }
@@ -136,9 +136,9 @@ class ControlCmds extends Operator {
 		try {
 		    interp.eval(argv[3]);
 		} catch (HeclException e) {
-		    if (e.code == HeclException.BREAK) {
+		    if (e.code.equals(HeclException.BREAK)) {
 			break;
-		    } else if (e.code == HeclException.CONTINUE) {
+		    } else if (e.code.equals(HeclException.CONTINUE)) {
 		    } else {
 			throw e;
 		    }
@@ -152,9 +152,9 @@ class ControlCmds extends Operator {
 		try {
 		    interp.eval(argv[2]);
 		} catch (HeclException e) {
-		    if (e.code == HeclException.BREAK) {
+		    if (e.code.equals(HeclException.BREAK)) {
 			break;
-		    } else if (e.code == HeclException.CONTINUE) {
+		    } else if (e.code.equals(HeclException.CONTINUE)) {
 		    } else {
 			throw e;
 		    }
@@ -164,11 +164,11 @@ class ControlCmds extends Operator {
 
 	  case BREAK:
 	    /* The 'break' command. */
-	    throw new HeclException(HeclException.BREAK);
+	    throw new HeclException("", HeclException.BREAK);
 
 	  case CONTINUE:
 	    /* The 'continue' command. */
-	    throw new HeclException(HeclException.CONTINUE);
+	    throw new HeclException("", HeclException.CONTINUE);
 	  default:
 	    throw new HeclException("Unknown list command '"
 				    + argv[0].toString() + "' with code '"
@@ -189,7 +189,7 @@ class ControlCmds extends Operator {
 
 
     protected ControlCmds(int cmdcode,int minargs,int maxargs) {
-	super(cmdcode,minargs,maxargs);
+	super(cmdcode, minargs, maxargs);
     }
 
     /* Creates these commands when this class is loaded. */

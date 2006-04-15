@@ -1,4 +1,4 @@
-/* Copyright 2005 Wojciech Kocjan, David N. Welton
+/* Copyright 2005-2006 Wojciech Kocjan, David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -65,10 +65,7 @@ public class Hecl {
 
     /**
      * The <code>commandLine</code> method implements a
-     * Read/Eval/Print Loop.  This could be improved by having
-     * something akin to Tcl's "is command complete?" function so that
-     * it would be possible to accept a command over more than one
-     * line.
+     * Read/Eval/Print Loop.
      *
      * @param interp an <code>Interp</code> value
      * @exception IOException if an error occurs
@@ -77,9 +74,13 @@ public class Hecl {
 	BufferedReader buff = new
 	    BufferedReader(new InputStreamReader(System.in));
 	String line = null;
+	String prompt_main = "hecl> ";
+	String prompt_more = "hecl+ ";
+	String prompt = prompt_main;
+	String morebuffer = "";
 
 	while (true) {
-	    System.out.print("hecl> ");
+	    System.out.print(prompt);
 	    System.out.flush();
 	    line = buff.readLine();
 	    /* Exit on end of file. */
@@ -87,13 +88,22 @@ public class Hecl {
 		System.exit(0);
 	    }
 	    try {
-		interp.eval(new Thing(line));
+		interp.eval(new Thing(morebuffer + line));
 		if (interp.result != null &&
 		    Compare.compareString(interp.result, new Thing("")) != 0) {
 		    System.out.println(interp.result);
 		}
+		morebuffer = "";
+		prompt = prompt_main;
 	    } catch (HeclException he) {
-		System.out.println(he);
+		if (he.code.equals("PARSE_ERROR")) {
+		    prompt = prompt_more;
+		    morebuffer = morebuffer + "\n" + line;
+		} else {
+		    System.out.println(he);
+		    morebuffer = "";
+		    prompt = prompt_main;
+		}
 	    }
 	}
     }
