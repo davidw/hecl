@@ -1,7 +1,5 @@
-org.hecl
-org.hecl.files
-org.hecl.modules
-org.hecl.http
-org.hecl.fp
 heclbuilder
 jarhack
+org.hecl
+org.hecl.files
+org.hecl.http

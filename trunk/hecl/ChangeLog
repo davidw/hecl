@@ -1,5 +1,8 @@
 2006-04-15  David N. Welton  <davidw@dedasys.com>
 
+	* javadocs fixups.  Now we generate them from the preprocessed
+	version of Hecl, so as to avoid making a mess.
+
 	* commandline/Hecl.java: On exception code PARSE_ERROR, assume
 	that the {} or [] are not balanced, and wait till the command is
 	complete.

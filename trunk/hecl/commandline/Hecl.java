@@ -74,7 +74,9 @@ public class Hecl {
 	BufferedReader buff = new
 	    BufferedReader(new InputStreamReader(System.in));
 	String line = null;
+	/* Normal prompt to use. */
 	String prompt_main = "hecl> ";
+	/* Prompt to use when we need more input. */
 	String prompt_more = "hecl+ ";
 	String prompt = prompt_main;
 	String morebuffer = "";
@@ -93,10 +95,14 @@ public class Hecl {
 		    Compare.compareString(interp.result, new Thing("")) != 0) {
 		    System.out.println(interp.result);
 		}
+		/* Make sure to wipe the buffer and put the prompt
+		 * back to normal. */
 		morebuffer = "";
 		prompt = prompt_main;
 	    } catch (HeclException he) {
 		if (he.code.equals("PARSE_ERROR")) {
+		    /* When we need more input, stash the current
+		     * input in morebuffer, and change the prompt. */
 		    prompt = prompt_more;
 		    morebuffer = morebuffer + "\n" + line;
 		} else {

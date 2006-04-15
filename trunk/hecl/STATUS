@@ -6,11 +6,7 @@ Open issues:
 Wolfgang writes:
 
 - syntax:
-  + I'd like to have something like 'command complete' to check for
-    syntactical completeness of a command.
-  + multiline commands via a line continuation characters
-    like '\' and '\n' in Tcl
-  + fix for currently weird behavior of imcomplete commands
+  + fix for currently weird behavior of incomplete commands
   + handling of numbers in input. Maybe we should better compare
     them into numbers when parsing?
   + Internationalization

@@ -550,14 +550,17 @@
 
 
   <!-- Docs -->
-  <target name="javadocs">
+
+  <!-- Depends on commandline version, so that we can run javadocs on
+  the parsed version. -->
+  <target name="javadocs" depends="packageCommandline">
     <javadoc packagenames="org.hecl,org.hecl.*,jarhack,heclbuilder"
       destdir="docs/jdocs"
       author="true"
       version="true"
       use="true">
       <sourcepath>
-	<pathelement path="core"/>
+	<pathelement path="build/j2se/pre/core/"/>
       </sourcepath>
       <sourcepath>
 	<pathelement path="files"/>
@@ -617,7 +620,7 @@
   </target>
 
   <target name="HeclBuilderJar" depends="HeclBuilder,midlet">
-    <jar destfile="HeclBuilder.jar" basedir="build/heclbuilder">
+    <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
 	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />
       </manifest>

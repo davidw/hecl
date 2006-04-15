@@ -43,7 +43,7 @@ public class HeclException extends Exception {
     /**
      * Creates a new <code>HeclException</code> instance.
      *
-     * @params a <code>String</code> value
+     * @param s a <code>String</code> value
      */
 
     public HeclException(String s) {

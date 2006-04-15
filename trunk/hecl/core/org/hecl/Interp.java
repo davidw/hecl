@@ -21,7 +21,7 @@ import java.util.Stack;
 /**
  * <code>Interp</code> is the Hecl interpreter, the class responsible for
  * knowing what variables and commands are available.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -59,7 +59,7 @@ public class Interp {
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
      * variable hashtables, a stack, and an error stack.
-     * 
+     *
      * @exception HeclException
      *                if an error occurs
      */
@@ -127,14 +127,11 @@ public class Interp {
     }
 
     /**
-     * The <code>eval</code> method evaluates some Hecl code passed to it.
+     * The <code>eval</code> method evaluates some Hecl code passed to
+     * it.
      *
-     * @param interp
-     *            an <code>Interp</code>.
-     * @param in
-     *            a <code>Thing</code> value representing the text to
-     *            evaluate.
-     * @return a <code>Thing</code> value - the result of the evaluation.
+     * @return a <code>Thing</code> value - the result of the
+     * evaluation.
      * @exception HeclException
      *                if an error occurs.
      */
@@ -148,7 +145,7 @@ public class Interp {
      * commands. These are commands available in all versions of Hecl. J2SE
      * commands are initialized in Standard.java, and J2ME commands in
      * Micro.java.
-     * 
+     *
      * @exception HeclException
      *                if an error occurs
      */
@@ -209,7 +206,7 @@ public class Interp {
     /**
      * <code>stackDecr</code> pops the stack frame, returning it so that
      * commands like upeval can save it. If it's not saved, it's gone.
-     *  
+     *
      */
     public Hashtable stackDecr() {
         return (Hashtable) stack.pop();
@@ -218,7 +215,7 @@ public class Interp {
     /**
      * <code>stackDecr</code> pushes a new variable hashtable (probably saved
      * via upeval) onto the stack frame.
-     *  
+     *
      */
     public void stackPush(Hashtable vars) {
         cacheversion++;
@@ -228,7 +225,7 @@ public class Interp {
     /**
      * <code>getVarhash</code> fetches the variable Hashtable at the given
      * level, where -1 means to just get the hashtable on top of the stack.
-     * 
+     *
      * @param level
      *            an <code>int</code> value
      * @return a <code>Hashtable</code> value
@@ -243,7 +240,7 @@ public class Interp {
 
     /**
      * <code>getVar</code> returns the value of a variable given its name.
-     * 
+     *
      * @param varname
      *            a <code>Thing</code> value
      * @return a <code>Thing</code> value
@@ -256,7 +253,7 @@ public class Interp {
 
     /**
      * <code>getVar</code> returns the value of a variable given its name.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @return a <code>Thing</code> value
@@ -270,7 +267,7 @@ public class Interp {
     /**
      * <code>getVar</code> returns the value of a variable given its name and
      * level.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @param level
@@ -293,7 +290,7 @@ public class Interp {
     /**
      * <code>setVar</code> sets a variable in the innermost variable stack
      * frame to a value.
-     * 
+     *
      * @param varname
      *            a <code>Thing</code> value
      * @param value
@@ -306,7 +303,7 @@ public class Interp {
     /**
      * <code>setVar</code> sets a variable in the innermost variable stack
      * frame to a value.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @param value
@@ -319,7 +316,7 @@ public class Interp {
     /**
      * <code>setVar</code> sets a variable to a value in the variable stack
      * frame specified by <code>level</code>.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @param value
@@ -375,7 +372,7 @@ public class Interp {
      * <code>existsVar</code> returns <code>true</code> if the given
      * variable exists in the current variable stack frame, <code>false</code>
      * if it does not.
-     * 
+     *
      * @param varname
      *            a <code>Thing</code> value
      * @return a <code>boolean</code> value
@@ -388,7 +385,7 @@ public class Interp {
      * <code>existsVar</code> returns <code>true</code> if the given
      * variable exists in the current variable stack frame, <code>false</code>
      * if it does not.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @return a <code>boolean</code> value
@@ -401,7 +398,7 @@ public class Interp {
      * <code>existsVar</code> returns <code>true</code> if the given
      * variable exists in the variable stack frame given by <code>level</code>,
      * <code>false</code> if it does not.
-     * 
+     *
      * @param varname
      *            a <code>String</code> value
      * @param level
@@ -456,7 +453,7 @@ public class Interp {
 
     /**
      * <code>getResult</code> fetches the result saved by setResult.
-     * 
+     *
      * @return a <code>Thing</code> value
      */
     public Thing getResult() {
@@ -465,7 +462,7 @@ public class Interp {
 
     /**
      * <code>addError</code> adds a Thing as an error message.
-     * 
+     *
      * @param err
      *            a <code>Thing</code> value
      */
@@ -475,7 +472,7 @@ public class Interp {
 
     /**
      * <code>clearError</code> clears the error stack.
-     *  
+     *
      */
     public void clearError() {
         error = new Stack();

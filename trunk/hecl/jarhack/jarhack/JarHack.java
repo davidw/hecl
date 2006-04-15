@@ -162,12 +162,12 @@ public class JarHack {
 
     /**
      *  <code>main</code> implements a command line version of JarHack
-     *  that takes five arguments: 1) The original 'template' .jar
-     *  file to use.  2) The destination directory where you want to
-     *  create your new application.  3) The name of your new
-     *  application as it will appear in the MIDlet.  4) The name of
+     *  that takes five arguments: 1. The original 'template' .jar
+     *  file to use.  2. The destination directory where you want to
+     *  create your new application.  3. The name of your new
+     *  application as it will appear in the MIDlet.  4. The name of
      *  the Hecl script you want to use instead of the script.hcl that
-     *  is included in the 'source' .jar file.  5) The URL where your
+     *  is included in the 'source' .jar file.  5. The URL where your
      *  jar file will reside.
      *
      * @param args a <code>String[]</code> value
