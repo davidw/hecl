@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,17 +21,17 @@ package org.hecl;
  * The <code>RealThing</code> interface is the actual value contained within a
  * Thing. It can be of several different types - integers, strings, lists,
  * hashes, and so on.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
 public abstract interface RealThing {
     public String thingclass();
-    
+
     /**
      * The <code>deepcopy</code> method must copy a RealThing and any values
      * it contains.
-     * 
+     *
      * @return a <code>RealThing</code> value
      * @throws HeclException
      */
@@ -40,7 +40,7 @@ public abstract interface RealThing {
     /**
      * The <code>getStringRep</code> method returns the string representation
      * of a <code>RealThing</code>.
-     * 
+     *
      * @return a <code>String</code> representation of the value
      */
     public String getStringRep();

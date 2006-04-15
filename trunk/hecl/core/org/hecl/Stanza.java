@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package org.hecl;
 /**
  * The <code>Stanza</code> class represents one command. A CodeThing
  * object may have several Stanzas.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -41,7 +41,7 @@ class Stanza {
     /**
      * Creates a new <code>Stanza</code> instance, taking a Command and
      * its arguments as input.
-     * 
+     *
      * @param newcmd
      *            a <code>Command</code> value
      * @param newargv
@@ -73,7 +73,7 @@ class Stanza {
      * The <code>run</code> method runs the Stanza. In order to avoid
      * creating a new newargv each time, the most common cases are
      * preallocated.
-     * 
+     *
      * @param interp
      *            <code>Interp</code> value
      * @exception HeclException
@@ -206,7 +206,7 @@ class Stanza {
 
     /**
      * The <code>toString</code> method turns a Stanza into a string.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String toString() {

@@ -19,6 +19,14 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+/**
+ * The <code>HashCmds</code> class takes care of loading and
+ * implementing the Hecl commands that deal with hash tables, which
+ * are in turn implemented in the HashThing class.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 class HashCmds extends Operator {
     public static final int HASH = 0;
     public static final int HGET = 1;
@@ -31,49 +39,49 @@ class HashCmds extends Operator {
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Hashtable hash = cmd != 0 ? HashThing.get(argv[1]) : null;
 	Thing result = null;
-	    
+
 	switch (cmd) {
-	  case HASH:
-	    result = HashThing.create(HashThing.get(argv[1]));
-	    break;
-	    
-	  case HGET:
-	    result = (Thing)hash.get(argv[2].toString());
-	    break;
-	    
-	  case HSET:
-	    result = argv[3];
-	    hash.put(argv[2].toString(), result);
-	    break;
+	    case HASH:
+		result = HashThing.create(HashThing.get(argv[1]));
+		break;
 
-	  case HKEYS:
-	    Vector v = new Vector(hash.size());
-	    Enumeration e = hash.keys();
-	    while(e.hasMoreElements()) {
-		v.addElement(new Thing((String)e.nextElement()));
-	    }
-	    return new ListThing(v);
+	    case HGET:
+		result = (Thing)hash.get(argv[2].toString());
+		break;
 
-	  case HCLEAR:
-	    hash.clear();
-	    result = argv[1];
-	    break;
+	    case HSET:
+		result = argv[3];
+		hash.put(argv[2].toString(), result);
+		break;
 
-	  case HREMOVE:
-	    Object o = hash.remove(argv[2].toString());
-	    result = o != null ? (Thing)o : new Thing("");
-	    break;
+	    case HKEYS:
+		Vector v = new Vector(hash.size());
+		Enumeration e = hash.keys();
+		while(e.hasMoreElements()) {
+		    v.addElement(new Thing((String)e.nextElement()));
+		}
+		return new ListThing(v);
 
-	  default:
-	    throw new HeclException("Unknown hash command '"
-				    + argv[0].toString() + "' with code '"
-				    + cmd + "'.");
+	    case HCLEAR:
+		hash.clear();
+		result = argv[1];
+		break;
+
+	    case HREMOVE:
+		Object o = hash.remove(argv[2].toString());
+		result = o != null ? (Thing)o : new Thing("");
+		break;
+
+	    default:
+		throw new HeclException("Unknown hash command '"
+					+ argv[0].toString() + "' with code '"
+					+ cmd + "'.");
 	}
 	if(result != null)
 	    interp.setResult(result);
 	return null;
     }
-    
+
 
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);

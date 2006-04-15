@@ -20,6 +20,13 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+/**
+ * The <code>InterpCmds</code> implements various Hecl commands that
+ * deal with the state of the interpreter.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 class InterpCmds extends Operator {
     public static final int SET = 1;
     public static final int UNSET = 2;

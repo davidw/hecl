@@ -15,6 +15,12 @@ limitations under the License.
 
 package org.hecl;
 
+/**
+ * The <code>FractionalThing</code> class is for floating point
+ * values.
+ *
+ * @version 1.0
+ */
 public abstract class FractionalThing extends NumberThing {
     public boolean isIntegral() {
 	return false;

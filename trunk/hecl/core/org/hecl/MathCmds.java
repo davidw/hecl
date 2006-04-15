@@ -18,6 +18,12 @@ package org.hecl;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * The <code>MathCmds</code> class implements a variety of math
+ * commands, depending on which version of Java Hecl is compiled for.
+ *
+ * @version 1.0
+ */
 public class MathCmds extends org.hecl.Operator {
 //#ifndef ant:cldc1.0
     public static final Thing E = new Thing(new DoubleThing(Math.E));
@@ -25,66 +31,66 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 
     public static final int CASTINT = 1;
-    public static final int CASTLONG = 2; 
-    public static final int CASTFLOAT = 3; 
-    public static final int CASTDOUBLE = 4; 
-    public static final int TODEGREES = 5; 
+    public static final int CASTLONG = 2;
+    public static final int CASTFLOAT = 3;
+    public static final int CASTDOUBLE = 4;
+    public static final int TODEGREES = 5;
     public static final int TORADIANS = 6;
-    public static final int ABS = 7; 
+    public static final int ABS = 7;
     public static final int SQRT = 8;
-    public static final int LOG = 9; 
+    public static final int LOG = 9;
 
-    public static final int SIN = 10; 
-    public static final int COS = 11; 
-    public static final int TAN = 12; 
-    public static final int ASIN = 13; 
-    public static final int ACOS = 14; 
-    public static final int ATAN = 15; 
-    public static final int EXP = 16; 
-    public static final int FLOOR = 17; 
-    public static final int CEIL = 18; 
-    public static final int POW = 19; 
+    public static final int SIN = 10;
+    public static final int COS = 11;
+    public static final int TAN = 12;
+    public static final int ASIN = 13;
+    public static final int ACOS = 14;
+    public static final int ATAN = 15;
+    public static final int EXP = 16;
+    public static final int FLOOR = 17;
+    public static final int CEIL = 18;
+    public static final int POW = 19;
     public static final int RANDOM = 20;
     public static final int ROUND = 21;
     public static final int MIN = 22;
     public static final int MAX = 23;
 
     // valid only for java 1.5
-    public static final int SIGNUM = 30; 
+    public static final int SIGNUM = 30;
     public static final int CBRT = 31;
-    public static final int LOG10 = 32; 
-    public static final int LOG1P = 33; 
-    public static final int SINH = 34; 
-    public static final int COSH = 35; 
-    public static final int TANH = 36; 
-    public static final int EXPM1 = 37; 
-    public static final int HYPOT = 38; 
+    public static final int LOG10 = 32;
+    public static final int LOG1P = 33;
+    public static final int SINH = 34;
+    public static final int COSH = 35;
+    public static final int TANH = 36;
+    public static final int EXPM1 = 37;
+    public static final int HYPOT = 38;
     // end valid for java 1.5
 
-    public static final int INCR = 50; 
-    public static final int DECR = 51; 
-    public static final int TRUE = 52; 
-    public static final int FALSE = 53; 
+    public static final int INCR = 50;
+    public static final int DECR = 51;
+    public static final int TRUE = 52;
+    public static final int FALSE = 53;
 
-    public static final int NOT = 80; 
-    public static final int AND = 81; 
-    public static final int OR = 82; 
+    public static final int NOT = 80;
+    public static final int AND = 81;
+    public static final int OR = 82;
 
-    public static final int EQ = 90; 
-    public static final int NEQ = 91; 
-    public static final int LT = 92; 
-    public static final int LE = 93; 
-    public static final int GT = 94; 
-    public static final int GE = 95; 
+    public static final int EQ = 90;
+    public static final int NEQ = 91;
+    public static final int LT = 92;
+    public static final int LE = 93;
+    public static final int GT = 94;
+    public static final int GE = 95;
 
     public static final int BINADD = 100;
     public static final int BINSUB = 101;
-    public static final int BINMUL = 102; 
-    public static final int BINDIV = 103; 
-    public static final int MOD = 104; 
-    public static final int PLUS = 105; 
-    public static final int MINUS = 106; 
-    public static final int MUL = 107; 
+    public static final int BINMUL = 102;
+    public static final int BINDIV = 103;
+    public static final int MOD = 104;
+    public static final int PLUS = 105;
+    public static final int MINUS = 106;
+    public static final int MUL = 107;
 
     // Comparison
     public static int compare(Thing a,Thing b) {
@@ -118,7 +124,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return new DoubleThing(a.doubleValue());
 	  case TODEGREES:
 	    return new DoubleThing(Math.toDegrees(a.doubleValue()));
-	  case TORADIANS:    
+	  case TORADIANS:
 	    return new DoubleThing(Math.toRadians(a.doubleValue()));
 //#endif
 	  case ABS:
@@ -152,7 +158,7 @@ public class MathCmds extends org.hecl.Operator {
 	  case NOT:
 	    return a.intValue() != 0 ? IntThing.ZERO : IntThing.ONE;
 //#ifdef ant:j2se
-	  case ROUND:    
+	  case ROUND:
 	    if(a.isIntegral()) {
 		return a.deepcopy();
 	    } else {
@@ -196,8 +202,8 @@ public class MathCmds extends org.hecl.Operator {
 	}
 	throw new HeclException("Unknown unary mathcmdcode '"+cmdcode+"'.");
     }
-    
-    
+
+
     public static RealThing binary(int cmdcode,Interp ip,NumberThing a,NumberThing b)
 	throws HeclException {
 	switch(cmdcode) {
@@ -316,11 +322,11 @@ public class MathCmds extends org.hecl.Operator {
 	}
 	throw new HeclException("Unknown binary mathcmdcode '"+cmdcode+"'.");
     }
-    
+
     public RealThing operate(int cmdcode,Interp ip,Thing[] argv)
 	throws HeclException {
 	NumberThing num = null;
-	
+
 	if(1 == minargs && 1 == maxargs)
 	    return unary(cmdcode,ip,NumberThing.asNumber(argv[1]));
 	if(2 == minargs && 2 == maxargs)
@@ -397,7 +403,7 @@ public class MathCmds extends org.hecl.Operator {
 	    if(c != null) {
 		c.
 	    }
-	    
+
 	    if(extensions.get(cmdcode)) {
 	    }
 	    */
@@ -406,7 +412,7 @@ public class MathCmds extends org.hecl.Operator {
 				+ argv[0].toString() + "' with code '"
 				+ cmdcode + "'.");
     }
-    
+
 
     public static void load(Interp ip) throws HeclException {
 	Enumeration e = vars.keys();
@@ -430,8 +436,8 @@ public class MathCmds extends org.hecl.Operator {
     protected MathCmds(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
     }
-    
-    
+
+
     protected static int compare(int v1,int v2) {
 	return v1 < v2 ? -1 : (v1 == v2) ? 0 : 1;
     }
@@ -445,14 +451,14 @@ public class MathCmds extends org.hecl.Operator {
     protected static int compare(double v1,double v2) {
 	return v1 < v2 ? -1 : (v1 == v2) ? 0 : 1;
     }
-    
+
 
     private static int nextop = 1000;
     private static Hashtable vars = new Hashtable();
     private static Hashtable extensions = new Hashtable();
-    
+
     static {
-	
+
 	cmdtable.put("true",new MathCmds(TRUE,0,0));
 	cmdtable.put("false",new MathCmds(FALSE,0,0));
 	cmdtable.put("and",new MathCmds(AND,1,-1));
@@ -461,37 +467,37 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put("1+",new MathCmds(INCR,1,2));
 	cmdtable.put("1-",new MathCmds(DECR,1,2));
 	cmdtable.put("incr",new MathCmds(INCR,1,2));
-		  
+
 	// cast operators
 	cmdtable.put("int",new MathCmds(CASTINT,1,1));
 	cmdtable.put("long",new MathCmds(CASTLONG,1,1));
-	
+
 	// unary operators
 	cmdtable.put("abs",new MathCmds(ABS,1,1));
 	cmdtable.put("not",new MathCmds(NOT,1,1));
-	
+
 	// binary operators
-	cmdtable.put("+",new MathCmds(PLUS,-1,-1)); 
-	cmdtable.put("-",new MathCmds(MINUS,-1,-1)); 
-	cmdtable.put("*",new MathCmds(MUL,-1,-1)); 
-	cmdtable.put("/", new MathCmds(BINDIV,2,2)); 
-	cmdtable.put("%", new MathCmds(MOD,2,2)); 
+	cmdtable.put("+",new MathCmds(PLUS,-1,-1));
+	cmdtable.put("-",new MathCmds(MINUS,-1,-1));
+	cmdtable.put("*",new MathCmds(MUL,-1,-1));
+	cmdtable.put("/", new MathCmds(BINDIV,2,2));
+	cmdtable.put("%", new MathCmds(MOD,2,2));
 
 	// comparison
-	cmdtable.put("=",new MathCmds(EQ,2,2)); 
-	cmdtable.put("!=",new MathCmds(NEQ,2,2)); 
-	cmdtable.put("<",new MathCmds(LT,2,2)); 
-	cmdtable.put("<=",new MathCmds(LE,2,2)); 
-	cmdtable.put(">",new MathCmds(GT,2,2)); 
-	cmdtable.put(">=",new MathCmds(GE,2,2)); 
-	
+	cmdtable.put("=",new MathCmds(EQ,2,2));
+	cmdtable.put("!=",new MathCmds(NEQ,2,2));
+	cmdtable.put("<",new MathCmds(LT,2,2));
+	cmdtable.put("<=",new MathCmds(LE,2,2));
+	cmdtable.put(">",new MathCmds(GT,2,2));
+	cmdtable.put(">=",new MathCmds(GE,2,2));
+
 	// stuff not available in cldc 1.0
 //#ifndef ant:cldc1.0
 	vars.put("pi",PI);
 	vars.put("e",E);
 	cmdtable.put("float",new MathCmds(CASTFLOAT,1,1));
 	cmdtable.put("double",new MathCmds(CASTDOUBLE,1,1));
-	cmdtable.put("toDegrees",new MathCmds(TODEGREES,1,1)); 
+	cmdtable.put("toDegrees",new MathCmds(TODEGREES,1,1));
 	cmdtable.put("toRadians",new MathCmds(TORADIANS,1,1));
 //#endif
 

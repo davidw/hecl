@@ -134,23 +134,23 @@ class DoubleThing extends FractionalThing {
     public byte byteValue() {
 	return (byte)val;
     }
-    
+
     public short shortValue() {
 	return (short)val;
     }
-    
+
     public int intValue() {
 	return (int)val;
     }
-    
+
     public long longValue() {
 	return (long)val;
     }
-    
+
     public float floatValue() {
 	return (float)val;
     }
-    
+
     public double doubleValue() {
 	return (double)val;
     }

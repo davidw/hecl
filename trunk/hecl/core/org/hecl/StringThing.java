@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package org.hecl;
  * The <code>StringThing</code> class is the internal representation of string
  * types. This is somewhat special, as all types in Hecl may be represented as
  * strings.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -28,7 +28,7 @@ public class StringThing implements RealThing {
 
     /**
      * Creates a new, empty <code>StringThing</code> instance.
-     *  
+     *
      */
     public StringThing() {
         val = new StringBuffer("");
@@ -36,7 +36,7 @@ public class StringThing implements RealThing {
 
     /**
      * Creates a new <code>StringThing</code> instance from a string.
-     * 
+     *
      * @param s
      *            a <code>String</code> value
      */
@@ -46,7 +46,7 @@ public class StringThing implements RealThing {
 
     /**
      * Creates a new <code>StringThing</code> instance from a stringbuffer.
-     * 
+     *
      * @param sb
      *            a <code>StringBuffer</code> value
      */
@@ -61,7 +61,7 @@ public class StringThing implements RealThing {
     /**
      * The <code>setStringFromAny</code> method transforms the Thing into a
      * string type.
-     * 
+     *
      * @param thing
      *            a <code>Thing</code> value
      * @throws HeclException
@@ -76,7 +76,7 @@ public class StringThing implements RealThing {
     /**
      * <code>get</code> returns a string representation of a given Thing,
      * transforming the thing into a string type at the same time.
-     * 
+     *
      * @param thing
      *            a <code>Thing</code> value
      * @return a <code>String</code> value
@@ -89,7 +89,7 @@ public class StringThing implements RealThing {
 
     /**
      * <code>deepcopy</code> copies the string.
-     * 
+     *
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
@@ -100,7 +100,7 @@ public class StringThing implements RealThing {
 
     /**
      * <code>getStringRep</code> returns its internal value.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String getStringRep() {
@@ -109,7 +109,7 @@ public class StringThing implements RealThing {
 
     /**
      * <code>append</code> takes a character and appends it to the string.
-     * 
+     *
      * @param ch
      *            a <code>char</code> value
      */
@@ -119,7 +119,7 @@ public class StringThing implements RealThing {
 
     /**
      * <code>append</code> appends a string to the string.
-     * 
+     *
      * @param str
      *            a <code>String</code> value
      */

@@ -41,12 +41,12 @@ class ControlCmds extends Operator {
 	  case IF:
 	    interp.eval(argv[1]);
 	    Thing result = interp.result;
-	    
+
 	    if (Thing.isTrue(result)) {
 		interp.eval(argv[2]);
 		    return null;
 	    }
-	    
+
 	    /*
 	     * We loop through to capture all else if...else if...else
 		 * possibilities.
@@ -72,12 +72,12 @@ class ControlCmds extends Operator {
 		}
 	    }
 	    break;
-	    
+
 	    /* The 'for' command. */
 	  case FOR:
 	    /* start */
 	    interp.eval(argv[1]);
-	    
+
 	    /* test */
 	    while (Thing.isTrue(interp.eval(argv[2]))) {
 		try {
@@ -95,7 +95,7 @@ class ControlCmds extends Operator {
 		interp.eval(argv[3]);
 	    }
 	    break;
-	    
+
 	    /* The 'foreach' command. */
 	  case FOREACH:
 	    Vector list = ListThing.get(argv[2]);
@@ -105,9 +105,9 @@ class ControlCmds extends Operator {
 	    Vector varlist = ListThing.get(argv[1]);
 	    int i = 0;
 	    boolean cont = true;
-	    
+
 	    //System.out.println("argv2 is " + argv[2] + " copy is " + argv[2].copy);
-	    
+
 	    while (cont) {
 		/*
 		 * This is for foreach loops where we have more than one variable to
@@ -118,21 +118,21 @@ class ControlCmds extends Operator {
 			throw new HeclException(
 			    "Foreach argument list does not match list length");
 		    }
-		    
+
 		    Thing element = (Thing) list.elementAt(i);
 		    element.copy = true; /* Make sure that we don't fiddle
 					  * with the original value. */
 		    String varname = ((Thing) e.nextElement()).getStringRep();
-		    
+
 		    //System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
-		    
+
 		    interp.setVar(varname, element);
 		    i++;
 		    if (i == list.size()) {
 			cont = false;
 		    }
 		}
-		
+
 		try {
 		    interp.eval(argv[3]);
 		} catch (HeclException e) {
@@ -161,11 +161,11 @@ class ControlCmds extends Operator {
 		}
 	    }
 	    break;
-	    
+
 	  case BREAK:
 	    /* The 'break' command. */
 	    throw new HeclException(HeclException.BREAK);
-	    
+
 	  case CONTINUE:
 	    /* The 'continue' command. */
 	    throw new HeclException(HeclException.CONTINUE);
@@ -192,8 +192,8 @@ class ControlCmds extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
 
-
-    static { 
+    /* Creates these commands when this class is loaded. */
+    static {
         cmdtable.put("if", new ControlCmds(IF,2,-1));
         cmdtable.put("for", new ControlCmds(FOR,4,4));
         cmdtable.put("foreach", new ControlCmds(FOREACH,3,3));

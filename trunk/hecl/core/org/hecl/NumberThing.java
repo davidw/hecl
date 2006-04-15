@@ -18,38 +18,113 @@ package org.hecl;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * The <code>NumberThing</code> class is what all numeric Thing types
+ * are derived from.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public abstract class NumberThing implements RealThing {
     // Satisfy RealThing...
     public abstract RealThing deepcopy() throws HeclException;
     public abstract String getStringRep();
 
-    // Some predicates
+    /**
+     * <code>isNumber</code> returns true if Thing t is represented as
+     * a number internally.
+     *
+     * @param t a <code>Thing</code> value
+     * @return a <code>boolean</code> value
+     */
     public static boolean isNumber(Thing t) {
 	return t.val instanceof NumberThing;
     }
-    
+
+    /**
+     * <code>isIntegral</code> returns true if Thing t is a whole
+     * number (an int or long), or false if it isn't.
+     *
+     * @param t a <code>Thing</code> value
+     * @return a <code>boolean</code> value
+     */
     public static boolean isIntegral(Thing t) {
 	return isNumber(t) && ((NumberThing)t.val).isIntegral();
     }
 
+
+    /**
+     * <code>isFractional</code> returns true if Thing t is a
+     * fractional (floating point) number, false if it isn't.
+     *
+     * @param t a <code>Thing</code> value
+     * @return a <code>boolean</code> value
+     */
     public static boolean isFractional(Thing t) {
 	return isNumber(t) && ((NumberThing)t.val).isFractional();
     }
-    
+
     public abstract boolean isIntegral();
     public abstract boolean isFractional();
-    
-    // Accessors
+
+
+    /**
+     * <code>byteValue</code> returns the number as a byte.
+     *
+     * @return a <code>byte</code> value
+     */
     public abstract byte byteValue();
+
+
+    /**
+     * <code>shortValue</code> returns the number as a short.
+     *
+     * @return a <code>short</code> value
+     */
     public abstract short shortValue();
+
+    /**
+     * <code>intValue</code> returns the number as an int.
+     *
+     * @return an <code>int</code> value
+     */
     public abstract int intValue();
+
+
+    /**
+     * <code>longValue</code> returns the value as a long.
+     *
+     * @return a <code>long</code> value
+     */
     public abstract long longValue();
 //#ifndef ant:cldc1.0
+
+    /**
+     * <code>floatValue</code> returns the value as a float.  Not
+     * available in CLDC 1.0
+     *
+     * @return a <code>float</code> value
+     */
     public abstract float floatValue();
+
+
+    /**
+     * <code>doubleValue</code> returns the value as a double.  Not
+     * available in CLDC 1.0
+     *
+     * @return a <code>double</code> value
+     */
     public abstract double doubleValue();
 //#endif
 
-    // Conversion
+    /**
+     * <code>asNumber</code> attempts to transform Thing t into a
+     * number of some sort.  It first tries to get an int from t, then
+     * a long, and finally a double.
+     *
+     * @param t a <code>Thing</code> value
+     * @return a <code>NumberThing</code> value
+     */
     public static NumberThing asNumber(Thing t) {
 	if(isNumber(t))
 	    return (NumberThing)(t.val);
@@ -71,6 +146,13 @@ public abstract class NumberThing implements RealThing {
 	}
     }
 
+    /**
+     * The <code>create</code> method creates a new Thing from
+     * NumberThing n.
+     *
+     * @param n a <code>NumberThing</code> value
+     * @return a <code>Thing</code> value
+     */
     public static Thing create(NumberThing n) {
 	return new Thing(n);
     }

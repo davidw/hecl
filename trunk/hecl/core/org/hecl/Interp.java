@@ -88,7 +88,6 @@ public class Interp {
 	commands.put(name,c);
 	return name;
     }
-    
 
     /**
      * Remove a command from an <code>Interp</code>.
@@ -107,8 +106,8 @@ public class Interp {
     public void setAuxData(String key,Object value) {
 	auxdata.put(key,value);
     }
-    
-    
+
+
     /**
      * Retrieve auxiliary data from an <code>Interp</code>.
      *
@@ -118,8 +117,8 @@ public class Interp {
     public Object getAuxData(String key) {
 	return auxdata.get(key);
     }
-    
-    
+
+
     /**
      * Remove auxiliary data from an <code>Interp</code>.
      */
@@ -127,11 +126,9 @@ public class Interp {
 	auxdata.remove(key);
     }
 
-    
-    
     /**
      * The <code>eval</code> method evaluates some Hecl code passed to it.
-     * 
+     *
      * @param interp
      *            an <code>Interp</code>.
      * @param in
@@ -167,10 +164,10 @@ public class Interp {
 
 	/* Math and logic commands. */
 	MathCmds.load(this);
-	
+
 	/* List related commands. */
 	ListCmds.load(this);
-	
+
 	/* Control commands. */
 	ControlCmds.load(this);
 

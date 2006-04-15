@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.util.*;
 
 /**
  * <code>Proc</code> is the class behind the "proc" command.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -31,11 +31,9 @@ class Proc implements Command {
     /**
      * Creates a new <code>Proc</code> instance, with the variable names in
      * cmdvars, and the actual code in cmdcode.
-     * 
-     * @param cmdvars
-     *            a <code>Thing</code> value
-     * @param cmdcode
-     *            a <code>Thing</code> value
+     *
+     * @param cmdvars a <code>Thing</code> value
+     * @param cmdcode a <code>Thing</code> value
      */
     public Proc(Thing cmdvars, Thing cmdcode) {
         vars = cmdvars;

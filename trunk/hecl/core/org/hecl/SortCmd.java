@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.util.*;
 
 /**
  * <code>SortCmd</code> implements the "sort" command.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -58,13 +58,10 @@ class SortCmd implements Command {
 
     /**
      * <code>quicksort</code> implementation.
-     * 
-     * @param a
-     *            a <code>Vector</code> value
-     * @param lo
-     *            an <code>int</code> value
-     * @param hi
-     *            an <code>int</code> value
+     *
+     * @param a a <code>Vector</code> value
+     * @param lo an <code>int</code> value
+     * @param hi an <code>int</code> value
      * @return a <code>Vector</code> value
      */
     private Vector quicksort(Vector a, int lo, int hi) throws HeclException {

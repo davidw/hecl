@@ -1,3 +1,11 @@
+2006-04-15  David N. Welton  <davidw@dedasys.com>
+
+	* General cleanup, killed trailing whitespace, added javadoc.
+	There should be no functional changes!
+
+	* build.xml: Preserve needs to specify methods explicitly:
+	<preserve class="Hecl { &lt;methods&gt;; }" />
+
 2006-04-09  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/HashThing.java: Reverted HashThing changes.

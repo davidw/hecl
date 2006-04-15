@@ -150,6 +150,7 @@ public class Hecl extends MIDlet {
 	try {
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
+	    /* e.printStackTrace(); */
 	    System.err.println("Error in runScript: " + e);
 	}
     }

@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package org.hecl;
 /**
  * The <code>SubstThing</code> class represents things that must be
  * substituted - $foo or &foo for example.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -40,11 +40,9 @@ public class SubstThing implements RealThing {
      * Creates a new <code>SubstThing</code> instance from a string, which is
      * the variable name to reference, and a boolean indicating whether this is
      * a reference (&) or not ($).
-     * 
-     * @param s
-     *            a <code>String</code> value
-     * @param isref
-     *            a <code>boolean</code> value
+     *
+     * @param s a <code>String</code> value
+     * @param isref a <code>boolean</code> value
      */
     public SubstThing(String s, boolean isref) {
         ref = isref;
@@ -57,13 +55,10 @@ public class SubstThing implements RealThing {
 
     /**
      * <code>setSubstFromAny</code> creates a Subst object from another type.
-     * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
      */
     private static void setSubstFromAny(Interp interp, Thing thing)
             throws HeclException {
@@ -80,14 +75,11 @@ public class SubstThing implements RealThing {
      * <code>get</code> returns the *value* of a SubstThing - in other words,
      * the Thing that its varName is pointing to. We use a cacheing mechanism
      * devised by Salvatore Sanfilippo to avoid unnecessary lookups.
-     * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public static Thing get(Interp interp, Thing thing) throws HeclException {
         setSubstFromAny(interp, thing);
@@ -120,7 +112,7 @@ public class SubstThing implements RealThing {
 
     /**
      * <code>deepcopy</code> returns a copy of the SubstThing.
-     * 
+     *
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
@@ -130,7 +122,7 @@ public class SubstThing implements RealThing {
     /**
      * <code>getStringRep</code> returns a string representation of the
      * SubstThing.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String getStringRep() {

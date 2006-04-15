@@ -17,8 +17,6 @@ package org.hecl;
 
 import java.util.Vector;
 
-//import java.util.Arrays;
-
 /**
  * The <code>Parse</code> class takes care of parsing Hecl scripts.
  *
@@ -92,6 +90,13 @@ public class Parse {
         return null;
     }
 
+
+    /**
+     * <code>parseToCode</code> parses up a [] section as code.
+     *
+     * @return a <code>CodeThing</code> value
+     * @exception HeclException if an error occurs
+     */
     public CodeThing parseToCode() throws HeclException {
         CodeThing code = new CodeThing();
         int i = 0;

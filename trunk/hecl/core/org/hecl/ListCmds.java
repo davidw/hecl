@@ -18,6 +18,13 @@ package org.hecl;
 import java.util.Enumeration;
 import java.util.Vector;
 
+/**
+ * The <code>ListCmds</code> class implements the Hecl commands that
+ * operate on lists, which are implemented by the ListThing class.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 class ListCmds extends Operator {
     public static final int LIST = 1;
     public static final int LLEN = 2;

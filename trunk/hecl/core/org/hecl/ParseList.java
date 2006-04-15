@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package org.hecl;
 
 /**
  * <code>ParseList</code> parses up Hecl lists.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -25,7 +25,7 @@ public class ParseList extends Parse {
 
     /**
      * Creates a new <code>ParseList</code> instance.
-     * 
+     *
      * @param in_in
      *            a <code>String</code> value
      */
@@ -37,7 +37,7 @@ public class ParseList extends Parse {
 
     /**
      * <code>parseLine</code> parses a line of Hecl code.
-     * 
+     *
      * @param in
      *            a <code>String</code> value
      * @param state
@@ -87,7 +87,7 @@ public class ParseList extends Parse {
     /**
      * <code>parseText</code> parses some text, such as that enclosed in
      * quotes "".
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException
@@ -115,7 +115,7 @@ public class ParseList extends Parse {
 
     /**
      * <code>parseWord</code> parses a plain Hecl word.
-     * 
+     *
      * @param state
      *            a <code>ParseState</code> value
      * @exception HeclException

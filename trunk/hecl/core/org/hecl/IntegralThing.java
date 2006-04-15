@@ -15,6 +15,13 @@ limitations under the License.
 
 package org.hecl;
 
+/**
+ * The <code>IntegralThing</code> class represents integer values - in
+ * practice, ints and longs.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public abstract class IntegralThing extends NumberThing {
     public boolean isIntegral() {
 	return true;

@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ public class CodeThing implements RealThing {
     public String thingclass() {
 	return "code";
     }
-    
+
     /**
      * The <code>setCodeFromAny</code> method makes the Thing passed to it
      * into a CodeThing representation.

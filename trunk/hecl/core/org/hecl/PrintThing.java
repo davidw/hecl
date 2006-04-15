@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * The <code>PrintThing</code> class is a utility class used to print out
  * Things. It is useful for debugging purposes.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -32,9 +32,8 @@ public class PrintThing {
      * <code>ws</code> creats new bytes with nulls, and then replaces them
      * with whitespace. Kind of ugly, but it works to print out a given amount
      * of whitespace.
-     * 
-     * @param n
-     *            an <code>int</code> value
+     *
+     * @param n an <code>int</code> value
      * @return a <code>String</code> value
      */
     private static String ws(int n) {
@@ -43,9 +42,8 @@ public class PrintThing {
 
     /**
      * <code>printThing</code> prints out a Thing.
-     * 
-     * @param t
-     *            a <code>Thing</code> value
+     *
+     * @param t a <code>Thing</code> value
      * @exception HeclException
      *                if an error occurs
      */
@@ -55,11 +53,9 @@ public class PrintThing {
 
     /**
      * The main <code>printThing</code> function.
-     * 
-     * @param t
-     *            a <code>Thing</code> value
-     * @param depth
-     *            an <code>int</code> value
+     *
+     * @param t a <code>Thing</code> value
+     * @param depth an <code>int</code> value
      * @exception HeclException
      *                if an error occurs
      */

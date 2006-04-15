@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package org.hecl;
 
 /**
  * The <code>ParseState</code> class is the state of the current parse.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -35,9 +35,8 @@ public class ParseState {
 
     /**
      * Creates a new <code>ParseState</code> instance.
-     * 
-     * @param in
-     *            a <code>String</code> value
+     *
+     * @param in a <code>String</code> value
      */
     public ParseState(String in) {
 	chars = in.toCharArray();
@@ -50,7 +49,7 @@ public class ParseState {
     /**
      * <code>nextchar</code> returns the next character, keeping track of
      * end-of-command and end-of-file conditions.
-     * 
+     *
      * @return a <code>char</code> value
      */
     public char nextchar() {
@@ -71,7 +70,7 @@ public class ParseState {
     /**
      * The <code>done</code> method returns true if either the
      * end-of-command or end-of-file condition is true.
-     * 
+     *
      * @return a <code>boolean</code> value
      */
     public boolean done() {
@@ -81,7 +80,7 @@ public class ParseState {
     /**
      * The <code>remaining</code> method is for debugging purposes, and
      * prints to standard output the remaining text.
-     *  
+     *
      */
     public void remaining() {
 	System.out.println("remaining:" + chars[idx]);
@@ -90,7 +89,7 @@ public class ParseState {
     /**
      * The <code>rewind</code> method "rewinds" the input by one
      * character.
-     *  
+     *
      */
     public void rewind() {
 	idx--;

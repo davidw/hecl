@@ -1,4 +1,4 @@
-/* Copyright 2004-2005 David N. Welton
+/* Copyright 2004-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,9 +18,10 @@ package org.hecl;
 import java.util.*;
 
 /**
- * The <code>Thing</code> class is what Hecl revolves around. "Things" can be
- * of several types, include strings, integers, lists, hash tables.
- * 
+ * The <code>Thing</code> class is what Hecl revolves around. "Things"
+ * can be of several types, include strings, integers, lists, hash
+ * tables.
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.1
  */
@@ -42,7 +43,7 @@ public class Thing extends Object {
 
     /**
      * Creates a new <code>Thing</code> instance from a string.
-     * 
+     *
      * @param s
      *            a <code>String</code> value
      */
@@ -53,7 +54,7 @@ public class Thing extends Object {
 
     /**
      * Creates a new <code>Thing</code> instance from a string buffer.
-     * 
+     *
      * @param s
      *            a <code>StringBuffer</code> value
      */
@@ -65,7 +66,7 @@ public class Thing extends Object {
     /**
      * Creates a new <code>Thing</code> instance from an internal
      * representation.
-     * 
+     *
      * @param realthing
      *            a <code>RealThing</code> value
      */
@@ -77,7 +78,7 @@ public class Thing extends Object {
     /**
      * <code>setVal</code> sets the internal representation of the Thing, and
      * cancels the string representation.
-     * 
+     *
      * @param realthing
      *            a <code>RealThing</code> value
      */
@@ -88,7 +89,7 @@ public class Thing extends Object {
 
     /**
      * <code>getVal</code> fetches the internal value of the Thing.
-     * 
+     *
      * @return a <code>RealThing</code> value
      */
     public RealThing getVal() {
@@ -129,7 +130,7 @@ public class Thing extends Object {
     /**
      * <code>makeref</code> sets the 'this' Thing to be a reference to the
      * newval that was passed to it.
-     * 
+     *
      * @param newval
      *            a <code>Thing</code> value.
      */
@@ -141,7 +142,7 @@ public class Thing extends Object {
     /**
      * <code>toString</code> returns the String value of a Thing. FIXME this
      * could probably be improved in terms of efficiency.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String toString() {
@@ -155,7 +156,7 @@ public class Thing extends Object {
     /**
      * <code>deepcopy</code> copies the thing, its value, and any elements the
      * value might contain.
-     * 
+     *
      * @return a <code>Thing</code> value
      * @throws HeclException
      */

@@ -1,4 +1,4 @@
-/* Copyright 2005 David N. Welton
+/* Copyright 2005-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ public class ObjectThing implements RealThing {
     /**
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an ObjectThing internal representation.
-     * 
+     *
      * @param o
      *            an <code>Object</code>
      * @return a <code>Thing</code> value
@@ -85,7 +85,7 @@ public class ObjectThing implements RealThing {
 
     /**
      * <code>deepcopy</code> makes a copy.
-     * 
+     *
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
@@ -95,7 +95,7 @@ public class ObjectThing implements RealThing {
     /**
      * <code>getStringRep</code> creates a string representation of the
      * ObjectThing.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String getStringRep() {
