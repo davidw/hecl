@@ -241,17 +241,22 @@ public class CodeThing implements RealThing {
     /**
      * The <code>getStringRep</code> method returns a String representation of
      * the commands it represents.
-     * 
+     *
      * @return a <code>String</code> value.
      */
     public String getStringRep() {
+	int i = 0;
         StringBuffer out = new StringBuffer();
 
         for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
             Stanza s = (Stanza) e.nextElement();
-            //	    out.append("[");
-            out.append(s.toString() + ";\n");
-            //	    out.append("]\n");
+	    /* Simulate 'join'ing the stanzas. */
+	    if (i > 0) {
+		out.append("\n");
+	    } else {
+		i ++;
+	    }
+            out.append(s.toString());
         }
         return out.toString();
     }

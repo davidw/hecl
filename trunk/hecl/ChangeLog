@@ -1,5 +1,11 @@
 2006-04-17  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/CodeThing.java: Fixed up printing of CodeThings
+	and GroupThings.
+
+	* core/org/hecl/Stanza.java: Fixed up printing of CodeThings and
+	GroupThings.
+
 	* build.xml: Build JarHack.jar in jars/, don't delete jars/
 	directory on ant clean, so as to preserve files.
 

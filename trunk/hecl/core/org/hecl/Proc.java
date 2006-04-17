@@ -76,4 +76,13 @@ class Proc implements Command {
         Hashtable ht = interp.stackDecr();
 	ht = null;
     }
+
+    /**
+     * <code>getCode</code> returns the proc's code.
+     *
+     * @return a <code>Thing</code> value
+     */
+    public Thing getCode() {
+	return code;
+    }
 }

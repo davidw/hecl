@@ -213,7 +213,18 @@ class Stanza {
 	StringBuffer out = new StringBuffer(argv[0].toString());
 	for (int i = 1; i < argv.length; i++) {
 	    out.append(" ");
-	    out.append(argv[i].toString());
+	    if (argv[i].val instanceof CodeThing) {
+		String avs = argv[i].toString();
+		if (!((CodeThing)argv[i].val).marksubst) {
+		    out.append("[" + avs + "]");
+		} else {
+		    out.append("{" + avs + "}");
+		}
+	    } else if (argv[i].val instanceof GroupThing) {
+		out.append("\"" + argv[i].toString() + "\"");
+	    } else {
+		out.append(argv[i].toString());
+	    }
 	}
 	return out.toString();
     }

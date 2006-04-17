@@ -27,5 +27,4 @@ test deepcopy-codething-1 {
     append &res $loop
 
     set res
-} {incr &iincr &{i};
-}
+} {incr &iincr &{i}}

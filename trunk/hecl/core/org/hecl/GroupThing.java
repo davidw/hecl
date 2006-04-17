@@ -79,7 +79,7 @@ public class GroupThing implements RealThing {
     /**
      * <code>get</code> returns a Vector containing other Things, representing
      * a group, from a Thing.
-     * 
+     *
      * @param thing
      *            a <code>Thing</code> value
      * @return a <code>Vector</code> value
@@ -93,7 +93,7 @@ public class GroupThing implements RealThing {
     /**
      * <code>deepcopy</code> makes a copy of a GroupThing and all its
      * elements.
-     * 
+     *
      * @return a <code>RealThing</code> value
      * @throws HeclException
      */
@@ -108,7 +108,7 @@ public class GroupThing implements RealThing {
 
     /**
      * <code>getStringRep</code> returns a string representation of the group.
-     * 
+     *
      * @return a <code>String</code> value
      */
     public String getStringRep() {

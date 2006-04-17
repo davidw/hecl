@@ -837,9 +837,8 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	    try {
 		interp.eval(code);
 	    } catch (Exception e) {
-		System.out.println(e.toString());
+		System.err.println(e.toString());
 	    }
 	}
     }
-
 }

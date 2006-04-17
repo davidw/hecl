@@ -100,6 +100,9 @@ class InterpCmds extends Operator {
 			results.addElement(t);
 		    }
 		    return new ListThing(results);
+		} else if (subcmd.equals("proccode")) {
+		    Proc p = (Proc)interp.commands.get(argv[2].toString());
+		    return p.getCode().val;
 		}
 		break;
 
