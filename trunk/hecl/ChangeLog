@@ -1,5 +1,8 @@
 2006-04-17  David N. Welton  <davidw@dedasys.com>
 
+	* build.xml: Build JarHack.jar in jars/, don't delete jars/
+	directory on ant clean, so as to preserve files.
+
 	* build.xml: Copy .jad as well as .jar to the jars/ directory.
 
 	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Build HeclBuilder

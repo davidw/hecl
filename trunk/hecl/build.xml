@@ -192,16 +192,18 @@
 
   <!-- clean targets -->
   <target name="clean" description="Clean the build"
-    depends="cleanOut,cleanBuild">
+    depends="cleanBuild">
     <delete file="Hecl.jar"/>
     <delete file="JarHack.jar"/>
     <delete file="HeclBuilder.jar"/>
     <delete file="StandaloneHecl.jar"/>
   </target>
 
+<!-- Don't do this... we keep these
   <target name="cleanOut" description="Clean out directory">
     <delete dir="${relprefix}"/>
   </target>
+-->
 
   <target name="cleanBuild" description="Clean build files">
     <delete dir="${buildprefix}"/>
@@ -306,7 +308,7 @@
     <mkdir dir="${j2se.build}/jarhack" />
     <javac srcdir="jarhack" destdir="${j2se.build}/jarhack">
     </javac>
-    <jar destfile="JarHack.jar" basedir="${j2se.build}/jarhack">
+    <jar destfile="jars/JarHack.jar" basedir="${j2se.build}/jarhack">
       <manifest>
 	<attribute name="Main-Class" value="$jarhack/JarHack"></attribute>
       </manifest>
@@ -615,7 +617,7 @@
       <classpath refid="classpath" />
       <classpath path="HeclBuilder/swing-layout-1.0.jar" />
       <classpath path="${j2se.hecl.lib.jar}" />
-      <classpath path="JarHack.jar" />
+      <classpath path="jars/JarHack.jar" />
     </javac>
   </target>
 
@@ -627,7 +629,7 @@
 
       <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
 	includes="org/jdesktop/layout/*.class"/>
-      <zipfileset src="JarHack.jar" includes="jarhack/*.class"/>
+      <zipfileset src="jars/JarHack.jar" includes="jarhack/*.class"/>
       <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/*.class"/>
       <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/files/*.class"/>
       <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/fp/*.class"/>
