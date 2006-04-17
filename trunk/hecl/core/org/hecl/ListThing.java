@@ -156,14 +156,13 @@ public class ListThing implements RealThing {
     }
 
     /**
-     * <code>toListString</code> is an internal function that transforms list
-     * elements into the string form {foo bar} if the element contains a space.
-     * 
-     * @param thing
-     *            a <code>Thing</code> value
+     * <code>toListString</code> transforms list elements into the
+     * string form {foo bar} if the element contains a space.
+     *
+     * @param thing a <code>Thing</code> value
      * @return a <code>String</code> value
      */
-    private String toListString(Thing thing) {
+    public static String toListString(Thing thing) {
         String elementstring = thing.getStringRep();
         StringBuffer resbuf = new StringBuffer();
 

@@ -215,13 +215,15 @@ class Stanza {
 	    out.append(" ");
 	    if (argv[i].val instanceof CodeThing) {
 		String avs = argv[i].toString();
-		if (!((CodeThing)argv[i].val).marksubst) {
+		if (((CodeThing)argv[i].val).marksubst) {
 		    out.append("[" + avs + "]");
 		} else {
 		    out.append("{" + avs + "}");
 		}
 	    } else if (argv[i].val instanceof GroupThing) {
 		out.append("\"" + argv[i].toString() + "\"");
+	    } else if (argv[i].val instanceof StringThing) {
+		out.append(ListThing.toListString(argv[i]));
 	    } else {
 		out.append(argv[i].toString());
 	    }

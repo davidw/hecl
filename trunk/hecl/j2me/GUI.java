@@ -23,6 +23,7 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
@@ -102,6 +103,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
     static final int LIST = 7 << 8;	/* List of items for Choice's */
     static final int VAL = 8 << 8;	/* Value - for gauges */
     static final int DATE = 9 << 8;	/* Date - for datefields */
+    static final int CALLBACK = 10 << 8;	/* Callback - callback code */
 
     /* get or set? */
     static final int GETPROP = 0x1000000;
@@ -316,6 +318,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	    case DATEFIELDCMD:
 		/* The datefield command. */
 		properties.setProp("type", new Thing("date_time"));
+		properties.setProps(argv, 1);
 
 		DateField df = new DateField(
 		    (properties.getProp("label")).toString(),
@@ -603,6 +606,8 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	    return TEXT;
 	} else if (prop.equals("len")) {
 	    return LEN;
+	} else if (prop.equals("callback")) {
+	    return CALLBACK;
 	} else if (prop.equals("code")) {
 	    return CODE;
 	} else if (prop.equals("label")) {
@@ -692,6 +697,9 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		Vector v = ListThing.get(propval);
 		boolean []flags = new boolean[sz];
 		int i;
+		for (i = 0; i < sz; i++) {
+		    flags[i] = false;
+		}
 		for (Enumeration e = v.elements(); e.hasMoreElements();) {
 		    i = IntThing.get((Thing)e.nextElement());
 		    flags[i] = true;
@@ -759,12 +767,29 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		result = IntThing.create(((Gauge)widget).getValue());
 		break;
 	    case DATEFIELD + DATE + GETPROP:
-		result = IntThing.create(
-		    (int)(((DateField)widget).getDate().getTime() / 1000));
+		result = LongThing.create(
+		    (int)(((DateField)widget).getDate().getTime()));
 		break;
 	    case DATEFIELD + DATE + SETPROP:
-		((DateField)widget).setDate(new java.util.Date((long)IntThing.get(propval) * 1000));
+		((DateField)widget).setDate(new java.util.Date(LongThing.get(propval)));
 		break;
+
+	    case CALLBACK + LISTBOX + SETPROP:
+	    case CALLBACK + CHOICEGROUP + SETPROP:
+	    case CALLBACK + GAUGE + SETPROP:
+	    case CALLBACK + TEXTFIELD + SETPROP:
+	    case CALLBACK + DATEFIELD + SETPROP:
+		itemcallbacks.put(widget, propval);
+		break;
+
+	    case CALLBACK + LISTBOX + GETPROP:
+	    case CALLBACK + CHOICEGROUP + GETPROP:
+	    case CALLBACK + GAUGE + GETPROP:
+	    case CALLBACK + TEXTFIELD + GETPROP:
+	    case CALLBACK + DATEFIELD + GETPROP:
+		result = (Thing)itemcallbacks.get(widget);
+		break;
+
 	    default:
 		if (!ok) {
 		    throw new HeclException("Bad " +

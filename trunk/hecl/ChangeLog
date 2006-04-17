@@ -1,3 +1,19 @@
+2006-04-18  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: New example script that,
+	hopefully, is a bit more pleasant and logical.
+
+	* j2me/GUI.java: Datefields now use LongThings.
+
+	* core/org/hecl/Stanza.java: StringThings print out surrounded by
+	{} if necessary, according to toListString rules.
+
+	* core/org/hecl/ListThing.java: Made toListString a public, static
+	method, so as to not waste space, and allow it to be used by
+	others.
+
+	* j2me/GUI.java: Added getprop/setprop for widget callbacks.
+
 2006-04-17  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/CodeThing.java: Fixed up printing of CodeThings
