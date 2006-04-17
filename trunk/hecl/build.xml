@@ -135,7 +135,7 @@
   <path id="j2se.coreclasspath">
     <pathelement location="${j2se.build}"/>
   </path>
-  
+
   <property name="j2se.hecl.cmdline.jar" value="${j2se.build}/Hecl.jar"/>
   <property name="j2se.hecl.lib.jar" value="${j2se.build}/Hecllib.jar"/>
   <property name="j2se.hecl.stand.jar" value="${j2se.build}/Heclstand.jar"/>
@@ -314,7 +314,7 @@
   </target>
 
   <!-- package targets -->
-  
+
   <!-- Build a jar containing the hecl core. -->
   <target name="packageLib"
     description="Create Jar for Hecl lib"
@@ -543,7 +543,7 @@
 	<attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
       </manifest>
     </wtkpackage>
-    <copy file="${j2me.hecl.jar}" todir="${j2me.rel}" overwrite="true"/>
+    <copy file="${j2me.hecl.jad}" todir="${j2me.rel}" overwrite="true"/>
     <copy file="${j2me.hecl.jar}" todir="${j2me.rel}" overwrite="true"/>
   </target>
 
@@ -619,7 +619,7 @@
     </javac>
   </target>
 
-  <target name="HeclBuilderJar" depends="HeclBuilder,midlet">
+  <target name="HeclBuilderJar" depends="HeclBuilder,midlet10,midlet11">
     <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
 	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />
@@ -628,14 +628,17 @@
       <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
 	includes="org/jdesktop/layout/*.class"/>
       <zipfileset src="JarHack.jar" includes="jarhack/*.class"/>
-      <zipfileset src="Hecl.jar" includes="org/hecl/*.class"/>
-      <zipfileset src="Hecl.jar" includes="org/hecl/files/*.class"/>
-      <zipfileset src="Hecl.jar" includes="org/hecl/fp/*.class"/>
-      <zipfileset src="Hecl.jar" includes="org/hecl/load/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/files/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/fp/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/load/*.class"/>
     </jar>
 
-    <jar destfile="HeclBuilder.jar" basedir="." includes="j2me/Hecl.jar"
-      update="true" />
+    <jar destfile="jars/HeclBuilder.jar" basedir="."
+    includes="jars/1.0/Hecl.jar" update="true" />
+    <jar destfile="jars/HeclBuilder.jar" basedir="."
+    includes="jars/1.1/Hecl.jar" update="true" />
+
   </target>
 
 </project>

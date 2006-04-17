@@ -54,6 +54,10 @@ public class HeclBuilderGui extends javax.swing.JFrame {
     private javax.swing.JButton selectScriptButton;
     private javax.swing.JLabel selectLabel;
 
+    private javax.swing.JRadioButton selectMidp10;
+    private javax.swing.JRadioButton selectMidp20;
+    private javax.swing.ButtonGroup selectMidp;
+
     /**
      * Creates a new <code>HeclBuilderGui</code> instance.
      *
@@ -110,6 +114,12 @@ public class HeclBuilderGui extends javax.swing.JFrame {
                 selectScriptButtonActionPerformed(evt);
             }
         });
+
+	selectMidp10 = new javax.swing.JRadioButton("MIDP 1.0", true);
+	selectMidp20 = new javax.swing.JRadioButton("MIDP 2.0");
+	selectMidp = new javax.swing.ButtonGroup();
+	selectMidp.add(selectMidp10);
+	selectMidp.add(selectMidp20);
 
         runButton.setText("Create .jar/.jad files");
         runButton.setToolTipText("Select a script and MIDlet name to activate this button");
@@ -172,7 +182,10 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 	hGroup.add(layout.createParallelGroup().
 		   add(scriptTextField).
 		   add(midletTextField).
-		   add(outputTextField));
+		   add(outputTextField).
+		   add(layout.createSequentialGroup().
+		       add(selectMidp10).
+		       add(selectMidp20)));
 
 	hGroup.add(layout.createParallelGroup().
 		   add(layout.createSequentialGroup().
@@ -198,6 +211,8 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 		   add(outputSelectButton));
 	vGroup.add(layout.createParallelGroup(GroupLayout.BASELINE).
 		   add(createLabel).
+		   add(selectMidp10).
+		   add(selectMidp20).
 		   add(runButton));
 	layout.setVerticalGroup(vGroup);
 
@@ -206,7 +221,13 @@ public class HeclBuilderGui extends javax.swing.JFrame {
 
 
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        InputStream in = this.getClass().getResourceAsStream("/j2me/Hecl.jar");
+	String hecljar = null;
+	if (selectMidp20.isSelected()) {
+	    hecljar = "/jars/1.0/Hecl.jar";
+	} else {
+	    hecljar = "/jars/1.1/Hecl.jar";
+	}
+        InputStream in = this.getClass().getResourceAsStream(hecljar);
         String scriptfile = scriptTextField.getText();
         String newname = midletTextField.getText();
         String outfile = outputTextField.getText() + File.separatorChar +

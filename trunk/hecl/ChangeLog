@@ -1,3 +1,12 @@
+2006-04-17  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Copy .jad as well as .jar to the jars/ directory.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Build HeclBuilder
+	with both .jars.  Added code to enable the selection of which MIDP
+	jar (maybe it would be best to say CLDC?) to use when building the
+	target application.
+
 2006-04-15  David N. Welton  <davidw@dedasys.com>
 
 	* javadocs fixups.  Now we generate them from the preprocessed
