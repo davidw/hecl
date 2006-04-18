@@ -102,7 +102,7 @@ setcurrent &main;
 
 	  <td>
 	    <applet id="microemulator" code="com.barteo.emulator.applet.Main"
-	      width="170" height="445" archive="me-applet.jar,../files/Hecl.jar">
+	      width="170" height="445" archive="me-applet.jar,../jars/1.0/Hecl.jar">
 	      <param name="midlet" value="Hecl">
 	    </applet>
 	  </td>

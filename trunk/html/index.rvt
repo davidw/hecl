@@ -87,8 +87,8 @@
       point, maybe even scripting entire applications, for
       devices running embedded Java.  As an example, you can
       try this MIDlet: <a
-	href="/files/Hecl.jar">Hecl.jar</a> <a
-	href="/files/Hecl.jad">Hecl.jad</a>
+	href="/jars/1.0/Hecl.jar">Hecl.jar</a> <a
+	href="/jars/1.0/Hecl.jad">Hecl.jad</a>
     </p>
 
     <p>
