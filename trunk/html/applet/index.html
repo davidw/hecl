@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+  <head>
+    <title>Hecl interpreter in an applet</title>
+    <link rel="stylesheet" href="/style.css">
+    <script>
+<!--
+
+function HW () {
+    applet = document.getElementById("microemulator");
+    s = document.sf2.script2.value;
+    applet.callMethod("runScript", s);
+}
+
+function reloadEmulator() {
+    applet = document.getElementById("microemulator");
+    applet.restartApp();
+}
+
+function runHecl() {
+    s = document.sf1.script1.value;
+    applet = document.getElementById("heclet");
+    applet.runScript(s);
+}
+// -->
+    </script>
+  </head>
+  <body>
+
+    <div class="title">
+      <h1 align="center">Hecl Programming Language</h1>
+    </div>
+
+    <div class="nav">
+      <br/>
+      <b>Links:</b>
+      <ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="/docs/">Documentation</a></li>
+	<li><a href="/hecl_examples.html">Examples</a></li>
+	<li>Applets</li>
+      </ul>
+      <ul>
+	<li><a
+	    href="http://sourceforge.net/projects/hecl/">SourceForge Project</a></li>
+	<li>
+	  <a
+	    href="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Mailing
+	    List</a>
+	</li>
+	<li>
+	  <a href="http://sourceforge.net/project/showfiles.php?group_id=122383&package_id=133643&release_id=360830">Download</a>
+	</li>
+      </ul>
+    </div>
+
+    <div style="width: 80%; float: right;">
+    <table class="applet">
+      <tbody>
+	<tr>
+	  <th colspan="2">
+	    Try out Hecl
+	  </th>
+	</tr>
+
+	<tr>
+	  <td>Write the script:</td>
+	  <td>Script output:</td>
+	</tr>
+
+	<tr>
+	  <td>
+	    <form name="sf1" action="">
+	      <p>
+		<textarea name="script1" style="width: 350px; height: 300px;%">set i 0
+while {< &i 10} {
+    puts "i is $i"
+    incr &i
+}</textarea><br/>
+	      </p>
+	    </form>
+	  </td>
+
+	  <td>
+	    <applet id="heclet" name="heclApplet" code="org.hecl.applet.HeclApplet"
+		archive="HeclApplet.jar" width="350" height="300">
+	    </applet>
+	  </td>
+	</tr>
+	<tr>
+	  <td style="text-align: center;" colspan="2">
+	    <input onclick="runHecl()" type="button" value="Run Script">
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+
+    <table class="applet">
+      <tbody>
+	<tr>
+	  <th colspan="2">
+	    Try out Hecl in a cell phone emulator
+	  </th>
+	</tr>
+
+	<tr>
+	  <td>Write the script:</td>
+	  <td>Emulator:</td>
+	</tr>
+
+	<tr>
+	  <td>
+	    <form name="sf2">
+		<textarea name="script2" cols="80" style="height: 450px;">set main [textbox label Hecl code {
+} len 200 text "A sample textbox"];
+
+setcurrent &main;
+</textarea><br/>
+	    </form>
+
+	  </td>
+
+	  <td>
+	    <applet id="microemulator" code="com.barteo.emulator.applet.Main"
+	      width="170" height="445" archive="me-applet.jar,../files/Hecl.jar">
+	      <param name="midlet" value="Hecl">
+	    </applet>
+	  </td>
+	</tr>
+
+	<tr>
+	  <td align="center">
+	    <input type="button" onclick="reloadEmulator()"
+	      value="Reload Emulator">
+	    <input type="button" onclick="HW()" value="Run Script">
+	  </td>
+	</tr>
+
+      </tbody>
+    </table>
+    </div>
+
+    <br style="clear:both;" />
+
+    <p>
+      These examples require Java and Javascript.
+    </p>
+
+  </body>
+</html>

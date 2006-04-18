@@ -1,0 +1,16 @@
+;; Object applet/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "applet/"
+  :tables (list 
+   (semanticdb-table "index.html"
+    :major-mode 'html-mode
+    :tags '(("Hecl interpreter in an applet" section nil nil [73 168]) ("Hecl Programming Language" section nil nil [168 609]) ("Hecl Programming Language" section (:members (("Hecl Programming Language" section (:members (("Home" section nil nil [779 810]) ("Documentation" section nil nil [810 855]) ("Examples" section nil nil [855 949]) ("SourceForge Project" section nil nil [949 1040]) ("Mailing
+	    List" section nil nil [1040 1148]) ("Download" section nil nil [1148 1151]))) nil [647 651]))) nil [609 614]))
+    :file "index.html"
+    :pointmax 3083
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0beta3"
+  :semanticdb-version "2.0beta3"
+  )

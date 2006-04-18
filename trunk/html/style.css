@@ -3,7 +3,20 @@ body {
     color: #313131;
     font-size: smaller;
     background-color: #ffffff;
+    margin-left: 5%;
+    margin-right: 5%;
 }
+
+div.title {
+    color: #f9b93e;
+    background-color: #070707;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3ex;
+    width: 50%;
+    padding: 5px;
+}
+
 
 A:link {
     color: #3333cc;
@@ -27,4 +40,43 @@ code {
 
 p {
     padding-left: 5ex;
+}
+
+div.nav {
+    float: left;
+    background-color: #dddddd;
+    margin: 2ex;
+    padding: 1ex;
+    border: solid #bbbbbb 1px;
+}
+
+div.example {
+    float: right;
+    background-color: #dddddd;
+    border: solid #bbbbbb 1px;
+    margin: 1ex;
+}
+
+div.nav ul {
+    padding-left: 2ex;
+}
+
+img.logo {
+    float: right;
+}
+
+table.applet {
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 1em;
+}
+
+table.applet th {
+    background-color: #bbbbbb;
+}
+
+table.applet td.caption {
+    background-color: #dddddd;
+    border: 1px #bbbbbb solid;
+    padding: 1em;
 }
