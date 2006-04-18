@@ -1,3 +1,8 @@
+2006-04-19  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: By default, cldc1.0 goes with midp1.0, cldc1.1 goes
+	with midp2.0.
+
 2006-04-18  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/script.hcl: New example script that,

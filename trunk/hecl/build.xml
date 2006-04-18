@@ -59,7 +59,7 @@
     </and>
   </condition>
 
-  <!-- Specifies the version of MIDP to use. 	2.0+ -->
+  <!-- Specifies the version of CLDC to use. 	2.0+ -->
   <!-- default: 1.1 -->
   <property name="wtk.cldc.version" value="1.1"/>
 
@@ -386,12 +386,14 @@
   <!-- J2ME versions -->
   <target name="midlet10" description="Build MIDlet for CLDC-1.0">
     <antcall target="midlet" inheritAll="false">
+      <param name="wtk.midp.version" value="1.0"/>
       <param name="wtk.cldc.version" value="1.0"/>
     </antcall>
   </target>
 
   <target name="midlet11" description="Build MIDlet for CLDC-1.1">
     <antcall target="midlet" inheritAll="false">
+      <param name="wtk.midp.version" value="2.0"/>
       <param name="wtk.cldc.version" value="1.1"/>
     </antcall>
   </target>
