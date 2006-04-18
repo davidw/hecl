@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Hecl Supported Phones</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body id="phones">
+
+    <div class="title">
+      <h1 align="center">Hecl Programming Language</h1>
+    </div>
+
+    <? include ../navbar.html ?>
+
+    <h3>List of phones Hecl is known to work with</h3>
+
+    <p>We've tested Hecl on these phones and we know it works.</p>
+
+    <p>If you're the generous sort, send us phones to test Hecl on, or
+    even better: try Hecl out yourself and let us know what you
+    think... and maybe even give us a hand developing it!</p>
+
+    <ul class="phonelist">
+
+      <li>
+	<h4>Nokia</h4>
+	<ul>
+	  <li>3100</li>
+	  <li>6630</li>
+	  <li>6680</li>
+	  <li>6230i</li>
+	  <li>N70</li>
+	</ul>
+      </li>
+
+    </ul>
+
+    <br/>
+
+    <h3>List of phones where Hecl should work</h3>
+
+    <p>
+      These devices ought to run Hecl just fine.  There is a really
+      thorough list of J2ME phones here: <a
+      href="http://www.j2mepolish.org/devices/devices-vendor.html">http://www.j2mepolish.org/devices/devices-vendor.html</a>,
+      and Hecl should work on them.
+    </p>
+
+    <ul class="phonelist">
+
+      <li>
+	<h4>Motorola</h4>
+	<ul>
+	  <li>A780</li>
+	  <li>E1000</li>
+	  <li>V980</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>Nokia</h4>
+	<ul>
+	  <li>3152</li>
+	  <li>3155</li>
+	  <li>3155i</li>
+	  <li>3220</li>
+	  <li>5140</li>
+	  <li>5140i</li>
+	  <li>6020</li>
+	  <li>6021</li>
+	  <li>6030</li>
+	  <li>6060</li>
+	  <li>6101</li>
+	  <li>6102</li>
+	  <li>6111</li>
+	  <li>6152</li>
+	  <li>6155</li>
+	  <li>6155i</li>
+	  <li>6170</li>
+	  <li>6230</li>
+	  <li>6230i</li>
+	  <li>6235</li>
+	  <li>6235i</li>
+	  <li>6255</li>
+	  <li>6265</li>
+	  <li>6265i</li>
+	  <li>6270</li>
+	  <li>6280</li>
+	  <li>6630</li>
+	  <li>6680</li>
+	  <li>6681</li>
+	  <li>6682</li>
+	  <li>6822</li>
+	  <li>7260</li>
+	  <li>7270</li>
+	  <li>7710</li>
+	  <li>8800</li>
+	  <li>8801</li>
+	  <li>300</li>
+	  <li>9500</li>
+	  <li>E60</li>
+	  <li>E61</li>
+	  <li>E70</li>
+	  <li>N70</li>
+	  <li>N90</li>
+	  <li>N91</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>O2</h4>
+	<ul>
+	  <li>XDAII</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>Samsung</h4>
+	<ul>
+	  <li>SGH-D500</li>
+	  <li>Z130</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>Siemens</h4>
+	<ul>
+	  <li>C65</li>
+	  <li>CX65</li>
+	  <li>M65</li>
+	  <li>S65</li>
+	  <li>SK65</li>
+	  <li>SL65</li>
+	  <li>ST60</li>
+	  <li>CX65</li>
+	  <li>CX75</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>Sony-Ericsson</h4>
+	<ul>
+	  <li>D750</li>
+	  <li>F500</li>
+	  <li>F500i</li>
+	  <li>J300</li>
+	  <li>K300</li>
+	  <li>K500</li>
+	  <li>K500c</li>
+	  <li>K500i</li>
+	  <li>K600</li>
+	  <li>K608</li>
+	  <li>K700</li>
+	  <li>K700c</li>
+	  <li>K700i</li>
+	  <li>K750</li>
+	  <li>S700</li>
+	  <li>S700c</li>
+	  <li>S700i</li>
+	  <li>V600</li>
+	  <li>V800</li>
+	  <li>V802</li>
+	  <li>W550</li>
+	  <li>W600</li>
+	  <li>W800</li>
+	  <li>W900</li>
+	  <li>Z1010</li>
+	  <li>Z500</li>
+	  <li>Z500a</li>
+	  <li>Z500i</li>
+	  <li>Z520</li>
+	  <li>Z800</li>
+	</ul>
+      </li>
+
+      <li>
+	<h4>T-Mobile</h4>
+	<ul>
+	  <li>MDAII</li>
+	  <li>MDAcompact</li>
+	</ul>
+      </li>
+    </ul>
+
+  </body>
+</html>
