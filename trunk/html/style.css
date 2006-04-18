@@ -61,6 +61,12 @@ div.nav ul {
     padding-left: 2ex;
 }
 
+#home #home-nav, #docs #docs-nav, #examples #examples-nav, #applets
+#applets-nav, #phones #phones-nav {
+background-color: #bbb;
+padding: 3px;
+}
+
 img.logo {
     float: right;
 }
@@ -79,4 +85,19 @@ table.applet td.caption {
     background-color: #dddddd;
     border: 1px #bbbbbb solid;
     padding: 1em;
+}
+
+ul.phonelist {
+    margin-left: 20%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ul.phonelist > li > ul > li {
+    display: inline;
+    margin-left: 2em;
+}
+
+#phones p, #phones h3 {
+margin-left: 15%;
 }

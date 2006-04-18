@@ -5,34 +5,13 @@
     <title>Hecl Programming Language</title>
     <link rel="stylesheet" href="/style.css">
   </head>
-  <body>
+  <body id="home">
 
     <div class="title">
       <h1 align="center">Hecl Programming Language</h1>
     </div>
 
-    <div class="nav">
-      <br/>
-      <b>Links:</b>
-      <ul>
-	<li>Home</li>
-	<li><a href="/docs/">Documentation</a></li>
-	<li><a href="hecl_examples.html">Examples</a></li>
-	<li><a href="applet/">Applets</a></li>
-      </ul>
-      <ul>
-	<li><a
-	href="http://sourceforge.net/projects/hecl/">SourceForge Project</a></li>
-	<li>
-	  <a
-	    href="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Mailing
-	    List</a>
-	</li>
-	<li>
-	  <a href="http://sourceforge.net/project/showfiles.php?group_id=122383&package_id=133643&release_id=360830">Download</a>
-	</li>
-      </ul>
-    </div>
+    <? include navbar.html ?>
 
     <img class="logo" src="hecl-look-left.png" alt="Hecl">
 
@@ -40,12 +19,13 @@
       The Hecl Programming Language is a high-level scripting
       language implemented in Java.  It is intended to be
       small, extensible, extremely flexible, and easy to learn
-      and use.
+      and use.  Infact, it's small enough that it runs on J2ME-enabled
+      cell phones!
     </p>
     <p>
       I personally can't stand web pages for new programming
       languages without a quick link to some examples.  Here
-      you are: <a href="hecl_examples.html">Hecl Examples</a>
+      you are: <a href="/examples/">Hecl Examples</a>
     </p>
 
     <p>
@@ -81,8 +61,14 @@
 	    <th colspan="2">Hecl example app for J2ME</th>
 	  </tr>
 	  <tr>
-	    <td style="padding: 1ex;"><img style="border: solid black 1px;" src="screen1.png" alt="Hecl code on cell phone"></td>
-	    <td style="padding: 1ex;"><img style="border: solid black 1px;" src="screen2.png" alt="Results of hecl code"></td>
+	    <td style="padding: 1ex;">
+	      <img style="border: solid black 1px;" src="screen1.png"
+		alt="Hecl code on cell phone">
+	    </td>
+	    <td style="padding: 1ex;">
+	      <img style="border: solid black 1px;" src="screen2.png"
+		alt="Results of hecl code">
+	    </td>
 	  </tr>
 	  <tr>
 	    <td style="padding: 1ex;">Edit the code...</td>
@@ -115,24 +101,12 @@
     </p>
 
     <p>
-      <b>About</b>: Hecl was written by <a
-	href="http://www.dedasys.com/davidw/">David N. Welton</a>. Major
-	contributions by: <a
-	href="http://www.zoro2.org/">Wojciech Kocjan</a>
+      <b>About</b>: Hecl is developed by <a
+	href="http://www.dedasys.com/davidw/">David N. Welton</a> and
+	<a
+	href="http://www.data2c.com/data2c/company/kechel.php">Wolfgang
+	Kechel</a>
     </p>
-
-    <div class="nav">
-      <b>Supported phones</b> <br/>
-      Hecl is known to work on these
-      phones:
-      <ul>
-	<li>Nokia 3100</li>
-	<li>Nokia 6630</li>
-	<li>Nokia 6680</li>
-	<li>Nokia N70</li>
-	<li>Nokia 6230i</li>
-      </ul>
-    </div>
 
   </body>
 </html>

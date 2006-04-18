@@ -26,34 +26,13 @@ function runHecl() {
 // -->
     </script>
   </head>
-  <body>
+  <body id="applets">
 
     <div class="title">
       <h1 align="center">Hecl Programming Language</h1>
     </div>
 
-    <div class="nav">
-      <br/>
-      <b>Links:</b>
-      <ul>
-	<li><a href="/">Home</a></li>
-	<li><a href="/docs/">Documentation</a></li>
-	<li><a href="/hecl_examples.html">Examples</a></li>
-	<li>Applets</li>
-      </ul>
-      <ul>
-	<li><a
-	    href="http://sourceforge.net/projects/hecl/">SourceForge Project</a></li>
-	<li>
-	  <a
-	    href="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Mailing
-	    List</a>
-	</li>
-	<li>
-	  <a href="http://sourceforge.net/project/showfiles.php?group_id=122383&package_id=133643&release_id=360830">Download</a>
-	</li>
-      </ul>
-    </div>
+<? include ../navbar.html ?>
 
     <div style="width: 80%; float: right;">
     <table class="applet">
