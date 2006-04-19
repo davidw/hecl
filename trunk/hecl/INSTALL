@@ -11,15 +11,15 @@ How to compile and run simple Hecl programs.
    ant packageCommandline
 
 3) At this point, you have a Hecl.jar file in the directory
-   build/j2se/final/Hecl.jar
+   jars/j2se/Hecl.jar
 
-   java -jar build/j2se/final/Hecl.jar
+   java -jar jars/j2se/Hecl.jar
    hecl> puts "hello world"
 hello world
 
 4) If you wish, you could also compile it to native code with GCJ:
 
-   gcj-3.4 -o hecl --main=Hecl Hecl.jar
+   gcj-3.4 -o hecl --main=Hecl jars/j2se/Hecl.jar
 
    davidw@medford:~/workshop/hecl$ ./hecl
    hecl> puts "hello world"
@@ -36,7 +36,7 @@ hello world
 
    or, using standard Java:
 
-   java -jar build/j2se/final/Hecl.jar tests/suite.hcl
+   java -jar jars/j2se/Hecl.jar tests/suite.hcl
 
 6) J2ME Hecl.  Look at README in the j2me directory, in addition to
    the documentation in the docs/ directory.

@@ -105,8 +105,8 @@
       Contributions in the form of code, ideas, suggestions, or even
       donations are welcome.  Hecl is still growing, so your thoughts
       are important, and you can help shape the language's future.
-      You can download the code via Subversion from the SourceForge
-      project page: <ulink
+      You can download the latest code via Subversion from the
+      SourceForge project page: <ulink
       url="http://sourceforge.net/projects/hecl/">http://sourceforge.net/projects/hecl/</ulink>.
     </para>
 
@@ -114,8 +114,8 @@
       Hecl is available under the liberal Apache 2.0 open source
       license.  Which says, more or less, that you may use Hecl in
       your own applications, even if they are not open source.  You
-      have to give me credit, though.  Read the license itself to
-      clear up any doubts.  Oh, and incidentally, I don't see the
+      have to give the authors credit, though.  Read the license
+      itself to clear up any doubts.  Incidentally, I don't see the
       license as being incompatible with the GPL, so feel free to
       utilize Hecl in your GPL product (I have added a note to this
       effect in the NOTICE file that must accompany products using the
@@ -155,9 +155,13 @@ ant packageCommandline
 </screen>
       </step>
       <step>
-	You should now have a Hecl.jar file.  To run it, do this:
+	<para>
+	  You should now have a Hecl.jar file in the
+	  <filename>jars/j2se/</filename> directory.  To run it, do
+	  this:
+	</para>
 	<screen>
-java -jar Hecl.jar Hecl
+java -jar jars/j2se/Hecl.jar Hecl
 hecl> puts "hello world"
 hello world
 </screen>
@@ -165,7 +169,7 @@ hello world
       <step>
 	If you wish, you can compile Hecl to native code with GCJ:
 	<screen>
-gcj -o hecl --main=Hecl Hecl.jar
+gcj -o hecl --main=Hecl jars/j2se/Hecl.jar
 davidw@medford:~/workshop/hecl$ ./hecl
 hecl> puts "hello world"
 hello world
@@ -175,13 +179,13 @@ hello world
 	If you want to check your installation of Hecl, you can run
 	the test suite to make sure everything checks out:
 	<screen>
-java -classpath Hecl.jar Hecl tests/suite.hcl
+java -classpath jars/j2se/Hecl.jar Hecl tests/suite.hcl
 	</screen>
 	An (incomplete) performance test is also supplied so that you
 	can compare numbers if you're curious, or want to hack on Hecl
 	to improve its speed:
 	<screen>
-java -classpath Hecl.jar Hecl tests/performance.hcl
+java -classpath jars/j2se/Hecl.jar Hecl tests/performance.hcl
 	</screen>
       </step>
     </procedure>
@@ -2952,7 +2956,7 @@ class HelloCmd implements Command {
 	    Launch it like so:
 	  </para>
 
-	  <screen>java -jar HeclBuilder.jar</screen>
+	  <screen>java -jar jars/HeclBuilder.jar</screen>
 
 	  <para>
 	    It should look something like this:
@@ -3106,9 +3110,10 @@ class HelloCmd implements Command {
 
       <para>
 	If you want to recompile the standard Hecl.jar and .jad,
-	simply use the <command>ant J2ME</command> command to create
-	the .jar and .jad files for you, including your version of
-	script.hcl.
+	simply use the <command>ant midlet10</command> command (or
+	<command>ant midlet11</command> if you want the CLDC1.1
+	version of Hecl) to create the .jar and .jad files for you,
+	including your version of script.hcl.
       </para>
     </section>
   </section>

@@ -18,16 +18,18 @@
 	To compile the standard, J2SE version of Hecl, do this:
 	<pre class="screen">
 ant packageCommandline
-</pre></li><li>
-	You should now have a Hecl.jar file.  To run it, do this:
-	<pre class="screen">
-java -jar Hecl.jar Hecl
+</pre></li><li><p>
+	  You should now have a Hecl.jar file in the
+	  <code class="filename">jars/j2se/</code> directory.  To run it, do
+	  this:
+	</p><pre class="screen">
+java -jar jars/j2se/Hecl.jar Hecl
 hecl&gt; puts "hello world"
 hello world
 </pre></li><li>
 	If you wish, you can compile Hecl to native code with GCJ:
 	<pre class="screen">
-gcj -o hecl --main=Hecl Hecl.jar
+gcj -o hecl --main=Hecl jars/j2se/Hecl.jar
 davidw@medford:~/workshop/hecl$ ./hecl
 hecl&gt; puts "hello world"
 hello world
@@ -35,13 +37,13 @@ hello world
 	If you want to check your installation of Hecl, you can run
 	the test suite to make sure everything checks out:
 	<pre class="screen">
-java -classpath Hecl.jar Hecl tests/suite.hcl
+java -classpath jars/j2se/Hecl.jar Hecl tests/suite.hcl
 	</pre>
 	An (incomplete) performance test is also supplied so that you
 	can compare numbers if you're curious, or want to hack on Hecl
 	to improve its speed:
 	<pre class="screen">
-java -classpath Hecl.jar Hecl tests/performance.hcl
+java -classpath jars/j2se/Hecl.jar Hecl tests/performance.hcl
 	</pre></li></ol></div><p>
       See <a href="j2me.html" title="Hecl and J2ME">the section called &#8220;Hecl and J2ME&#8221;</a> for more information on installation
       and use with J2ME.

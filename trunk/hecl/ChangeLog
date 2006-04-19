@@ -1,5 +1,10 @@
 2006-04-19  David N. Welton  <davidw@dedasys.com>
 
+	* docs/jdocs: Added some jdocs to version control that weren't
+	present.
+
+	* docs/hecl.xml: Minor updates to the docs.
+
 	* build.xml: By default, cldc1.0 goes with midp1.0, cldc1.1 goes
 	with midp2.0.
 

@@ -6,7 +6,7 @@
       
 	Hecl Programming Language
       
-    "><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="alert.html" title="alert"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and J2ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="alert.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and J2ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#j2mecommands">Hecl J2ME Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl J2ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#id2518361">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#id2518481">Hacking Hecl's J2ME code</a></span></dt></dl></div><p>
+    "><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="alert.html" title="alert"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and J2ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="alert.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and J2ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#j2mecommands">Hecl J2ME Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl J2ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#id2518370">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#id2518489">Hacking Hecl's J2ME code</a></span></dt></dl></div><p>
       Hecl is designed to be small enough to run on mobile devices
       such as cell phones.  This means that for the Hecl core, has
       been necessary to limit ourselves to Java API's that work with
@@ -25,7 +25,7 @@
 	<span class="application">HeclBuilder</span> application.
       </p><div class="procedure"><ol type="1"><li><p>
 	    Launch it like so:
-	  </p><pre class="screen">java -jar HeclBuilder.jar</pre><p>
+	  </p><pre class="screen">java -jar jars/HeclBuilder.jar</pre><p>
 	    It should look something like this:
 	  </p><div class="screenshot"><div class="mediaobject"><img src="heclbuilder-screen.png"><div class="caption">
 		HeclBuilder in action
@@ -65,7 +65,7 @@
 	HeclBuilder open, all you have to do to update your .jar and
 	.jad files after you have edited your Hecl script, is to click
 	the <span class="guibutton">Create .jar/.jad files</span> button!
-      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2518361"></a>Example application</h3></div></div></div><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2518370"></a>Example application</h3></div></div></div><p>
 	For example, let's create a simple form with a text entry
 	widget and a command that acts on it:
       </p><pre class="programlisting">proc reverse {tf results} {
@@ -114,7 +114,7 @@ setcurrent $mainform
       </p><div class="screenshot"><div class="mediaobject"><img src="reverse-screen.png"><div class="caption">
 	    "reverse" screenshot, with textfield, stringitem, and two
 	    commands, Reverse and Exit
-	  </div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2518481"></a>Hacking Hecl's J2ME code</h3></div></div></div><p>
+	  </div></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2518489"></a>Hacking Hecl's J2ME code</h3></div></div></div><p>
 	Should you need to "look under the hood" (and you are
 	encouraged to do so!), everything you need is in the
 	<code class="filename">j2me/</code> directory.  The
@@ -124,7 +124,8 @@ setcurrent $mainform
 	starts up Hecl on the cell phone.
       </p><p>
 	If you want to recompile the standard Hecl.jar and .jad,
-	simply use the <span><strong class="command">ant J2ME</strong></span> command to create
-	the .jar and .jad files for you, including your version of
-	script.hcl.
+	simply use the <span><strong class="command">ant midlet10</strong></span> command (or
+	<span><strong class="command">ant midlet11</strong></span> if you want the CLDC1.1
+	version of Hecl) to create the .jar and .jad files for you,
+	including your version of script.hcl.
       </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="alert.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> alert</td></tr></table></div></body></html>
