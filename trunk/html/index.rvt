@@ -72,7 +72,15 @@
 	  </tr>
 	  <tr>
 	    <td style="padding: 1ex;">Edit the code...</td>
-	    <td style="padding: 1ex;">... and run it!</td>
+	    <td style="padding: 1ex;">
+	      ... and run it!
+	    </td>
+	  </tr>
+	  <tr>
+	    <td colspan="2" style="width: 90px;"> Naturally, this is just an example -
+	      you don't have to edit the source code on your phone.
+	      Indeed, for normal applications, you wouldn't expose it
+	      at all.</td>
 	  </tr>
 	</tbody>
       </table>
