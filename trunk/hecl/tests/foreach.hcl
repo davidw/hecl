@@ -3,7 +3,7 @@ test foreach-1 {
     set lst {a b c d e}
     set res {}
     foreach el $lst {
-	append &res $el
+	append $res $el
     }
     set res
 } {abcde}
@@ -12,7 +12,7 @@ test foreach-2 {
     set lst {a b c d e f}
     set res {}
     foreach {m n} $lst {
-	append &res "$m+$n"
+	append $res "$m+$n"
     }
     set res
 } {a+bc+de+f}
@@ -21,7 +21,7 @@ test foreach-3 {
     set lst {a b c d e f g}
     set res {}
     foreach {m n} $lst {
-	append &res "$m+$n"
+	append $res "$m+$n"
     }
     set res
 } {{ERROR {Foreach argument list does not match list length}} foreach}
@@ -31,10 +31,10 @@ test foreach-4 {
     set res {}
     set lst {a b c d e f g}
     foreach {m} $lst {
-	incr &i
-	append &res $i
+	incr $i
+	append $res $i
 	continue
-	append &res $m
+	append $res $m
     }
     set res
 } {1234567}
@@ -48,9 +48,9 @@ test foreach-5 {
 proc foreach6cmd {} {
     global foreach6
     foreach v {a b c d e} {
-	append &foreach6 "v is $v\n"
+	append $foreach6 "v is $v\n"
     }
-    return &foreach6
+    return $foreach6
 }
 
 test foreach-6 {
@@ -69,14 +69,14 @@ v is e
 }
 
 proc fe7 {lst} {
-    foreach v &lst {
+    foreach v $lst {
     }
 }
 
 test foreach-7 {
     set locallst {a b c d e}
-    fe7 &locallst
-    fe7 &locallst
-    fe7 &locallst
+    fe7 $locallst
+    fe7 $locallst
+    fe7 $locallst
     set locallst
 } {a b c d e}

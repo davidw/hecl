@@ -16,8 +16,8 @@ test list-3 {
 
 test lappend-4 {
     set bar [list a b c]
-    set foo &bar
-    lappend &bar d
+    set foo $bar
+    lappend $bar d
     set foo
 } {a b c d}
 
@@ -38,7 +38,7 @@ test lrange-7 {
 
 proc touchlist {} {
     set lst {}
-    lappend &lst "foo"
+    lappend $lst "foo"
     return $lst
 }
 

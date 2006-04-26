@@ -1,7 +1,7 @@
 
 test lset-1 {
     set lst {a b c}
-    lset &lst 1 x
+    lset $lst 1 x
     set lst
 } {a x c}
 
@@ -9,6 +9,6 @@ test lset-1 {
 
 test lset-2 {
     set lst {a b c}
-    lset &lst 1
+    lset $lst 1
     set lst
 } {a c}

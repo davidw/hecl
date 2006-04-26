@@ -182,10 +182,10 @@ public class Parse {
      * @param docopy a <code>boolean</code> value
      * @exception HeclException if an error occurs
      */
-    public void addDollar(boolean docopy) throws HeclException {
+    public void addDollar() throws HeclException {
         Thing saveout = currentOut;
         currentOut = new Thing("");
-        parseDollar(state, docopy);
+        parseDollar(state);
         saveout.appendToGroup(currentOut);
         saveout.appendToGroup(new Thing(""));
         currentOut = saveout;
@@ -217,13 +217,13 @@ public class Parse {
                     addCurrent();
                     break;
                 case '$' :
-                    parseDollar(state, true);
+                    parseDollar(state);
                     addCurrent();
                     break;
-                case '&' :
+/*                 case '&' :
                     parseDollar(state, false);
                     addCurrent();
-                    break;
+                    break;  */
                 case '"' :
                     parseText(state);
                     addCurrent();
@@ -301,7 +301,7 @@ public class Parse {
      * @exception HeclException if an error occurs
      */
 
-    private void parseDollar(ParseState state, boolean docopy)
+    private void parseDollar(ParseState state)
 	throws HeclException {
 	char ch;
 	ch = state.nextchar();
@@ -322,7 +322,7 @@ public class Parse {
 	 * System.out.println("parser ^^^^");
 	 */
 	Thing strcopy = currentOut.deepcopy();
-	currentOut.setVal(new SubstThing(strcopy.getStringRep(), !docopy));
+	currentOut.setVal(new SubstThing(strcopy.getStringRep()));
     }
 
     /**
@@ -438,11 +438,11 @@ public class Parse {
                     addCommand();
                     break;
                 case '$' :
-                    addDollar(true);
+                    addDollar();
                     break;
-                case '&' :
+/*                 case '&' :
                     addDollar(false);
-                    break;
+                    break;  */
                 case '"' :
                     return;
                 default :
@@ -473,11 +473,11 @@ public class Parse {
                     addCommand();
                     break;
                 case '$' :
-                    addDollar(true);
+                    addDollar();
                     break;
-                case '&' :
+/*                 case '&' :
                     addDollar(false);
-                    break;
+                    break;  */
                 /* This isn't special here, we can ignore it? */
                 /*
                  * case '"': addCurrent(); parseText(state); appendCurrent();

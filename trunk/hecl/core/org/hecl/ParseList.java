@@ -136,11 +136,11 @@ public class ParseList extends Parse {
                     addCommand();
                     break;
                 case '$' :
-                    addDollar(true);
+                    addDollar();
                     break;
-                case '&' :
+/*                 case '&' :
                     addDollar(false);
-                    break;
+                    break;  */
                 /*
                  * case '"': addCurrent(); parseText(state); appendCurrent();
                  * break;

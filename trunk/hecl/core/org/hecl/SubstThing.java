@@ -27,8 +27,6 @@ package org.hecl;
 public class SubstThing implements RealThing {
     public long cacheversion = -1;
 
-    public boolean ref = false;
-
     private Thing val = null;
 
     private String varName = null;
@@ -44,8 +42,7 @@ public class SubstThing implements RealThing {
      * @param s a <code>String</code> value
      * @param isref a <code>boolean</code> value
      */
-    public SubstThing(String s, boolean isref) {
-        ref = isref;
+    public SubstThing(String s) {
         varName = s;
     }
 
@@ -67,7 +64,7 @@ public class SubstThing implements RealThing {
         if (realthing instanceof SubstThing) {
             /* Don't need to modify it. */
         } else {
-            thing.setVal(new SubstThing(thing.getStringRep(), true));
+            thing.setVal(new SubstThing(thing.getStringRep()));
         }
     }
 
@@ -93,21 +90,17 @@ public class SubstThing implements RealThing {
 	    System.out.println("CACHE HIT");
 	}  */
 
-        if (getcopy.ref) {
-	    if (getcopy.val.copy) {
-		/* If the Thing value of the substthing is something
-		 * that should be copied, we copy it so that we don't
-		 * mess up the original.  See the set-3 test, for
-		 * example. */
-		Thing copy = getcopy.val.deepcopy();
-		copy.copy = false;
-		interp.setVar(getcopy.varName, copy);
-		return copy;
-	    }
-	    return getcopy.val;
-        } else {
-            return getcopy.val.deepcopy();
-        }
+	if (getcopy.val.copy) {
+	    /* If the Thing value of the substthing is something
+	     * that should be copied, we copy it so that we don't
+	     * mess up the original.  See the set-3 test, for
+	     * example. */
+	    Thing copy = getcopy.val.deepcopy();
+	    copy.copy = false;
+	    interp.setVar(getcopy.varName, copy);
+	    return copy;
+	}
+	return getcopy.val;
     }
 
     /**
@@ -116,7 +109,7 @@ public class SubstThing implements RealThing {
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
-        return new SubstThing(varName, ref);
+        return new SubstThing(varName);
     }
 
     /**
@@ -126,9 +119,6 @@ public class SubstThing implements RealThing {
      * @return a <code>String</code> value
      */
     public String getStringRep() {
-        if (ref) {
-            return "&{" + varName + "}";
-        }
 	// Tricky: make wtkpreprocess happy by splitting the $ and the {
 	return "$"+"{" + varName + "}";
     }

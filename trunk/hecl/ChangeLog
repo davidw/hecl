@@ -1,3 +1,14 @@
+2006-04-26  David N. Welton  <davidw@dedasys.com>
+
+	* tests/suite.hcl: Change tests to reflect that $ vars are now
+	references, and copying must be done explicitly with 'copy'.
+
+	* core/org/hecl/SubstThing.java: No longer have to keep track of
+	whether we are a reference or not.
+
+	* core/org/hecl/Parse.java: Use $ instead of & for references.
+	Copying is now performed explicitly with the copy command.
+
 2006-04-19  David N. Welton  <davidw@dedasys.com>
 
 	* docs/jdocs: Added some jdocs to version control that weren't

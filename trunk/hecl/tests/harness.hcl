@@ -21,7 +21,7 @@ proc testfiles {files} {
 proc ok {name} {
     global ok
     # puts "$name		ok"
-    lappend &ok $name
+    lappend $ok $name
 }
 
 proc fail {name result expected} {
@@ -29,7 +29,7 @@ proc fail {name result expected} {
     puts "$name FAILED"
     puts "expected: $expected"
     puts "received: $result"
-    lappend &failed $name
+    lappend $failed $name
 }
 
 proc totals {} {

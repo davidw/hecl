@@ -28,12 +28,12 @@ test sort-6 {
 } {1 10 100 2 20 3 4 5 6 7}
 
 proc mysort {l1 l2} {
-    set t1 [lindex &l1 2]
-    set t2 [lindex &l2 2]
+    set t1 [lindex $l1 2]
+    set t2 [lindex $l2 2]
 
-    if {= &t1 &t2} {
+    if {= $t1 $t2} {
 	return 0
-    } elseif {< &t1 &t2} {
+    } elseif {< $t1 $t2} {
 	return -1;
     } else {
 	return 1;

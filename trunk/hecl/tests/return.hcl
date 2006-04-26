@@ -1,8 +1,8 @@
 proc returntest {} {
     set foo 1
-    return &foo
+    return $foo
     set foo 2
-    return &foo
+    return $foo
 }
 
 test return-1 {
@@ -27,6 +27,6 @@ test return-4 {
     set x 10
     set x
     set res [puts x]
-    append &res [puts y]
+    append $res [puts y]
     set res
 } {}

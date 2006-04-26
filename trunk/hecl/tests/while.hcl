@@ -3,7 +3,7 @@ test while-1 {
     set i 0
     set out {}
     while { < $i 10 } {
-	append &out " $i"
+	append $out " $i"
 	set i [+ $i 1]
     }
     set out

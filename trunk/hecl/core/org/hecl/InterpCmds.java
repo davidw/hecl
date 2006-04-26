@@ -41,6 +41,8 @@ class InterpCmds extends Operator {
     public static final int UPCMD = 11;
     public static final int TIMECMD = 12;
 
+    public static final int COPY = 13;
+
     public static final int CLASSINFO = 20;
 
 
@@ -54,6 +56,10 @@ class InterpCmds extends Operator {
 		    interp.setVar(argv[1], argv[2]);
 		}
 		interp.setResult(interp.getVar(argv[1]));
+		break;
+
+	    case COPY:
+		interp.setResult(argv[1].deepcopy());
 		break;
 
 	    case UNSET:
@@ -194,6 +200,8 @@ class InterpCmds extends Operator {
         cmdtable.put("exit", new InterpCmds(EXIT, 0, 1));
         cmdtable.put("upeval", new InterpCmds(UPCMD, 1, 1));
         cmdtable.put("time", new InterpCmds(TIMECMD, 1, 2));
+
+        cmdtable.put("copy", new InterpCmds(COPY, 1, 1));
 
         cmdtable.put("classof", new InterpCmds(CLASSINFO, 1, 1));
     }

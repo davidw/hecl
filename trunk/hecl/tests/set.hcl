@@ -6,7 +6,7 @@ test set-1 {
 
 test set-2 {
     set foo x
-    set bar $foo
+    set bar [copy $foo]
     set foo y
     set bar
 } x
@@ -14,13 +14,13 @@ test set-2 {
 proc zealousref {} {
     set myvar ""
     set myvar "more $myvar"
-    return &myvar
+    return $myvar
 }
 
 proc zealousref2 {} {
     set refvar "a b c d"
     set refvar "more $refvar"
-    return &refvar
+    return $refvar
 }
 
 test set-3 {

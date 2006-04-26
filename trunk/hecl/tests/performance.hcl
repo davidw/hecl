@@ -7,7 +7,7 @@ cd [listtofile [lrange [filetolist [currentfile]] 0 -2]]
 proc stopwatch {name code} {
     global times
     puts $name
-    hset &times $name [time $code]
+    hset $times $name [time $code]
 }
 
 set times [hash {}]
@@ -22,13 +22,13 @@ foreach f [sort {
 proc hashsort {h} {
     set keys {}
     foreach {k v} $h {
-	lappend &keys $k
+	lappend $keys $k
     }
     set keys [sort $keys]
     set retval {}
     foreach k $keys {
-	lappend &retval $k
-	lappend &retval [hget $h $k]
+	lappend $retval $k
+	lappend $retval [hget $h $k]
     }
     return $retval
 }

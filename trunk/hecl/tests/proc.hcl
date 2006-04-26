@@ -22,10 +22,10 @@ test proc-3 {
 test proc-4 {
     proc f1 {} {return hello}
     proc f2 {} {return world}
-    proc f3 {f} {&f}
+    proc f3 {f} {$f}
     set res ""
-    append &res [f3 f1]
-    append &res [f3 f2]
+    append $res [f3 f1]
+    append $res [f3 f2]
     set res
 } {helloworld}
 
@@ -33,6 +33,6 @@ test rename-1 {
     proc f1 {} {return fred}
     set r [f1]
     rename f1 newcmd
-    append &r [newcmd]
+    append $r [newcmd]
     set r
 } {fredfred}

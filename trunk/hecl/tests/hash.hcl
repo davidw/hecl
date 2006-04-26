@@ -2,14 +2,14 @@
 
 test hash-1 {
     set foo [hash {a b c d}]
-    sort [list [hget &foo a] [hget &foo c]]
+    sort [list [hget $foo a] [hget $foo c]]
 } {b d}
 
 test hash-2 {
     set foo [hash {a b c d}]
-    hset &foo a 1
-    hset &foo c 2
-    list [hget &foo a] [hget &foo c]
+    hset $foo a 1
+    hset $foo c 2
+    list [hget $foo a] [hget $foo c]
 } {1 2}
 
 test hash-3 {
@@ -22,7 +22,7 @@ test hash-4 {
 
 test hash-5 {
     set foo [hash {a b c d}]
-    hset $foo a 1
-    hset $foo x y
-    sort [join &foo]
+    hset [copy $foo] a 1
+    hset [copy $foo] x y
+    sort [join $foo]
 } {a b c d}

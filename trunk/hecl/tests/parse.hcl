@@ -33,9 +33,9 @@ test parse-4 {
 test parse-5 {
     set out {}
     set ps printstuff
-    append &out [$ps foo]
+    append $out [$ps foo]
     set ps printstuff2
-    append &out [$ps foo]
+    append $out [$ps foo]
     set out
 } {foonew foo}
 
@@ -71,7 +71,7 @@ test parse-11 {
 
 test parse-12 {
     set foo [list a "\n" b]
-    lindex &foo 1
+    lindex $foo 1
 } {
 }
 
