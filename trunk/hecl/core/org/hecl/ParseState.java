@@ -25,6 +25,8 @@ package org.hecl;
 public class ParseState {
     public int len;
 
+    public int lineno = 1;
+
     private char[] chars;
 
     private int idx;

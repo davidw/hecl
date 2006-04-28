@@ -59,7 +59,8 @@ public class Compare {
     public static int compareProc(Thing a, Thing b, Interp interp, Thing sortproc)
 	throws HeclException {
 	CodeThing ct = new CodeThing();
-	ct.addStanza(interp, new Thing[] {sortproc, a, b});
+	/* FIXME - addstanza lineno*/
+	ct.addStanza(interp, new Thing[] {sortproc, a, b}, -1);
 	ct.run(interp);
 	return IntThing.get(interp.result);
     }

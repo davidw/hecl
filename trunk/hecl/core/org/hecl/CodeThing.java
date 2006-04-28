@@ -72,7 +72,8 @@ public class CodeThing implements RealThing {
 	    for (int i = 0; i < sz; i++) {
 		argv[i] = (Thing)v.elementAt(i);
 	    }
-	    newthing.addStanza(interp, argv);
+	    /* FIXME - addstanza lineno */
+	    newthing.addStanza(interp, argv, -1);
 	} else {
 	    Parse hp = new Parse(interp, thing.toString());
             newthing = hp.parseToCode();
@@ -214,8 +215,8 @@ public class CodeThing implements RealThing {
      * @param argv
      *            <code>Thing[]</code> value
      */
-    public void addStanza(Interp interp, Thing []argv) {
-	stanzas.addElement(new Stanza(null, argv));
+    public void addStanza(Interp interp, Thing []argv, int lineno) {
+	stanzas.addElement(new Stanza(null, argv, lineno));
     }
 
     /**
@@ -230,10 +231,10 @@ public class CodeThing implements RealThing {
 /* 	level ++;
 	System.err.println("starting CodeThing run" + level);  */
         //System.out.println("RUNNING: " + this.getStringRep() + "</RUNNING>");
-        for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
-            Stanza s = (Stanza) e.nextElement();
-            s.run(interp);
-        }
+	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
+	    Stanza s = (Stanza) e.nextElement();
+	    s.run(interp);
+	}
 /* 	System.err.println("ending CodeThing run" + level);
 	level --;  */
     }

@@ -15,6 +15,8 @@
 
 package org.hecl;
 
+import java.util.Vector;
+
 //import java.util.Arrays;
 
 /**
@@ -26,6 +28,9 @@ package org.hecl;
  */
 
 class Stanza {
+    /* The line this stanza begins on. */
+    private int lineno = 0;
+
     private Command command = null;
 
     private Thing[] argv = null;
@@ -47,9 +52,10 @@ class Stanza {
      * @param newargv
      *            a <code>Thing[]</code> value
      */
-    Stanza(Command newcmd, Thing[] newargv) {
+    Stanza(Command newcmd, Thing[] newargv, int ln) {
 	command = newcmd;
 	argv = newargv;
+	lineno = ln;
     }
 
 
@@ -66,7 +72,7 @@ class Stanza {
 	for (int i = 0; i < argv.length; i++) {
 	    destargv[i] = argv[i].deepcopy();
 	}
-	return new Stanza(command, destargv);
+	return new Stanza(command, destargv, lineno);
     }
 
     /**
@@ -128,8 +134,10 @@ class Stanza {
 
 	    tmpcommand = (Command)interp.commands.get(cmdName);
 	    if (tmpcommand == null) {
-		throw new HeclException("Command " + cmdName
-					+ " does not exist");
+		HeclException he =  new HeclException("Command " + cmdName
+						      + " does not exist");
+		he.setLine(lineno);
+		throw he;
 	    }
 	} else {
 	    tmpcommand = command;
@@ -148,19 +156,24 @@ class Stanza {
 	 * Fill in the elements of the new argv - doing substitutions and
 	 * running code where needs be.
 	 */
-	for (int i = 0; i < argv.length; i++) {
-	    realthing = argv[i].val;
-	    if (realthing instanceof GroupThing) {
-		newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
-		newargv[i].copy = true;
-	    } else if (realthing instanceof SubstThing) {
-		newargv[i] = CodeThing.doSubstSubst(interp, argv[i]);
-	    } else if (realthing instanceof CodeThing) {
-		newargv[i] = CodeThing.doCodeSubst(interp, argv[i]);
-	    } else {
-		newargv[i] = argv[i];
-		newargv[i].copy = true;
+	try {
+	    for (int i = 0; i < argv.length; i++) {
+		realthing = argv[i].val;
+		if (realthing instanceof GroupThing) {
+		    newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
+		    newargv[i].copy = true;
+		} else if (realthing instanceof SubstThing) {
+		    newargv[i] = CodeThing.doSubstSubst(interp, argv[i]);
+		} else if (realthing instanceof CodeThing) {
+		    newargv[i] = CodeThing.doCodeSubst(interp, argv[i]);
+		} else {
+		    newargv[i] = argv[i];
+		    newargv[i].copy = true;
+		}
 	    }
+	} catch (HeclException he) {
+	    he.setLine(lineno);
+	    throw he;
 	}
 
 	/* DEBUG - after. */
@@ -180,7 +193,7 @@ class Stanza {
 	    /* Uh oh, an "issue"! */
 	    if (newargv[0] != null) {
 		/* Let the exception know where we are. */
-		e.where(newargv[0].toString());
+		e.where(newargv[0].toString(), lineno);
 	    }
 	    throw e;
 	} catch (Exception e) {
@@ -195,7 +208,9 @@ class Stanza {
 	    } else {
 		msg = "Exception of type " + e.getClass() + ": " + msg;
 	    }
-	    throw new HeclException(msg);
+	    HeclException he = new HeclException(msg);
+	    he.setLine(lineno);
+	    throw he;
 	}
 
 	/* Go ahead and save the command. */

@@ -103,9 +103,12 @@ public class Parse {
 	Thing[] argv;
 	int cmdsize = 0;
 
+	int beginline = 0;
+
         while (more()) {
+	    beginline = state.lineno;
             cmd = parse();
-            //System.out.println("CMD is " + cmd);
+            // System.out.println("CMD is " + cmd + " lineno is " + beginline);
 
             if (cmd == null) {
                 continue;
@@ -120,7 +123,7 @@ public class Parse {
                 argv[i] = (Thing) cmd.elementAt(i);
             }
 
-            code.addStanza(interp, argv);
+            code.addStanza(interp, argv, beginline);
         }
         return code;
     }
@@ -236,8 +239,8 @@ public class Parse {
                     parseComment(state);
                     return;
                 case '\r' :
-                    return;
                 case '\n' :
+		    state.lineno ++;
                     return;
                 case ';' :
                     return;
@@ -269,6 +272,7 @@ public class Parse {
         while (true) {
             ch = state.nextchar();
             if (((ch == '\n') || (ch == '\r')) || state.done()) {
+		state.lineno ++;
                 return;
             }
         }
@@ -387,6 +391,11 @@ public class Parse {
             } else if (ch == rdelim) {
                 level--;
             }
+
+	    if (ch == '\n' || ch == '\r') {
+		state.lineno ++;
+	    }
+
             if (level == 0) {
                 /* It's just a block, return it. */
                 if (block || parselist) {
@@ -395,7 +404,7 @@ public class Parse {
 		     * such as $\ {foo}, and the next character
 		     * isn't a space, we have a problem. */
 		    if (!invar && ch != ' ' && ch != '	' &&
-			ch != '\n' && ch != '\n' && ch != ';' && ch != 0) {
+			ch != '\n' && ch != '\r' && ch != ';' && ch != 0) {
 			throw new HeclException("extra characters after close-brace");
 		    }
 		    state.rewind();
@@ -491,6 +500,7 @@ public class Parse {
                     state.eoc = true;
                     return;
                 case '\n' :
+		    state.lineno ++;
                     state.eoc = true;
                     return;
                 case ';' :

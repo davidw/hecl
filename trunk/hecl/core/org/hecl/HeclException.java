@@ -77,7 +77,6 @@ public class HeclException extends Exception {
         Vector lst = new Vector();
         lst.addElement(new Thing(code));
         lst.addElement(new Thing(txt));
-
         stack.push(new Thing(new ListThing(lst)));
     }
 
@@ -88,8 +87,11 @@ public class HeclException extends Exception {
      * @param cmd
      *            a <code>String</code> containing the command name.
      */
-    public void where(String cmd) {
-        stack.push(new Thing(cmd));
+    public void where(String cmd, int lineno) {
+        Vector lst = new Vector();
+        lst.addElement(new Thing(cmd));
+        lst.addElement(IntThing.create(lineno));
+        stack.push(new Thing(new ListThing(lst)));
     }
 
     /**
@@ -137,5 +139,25 @@ public class HeclException extends Exception {
             String type, String options) throws HeclException {
         return new HeclException("invalid " + type + " specified \""
                 + param.getStringRep() + "\"; should be: " + options + ".");
+    }
+
+
+    /**
+     * The <code>setLine</code> method sets the line number of an
+     * error.  FIXME - this could probably be done in a cleaner way...
+     *
+     * @param lineno an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
+    public void setLine(int lineno) throws HeclException {
+	Vector ex = (Vector)stack;
+	Vector err;
+	err = ListThing.get((Thing)ex.elementAt(0));
+	Thing l = IntThing.create(lineno);
+	if (err.size() == 2) {
+	    err.addElement(l);
+	} else {
+	    err.setElementAt(l, 2);
+	}
     }
 }
