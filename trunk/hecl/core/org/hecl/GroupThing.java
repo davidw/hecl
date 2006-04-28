@@ -69,8 +69,7 @@ public class GroupThing implements RealThing {
             if (realthing instanceof CodeThing) {
                 group.addElement(thing);
             } else {
-                group.addElement(new Thing(
-                        new StringThing(thing.getStringRep())));
+                group.addElement(new Thing(thing.toString()));
             }
             thing.setVal(new GroupThing(group));
         }
@@ -119,7 +118,7 @@ public class GroupThing implements RealThing {
         if (sz > 0) {
             for (int i = 0; i < sz; i++) {
                 element = (Thing) val.elementAt(i);
-                resbuf.append(element.getStringRep());
+                resbuf.append(element.toString());
             }
         }
         return resbuf.toString();

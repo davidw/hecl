@@ -1,5 +1,10 @@
 2006-04-28  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Thing.java: Eliminated getStringRep in favor of
+	toString.  toString now does cacheing.  This is not ideal in all
+	situations - for example, when we know that the result is going to
+	be passed to a setVal which will invalidate the cache in any case.
+
 	* tests/: Updated tests to reflect the line number information.
 
 	* core/org/hecl/ParseState.java: Keep track of the line number

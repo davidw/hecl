@@ -33,7 +33,7 @@ public class Thing extends Object {
      * be copied if something tries to write to it.  */
     public boolean copy = false;
 
-    protected String stringval;
+    protected String stringval = null;
 
     /* Used to keep track of nesting depth. */
     private int depth = 0;
@@ -146,12 +146,17 @@ public class Thing extends Object {
      * @return a <code>String</code> value
      */
     public String toString() {
-        return val.getStringRep();
+	if (stringval != null) {
+	    return stringval;
+	} else {
+	    stringval = val.getStringRep();
+	    return stringval;
+	}
     }
 
-    public String getStringRep() {
-	return val.getStringRep();
-    }
+    /* public String getStringRep() {
+       return val.getStringRep();
+       } */
 
     /**
      * <code>deepcopy</code> copies the thing, its value, and any elements the

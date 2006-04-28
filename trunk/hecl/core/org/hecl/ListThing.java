@@ -163,7 +163,7 @@ public class ListThing implements RealThing {
      * @return a <code>String</code> value
      */
     public static String toListString(Thing thing) {
-        String elementstring = thing.getStringRep();
+        String elementstring = thing.toString();
         StringBuffer resbuf = new StringBuffer();
 
         if (elementstring.indexOf(' ') > 0) {

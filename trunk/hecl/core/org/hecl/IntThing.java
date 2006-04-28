@@ -114,7 +114,7 @@ public class IntThing extends IntegralThing {
 	} else {
             /* If it's not an intthing already, we make it from its
 	     * string rep. */
-            thing.setVal(new IntThing(thing.getStringRep()));
+            thing.setVal(new IntThing(thing.toString()));
         }
     }
 

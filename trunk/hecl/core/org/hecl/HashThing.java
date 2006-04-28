@@ -68,7 +68,7 @@ public class HashThing implements RealThing {
         val = new Hashtable((v.size() >> 1) + 3);
 
         for (Enumeration e = v.elements(); e.hasMoreElements();) {
-            String key = ((Thing) e.nextElement()).getStringRep();
+            String key = ((Thing) e.nextElement()).toString();
             Thing value = (Thing) e.nextElement();
             val.put(key, value);
         }

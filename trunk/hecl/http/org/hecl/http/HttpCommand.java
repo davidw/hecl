@@ -36,7 +36,7 @@ public class HttpCommand implements Command {
         }
 
         if (argv.length > 3) {
-            type = argv[3].getStringRep();
+            type = argv[3].toString();
         }
 
         data = HttpCommand.executeQuery(url, data, type);

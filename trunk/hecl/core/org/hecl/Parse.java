@@ -326,7 +326,7 @@ public class Parse {
 	 * System.out.println("parser ^^^^");
 	 */
 	Thing strcopy = currentOut.deepcopy();
-	currentOut.setVal(new SubstThing(strcopy.getStringRep()));
+	currentOut.setVal(new SubstThing(strcopy.toString()));
     }
 
     /**
@@ -412,7 +412,7 @@ public class Parse {
                     return;
                 } else {
                     /* We parse it up for later consumption. */
-                    Parse hp = new Parse(interp, currentOut.getStringRep());
+                    Parse hp = new Parse(interp, currentOut.toString());
                     CodeThing code = hp.parseToCode();
                     code.marksubst = true;
                     currentOut.setVal(code);

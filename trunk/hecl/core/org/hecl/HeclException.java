@@ -119,7 +119,7 @@ public class HeclException extends Exception {
             int count, String message) throws HeclException {
         StringBuffer str = new StringBuffer();
         for (int i = 0; i < count && i < argv.length; i++) {
-            str.append(argv[i].getStringRep());
+            str.append(argv[i].toString());
             str.append(" ");
         }
         return new HeclException("wrong # args: should be \"" + str + message + "\"");
@@ -138,7 +138,7 @@ public class HeclException extends Exception {
     public static HeclException createInvalidParameter(Thing param,
             String type, String options) throws HeclException {
         return new HeclException("invalid " + type + " specified \""
-                + param.getStringRep() + "\"; should be: " + options + ".");
+                + param.toString() + "\"; should be: " + options + ".");
     }
 
 

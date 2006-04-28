@@ -53,11 +53,11 @@ class ControlCmds extends Operator {
 		 */
 	    if (argv.length > 3) {
 		for (int i = 3; i <= argv.length; i += 3) {
-		    if (argv[i].getStringRep().equals("else")) {
+		    if (argv[i].toString().equals("else")) {
 			/* It's an else block, evaluate it and return. */
 			interp.eval(argv[i + 1]);
 			return null;
-		    } else if (argv[i].getStringRep().equals("elseif")) {
+		    } else if (argv[i].toString().equals("elseif")) {
 			/*
 			 * elseif - check and see if the condition is true, if so
 			 * evaluate it and return.
@@ -122,7 +122,7 @@ class ControlCmds extends Operator {
 		    Thing element = (Thing) list.elementAt(i);
 		    element.copy = true; /* Make sure that we don't fiddle
 					  * with the original value. */
-		    String varname = ((Thing) e.nextElement()).getStringRep();
+		    String varname = ((Thing) e.nextElement()).toString();
 
 		    //System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
 

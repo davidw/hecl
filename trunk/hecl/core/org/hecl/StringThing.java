@@ -69,7 +69,7 @@ public class StringThing implements RealThing {
     private static void setStringFromAny(Thing thing) {
         RealThing realthing = thing.val;
         if (!(realthing instanceof StringThing)) {
-            thing.val = new StringThing(((Thing) thing).getStringRep());
+            thing.val = new StringThing(((Thing) thing).toString());
         }
     }
 
@@ -84,7 +84,7 @@ public class StringThing implements RealThing {
      */
     public static String get(Thing thing) {
         setStringFromAny(thing);
-        return thing.getStringRep();
+        return thing.toString();
     }
 
     /**
@@ -116,7 +116,7 @@ public class StringThing implements RealThing {
     public void append(char ch) {
         val.append(ch);
     }
-
+    
     /**
      * <code>append</code> appends a string to the string.
      *

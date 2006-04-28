@@ -248,7 +248,7 @@ public class Interp {
      *                if an error occurs
      */
     public Thing getVar(Thing varname) throws HeclException {
-        return getVar(varname.getStringRep(), -1);
+        return getVar(varname.toString(), -1);
     }
 
     /**
@@ -378,7 +378,7 @@ public class Interp {
      * @return a <code>boolean</code> value
      */
     public boolean existsVar(Thing varname) throws HeclException {
-        return existsVar(varname.getStringRep());
+        return existsVar(varname.toString());
     }
 
     /**

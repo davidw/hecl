@@ -64,7 +64,7 @@ public class SubstThing implements RealThing {
         if (realthing instanceof SubstThing) {
             /* Don't need to modify it. */
         } else {
-            thing.setVal(new SubstThing(thing.getStringRep()));
+            thing.setVal(new SubstThing(thing.toString()));
         }
     }
 

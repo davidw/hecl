@@ -194,13 +194,13 @@ public class CodeThing implements RealThing {
 
                 realthing = t.val;
                 if (realthing instanceof GroupThing) {
-                    result.append(doGroupSubst(interp, t).getStringRep());
+                    result.append(doGroupSubst(interp, t).toString());
                 } else if (realthing instanceof SubstThing) {
-                    result.append(doSubstSubst(interp, t).getStringRep());
+                    result.append(doSubstSubst(interp, t).toString());
                 } else if (realthing instanceof CodeThing) {
-                    result.append(doCodeSubst(interp, t).getStringRep());
+                    result.append(doCodeSubst(interp, t).toString());
                 } else {
-                    result.append(t.getStringRep());
+                    result.append(t.toString());
                 }
             }
         }

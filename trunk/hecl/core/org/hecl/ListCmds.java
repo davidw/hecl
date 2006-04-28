@@ -160,7 +160,7 @@ class ListCmds extends Operator {
 	    boolean firstone = true;
 	    String joinstr = null;
 	    if (argv.length > 2) {
-		joinstr = argv[2].getStringRep();
+		joinstr = argv[2].toString();
 	    } else {
 		joinstr = " ";
 	    }

@@ -117,7 +117,7 @@ public class LongThing extends FractionalThing {
 	    thing.setVal(new LongThing(((NumberThing)realthing).longValue()));
 	} else {
 	    // If it's not a longthing already, we make it from its string rep.
-	    thing.setVal(new LongThing(thing.getStringRep()));
+	    thing.setVal(new LongThing(thing.toString()));
         }
     }
 

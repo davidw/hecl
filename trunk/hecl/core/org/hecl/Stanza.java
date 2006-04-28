@@ -119,14 +119,14 @@ class Stanza {
 	     * substitute it to get the name.
 	     */
 	    if (realthing instanceof CodeThing) {
-		cmdName = CodeThing.doCodeSubst(interp, argv[0]).getStringRep();
+		cmdName = CodeThing.doCodeSubst(interp, argv[0]).toString();
 	    } else if (realthing instanceof GroupThing) {
-		cmdName = CodeThing.doGroupSubst(interp, argv[0]).getStringRep();
+		cmdName = CodeThing.doGroupSubst(interp, argv[0]).toString();
 	    } else if (realthing instanceof SubstThing) {
-		cmdName = CodeThing.doSubstSubst(interp, argv[0]).getStringRep();
+		cmdName = CodeThing.doSubstSubst(interp, argv[0]).toString();
 	    } else {
 		saveit = true;
-		cmdName = argv[0].getStringRep();
+		cmdName = argv[0].toString();
 	    }
 
 	    //System.out.println("cmdname = " + cmdName);

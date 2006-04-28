@@ -37,11 +37,12 @@ class StringCmds extends Operator {
 	    case APPEND:
 		/* The 'append' command. */
 		Thing result = argv[1];
-		StringThing.get(result);
-		StringThing st = (StringThing) result.val;
+
+		StringBuffer sb = new StringBuffer(StringThing.get(result));
 		for (int i = 2; i < argv.length; i++) {
-		    st.append(argv[i].toString());
+		    sb.append(argv[i].toString());
 		}
+		result.setVal(new StringThing(sb));
 		interp.setResult(result);
 		break;
 	    case SLEN:
@@ -63,8 +64,9 @@ class StringCmds extends Operator {
 	    case STRNEQ:
 		/* 'eq' and 'ne' commands. */
 		int i = Compare.compareString(argv[1],argv[2]);
-		if(cmd == STREQ)
+		if(cmd == STREQ) {
 		    return i != 0 ? IntThing.ZERO : IntThing.ONE;
+		}
 		return i != 0 ? IntThing.ONE : IntThing.ZERO;
 	    default:
 		throw new HeclException("Unknown string command '"
@@ -86,7 +88,7 @@ class StringCmds extends Operator {
 
 
     protected StringCmds(int cmdcode,int minargs,int maxargs) {
-	super(cmdcode,minargs,maxargs);
+	super(cmdcode, minargs, maxargs);
     }
 
     static {
