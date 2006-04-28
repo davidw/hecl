@@ -39,4 +39,4 @@ test unset-1 {
     set a 1
     unset a
     set a
-} {{ERROR {Variable a does not exist}} set}
+} {{ERROR {Variable a does not exist}} {set 4}}

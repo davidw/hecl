@@ -59,7 +59,6 @@ class Stanza {
     }
 
 
-
     /**
      * <code>deepcopy</code> creates a new stanza and returns it.
      *

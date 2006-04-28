@@ -24,7 +24,7 @@ test foreach-3 {
 	append $res "$m+$n"
     }
     set res
-} {{ERROR {Foreach argument list does not match list length}} foreach}
+} {{ERROR {Foreach argument list does not match list length}} {foreach 4}}
 
 test foreach-4 {
     set i 0

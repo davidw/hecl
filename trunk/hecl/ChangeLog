@@ -1,5 +1,7 @@
 2006-04-28  David N. Welton  <davidw@dedasys.com>
 
+	* tests/: Updated tests to reflect the line number information.
+
 	* core/org/hecl/ParseState.java: Keep track of the line number
 	relative to the current chunk of code being parsed.
 

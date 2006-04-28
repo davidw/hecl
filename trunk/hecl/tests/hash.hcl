@@ -18,7 +18,7 @@ test hash-3 {
 
 test hash-4 {
     set foo [hash {a b c}]
-} {{ERROR {list must have even number of elements}} hash}
+} {{ERROR {list must have even number of elements} 2} {hash 1}}
 
 test hash-5 {
     set foo [hash {a b c d}]

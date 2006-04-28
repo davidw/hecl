@@ -5,4 +5,4 @@ test circular-1 {
     set y [list a [list m $x n] z]
     set x $y
     llen [copy $x]
-} {{ERROR {reference hard limit - circular reference?}} copy}
+} {{ERROR {reference hard limit - circular reference?} 5} {copy 1}}

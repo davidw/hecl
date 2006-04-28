@@ -12,12 +12,12 @@ test proc-1 {
 test proc-2 {
     proc badcommand {a b} {}
     badcommand a b c d
-} {{ERROR {proc badcommand has too many arguments}} badcommand}
+} {{ERROR {proc badcommand has too many arguments}} {badcommand 3}}
 
 test proc-3 {
     proc badcommand {a b} {}
     badcommand a
-} {{ERROR {proc badcommand doesn't have enough arguments}} badcommand}
+} {{ERROR {proc badcommand doesn't have enough arguments}} {badcommand 3}}
 
 test proc-4 {
     proc f1 {} {return hello}
