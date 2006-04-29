@@ -3,35 +3,35 @@
 # Display the error frame with text $txt
 proc err {txt} {
     global errf
-    setcurrent &errf
+    setcurrent $errf
     string $txt
 };
 
 # Run the main script.
 proc run {} {
     global main
-    if { catch {upeval [getprop &main text]} problem } {
+    if { catch {upeval [getprop $main text]} problem } {
 	err $problem
     }
 }
 
 # Create a 'back' button - backto is the screen to return to.
 proc makebackbutton {backto} {
-    return [list cmd label Back code [list setcurrent &backto] type back]
+    return [list cmd label Back code [list setcurrent $backto] type back]
 }
 
 # Helper for form eval
 proc formeval {textfield results} {
-    setprop &results text \
-	[eval [getprop &textfield text]]
+    setprop $results text \
+	[eval [getprop $textfield text]]
 }
 
 # Callback for fast/cheap/good choicegroup
 
 proc fastcheapgood {choicegroup} {
-    set sel [getprop &choicegroup selected]
-    if { < 2 [llen &sel] } {
-	setprop &choicegroup selected {}
+    set sel [getprop $choicegroup selected]
+    if { < 2 [llen $sel] } {
+	setprop $choicegroup selected {}
     }
 }
 
@@ -48,24 +48,24 @@ proc makeform {} {
 	datefield label "Select date/time"
 
 	set fcg [choicegroup label "Chose any two:" list {Cheap Fast Good} type multiple]
-	setprop &fcg callback [list fastcheapgood &fcg]
+	setprop $fcg callback [list fastcheapgood $fcg]
 
-	cmd label "Eval" code [list formeval &tf &results]
-	eval [makebackbutton &lbox]
+	cmd label "Eval" code [list formeval $tf $results]
+	eval [makebackbutton $lbox]
     }]
-    setcurrent &newform
+    setcurrent $newform
 }
 
 # listbox helper
 proc listboxcallback {lst} {
     global newlistbox
-    set selected [getprop &newlistbox selected]
+    set selected [getprop $newlistbox selected]
     set newlist ""
-    foreach i &selected {
-	lappend &newlist [lindex &lst &i]
+    foreach i $selected {
+	lappend $newlist [lindex $lst $i]
     }
 
-    setprop &newlistbox label "Selected: [join &newlist]"
+    setprop $newlistbox label "Selected: [join $newlist]"
 }
 
 # Create a listbox
@@ -74,26 +74,26 @@ proc makelistbox {} {
     global newlistbox
     set lbl [list Apples Bananas Oranges Pears]
     set newlistbox \
-	[listbox label "MIDP ListBox" list &lbl callback \
-	     [list listboxcallback &lbl] code {
-	    eval [makebackbutton &lbox]
+	[listbox label "MIDP ListBox" list $lbl callback \
+	     [list listboxcallback $lbl] code {
+	    eval [makebackbutton $lbox]
 	}]
-    setcurrent &newlistbox
+    setcurrent $newlistbox
 }
 
 # Create a textbox
 proc maketextbox {} {
     global lbox
     set newtextbox [textbox label "MIDP TextBox" code {
-	eval [makebackbutton &lbox]
+	eval [makebackbutton $lbox]
     } text "This is an example of a TextBox"]
-    setcurrent &newtextbox
+    setcurrent $newtextbox
 }
 
 # Create an alert
 proc makealert {} {
     set newalert [alert label "MIDP Alert" text "This is an example of an Alert!"]
-    setcurrent &newalert
+    setcurrent $newalert
 }
 
 set screenhash [hash {
@@ -107,8 +107,8 @@ set screenhash [hash {
 proc choose {} {
     global lbox
     global screenhash
-    set sel [getprop &lbox selected]
-    set cmd "make[hget &screenhash $sel]"
+    set sel [getprop $lbox selected]
+    set cmd "make[hget $screenhash $sel]"
     $cmd
 }
 
@@ -116,13 +116,13 @@ proc choose {} {
 proc viewsource {} {
     global lbox
     global screenhash
-    set sel [getprop &lbox selected]
-    set screen [hget &screenhash $sel]
+    set sel [getprop $lbox selected]
+    set screen [hget $screenhash $sel]
     set code [intro proccode "make$screen"]
-    set tb [textbox label "Source for $screen example" text &code code {
-	eval [makebackbutton &lbox]
+    set tb [textbox label "Source for $screen example" text $code code {
+	eval [makebackbutton $lbox]
     }]
-    setcurrent &tb
+    setcurrent $tb
 }
 
 # Initial script to run.
@@ -136,19 +136,19 @@ set lbox [listbox label "Hecl examples" code {
     cmd label "See source" code viewsource
     cmd label {Exit} type exit code exit
 } type exclusive]
-setcurrent &lbox
+setcurrent $lbox
 # 'Run' to continue...
 }
 
 # Error report form
 set errf [form label Error code {
-    cmd label Back type back code {setcurrent &main}
+    cmd label Back type back code {setcurrent $main}
 }];
 
 # Initial textbox
 set main [textbox label Hecl code {
     cmd label Run code run ;
-    cmd label "View errors" code {setcurrent &errf} ;
-} len 900 text &script];
+    cmd label "View errors" code {setcurrent $errf} ;
+} len 900 text $script];
 
-setcurrent &main;
+setcurrent $main;

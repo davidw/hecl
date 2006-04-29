@@ -1,3 +1,10 @@
+2006-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/Hecl.java: Speed up loading of scripts by processing N
+	bytes at a time.
+
+	* j2me/script.hcl: Use $ instead of &.
+
 2006-04-28  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Thing.java: Eliminated getStringRep in favor of

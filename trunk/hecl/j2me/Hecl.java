@@ -14,6 +14,7 @@ limitations under the License.
 */
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.IOException;
 
 import javax.microedition.lcdui.Display;
@@ -46,106 +47,133 @@ public class Hecl extends MIDlet {
     public Hecl() {
     }
 
+    /**
+     * The <code>destroyApp</code> method is called when the
+     * application is exiting.
+     *
+     * @param unconditional a <code>boolean</code> value
+     */
     public void destroyApp(boolean unconditional) {
     }
 
+
+    /**
+     * The <code>exitApp</code> method destroys the current midlet.
+     *
+     */
     public void exitApp() {
 	destroyApp(true);
 	notifyDestroyed();
     }
 
-    public void pauseApp() {}
+    public void pauseApp() {
+    }
 
+    /**
+     * The <code>startApp</code> method is called when the application
+     * is started.
+     *
+     */
     public void startApp() {
 	if (!started) {
 	    int ch;
 	    StringBuffer script = new StringBuffer("");
 
-
 	    display = Display.getDisplay(this);
 	    Form f = new Form("Welcome to Hecl");
 	    display.setCurrent(f);
 	    f.append("Loading Hecl, please wait ");
-
 	    /* Fetch the script. */
-	    int i = 0;
-	    DataInputStream is =
-		new DataInputStream(this.getClass().getResourceAsStream("/script.hcl"));
+	    int bufsize = 500;
+	    byte []b = new byte[bufsize];
+	    DataInputStream is = new DataInputStream(
+		this.getClass().getResourceAsStream("/script.hcl"));
 	    try {
-		while ((ch = is.read()) != -1) {
-		    i ++;
-		    script.append((char)ch);
-		    if (i % 100 == 0) {
-			f.append(".");
-		    }
+		int read = 0;
+		while ((read = is.read(b, 0, bufsize)) == bufsize) {
+		    script.append(new String(b));
+		    f.append(".");
+		    b = null;
+		    b = new byte[bufsize];
 		}
+		script.append(new String(b, 0, read));
 		is.close();
 	    } catch (IOException e) {
 		f.append("error reading init script: " + e.toString());
+		return;
 	    }
+	    is = null;
+	    b = null;
 
 	    started = true;
 	    try {
 		interp = new Interp();
-
 		new HttpModule().loadModule(interp);
 		new RMSModule().loadModule(interp);
-
-		GUI cmds = new GUI();
-		cmds.display = display;
-		cmds.interp = interp;
-		cmds.midlet = this;
-
-		interp.commands.put("alert",
-				    new GUICmdFacade(GUI.ALERTCMD, cmds));
-		interp.commands.put("choicegroup",
-				    new GUICmdFacade(GUI.CHOICEGROUPCMD, cmds));
-		interp.commands.put("cmd",
-				    new GUICmdFacade(GUI.CMDCMD, cmds));
-		interp.commands.put("datefield",
-				    new GUICmdFacade(GUI.DATEFIELDCMD, cmds));
-		interp.commands.put("form",
-				    new GUICmdFacade(GUI.FORMCMD, cmds));
-		interp.commands.put("gauge",
-				    new GUICmdFacade(GUI.GAUGECMD, cmds));
-		interp.commands.put("listbox",
-				    new GUICmdFacade(GUI.LISTBOXCMD, cmds));
-		interp.commands.put("string",
-				    new GUICmdFacade(GUI.STRINGCMD, cmds));
-		interp.commands.put("stringitem",
-				    new GUICmdFacade(GUI.STRINGITEMCMD, cmds));
-		interp.commands.put("textbox",
-				    new GUICmdFacade(GUI.TEXTBOXCMD, cmds));
-		interp.commands.put("textfield",
-				    new GUICmdFacade(GUI.TEXTFIELDCMD, cmds));
-
-		interp.commands.put("getprop",
-				    new GUICmdFacade(GUI.GETPROPCMD, cmds));
-		interp.commands.put("setprop",
-				    new GUICmdFacade(GUI.SETPROPCMD, cmds));
-		interp.commands.put("getindex",
-				    new GUICmdFacade(GUI.GETINDEXCMD, cmds));
-		interp.commands.put("setindex",
-				    new GUICmdFacade(GUI.SETINDEXCMD, cmds));
-		interp.commands.put("setcurrent",
-				    new GUICmdFacade(GUI.SETCURRENTCMD, cmds));
-		interp.commands.put("noscreen",
-				    new GUICmdFacade(GUI.NOSCREENCMD, cmds));
-		interp.commands.put("screenappend",
-				    new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
-		/* interp.commands.put("mem", cmds); */
-		interp.commands.put("exit",
-				    new GUICmdFacade(GUI.EXITCMD, cmds));
-
-		interp.eval(new Thing(script.toString()));
-		script = null;
-		f = null;
 	    } catch (Exception e) {
 		f.append(e.toString());
 	    }
+
+	    GUI cmds = new GUI();
+	    cmds.display = display;
+	    cmds.interp = interp;
+	    cmds.midlet = this;
+
+	    interp.commands.put("alert",
+				new GUICmdFacade(GUI.ALERTCMD, cmds));
+	    interp.commands.put("choicegroup",
+				new GUICmdFacade(GUI.CHOICEGROUPCMD, cmds));
+	    interp.commands.put("cmd",
+				new GUICmdFacade(GUI.CMDCMD, cmds));
+	    interp.commands.put("datefield",
+				new GUICmdFacade(GUI.DATEFIELDCMD, cmds));
+	    interp.commands.put("form",
+				new GUICmdFacade(GUI.FORMCMD, cmds));
+	    interp.commands.put("gauge",
+				new GUICmdFacade(GUI.GAUGECMD, cmds));
+	    interp.commands.put("listbox",
+				new GUICmdFacade(GUI.LISTBOXCMD, cmds));
+	    interp.commands.put("string",
+				new GUICmdFacade(GUI.STRINGCMD, cmds));
+	    interp.commands.put("stringitem",
+				new GUICmdFacade(GUI.STRINGITEMCMD, cmds));
+	    interp.commands.put("textbox",
+				new GUICmdFacade(GUI.TEXTBOXCMD, cmds));
+	    interp.commands.put("textfield",
+				new GUICmdFacade(GUI.TEXTFIELDCMD, cmds));
+
+	    interp.commands.put("getprop",
+				new GUICmdFacade(GUI.GETPROPCMD, cmds));
+	    interp.commands.put("setprop",
+				new GUICmdFacade(GUI.SETPROPCMD, cmds));
+	    interp.commands.put("getindex",
+				new GUICmdFacade(GUI.GETINDEXCMD, cmds));
+	    interp.commands.put("setindex",
+				new GUICmdFacade(GUI.SETINDEXCMD, cmds));
+	    interp.commands.put("setcurrent",
+				new GUICmdFacade(GUI.SETCURRENTCMD, cmds));
+	    interp.commands.put("noscreen",
+				new GUICmdFacade(GUI.NOSCREENCMD, cmds));
+	    interp.commands.put("screenappend",
+				new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
+	    interp.commands.put("exit",
+				new GUICmdFacade(GUI.EXITCMD, cmds));
+
+	    f.append("\nOK - executing");
+	    runScript(script.toString());
+	    script = null;
+	    f = null;
 	}
     }
 
+
+    /**
+     * The <code>runScript</code> method exists so that external
+     * applications (emulators, primarily) can call into Hecl and run
+     * scripts.
+     *
+     * @param s a <code>String</code> value
+     */
     public void runScript(String s) {
 	try {
 	    interp.eval(new Thing(s));
