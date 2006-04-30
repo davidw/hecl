@@ -21,7 +21,7 @@ import java.util.Vector;
 /**
  * The <code>GroupThing</code> class is for Hecl "groups". For instance, "foo
  * $foo [foo]" must have its components kept together, and is not a proper list.
- * 
+ *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
@@ -32,9 +32,8 @@ public class GroupThing implements RealThing {
 
     /**
      * Creates a new <code>GroupThing</code> instance from a vector.
-     * 
-     * @param v
-     *            a <code>Vector</code> value
+     *
+     * @param v a <code>Vector</code> value
      */
     public GroupThing(Vector v) {
         val = v;
@@ -42,24 +41,34 @@ public class GroupThing implements RealThing {
 
     /**
      * Creates a new <code>GroupThing</code> instance from a string.
-     * 
-     * @param s
-     *            a <code>String</code> value
+     *
+     * @param s a <code>String</code> value
      */
     public GroupThing(String s) {
         val.addElement(new Thing(new StringThing(s)));
+    }
+
+    /**
+     * The <code>create</code> method takes a Vector of Things and
+     * creates a Thing containing a GroupThing.
+     *
+     * @param v a <code>Vector</code> value
+     * @return a <code>Thing</code> value
+     */
+    public static Thing create(Vector v) {
+        return new Thing(new GroupThing(v));
     }
 
     public String thingclass() {
 	return "group";
     }
 
+
     /**
      * <code>setGroupFromAny</code> creates a group from another type of
      * Thing.
-     * 
-     * @param thing
-     *            a <code>Thing</code> value
+     *
+     * @param thing a <code>Thing</code> value
      */
     private static void setGroupFromAny(Thing thing) throws HeclException {
         RealThing realthing = thing.val;
@@ -79,8 +88,7 @@ public class GroupThing implements RealThing {
      * <code>get</code> returns a Vector containing other Things, representing
      * a group, from a Thing.
      *
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Vector</code> value
      */
     public static Vector get(Thing thing) throws HeclException {

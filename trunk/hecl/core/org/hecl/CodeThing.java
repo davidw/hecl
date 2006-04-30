@@ -167,14 +167,11 @@ public class CodeThing implements RealThing {
      * <code>doGroupSubst</code> runs substitutions on 'groups' of things,
      * such as "foo $foo [foo]". The group can't be broken up, so it needs to be
      * substituted together by subst'ing the individual components.
-     * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
+     *
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     protected static Thing doGroupSubst(Interp interp, Thing thing)
             throws HeclException {
@@ -182,28 +179,24 @@ public class CodeThing implements RealThing {
         StringBuffer result = new StringBuffer("");
         Vector v = GroupThing.get(thing);
 
-        /*
-         * As a special case, one element groups get turned into regular things.
-         */
-        if (v.size() == 1) {
-            StringThing.get(thing);
-            return thing;
-        } else {
-            for (Enumeration e = v.elements(); e.hasMoreElements();) {
-                Thing t = (Thing) e.nextElement();
+	Thing t = null;
 
-                realthing = t.val;
-                if (realthing instanceof GroupThing) {
-                    result.append(doGroupSubst(interp, t).toString());
-                } else if (realthing instanceof SubstThing) {
-                    result.append(doSubstSubst(interp, t).toString());
-                } else if (realthing instanceof CodeThing) {
-                    result.append(doCodeSubst(interp, t).toString());
-                } else {
-                    result.append(t.toString());
-                }
-            }
-        }
+	for (Enumeration e = v.elements(); e.hasMoreElements();) {
+	    t = (Thing) e.nextElement();
+
+	    realthing = t.val;
+	    if (realthing instanceof GroupThing) {
+		result.append(doGroupSubst(interp, t).toString());
+	    } else if (realthing instanceof SubstThing) {
+		result.append(doSubstSubst(interp, t).toString());
+		/* System.out.println("result is " + result);  */
+	    } else if (realthing instanceof CodeThing) {
+		result.append(doCodeSubst(interp, t).toString());
+	    } else {
+		result.append(t.toString());
+	    }
+	}
+
         return new Thing(result.toString());
     }
 

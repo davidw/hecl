@@ -96,24 +96,6 @@ public class Thing extends Object {
         return val;
     }
 
-    /* FIXME - this shouldn't be here, really. */
-    public void appendToGroup(Thing thing) throws HeclException {
-        Vector v = GroupThing.get(this);
-        v.addElement(thing);
-        stringval = null;
-    }
-
-    /* FIXME - and neither should this. */
-    public void appendToGroup(char ch) throws HeclException {
-        Vector v = GroupThing.get(this);
-        Thing le = (Thing) v.lastElement();
-        StringThing.get(le);
-        RealThing rt = le.getVal();
-        StringThing str = (StringThing) rt;
-        str.append(ch);
-        le.setVal(str);
-        stringval = null;
-    }
 
     /**
      * <code>isTrue</code> is a convenience function that lets us know if the

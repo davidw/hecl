@@ -1,3 +1,19 @@
+2006-04-30  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/GroupThing.java: Added 'create' method to easily
+	create GroupThings from Vectors of Things.
+
+	* core/org/hecl/CodeThing.java: doGroupSubst no longer takes care
+	of collapsing GroupThings containing only one Thing - this is now
+	done by the parser.
+
+	* core/org/hecl/Thing.java: Removed appendToGroup methods which
+	never really belonged here in any case.
+
+	* core/org/hecl/Parse.java: Big overhaul of the parser.  Still not
+	convinced that it's as good as it can be, but it's significantly
+	faster, and doesn't require strange methods in Thing.
+
 2006-04-29  David N. Welton  <davidw@dedasys.com>
 
 	* j2me/Hecl.java: Speed up loading of scripts by processing N

@@ -116,7 +116,7 @@ public class StringThing implements RealThing {
     public void append(char ch) {
         val.append(ch);
     }
-    
+
     /**
      * <code>append</code> appends a string to the string.
      *

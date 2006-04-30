@@ -15,6 +15,7 @@
 
 package org.hecl;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 /**
@@ -25,6 +26,7 @@ import java.util.Vector;
  */
 
 public class Parse {
+    /* Used to build up commands. */
     protected Vector outList;
 
     protected ParseState state;
@@ -33,7 +35,10 @@ public class Parse {
 
     protected String in;
 
-    protected Thing currentOut;
+    /* Used to build up individual Things with. */
+    protected StringThing outBuf;
+    /* Used to build up words (that might be GroupThings). */
+    protected Vector outGroup;
 
     protected boolean parselist = false;
 
@@ -78,12 +83,12 @@ public class Parse {
      */
     public Vector parse() throws HeclException {
         outList = new Vector();
-        currentOut = new Thing("");
+	newCurrent();
         state.eoc = false;
 
         parseLine(in, state);
         if (outList.size() > 0) {
-            //System.out.println("outlist is : " + outList);
+            // System.out.println("outlist is : " + outList);
             return outList;
         }
         return null;
@@ -128,40 +133,54 @@ public class Parse {
         return code;
     }
 
+
+    /**
+     * The <code>newCurrent</code> method creates a new 'context' to
+     * be added to.
+     *
+     * @exception HeclException if an error occurs
+     */
+    protected void newCurrent() throws HeclException {
+	outGroup = new Vector();
+	outBuf = new StringThing();
+	outGroup.addElement(outBuf);
+    }
+
+
     /**
      * The <code>addCurrent</code> method adds a new element to the command
      * parsed.
      *
      */
-    protected void addCurrent() {
-        outList.addElement(currentOut);
-        currentOut = new Thing("");
+    protected void addCurrent() throws HeclException {
+	/* If it's only got one element, don't make a groupthing out
+	 * of it. */
+	if (outGroup.size() == 1) {
+	    outList.addElement(new Thing((RealThing)outGroup.elementAt(0)));
+	} else {
+	    Vector outv = new Vector();
+	    for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
+		outv.addElement(new Thing((RealThing)e.nextElement()));
+	    }
+
+	    outList.addElement(GroupThing.create(outv));
+	}
+	newCurrent();
     }
 
     /**
      * The <code>appendToCurrent</code> method adds a character to the group
      * object.
      *
-     * @param ch
-     *            a <code>char</code>
+     * @param ch a <code>char</code>
      */
-
-    /* FIXME - this could be reworked. */
-
     protected void appendToCurrent(char ch) throws HeclException {
-        currentOut.appendToGroup(ch);
+	outBuf.append(ch);
     }
 
-    /**
-     * The <code>addCurrent</code> method adds a new Thing to the out list,
-     * and sets the current output collector to an empty Thing.
-     *
-     * @param newthing a <code>Thing</code> value
-     */
-    protected void addCurrent(Thing newthing) {
-        outList.addElement(newthing);
-        currentOut = new Thing("");
-    }
+    /* Used internally. */
+    private static final int DOLLAR = 0;
+    private static final int COMMAND = 1;
 
     /**
      * The <code>addCommand</code> method adds a command to the current
@@ -170,12 +189,7 @@ public class Parse {
      * @exception HeclException if an error occurs
      */
     protected void addCommand() throws HeclException {
-        Thing saveout = currentOut;
-        currentOut = new Thing("");
-        parseCommand(state);
-        saveout.appendToGroup(currentOut);
-        saveout.appendToGroup(new Thing(""));
-        currentOut = saveout;
+	addSub(COMMAND);
     }
 
     /**
@@ -186,12 +200,27 @@ public class Parse {
      * @exception HeclException if an error occurs
      */
     public void addDollar() throws HeclException {
-        Thing saveout = currentOut;
-        currentOut = new Thing("");
-        parseDollar(state);
-        saveout.appendToGroup(currentOut);
-        saveout.appendToGroup(new Thing(""));
-        currentOut = saveout;
+	addSub(DOLLAR);
+    }
+
+    public void addSub(int type) throws HeclException {
+        Vector savegroup = outGroup;
+	StringThing savebuf = outBuf;
+	newCurrent();
+	if (type == DOLLAR) {
+	    parseDollar(state);
+	} else {
+	    parseCommand(state);
+	}
+
+	for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
+	    RealThing rt = (RealThing)e.nextElement();
+	    savegroup.addElement(rt);
+	}
+
+	outBuf = new StringThing();
+	savegroup.addElement(outBuf);
+	outGroup = savegroup;
     }
 
     /**
@@ -211,30 +240,6 @@ public class Parse {
                 return;
             }
             switch (ch) {
-                case '{' :
-                    parseBlock(state);
-                    addCurrent();
-                    break;
-                case '[' :
-                    parseCommand(state);
-                    addCurrent();
-                    break;
-                case '$' :
-                    parseDollar(state);
-                    addCurrent();
-                    break;
-/*                 case '&' :
-                    parseDollar(state, false);
-                    addCurrent();
-                    break;  */
-                case '"' :
-                    parseText(state);
-                    addCurrent();
-                    break;
-                case ' ' :
-                    break;
-                case '	' :
-                    break;
                 case '#' :
                     parseComment(state);
                     return;
@@ -243,20 +248,35 @@ public class Parse {
 		    state.lineno ++;
                     return;
                 case ';' :
-                    return;
+		    return;
+                case ' ' :
+                case '	' :
+                    continue;
+                case '{' :
+                    parseBlock(state);
+                    break;
+                case '[' :
+                    parseCommand(state);
+                    break;
+                case '$' :
+                    parseDollar(state);
+                    break;
+                case '"' :
+                    parseText(state);
+                    break;
 		case '\\' :
 		    if (!parseEscape(state)) {
 			parseWord(state);
-			addCurrent();
+			break;
 		    }
-		    break;
+		    continue;
                 default :
 		    appendToCurrent(ch);
                     //		    state.rewind();
                     parseWord(state);
-                    addCurrent();
                     break;
             }
+	    addCurrent();
         }
     }
 
@@ -264,8 +284,7 @@ public class Parse {
      * The <code>parseComment</code> method keeps reading until a newline,
      * this 'eating' the comment.
      *
-     * @param state
-     *            a <code>ParseState</code> value
+     * @param state a <code>ParseState</code> value
      */
     private void parseComment(ParseState state) {
         char ch;
@@ -304,7 +323,6 @@ public class Parse {
      * @param docopy a <code>boolean</code> value
      * @exception HeclException if an error occurs
      */
-
     private void parseDollar(ParseState state)
 	throws HeclException {
 	char ch;
@@ -325,8 +343,11 @@ public class Parse {
 	 * System.out.println("parser vvvv"); Thing.printThing(argv[1]);
 	 * System.out.println("parser ^^^^");
 	 */
-	Thing strcopy = currentOut.deepcopy();
-	currentOut.setVal(new SubstThing(strcopy.toString()));
+//	Thing t = new Thing(new SubstThing(outBuf.toString()));
+//	outGroup.setElementAt(t, outGroup.size() - 1);
+
+	outGroup.setElementAt(new SubstThing(outBuf.getStringRep()),
+			      outGroup.size() - 1);
     }
 
     /**
@@ -346,10 +367,8 @@ public class Parse {
     /**
      * <code>parseCommand</code> parses a [] command.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     protected void parseCommand(ParseState state) throws HeclException {
         parseBlockOrCommand(state, false, false);
@@ -359,12 +378,9 @@ public class Parse {
      * <code>parseBlockOrCommand</code> is what parseCommand and parseBlock
      * use internally.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @param block
-     *            a <code>boolean</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @param block a <code>boolean</code> value
+     * @exception HeclException if an error occurs
      */
     protected void parseBlockOrCommand(ParseState state, boolean block, boolean invar)
             throws HeclException {
@@ -412,10 +428,11 @@ public class Parse {
                     return;
                 } else {
                     /* We parse it up for later consumption. */
-                    Parse hp = new Parse(interp, currentOut.toString());
+		    Parse hp = new Parse(interp, outBuf.getStringRep());
                     CodeThing code = hp.parseToCode();
                     code.marksubst = true;
-                    currentOut.setVal(code);
+		    /* Replace outBuf in the vector. */
+		    outGroup.setElementAt(code, outGroup.size() - 1);
                     return;
                 }
             } else {
@@ -427,10 +444,8 @@ public class Parse {
     /**
      * <code>parseText</code> parses a "string in quotes".
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     protected void parseText(ParseState state) throws HeclException {
         char ch;
@@ -440,6 +455,8 @@ public class Parse {
                 return;
             }
             switch (ch) {
+                case '"' :
+                    return;
                 case '\\' :
 		    parseEscape(state);
                     break;
@@ -449,11 +466,6 @@ public class Parse {
                 case '$' :
                     addDollar();
                     break;
-/*                 case '&' :
-                    addDollar(false);
-                    break;  */
-                case '"' :
-                    return;
                 default :
                     appendToCurrent(ch);
                     break;
@@ -464,10 +476,8 @@ public class Parse {
     /**
      * <code>parseWord</code> parses a regular word not in quotes.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     protected void parseWord(ParseState state) throws HeclException {
         char ch;
@@ -476,7 +486,6 @@ public class Parse {
             if (state.done()) {
                 return;
             }
-	begin:
             switch (ch) {
                 case '[' :
                     addCommand();
@@ -484,25 +493,13 @@ public class Parse {
                 case '$' :
                     addDollar();
                     break;
-/*                 case '&' :
-                    addDollar(false);
-                    break;  */
-                /* This isn't special here, we can ignore it? */
-                /*
-                 * case '"': addCurrent(); parseText(state); appendCurrent();
-                 * break;
-                 */
                 case ' ' :
-                    return;
                 case '	' :
                     return;
                 case '\r' :
-                    state.eoc = true;
-                    return;
                 case '\n' :
 		    state.lineno ++;
-                    state.eoc = true;
-                    return;
+		    /* Fall through on purpose. */
                 case ';' :
                     state.eoc = true;
                     return;
@@ -510,7 +507,6 @@ public class Parse {
 		    if (parseEscape(state)) return;
                 default :
                     appendToCurrent(ch);
-                    //		    out.appendString(state.chars[state.idx]);
                     break;
             }
         }
