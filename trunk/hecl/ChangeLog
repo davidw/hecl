@@ -1,5 +1,9 @@
 2006-04-30  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Use $ instead of &.
+
+	* docs/reverse.hcl: Use $ instead of &.
+
 	* core/org/hecl/GroupThing.java: Added 'create' method to easily
 	create GroupThings from Vectors of Things.
 

@@ -248,9 +248,9 @@ puts "Hecl, from 1 to 10: $rating"</programlisting>
     <programlisting>puts {The $dollar $signs $are printed	    literally$$ - no substitution}</programlisting>
 
     <para>
-      Aside from the dollar sign, which returns a copy of the value of
-      a variable, it is also possible to utilize the results of one
-      command as the input of a second command.  For example:
+      Aside from the dollar sign, which returns a reference to the
+      value of a variable, it is also possible to utilize the results
+      of one command as the input of a second command.  For example:
     </para>
 
     <programlisting>set rating 10
@@ -291,19 +291,19 @@ if { &lt; $temp 0 } {
     <para>References:</para>
 
     <programlisting>set a 1
-set b &amp;a
+set b $a
 puts $b
-# Returns '1'
+# Prints '1'
 set a 2
 puts $b
-# Returns '2'</programlisting>
+# Prints '2'</programlisting>
 
     <para>"while" loop command:</para>
 
     <programlisting>set i 0
-while { &lt; &amp;i 10 } {
+while { &lt; $i 10 } {
     puts "i is now $i"
-    incr &amp;i
+    incr $i
 }
 </programlisting>
 
@@ -311,8 +311,8 @@ while { &lt; &amp;i 10 } {
 
     <programlisting>set foo [list a b c]
 set bar {a b c}
-lappend &amp;foo d
-lappend &amp;bar d
+lappend $foo d
+lappend $bar d
 set foo
 # Returns 'a b c d'
 set bar
@@ -322,12 +322,12 @@ set bar
     <para>Hash tables:</para>
 
     <programlisting>set foo [hash {a b c d}]
-puts [hget &amp;foo a]
+puts [hget $foo a]
 # prints 'b'
-puts [hget &amp;foo c]
+puts [hget $foo c]
 # prints 'd'
-hset &amp;foo c 2
-puts [hget &amp;foo c]
+hset $foo c 2
+puts [hget $foo c]
 # prints '2'
 puts $foo
 # prints 'a b c 2' (although not necessarily in that order)
@@ -354,11 +354,11 @@ proc printvals {vals} {
     set num 1
     foreach v $vals {
 	puts "$num - $v"
-	incr &amp;num
+	incr $num
     }
 }
 
-printvals &amp;list</programlisting>
+printvals $list</programlisting>
 
     <para>
       Hecl is very flexible - in this example, we create a
@@ -368,7 +368,7 @@ printvals &amp;list</programlisting>
 
     <programlisting>proc do {code while condition} {
     upeval $code
-    while { upeval &amp;condition } {
+    while { upeval $condition } {
 	upeval $code
     }
 }
@@ -376,9 +376,9 @@ printvals &amp;list</programlisting>
 set x 100
 set foo ""
 do {
-    append &amp;foo $x
-    incr &amp;x
-} while { &lt; &amp;x 10 }
+    append $foo $x
+    incr $x
+} while { &lt; $x 10 }
 set foo
 # Returns 100 - because the loop is run once and only once.
 </programlisting>
@@ -550,7 +550,7 @@ hecl> and 1 2 4 8
 	<title>Example</title>
 	  <programlisting>
 set foo "bar"
-append &amp;foo "beebop"
+append $foo "beebop"
 # The foo variable now contains the string barbeebop
 	  </programlisting>
 	  <para>Produces:</para>
@@ -586,7 +586,7 @@ while { true } {
     if { > $i 100 } {
         break
     }
-    incr &amp;i
+    incr $i
 }
 	  </programlisting>
 	<para>
@@ -703,9 +703,9 @@ org.hecl.StringThing
 set i 0
 set res {}
 foreach x {a b c d e} {
-    incr &amp;i
+    incr $i
     continue
-    append &amp;res $x
+    append $res $x
 }
 puts $i
 puts $res
@@ -782,7 +782,7 @@ if {eq 1 1.0} {
 	  <programlisting>
 set i 0
 set str {incr}
-lappend &amp;str "i"
+lappend $str "i"
 eval $str
 puts $i
 	  </programlisting>
@@ -881,8 +881,8 @@ puts [filter $lst x {= $x 4}]
 	<title>Example</title>
 	  <programlisting>
 set out {}
-for {set i 0} {&lt; $i 10} {incr &amp;i} {
-    append &amp;out $i
+for {set i 0} {&lt; $i 10} {incr $i} {
+    append $out $i
 }
 puts $out
 	  </programlisting>
@@ -924,7 +924,7 @@ puts $out
 set lst {a b c d e}
 set res {}
 foreach el $lst {
-    append &amp;res $el
+    append $res $el
 }
 puts $res
 	  </programlisting>
@@ -962,7 +962,7 @@ puts $res
 set foo 1
 proc incfoo {} {
     global foo
-    incr &amp;foo
+    incr $foo
 }
 incfoo
 puts $foo
@@ -1009,8 +1009,8 @@ puts $foo
 	<title>Example</title>
 	  <programlisting>
 set foo [hash {a b c d}]
-hset &amp;foo a 42
-puts [hget &amp;foo a]
+hset $foo a 42
+puts [hget $foo a]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>42</screen>
@@ -1106,9 +1106,9 @@ if { > 0 1 } {
 	<title>Example</title>
 	  <programlisting>
 set foo 1
-incr &amp;foo
+incr $foo
 puts "foo is $foo"
-incr &amp;foo 10
+incr $foo 10
 puts "foo is now $foo"
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1207,9 +1207,9 @@ puts [join {a b c} "|"]
 	<title>Example</title>
 	  <programlisting>
 set foo a
-lappend &amp;foo "b"
+lappend $foo "b"
 puts $foo
-lappend &amp;foo "c d"
+lappend $foo "c d"
 puts $foo
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1374,10 +1374,10 @@ lrange {a b c d e f g} 0 2
 	<title>Example</title>
 	  <programlisting>
     set lst {a b c}
-    lset &amp;lst 1 x
+    lset $lst 1 x
     puts $lst
 
-    lset &amp;lst 1
+    lset $lst 1
     puts $lst
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1526,10 +1526,10 @@ hecl> or 1 2 4
 	  <programlisting>
 proc addlist {lst} {
     set res 0
-    foreach e &amp;lst {
-	incr &amp;res $e
+    foreach e $lst {
+	incr $res $e
     }
-    return &amp;res
+    return $res
 }
 
 puts [addlist {1 2 3 4 5}]
@@ -1592,9 +1592,9 @@ puts "Hello, world"
 	  <programlisting>
 proc someproc {} {
     set res 1
-    return &amp;res
+    return $res
     set res 2
-    return &amp;res
+    return $res
 }
 puts [someproc]
 	  </programlisting>
@@ -1833,8 +1833,8 @@ aaaxbbbyccc ddd</screen>
 	  <programlisting>
 set time [time {
     set i 0
-    while { &lt; &amp;i 100 } {
-	incr &amp;i
+    while { &lt; $i 100 } {
+	incr $i
     }
 } 10]
 puts "Time is $time"
@@ -1917,7 +1917,7 @@ if { true } {
 	<title>Example</title>
 	  <programlisting>
 proc stackframe {} {
-    upeval { incr &amp;foo }
+    upeval { incr $foo }
 }
 set foo 1
 stackframe
@@ -1953,9 +1953,9 @@ puts $foo
 	<title>Example</title>
 	  <programlisting>
 set i 0
-while { &lt; &amp;i 6 } {
+while { &lt; $i 6 } {
     puts "i is $i"
-    incr &amp;i
+    incr $i
 }
 	  </programlisting>
 	  <para>Produces:</para>
@@ -1992,7 +1992,7 @@ i is 5
 	<title>Example</title>
 	  <programlisting>
 set foo "bar"
-append &amp;foo "beebop"
+append $foo "beebop"
 # The foo variable now contains the string barbeebop
 	  </programlisting>
 	  <para>Produces:</para>
@@ -2041,6 +2041,44 @@ append &amp;foo "beebop"
 	    actual working directory.  Apparently that's not possible
 	    with Java.
 	  </para>
+	</refsect1>
+      </refentry>
+
+      <!-- copy -->
+      <refentry id="copy">
+	<refnamediv>
+	  <refname>copy</refname>
+	  <refpurpose>Copy a Hecl value.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>cd</command>
+	    <arg choice="req"><replaceable>value</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>copy</command> command makes a deep copy of a
+	    Hecl value, whereas normally, Hecl variables contain
+	    references.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>hecl&gt; set foo 1
+set bee $foo
+set bop [copy $foo]
+incr $foo
+puts "foo is $foo"
+puts "bee is $bee"
+puts "bop is $bop"
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>foo is 2
+bee is 2
+bop is 1
+</screen>
 	</refsect1>
       </refentry>
 
@@ -2156,7 +2194,7 @@ set lines [split $data "\n"]
 set i 1
 foreach line $lines {
     puts "$i $line"
-    incr &amp;i
+    incr $i
 }
 	  </programlisting>
 	  <para>Produces:</para>
@@ -2767,7 +2805,7 @@ class HelloCmd implements Command {
 	  <programlisting>
 	    set tf [textfield label "Insert text:"]
 	    ...
-	    set inserted_text [getprop &amp;tf text]
+	    set inserted_text [getprop $tf text]
 	  </programlisting>
 	  <para>
 	    In this example, <command>getprop</command> fetches the
@@ -2869,7 +2907,7 @@ class HelloCmd implements Command {
 	  </para>
 	  <programlisting>
 	    set f [form label "New Form"]
-	    setcurrent &amp;f
+	    setcurrent $f
 	  </programlisting>
 	</refsect1>
       </refentry>

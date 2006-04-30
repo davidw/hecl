@@ -573,9 +573,6 @@
 	<pathelement path="http"/>
       </sourcepath>
       <sourcepath>
-	<pathelement path="float"/>
-      </sourcepath>
-      <sourcepath>
 	<pathelement path="HeclBuilder"/>
       </sourcepath>
       <sourcepath>

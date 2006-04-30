@@ -196,7 +196,6 @@ public class Parse {
      * The <code>addDollar</code> method adds a $var lookup to the current
      * output.
      *
-     * @param docopy a <code>boolean</code> value
      * @exception HeclException if an error occurs
      */
     public void addDollar() throws HeclException {

@@ -40,7 +40,6 @@ public class SubstThing implements RealThing {
      * a reference (&) or not ($).
      *
      * @param s a <code>String</code> value
-     * @param isref a <code>boolean</code> value
      */
     public SubstThing(String s) {
         varName = s;
