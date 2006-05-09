@@ -36,3 +36,23 @@ test rename-1 {
     append $r [newcmd]
     set r
 } {fredfred}
+
+proc varargproc {a b varargs} {
+    return "$a $b $varargs"
+}
+
+test varargs-1 {
+    varargproc x
+} {{ERROR {proc varargproc doesn't have enough arguments}} {varargproc 2}}
+
+test varargs-2 {
+    varargproc x y
+} {x y }
+
+test varargs-3 {
+    varargproc x y z
+} {x y z}
+
+test varargs-4 {
+    varargproc x y 1 2 3 4 5 6
+} {x y 1 2 3 4 5 6}

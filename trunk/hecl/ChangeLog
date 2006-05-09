@@ -1,3 +1,9 @@
+2006-05-09  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl (varargproc): Tests for varargs.
+
+	* core/org/hecl/Proc.java: First cut at varargs functionality.
+
 2006-04-30  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Use $ instead of &.

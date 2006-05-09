@@ -1,6 +1,7 @@
 # harness.hcl -- test harness procedures.
 
 proc test {name code result} {
+    # puts "Running $name"
     catch $code res
     # puts "Code was $code"
     # puts "Result was $res"

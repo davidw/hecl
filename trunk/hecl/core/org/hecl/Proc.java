@@ -40,28 +40,51 @@ class Proc implements Command {
         code = cmdcode;
     }
 
+    private static final String varargvarname = "varargs";
+
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Vector varnames = ListThing.get(vars);
         int i = 0;
+	Vector vargvals = null;
 
         /* Push a new frame onto the stack. */
         interp.stackIncr();
         /* Create the argument variables. */
-        for (i = 0; i < varnames.size(); i++) {
-            if (i == argv.length - 1) {
-                interp.stackDecr();
-                throw new HeclException("proc " + argv[0]
-                        + " doesn't have enough arguments");
-            }
+	int argc = varnames.size();
+
+	/* If the last element of the variable names is called
+	 * 'varargs', then it is a list that can accumulate any
+	 * 'extra' args passed in to the proc. */
+	if (argc > 0 && ((Thing) varnames.elementAt(argc - 1)).toString().equals(varargvarname)) {
+	    vargvals = new Vector();
+	    argc --;
+	}
+	HeclException he = null;
+	if (argv.length - 1 < argc) {
+	    he = new HeclException("proc " + argv[0]
+				    + " doesn't have enough arguments");
+	} else if (argv.length - 1 > argc && vargvals == null) {
+            he = new HeclException("proc " + argv[0]
+                    + " has too many arguments");
+	}
+	if (he != null) {
+	    interp.stackDecr();
+	    throw he;
+	}
+
+	/* Set the variables from argv.  Add one to argv, because
+	 * argv0 is the name of the proc itself. */
+        for (i = 0; i < argc; i++) {
             interp.setVar(((Thing) varnames.elementAt(i)).toString(),
 			  argv[i + 1]);
         }
 
-        if (i != argv.length - 1) {
-            interp.stackDecr();
-            throw new HeclException("proc " + argv[0]
-                    + " has too many arguments");
-        }
+	/* Hoover up anything left over as varargs. */
+	for (; i < argv.length - 1; i++ ) {
+	    vargvals.addElement(argv[i + 1]);
+	}
+	interp.setVar(varargvarname, ListThing.create(vargvals));
+
 
         try {
             interp.eval(code);
