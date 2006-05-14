@@ -1,5 +1,13 @@
 2006-05-14  David N. Welton  <davidw@dedasys.com>
 
+	* files/org/hecl/files/HeclFile.java: Make sure that filetolist
+	works on Windows.
+
+	* core/org/hecl/Parse.java: Make \n parse as "end of line", which
+	is added to the output, no matter what platform we are on.
+
+	* core/org/hecl/ParseList.java: Check for \r in list parsing.
+
 	* j2me/script.hcl: Added an sms example.
 
 	* j2me/GUI.java: Add sms command (wma).  Eventually, since this is

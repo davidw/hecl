@@ -42,6 +42,13 @@ public class Parse {
 
     protected boolean parselist = false;
 
+//#ifdef ant:j2se
+    protected static final char eol[] =
+	System.getProperty("line.separator").toCharArray();
+//#else
+    protected static final char eol[] = { '\n' };
+//#endif
+
     /**
      * The <code>more</code> method returns a boolean value indicating whether
      * there is more text to be parsed or not.
@@ -243,6 +250,7 @@ public class Parse {
                     parseComment(state);
                     return;
                 case '\r' :
+		    return;
                 case '\n' :
 		    state.lineno ++;
                     return;
@@ -289,8 +297,11 @@ public class Parse {
         char ch;
         while (true) {
             ch = state.nextchar();
-            if (((ch == '\n') || (ch == '\r')) || state.done()) {
+	    if (ch == '\n') {
 		state.lineno ++;
+		return;
+	    }
+            if ((ch == '\r') || state.done()) {
                 return;
             }
         }
@@ -407,7 +418,8 @@ public class Parse {
                 level--;
             }
 
-	    if (ch == '\n' || ch == '\r') {
+	    // || ch == '\r'
+	    if (ch == '\n') {
 		state.lineno ++;
 	    }
 
@@ -495,10 +507,10 @@ public class Parse {
                 case ' ' :
                 case '	' :
                     return;
-                case '\r' :
                 case '\n' :
 		    state.lineno ++;
 		    /* Fall through on purpose. */
+                case '\r' :
                 case ';' :
                     state.eoc = true;
                     return;
@@ -527,10 +539,22 @@ public class Parse {
 	}
 	/* \n style escapes */
 	switch (ch) {
+            case '\r':
+		char ch2 = state.nextchar();
+		if (ch2 == '\n') {
+		    return true;
+		} else {
+		    state.rewind();
+		}
 	    case '\n':
 		return true;
 	    case 'n':
-		appendToCurrent('\n');
+		appendToCurrent(eol[0]);
+//#ifdef ant:j2se
+		if (eol.length > 1) {
+		    appendToCurrent(eol[1]);
+		}
+//#endif
 		break;
 	    case 't':
 		appendToCurrent('\t');

@@ -1,7 +1,9 @@
 # Suite.hcl - Hecl test suite.
 
 # Move to the correct directory.
-cd [listtofile [lrange [filetolist [currentfile]] 0 -2]]
+set destdir [listtofile [lrange [filetolist [currentfile]] 0 -2]]
+puts "Running in $destdir"
+cd $destdir
 
 source harness.hcl
 

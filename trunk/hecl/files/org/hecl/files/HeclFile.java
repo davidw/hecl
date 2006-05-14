@@ -168,35 +168,29 @@ public class HeclFile implements org.hecl.HeclModule {
 
 	/* Walk through all elements, compare the element with its
 	 * parent, and tack the difference onto the Vector.  */
+	String ss = null;
 	while (pf != null) {
 	    fns = fn.toString();
 	    pfs = pf.toString();
 
-	    reversed.addElement(
-		new Thing(new String(fns.substring(
-					 pfs.length(), fns.length()))));
+	    ss = fns.substring(pfs.length(), fns.length());
+	    /* The 'diff' operation leaves path components with a
+	     * leading slash.  Remove it. */
+	    if (ss.charAt(0) == File.separatorChar) {
+		ss = ss.substring(1, ss.length());
+	    }
+	    reversed.addElement(new Thing(ss));
 	    fn = pf;
 	    pf = pf.getParentFile();
 	}
 	reversed.addElement(new Thing(fn.toString()));
 
-	/* Ok, now we correct the order of the list by reversing it.
-	 * We also trim the path seperators off of those entries that
-	 * need it. If the path starts with a /, then we don't chop
-	 * the second element, otherwise we do. */
+	/* Ok, now we correct the order of the list by reversing
+	 * it. */
 	int j = 0;
 	for (int i = reversed.size() - 1; i >= 0 ; i --) {
 	    Thing t = (Thing)reversed.elementAt(i);
-	    if (j == 0) {
-		resultv.addElement(t);
-		/* FIXME - broken on windows */
-		if (t.toString().equals("/")) {
-		    j --;
-		}
-	    } else {
-		String elstr = t.toString();
-		resultv.addElement(new Thing(elstr.substring(1, elstr.length())));
-	    }
+	    resultv.addElement(t);
 	    j ++;
 	}
 
