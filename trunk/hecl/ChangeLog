@@ -1,3 +1,14 @@
+2006-05-14  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: Added an sms example.
+
+	* j2me/GUI.java: Add sms command (wma).  Eventually, since this is
+	optional, it should probably be in a class like Optional for
+	various commands that may or may not be present.
+
+	* build.xml: Use j2me.defines property for potential symbols for
+	j2me builds.
+
 2006-05-09  David N. Welton  <davidw@dedasys.com>
 
 	* tests/proc.hcl (varargproc): Tests for varargs.

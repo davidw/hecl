@@ -26,6 +26,11 @@ proc formeval {textfield results} {
 	[eval [getprop $textfield text]]
 }
 
+proc sendsms {textfield} {
+    set txt [getprop $textfield text]
+    sms +393485422457 "Another Hecl user says: $txt"
+}
+
 # Callback for fast/cheap/good choicegroup
 
 proc fastcheapgood {choicegroup} {
@@ -50,7 +55,10 @@ proc makeform {} {
 	set fcg [choicegroup label "Chose any two:" list {Cheap Fast Good} type multiple]
 	setprop $fcg callback [list fastcheapgood $fcg]
 
+	set sendsms [textfield label "SMS to davidw:"]
+
 	cmd label "Eval" code [list formeval $tf $results]
+	cmd label "Send SMS" code [list sendsms $sendsms]
 	eval [makebackbutton $lbox]
     }]
     setcurrent $newform

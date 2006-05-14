@@ -38,14 +38,19 @@
   <!-- *************************************************** -->
   <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
   <!--
-  Everything is set up to build a midlet for MIDP2.0 and
-  CLDC1.1 by default.
+  Everything is set up to build a midlet for MIDP2.0 and CLDC1.1 by
+  default.
+
   To create a midlet for CLDC1.1, use
+
   ant midlet11
-  or simlply (with the default settings)
+
+  or simply (with the default settings)
+
   ant midlet
 
   To create a midlet for CLDC1.0, use
+
   ant midlet10
 
   -->
@@ -73,7 +78,7 @@
 
   <!--Enables or disables the Wireless Messaging API (WMA). 	2.0+ -->
   <!-- default: false -->
-  <property name="wtk.wma.enabled" value="false"/>
+  <property name="wtk.wma.enabled" value="1.1"/>
 
   <!-- nables or disables the J2ME Web Services API (J2MEWS). 	2.1+ -->
   <!-- default: false -->
@@ -106,7 +111,7 @@
   <!-- *************************************************** -->
   <property name="buildprefix" value="build"/>
   <property name="relprefix" value="jars"/>
-  
+
   <!-- J2SE ************************************** -->
   <!-- properties for the build base directorries  -->
   <condition property="javamail.complete">
@@ -120,7 +125,15 @@
     <equals arg1="1.5" arg2="${ant.java.version}"/>
   </condition>
 
+  <condition property="sms" value="sms">
+    <or>
+      <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
+      <equals arg1="2.0" arg2="${wtk.wma.enabled}"/>
+    </or>
+  </condition>
+
   <property name="j2se.defines" value="ant:j2se"/>
+  <property name="j2me.defines" value="${sms}"/>
 
   <target name="echo">
     <echo message="Java version: ${ant.java.version}, defines=--${j2se.defines}--"/>
@@ -226,11 +239,8 @@
     depends="initCompile"
     description="Compile core Hecl functionality">
     <mkdir dir="${j2se.pre}/core"/>
-    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core"
-      symbols="${j2se.defines}"/>
-    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}"
-      debug="${hecldebug}"
-      >
+    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}" debug="${hecldebug}" >
       <classpath refid="classpath"/>
     </javac>
   </target>
@@ -450,12 +460,13 @@
 
   <target name="compileJ2ME"
     description="Compile the J2ME specific stuff"
-    depends ="compileJ2MECore,compileJ2MEHttp,compileJ2MErms"
-    >
+    depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
+
     <mkdir dir="${j2me.build}/stand"/>
     <mkdir dir="${j2me.pre}/stand"/>
+
     <wtkpreprocess srcdir="j2me" destdir="${j2me.pre}/stand"
-      symbols="ant:j2me,ant:${cldc}"/>
+      symbols="ant:j2me,ant:${cldc},${j2me.defines}"/>
     <wtkbuild srcdir="${j2me.pre}/stand" target="1.1" source="1.2"
       destdir="${j2me.build}" debug="${hecldebug}">
       <classpath refid="j2me.coreclasspath"/>

@@ -158,6 +158,10 @@ public class Hecl extends MIDlet {
 				new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
 	    interp.commands.put("exit",
 				new GUICmdFacade(GUI.EXITCMD, cmds));
+//#ifdef sms
+	    interp.commands.put("sms",
+				new GUICmdFacade(GUI.SMSCMD, cmds));
+//#endif
 
 	    f.append("\nOK - executing");
 	    runScript(script.toString());

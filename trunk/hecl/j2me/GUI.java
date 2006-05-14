@@ -1,4 +1,4 @@
-/* Copyright 2005 David N. Welton
+/* Copyright 2005-2006 David N. Welton
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,11 @@ import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
+//#ifdef sms
+import javax.microedition.io.Connector;
+import javax.wireless.messaging.MessageConnection;
+import javax.wireless.messaging.TextMessage;
+//#endif
 
 /**
  * <code>GUI</code> implements the high level lcdui commands.
@@ -75,6 +80,10 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
     public static final int NOSCREENCMD = 16;
     public static final int SCREENAPPENDCMD = 17;
     public static final int EXITCMD = 18;
+
+//#ifdef sms
+    public static final int SMSCMD = 20;
+//#endif
 
     /* Commands are run in a new thread so that if they block, they
      * don't block the whole system. */
@@ -442,6 +451,22 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	    case EXITCMD:
 		midlet.exitApp();
 		break;
+
+//#ifdef sms
+	    case SMSCMD:
+		try {
+		    MessageConnection mc = (MessageConnection)
+			Connector.open("sms://" + argv[1].toString());
+		    TextMessage msg = (TextMessage)
+			mc.newMessage(MessageConnection.TEXT_MESSAGE);
+		    msg.setPayloadText(argv[2].toString());
+		    mc.send(msg);
+		    mc.close();
+		} catch (Exception e) {
+		    System.err.println(e.toString());
+		}
+		break;
+//#endif
 	}
 	interp.setResult(res);
 
