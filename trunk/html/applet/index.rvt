@@ -53,9 +53,9 @@ function runHecl() {
 	    <form name="sf1" action="">
 	      <p>
 		<textarea name="script1" style="width: 350px; height: 300px;%">set i 0
-while {< &i 10} {
+while {< $i 10} {
     puts "i is $i"
-    incr &i
+    incr $i
 }</textarea><br/>
 	      </p>
 	    </form>
@@ -94,7 +94,7 @@ while {< &i 10} {
 		<textarea name="script2" cols="80" style="height: 450px;">set main [textbox label Hecl code {
 } len 200 text "A sample textbox"];
 
-setcurrent &main;
+setcurrent $main;
 </textarea><br/>
 	    </form>
 
