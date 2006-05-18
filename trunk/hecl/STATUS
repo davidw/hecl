@@ -3,6 +3,15 @@ Hecl STATUS File
 
 Open issues:
 
+* varargs variable name.  Proposals: *?somename?, args, varargs
+
+* String command names... slen vs strlen vs string length.
+
+* ant condition/else is only available in newer ant systems - find an
+  alternative.
+
+* Namespace/OO delimiters.
+
 Wolfgang writes:
 
 - syntax:
