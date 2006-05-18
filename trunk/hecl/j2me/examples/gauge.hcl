@@ -4,9 +4,9 @@
 proc cycle {} {
     global g
     global si
-    for {set i 0} {< &i 11} {incr &i} {
-	setprop &g val $i
-	setprop &si text $i
+    for {set i 0} {< $i 11} {incr $i} {
+	setprop $g val $i
+	setprop $si text $i
     }
 }
 
@@ -15,8 +15,8 @@ set f [form label "Gauge Example" code {
     set g [gauge label Foo maxval 10 val 0]
     cmd label "move" code cycle
     cmd label "reset" code {
-	setprop &g val 0
-	setprop &si text 0
+	setprop $g val 0
+	setprop $si text 0
     }
 }]
 setcurrent $f;

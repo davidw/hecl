@@ -129,7 +129,7 @@ proc viewsource {} {
     set code [intro proccode "make$screen"]
     set tb [textbox label "Source for $screen example" text $code code {
 	eval [makebackbutton $lbox]
-    }]
+    } len 800]
     setcurrent $tb
 }
 

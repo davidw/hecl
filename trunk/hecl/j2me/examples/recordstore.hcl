@@ -7,14 +7,14 @@ proc saveit {} {
     global existing
     global rsn
     global tf
-    rs_put [getprop &rsn text] [getprop &tf text]
-    setprop &existing text [rs_list]
+    rs_put [getprop $rsn text] [getprop $tf text]
+    setprop $existing text [rs_list]
 }
 
 proc getit {} {
     global rsn
     global tf
-    setprop &tf text [rs_get [getprop &rsn text]]
+    setprop $tf text [rs_get [getprop $rsn text]]
 }
 
 set f [form label SaveIt code {
@@ -24,4 +24,4 @@ set f [form label SaveIt code {
     cmd label "Save it" code saveit
     cmd label "Fetch it" code getit
 }]
-setcurrent &f
+setcurrent $f

@@ -28,12 +28,6 @@ import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
-//#ifdef sms
-import javax.microedition.io.Connector;
-import javax.wireless.messaging.MessageConnection;
-import javax.wireless.messaging.TextMessage;
-//#endif
-
 /**
  * <code>GUI</code> implements the high level lcdui commands.
  *
@@ -58,6 +52,11 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
     private static int uniqueid = 0;
 
     private static Screen screen;
+
+//#ifdef sms
+    private static boolean smsloaded = false;
+    private static boolean smspresent = false;
+//#endif
 
     /* Command types  */
     public static final int ALERTCMD = 0;
@@ -455,15 +454,10 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 //#ifdef sms
 	    case SMSCMD:
 		try {
-		    MessageConnection mc = (MessageConnection)
-			Connector.open("sms://" + argv[1].toString());
-		    TextMessage msg = (TextMessage)
-			mc.newMessage(MessageConnection.TEXT_MESSAGE);
-		    msg.setPayloadText(argv[2].toString());
-		    mc.send(msg);
-		    mc.close();
-		} catch (Exception e) {
-		    System.err.println(e.toString());
+		    Class.forName("javax.wireless.messaging.MessageConnection");
+		    SMS.send("sms://" + argv[1].toString(), argv[2].toString());
+		} catch (ClassNotFoundException cnf) {
+		    throw new HeclException("This phone doesn't support Java SMS!");
 		}
 		break;
 //#endif

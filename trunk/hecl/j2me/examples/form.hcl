@@ -4,7 +4,7 @@
 
 proc newitem {type} {
     global tf
-    $type label [getprop &tf text]
+    $type label [getprop $tf text]
 }
 
 set f [form label "Form Example" code {
@@ -17,4 +17,4 @@ set f [form label "Form Example" code {
     cmd label exit type exit code exit
 }]
 
-setcurrent &f
+setcurrent $f

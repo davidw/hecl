@@ -1,3 +1,15 @@
+2006-05-19  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/examples/: Removed & in favor of $.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Added rs_size and
+	rs_sizeavail commands.
+
+2006-05-18  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/SMS.java: Apparently, if we hive the SMS stuff off into a
+	class unto itself, it will load ok.
+
 2006-05-14  David N. Welton  <davidw@dedasys.com>
 
 	* files/org/hecl/files/HeclFile.java: Make sure that filetolist

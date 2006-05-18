@@ -4,8 +4,8 @@
 
 proc DoAlert {} {
     global tf
-    set txt [getprop &tf text]
-    setcurrent [alert label "Alert Example" text &txt]
+    set txt [getprop $tf text]
+    setcurrent [alert label "Alert Example" text $txt]
 }
 
 set f [form label "Alert Example" code {
@@ -13,4 +13,4 @@ set f [form label "Alert Example" code {
     cmd label "Run alert" code DoAlert
 }]
 
-setcurrent &f
+setcurrent $f

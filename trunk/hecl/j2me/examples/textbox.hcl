@@ -10,4 +10,4 @@ blah blah" code {
     cmd label "Exit" code exit
 }]
 
-setcurrent &tb
+setcurrent $tb
