@@ -69,6 +69,7 @@ public class HeclRecordStoreCmds extends Operator {
 		    data = rs.getRecord(1); /* The first one. */
 		    rs.closeRecordStore();
 		} catch (Exception e) {
+		    /* FIXME - we ought to do something a little bit more clever here. */
 		    throw new HeclException(e.toString());
 		}
 		return new StringThing(new String(data));

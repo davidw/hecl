@@ -8,7 +8,13 @@ proc saveit {} {
     global rsn
     global tf
     rs_put [getprop $rsn text] [getprop $tf text]
-    setprop $existing text [rs_list]
+
+    set lst {}
+    foreach k [rs_list] {
+	lappend $lst "Name: $k Size: [rs_size $k] Available: [rs_sizeavail $k]"
+    }
+
+    setprop $existing text [join $lst "\n"]
 }
 
 proc getit {} {
@@ -24,4 +30,5 @@ set f [form label SaveIt code {
     cmd label "Save it" code saveit
     cmd label "Fetch it" code getit
 }]
+
 setcurrent $f
