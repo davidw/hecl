@@ -1,5 +1,8 @@
 2006-05-19  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/StringCmds.java: Added latest version from
+	Wolfgang.
+
 	* j2me/examples/recordstore.hcl: Added size and sizeavail commands
 	to the example.
 
