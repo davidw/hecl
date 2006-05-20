@@ -11,8 +11,13 @@
 	  list of arguments that the new command will take and make
 	  available as local variables within the
 	  <code class="option"><em class="replaceable"><code>body</code></em></code>, which is
-	  the code executed every time the command is called.
-	</p></div><div class="refsect1" lang="en"><a name="id2514290"></a><h2>Example</h2><pre class="programlisting">
+	  the code executed every time the command is called.  If the
+	  last element of the argument list is
+	  </p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/important.png"></td><th align="left">Important</th></tr><tr><td align="left" valign="top">args</td></tr></table></div><p>, the variable
+	  <code class="varname">args</code> is a list that is filled with
+	  any arguments (including 0) above and beyond the number of
+	  arguments specified for the proc.
+	</p></div><div class="refsect1" lang="en"><a name="id2514301"></a><h2>Example</h2><pre class="programlisting">
 proc addlist {lst} {
     set res 0
     foreach e $lst {
@@ -22,4 +27,11 @@ proc addlist {lst} {
 }
 
 puts [addlist {1 2 3 4 5}]
-	  </pre><p>Produces:</p><pre class="screen">15</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="or.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="puts.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">or </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> puts</td></tr></table></div></body></html>
+	  </pre><p>Produces:</p><pre class="screen">15</pre></div><div class="refsect1" lang="en"><a name="id2514324"></a><h2>args Example</h2><pre class="programlisting">
+proc showargs {args} {
+    puts "Args: $args"
+}
+showargs
+showargs x y z
+	</pre><p>Produces:</p><pre class="screen">Args: 
+Args: x y z</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="or.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="puts.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">or </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> puts</td></tr></table></div></body></html>

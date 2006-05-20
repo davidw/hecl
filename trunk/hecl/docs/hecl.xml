@@ -474,7 +474,7 @@ puts [* 6 7]
 puts [/ 100 5]
 	  </programlisting>
 	  <para>Produces:</para>
-	  <screen>2
+	  <screen>4
 6
 9
 42
@@ -1518,7 +1518,12 @@ hecl> or 1 2 4
 	  list of arguments that the new command will take and make
 	  available as local variables within the
 	  <option><replaceable>body</replaceable></option>, which is
-	  the code executed every time the command is called.
+	  the code executed every time the command is called.  If the
+	  last element of the argument list is
+	  <important>args</important>, the variable
+	  <varname>args</varname> is a list that is filled with
+	  any arguments (including 0) above and beyond the number of
+	  arguments specified for the proc.
 	</para>
       </refsect1>
       <refsect1>
@@ -1536,6 +1541,19 @@ puts [addlist {1 2 3 4 5}]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>15</screen>
+      </refsect1>
+      <refsect1>
+	<title>args Example</title>
+	  <programlisting>
+proc showargs {args} {
+    puts "Args: $args"
+}
+showargs
+showargs x y z
+	</programlisting>
+	<para>Produces:</para>
+	<screen>Args: 
+Args: x y z</screen>
       </refsect1>
     </refentry>
 

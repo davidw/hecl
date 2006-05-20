@@ -1,3 +1,12 @@
+2006-05-20  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: 2 + 2 equals 4, not 2.  Thanks to Alexandre
+	Ferrieux for catching this buglet.
+	(args): Documented args argument to procs.
+
+	* core/org/hecl/Proc.java: 'args' is the preferred choice of
+	discriminating Hecl hackers everywhere.
+
 2006-05-19  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/StringCmds.java: Added latest version from

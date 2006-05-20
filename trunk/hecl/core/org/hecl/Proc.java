@@ -40,7 +40,7 @@ class Proc implements Command {
         code = cmdcode;
     }
 
-    private static final String varargvarname = "varargs";
+    private static final String varargvarname = "args";
 
     public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Vector varnames = ListThing.get(vars);

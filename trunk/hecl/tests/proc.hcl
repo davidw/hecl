@@ -37,8 +37,8 @@ test rename-1 {
     set r
 } {fredfred}
 
-proc varargproc {a b varargs} {
-    return "$a $b $varargs"
+proc varargproc {a b args} {
+    return "$a $b $args"
 }
 
 test varargs-1 {
