@@ -1,3 +1,18 @@
+2006-05-23  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Try out the string commands with
+	'str___' style names as a compromise between short and succint and
+	descriptive.  Moved slen and sindex to strlen and strindex.
+
+2006-05-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmds.java: When accepting negative numbers as
+	list indexes, make sure that we don't walk off the end of an
+	index.
+
+	* core/org/hecl/ListCmds.java: Make sure to set the value of the
+	Thing that contains the list.
+
 2006-05-20  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: 2 + 2 equals 4, not 2.  Thanks to Alexandre

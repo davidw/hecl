@@ -130,7 +130,7 @@ public class ListThing implements RealThing {
 
 	/* If the thing is slated for copying, it's elements should be
 	 * as well. */
-	if (thing.copy) {
+ 	if (thing.copy) {
 	    for (Enumeration e = getlist.val.elements(); e.hasMoreElements();) {
 		Thing te = (Thing) e.nextElement();
 		te.copy = true;

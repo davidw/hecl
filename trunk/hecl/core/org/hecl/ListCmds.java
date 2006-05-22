@@ -66,6 +66,9 @@ class ListCmds extends Operator {
 		/* Count backwards from the end of the list. */
 		if (idx < 0) {
 		    idx += list.size();
+		    if (idx < 0) {
+			idx = 0;
+		    }
 		}
 		interp.setResult((Thing)list.elementAt(idx));
 	    }
@@ -76,8 +79,13 @@ class ListCmds extends Operator {
 	    idx = NumberThing.asNumber(argv[2]).intValue();
 	    if (idx < 0) {
 		idx += list.size();
+		if (idx < 0) {
+		    idx = 0;
+		}
 	    }
 	    list.insertElementAt(argv[3], idx);
+
+	    argv[1].setVal(new ListThing(list));
 	    interp.setResult(argv[1]);
 	    break;
 
@@ -86,12 +94,17 @@ class ListCmds extends Operator {
 	    idx = NumberThing.asNumber(argv[2]).intValue();
 	    if (idx < 0) {
 		idx += list.size();
+		if (idx < 0) {
+		    idx = 0;
+		}
 	    }
 	    if (argv.length < 4) {
 		list.removeElementAt(idx);
 	    } else {
 		list.setElementAt(argv[3], idx);
 	    }
+
+	    argv[1].setVal(new ListThing(list));
 	    interp.setResult(argv[1]);
 	    break;
 
@@ -122,6 +135,7 @@ class ListCmds extends Operator {
 	    for (int i = 2; i < argv.length; i++) {
 		list.addElement(argv[i]);
 	    }
+	    argv[1].setVal(new ListThing(list));
 	    interp.setResult(argv[1]);
 	    break;
 
@@ -224,6 +238,7 @@ class ListCmds extends Operator {
         cmdtable.put("llen", new ListCmds(LLEN,1,1));
         cmdtable.put("lappend", new ListCmds(LAPPEND,1,-1));
         cmdtable.put("lindex", new ListCmds(LINDEX,2,2));
+        cmdtable.put("linsert", new ListCmds(LINSERT,3,3));
         cmdtable.put("lset", new ListCmds(LSET,2,3));
         cmdtable.put("lrange", new ListCmds(LRANGE,3,3));
         cmdtable.put("filter", new ListCmds(FILTER,2,3));

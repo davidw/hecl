@@ -47,3 +47,8 @@ test list-8 {
     touchlist
     touchlist
 } {foo}
+
+test list-9 {
+    set foo {a b c d}
+    lindex $foo -10
+} {a}

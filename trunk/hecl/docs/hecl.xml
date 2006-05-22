@@ -1145,7 +1145,7 @@ puts "foo is now $foo"
  puts [sort [intro commands]]
 	  </programlisting>
 	  <para>Produces: (depending on the available commands)</para>
-	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set sindex slen sort source split time true upeval while</screen>
+	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set strindex strlen sort source split time true upeval while</screen>
       </refsect1>
     </refentry>
 
@@ -1692,15 +1692,15 @@ foo is bar and bee is bop
       </refsect1>
     </refentry>
 
-     <!-- sindex -->
-     <refentry id="sindex">
+     <!-- strindex -->
+     <refentry id="strindex">
       <refnamediv>
-	<refname>sindex</refname>
+	<refname>strindex</refname>
 	<refpurpose>Return the index'th character of string.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
 	<cmdsynopsis>
-	  <command>sindex</command>
+	  <command>strindex</command>
 	  <arg choice="req"><replaceable>string</replaceable></arg>
 	  <arg choice="req"><replaceable>index</replaceable></arg>
 	</cmdsynopsis>
@@ -1708,7 +1708,7 @@ foo is bar and bee is bop
       <refsect1>
 	<title>Description</title>
 	<para>
-	  The <command>sindex</command> command returns the
+	  The <command>strindex</command> command returns the
 	  <option><replaceable>index</replaceable></option>'th
 	  character of <option><replaceable>string</replaceable></option>.
 	</para>
@@ -1716,8 +1716,8 @@ foo is bar and bee is bop
       <refsect1>
 	<title>Example</title>
 	  <programlisting>
-puts [sindex "Hello, world" 0]
-puts [sindex "Hello, world" 11]
+puts [strindex "Hello, world" 0]
+puts [strindex "Hello, world" 11]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>H
@@ -1725,29 +1725,29 @@ d</screen>
       </refsect1>
     </refentry>
 
-    <!-- slen -->
-    <refentry id="slen">
+    <!-- strlen -->
+    <refentry id="strlen">
       <refnamediv>
-	<refname>slen</refname>
+	<refname>strlen</refname>
 	<refpurpose>String length.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
 	<cmdsynopsis>
-	  <command>slen</command>
+	  <command>strlen</command>
 	  <arg choice="req"><replaceable>string</replaceable></arg>
 	</cmdsynopsis>
       </refsynopsisdiv>
       <refsect1>
 	<title>Description</title>
 	<para>
-	  The <command>slen</command> returns the length of
+	  The <command>strlen</command> returns the length of
 	  <option><replaceable>string</replaceable></option>.
 	</para>
       </refsect1>
       <refsect1>
 	<title>Example</title>
 	  <programlisting>
-puts [slen "abcdefghijklmnopqrstuvwxyz"]
+puts [strlen "abcdefghijklmnopqrstuvwxyz"]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>26</screen>
