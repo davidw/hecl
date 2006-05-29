@@ -1692,68 +1692,6 @@ foo is bar and bee is bop
       </refsect1>
     </refentry>
 
-     <!-- strindex -->
-     <refentry id="strindex">
-      <refnamediv>
-	<refname>strindex</refname>
-	<refpurpose>Return the index'th character of string.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-	<cmdsynopsis>
-	  <command>strindex</command>
-	  <arg choice="req"><replaceable>string</replaceable></arg>
-	  <arg choice="req"><replaceable>index</replaceable></arg>
-	</cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1>
-	<title>Description</title>
-	<para>
-	  The <command>strindex</command> command returns the
-	  <option><replaceable>index</replaceable></option>'th
-	  character of <option><replaceable>string</replaceable></option>.
-	</para>
-      </refsect1>
-      <refsect1>
-	<title>Example</title>
-	  <programlisting>
-puts [strindex "Hello, world" 0]
-puts [strindex "Hello, world" 11]
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>H
-d</screen>
-      </refsect1>
-    </refentry>
-
-    <!-- strlen -->
-    <refentry id="strlen">
-      <refnamediv>
-	<refname>strlen</refname>
-	<refpurpose>String length.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-	<cmdsynopsis>
-	  <command>strlen</command>
-	  <arg choice="req"><replaceable>string</replaceable></arg>
-	</cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1>
-	<title>Description</title>
-	<para>
-	  The <command>strlen</command> returns the length of
-	  <option><replaceable>string</replaceable></option>.
-	</para>
-      </refsect1>
-      <refsect1>
-	<title>Example</title>
-	  <programlisting>
-puts [strlen "abcdefghijklmnopqrstuvwxyz"]
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>26</screen>
-      </refsect1>
-    </refentry>
-
      <!-- sort -->
      <refentry id="sort">
       <refnamediv>
@@ -1818,6 +1756,68 @@ puts [split "aaaxbbbycccxyddd" "xy"]
 	  <screen>aaa bbb ccc
 aaa bbb ccc
 aaaxbbbyccc ddd</screen>
+      </refsect1>
+    </refentry>
+
+     <!-- strindex -->
+     <refentry id="strindex">
+      <refnamediv>
+	<refname>strindex</refname>
+	<refpurpose>Return the index'th character of string.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strindex</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="req"><replaceable>index</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strindex</command> command returns the
+	  <option><replaceable>index</replaceable></option>'th
+	  character of <option><replaceable>string</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [strindex "Hello, world" 0]
+puts [strindex "Hello, world" 11]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>H
+d</screen>
+      </refsect1>
+    </refentry>
+
+    <!-- strlen -->
+    <refentry id="strlen">
+      <refnamediv>
+	<refname>strlen</refname>
+	<refpurpose>String length.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strlen</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strlen</command> returns the length of
+	  <option><replaceable>string</replaceable></option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [strlen "abcdefghijklmnopqrstuvwxyz"]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>26</screen>
       </refsect1>
     </refentry>
 
