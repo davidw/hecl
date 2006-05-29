@@ -1,3 +1,9 @@
+2006-05-29  David N. Welton  <davidw@dedasys.com>
+
+	* docs/sindex.html: Removed.
+
+	* docs/slen.html: Removed - string commands have new names.
+
 2006-05-23  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/StringCmds.java: Try out the string commands with

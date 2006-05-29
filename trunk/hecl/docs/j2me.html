@@ -74,7 +74,7 @@
     set i [slen $string]
     incr $i -1
     while {&gt; $i -1} {
-	set c [strindex $string $i]
+	set c [sindex $string $i]
 	append $newstring $c
 	incr $i -1
     }
