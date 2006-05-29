@@ -5,6 +5,8 @@ Open issues:
 
 * Finalize string command names, write tests, write documentation.
 
+* Document sms command.
+
 * ant condition/else is only available in newer ant systems - find an
   alternative.
 
