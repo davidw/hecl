@@ -1,5 +1,8 @@
 2006-05-29  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Moved strindex and strlen to the proper place in
+	terms of alphabetical ordering.
+
 	* docs/sindex.html: Removed.
 
 	* docs/slen.html: Removed - string commands have new names.
