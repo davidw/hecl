@@ -136,6 +136,7 @@ public class Interp {
      *                if an error occurs.
      */
     public Thing eval(Thing in) throws HeclException {
+	result = null;
 	CodeThing.get(this, in).run(this);
 	return result;
     }
@@ -428,17 +429,18 @@ public class Interp {
      * @param newresult a <code>String</code> value
      */
     public void setResult(String newresult) {
+	if(newresult == null)
+	    newresult = "";
 	result = new Thing(newresult);
     }
 
     /**
-     * <code>setResult</code> sets the interpreter result of the most recent
-     * command.
+     * <code>setResult</code> sets the interpreter result to the specified value.
      *
-     * @param newresult an <code>int</code> value
+     * @param newresult a <code>long</code> value
      */
-    public void setResult(int newresult) {
-	result = IntThing.create(newresult);
+    public void setResult(long newresult) {
+	result = LongThing.create(newresult);
     }
 
     /**

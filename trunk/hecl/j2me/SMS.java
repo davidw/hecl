@@ -13,9 +13,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+//#ifdef sms
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
+//#endif
 
 import org.hecl.HeclException;
 
@@ -30,9 +32,7 @@ public class SMS {
     public static void send (String num, String msgtxt) throws HeclException {
  //#ifdef sms
 	try {
-
-	    MessageConnection mc = (MessageConnection)
-		Connector.open(num);
+	    MessageConnection mc = (MessageConnection) Connector.open(num);
 	    TextMessage msg = (TextMessage)
 		mc.newMessage(MessageConnection.TEXT_MESSAGE);
 	    msg.setPayloadText(msgtxt);
@@ -41,8 +41,8 @@ public class SMS {
 	} catch (Exception e) {
 	    throw new HeclException(e.toString());
 	}
-    }
 //#else
-    throw new HeclException("sms support not enabled!");
+	throw new HeclException("sms support not enabled!");
 //#endif
+    }
 }

@@ -35,6 +35,11 @@
 
   <property name="preverify" value="true"/>
 
+  <!-- Control usage of J2SE 1.5 features, default: true -->
+  <property name="j2se.use15" value="true"/>
+  <!--<property name="j2se.use15" value="false"/>-->
+  <!--<property name="j2se.use15" value="true"/>-->
+
   <!-- *************************************************** -->
   <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
   <!--
@@ -78,7 +83,8 @@
 
   <!--Enables or disables the Wireless Messaging API (WMA). 	2.0+ -->
   <!-- default: false -->
-  <property name="wtk.wma.enabled" value="1.1"/>
+  <property name="wtk.wma.enabled" value="false"/>
+  <!--<property name="wtk.wma.enabled" value="1.1"/>-->
 
   <!-- nables or disables the J2ME Web Services API (J2MEWS). 	2.1+ -->
   <!-- default: false -->
@@ -112,6 +118,13 @@
   <property name="buildprefix" value="build"/>
   <property name="relprefix" value="jars"/>
 
+  <condition property="sms" value="sms">
+    <or>
+      <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
+      <equals arg1="2.0" arg2="${wtk.wma.enabled}"/>
+    </or>
+  </condition>
+
   <!-- J2SE ************************************** -->
   <!-- properties for the build base directorries  -->
   <condition property="javamail.complete">
@@ -121,22 +134,19 @@
     </and>
   </condition>
 
-  <condition property="j2se.java15">
-    <equals arg1="1.5" arg2="${ant.java.version}"/>
+  <condition property="j2se.define.java15" value="j2se.java15" else="no.j2se.java15">
+    <and>
+      <equals trim="true" casesensitive="false"
+        arg1="1.5" arg2="${ant.java.version}"/>
+      <istrue value="${j2se.use15}"/>
+    </and>
   </condition>
 
-  <condition property="sms" value="sms">
-    <or>
-      <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
-      <equals arg1="2.0" arg2="${wtk.wma.enabled}"/>
-    </or>
-  </condition>
-
-  <property name="j2se.defines" value="ant:j2se"/>
-  <property name="j2me.defines" value="${sms}"/>
+  <property name="j2se.defines" value="ant:j2se,${j2se.define.java15}"/>
 
   <target name="echo">
-    <echo message="Java version: ${ant.java.version}, defines=--${j2se.defines}--"/>
+    <echo message="Java version: ${ant.java.version}, defines:'${j2se.defines}'"/>
+    <echo message="j2se.use15: ${j2se.use15}"/>
     <echo message="WTK Home: ${wtk.home}"/>
   </target>
 
@@ -156,6 +166,8 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
+  <property name="j2me.defines" value="${sms}"/>
+
   <property name="j2me.build" value="${buildprefix}/j2me/final/${wtk.cldc.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/${wtk.cldc.version}"/>
   <property name="j2me.rel" value="${relprefix}/${wtk.cldc.version}"/>
