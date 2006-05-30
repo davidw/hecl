@@ -200,7 +200,7 @@ class StringCmds extends Operator {
 	      int to = str.length()-1;
 	      while(to >= 0 && 0 <= trimchars.indexOf(str.charAt(to)))
 		  --to;
-	      return new StringThing(to >= 0 ? str.substring(0,to) : "");
+	      return new StringThing(to >= 0 ? str.substring(0,to+1) : "");
 	  }
 	    
 	  default:
@@ -267,7 +267,7 @@ class StringCmds extends Operator {
 	cmdtable.put("strcmp", new StringCmds(STRCMP,2,2));
 	cmdtable.put("strfind", new StringCmds(STRFIND,2,3));
 	cmdtable.put("strindex", new StringCmds(STRINDEX,2,2));
-	cmdtable.put("strlast", new StringCmds(STRLAST,2,2));
+	cmdtable.put("strlast", new StringCmds(STRLAST,2,3));
 	cmdtable.put("strlen", new StringCmds(STRLEN,1,1));
 	cmdtable.put("strrange", new StringCmds(STRRANGE,3,3));
 	cmdtable.put("strrep", new StringCmds(STRREP,2,2));

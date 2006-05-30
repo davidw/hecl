@@ -1,3 +1,12 @@
+2006-05-30  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* tests/string.hcl: Added some tests.
+
+	* core/org/hecl/StringCmds.java: Added trim/trimr/triml, corrected
+	bugs in strlast.
+
+	* core/org/hecl/Parse.java: Accepts '\r'(CR) --> 0x0d in string
+
 2006-05-29  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Moved strindex and strlen to the proper place in

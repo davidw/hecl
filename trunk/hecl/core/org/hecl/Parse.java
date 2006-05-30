@@ -548,6 +548,9 @@ public class Parse {
 		}
 	    case '\n':
 		return true;
+	  case 'r':
+	    appendToCurrent((char)0x0d);
+	    break;
 	    case 'n':
 		appendToCurrent(eol[0]);
 //#ifdef ant:j2se
