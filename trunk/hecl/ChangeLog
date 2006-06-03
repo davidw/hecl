@@ -1,5 +1,12 @@
 2006-06-03  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/StringCmds.java: String trim commands now take a
+	list of strings to trim from left, right, or both sides.  strtrim
+	by default uses the String.trim method in Java.
+
+	* tests/string.hcl: Make sure that string tests pass according to
+	new trim commands.
+
 	* files/org/hecl/files/HeclFile.java: Transform sourced files
 	using the system encoding after reading in 'raw' bytes.
 

@@ -73,8 +73,8 @@ test string-upper-1 {
 } ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ€0123456789
 
 test string-trim-1 {
-     strtrim abcdefg ag
-} bcdef
+     strtrim abcdefga a
+} bcdefg
 
 test string-trim-2 {
      strtrim abcdefg x
@@ -85,7 +85,7 @@ test string-trim-3 {
 } abcdefg
 
 test string-trimr-1 {
-     strtrimr abcdefg ag
+     strtrimr abcdefg g
 } abcdef
 
 test string-trimr-2 {
@@ -94,7 +94,7 @@ test string-trimr-2 {
 
 test string-trimr-3 {
      strtrimr "\t\n\r abcdefg \n\t\r"
-} "\t\n abcdef"
+} "\t\n\r abcdefg"
 
 test string-find-1 {
      strfind b abcdefg

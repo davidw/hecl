@@ -46,173 +46,173 @@ class ListCmds extends Operator {
 	Vector result;
 
 	switch (cmd) {
-	  case LIST:
-	    result = new Vector();
-	    for (int i = 1; i < argv.length; i++) {
-		result.addElement(argv[i]);
-	    }
-	    return new ListThing(result);
+	    case LIST:
+		result = new Vector();
+		for (int i = 1; i < argv.length; i++) {
+		    result.addElement(argv[i]);
+		}
+		return new ListThing(result);
 
-	  case LLEN:
-	    list = ListThing.get(argv[1]);
-	    return new IntThing(list.size());
+	    case LLEN:
+		list = ListThing.get(argv[1]);
+		return new IntThing(list.size());
 
-	  case LINDEX:
-	    list = ListThing.get(argv[1]);
-	    idx = NumberThing.asNumber(argv[2]).intValue();
-	    if (idx >= list.size()) {
-		interp.setResult("");
-	    } else {
-		/* Count backwards from the end of the list. */
+	    case LINDEX:
+		list = ListThing.get(argv[1]);
+		idx = NumberThing.asNumber(argv[2]).intValue();
+		if (idx >= list.size()) {
+		    interp.setResult("");
+		} else {
+		    /* Count backwards from the end of the list. */
+		    if (idx < 0) {
+			idx += list.size();
+			if (idx < 0) {
+			    idx = 0;
+			}
+		    }
+		    interp.setResult((Thing)list.elementAt(idx));
+		}
+		break;
+
+	    case LINSERT:
+		list = ListThing.get(argv[1]);
+		idx = NumberThing.asNumber(argv[2]).intValue();
 		if (idx < 0) {
 		    idx += list.size();
 		    if (idx < 0) {
 			idx = 0;
 		    }
 		}
-		interp.setResult((Thing)list.elementAt(idx));
-	    }
-	    break;
+		list.insertElementAt(argv[3], idx);
 
-	  case LINSERT:
-	    list = ListThing.get(argv[1]);
-	    idx = NumberThing.asNumber(argv[2]).intValue();
-	    if (idx < 0) {
-		idx += list.size();
+		argv[1].setVal(new ListThing(list));
+		interp.setResult(argv[1]);
+		break;
+
+	    case LSET:
+		list = ListThing.get(argv[1]);
+		idx = NumberThing.asNumber(argv[2]).intValue();
 		if (idx < 0) {
-		    idx = 0;
-		}
-	    }
-	    list.insertElementAt(argv[3], idx);
-
-	    argv[1].setVal(new ListThing(list));
-	    interp.setResult(argv[1]);
-	    break;
-
-	  case LSET:
-	    list = ListThing.get(argv[1]);
-	    idx = NumberThing.asNumber(argv[2]).intValue();
-	    if (idx < 0) {
-		idx += list.size();
-		if (idx < 0) {
-		    idx = 0;
-		}
-	    }
-	    if (argv.length < 4) {
-		list.removeElementAt(idx);
-	    } else {
-		list.setElementAt(argv[3], idx);
-	    }
-
-	    argv[1].setVal(new ListThing(list));
-	    interp.setResult(argv[1]);
-	    break;
-
-	  case LRANGE:
-	    list = ListThing.get(argv[1]);
-	    int first = NumberThing.asNumber(argv[2]).intValue();
-	    last = NumberThing.asNumber(argv[3]).intValue();
-	    int ls = list.size();
-
-	    if (first < 0) {
-		first += ls;
-	    }
-	    if (last < 0) {
-		last += ls;
-	    }
-
-	    if (last <= first || last >= ls || first >= ls) {
-		interp.setResult("");
-	    }
-	    Vector resultv = new Vector();
-	    for (int i = first; i <= last; i++) {
-		resultv.addElement(list.elementAt(i));
-	    }
-	    return new ListThing(resultv);
-
-	  case LAPPEND:
-	    list = ListThing.get(argv[1]);
-	    for (int i = 2; i < argv.length; i++) {
-		list.addElement(argv[i]);
-	    }
-	    argv[1].setVal(new ListThing(list));
-	    interp.setResult(argv[1]);
-	    break;
-
-	  case FILTER:
-	  case SEARCH:
-	    list = ListThing.get(argv[1]);
-	    Vector results = new Vector();
-	    String varname = argv[2].toString();
-	    int sz = list.size();
-	    Thing val;
-	    boolean brk = false;
-
-	    if (cmd == SEARCH) {
-		brk = true;
-	    }
-
-	    for (int i = 0; i < sz; i++) {
-		val = (Thing) list.elementAt(i);
-		val.copy = true; /* Make sure that the original value
-				  * doesn't get fiddled with. */
-		interp.setVar(varname, val);
-		interp.eval(argv[3]);
-
-		if (IntThing.get(interp.getResult()) != 0) {
-		    results.addElement(val);
-		    if (brk == true) {
-			break;
+		    idx += list.size();
+		    if (idx < 0) {
+			idx = 0;
 		    }
 		}
-	    }
-	    return new ListThing(results);
-
-	  case JOIN:
-	    list = ListThing.get(argv[1]);
-	    StringBuffer strres = new StringBuffer("");
-	    boolean firstone = true;
-	    String joinstr = null;
-	    if (argv.length > 2) {
-		joinstr = argv[2].toString();
-	    } else {
-		joinstr = " ";
-	    }
-
-	    for (Enumeration e = list.elements(); e.hasMoreElements();) {
-		if (firstone == false) {
-		    strres.append(joinstr);
+		if (argv.length < 4) {
+		    list.removeElementAt(idx);
 		} else {
-		    firstone = false;
+		    list.setElementAt(argv[3], idx);
 		}
-		strres.append(((Thing) e.nextElement()).toString());
-	    }
-	    return new StringThing(strres);
 
-	  case SPLIT:
-	    result = new Vector();
-	    String str = argv[1].toString();
-	    String splitstr = null;
-	    if (argv.length > 2) {
-		splitstr = argv[2].toString();
-	    } else {
-		/* By default, we split on spaces. */
-		splitstr = " ";
-	    }
+		argv[1].setVal(new ListThing(list));
+		interp.setResult(argv[1]);
+		break;
 
-	    idx = str.indexOf(splitstr);
-	    while (idx >= 0) {
-		result.addElement(new Thing(str.substring(last, idx)));
-		last = idx + splitstr.length();
-		idx = str.indexOf(splitstr, last);
-	    }
-	    result.addElement(new Thing(str.substring(last, str.length())));
-	    interp.setResult(ListThing.create(result));
-	    break;
-	  default:
-	    throw new HeclException("Unknown list command '"
-				    + argv[0].toString() + "' with code '"
-				    + cmd + "'.");
+	    case LRANGE:
+		list = ListThing.get(argv[1]);
+		int first = NumberThing.asNumber(argv[2]).intValue();
+		last = NumberThing.asNumber(argv[3]).intValue();
+		int ls = list.size();
+
+		if (first < 0) {
+		    first += ls;
+		}
+		if (last < 0) {
+		    last += ls;
+		}
+
+		if (last <= first || last >= ls || first >= ls) {
+		    interp.setResult("");
+		}
+		Vector resultv = new Vector();
+		for (int i = first; i <= last; i++) {
+		    resultv.addElement(list.elementAt(i));
+		}
+		return new ListThing(resultv);
+
+	    case LAPPEND:
+		list = ListThing.get(argv[1]);
+		for (int i = 2; i < argv.length; i++) {
+		    list.addElement(argv[i]);
+		}
+		argv[1].setVal(new ListThing(list));
+		interp.setResult(argv[1]);
+		break;
+
+	    case FILTER:
+	    case SEARCH:
+		list = ListThing.get(argv[1]);
+		Vector results = new Vector();
+		String varname = argv[2].toString();
+		int sz = list.size();
+		Thing val;
+		boolean brk = false;
+
+		if (cmd == SEARCH) {
+		    brk = true;
+		}
+
+		for (int i = 0; i < sz; i++) {
+		    val = (Thing) list.elementAt(i);
+		    val.copy = true; /* Make sure that the original value
+				      * doesn't get fiddled with. */
+		    interp.setVar(varname, val);
+		    interp.eval(argv[3]);
+
+		    if (IntThing.get(interp.getResult()) != 0) {
+			results.addElement(val);
+			if (brk == true) {
+			    break;
+			}
+		    }
+		}
+		return new ListThing(results);
+
+	    case JOIN:
+		list = ListThing.get(argv[1]);
+		StringBuffer strres = new StringBuffer("");
+		boolean firstone = true;
+		String joinstr = null;
+		if (argv.length > 2) {
+		    joinstr = argv[2].toString();
+		} else {
+		    joinstr = " ";
+		}
+
+		for (Enumeration e = list.elements(); e.hasMoreElements();) {
+		    if (firstone == false) {
+			strres.append(joinstr);
+		    } else {
+			firstone = false;
+		    }
+		    strres.append(((Thing) e.nextElement()).toString());
+		}
+		return new StringThing(strres);
+
+	    case SPLIT:
+		result = new Vector();
+		String str = argv[1].toString();
+		String splitstr = null;
+		if (argv.length > 2) {
+		    splitstr = argv[2].toString();
+		} else {
+		    /* By default, we split on spaces. */
+		    splitstr = " ";
+		}
+
+		idx = str.indexOf(splitstr);
+		while (idx >= 0) {
+		    result.addElement(new Thing(str.substring(last, idx)));
+		    last = idx + splitstr.length();
+		    idx = str.indexOf(splitstr, last);
+		}
+		result.addElement(new Thing(str.substring(last, str.length())));
+		interp.setResult(ListThing.create(result));
+		break;
+	    default:
+		throw new HeclException("Unknown list command '"
+					+ argv[0].toString() + "' with code '"
+					+ cmd + "'.");
 	}
 	return null;
     }

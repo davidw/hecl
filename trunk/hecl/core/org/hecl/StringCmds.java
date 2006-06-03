@@ -16,6 +16,7 @@
 
 package org.hecl;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 import org.hecl.IntThing;
@@ -97,7 +98,6 @@ class StringCmds extends Operator {
 
 	    case STRINDEX:
 		if (str.length() <= IntThing.get(argv[2])) {
-		    System.out.println("av2 = " + IntThing.get(argv[2]));
 		    return new StringThing("");
 		} else {
 		    sb = new StringBuffer();
@@ -179,33 +179,47 @@ class StringCmds extends Operator {
 		return new StringThing(str.toUpperCase());
 
 	    case STRTRIM: {
-		String trimchars = argv.length >= 3 ? argv[2].toString() : deftrimchars;
-		int n = str.length();
-		int from = 0;
-		int to = n-1;
-		// Quite dumb algorithm, should use more elaborate technique...
-		while(from < n && 0 <= trimchars.indexOf(str.charAt(from)))
-		    ++from;
-		while(to >= from && 0 <= trimchars.indexOf(str.charAt(to)))
-		    --to;
-		return new StringThing(from <= to ? str.substring(from,to+1) : "");
+		String resstr;
+		Vector trimstrings = null;
+
+		if (argv.length == 3 ) {
+		    trimstrings = ListThing.get(argv[2]);
+		} else {
+		    /* We just use the native method. */
+		    return new StringThing(str.trim());
+		}
+
+		resstr = stripr(str, trimstrings);
+		resstr = stripl(resstr, trimstrings);
+		return new StringThing(resstr);
 	    }
 
 	    case STRTRIML: {
-		String trimchars = argv.length >= 3 ? argv[2].toString() : deftrimchars;
-		int n = str.length();
-		int from = 0;
-		while(from < n && 0 <= trimchars.indexOf(str.charAt(from)))
-		    ++from;
-		return new StringThing(from < n ? str.substring(from,n) : "");
+		String resstr;
+		Vector trimstrings = null;
+
+		if (argv.length == 3 ) {
+		    trimstrings = ListThing.get(argv[2]);
+		} else {
+		    trimstrings = defsplitstrings;
+		}
+
+		resstr = stripl(str, trimstrings);
+		return new StringThing(resstr);
 	    }
 
 	    case STRTRIMR: {
-		String trimchars = argv.length >= 3 ? argv[2].toString() : deftrimchars;
-		int to = str.length()-1;
-		while(to >= 0 && 0 <= trimchars.indexOf(str.charAt(to)))
-		    --to;
-		return new StringThing(to >= 0 ? str.substring(0,to+1) : "");
+		String resstr;
+		Vector trimstrings = null;
+
+		if (argv.length == 3 ) {
+		    trimstrings = ListThing.get(argv[2]);
+		} else {
+		    trimstrings = defsplitstrings;
+		}
+
+		resstr = stripr(str, trimstrings);
+		return new StringThing(resstr);
 	    }
 
 	    default:
@@ -231,6 +245,54 @@ class StringCmds extends Operator {
     }
 
     /**
+     * The <code>stripr</code> method takes a string, and a Vector of
+     * Hecl Things, and strips them off the left side of the string.
+     *
+     * @param str a <code>String</code> value
+     * @param trimstrings a <code>Vector</code> value
+     * @return a <code>String</code> value
+     */
+    protected static String stripl(String str, Vector trimstrings) {
+	String ts;
+	boolean modified = true;
+	while (modified) {
+	    modified = false;
+	    for (Enumeration e = trimstrings.elements(); e.hasMoreElements();) {
+		ts = ((Thing)e.nextElement()).toString();
+		if (str.startsWith(ts)) {
+		    str = str.substring(ts.length());
+		    modified = true;
+		}
+	    }
+	}
+	return str;
+    }
+
+    /**
+     * The <code>stripr</code> method takes a string, and a Vector of
+     * Hecl Things, and strips them off the right side of the string.
+     *
+     * @param str a <code>String</code> value
+     * @param trimstrings a <code>Vector</code> value
+     * @return a <code>String</code> value
+     */
+    protected static String stripr(String str, Vector trimstrings) {
+	String ts;
+	boolean modified = true;
+	while (modified) {
+	    modified = false;
+	    for (Enumeration e = trimstrings.elements(); e.hasMoreElements();) {
+		ts = ((Thing)e.nextElement()).toString();
+		if (str.endsWith(ts)) {
+		    str = str.substring(0, str.length() - ts.length());
+		    modified = true;
+		}
+	    }
+	}
+	return str;
+    }
+
+    /**
      * The <code>position</code> method 
      *
      * @param s an <code>String</code> value
@@ -253,17 +315,16 @@ class StringCmds extends Operator {
 	return pos;
     }
 
-    //private static Vector defsplitstrings;
+    private static Vector defsplitstrings;
     private static String deftrimchars = "\t\n\r ";
-    
+
     static {
-	/*
-	  defsplitstrings = new Vector();
-	  defsplitstrings.addElement(" ");
-	  defsplitstrings.addElement("\t");
-	  defsplitstrings.addElement("\n");
-	  defsplitstrings.addElement("\r");
-	*/
+	defsplitstrings = new Vector();
+	defsplitstrings.addElement(new Thing(" "));
+	defsplitstrings.addElement(new Thing("\t"));
+	defsplitstrings.addElement(new Thing("\n"));
+	defsplitstrings.addElement(new Thing("\r"));
+
         cmdtable.put("append", new StringCmds(APPEND,1,-1));
         cmdtable.put("eq", new StringCmds(STREQ,2,2));
 	cmdtable.put("ne", new StringCmds(STRNEQ,2,2));
