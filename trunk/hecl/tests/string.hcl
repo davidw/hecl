@@ -69,7 +69,7 @@ test string-lower-1 {
 } abcdefghijklmnopqrstuvwxyzäöü€0123456789
 
 test string-upper-1 {
-     strlower abcdefghijklmnopqrstuvwxyzäöü€0123456789
+     strupper abcdefghijklmnopqrstuvwxyzäöü€0123456789
 } ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ€0123456789
 
 test string-trim-1 {
@@ -82,7 +82,7 @@ test string-trim-2 {
 
 test string-trim-3 {
      strtrim "\t\n\r abcdefg \n\t\r"
-} abcdef
+} abcdefg
 
 test string-trimr-1 {
      strtrimr abcdefg ag

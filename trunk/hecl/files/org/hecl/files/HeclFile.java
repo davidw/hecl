@@ -1,4 +1,4 @@
-/* Copyright 2005 David N. Welton
+/* Copyright 2005-2006 David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -210,8 +210,11 @@ public class HeclFile implements org.hecl.HeclModule {
 	throws HeclException {
 	File realfn = new File(filename).getAbsoluteFile();
 	currentFile = realfn.toString();
-
-        interp.eval(new Thing(readFile(filename)));
+	try {
+	    interp.eval(new Thing(new String(readFile(filename).toString().getBytes("ISO-8859-1"))));
+	} catch (Exception e) {
+	    System.err.println("ERROR: we should never reach this line!");
+	}
     }
 
     public void loadModule(Interp interp) throws HeclException {

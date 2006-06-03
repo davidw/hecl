@@ -42,43 +42,43 @@ class FileCmds extends Operator {
     private FileCmds(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
     }
-    
+
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
-	  case CD:
-	    HeclFile.changeDir(argv[1].toString());
-	    break;
-	    
-	  case CURRENTFILE:
-	    return new StringThing(HeclFile.currentFile);
-	    
-	  case FILESIZE:
-	    File fl = new File(argv[1].toString()).getAbsoluteFile();
-	    return new LongThing(fl.length());
-	    
-	  case FILETOLIST:
-	    return new ListThing(HeclFile.fileToList(argv[1].toString()));
-	    
-	  case LISTTOFILE:
-	    return new StringThing(HeclFile.listToFile(ListThing.get(argv[1])));
-	    
-	  case READALL:
-	    return new StringThing(HeclFile.readFile(argv[1].toString()));
-	    
-	  case WRITE:
-	    String fn = argv[1].toString();
-	    String data = argv[2].toString();
-	    HeclFile.writeFile(fn, data);
-	    return new IntThing(data.length());
+	    case CD:
+		HeclFile.changeDir(argv[1].toString());
+		break;
 
-	  case SOURCE:
-	    HeclFile.sourceFile(interp, argv[1].toString());
-	    break;
+	    case CURRENTFILE:
+		return new StringThing(HeclFile.currentFile);
 
-	  default:
-	    throw new HeclException("Unknown file command '"
-				    + argv[0].toString() + "' with code '"
-				    + cmd + "'.");
+	    case FILESIZE:
+		File fl = new File(argv[1].toString()).getAbsoluteFile();
+		return new LongThing(fl.length());
+
+	    case FILETOLIST:
+		return new ListThing(HeclFile.fileToList(argv[1].toString()));
+
+	    case LISTTOFILE:
+		return new StringThing(HeclFile.listToFile(ListThing.get(argv[1])));
+
+	    case READALL:
+		return new StringThing(HeclFile.readFile(argv[1].toString()));
+
+	    case WRITE:
+		String fn = argv[1].toString();
+		String data = argv[2].toString();
+		HeclFile.writeFile(fn, data);
+		return new IntThing(data.length());
+
+	    case SOURCE:
+		HeclFile.sourceFile(interp, argv[1].toString());
+		break;
+
+	    default:
+		throw new HeclException("Unknown file command '"
+					+ argv[0].toString() + "' with code '"
+					+ cmd + "'.");
 	}
 	return null;
     }
