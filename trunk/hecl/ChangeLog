@@ -1,3 +1,14 @@
+2006-06-06  David N. Welton  <davidw@dedasys.com>
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Get the 1.0/2.0
+	order right.
+
+	* build.xml: HeclBuilderJar depends on having a JarHack jar
+	available.
+
+	* jarhack/jarhack/JarHack.java: Make sure version and vendor match
+	up.
+
 2006-06-03  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/StringCmds.java: String trim commands now take a

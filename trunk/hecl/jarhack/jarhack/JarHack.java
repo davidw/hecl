@@ -152,8 +152,8 @@ public class JarHack {
 		 "MIDlet-Jar-Size: " + jf.length() + "\n" +
 		 "MIDlet-Jar-URL: " + url + "\n" +
 		 "MIDlet-Name: " + appname + "\n" +
-		 "MIDlet-Vendor: DedaSys" + "\n" +
-		 "MIDlet-Version: 1.0" + "\n" +
+		 "MIDlet-Vendor: dedasys.com" + "\n" +
+		 "MIDlet-Version: 1.1" + "\n" +
 		 "MicroEdition-Profile: MIDP-1.0" + "\n" +
 		 "MicroEdition-Configuration: CLDC-1.0");
 	of.close();

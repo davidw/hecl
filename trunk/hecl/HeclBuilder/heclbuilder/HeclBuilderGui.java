@@ -220,9 +220,16 @@ public class HeclBuilderGui extends javax.swing.JFrame {
     }
 
 
+    /**
+     * The <code>runButtonActionPerformed</code> method runs JarHack
+     * to actually create the jar/jad files where they are supposed to
+     * be.
+     *
+     * @param evt a <code>java.awt.event.ActionEvent</code> value
+     */
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
 	String hecljar = null;
-	if (selectMidp20.isSelected()) {
+	if (selectMidp10.isSelected()) {
 	    hecljar = "/jars/1.0/Hecl.jar";
 	} else {
 	    hecljar = "/jars/1.1/Hecl.jar";
