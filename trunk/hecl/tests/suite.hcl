@@ -40,6 +40,7 @@ testfiles {
     source.hcl
     split.hcl
     string.hcl
+    throw.hcl
     upeval.hcl
     while.hcl
 }

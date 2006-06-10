@@ -42,6 +42,7 @@ class InterpCmds extends Operator {
     public static final int TIMECMD = 12;
 
     public static final int COPY = 13;
+    public static final int THROW = 14;
 
     public static final int CLASSINFO = 20;
 
@@ -133,6 +134,14 @@ class InterpCmds extends Operator {
 		}
 		return retval != 0 ? IntThing.ONE : IntThing.ZERO;
 
+	    case THROW:
+		String errmsg = argv[1].toString();
+		if (argv.length == 2) {
+		    throw new HeclException(errmsg);
+		} else {
+		    throw new HeclException(errmsg, argv[2].toString());
+		}
+
 	    case EXIT:
 		retval = 0;
 		if (argv.length > 1) {
@@ -197,6 +206,7 @@ class InterpCmds extends Operator {
         cmdtable.put("intro", new InterpCmds(INTROSPECT, 1, -1));
         cmdtable.put("return", new InterpCmds(RETURN, 0, 1));
         cmdtable.put("catch", new InterpCmds(CATCH, 1, 2));
+        cmdtable.put("throw", new InterpCmds(THROW, 1, 2));
         cmdtable.put("exit", new InterpCmds(EXIT, 0, 1));
         cmdtable.put("upeval", new InterpCmds(UPCMD, 1, 1));
         cmdtable.put("time", new InterpCmds(TIMECMD, 1, 2));

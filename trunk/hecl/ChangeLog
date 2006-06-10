@@ -1,3 +1,11 @@
+2006-06-10  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added 'throw' command.
+
+	* tests/throw.hcl: Added tests for throw command.
+
+	* docs/hecl.xml: Added docs for http, rearranged j2me docs.
+
 2006-06-06  David N. Welton  <davidw@dedasys.com>
 
 	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Get the 1.0/2.0
