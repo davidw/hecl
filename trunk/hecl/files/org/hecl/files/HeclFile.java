@@ -212,8 +212,10 @@ public class HeclFile implements org.hecl.HeclModule {
 	currentFile = realfn.toString();
 	try {
 	    interp.eval(new Thing(new String(readFile(filename).toString().getBytes("ISO-8859-1"))));
+	} catch (HeclException e) {
+	    throw e;
 	} catch (Exception e) {
-	    System.err.println("ERROR: we should never reach this line!");
+	    System.err.println("ERROR: we should never reach this line!" + e);
 	}
     }
 
