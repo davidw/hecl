@@ -24,6 +24,7 @@ import org.hecl.ListThing;
 import org.hecl.HeclException;
 
 import org.hecl.files.*;
+import org.hecl.http.HttpModule;
 
 /**
  * <code>Hecl</code> - this class implements the main Hecl command
@@ -44,6 +45,7 @@ public class Hecl {
             Interp interp = new Interp();
 	    /* Add the standard packages in. */
 	    new HeclFile().loadModule(interp);
+	    new HttpModule().loadModule(interp);
 	    new org.hecl.load.HeclLoad().loadModule(interp);
 	    Vector argv = new Vector();
 
