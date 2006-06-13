@@ -10,7 +10,7 @@
     <div class="title">
       <img style="float:right;" src="hecl-look-left.png" alt="Hecl">
       <h1>Hecl</h1>
-      <span style="font-size:16px; font-weight: bold;">The Mobile Scripting Language</span>
+      <span>The Mobile Scripting Language</span>
     </div>
 
     <? include navbar.html ?>

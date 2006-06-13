@@ -12,9 +12,10 @@ pre {
   </head>
   <body id="examples">
 
-
     <div class="title">
-      <h1 align="center">Hecl Programming Language</h1>
+      <img style="float:right;" src="/hecl-look-left.png" alt="Hecl">
+      <h1>Hecl</h1>
+      <span>The Mobile Scripting Language</span>
     </div>
 
 <? include ../navbar.html ?>
