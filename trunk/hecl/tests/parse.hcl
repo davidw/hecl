@@ -75,3 +75,8 @@ test parse-12 {
 } {
 }
 
+test parse-13 {
+    set foo foobar
+    set bar ${foo}/beebop
+    set bar
+} {foobar/beebop}

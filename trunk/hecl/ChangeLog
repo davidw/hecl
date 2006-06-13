@@ -1,3 +1,8 @@
+2006-06-14  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl: There is a regression with variables like
+	${foo} adding an extra space aftering being parsed...
+
 2006-06-12  David N. Welton  <davidw@dedasys.com>
 
 	* commandline/Hecl.java: Include the http module in the command
