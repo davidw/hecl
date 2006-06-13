@@ -8,15 +8,23 @@ body {
 }
 
 div.title {
-    color: #f9b93e;
-    background-color: #070707;
+    background-color: #f9b93e;
+    color #070707;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 3ex;
-    width: 50%;
-    padding: 5px;
+    width: 25%;
+    border: 1px solid black;
+    height: 100px;
+    padding-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
+div.title h1 {
+    font-size: 32px;
+    padding: 0;
+    margin: 0;
+}
 
 A:link {
     color: #3333cc;
@@ -65,10 +73,6 @@ div.nav ul {
 #applets-nav, #phones #phones-nav {
 background-color: #bbb;
 padding: 3px;
-}
-
-img.logo {
-    float: right;
 }
 
 table.applet {

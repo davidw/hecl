@@ -2,18 +2,18 @@
 
 <html>
   <head>
-    <title>Hecl Programming Language</title>
+    <title>Hecl - The Mobile Scripting Language</title>
     <link rel="stylesheet" href="/style.css">
   </head>
   <body id="home">
 
     <div class="title">
-      <h1 align="center">Hecl Programming Language</h1>
+      <img style="float:right;" src="hecl-look-left.png" alt="Hecl">
+      <h1>Hecl</h1>
+      <span style="font-size:16px; font-weight: bold;">The Mobile Scripting Language</span>
     </div>
 
     <? include navbar.html ?>
-
-    <img class="logo" src="hecl-look-left.png" alt="Hecl">
 
     <p>
       The Hecl Programming Language is a high-level scripting
