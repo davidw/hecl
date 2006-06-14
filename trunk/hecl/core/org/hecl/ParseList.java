@@ -45,7 +45,7 @@ public class ParseList extends Parse {
      * @exception HeclException
      *                if an error occurs
      */
-    public void parseLine(String in, ParseState state) throws HeclException {
+    public void parseLine(ParseState state) throws HeclException {
         char ch;
 
         while (true) {

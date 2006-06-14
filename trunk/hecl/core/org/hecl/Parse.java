@@ -37,6 +37,7 @@ public class Parse {
 
     /* Used to build up individual Things with. */
     protected StringThing outBuf;
+    protected boolean outBufused = false;
     /* Used to build up words (that might be GroupThings). */
     protected Vector outGroup;
 
@@ -93,7 +94,7 @@ public class Parse {
 	newCurrent();
         state.eoc = false;
 
-        parseLine(in, state);
+        parseLine(state);
         if (outList.size() > 0) {
             // System.out.println("outlist is : " + outList);
             return outList;
@@ -149,8 +150,7 @@ public class Parse {
      */
     protected void newCurrent() throws HeclException {
 	outGroup = new Vector();
-	outBuf = new StringThing();
-	outGroup.addElement(outBuf);
+	outBufused = false;
     }
 
 
@@ -164,13 +164,18 @@ public class Parse {
 	 * of it. */
 	if (outGroup.size() == 1) {
 	    outList.addElement(new Thing((RealThing)outGroup.elementAt(0)));
-	} else {
+	} else if (outGroup.size() > 1) {
 	    Vector outv = new Vector();
 	    for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
-		outv.addElement(new Thing((RealThing)e.nextElement()));
+		RealThing rt = (RealThing)e.nextElement();
+		outv.addElement(new Thing(rt));
 	    }
 
 	    outList.addElement(GroupThing.create(outv));
+	} else {
+	    /* If nothing has been added (for example {}), then make
+	     * it an empty element. */
+	    outList.addElement(new Thing(""));
 	}
 	newCurrent();
     }
@@ -182,6 +187,11 @@ public class Parse {
      * @param ch a <code>char</code>
      */
     protected void appendToCurrent(char ch) throws HeclException {
+	if (!outBufused) {
+	    outBuf = new StringThing();
+	    outBufused = true;
+	    outGroup.addElement(outBuf);
+	}
 	outBuf.append(ch);
     }
 
@@ -224,8 +234,7 @@ public class Parse {
 	    savegroup.addElement(rt);
 	}
 
-	outBuf = new StringThing();
-	savegroup.addElement(outBuf);
+	outBufused = false;
 	outGroup = savegroup;
     }
 
@@ -237,7 +246,7 @@ public class Parse {
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */
-    public void parseLine(String in, ParseState state) throws HeclException {
+    public void parseLine(ParseState state) throws HeclException {
         char ch;
 
         while (true) {
@@ -266,7 +275,11 @@ public class Parse {
                     parseCommand(state);
                     break;
                 case '$' :
-                    parseDollar(state);
+		    /* variables might be the start of the rest of a
+		     * word - for instance: ${foo}bar - so we parse
+		     * them as such. */
+ 		    state.rewind();
+		    parseWord(state);
                     break;
                 case '"' :
                     parseText(state);
@@ -279,7 +292,6 @@ public class Parse {
 		    continue;
                 default :
 		    appendToCurrent(ch);
-                    //		    state.rewind();
                     parseWord(state);
                     break;
             }
@@ -325,7 +337,7 @@ public class Parse {
     }
 
     /**
-     * The <code>parseDollar</code> method parses a $\ foo (or &foo)
+     * The <code>parseDollar</code> method parses a $\ foo
      * variable. These can also be of the form $\ {foo} so that we can
      * separate them from any surrounding text.
      *
@@ -349,13 +361,10 @@ public class Parse {
 		state.rewind();
 	    }
 	}
-	/*
-	 * System.out.println("parser vvvv"); Thing.printThing(argv[1]);
-	 * System.out.println("parser ^^^^");
-	 */
-//	Thing t = new Thing(new SubstThing(outBuf.toString()));
-//	outGroup.setElementAt(t, outGroup.size() - 1);
 
+// 	System.out.println("parser vvvv");
+// 	PrintThing.printThing(new Thing(outBuf));
+// 	System.out.println("parser ^^^^");
 	outGroup.setElementAt(new SubstThing(outBuf.getStringRep()),
 			      outGroup.size() - 1);
     }
@@ -435,7 +444,6 @@ public class Parse {
 			throw new HeclException("extra characters after close-brace");
 		    }
 		    state.rewind();
-                    //return new Thing(out);
                     return;
                 } else {
                     /* We parse it up for later consumption. */

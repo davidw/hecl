@@ -359,6 +359,7 @@
   <target name="packageCommandline"
     description="Create Jar for command line Hecl"
     depends="compileCommandline,compileHttp,packageLib">
+
     <jar destfile="${j2se.hecl.cmdline.jar}"
       basedir="${j2se.build}"
       excludes="**jad,**jar,StandaloneHecl.class,*html,**/applet/**"

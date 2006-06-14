@@ -1,5 +1,11 @@
 2006-06-14  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Parse.java: Use a boolean to keep track of whether
+	something has been stashed in the current outBuf, so that we don't
+	end up having to deal with empty outBuf's tacked on to the current
+	outGroup.  Also, parseLine doesn't need to take an String
+	argument.
+
 	* tests/parse.hcl: There is a regression with variables like
 	${foo} adding an extra space aftering being parsed...
 
