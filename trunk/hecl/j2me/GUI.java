@@ -374,8 +374,8 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		properties.setProp("type", new Thing("screen"));
 		properties.setProps(argv, 1);
 		String label = (properties.getProp("label")).toString();
-		Command c = new Command(
-		    label, getCmdType((properties.getProp("type")).toString()), 0);
+		Command c = new Command(label,
+					getCmdType((properties.getProp("type")).toString()), 0);
 		if (screen != null) {
 		    screen.addCommand(c);
 		}
@@ -807,6 +807,14 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	    case CALLBACK + TEXTFIELD + GETPROP:
 	    case CALLBACK + DATEFIELD + GETPROP:
 		result = (Thing)itemcallbacks.get(widget);
+		break;
+
+	    case COMMAND + CODE + SETPROP:
+		String label = ((Command)widget).getLabel();
+		callbacks.put(label, propval);
+		break;
+	    case COMMAND + CODE + GETPROP:
+		result = (Thing)callbacks.get(((Command)widget).getLabel());
 		break;
 
 	    default:
