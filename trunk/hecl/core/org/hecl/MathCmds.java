@@ -204,8 +204,9 @@ public class MathCmds extends org.hecl.Operator {
     }
 
 
-    public static RealThing binary(int cmdcode,Interp ip,NumberThing a,NumberThing b)
+    public static RealThing binary(int cmdcode, Interp ip, NumberThing a, NumberThing b)
 	throws HeclException {
+
 	switch(cmdcode) {
 	  case BINADD:
 //#ifndef ant:cldc1.0
@@ -382,21 +383,22 @@ public class MathCmds extends org.hecl.Operator {
 	    }
 	    return num;
 	  case INCR:
-	    num = NumberThing.asNumber(argv[1]);
-	    if(!num.isIntegral()) {
-		throw new HeclException("Argument '" + argv[1].toString()
-					+ "' not an integer.");
-	    }
-	    NumberThing offset = argv.length > 2 ?
-		NumberThing.asNumber(argv[2]) : IntThing.ONE;
-	    if(((IntegralThing)num).isLong()) {
-		num = new LongThing(num.longValue()+offset.longValue());
-	    } else {
-		num = new IntThing(num.intValue()+offset.intValue());
-	    }
-	    argv[1].setVal(num);
-	    ip.setResult(argv[1]);
-	    return null;
+	      num = NumberThing.asNumber(argv[1]);
+
+	      if(!num.isIntegral()) {
+		  throw new HeclException("Argument '" + argv[1].toString()
+					  + "' not an integer.");
+	      }
+	      NumberThing offset = argv.length > 2 ?
+		  NumberThing.asNumber(argv[2]) : IntThing.ONE;
+	      if(((IntegralThing)num).isLong()) {
+		  num = new LongThing(num.longValue() + offset.longValue());
+	      } else {
+		  num = new IntThing(num.intValue() + offset.intValue());
+	      }
+	      argv[1].setVal(num);
+	      ip.setResult(argv[1]);
+	      return null;
 	  default:
 	    /*
 	    Command c = extensions.get(cmdcode);

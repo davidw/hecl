@@ -80,23 +80,27 @@ class InterpCmds extends Operator {
 		break;
 
 	    case GLOBAL:
+	    {
+		String varname = null;
+		Thing newThing = null;
 		for (int i = 1; i < argv.length; i ++) {
-		    String varname = argv[i].toString();
-		    Thing newThing = null;
+		    varname = argv[i].toString();
+		    newThing = null;
 
 		    if (!interp.existsVar(varname, 0)) {
+			/* Create a new value for it. */
 			newThing = new Thing("");
 		    } else {
-			/* If it already exists, make a copy of it that is no
-			 * longer marked to be copied. */
-			Thing globalthing = interp.getVar(varname, 0);
-			newThing = globalthing.deepcopy();
+			/* If it already exists, make a copy of it
+			 * that is no longer marked to be copied. */
+			newThing = interp.getVar(varname, 0);
 		    }
+		    newThing.global = true;
+		    interp.setVar(varname, newThing);
 		    interp.setVar(varname, newThing, 0);
-		    interp.setVar(argv[i], newThing);
 		}
 		break;
-
+	    }
 	    case INTROSPECT:
 		String subcmd = argv[1].toString();
 		Vector results = new Vector();

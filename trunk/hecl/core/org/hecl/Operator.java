@@ -63,6 +63,7 @@ public abstract class Operator implements Command {
 	   indicate result has already been set. Of course, this
 	   disallows returning null as result of an operator, but this
 	   is not really an issue. */
+
 	RealThing rt = operate(cmdcode, interp, argv);
 	if(rt != null) {
 	    interp.setResult(new Thing(rt));

@@ -33,6 +33,9 @@ public class Thing extends Object {
      * be copied if something tries to write to it.  */
     public boolean copy = false;
 
+    /* Refers to a global variable? */
+    public boolean global = false;
+
     protected String stringval = null;
 
     /* Used to keep track of nesting depth. */

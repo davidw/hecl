@@ -49,12 +49,13 @@ class Proc implements Command {
 
         /* Push a new frame onto the stack. */
         interp.stackIncr();
+
         /* Create the argument variables. */
 	int argc = varnames.size();
 
-	/* If the last element of the variable names is called
-	 * 'varargs', then it is a list that can accumulate any
-	 * 'extra' args passed in to the proc. */
+	/* If the last element of the variable names is called 'args',
+	 * then it is a list that can accumulate any 'extra' args
+	 * passed in to the proc. */
 	if (argc > 0 && ((Thing) varnames.elementAt(argc - 1)).toString().equals(varargvarname)) {
 	    vargvals = new Vector();
 	    argc --;
@@ -85,12 +86,12 @@ class Proc implements Command {
 	}
 	interp.setVar(varargvarname, ListThing.create(vargvals));
 
-
+	/* We actually run the code here. */
         try {
             interp.eval(code);
         } catch (HeclException e) {
-            /* Don't pop the stack here. */
             if (e.code != HeclException.RETURN) {
+		interp.stackDecr();
                 throw e;
             }
         }

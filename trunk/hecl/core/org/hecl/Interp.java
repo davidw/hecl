@@ -104,7 +104,7 @@ public class Interp {
      * Attach auxiliary data to an <code>Interp</code>.
      */
     public void setAuxData(String key,Object value) {
-	auxdata.put(key,value);
+	auxdata.put(key, value);
     }
 
 
@@ -305,10 +305,8 @@ public class Interp {
      * <code>setVar</code> sets a variable in the innermost variable stack
      * frame to a value.
      *
-     * @param varname
-     *            a <code>String</code> value
-     * @param value
-     *            a <code>Thing</code> value
+     * @param varname a <code>String</code> value
+     * @param value a <code>Thing</code> value
      */
     public void setVar(String varname, Thing value) {
         setVar(varname, value, -1);
@@ -318,12 +316,9 @@ public class Interp {
      * <code>setVar</code> sets a variable to a value in the variable stack
      * frame specified by <code>level</code>.
      *
-     * @param varname
-     *            a <code>String</code> value
-     * @param value
-     *            a <code>Thing</code> value
-     * @param level
-     *            an <code>int</code> value
+     * @param varname a <code>String</code> value
+     * @param value a <code>Thing</code> value
+     * @param level an <code>int</code> value
      */
     public void setVar(String varname, Thing value, int level) {
         Hashtable lookup = getVarhash(level);
@@ -333,6 +328,26 @@ public class Interp {
         cacheversion++;
 	if (lookup.containsKey(varname)) {
 	     Thing oldval = (Thing) lookup.get(varname);
+
+	     /* In order to make the 'global' command work, we check
+	      * and see if the previous 'inhabitant' of the hashtable
+	      * had its global flag set.  If that's the case, then we
+	      * set the variable both at the local level, and at the
+	      * global level.  */
+	     if (oldval.global && level != 0) {
+		 Hashtable globalhash = getVarhash(0);
+		 if (globalhash.containsKey(varname)) {
+		     Thing globaloldval = (Thing) globalhash.get(varname);
+		     if (!globaloldval.copy) {
+			 globaloldval.makeref(value);
+		     } else {
+			 globalhash.put(varname, value);
+		     }
+		 } else {
+		     globalhash.put(varname, value);
+		 }
+	     }
+
 	     /* If Stanza has indicated that this value should be
 	      * copied if a write is attempted to it, don't use the
 	      * existing reference. */

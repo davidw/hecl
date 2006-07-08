@@ -29,3 +29,20 @@ test global-2 {
     settwoglobals
     twoglobals
 } {1 2}
+
+set a_global_variable 1
+
+proc globalincr {} {
+    global a_global_variable
+    incr $a_global_variable
+}
+
+# Broken - needs upeval command to work at a global level to work
+# completely.
+test global-3 {
+    set testres ""
+    lappend $testres $a_global_variable
+    globalincr
+    lappend $testres $a_global_variable
+    set testres
+} {}
