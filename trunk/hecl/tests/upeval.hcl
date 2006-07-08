@@ -25,3 +25,15 @@ test upeval-2 {
     } while {< $x 10}
     set foo
 } {100}
+
+proc globalset {} {
+    global upeval3
+    set upeval3 100
+}
+
+test upeval-3 {
+    globalset
+    upeval 0 {
+	set upeval3
+    }
+} {100}

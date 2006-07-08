@@ -38,10 +38,7 @@ public class ParseList extends Parse {
     /**
      * <code>parseLine</code> parses a line of Hecl code.
      *
-     * @param in
-     *            a <code>String</code> value
-     * @param state
-     *            a <code>ParseState</code> value
+     * @param state a <code>ParseState</code> value
      * @exception HeclException
      *                if an error occurs
      */

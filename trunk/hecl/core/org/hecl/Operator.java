@@ -26,8 +26,26 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public abstract class Operator implements Command {
+
+    /**
+     * <code>cmdcode</code> - the int that corresponds to the command
+     * to be executed.
+     *
+     */
     protected int cmdcode;
+
+    /**
+     * <code>minargs</code> - the minimum number of arguments this
+     * command accepts.
+     *
+     */
     protected int minargs;
+
+    /**
+     * <code>maxargs</code> - the maximum number of arguments this
+     * command accepts.  A value of 0 means unlimited arguments.
+     *
+     */
     protected int maxargs;
 
     static protected Hashtable cmdtable = new Hashtable();
@@ -38,11 +56,12 @@ public abstract class Operator implements Command {
      * @param cmdcode an <code>int</code> value corresponding to the
      * command code number found in the class implementing the
      * command.
-     * @param minargs an <code>int</code> value - the minimum number of arguments to the command.
+     * @param minargs an <code>int</code> value - the minimum number
+     * of arguments to the command.
      * @param maxargs an <code>int</code> value - the maximum number
      * of arguments to the command, or -1 if unlimited.
      */
-    protected Operator(int cmdcode,int minargs,int maxargs) {
+    protected Operator(int cmdcode, int minargs, int maxargs) {
 	this.cmdcode = cmdcode;
 	this.minargs = minargs;
 	this.maxargs = maxargs;

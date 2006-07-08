@@ -242,7 +242,6 @@ public class Parse {
      * The <code>parseLine</code> method is where parsing starts on a new
      * line.
      *
-     * @param in a <code>String</code> value
      * @param state a <code>ParseState</code> value
      * @exception HeclException if an error occurs
      */

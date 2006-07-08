@@ -17,6 +17,7 @@ package org.hecl;
 
 import java.util.Hashtable;
 import java.util.Stack;
+import java.util.Vector;
 
 /**
  * <code>Interp</code> is the Hecl interpreter, the class responsible for
@@ -142,6 +143,46 @@ public class Interp {
     }
 
     /**
+     * This version of <code>eval</code> takes a 'level' argument that
+     * tells Hecl what level to run the code at.  Level 0 means
+     * global, negative numbers indicate relative levels down from the
+     * current stackframe, and positive numbers mean absolute stack
+     * frames counting up from 0.
+     *
+     * @param in a <code>Thing</code> value
+     * @param level an <code>int</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public Thing eval(Thing in, int level) throws HeclException {
+	Thing result = null;
+	Vector savedstack = new Vector();
+	int stacklen = stack.size();
+	int i = 0;
+	int end = 0;
+
+	if (level >= 0) {
+	    end = level;
+	} else {
+	    end = (stacklen - 1 + level);
+	}
+
+	/* Save the old stack frames... */
+	for (i = stacklen - 1; i > end; i--) {
+	    savedstack.addElement(stackDecr());
+	}
+
+	result = eval(in);
+
+	/* ... and then restore them after evaluating the code. */
+	for (i = savedstack.size() - 1; i >= 0; i--) {
+	    stackPush((Hashtable)savedstack.elementAt(i));
+	}
+
+	return result;
+    }
+
+    /**
      * The <code>initCommands</code> method initializes all the built in
      * commands. These are commands available in all versions of Hecl. J2SE
      * commands are initialized in Standard.java, and J2ME commands in
@@ -214,8 +255,8 @@ public class Interp {
     }
 
     /**
-     * <code>stackDecr</code> pushes a new variable hashtable (probably saved
-     * via upeval) onto the stack frame.
+     * <code>stackDecr</code> pushes a new variable hashtable
+     * (probably saved via upeval) onto the stack frame.
      *
      */
     public void stackPush(Hashtable vars) {
@@ -224,11 +265,11 @@ public class Interp {
     }
 
     /**
-     * <code>getVarhash</code> fetches the variable Hashtable at the given
-     * level, where -1 means to just get the hashtable on top of the stack.
+     * <code>getVarhash</code> fetches the variable Hashtable at the
+     * given level, where -1 means to just get the hashtable on top of
+     * the stack.
      *
-     * @param level
-     *            an <code>int</code> value
+     * @param level an <code>int</code> value
      * @return a <code>Hashtable</code> value
      */
     private Hashtable getVarhash(int level) {

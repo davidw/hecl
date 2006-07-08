@@ -1891,7 +1891,7 @@ if { true } {
       </refsect1>
     </refentry>
 
-    <!-- upeval -->
+    <!-- unset -->
     <refentry id="unset">
       <refnamediv>
 	<refname>unset</refname>
@@ -1920,6 +1920,7 @@ if { true } {
       <refsynopsisdiv>
 	<cmdsynopsis>
 	  <command>upeval</command>
+	  <arg choice="opt"><replaceable>level</replaceable></arg>
 	  <arg choice="req"><replaceable>script</replaceable></arg>
 	</cmdsynopsis>
       </refsynopsisdiv>
@@ -1928,7 +1929,18 @@ if { true } {
 	<para>
 	  The <command>upeval</command> command evaluates
 	  <option><replaceable>script</replaceable></option> one stack
-	  frame up from the current stack frame.
+	  frame up from the current stack frame, if
+	  <option><replaceable>level</replaceable></option> is not
+	  present.  If
+	  <option><replaceable>level</replaceable></option> is
+	  present, <command>upeval</command> behaves like so: if
+	  <option><replaceable>level</replaceable></option> is less
+	  than one, the
+	  <option><replaceable>script</replaceable></option> is run
+	  that many levels down from the top of the stack.  If it's 0,
+	  the script is run at the global level, and if it's a
+	  positive number, the script is run at that absolute level up
+	  from the global namespace.
 	</para>
       </refsect1>
       <refsect1>

@@ -155,9 +155,19 @@ class InterpCmds extends Operator {
 		break;
 
 	    case UPCMD:
-		Hashtable save = interp.stackDecr();
-		interp.eval(argv[1]);
-		interp.stackPush(save);
+		Hashtable save = null;
+		Thing code = null;
+		int level = -1;
+
+		if (argv.length == 2) {
+		    code = argv[1];
+		} else if (argv.length == 3) {
+		    code = argv[2];
+		    level = IntThing.get(argv[1]);
+		}
+
+		interp.eval(code, level);
+
 		break;
 
 	    case TIMECMD:
@@ -212,7 +222,7 @@ class InterpCmds extends Operator {
         cmdtable.put("catch", new InterpCmds(CATCH, 1, 2));
         cmdtable.put("throw", new InterpCmds(THROW, 1, 2));
         cmdtable.put("exit", new InterpCmds(EXIT, 0, 1));
-        cmdtable.put("upeval", new InterpCmds(UPCMD, 1, 1));
+        cmdtable.put("upeval", new InterpCmds(UPCMD, 1, 2));
         cmdtable.put("time", new InterpCmds(TIMECMD, 1, 2));
 
         cmdtable.put("copy", new InterpCmds(COPY, 1, 1));
