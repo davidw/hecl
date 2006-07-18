@@ -16,10 +16,10 @@
     <? include navbar.html ?>
 
     <p>
-      The Hecl Programming Language is a high-level scripting
-      language implemented in Java.  It is intended to be
-      small, extensible, extremely flexible, and easy to learn
-      and use.  Infact, it's small enough that it runs on J2ME-enabled
+      The Hecl Programming Language is a high-level, open source
+      scripting language implemented in Java.  It is intended to be
+      small, extensible, extremely flexible, and easy to learn and
+      use.  Infact, it's small enough that it runs on J2ME-enabled
       cell phones!
     </p>
     <p>
