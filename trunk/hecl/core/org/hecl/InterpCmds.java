@@ -43,6 +43,10 @@ class InterpCmds extends Operator {
 
     public static final int COPY = 13;
     public static final int THROW = 14;
+    public static final int AFTER = 15;
+    public static final int BGERROR = 16;
+    public static final int TOKENWAIT = 17;
+    public static final int TOKENNOTIFY = 18;
 
     public static final int CLASSINFO = 20;
 
@@ -50,7 +54,8 @@ class InterpCmds extends Operator {
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Thing result = null;
 	int retval = 0;
-
+	String subcmd  = null;
+	
 	switch (cmd) {
 	    case SET:
 		if (argv.length == 3) {
@@ -102,7 +107,7 @@ class InterpCmds extends Operator {
 		break;
 	    }
 	    case INTROSPECT:
-		String subcmd = argv[1].toString();
+	      subcmd = argv[1].toString();
 		Vector results = new Vector();
 
 		if (subcmd.equals("commands")) {
@@ -146,10 +151,94 @@ class InterpCmds extends Operator {
 		    throw new HeclException(errmsg, argv[2].toString());
 		}
 
+	  case AFTER:
+	    subcmd = argv[1].toString();
+	    if(subcmd.equals("info")) {
+		System.err.println("after info");
+		if(argv.length == 2) {
+		    Vector v = interp.getAllEvents();
+		    int n = v.size();
+		    for(int i=0; i<n; ++i) {
+			HeclTask t = (HeclTask)v.elementAt(i);
+			v.setElementAt(new Thing(t.getName()),i);
+		    }
+		    return new ListThing(v);
+		}
+		if(argv.length == 3) {
+		    String evname = argv[2].toString();
+		    HeclTask t = interp.getEvent(evname);
+		    // event specified, must exist
+		    if(t != null) {
+			Vector v = new Vector();
+			v.addElement(new Thing(t.getScript().toString()));
+			v.addElement(new Thing(t.getType()));
+			return new ListThing(v);
+		    }
+		    throw new HeclException("Event '"+evname+"' doesn't exist.");
+		}
+		throw HeclException.createWrongNumArgsException(argv,2,"?id?");
+	    }
+	    if(subcmd.equals("cancel")) {
+		System.err.println("after cancel");
+		for(int i=2; i<argv.length; ++i) {
+		    String s = argv[2].toString();
+		    if(s.startsWith("idle"))
+			interp.cancelIdle(s);
+		    else if(s.startsWith("after"))
+			interp.cancelTimer(s);
+		    else if(s.startsWith("async"))
+			interp.cancelAsync(s);
+		}
+		break;
+	    }
+	    if(subcmd.equals("idle")) {
+		System.err.println("after idle");
+		if(argv.length != 3)
+		    throw HeclException.createWrongNumArgsException(
+			argv,2,"script");
+		interp.evalIdle(argv[2]);
+		break;
+	    }
+	    int milli = IntThing.get(argv[1]);
+	    if(milli >= 0) {
+		switch(argv.length) {
+		  case 3:
+		    interp.addTimer(argv[2],milli);
+		    break;
+		  case 2:
+		    ;			    // fool emacs indentation...
+		    {
+			HeclTask t = interp.addTimer(Thing.EMPTYTHING,milli);
+			while(! t.isDone()) {
+			    interp.doOneEvent(Interp.ALL_EVENTS);
+			}
+		    }
+		    break;
+		  default:
+		    throw HeclException.createWrongNumArgsException(
+			argv,2,"script");
+		}
+		break;
+	    }
+	    throw new HeclException("Unknown after option '"+subcmd+"'.");
+	  
+	  case TOKENWAIT:
+	    subcmd = argv[1].toString();    // varname
+	    interp.waitForToken(argv[1].toString());
+	    break;
+
+	  case TOKENNOTIFY:
+	    interp.notifyToken(argv[1].toString());
+	    break;
+	    
+	  case BGERROR:
+	    System.err.println("bgerror - "+argv[1].toString());
+	    break;
+	    
 	    case EXIT:
 		retval = 0;
 		if (argv.length > 1) {
-		    retval = NumberThing.asNumber(argv[1]).intValue();
+		    retval = IntThing.get(argv[1]);
 		}
 		System.exit(retval);
 		break;
@@ -224,6 +313,10 @@ class InterpCmds extends Operator {
         cmdtable.put("exit", new InterpCmds(EXIT, 0, 1));
         cmdtable.put("upeval", new InterpCmds(UPCMD, 1, 2));
         cmdtable.put("time", new InterpCmds(TIMECMD, 1, 2));
+        cmdtable.put("after", new InterpCmds(AFTER, 1, -1));
+	cmdtable.put("bgerror", new InterpCmds(BGERROR, 1, 1));
+        cmdtable.put("twait", new InterpCmds(TOKENWAIT, 1, 1));
+        cmdtable.put("tnotify", new InterpCmds(TOKENNOTIFY, 1, 1));
 
         cmdtable.put("copy", new InterpCmds(COPY, 1, 1));
 

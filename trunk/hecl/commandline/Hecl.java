@@ -22,9 +22,12 @@ import org.hecl.Interp;
 import org.hecl.Thing;
 import org.hecl.ListThing;
 import org.hecl.HeclException;
+import org.hecl.HeclTask;
 
 import org.hecl.files.*;
-import org.hecl.http.HttpModule;
+//import org.hecl.http.HttpModule;
+import org.hecl.net.Base64Cmd;
+import org.hecl.net.HttpCmd;
 
 /**
  * <code>Hecl</code> - this class implements the main Hecl command
@@ -44,8 +47,10 @@ public class Hecl {
             int i;
             Interp interp = new Interp();
 	    /* Add the standard packages in. */
-	    new HeclFile().loadModule(interp);
-	    new HttpModule().loadModule(interp);
+	    //new HeclFile().loadModule(interp);
+	    //new HttpModule().loadModule(interp);
+	    Base64Cmd.load(interp);
+	    HttpCmd.load(interp);
 	    new org.hecl.load.HeclLoad().loadModule(interp);
 	    Vector argv = new Vector();
 
@@ -65,6 +70,9 @@ public class Hecl {
         }
     }
 
+    static final String PROMPT = "hecl> ";
+    static final String PROMPT2 = "hecl+ ";
+
     /**
      * The <code>commandLine</code> method implements a
      * Read/Eval/Print Loop.
@@ -77,10 +85,8 @@ public class Hecl {
 	    BufferedReader(new InputStreamReader(System.in));
 	String line = null;
 	/* Normal prompt to use. */
-	String prompt_main = "hecl> ";
 	/* Prompt to use when we need more input. */
-	String prompt_more = "hecl+ ";
-	String prompt = prompt_main;
+	String prompt = PROMPT;
 	String morebuffer = "";
 
 	while (true) {
@@ -88,32 +94,34 @@ public class Hecl {
 	    System.out.flush();
 	    line = buff.readLine();
 	    /* Exit on end of file. */
-	    if (line == null) {
-		System.exit(0);
-	    }
+	    if (line == null)
+		break;
+
 	    try {
-		interp.eval(new Thing(morebuffer + line));
-		if (interp.result != null &&
-		    Compare.compareString(interp.result, new Thing("")) != 0) {
+		Thing res = interp.evalAsyncAndWait(new Thing(morebuffer + line));
+		if(res != null
+		   && 0 != Compare.compareString(res, Thing.EMPTYTHING)) {
 		    System.out.println(interp.result);
 		}
-		/* Make sure to wipe the buffer and put the prompt
-		 * back to normal. */
-		morebuffer = "";
-		prompt = prompt_main;
-	    } catch (HeclException he) {
+	    }
+	    catch (HeclException he) {
 		if (he.code.equals("PARSE_ERROR")) {
 		    /* When we need more input, stash the current
 		     * input in morebuffer, and change the prompt. */
-		    prompt = prompt_more;
+		    prompt = PROMPT2;
 		    morebuffer = morebuffer + "\n" + line;
 		} else {
 		    System.out.println(he);
 		    morebuffer = "";
-		    prompt = prompt_main;
+		    prompt = PROMPT;
 		}
 	    }
+	    catch(Exception e) {
+		e.printStackTrace();
+	    }
 	}
+	interp.abort();
+	System.exit(0);
     }
 }
 

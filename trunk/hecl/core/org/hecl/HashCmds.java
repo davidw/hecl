@@ -34,6 +34,7 @@ class HashCmds extends Operator {
     public static final int HKEYS = 3;
     public static final int HCLEAR = 4;
     public static final int HREMOVE = 5;
+    public static final int HCONTAINS = 6;
 
 
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -72,6 +73,11 @@ class HashCmds extends Operator {
 		result = o != null ? (Thing)o : new Thing("");
 		break;
 
+	    case HCONTAINS:
+	        result = new Thing(hash.containsKey(argv[2].toString()) ?
+				   IntThing.ONE : IntThing.ZERO);
+		break;
+		
 	    default:
 		throw new HeclException("Unknown hash command '"
 					+ argv[0].toString() + "' with code '"
@@ -105,5 +111,6 @@ class HashCmds extends Operator {
         cmdtable.put("hkeys", new HashCmds(HKEYS,1,1));
         cmdtable.put("hclear", new HashCmds(HCLEAR,1,1));
         cmdtable.put("hremove", new HashCmds(HREMOVE,2,2));
+        cmdtable.put("hcontains", new HashCmds(HCONTAINS,2,2));
     }
 }

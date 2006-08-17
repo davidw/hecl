@@ -15,8 +15,6 @@
 
 package org.hecl;
 
-import java.util.*;
-
 /**
  * The <code>Thing</code> class is what Hecl revolves around. "Things"
  * can be of several types, include strings, integers, lists, hash
@@ -27,6 +25,8 @@ import java.util.*;
  */
 
 public class Thing extends Object {
+    public static final Thing EMPTYTHING = new Thing("");
+    
     public RealThing val;
 
     /* This flag is used by Stanza to indicate whether a Thing should
@@ -55,6 +55,7 @@ public class Thing extends Object {
         stringval = s;
     }
 
+    
     /**
      * Creates a new <code>Thing</code> instance from a string buffer.
      *
@@ -131,17 +132,10 @@ public class Thing extends Object {
      * @return a <code>String</code> value
      */
     public String toString() {
-	if (stringval != null) {
-	    return stringval;
-	} else {
+	if(stringval == null)
 	    stringval = val.getStringRep();
-	    return stringval;
-	}
+	return stringval;
     }
-
-    /* public String getStringRep() {
-       return val.getStringRep();
-       } */
 
     /**
      * <code>deepcopy</code> copies the thing, its value, and any elements the

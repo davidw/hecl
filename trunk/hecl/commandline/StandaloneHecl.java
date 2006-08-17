@@ -16,7 +16,9 @@
 import org.hecl.Interp;
 import org.hecl.Thing;
 
-import org.hecl.http.*;
+//import org.hecl.http.*;
+import org.hecl.net.Base64Cmd;
+import org.hecl.net.HttpCmd;
 import org.hecl.files.*;
 
 /**
@@ -28,14 +30,17 @@ import org.hecl.files.*;
  */
 public class StandaloneHecl {
 
-    private static String script = "for {set i 0} {< $i 10} {incr &i} { puts $i }";
+    private static String script = "for {set i 0} {< $i 10} {incr $i} { puts $i }";
 
     public static void main(String[] args) {
         try {
             Interp interp = new Interp();
 	    new HeclFile().loadModule(interp);
-	    new HttpModule().loadModule(interp);
-            interp.eval(new Thing(script));
+	    //new HttpModule().loadModule(interp);
+	    Base64Cmd.load(interp);
+	    HttpCmd.load(interp);
+            interp.evalAsyncAndWait(new Thing(script));
+	    interp.abort();
         } catch (Exception e) {
             e.printStackTrace();
         }

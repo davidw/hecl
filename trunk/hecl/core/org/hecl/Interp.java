@@ -26,12 +26,21 @@ import java.util.Vector;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
-public class Interp {
+public class Interp implements Runnable {
     /**
      * Package name prefix of the module classes.
      */
     public static final String MODULE_CLASS_PACKAGE = "org.hecl";
-
+    public static final int DONT_WAIT = 1;
+    public static final int IDLE_EVENTS = 2;
+    public static final int TIMER_EVENTS = 4;
+    public static final int ALL_EVENTS = ~DONT_WAIT;
+    
+    public static final String ASYNCPREFIX = "async";
+    public static final String IDLEPREFIX = "idle";
+    public static final String TIMERPREFIX = "timer";
+    
+    
     public long cacheversion = 0;
 
     /**
@@ -43,20 +52,27 @@ public class Interp {
      * accessors.
      *
      */
-    public Hashtable commands;
+    public Hashtable commands = new Hashtable();
 
     /**
      * The <code>auxdata</code> <code>Hashtable</code> is a place to
      * store extra information about the state of the program.
      *
      */
-    protected Hashtable auxdata;
+    protected Hashtable auxdata = new Hashtable();
 
-    public Thing result;
-    protected Stack stack;
-    protected int stacklevel;
-    protected Stack error;
+    public Thing result = null;
+    protected Stack stack = new Stack();
+    protected Stack error = new Stack();
 
+    protected Vector timers = new Vector();
+    protected Vector asyncs = new Vector();
+    protected Vector idle = new Vector();
+    protected Hashtable waittokens = new Hashtable();
+    protected long idlegeneration = 0;
+    protected boolean running = true;
+    protected long maxblocktime = 0;	    // block time in milliseconds
+    
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
      * variable hashtables, a stack, and an error stack.
@@ -65,15 +81,10 @@ public class Interp {
      *                if an error occurs
      */
     public Interp() throws HeclException {
-        commands = new Hashtable();
-	auxdata = new Hashtable();
-        stack = new Stack();
-        error = new Stack();
-
         // Set up stack frame for globals.
         stack.push(new Hashtable());
-
         initInterp();
+	new Thread(this).start();
     }
 
 
@@ -85,7 +96,7 @@ public class Interp {
      * @param c
      *            the command to add.
      */
-    public String addCommand(String name,Command c) {
+    public synchronized String addCommand(String name,Command c) {
 	commands.put(name,c);
 	return name;
     }
@@ -96,7 +107,7 @@ public class Interp {
      * @param name
      *            the name of the command to add.
      */
-    public void removeCommand(String name) {
+    public synchronized void removeCommand(String name) {
 	commands.remove(name);
     }
 
@@ -104,7 +115,7 @@ public class Interp {
     /**
      * Attach auxiliary data to an <code>Interp</code>.
      */
-    public void setAuxData(String key,Object value) {
+    public synchronized void setAuxData(String key,Object value) {
 	auxdata.put(key, value);
     }
 
@@ -115,7 +126,7 @@ public class Interp {
      * @return a <code>Object</code> value or <code>null</code> when no
      * auxiliary data under the given key is attached to the interpreter.
      */
-    public Object getAuxData(String key) {
+    public synchronized Object getAuxData(String key) {
 	return auxdata.get(key);
     }
 
@@ -123,7 +134,7 @@ public class Interp {
     /**
      * Remove auxiliary data from an <code>Interp</code>.
      */
-    public void removeAuxData(String key) {
+    public synchronized void removeAuxData(String key) {
 	auxdata.remove(key);
     }
 
@@ -142,6 +153,44 @@ public class Interp {
 	return result;
     }
 
+    public HeclTask evalIdle(Thing idleThing) {
+	return addTask(idle,new HeclTask(idleThing,idlegeneration,IDLEPREFIX),-1);
+    }
+
+
+    public HeclTask evalAsync(Thing asyncThing) {
+	return addTask(asyncs, new HeclTask(asyncThing,0,ASYNCPREFIX),-1);
+    }
+
+    public Thing evalAsyncAndWait(Thing in) throws HeclException {
+	HeclTask t = evalAsync(in);
+	t.setErrorPrint(false);
+	boolean done = false;
+	while(!t.isDone()) {
+	    try {
+		synchronized(t) {
+		    t.wait();
+		}
+	    }
+	    catch(Exception e) {
+		// ignore
+		e.printStackTrace();
+	    }
+	}
+	try {
+	    Exception e = t.getError();
+	    if(e != null)
+		throw e;
+	    return t.getResult();
+	}
+	catch (HeclException he) {
+	    throw he;
+	}
+	catch(Exception e) {
+	    throw new HeclException(e.getMessage());
+	}
+    }
+    
     /**
      * This version of <code>eval</code> takes a 'level' argument that
      * tells Hecl what level to run the code at.  Level 0 means
@@ -181,6 +230,176 @@ public class Interp {
 
 	return result;
     }
+
+    
+    public synchronized HeclTask getEvent(String name) {
+	int n = timers.size();
+	Vector v = new Vector();
+	HeclTask t = null;
+	for(int i=0; i<n; ++i) {
+	    t = (HeclTask)timers.elementAt(i);
+	    if(name.equals(t.getName()))
+		return t;
+	}
+	n = idle.size();
+	for(int i=0; i<n; ++i) {
+	    t = (HeclTask)idle.elementAt(i);
+	    if(name.equals(t.getName()))
+		return t;
+	}
+	return null;
+    }
+    
+    public synchronized Vector getAllEvents() {
+	int n = timers.size();
+	Vector v = new Vector();
+	for(int i=0; i<n; ++i)
+	    v.addElement(timers.elementAt(i));
+	n = idle.size();
+	for(int i=0; i<n; ++i)
+	    v.addElement(timers.elementAt(i));
+	return v;
+    }
+    
+    public synchronized HeclTask addTimer(Thing timerThing,int millisecs) {
+	int n = timers.size();
+	long ts = System.currentTimeMillis()+millisecs;
+	HeclTask t = new HeclTask(timerThing, ts,TIMERPREFIX);
+	
+	int i;
+	for(i=0; i<n; ++i) {
+	    HeclTask other = (HeclTask)timers.elementAt(i);
+	    if(other.getGeneration() > ts)
+		break;
+	}
+	//System.err.println("Adding timer, time="+ts);
+	return addTask(timers,t,i);
+    }
+    
+
+    public void cancelTimer(String name) {
+	cancelTask(timers,name);
+    }
+    
+    public void cancelIdle(String name) {
+	cancelTask(idle,name);
+    }
+    
+    public void cancelAsync(String name) {
+	cancelTask(asyncs,name);
+    }
+    
+    public synchronized void cancelIdle(HeclTask idletask) {
+	idle.removeElement(idletask);
+    }
+    
+    
+    public boolean doOneEvent(int flags) {
+	if((flags & ALL_EVENTS) == 0)
+	    flags = ALL_EVENTS;
+
+	// The core of this procedure is an infinite loop, even though
+	// we only service one event.  The reason for this is that we
+	// may be processing events that don't do anything inside of Hecl.
+ 	while(true) {
+	    // First check for async events...
+	    HeclTask t = nextTask(asyncs,-1);
+	    if(t != null) {
+		return executeTask(t);
+	    }
+	    
+	    long now = System.currentTimeMillis();
+
+	    if((flags & TIMER_EVENTS) != 0) {
+		t = nextTask(timers,now);
+		if(t != null) {
+		    return executeTask(t);
+		}
+	    }
+
+	    // Determine maxblocktime
+	    maxblocktime = (flags & DONT_WAIT) != 0 ? 0 : 10000;
+	    synchronized(this) {
+		if(timers.size() > 0) {
+		    t = (HeclTask)timers.elementAt(0);
+		    maxblocktime = t.getGeneration() - now;
+		}
+	    }
+	    //System.err.println("maxblocktime="+maxblocktime);
+	    // this may reduce maxblocktime!
+	    if((flags & IDLE_EVENTS) != 0) {
+		serviceIdleTask();
+	    }
+
+	    if(maxblocktime < 0)
+		maxblocktime = 1000;
+	    
+	    if(maxblocktime > 0) {
+		synchronized (this) {
+		    try {
+			wait(maxblocktime);
+		    }
+		    catch (InterruptedException e) {
+			// it doesn't matter
+		    }
+		}
+	    } else
+		break;
+	}
+	return false;
+    }
+
+    public void waitForToken(String tokenname) throws HeclException {
+	boolean exists = false;
+	WaitToken token = null;
+	synchronized(this) {
+	    exists = waittokens.containsKey(tokenname);
+	    if(exists)
+		throw new HeclException("Wait token '"+tokenname+"' already exists.");
+	    token = new WaitToken();
+	    waittokens.put(tokenname,token);
+	}
+
+	// Endless loop, some event in the future should kick us off this loop
+	boolean b = true;
+	while(b) {
+	    // Carefully read/modify status information
+	    synchronized(this) {
+		b = token.waiting;
+	    }
+	    if(b) {
+		// Service one event
+		doOneEvent(Interp.ALL_EVENTS);
+	    }
+	}
+    }
+    
+    public void notifyToken(String tokenname) throws HeclException {
+	synchronized(this) {
+	    WaitToken token = (WaitToken)waittokens.get(tokenname);
+	    if(token == null)
+		throw new HeclException("No wait token '"+tokenname+"'.");
+	    token.waiting = false;
+	    waittokens.remove(tokenname);
+	}
+    }
+    
+    public void abort() {
+	running = false;
+	synchronized(this) {
+	    notify();
+	}
+    }
+    
+    public void run() {
+	//System.err.println("interp running...");
+	long now = System.currentTimeMillis();
+	while(running) {
+	    doOneEvent(ALL_EVENTS);
+	}
+	//System.err.println("interp stopped!");
+    }
+    
 
     /**
      * The <code>initCommands</code> method initializes all the built in
@@ -228,7 +447,8 @@ public class Interp {
      * @param newname a <code>String</code> value
      * @exception HeclException if an error occurs
      */
-    public void cmdRename(String oldname, String newname) throws HeclException {
+    public synchronized void cmdRename(String oldname, String newname)
+	throws HeclException {
 	Command tmp = (Command)commands.get(oldname);
 	if (tmp == null) {
             throw new HeclException("Command " + oldname + " does not exist");
@@ -241,7 +461,7 @@ public class Interp {
      * the Proc class.
      *
      */
-    public void stackIncr() {
+    public synchronized void stackIncr() {
         stackPush(new Hashtable());
     }
 
@@ -250,7 +470,7 @@ public class Interp {
      * commands like upeval can save it. If it's not saved, it's gone.
      *
      */
-    public Hashtable stackDecr() {
+    public synchronized Hashtable stackDecr() {
         return (Hashtable) stack.pop();
     }
 
@@ -259,7 +479,7 @@ public class Interp {
      * (probably saved via upeval) onto the stack frame.
      *
      */
-    public void stackPush(Hashtable vars) {
+    public synchronized void stackPush(Hashtable vars) {
         cacheversion++;
         stack.push(vars);
     }
@@ -318,7 +538,7 @@ public class Interp {
      * @exception HeclException
      *                if an error occurs
      */
-    public Thing getVar(String varname, int level) throws HeclException {
+    public synchronized Thing getVar(String varname, int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
 	//System.out.println("getvar: " + varname + " " + level + " " + lookup);
 
@@ -361,7 +581,7 @@ public class Interp {
      * @param value a <code>Thing</code> value
      * @param level an <code>int</code> value
      */
-    public void setVar(String varname, Thing value, int level) {
+    public synchronized void setVar(String varname, Thing value, int level) {
         Hashtable lookup = getVarhash(level);
 
 	/* Bump the cache number so that SubstThing.get refetches the
@@ -412,11 +632,12 @@ public class Interp {
 	unSetVar(varname.toString());
     }
 
-    public void unSetVar(String varname) throws HeclException {
+    public synchronized void unSetVar(String varname) throws HeclException {
         Hashtable lookup = getVarhash(-1);
 	/* Bump the cache number so that SubstThing.get refetches the
 	 * variable. */
-	if (lookup.containsKey(varname)) {
+	Thing value = (Thing)lookup.get(varname);
+	if (value != null) {
 	    cacheversion++;
 	    lookup.remove(varname);
 	} else {
@@ -462,7 +683,7 @@ public class Interp {
      *            an <code>int</code> value
      * @return a <code>boolean</code> value
      */
-    public boolean existsVar(String varname, int level) {
+    public synchronized boolean existsVar(String varname, int level) {
         Hashtable lookup = getVarhash(level);
         return lookup.containsKey(varname);
     }
@@ -474,7 +695,7 @@ public class Interp {
      * @param newresult
      *            a <code>Thing</code> value
      */
-    public void setResult(Thing newresult) {
+    public synchronized void setResult(Thing newresult) {
         result = newresult;
     }
 
@@ -484,7 +705,7 @@ public class Interp {
      *
      * @param newresult a <code>String</code> value
      */
-    public void setResult(String newresult) {
+    public synchronized void setResult(String newresult) {
 	if(newresult == null)
 	    newresult = "";
 	result = new Thing(newresult);
@@ -495,7 +716,7 @@ public class Interp {
      *
      * @param newresult a <code>long</code> value
      */
-    public void setResult(long newresult) {
+    public synchronized void setResult(long newresult) {
 	result = LongThing.create(newresult);
     }
 
@@ -505,7 +726,7 @@ public class Interp {
      *
      * @param newresult a <code>boolean</code> value
      */
-    public void setResult(boolean newresult) {
+    public synchronized void setResult(boolean newresult) {
 	result = new Thing(newresult ? IntThing.ONE : IntThing.ZERO);
     }
 
@@ -514,7 +735,7 @@ public class Interp {
      *
      * @return a <code>Thing</code> value
      */
-    public Thing getResult() {
+    public synchronized Thing getResult() {
         return result;
     }
 
@@ -535,4 +756,147 @@ public class Interp {
     public void clearError() {
         error = new Stack();
     }
+
+
+    /**
+     * <code>nextTask</code> extracts first element from given vector.
+     * This function operates in a synchronized manner on the argument
+     * <code>v</code>.
+     *
+     * @param v
+     * A <code>Vector</code> of tasks.
+     * @param until
+     * A value to compare the result of <code>getGeneration</code> of the
+     * <code>HeclTask</code>. If <code>until</code> is less than 0 or
+     * <code>getGeneration</code> is less than <code>until</code> for the
+     * first  element of <code>v</code>, the first task in the vector is
+     * returned, null otherwise.
+     */
+    protected synchronized HeclTask nextTask(Vector v,long until) {
+	HeclTask t = null;
+	
+	if(v.size() > 0) {
+	    t = (HeclTask)v.elementAt(0);
+	    //System.err.println("now="+ts+", fire="+t.getGeneration());
+	    if(until < 0 || t.getGeneration() <= until) {
+		v.removeElementAt(0);
+	    } else {
+		t = null;
+	    }
+	}
+	return t;
+    }
+    
+
+    /**
+     * Service at most one idle task of the idle task queue.
+     *
+     * @return a <code>boolean</code> indicatign that an idle task has been
+     * serviced (=true) or not (=false).
+     */
+    protected boolean serviceIdleTask() {
+	// The code below is trickier than it may look, for the following
+	// reasons:
+	//
+	// 1. New handlers can get added to the list while the current
+	//    one is being processed.  If new ones get added, we don't
+	//    want to process them during this pass through the list (want
+	//    to check for other work to do first).  This is implemented
+	//    using the generation number in the handler:  new handlers
+	//    will have a different generation than any of the ones currently
+	//    on the list.
+	// 2. The handler can call doOneEvent, so we have to remove
+	//    the handler from the list before calling it. Otherwise an
+	//    infinite loop could result.
+	// 3. cancelIdleCall can be called to remove an element from
+	//    the list while a handler is executing, so the list could
+	//    change structure during the call.
+	long oldgeneration;
+	synchronized(this) {
+	    if(idle.size()== 0) {
+		idlegeneration = 0;
+		return false;
+	    }
+	    oldgeneration = idlegeneration;
+	    ++idlegeneration;
+	}
+	HeclTask t = nextTask(idle,oldgeneration);
+	if(t != null)
+	    t.execute(this);
+	if(idle.size() > 0)
+	    maxblocktime = 0;
+	return true;
+    }
+    
+
+    /**
+     * Service at most one idle task of the idle task queue.
+     *
+     * @param v
+     * A <code>Vector</code> of tasks to add the task to.
+     * @param task
+     * The <code>HeclTask</code> to add.
+     * @param pos
+     * The </code>int</code> position of <code>v</code> where to add
+     * <code>task</code> being in the range from 0 to <code>v.size()</code>.
+     * -1 indicates to add <code>task</code> to the end of <code>v</code>.
+     *
+     * @return A <code>String</code> being the name of the inserted task.
+     */
+    private synchronized HeclTask addTask(Vector v,HeclTask task,int pos) {
+	if(pos < 0)
+	    v.addElement(task);
+	else
+	    v.insertElementAt(task,pos);
+	notify();
+	setResult(task.getName());
+	return task;
+    }
+    
+
+    /**
+     * Cancel a task of the specified name in the specified vector.
+     * The functions performs nothing when no task of the specified name is
+     * an element of the vector.
+     *
+     * @param v
+     * A vector of <code>HeclTask</code>s.
+     * @param name
+     * A <code>String</code> specifying the name of the task to be removed
+     * from <code>v</code>.
+     */
+    private synchronized void cancelTask(Vector v,String name) {
+	int n = v.size();
+	for(int i = 0; i<n; ++i) {
+	    HeclTask t = (HeclTask)v.elementAt(i);
+	    if(name.equals(t.getName())) {
+		v.removeElementAt(i);
+		return;
+	    }
+	}
+    }
+
+
+    /**
+     * Execute a <code>task</code>.
+     *
+     * @return Always the boolean value <code>true</code> to indicate that a
+     * task has been serviced.
+     */
+    private boolean executeTask(HeclTask task) {
+	try {
+	    task.execute(this);
+	}
+	catch(Exception e) {
+	    // Nothing to do. It is expected that each task handles
+	    // its own locally exception but this block is to ensure
+	    // that the queue continues to operate
+	}
+	return true;
+    }
+
+    protected static class WaitToken {
+	public volatile boolean waiting = true;
+    }
+    
 }

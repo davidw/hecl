@@ -24,7 +24,9 @@ import javax.microedition.midlet.MIDlet;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
-import org.hecl.http.*;
+//import org.hecl.http.*;
+import org.hecl.net.Base64Cmd;
+import org.hecl.net.HttpCmd;
 import org.hecl.rms.*;
 
 
@@ -108,8 +110,10 @@ public class Hecl extends MIDlet {
 	    started = true;
 	    try {
 		interp = new Interp();
-		new HttpModule().loadModule(interp);
-		new RMSModule().loadModule(interp);
+		Base64Cmd.load(interp);
+		HttpCmd.load(interp);
+		//new HttpModule().loadModule(interp);
+		//new RMSModule().loadModule(interp);
 	    } catch (Exception e) {
 		f.append(e.toString());
 	    }
