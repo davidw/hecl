@@ -24,7 +24,8 @@ import org.hecl.ListThing;
 import org.hecl.HeclException;
 import org.hecl.HeclTask;
 
-import org.hecl.files.*;
+import org.hecl.files.FileCmds;
+import org.hecl.files.HeclFile;
 //import org.hecl.http.HttpModule;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
@@ -43,11 +44,18 @@ public class Hecl {
      * @param args a <code>String[]</code> value
      */
     public static void main(String[] args) {
+	Interp interp = null;
+	try {
+	    interp = new Interp();
+	} catch (HeclException he) {
+	    System.err.println("Error initializing the Hecl interpreter!");
+	    System.exit(1);
+	}
+
         try {
             int i;
-            Interp interp = new Interp();
 	    /* Add the standard packages in. */
-	    //new HeclFile().loadModule(interp);
+	    FileCmds.load(interp);
 	    //new HttpModule().loadModule(interp);
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
@@ -68,6 +76,8 @@ public class Hecl {
         } catch (Exception e) {
             e.printStackTrace();
         }
+	interp.abort();
+	System.exit(0);
     }
 
     static final String PROMPT = "hecl> ";
@@ -99,8 +109,8 @@ public class Hecl {
 
 	    try {
 		Thing res = interp.evalAsyncAndWait(new Thing(morebuffer + line));
-		if(res != null
-		   && 0 != Compare.compareString(res, Thing.EMPTYTHING)) {
+		if(res != null &&
+		   0 != Compare.compareString(res, Thing.EMPTYTHING)) {
 		    System.out.println(interp.result);
 		}
 	    }

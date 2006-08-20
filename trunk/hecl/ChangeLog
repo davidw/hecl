@@ -1,40 +1,31 @@
-2006-08-17  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-20  David N. Welton  <davidw@dedasys.com>
 
-	* net/org/hecl/*.java:
-	Added new http implementation. Inteneded to replace existing one,
-	so I already changed build.xml to use it. Maybe existing apps get
-	broken, so I kept the old stuff where it was.
-	
-	* commandline/Hecl.java: 
-	* commandline/StandaloneHecl.java: Now uses asyncEvalAndWait to
-	evaluate script code in the interpreter thread.
+	* commandline/Hecl.java: Re-added file commands, ensure that Hecl
+	exits after evaluating a hecl file.
 
-	* core/org/hecl/InterpCmds.java: 
-	New command after, ngerror, twait, tnotify.
+2006-08-17  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
 
-	* core/org/hecl/Interp.java: 
-	Made Hecl interpreter a thread, added async, idle, timer
-	facilities and an event loop. Hecl is now able to handle
-	asynchronious evaluation via asyncEval, asyncEvalAndWait as well
-	as timers (addTimer) and idle (addIdle).
-	
-	* core/org/hecl/HeclTask.java: Nw class to deal with Hecl
-	evaluation tasks. Jeavily used by the interpreter and required for
-	async evaluation.
+	* new http code
 
-	* j2me/Hecl.java: Now uses new http/base64 code.
-
-	* core/org/hecl/Thing.java: Added final global EMPTYTHING. Bautification.
-
-2006-08-10  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
-
-	* core/org/hecl/Thing.java: Removed unnecessary import.
-
-	* core/org/hecl/HashCmds.java (new command): Added new command
-	hcontains to check whether hash table contains a an entry for a
-	specific key.
+	* async evaluation in Hecl interpreter (including idle, timer,
+	async, wait/notify).
 
 2006-07-08  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: UPCMD is now simpler becaus it
+	hands everything off to Interp.eval.
+
+	* core/org/hecl/Interp.java: Added a new eval method that takes a
+	stack level to evaluate the code at.  Used by upeval.
+
+	* tests/upeval.hcl: Test upeval ?level? script.
+
+	* tests/global.hcl: The global-3 test works now thanks to an
+	updated upeval command.
+
+	* docs/hecl.xml: Updated upeval documentation.
+
+	* docs/jdocs: Updated javadocs.
 
 	* core/org/hecl/InterpCmds.java (global): Changed global command
 	to set a flag indicating that the Thing is to be shared at the
