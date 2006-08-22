@@ -27,7 +27,7 @@ import org.hecl.RealThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-class FileCmds extends Operator {
+public class FileCmds extends Operator {
     public static final int CD = 1;
     public static final int CURRENTFILE = 2;
     public static final int READALL = 3;

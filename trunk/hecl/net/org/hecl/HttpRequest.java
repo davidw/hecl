@@ -30,7 +30,9 @@ import java.util.Hashtable;
 //#ifdef ant:j2me
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
+//#ifndef ant:cldc1.0
 import javax.microedition.io.HttpsConnection;
+//#endif
 //#else
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -74,18 +76,24 @@ public class HttpRequest extends Thread {
 	    is = null;
 	    os = null;
 	    conn = null;
+//#ifndef ant:cldc1.0
 	    secure = url.toLowerCase().startsWith("https");
+//#endif
 
 //#ifdef ant:j2me 
-	    if(false)
+	    if(false) {
 		conn = (HttpConnection)Connector.open(url,Connector.READ_WRITE,true);
-	    else {
+	    } else {
+//#ifndef ant:cldc1.0
 		conn = secure ?
 		    (HttpsConnection)
 		    Connector.open(url,Connector.READ_WRITE, true) :
 		    (HttpConnection)
 		    Connector.open(url,Connector.READ_WRITE, true);
-		
+//#else
+		conn = (HttpConnection)
+		    Connector.open(url,Connector.READ_WRITE, true);
+//#endif
 	    }
 //#else
 	    URL myurl = new URL(url);
@@ -257,7 +265,7 @@ public class HttpRequest extends Thread {
 	public HttpURLConnection conn;
 //#endif
 	int state;
-	boolean secure;
+	boolean secure = false;
 	InputStream is;
 	OutputStream os;
     }

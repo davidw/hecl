@@ -1,3 +1,11 @@
+2006-08-22  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/FileCmds.java: This class needs to be
+	public in order to be visible to Hecl.java.
+
+	* net/org/hecl/HttpRequest.java (http): Filter out 'https' stuff
+	from MIDP1.0 version.
+
 2006-08-20  David N. Welton  <davidw@dedasys.com>
 
 	* commandline/Hecl.java: Re-added file commands, ensure that Hecl
