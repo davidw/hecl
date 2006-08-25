@@ -40,7 +40,7 @@ public class StandaloneHecl {
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
             interp.evalAsyncAndWait(new Thing(script));
-	    interp.abort();
+	    interp.terminate();
         } catch (Exception e) {
             e.printStackTrace();
         }
