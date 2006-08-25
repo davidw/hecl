@@ -76,7 +76,7 @@ public class Hecl {
         } catch (Exception e) {
             e.printStackTrace();
         }
-	interp.abort();
+	interp.terminate();
 	System.exit(0);
     }
 
@@ -109,13 +109,16 @@ public class Hecl {
 
 	    try {
 		Thing res = interp.evalAsyncAndWait(new Thing(morebuffer + line));
-		if(res != null &&
-		   0 != Compare.compareString(res, Thing.EMPTYTHING)) {
+		if(res != null
+		   && 0 != Compare.compareString(res, Thing.EMPTYTHING)) {
 		    System.out.println(interp.result);
 		}
 	    }
 	    catch (HeclException he) {
 		if (he.code.equals("PARSE_ERROR")) {
+		    //System.err.println("paser error: "+he.getMessage());
+		    //he.printStackTrace();
+		    
 		    /* When we need more input, stash the current
 		     * input in morebuffer, and change the prompt. */
 		    prompt = PROMPT2;
@@ -130,7 +133,7 @@ public class Hecl {
 		e.printStackTrace();
 	    }
 	}
-	interp.abort();
+	interp.terminate();
 	System.exit(0);
     }
 }
