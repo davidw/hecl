@@ -58,71 +58,51 @@ class ListCmds extends Operator {
 		return new IntThing(list.size());
 
 	    case LINDEX:
-		list = ListThing.get(argv[1]);
-		idx = NumberThing.asNumber(argv[2]).intValue();
-		if (idx >= list.size()) {
-		    interp.setResult("");
-		} else {
-		    /* Count backwards from the end of the list. */
-		    if (idx < 0) {
-			idx += list.size();
-			if (idx < 0) {
-			    idx = 0;
-			}
-		    }
-		    interp.setResult((Thing)list.elementAt(idx));
-		}
-		break;
+	      ;
+	      {
+		  Thing res = argv[1];
+		  for(int i = 2; i<argv.length; ++i) {
+		      list = ListThing.get(res);
+		      last = list.size();
+		      idx = getIndex(argv[i],last);
+		      if (idx >= last) {
+			  list = new Vector();
+			  res = ListThing.create(list);
+		      } else {
+			  res = (Thing)list.elementAt(idx);
+		      }
+		  }
+		  interp.setResult(res);
+	      }
+	      break;
 
 	    case LINSERT:
 		list = ListThing.get(argv[1]);
-		idx = NumberThing.asNumber(argv[2]).intValue();
-		if (idx < 0) {
-		    idx += list.size();
-		    if (idx < 0) {
-			idx = 0;
-		    }
-		}
-		list.insertElementAt(argv[3], idx);
-
+		list.insertElementAt(argv[3], getIndex(argv[2],list.size()));
 		argv[1].setVal(new ListThing(list));
 		interp.setResult(argv[1]);
 		break;
 
 	    case LSET:
 		list = ListThing.get(argv[1]);
-		idx = NumberThing.asNumber(argv[2]).intValue();
-		if (idx < 0) {
-		    idx += list.size();
-		    if (idx < 0) {
-			idx = 0;
-		    }
-		}
+		idx = getIndex(argv[2],list.size());
 		if (argv.length < 4) {
 		    list.removeElementAt(idx);
 		} else {
 		    list.setElementAt(argv[3], idx);
 		}
-
 		argv[1].setVal(new ListThing(list));
 		interp.setResult(argv[1]);
 		break;
 
 	    case LRANGE:
 		list = ListThing.get(argv[1]);
-		int first = NumberThing.asNumber(argv[2]).intValue();
-		last = NumberThing.asNumber(argv[3]).intValue();
 		int ls = list.size();
-
-		if (first < 0) {
-		    first += ls;
-		}
-		if (last < 0) {
-		    last += ls;
-		}
+		int first = getIndex(argv[2],ls);
+		last = getIndex(argv[3],ls);
 
 		if (last <= first || last >= ls || first >= ls) {
-		    interp.setResult("");
+		    interp.setResult(Thing.EMPTYTHING);
 		}
 		Vector resultv = new Vector();
 		for (int i = first; i <= last; i++) {
@@ -217,7 +197,22 @@ class ListCmds extends Operator {
 	return null;
     }
 
-
+    public static int getIndex(Thing t,int llen) throws HeclException {
+	String s = t.toString();
+	if(s.equals("end"))
+	    return llen-1;
+	if(s.equals("start"))
+	    return 0;
+	int idx = IntThing.get(t);
+	if (idx < 0) {
+	    idx += llen;
+	    if (idx < 0) {
+		idx = 0;
+	    }
+	}
+	return idx;
+    }
+    
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }
@@ -237,7 +232,7 @@ class ListCmds extends Operator {
 	cmdtable.put("list", new ListCmds(LIST,-1,-1));
         cmdtable.put("llen", new ListCmds(LLEN,1,1));
         cmdtable.put("lappend", new ListCmds(LAPPEND,1,-1));
-        cmdtable.put("lindex", new ListCmds(LINDEX,2,2));
+        cmdtable.put("lindex", new ListCmds(LINDEX,2,-1));
         cmdtable.put("linsert", new ListCmds(LINSERT,3,3));
         cmdtable.put("lset", new ListCmds(LSET,2,3));
         cmdtable.put("lrange", new ListCmds(LRANGE,3,3));
