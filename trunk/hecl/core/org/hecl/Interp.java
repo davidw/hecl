@@ -384,7 +384,12 @@ public class Interp implements Runnable {
 	}
     }
     
-    public void abort() {
+
+    /**
+     * Terminate the interpretert thread in a graceful manner. The thread will
+     * eventually finish its run-method.  
+     */
+    public void terminate() {
 	running = false;
 	synchronized(this) {
 	    notify();
