@@ -1,3 +1,15 @@
+2006-08-25  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* net/org/hecl/HttpRequest.java: Beautification, debug output.
+
+	* core/org/hecl/ListCmds.java: Unified index treatment, allowed
+	start/end and multiple indices for nested lists.
+
+	* commandline/StandaloneHecl.java: 
+	* commandline/Hecl.java: Properly uses Interp.terminate().
+
+	* core/org/hecl/Interp.java: Renamed abort->terminate.
+
 2006-08-22  David N. Welton  <davidw@dedasys.com>
 
 	* files/org/hecl/files/FileCmds.java: This class needs to be
