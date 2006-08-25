@@ -106,13 +106,13 @@ public class HttpRequest extends Thread {
 	public void connect(String rm, Hashtable rfields,String qdata)
 	    throws IOException {
 	    conn.setRequestMethod(rm);
-	    System.out.println("requestMethod="+rm);
+	    //System.err.println("requestMethod="+rm);
 	    // Set the request fields.
 	    Enumeration e = rfields.keys();
-	    System.out.println("--- REQUEST -------------------------------------");
+	    //System.err.println("--- REQUEST -------------------------------------");
 	    while (e.hasMoreElements()) {
 		String key = (String)e.nextElement();
-		System.out.println("key: " + key + ", value: " + (String)rfields.get(key));
+		//System.err.println("key: " + key + ", value: " + (String)rfields.get(key));
 		conn.setRequestProperty(key, (String)rfields.get(key));
 	    }
 
@@ -130,7 +130,7 @@ public class HttpRequest extends Thread {
 //#else
 		os = conn.getOutputStream();
 //#endif
-		System.out.println("writing " + qdata.getBytes(defcharset).length + " bytes");
+		//System.err.println("writing " + qdata.getBytes(defcharset).length + " bytes");
 		os.write(qdata.getBytes(defcharset));
 		os.flush();
 		os.close();
@@ -169,7 +169,7 @@ public class HttpRequest extends Thread {
 		++idx;
 	    }
 //#endif
-	    System.out.println("--- RESPONSE HEADER-----------------");
+	    //System.err.println("--- RESPONSE HEADER-----------------");
 	    String key = "";
 	    while (key != null) {
 //#ifdef ant:j2me
@@ -178,7 +178,7 @@ public class HttpRequest extends Thread {
 		    key = conn.getHeaderFieldKey(idx++);
 		    if (key != null) {
 			tab.put(key.toLowerCase(), conn.getHeaderField(key));
-			//System.out.println("key: " + key + ", value: " + conn.getHeaderField(key));
+			//System.err.println("key: " + key + ", value: " + conn.getHeaderField(key));
 		    }
 //#ifdef ant:j2me
 		}
@@ -322,7 +322,7 @@ public class HttpRequest extends Thread {
 	rc = -1;
 	error = null;
 	inData = null;
-	//System.out.println("urlstr="+urlstr);
+	//System.err.println("urlstr="+urlstr);
 	try {
 	    co = new MyHttpConn(urlstr);
 	}
@@ -335,9 +335,9 @@ public class HttpRequest extends Thread {
 	try {
 	    co.connect(requestMethod,requestFields,qdata);
 	    status = CONNECTED;
-	    //System.out.println("Connected");
+	    //System.err.println("Connected");
 	    rc = co.getResponseCode();
-	    //System.out.println("rc="+rc);
+	    //System.err.println("rc="+rc);
 	    if(rc == -1) {
 		status = ERROR;
 		return;
@@ -392,7 +392,9 @@ public class HttpRequest extends Thread {
 		    break;
 		}
 		try {
+		    //System.err.println("trying to decode with charset="+charset);
 		    body = new String(inData,charset);
+		    //System.err.println("decode success");
 		    break;
 		}
 		catch(Exception e2) {
