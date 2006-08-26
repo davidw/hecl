@@ -110,7 +110,7 @@ class Stanza {
 	 * commands. */
 	boolean saveit = false;
 
-	realthing = argv[0].val;
+	realthing = argv[0].getVal();
 	if (command == null) {
 	    String cmdName = null;
 
@@ -157,7 +157,7 @@ class Stanza {
 	 */
 	try {
 	    for (int i = 0; i < argv.length; i++) {
-		realthing = argv[i].val;
+		realthing = argv[i].getVal();
 		if (realthing instanceof GroupThing) {
 		    newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
 		    newargv[i].copy = true;
@@ -227,16 +227,17 @@ class Stanza {
 	StringBuffer out = new StringBuffer(argv[0].toString());
 	for (int i = 1; i < argv.length; i++) {
 	    out.append(" ");
-	    if (argv[i].val instanceof CodeThing) {
+	    RealThing rt = argv[i].getVal();
+	    if (rt instanceof CodeThing) {
 		String avs = argv[i].toString();
-		if (((CodeThing)argv[i].val).marksubst) {
+		if (((CodeThing)rt).marksubst) {
 		    out.append("[" + avs + "]");
 		} else {
 		    out.append("{" + avs + "}");
 		}
-	    } else if (argv[i].val instanceof GroupThing) {
+	    } else if (rt instanceof GroupThing) {
 		out.append("\"" + argv[i].toString() + "\"");
-	    } else if (argv[i].val instanceof StringThing) {
+	    } else if (rt instanceof StringThing) {
 		out.append(ListThing.toListString(argv[i]));
 	    } else {
 		out.append(argv[i].toString());

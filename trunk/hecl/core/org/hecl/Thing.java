@@ -27,11 +27,11 @@ package org.hecl;
 public class Thing extends Object {
     public static final Thing EMPTYTHING = new Thing("");
     
-    public RealThing val;
+    private RealThing val;
 
     /* This flag is used by Stanza to indicate whether a Thing should
      * be copied if something tries to write to it.  */
-    public boolean copy = false;
+    protected boolean copy = false;
 
     /* Refers to a global variable? */
     public boolean global = false;

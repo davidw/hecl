@@ -38,9 +38,13 @@ public abstract class NumberThing implements RealThing {
      * @return a <code>boolean</code> value
      */
     public static boolean isNumber(Thing t) {
-	return t.val instanceof NumberThing;
+	return t.getVal() instanceof NumberThing;
     }
 
+    public static boolean isNumber(RealThing rt) {
+	return rt instanceof NumberThing;
+    }
+    
     /**
      * <code>isIntegral</code> returns true if Thing t is a whole
      * number (an int or long), or false if it isn't.
@@ -49,7 +53,8 @@ public abstract class NumberThing implements RealThing {
      * @return a <code>boolean</code> value
      */
     public static boolean isIntegral(Thing t) {
-	return isNumber(t) && ((NumberThing)t.val).isIntegral();
+	RealThing rt = t.getVal();
+	return isNumber(rt) && ((NumberThing)rt).isIntegral();
     }
 
 
@@ -61,7 +66,8 @@ public abstract class NumberThing implements RealThing {
      * @return a <code>boolean</code> value
      */
     public static boolean isFractional(Thing t) {
-	return isNumber(t) && ((NumberThing)t.val).isFractional();
+	RealThing rt = t.getVal();
+	return isNumber(rt) && ((NumberThing)rt).isFractional();
     }
 
     public abstract boolean isIntegral();
@@ -127,7 +133,7 @@ public abstract class NumberThing implements RealThing {
      */
     public static NumberThing asNumber(Thing t) {
 	if(isNumber(t))
-	    return (NumberThing)(t.val);
+	    return (NumberThing)(t.getVal());
 	String s = t.toString();
 	try {
 	    return new IntThing(s);

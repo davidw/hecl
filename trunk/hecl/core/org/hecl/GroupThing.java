@@ -71,7 +71,7 @@ public class GroupThing implements RealThing {
      * @param thing a <code>Thing</code> value
      */
     private static void setGroupFromAny(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (!(realthing instanceof GroupThing)) {
             Vector group = new Vector();
@@ -93,8 +93,7 @@ public class GroupThing implements RealThing {
      */
     public static Vector get(Thing thing) throws HeclException {
         setGroupFromAny(thing);
-        GroupThing group = (GroupThing) thing.val;
-        return group.val;
+        return ((GroupThing)thing.getVal()).val;
     }
 
     /**

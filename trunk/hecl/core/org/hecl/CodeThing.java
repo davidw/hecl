@@ -58,7 +58,7 @@ public class CodeThing implements RealThing {
      */
     private static void setCodeFromAny(Interp interp, Thing thing)
             throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 	CodeThing newthing;
         /* FIXME - SubstThing? */
 
@@ -96,7 +96,7 @@ public class CodeThing implements RealThing {
     public static CodeThing get(Interp interp, Thing thing)
             throws HeclException {
         setCodeFromAny(interp, thing);
-        return (CodeThing) thing.val;
+        return (CodeThing)thing.getVal();
     }
 
 
@@ -134,10 +134,10 @@ public class CodeThing implements RealThing {
      */
     protected static Thing doCodeSubst(Interp interp, Thing thing)
             throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
         Thing newthing = null;
 
-        if (((CodeThing) realthing).marksubst) {
+        if (((CodeThing)realthing).marksubst) {
             interp.eval(thing);
             newthing = interp.result;
         } else {
@@ -175,7 +175,7 @@ public class CodeThing implements RealThing {
      */
     protected static Thing doGroupSubst(Interp interp, Thing thing)
             throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
         StringBuffer result = new StringBuffer("");
         Vector v = GroupThing.get(thing);
 
@@ -184,7 +184,7 @@ public class CodeThing implements RealThing {
 	for (Enumeration e = v.elements(); e.hasMoreElements();) {
 	    t = (Thing) e.nextElement();
 
-	    realthing = t.val;
+	    realthing = t.getVal();
 	    if (realthing instanceof GroupThing) {
 		result.append(doGroupSubst(interp, t).toString());
 	    } else if (realthing instanceof SubstThing) {

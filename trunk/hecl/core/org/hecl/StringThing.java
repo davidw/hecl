@@ -67,9 +67,9 @@ public class StringThing implements RealThing {
      * @throws HeclException
      */
     private static void setStringFromAny(Thing thing) {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
         if (!(realthing instanceof StringThing)) {
-            thing.val = new StringThing(((Thing) thing).toString());
+            thing.setVal(new StringThing(thing.toString()));
         }
     }
 

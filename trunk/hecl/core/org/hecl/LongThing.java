@@ -107,7 +107,7 @@ public class LongThing extends FractionalThing {
      *                if an error occurs
      */
     private static void set(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (realthing instanceof LongThing)
 	    return;
@@ -132,7 +132,7 @@ public class LongThing extends FractionalThing {
      */
     public static long get(Thing thing) throws HeclException {
         set(thing);
-        return ((LongThing)thing.val).longValue();
+        return ((LongThing)thing.getVal()).longValue();
     }
 
 

@@ -90,7 +90,7 @@ public class ListThing implements RealThing {
      *                if an error occurs
      */
     private static void setListFromAny(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (realthing instanceof ListThing) {
             /* Nothing to be done. */
@@ -126,7 +126,7 @@ public class ListThing implements RealThing {
      */
     public static Vector get(Thing thing) throws HeclException {
         setListFromAny(thing);
-        ListThing getlist = (ListThing) thing.val;
+        ListThing getlist = (ListThing)thing.getVal();
 
 	/* If the thing is slated for copying, it's elements should be
 	 * as well. */
@@ -166,16 +166,71 @@ public class ListThing implements RealThing {
         String elementstring = thing.toString();
         StringBuffer resbuf = new StringBuffer();
 
-        if (elementstring.indexOf(' ') > 0) {
-            resbuf.append("{");
+        if (elementstring.indexOf(' ') >= 0) {
+            resbuf.append('{');
             resbuf.append(elementstring);
-            resbuf.append("}");
+            resbuf.append('}');
         } else {
             resbuf.append(elementstring);
         }
+	System.err.println("toListString: >"+elementstring+"< --> " + resbuf.toString());
         return resbuf.toString();
     }
 
+    static final int USE_BRACES = 1;
+    static final int DONT_USE_BRACES = 2;
+    static final int BRACES_UNMATCHED = 4;
+    
+    static int scanElement(Thing t) {
+	String s = t.toString();
+	int flags = 0;
+	int n = s.length();
+	char ch;
+	
+	if(n == 0 || (((ch = s.charAt(0)) == '{') || ch == '}'))
+	    flags |= USE_BRACES;
+
+	int nestinglevel = 0;
+	for(int i=0; i<n; ++i) {
+	    switch (s.charAt(i)) {
+	      case '{':
+		++nestinglevel;
+		break;
+	      case '}':
+		--nestinglevel;
+		if (nestinglevel < 0) {
+		    flags |= DONT_USE_BRACES|BRACES_UNMATCHED;
+		}
+		break;
+	      case '[':
+	      case '$':
+	      case ';':
+	      case ' ':
+	      case '\f':
+	      case '\n':
+	      case '\r':
+	      case '\t':
+	      case 0x0b:		    // vertical tab
+		flags |= USE_BRACES;
+		break;
+	      case '\\':
+		if ((i+1 == n) || (s.charAt(i+1) == '\n')) {
+		    flags = DONT_USE_BRACES | BRACES_UNMATCHED;
+		} else {
+		    int size=5;
+		    //Tcl_UtfBackslash(p, &size, NULL);
+		    i += size-1;
+		    flags |= USE_BRACES;
+		}
+		break;
+	    }
+	}
+	if (nestinglevel != 0) {
+	    flags = DONT_USE_BRACES | BRACES_UNMATCHED;
+	}
+	return flags;
+    }
+    
     /**
      * <code>getStringRep</code> returns a string representation of a
      * ListThing.
@@ -183,18 +238,22 @@ public class ListThing implements RealThing {
      * @return a <code>String</code> value
      */
     public String getStringRep() {
-        StringBuffer resbuf = new StringBuffer("");
         int sz = val.size();
-        int i = 0;
-
-        if (sz > 0) {
-	    for (i = 0; i < sz - 1; i++) {
-		resbuf.append(toListString((Thing) val.elementAt(i)));
-		resbuf.append(" ");
-	    }
-	    resbuf.append(toListString((Thing) val.elementAt(i)));
-        }
-
+	if(sz == 0)
+	    return "";
+	int i = 0;
+	int[] flags = new int[sz];
+	for(i=0; i<sz; ++i) {
+	    Thing elem = (Thing)val.elementAt(i);
+	    flags[i] = scanElement(elem);
+	}
+	
+        StringBuffer resbuf = new StringBuffer();
+	for (; i < sz - 1; i++) {
+	    resbuf.append(toListString((Thing)val.elementAt(i)));
+	    resbuf.append(" ");
+	}
+	resbuf.append(toListString((Thing) val.elementAt(i)));
         return resbuf.toString();
     }
 }

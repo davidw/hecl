@@ -73,14 +73,13 @@ public class ObjectThing implements RealThing {
      *                if an error occurs
      */
     public static Object get(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
 	if (!(realthing instanceof ObjectThing)) {
 	    throw new HeclException("cannot transform " + thing.toString() +
 				    " into an ObjectThing");
 	}
-	ObjectThing retobj = (ObjectThing)thing.val;
-        return retobj.val;
+	return ((ObjectThing)realthing).val;
     }
 
     /**

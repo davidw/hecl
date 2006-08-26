@@ -60,7 +60,7 @@ public class PrintThing {
      *                if an error occurs
      */
     public static void printThing(Thing t, int depth) throws HeclException {
-        RealThing rt = t.val;
+        RealThing rt = t.getVal();
         if (rt instanceof IntThing) {
             System.out.println(ws(depth * 4) + "INT: " + IntThing.get(t) + " (copy: " + t.copy +")");
         } else if (rt instanceof StringThing) {

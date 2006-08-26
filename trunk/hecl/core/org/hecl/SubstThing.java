@@ -58,7 +58,7 @@ public class SubstThing implements RealThing {
      */
     private static void setSubstFromAny(Interp interp, Thing thing)
             throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (realthing instanceof SubstThing) {
             /* Don't need to modify it. */
@@ -79,7 +79,7 @@ public class SubstThing implements RealThing {
      */
     public static Thing get(Interp interp, Thing thing) throws HeclException {
         setSubstFromAny(interp, thing);
-        SubstThing getcopy = (SubstThing) thing.val;
+        SubstThing getcopy = (SubstThing)thing.getVal();
 
         if (getcopy.cacheversion != interp.cacheversion) {
             getcopy.cacheversion = interp.cacheversion;

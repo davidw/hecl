@@ -103,14 +103,14 @@ public class IntThing extends IntegralThing {
      *                if an error occurs
      */
     private static void set(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (realthing instanceof IntThing)
 	    return;
 
-	if(NumberThing.isNumber(thing)) {
+	if(NumberThing.isNumber(realthing)) {
 	    // It's already a number
-	    thing.setVal(new IntThing(((IntThing)realthing).intValue()));
+	    thing.setVal(new IntThing(((NumberThing)realthing).intValue()));
 	} else {
             /* If it's not an intthing already, we make it from its
 	     * string rep. */

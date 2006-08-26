@@ -99,7 +99,7 @@ public class HashThing implements RealThing {
      *                if an error occurs
      */
     private static void setHashFromAny(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
         Vector list = null;
         HashThing newthing = null;
 
@@ -126,7 +126,7 @@ public class HashThing implements RealThing {
      */
     public static Hashtable get(Thing thing) throws HeclException {
         setHashFromAny(thing);
-        HashThing gethash = (HashThing) thing.val;
+        HashThing gethash = (HashThing) thing.getVal();
 
 	/* Like ListThings, if we are slated to be copied, then make
 	 * sure our elements are as well. */

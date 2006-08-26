@@ -102,12 +102,12 @@ class DoubleThing extends FractionalThing {
      *                if an error occurs
      */
     private static void set(Thing thing) throws HeclException {
-        RealThing realthing = thing.val;
+        RealThing realthing = thing.getVal();
 
         if (realthing instanceof DoubleThing)
 	    return;
 
-	if(NumberThing.isNumber(thing)) {
+	if(NumberThing.isNumber(realthing)) {
 	    // It's already a number
 	    thing.setVal(new DoubleThing(((NumberThing)realthing).doubleValue()));
 	} else {
@@ -127,7 +127,7 @@ class DoubleThing extends FractionalThing {
      */
     public static double get(Thing thing) throws HeclException {
         set(thing);
-	return ((DoubleThing)thing.val).doubleValue();
+	return ((DoubleThing)thing.getVal()).doubleValue();
     }
 
 
