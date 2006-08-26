@@ -118,7 +118,7 @@ class InterpCmds extends Operator {
 		    return new ListThing(results);
 		} else if (subcmd.equals("proccode")) {
 		    Proc p = (Proc)interp.commands.get(argv[2].toString());
-		    return p.getCode().val;
+		    return p.getCode().getVal();
 		}
 		break;
 
@@ -273,7 +273,7 @@ class InterpCmds extends Operator {
 		return new LongThing(new Date().getTime() - then);
 
 	    case CLASSINFO:
-		return new StringThing("<"+argv[1].val.thingclass()+">");
+		return new StringThing("<"+argv[1].getVal().thingclass()+">");
 
 	    default:
 		throw new HeclException("Unknown interp command '"

@@ -1,3 +1,24 @@
+2006-08-26  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Thing.java:
+	Member access change: val private, copy protected.
+
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/DoubleThing.java: 
+	* core/org/hecl/GroupThing.java:
+	* core/org/hecl/HashThing.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/IntThing.java: 
+	* core/org/hecl/ListThing.java: 
+	* core/org/hecl/LongThing.java: 
+	* core/org/hecl/ObjectThing.java: 
+	* core/org/hecl/PrintThing.java: 
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/StringThing.java: 
+	* core/org/hecl/SubstThing.java: 
+	* core/org/hecl/NumberThing.java: 
+	Now use Thing{s,g}etVal();
+
 2006-08-25  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* net/org/hecl/HttpRequest.java: Beautification, debug output.
