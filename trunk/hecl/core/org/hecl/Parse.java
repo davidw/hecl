@@ -405,6 +405,7 @@ public class Parse {
         int level = 1;
         char ldelim, rdelim;
         char ch;
+	char lastchar = 0;
 
         if (block == true) {
             ldelim = '{';
@@ -420,11 +421,14 @@ public class Parse {
 		throw new HeclException("Unbalanced " +
 		    (block ? "{}" : "[]"), "PARSE_ERROR");
             }
-            if (ch == ldelim) {
-                level++;
-            } else if (ch == rdelim) {
-                level--;
-            }
+
+	    if (block || lastchar != '\\') {
+		if (ch == ldelim) {
+		    level++;
+		} else if (ch == rdelim) {
+		    level--;
+		}
+	    }
 
 	    // || ch == '\r'
 	    if (ch == '\n') {
@@ -456,6 +460,9 @@ public class Parse {
             } else {
                 appendToCurrent(ch);
             }
+
+	    /* Save the last character viewed. */
+	    lastchar = ch;
         }
     }
 
@@ -523,6 +530,7 @@ public class Parse {
                     return;
                 case '\\' :
 		    if (parseEscape(state)) return;
+		    break;
                 default :
                     appendToCurrent(ch);
                     break;
@@ -555,9 +563,9 @@ public class Parse {
 		}
 	    case '\n':
 		return true;
-	  case 'r':
-	    appendToCurrent((char)0x0d);
-	    break;
+	    case 'r':
+		appendToCurrent((char)0x0d);
+		break;
 	    case 'n':
 		appendToCurrent(eol[0]);
 //#ifdef ant:j2se

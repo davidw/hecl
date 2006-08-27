@@ -1,3 +1,17 @@
+2006-08-28  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Make parseBlockOrCommand keep track of
+	backslashes.  NOTE that this is not enough... [] commands also
+	need to be aware of { [ }, for instance, in their arguments when
+	doing parseBlockOrCommand.
+
+	* core/org/hecl/ParseList.java: Ignore special characters in
+	parseWord, because to even get here, they had to have been parsed
+	at least once by something else.
+
+	* core/org/hecl/ListThing.java: Reverted to old version for the
+	moment, to test a different approach.
+
 2006-08-26  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* core/org/hecl/Thing.java:

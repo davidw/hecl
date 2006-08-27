@@ -26,8 +26,7 @@ public class ParseList extends Parse {
     /**
      * Creates a new <code>ParseList</code> instance.
      *
-     * @param in_in
-     *            a <code>String</code> value
+     * @param in_in a <code>String</code> value
      */
     public ParseList(String in_in) {
         in = in_in;
@@ -39,8 +38,7 @@ public class ParseList extends Parse {
      * <code>parseLine</code> parses a line of Hecl code.
      *
      * @param state a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public void parseLine(ParseState state) throws HeclException {
         char ch;
@@ -85,10 +83,8 @@ public class ParseList extends Parse {
      * <code>parseText</code> parses some text, such as that enclosed in
      * quotes "".
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     public void parseText(ParseState state) throws HeclException {
         char ch;
@@ -113,10 +109,8 @@ public class ParseList extends Parse {
     /**
      * <code>parseWord</code> parses a plain Hecl word.
      *
-     * @param state
-     *            a <code>ParseState</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param state a <code>ParseState</code> value
+     * @exception HeclException if an error occurs
      */
     public void parseWord(ParseState state) throws HeclException {
         char ch;
@@ -128,26 +122,25 @@ public class ParseList extends Parse {
             if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
                 return;
             }
-            switch (ch) {
-                case '[' :
+	    appendToCurrent(ch);
+
+/*             switch (ch) {  */
+/*                 case '[' :
                     addCommand();
-                    break;
-                case '$' :
+                    break;  */
+/*                 case '$' :
                     addDollar();
-                    break;
-/*                 case '&' :
-                    addDollar(false);
                     break;  */
                 /*
                  * case '"': addCurrent(); parseText(state); appendCurrent();
                  * break;
                  */
-                case '\\' :
+/*                 case '\\' :
 		    parseEscape(state);
-                    break;
-                default :
+                    break;  */
+/*                 default :
                     appendToCurrent(ch);
-                    break;
+                    break;  */
             }
         }
     }
