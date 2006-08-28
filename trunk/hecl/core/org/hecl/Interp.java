@@ -35,12 +35,11 @@ public class Interp implements Runnable {
     public static final int IDLE_EVENTS = 2;
     public static final int TIMER_EVENTS = 4;
     public static final int ALL_EVENTS = ~DONT_WAIT;
-    
+
     public static final String ASYNCPREFIX = "async";
     public static final String IDLEPREFIX = "idle";
     public static final String TIMERPREFIX = "timer";
-    
-    
+
     public long cacheversion = 0;
 
     /**
@@ -373,7 +372,7 @@ public class Interp implements Runnable {
 	    }
 	}
     }
-    
+
     public void notifyToken(String tokenname) throws HeclException {
 	synchronized(this) {
 	    WaitToken token = (WaitToken)waittokens.get(tokenname);
@@ -383,11 +382,12 @@ public class Interp implements Runnable {
 	    waittokens.remove(tokenname);
 	}
     }
-    
 
     /**
-     * Terminate the interpretert thread in a graceful manner. The thread will
-     * eventually finish its run-method.  
+     * The <code>terminate</code> method terminates the Hecl
+     * interpreter thread in a graceful manner. The thread will
+     * eventually finish its run-method.
+     *
      */
     public void terminate() {
 	running = false;
@@ -395,7 +395,7 @@ public class Interp implements Runnable {
 	    notify();
 	}
     }
-    
+
     public void run() {
 	//System.err.println("interp running...");
 	long now = System.currentTimeMillis();
@@ -404,7 +404,7 @@ public class Interp implements Runnable {
 	}
 	//System.err.println("interp stopped!");
     }
-    
+
 
     /**
      * The <code>initCommands</code> method initializes all the built in
@@ -617,7 +617,7 @@ public class Interp implements Runnable {
 	     /* If Stanza has indicated that this value should be
 	      * copied if a write is attempted to it, don't use the
 	      * existing reference. */
-	     if (!oldval.copy) {
+	     if (!oldval.copy && !value.copy) {
 		 oldval.makeref(value);
 		 return;
 	     }

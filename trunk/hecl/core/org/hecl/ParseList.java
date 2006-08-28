@@ -123,25 +123,6 @@ public class ParseList extends Parse {
                 return;
             }
 	    appendToCurrent(ch);
-
-/*             switch (ch) {  */
-/*                 case '[' :
-                    addCommand();
-                    break;  */
-/*                 case '$' :
-                    addDollar();
-                    break;  */
-                /*
-                 * case '"': addCurrent(); parseText(state); appendCurrent();
-                 * break;
-                 */
-/*                 case '\\' :
-		    parseEscape(state);
-                    break;  */
-/*                 default :
-                    appendToCurrent(ch);
-                    break;  */
-            }
         }
     }
 }

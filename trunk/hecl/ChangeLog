@@ -1,5 +1,8 @@
 2006-08-28  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Interp.java: Fixed a problem with value copying on
+	set.
+
 	* core/org/hecl/Parse.java: Make parseBlockOrCommand keep track of
 	backslashes.  NOTE that this is not enough... [] commands also
 	need to be aware of { [ }, for instance, in their arguments when
