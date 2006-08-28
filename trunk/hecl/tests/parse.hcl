@@ -43,7 +43,7 @@ test parse-6 {
     foreach x y {
 	set z 1
     }XXX
-} {{ERROR {extra characters after close-brace}}}
+} {{ERROR {Extra characters after close-brace}}}
 
 test parse-7 {
     set foo {};set bar 1
@@ -80,3 +80,11 @@ test parse-13 {
     set bar ${foo}/beebop
     set bar
 } {foobar/beebop}
+
+test parse-14 {
+     lindex {a\[ b} 0
+} "a\["
+
+#test parse-15 {
+#     lindex "a\[ b" 0
+#} "a\["
