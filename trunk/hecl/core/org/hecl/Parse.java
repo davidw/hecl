@@ -96,7 +96,7 @@ public class Parse {
 
         parseLine(state);
         if (outList.size() > 0) {
-            // System.out.println("outlist is : " + outList);
+            //System.out.println("outlist is : " + outList);
             return outList;
         }
         return null;
@@ -117,7 +117,6 @@ public class Parse {
 	int cmdsize = 0;
 
 	int beginline = 0;
-
         while (more()) {
 	    beginline = state.lineno;
             cmd = parse();
@@ -406,7 +405,6 @@ public class Parse {
         char ldelim, rdelim;
         char ch;
 	char lastchar = 0;
-
         if (block == true) {
             ldelim = '{';
             rdelim = '}';
@@ -417,11 +415,9 @@ public class Parse {
 
         while (true) {
             ch = state.nextchar();
-            if (state.done()) {
+            if (state.done())
 		throw new HeclException("Unbalanced " +
-		    (block ? "{}" : "[]"), "PARSE_ERROR");
-            }
-
+					(block ? "{}" : "[]"), "PARSE_ERROR");
 	    if (block || lastchar != '\\') {
 		if (ch == ldelim) {
 		    level++;
@@ -435,6 +431,14 @@ public class Parse {
 		state.lineno ++;
 	    }
 
+	    if (lastchar != '\\') { 
+		if (ch == ldelim) {
+		    level++;
+		} else if (ch == rdelim) {
+		    level--;
+		}
+	    }
+
             if (level == 0) {
                 /* It's just a block, return it. */
                 if (block || parselist) {
@@ -444,7 +448,7 @@ public class Parse {
 		     * isn't a space, we have a problem. */
 		    if (!invar && ch != ' ' && ch != '	' &&
 			ch != '\n' && ch != '\r' && ch != ';' && ch != 0) {
-			throw new HeclException("extra characters after close-brace");
+			throw new HeclException("Extra characters after close-brace");
 		    }
 		    state.rewind();
                     return;
@@ -460,7 +464,6 @@ public class Parse {
             } else {
                 appendToCurrent(ch);
             }
-
 	    /* Save the last character viewed. */
 	    lastchar = ch;
         }
@@ -509,31 +512,33 @@ public class Parse {
         while (true) {
             ch = state.nextchar();
             if (state.done()) {
-                return;
+		return;
             }
             switch (ch) {
-                case '[' :
-                    addCommand();
-                    break;
-                case '$' :
-                    addDollar();
-                    break;
-                case ' ' :
-                case '	' :
-                    return;
-                case '\n' :
-		    state.lineno ++;
-		    /* Fall through on purpose. */
-                case '\r' :
-                case ';' :
-                    state.eoc = true;
-                    return;
-                case '\\' :
-		    if (parseEscape(state)) return;
-		    break;
-                default :
-                    appendToCurrent(ch);
-                    break;
+	      case '[' :
+		addCommand();
+		break;
+	      case '$' :
+		addDollar();
+		break;
+	      case ' ' :
+	      case '\t' :
+		return;
+	      case '\n' :
+		state.lineno ++;
+		/* Fall through on purpose. */
+	      case '\r' :
+	      case ';' :
+		state.eoc = true;
+		return;
+	      case '\\' :
+		if (parseEscape(state)) {
+		    return;
+		}
+		break;
+	      default :
+		appendToCurrent(ch);
+		break;
             }
         }
     }
@@ -554,53 +559,54 @@ public class Parse {
 	}
 	/* \n style escapes */
 	switch (ch) {
-            case '\r':
-		char ch2 = state.nextchar();
-		if (ch2 == '\n') {
-		    return true;
-		} else {
-		    state.rewind();
-		}
-	    case '\n':
+	  case '\r':
+	    char ch2 = state.nextchar();
+	    if (ch2 == '\n') {
 		return true;
-	    case 'r':
-		appendToCurrent((char)0x0d);
-		break;
-	    case 'n':
-		appendToCurrent(eol[0]);
+	    } else {
+		state.rewind();
+	    }
+	  case '\n':
+	    return true;
+	  case 'r':
+	    appendToCurrent((char)0x0d);
+	    break;
+	  case 'n':
+	    appendToCurrent(eol[0]);
 //#ifdef ant:j2se
-		if (eol.length > 1) {
-		    appendToCurrent(eol[1]);
-		}
+	    if (eol.length > 1) {
+		appendToCurrent(eol[1]);
+	    }
 //#endif
-		break;
-	    case 't':
-		appendToCurrent('\t');
-		break;
-	    case 'u':
-		/* Add unicode sequences. */
-		StringBuffer num = new StringBuffer("");
-		char nextc;
-		for (int i = 0; i < 4; i++) {
-		    nextc = state.nextchar();
-		    if (state.done()) {
-			return true;
-		    }
-		    if (!isXDigit(nextc)) {
-			state.rewind();
-			break;
-		    }
-		    num.append(nextc);
+	    break;
+	  case 't':
+	    appendToCurrent('\t');
+	    break;
+	  case 'u':
+	    /* Add unicode sequences. */
+	    StringBuffer num = new StringBuffer("");
+	    char nextc;
+	    for (int i = 0; i < 4; i++) {
+		nextc = state.nextchar();
+		if (state.done()) {
+		    return true;
 		}
-		try {
-		    appendToCurrent((char)Integer.parseInt(num.toString(), 16));
-		} catch (NumberFormatException e) {
-		    throw new HeclException("illegal unicode escape: \\u" + num);
+		if (!isXDigit(nextc)) {
+		    state.rewind();
+		    break;
 		}
-		num = null;
-		break;
-	    default:
-		appendToCurrent(ch);
+		num.append(nextc);
+	    }
+	    try {
+		appendToCurrent((char)Integer.parseInt(num.toString(), 16));
+	    } catch (NumberFormatException e) {
+		throw new HeclException("illegal unicode escape: \\u" + num);
+	    }
+	    num = null;
+	    break;
+	  default:
+	    appendToCurrent(ch);
+	    break;
 	}
 	return false;
     }
