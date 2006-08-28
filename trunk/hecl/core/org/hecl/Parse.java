@@ -415,23 +415,17 @@ public class Parse {
 
         while (true) {
             ch = state.nextchar();
-            if (state.done())
+            if (state.done()) {
 		throw new HeclException("Unbalanced " +
 					(block ? "{}" : "[]"), "PARSE_ERROR");
-	    if (block || lastchar != '\\') {
-		if (ch == ldelim) {
-		    level++;
-		} else if (ch == rdelim) {
-		    level--;
-		}
 	    }
-
+	    
 	    // || ch == '\r'
 	    if (ch == '\n') {
 		state.lineno ++;
 	    }
 
-	    if (lastchar != '\\') { 
+	    if (block || lastchar != '\\') { 
 		if (ch == ldelim) {
 		    level++;
 		} else if (ch == rdelim) {
