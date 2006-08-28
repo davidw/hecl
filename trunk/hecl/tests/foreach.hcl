@@ -80,3 +80,9 @@ test foreach-7 {
     fe7 $locallst
     set locallst
 } {a b c d e}
+
+test foreach-8 {
+    set rl {}
+    foreach x {1 2 3} {lappend $rl $x}
+    set rl
+} {1 2 3}

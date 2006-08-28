@@ -1,5 +1,9 @@
 2006-08-28  David N. Welton  <davidw@dedasys.com>
 
+	* tests/foreach.hcl: Added another test to make sure that foreach
+	loop variables really are getting new values assigned that can
+	then be copied.
+
 	* core/org/hecl/Interp.java: Fixed a problem with value copying on
 	set.
 
