@@ -1,0 +1,251 @@
+/*
+ * Copyright 2005-2006
+ * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
+ * 
+ * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.hecl.midp20.lcdui;
+
+import java.util.Hashtable;
+
+import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Graphics;
+
+import org.hecl.HeclException;
+import org.hecl.Interp;
+import org.hecl.IntThing;
+import org.hecl.Properties;
+import org.hecl.Thing;
+
+import org.hecl.misc.HeclUtils;
+
+public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
+    public static final org.hecl.Command CREATE = new org.hecl.Command() {
+	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
+		Properties p = WidgetInfo.defaultProps(Canvas.class);
+		p.setProps(argv,1);
+		HeclCanvas w = new HeclCanvas(HeclUtils.thing2bool(
+						  p.getProp(WidgetInfo.NSUPPRESSKEYS)));
+		p.delProp(WidgetInfo.NTITLE);
+		p.delProp(WidgetInfo.NSUPPRESSKEYS);
+		WidgetMap.addWidget(interp,null,w,new CanvasCmd(interp,w,p));
+	    }
+	};
+
+    
+    protected CanvasCmd(Interp ip,HeclCanvas acanvas,Properties p) throws HeclException {
+	super(ip,acanvas,p);
+	callbacks = new Hashtable();
+	g = new GraphicsCmd(acanvas.getGraphics(),
+			    acanvas.getWidth(),acanvas.getHeight());
+	acanvas.setOwner(this);
+	fullscreen = false;
+	autoflush = true;
+    }
+    
+
+    public void cget(Interp ip,String optname) throws HeclException {
+	HeclCanvas c = (HeclCanvas)getData();
+	
+	if(optname.equals("-autoflush")) {
+	    ip.setResult(autoflush);
+	    return;
+	}
+	if(optname.equals("-fullscreen")) {
+	    ip.setResult(fullscreen);
+	    return;
+	}
+	if(optname.equals("-doublebuffered")) {
+	    ip.setResult(c.isDoubleBuffered());
+	    return;
+	}
+	if(optname.equals("-pointerevents")) {
+	    ip.setResult(c.hasPointerEvents());
+	    return;
+	}
+	if(optname.equals("-pointermotionevents")) {
+	    ip.setResult(c.hasPointerMotionEvents());
+	    return;
+	}
+	if(optname.equals("-repeatevents")) {
+	    ip.setResult(c.hasRepeatEvents());
+	    return;
+	}
+	try {
+	    super.cget(ip,optname);
+	    return;
+	}
+	catch (HeclException e) {
+	    if(g == null)
+		throw e;
+	}
+	g.cget(ip,optname);
+    }
+    
+
+    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
+	HeclCanvas c = (HeclCanvas)getData();
+
+	if(optname.equals("-autoflush")) {
+	    autoflush = HeclUtils.thing2bool(optval);
+	    c.setFullScreenMode(fullscreen);
+	    return;
+	}
+	if(optname.equals("-fullscreen")) {
+	    fullscreen = HeclUtils.thing2bool(optval);
+	    c.setFullScreenMode(fullscreen);
+	    return;
+	}
+	try {
+	    super.cset(ip,optname,optval);
+	    return;
+	}
+	catch (HeclException e) {
+	    if(g == null)
+		throw e;
+	}
+	g.cset(ip,optname,optval);
+    }
+    
+
+    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+	throws HeclException {
+	HeclCanvas c = (HeclCanvas)getData();
+
+	if(subcmd.equals(WidgetInfo.NREPAINT)) {
+	    c.repaint();
+	    return;
+	}
+	if(subcmd.equals("addcallback")) {
+	    if(startat < argv.length) {
+		String eventname = argv[startat].toString();
+		int i = CanvasEvent.eventOf(eventname);
+		if(i != CanvasEvent.E_UNKNOWN)
+		    addCallback(i,argv[startat+1].toString());
+	    }
+	    return;
+	}
+	if(subcmd.equals("removecallback")) {
+	    if(startat < argv.length) {
+		String eventname = argv[startat].toString();
+		int i = CanvasEvent.eventOf(eventname);
+		if(i != CanvasEvent.E_UNKNOWN)
+		    removeCallback(i);
+	    }
+	    return;
+	}
+	if(subcmd.equals("servicerepaints")) {
+	    if(!c.isPainting())
+		c.serviceRepaints();
+	    return;
+	}
+	if(subcmd.equals("flush")) {
+	    if(argv.length == startat) {
+		// Simple case, flush whole buffer
+		c.flushGraphics();
+		return;
+	    }
+	    
+	    /* x, y, w, h, */
+	    if(startat+4 != argv.length)
+		throw HeclException.createWrongNumArgsException(
+		    argv, startat, "x y w h");
+	    
+	    c.flushGraphics(IntThing.get(argv[startat]),
+			    IntThing.get(argv[startat+1]),
+			    IntThing.get(argv[startat+2]),
+			    IntThing.get(argv[startat+3]));
+	    return;
+	}
+
+	// Draw commands go here
+	try {
+	    super.handlecmd(ip,subcmd,argv,startat);
+	    return;
+	}
+	catch (HeclException e) {
+	    if(null == g)
+		throw e;
+	}
+	try {
+	    g.handlecmd(ip,subcmd,argv,startat);
+	}
+	finally {
+	    if(autoflush)
+		c.flushGraphics();
+	}
+    }
+
+    public void addCallback(int reason,String s) {
+	if(s != null)
+	    callbacks.put(new Integer(reason),s);
+	else
+	    removeCallback(reason);
+    }
+	    
+    
+    public void removeCallback(int reason) {
+	callbacks.remove(new Integer(reason));
+    }
+	    
+
+    public void call(CanvasEvent e) {
+	System.out.println("callback for: "+CanvasEvent.eventName(e.reason));
+	
+	String cb = (String)callbacks.get(new Integer(e.reason));
+	if(cb != null) {
+	    HeclCanvas c = (HeclCanvas)getData();
+	    Interp ip = getCreator();
+	    WidgetMap wm = WidgetMap.mapOf(ip);
+	    String canvasname = wm.nameOf(e.canvas);
+	    
+	    if(canvasname != null) {
+		// Perform %-substitution and call the callback
+		// %W --> e.canvas
+		// %T --> e.reason
+		// %x --> e.x
+		// %y --> e.y
+		// %w --> e.width
+		// %h --> e.height
+		// %k --> e.keycode
+		char expandchars[] = {'W','T','x','y','w','h','k','K','g'};
+		String expansions[] = {
+		    canvasname, CanvasEvent.eventName(e.reason),
+			String.valueOf(e.x), String.valueOf(e.y),
+			String.valueOf(e.width), String.valueOf(e.height),
+			String.valueOf(e.keycode),
+			"none","none"
+		};
+		try {
+		    expansions[7] = c.getKeyName(e.keycode);
+		    expansions[8] = String.valueOf(c.getGameAction(e.keycode));
+		}
+		catch(IllegalArgumentException illgl) {
+		}
+		String todo = WidgetMap.expandPercent(cb,expandchars,expansions);
+		
+		System.out.println("we evaluate: "+todo+"<<");
+		ip.evalAsync(new Thing(todo));
+	    }
+	}
+    }
+    
+
+    protected GraphicsCmd g;
+    protected Hashtable callbacks;
+    boolean fullscreen;
+    boolean autoflush;
+}
