@@ -181,12 +181,21 @@
 
   <property name="j2me.hecl.jad" value="${j2me.build}/${j2me.app}.jad"/>
   <property name="j2me.hecl.jar" value="${j2me.build}/${j2me.app}.jar"/>
+  <property name="j2me.heclgui.jar" value="${j2me.build}/${j2me.app}gui.jar"/>
   <property name="j2me.hecl.lib.jad" value="${j2me.build}/${j2me.app}lib.jad"/>
   <property name="j2me.hecl.lib.jar" value="${j2me.build}/${j2me.app}lib.jar"/>
 
   <property name="j2me.coreclasspath" value="${j2me.build}"/>
   <path id="j2me.coreclasspath">
     <pathelement location="${j2me.coreclasspath}"/>
+  </path>
+  <property name="j2me.awtclasspath" value="${j2me.build}"/>
+  <path id="j2me.awtclasspath">
+    <pathelement location="${j2me.awtclasspath}"/>
+  </path>
+  <property name="j2me.guiclasspath" value="${j2me.build}"/>
+  <path id="j2me.guiclasspath">
+    <pathelement location="${j2me.guiclasspath}"/>
   </path>
   <property name="j2me.httpclasspath" value="${j2me.build}"/>
   <path id="j2me.httpclasspath">
@@ -488,6 +497,28 @@
       destdir="${j2me.httpclasspath}">
       <classpath refid="j2me.coreclasspath"/>
     </wtkbuild>
+  </target>
+
+  <!--
+   -->
+  <target name="j2megui20"
+    depends="midlet11"
+    description="Compile J2ME MIDP2.0 GUI">
+    <mkdir dir="${j2me.guiclasspath}"/>
+    <mkdir dir="${j2me.pre}/midp20"/>
+    <wtkpreprocess srcdir="midp20" destdir="${j2me.pre}/midp20"
+      symbols="ant:j2me,ant:cldc1.1"/>
+    <wtkbuild srcdir="${j2me.pre}/midp20" target="1.1" source="1.2"
+      cldc="false"
+      destdir="${j2me.guiclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+    </wtkbuild>
+
+    <jar destfile="${j2me.heclgui.jar}"
+      basedir="${j2me.build}"
+      excludes="**jad,**jar,Hecl.class,StandaloneHecl.class,*html"
+      update="true">
+    </jar>
   </target>
 
   <target name="compileJ2ME"
