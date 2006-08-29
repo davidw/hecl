@@ -1,3 +1,19 @@
+2006-08-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* build.xml: New (experimental) target j2megui20.
+
+	* core/org/hecl/InterpCmds.java: Added new commands system.gc,
+	system.getproperty, system.hasproperty.
+
+2006-08-28  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Parse.java: Line counting in parseBlockOrCommand
+	corrected, now also counts escaled newlines since they are in a
+	new line on the source file!
+
+	* tests/parse.hcl: Added parse-14/parse-15, latter disabled since
+	both should work fine in the future.
+
 2006-08-28  David N. Welton  <davidw@dedasys.com>
 
 	* tests/foreach.hcl: Added another test to make sure that foreach
