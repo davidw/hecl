@@ -48,7 +48,11 @@ class InterpCmds extends Operator {
     public static final int TOKENWAIT = 17;
     public static final int TOKENNOTIFY = 18;
 
-    public static final int CLASSINFO = 20;
+    protected static final int GC = 19;
+    protected static final int GETPROP = 20;
+    protected static final int HASPROP = 21;
+
+    public static final int CLASSINFO = 80;
 
 
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -272,8 +276,22 @@ class InterpCmds extends Operator {
 		}
 		return new LongThing(new Date().getTime() - then);
 
-	    case CLASSINFO:
-		return new StringThing("<"+argv[1].getVal().thingclass()+">");
+	  case CLASSINFO:
+	    return new StringThing("<"+argv[1].getVal().thingclass()+">");
+
+	  case GC:
+	    System.gc();
+	    break;
+	    
+	  case GETPROP:
+	    String s = System.getProperty(argv[1].toString());
+	    if(s == null)
+		s = "";
+	    return new StringThing(s);
+	    
+	  case HASPROP:
+	    interp.setResult(System.getProperty(argv[1].toString())!=null);
+	    break;
 
 	    default:
 		throw new HeclException("Unknown interp command '"
@@ -319,6 +337,10 @@ class InterpCmds extends Operator {
         cmdtable.put("tnotify", new InterpCmds(TOKENNOTIFY, 1, 1));
 
         cmdtable.put("copy", new InterpCmds(COPY, 1, 1));
+
+	cmdtable.put("system.gc", new InterpCmds(GC,0,0));
+	cmdtable.put("system.getproperty", new InterpCmds(GETPROP,1,1));
+	cmdtable.put("system.hasproperty", new InterpCmds(HASPROP,1,1));
 
         cmdtable.put("classof", new InterpCmds(CLASSINFO, 1, 1));
     }
