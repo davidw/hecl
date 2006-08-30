@@ -646,6 +646,13 @@ public class Interp implements Runnable {
 	if (value != null) {
 	    cacheversion++;
 	    lookup.remove(varname);
+	    if (value.global) {
+		Hashtable globalhash = getVarhash(0);
+		value = (Thing)globalhash.get(varname);
+		if (value != null) {
+		    globalhash.remove(varname);
+		}
+	    }
 	} else {
             throw new HeclException("Variable " + varname + " does not exist");
 	}
