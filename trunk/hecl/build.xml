@@ -500,9 +500,9 @@
   </target>
 
   <!--
-    depends="midlet11"
    -->
   <target name="j2megui20"
+    depends="midlet11"
     description="Compile J2ME MIDP2.0 GUI">
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp20"/>
