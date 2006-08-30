@@ -158,7 +158,6 @@ class InterpCmds extends Operator {
 	  case AFTER:
 	    subcmd = argv[1].toString();
 	    if(subcmd.equals("info")) {
-		System.err.println("after info");
 		if(argv.length == 2) {
 		    Vector v = interp.getAllEvents();
 		    int n = v.size();
@@ -183,7 +182,6 @@ class InterpCmds extends Operator {
 		throw HeclException.createWrongNumArgsException(argv,2,"?id?");
 	    }
 	    if(subcmd.equals("cancel")) {
-		System.err.println("after cancel");
 		for(int i=2; i<argv.length; ++i) {
 		    String s = argv[2].toString();
 		    if(s.startsWith("idle"))
@@ -196,7 +194,6 @@ class InterpCmds extends Operator {
 		break;
 	    }
 	    if(subcmd.equals("idle")) {
-		System.err.println("after idle");
 		if(argv.length != 3)
 		    throw HeclException.createWrongNumArgsException(
 			argv,2,"script");

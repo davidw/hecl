@@ -84,34 +84,39 @@ public class HttpCmd extends org.hecl.Operator {
 		    throw new HeclException("Unknown option '"+key+"'.");
 		}
 	    }
-	    HttpRequest r = new HttpRequest(argv[1].toString(), qdata, validate, h);
+	    HttpRequest r = new HttpRequest(argv[1].toString(), qdata,
+					    validate, h, Thread.currentThread());
 	    r.start();
+	    while(!r.isDone()) {
+		interp.doOneEvent(Interp.ALL_EVENTS);
+	    }
+	    int status = r.getStatus();
+	    System.err.println("status="+status);
+	    if(status != HttpRequest.OK) {
+		Exception e = r.getException();
+		// wke 31.08.2006
+		// need a strngbuffer here, otherwise error message is not
+		// complete. May be a compiler problem.
+		StringBuffer s = new StringBuffer();
+		s.append("HTTP geturl failed '").append(HttpRequest.getStatusText(status))
+		    .append("' - ").append(e != null ? e.toString() : "");
+		System.err.println("msg="+s.toString());
+		throw new HeclException(s.toString());
+	    }
+		
 	    try {
-		r.join();
-
-		int status = r.getStatus();
-		if(status != HttpRequest.OK) {
-		    Exception e = r.getException();
-		    
-		    throw new HeclException("HTTP failed '"
-					    +HttpRequest.getStatusText(status)
-					    + "' - "
-					    + e != null ? e.getMessage() : ""
-					    + ".");
-		}
-
 		int retcode = r.getRC();
 		Hashtable ht = new Hashtable();
-
+		
 		ht.put("status",new Thing(HttpRequest.getStatusText(status)));
 		ht.put("ncode",IntThing.create(retcode));
-
+		
 		Enumeration e = r.getResponseFieldNames();
 		while(e.hasMoreElements()) {
 		    String key = (String)e.nextElement();
 		    ht.put(key,new Thing(r.getResponseFieldValue(key)));
 		}
-
+		
 		t = null;
 		try {
 		    t = interp.getVar("http::charset");
@@ -119,10 +124,10 @@ public class HttpCmd extends org.hecl.Operator {
 		catch (HeclException hecle) {
 		}
 		String encoding = t != null ? t.toString() : defcharset;
-
+		
 		t = (Thing)ht.get("content-type");
 		String ct = t != null ? t.toString() : null;
-
+		
 		if(ct != null) {
 		    int begin = ct.toLowerCase().indexOf("charset=");
 		    if (begin >= 0) {
@@ -167,10 +172,11 @@ public class HttpCmd extends org.hecl.Operator {
 		
 		ht.put("data",new Thing(ct != null ? ct : ""));
 		return new HashThing(ht);
-	    } catch (Exception e) {
+	    }
+	    catch (Exception e) {
 		throw new HeclException(e.getMessage());
 	    }
-	    
+
 	  case GETDATA:
 	    h = HashThing.get(argv[1]);
 	    interp.setResult((Thing)h.get("data"));
@@ -238,11 +244,11 @@ public class HttpCmd extends org.hecl.Operator {
 //#endif 
 	if(deflocale == null)
 	    deflocale = "en-US";
-	cmdtable.put("http::geturl", new HttpCmd(GETURL,1,-1));
-        cmdtable.put("http::formatQuery", new HttpCmd(FORMATQUERY,0,-1));
-        cmdtable.put("http::data", new HttpCmd(GETDATA,0,-1));
-        cmdtable.put("http::ncode", new HttpCmd(GETNCODE,0,-1));
-        cmdtable.put("http::status", new HttpCmd(GETSTATUS,0,-1));
+	cmdtable.put("http.geturl", new HttpCmd(GETURL,1,-1));
+        cmdtable.put("http.formatQuery", new HttpCmd(FORMATQUERY,0,-1));
+        cmdtable.put("http.data", new HttpCmd(GETDATA,0,-1));
+        cmdtable.put("http.ncode", new HttpCmd(GETNCODE,0,-1));
+        cmdtable.put("http.status", new HttpCmd(GETSTATUS,0,-1));
 	
     }
     

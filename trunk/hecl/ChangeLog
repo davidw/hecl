@@ -1,3 +1,21 @@
+2006-08-31  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/InterpCmds.java: Removed debug printouts.
+
+	* core/org/hecl/Interp.java: Enhanced doOneEvent to allow
+	notifications from external pure Java code (like
+	HttpRequest). Derived from thread to simplify wait/notify
+	handling.
+
+	* net/org/hecl/HttpRequest.java: Added notify object to
+	constructor. When != null, this object will be notified when the
+	request is done.
+
+	* net/org/hecl/HttpCmd.java: Made geturl compliant with new event
+	model and assure that Hecl events are processed during the wait
+	for the result from the server.
+	Rename all commands to http.???
+
 2006-08-31  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Make sure that unSetvar knows how to

@@ -272,7 +272,8 @@ public class HttpRequest extends Thread {
 
 
     public HttpRequest(String url, String queryData,
-		       boolean validate, Hashtable headerfields) {
+		       boolean validate, Hashtable headerfields,
+		       Object requestnotify) {
 	urlstr = url;
 	body = new String();
 	qdata = queryData;
@@ -296,6 +297,7 @@ public class HttpRequest extends Thread {
 	    if(validate)
 		requestMethod = HttpConstants.HEAD;
 	}
+	neednotify = requestnotify;
     }
 
     // Add a header field with key and value when sending a request
@@ -410,6 +412,12 @@ public class HttpRequest extends Thread {
 	if(co != null) {
 	    co.close();
 	}
+	done = true;
+	if(neednotify != null) {
+	    synchronized(neednotify) {
+		neednotify.notify();
+	    }
+	}
     }
 
 
@@ -438,6 +446,10 @@ public class HttpRequest extends Thread {
     }
 
 
+    public synchronized boolean isDone() {
+	return done;
+    }
+	    
     public static String getStatusText(int status) {
 	switch(status) {
 	  case SETUP:
@@ -540,6 +552,8 @@ public class HttpRequest extends Thread {
     private String requestMethod;
     private int rc;
     private int status;
+    private volatile boolean done = false;
+    private Object neednotify = null;
     Exception error;
     private Hashtable requestFields;
     private Hashtable responseFields;
@@ -568,7 +582,7 @@ public class HttpRequest extends Thread {
 	    }
 	}
 	urlencodemap[' '] = "+";
-	urlencodemap['\n'] = "%0D%0A";
+	//urlencodemap['\n'] = "%0D%0A";
     }
 
 }

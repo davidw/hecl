@@ -26,7 +26,7 @@ import java.util.Vector;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton </a>
  * @version 1.0
  */
-public class Interp implements Runnable {
+public class Interp extends Thread/*implements Runnable*/ {
     /**
      * Package name prefix of the module classes.
      */
@@ -83,7 +83,7 @@ public class Interp implements Runnable {
         // Set up stack frame for globals.
         stack.push(new Hashtable());
         initInterp();
-	new Thread(this).start();
+	start();
     }
 
 
@@ -300,7 +300,8 @@ public class Interp implements Runnable {
 	// The core of this procedure is an infinite loop, even though
 	// we only service one event.  The reason for this is that we
 	// may be processing events that don't do anything inside of Hecl.
- 	while(true) {
+	int count = 0;
+	while(true) {
 	    // First check for async events...
 	    HeclTask t = nextTask(asyncs,-1);
 	    if(t != null) {
@@ -324,27 +325,27 @@ public class Interp implements Runnable {
 		    maxblocktime = t.getGeneration() - now;
 		}
 	    }
-	    //System.err.println("maxblocktime="+maxblocktime);
 	    // this may reduce maxblocktime!
 	    if((flags & IDLE_EVENTS) != 0) {
 		serviceIdleTask();
 	    }
 
-	    if(maxblocktime < 0)
-		maxblocktime = 1000;
-	    
-	    if(maxblocktime > 0) {
-		synchronized (this) {
-		    try {
-			wait(maxblocktime);
-		    }
-		    catch (InterruptedException e) {
-			// it doesn't matter
-		    }
-		}
-	    } else
+	    if(count > 0 || maxblocktime <= 0)
 		break;
+	    //System.err.println("interp wait for "+maxblocktime);
+	    yield();			    // give other thread a chance
+	    synchronized(this) {
+		try {
+		    this.wait(maxblocktime);
+		}
+		catch (InterruptedException e) {
+		    // it doesn't matter
+		}
+	    }
+	    //System.err.println("interp wait done, next loop iteration");
+	    ++count;
 	}
+	//System.err.println("<--doOneEvent:false");
 	return false;
     }
 
