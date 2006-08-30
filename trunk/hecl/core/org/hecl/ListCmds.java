@@ -115,8 +115,11 @@ class ListCmds extends Operator {
 		for (int i = 2; i < argv.length; i++) {
 		    list.addElement(argv[i]);
 		}
-		argv[1].setVal(new ListThing(list));
-		interp.setResult(argv[1]);
+		// was:argv[1].setVal(new ListThing(list));
+		if (!argv[1].copy) {
+		    argv[1].setVal(new ListThing(list));
+		}
+                interp.setResult(argv[1]);
 		break;
 
 	    case FILTER:

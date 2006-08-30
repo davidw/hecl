@@ -38,6 +38,8 @@ import org.hecl.net.HttpCmd;
  * @version 1.0
  */
 public class Hecl {
+    public static boolean VERBOSE = false;
+    
     /**
      * <code>main</code> is what actually runs things.
      *
@@ -116,9 +118,10 @@ public class Hecl {
 	    }
 	    catch (HeclException he) {
 		if (he.code.equals("PARSE_ERROR")) {
-		    //System.err.println("paser error: "+he.getMessage());
-		    //he.printStackTrace();
-		    
+		    if(VERBOSE) {
+			System.err.println("PARSE ERROR: "+he.getMessage());
+			he.printStackTrace();
+		    }
 		    /* When we need more input, stash the current
 		     * input in morebuffer, and change the prompt. */
 		    prompt = PROMPT2;

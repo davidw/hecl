@@ -1,3 +1,16 @@
+2006-08-30  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/ListCmds.java: Added preliminary fix for global problem.
+
+	* commandline/Hecl.java: Added verbosity for read-eval-print loop.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Major overhaul. Fixed
+	odd behavior, rudimentary support for access to external record
+	stores, support for record store as hashtable with key (string)
+	and value (string).
+
+	* j2me/Hecl.java: Enabled record store commands by default.
+
 2006-08-30  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: New value wasn't properly being
