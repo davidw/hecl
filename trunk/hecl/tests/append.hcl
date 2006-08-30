@@ -13,3 +13,8 @@ test append-3 {
     set foo {}
     append $foo x y z
 } {xyz}
+
+test append-4 {
+     proc doappend {} {append a b}
+     set x "[doappend][doappend]";
+} abab

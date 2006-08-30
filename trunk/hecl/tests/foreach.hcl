@@ -54,8 +54,13 @@ proc foreach6cmd {} {
 }
 
 test foreach-6 {
-    foreach6cmd
-    foreach6cmd
+    global foreach6;
+    # make sure var does not exist to allow
+    # multiple runs of the test
+    set foreach6 xx;
+    unset foreach6;
+    foreach6cmd;
+    foreach6cmd;
 } {v is a
 v is b
 v is c
