@@ -601,10 +601,11 @@ public class Interp implements Runnable {
 	      * set the variable both at the local level, and at the
 	      * global level.  */
 	     if (oldval.global && level != 0) {
+		 value.global = true;
 		 Hashtable globalhash = getVarhash(0);
 		 if (globalhash.containsKey(varname)) {
 		     Thing globaloldval = (Thing) globalhash.get(varname);
-		     if (!globaloldval.copy) {
+		     if (!globaloldval.copy && !value.copy) {
 			 globaloldval.makeref(value);
 		     } else {
 			 globalhash.put(varname, value);
