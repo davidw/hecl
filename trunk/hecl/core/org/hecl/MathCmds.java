@@ -397,7 +397,7 @@ public class MathCmds extends org.hecl.Operator {
 		  num = new IntThing(num.intValue() + offset.intValue());
 	      }
 	      argv[1].setCopyVal(num);
-	      ip.setResult(argv[1]);
+	      ip.setResult(new Thing(num));
 	      return null;
 	  default:
 	    /*

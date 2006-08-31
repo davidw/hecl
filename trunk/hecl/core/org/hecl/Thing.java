@@ -26,7 +26,7 @@ package org.hecl;
 
 public class Thing extends Object {
     public static final Thing EMPTYTHING = new Thing("");
-    
+
     private RealThing val;
 
     /* This flag is used by Stanza to indicate whether a Thing should
@@ -55,7 +55,6 @@ public class Thing extends Object {
         stringval = s;
     }
 
-    
     /**
      * Creates a new <code>Thing</code> instance from a string buffer.
      *

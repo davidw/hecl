@@ -44,6 +44,7 @@ class ListCmds extends Operator {
 	int last = 0;
 	Vector list;
 	Vector result;
+	ListThing newval = null;
 
 	switch (cmd) {
 	    case LIST:
@@ -78,8 +79,9 @@ class ListCmds extends Operator {
 	    case LINSERT:
 		list = ListThing.get(argv[1]);
 		list.insertElementAt(argv[3], getIndex(argv[2],list.size()));
-		argv[1].setCopyVal(new ListThing(list));
-		interp.setResult(argv[1]);
+		newval = new ListThing(list);
+		argv[1].setCopyVal(newval);
+		interp.setResult(new Thing(newval));
 		break;
 
 	    case LSET:
@@ -90,8 +92,9 @@ class ListCmds extends Operator {
 		} else {
 		    list.setElementAt(argv[3], idx);
 		}
-		argv[1].setCopyVal(new ListThing(list));
-		interp.setResult(argv[1]);
+		newval = new ListThing(list);
+		argv[1].setCopyVal(newval);
+		interp.setResult(new Thing(newval));
 		break;
 
 	    case LRANGE:
@@ -114,8 +117,9 @@ class ListCmds extends Operator {
 		for (int i = 2; i < argv.length; i++) {
 		    list.addElement(argv[i]);
 		}
-		argv[1].setCopyVal(new ListThing(list));
-		interp.setResult(argv[1]);
+		newval = new ListThing(list);
+		argv[1].setCopyVal(newval);
+		interp.setResult(new Thing(newval));
 		break;
 
 	    case FILTER:

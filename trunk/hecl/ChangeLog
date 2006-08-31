@@ -1,11 +1,14 @@
 2006-08-31  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/ListCmds.java: linsert uses setCopyVal, lset uses
-	setCopyVal, lappend uses setCopyVal.
+	setCopyVal, lappend uses setCopyVal.  Put a new result in the
+	interpreter's result.
 
-	* core/org/hecl/StringCmds.java: append uses setCopyVal.
+	* core/org/hecl/StringCmds.java: append uses setCopyVal.  Put a
+	new result in the interpreter's result.
 
-	* core/org/hecl/MathCmds.java: incr uses setCopyVal.
+	* core/org/hecl/MathCmds.java: incr uses setCopyVal.  Put a new
+	result in the interpreter's result.
 
 	* core/org/hecl/Thing.java: New method setCopyVal (need a better
 	name, though), that won't set values if the copy flag bit is set.

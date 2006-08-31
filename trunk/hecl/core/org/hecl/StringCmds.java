@@ -69,8 +69,9 @@ class StringCmds extends Operator {
 		for (int i = 2; i < argv.length; i++) {
 		    sb.append(argv[i].toString());
 		}
-		result.setCopyVal(new StringThing(sb));
-		interp.setResult(result);
+		StringThing newval = new StringThing(sb);
+		result.setCopyVal(newval);
+		interp.setResult(new Thing(newval));
 		break;
 
 	    case STREQ:
