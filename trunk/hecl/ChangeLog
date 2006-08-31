@@ -1,5 +1,8 @@
 2006-08-31  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
+	* core/org/hecl/ListThing.java: Minor changes, added some (still
+	unused) code on the way to get list->string working for all cases.
+
 	* core/org/hecl/InterpCmds.java: Removed debug printouts.
 
 	* core/org/hecl/Interp.java: Enhanced doOneEvent to allow
