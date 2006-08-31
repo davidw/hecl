@@ -277,12 +277,6 @@ public class HttpRequest extends Thread {
 	urlstr = url;
 	body = new String();
 	qdata = queryData;
-	rc = -1;
-	error = null;
-	status = SETUP;
-	inData = null;
-	requestFields = new Hashtable();
-	responseFields = new Hashtable();
 	if(headerfields != null) {
 	    Enumeration e = headerfields.keys();
 	    while(e.hasMoreElements()) {
@@ -297,7 +291,7 @@ public class HttpRequest extends Thread {
 	    if(validate)
 		requestMethod = HttpConstants.HEAD;
 	}
-	neednotify = requestnotify;
+	notifywhendone = requestnotify;
     }
 
     // Add a header field with key and value when sending a request
@@ -412,10 +406,9 @@ public class HttpRequest extends Thread {
 	if(co != null) {
 	    co.close();
 	}
-	done = true;
-	if(neednotify != null) {
-	    synchronized(neednotify) {
-		neednotify.notify();
+	if(notifywhendone != null) {
+	    synchronized(notifywhendone) {
+		notifywhendone.notify();
 	    }
 	}
     }
@@ -446,10 +439,6 @@ public class HttpRequest extends Thread {
     }
 
 
-    public synchronized boolean isDone() {
-	return done;
-    }
-	    
     public static String getStatusText(int status) {
 	switch(status) {
 	  case SETUP:
@@ -545,18 +534,17 @@ public class HttpRequest extends Thread {
     }
 
 
-    private String urlstr;
-    private byte[] inData;
-    private String body;
-    private String qdata;
-    private String requestMethod;
-    private int rc;
-    private int status;
-    private volatile boolean done = false;
-    private Object neednotify = null;
-    Exception error;
-    private Hashtable requestFields;
-    private Hashtable responseFields;
+    private String urlstr = null;
+    private byte[] inData = null;
+    private String body = null;
+    private String qdata = null;
+    private String requestMethod = HttpConstants.GET;
+    private int rc = -1;
+    private int status = SETUP;
+    private Object notifywhendone = null;
+    Exception error = null;
+    private Hashtable requestFields = new Hashtable();
+    private Hashtable responseFields = new Hashtable();
 
     private static String[] urlencodemap = new String[256];
     private static String validUrlChars =

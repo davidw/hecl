@@ -87,7 +87,7 @@ public class HttpCmd extends org.hecl.Operator {
 	    HttpRequest r = new HttpRequest(argv[1].toString(), qdata,
 					    validate, h, interp);
 	    r.start();
-	    while(!r.isDone()) {
+	    while(r.isAlive()) {
 		interp.doOneEvent(Interp.ALL_EVENTS);
 	    }
 	    int status = r.getStatus();
