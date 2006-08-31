@@ -69,7 +69,7 @@ class StringCmds extends Operator {
 		for (int i = 2; i < argv.length; i++) {
 		    sb.append(argv[i].toString());
 		}
-		result.setVal(new StringThing(sb));
+		result.setCopyVal(new StringThing(sb));
 		interp.setResult(result);
 		break;
 

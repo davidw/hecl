@@ -1,3 +1,15 @@
+2006-08-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmds.java: linsert uses setCopyVal, lset uses
+	setCopyVal, lappend uses setCopyVal.
+
+	* core/org/hecl/StringCmds.java: append uses setCopyVal.
+
+	* core/org/hecl/MathCmds.java: incr uses setCopyVal.
+
+	* core/org/hecl/Thing.java: New method setCopyVal (need a better
+	name, though), that won't set values if the copy flag bit is set.
+
 2006-08-31  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* net/org/hecl/HttpRequest.java: 

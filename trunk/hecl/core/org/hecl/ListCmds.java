@@ -58,10 +58,9 @@ class ListCmds extends Operator {
 		return new IntThing(list.size());
 
 	    case LINDEX:
-	      ;
 	      {
 		  Thing res = argv[1];
-		  for(int i = 2; i<argv.length; ++i) {
+		  for(int i = 2; i < argv.length; ++i) {
 		      list = ListThing.get(res);
 		      last = list.size();
 		      idx = getIndex(argv[i],last);
@@ -79,7 +78,7 @@ class ListCmds extends Operator {
 	    case LINSERT:
 		list = ListThing.get(argv[1]);
 		list.insertElementAt(argv[3], getIndex(argv[2],list.size()));
-		argv[1].setVal(new ListThing(list));
+		argv[1].setCopyVal(new ListThing(list));
 		interp.setResult(argv[1]);
 		break;
 
@@ -91,7 +90,7 @@ class ListCmds extends Operator {
 		} else {
 		    list.setElementAt(argv[3], idx);
 		}
-		argv[1].setVal(new ListThing(list));
+		argv[1].setCopyVal(new ListThing(list));
 		interp.setResult(argv[1]);
 		break;
 
@@ -115,11 +114,8 @@ class ListCmds extends Operator {
 		for (int i = 2; i < argv.length; i++) {
 		    list.addElement(argv[i]);
 		}
-		// was:argv[1].setVal(new ListThing(list));
-		if (!argv[1].copy) {
-		    argv[1].setVal(new ListThing(list));
-		}
-                interp.setResult(argv[1]);
+		argv[1].setCopyVal(new ListThing(list));
+		interp.setResult(argv[1]);
 		break;
 
 	    case FILTER:
@@ -215,7 +211,7 @@ class ListCmds extends Operator {
 	}
 	return idx;
     }
-    
+
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip);
     }

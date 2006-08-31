@@ -91,6 +91,12 @@ public class Thing extends Object {
         stringval = null;
     }
 
+    public void setCopyVal(RealThing realthing) {
+	if (!copy) {
+	    setVal(realthing);
+	}
+    }
+
     /**
      * <code>getVal</code> fetches the internal value of the Thing.
      *
