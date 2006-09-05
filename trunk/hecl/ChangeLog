@@ -1,3 +1,53 @@
+2006-09-05  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* build.xml: More fiddling with j2megui20 target.
+
+	* net/org/hecl/HttpRequest.java: Enhancements in treatment of encoding.
+
+	* net/org/hecl/Base64.java: Provide encoding into StringBuffer.
+
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/ListThing.java: Speedup for conversion into StringBuffer.
+
+	* midp20/org/hecl/midp20/lcdui/CmdDataMap.java: Changed separator
+	to '#'.
+
+	* midp20/org/hecl/midp20/lcdui/ImageGadget.java: Added support for
+	imageitem elements in form.
+
+	* midp20/org/hecl/midp20/lcdui/FormGadget.java: Corrected bug in
+	conigure that causes errorneous treatment of arguments.
+
+2006-09-04  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/InterpCmds.java: Corrected argument count for
+	system.time.
+
+	* midp20/org/hecl/midp20/lcdui/*.java: 
+	Major overhaul: new command treatment, new callback handling and
+	mapping to Hecl code, new exceptions for widget commands, majo0r
+	enhancements for HeclCanvas.
+
+2006-09-01  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: Changed
+	method 'delete' into 'destroy' since forms need a delete command.
+
+	* midp20/org/hecl/midp20/lcdui/AlertCmd.java: Added support for indicator.
+
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: 
+	Simplified, removed unused stuff.
+
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/ChoiceGadget.java: 
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/FormGadget.java: 
+	Removed debug printouts.
+
+	* core/org/hecl/InterpCmds.java: 
+	New commands: system.time, runtime.freememory, runtime.totalmemory.
+
 2006-08-31  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/ListCmds.java: linsert uses setCopyVal, lset uses
