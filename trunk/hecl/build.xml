@@ -502,7 +502,11 @@
   <!--
    -->
   <target name="j2megui20"
-    depends="midlet11"
+    depends="midlet11,qj2megui20"
+    description="Build J2ME MIDP2.0 GUI">
+  </target>
+
+  <target name="qj2megui20"
     description="Compile J2ME MIDP2.0 GUI">
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp20"/>
@@ -513,7 +517,6 @@
       destdir="${j2me.guiclasspath}">
       <classpath refid="j2me.coreclasspath"/>
     </wtkbuild>
-
     <jar destfile="${j2me.heclgui.jar}"
       basedir="${j2me.build}"
       excludes="stand/**,**jad,**jar,*html,*hcl,*.class"
