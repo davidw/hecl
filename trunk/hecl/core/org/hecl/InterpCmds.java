@@ -51,6 +51,10 @@ class InterpCmds extends Operator {
     protected static final int GC = 19;
     protected static final int GETPROP = 20;
     protected static final int HASPROP = 21;
+    protected static final int TIME = 22;
+
+    protected static final int FREEMEM = 23;
+    protected static final int TOTALMEM = 24;
 
     public static final int CLASSINFO = 80;
 
@@ -287,13 +291,21 @@ class InterpCmds extends Operator {
 	    return new StringThing(s);
 	    
 	  case HASPROP:
-	    interp.setResult(System.getProperty(argv[1].toString())!=null);
-	    break;
+	    return new IntThing(System.getProperty(argv[1].toString())!=null ? 1 : 0);
 
-	    default:
-		throw new HeclException("Unknown interp command '"
-					+ argv[0].toString() + "' with code '"
-					+ cmd + "'.");
+	  case TIME:
+	    return new LongThing(System.currentTimeMillis());
+
+	  case FREEMEM:
+	    return new LongThing(Runtime.getRuntime().freeMemory());
+	    
+	  case TOTALMEM:
+	    return new LongThing(Runtime.getRuntime().totalMemory());
+
+	  default:
+	    throw new HeclException("Unknown interp command '"
+				    + argv[0].toString() + "' with code '"
+				    + cmd + "'.");
 	}
 	return null;
     }
@@ -338,8 +350,11 @@ class InterpCmds extends Operator {
 	cmdtable.put("system.gc", new InterpCmds(GC,0,0));
 	cmdtable.put("system.getproperty", new InterpCmds(GETPROP,1,1));
 	cmdtable.put("system.hasproperty", new InterpCmds(HASPROP,1,1));
+	cmdtable.put("system.time", new InterpCmds(TIME,0,0));
+
+	cmdtable.put("runtime.freememory", new InterpCmds(FREEMEM,0,0));
+	cmdtable.put("runtime.totalmemory", new InterpCmds(TOTALMEM,0,0));
 
         cmdtable.put("classof", new InterpCmds(CLASSINFO, 1, 1));
     }
-
 }
