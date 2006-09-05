@@ -167,12 +167,24 @@ public class ListThing implements RealThing {
 	    StringBuffer resbuf = new StringBuffer();
             resbuf.append('{').append(elementstring).append('}');
 	    
-	    //System.err.println("toListString: >"+elementstring+"< --> " + resbuf.toString());
+	    System.err.println("toListString: >"+elementstring+"< --> " + resbuf.toString());
 	    return resbuf.toString();
         }
 	return elementstring;
     }
 
+    public static StringBuffer appendListItem(StringBuffer buf,Thing thing) {
+        String elementstring = thing.toString();
+
+        if (elementstring.indexOf(' ') >= 0
+	    || elementstring.indexOf('\t') >= 0) {
+	    buf.append('{').append(elementstring).append('}');
+	} else {
+	    buf.append(elementstring);
+	}
+	return buf;
+    }
+    
 //#ifdef notdef
     static final int USE_BRACES = 1;
     static final int DONT_USE_BRACES = 2;
@@ -249,10 +261,12 @@ public class ListThing implements RealThing {
 	}
 //#endif
         StringBuffer resbuf = new StringBuffer();
-	for (i=0; i < sz - 1; i++) {
-	    resbuf.append(toListString((Thing)val.elementAt(i))).append(' ');
+	for (i=0; i < sz; ++i) {
+	    if(i > 0)
+		resbuf.append(' ');
+	    //resbuf.append(toListString((Thing)val.elementAt(i)));
+	    appendListItem(resbuf,(Thing)val.elementAt(i));
 	}
-	resbuf.append(toListString((Thing) val.elementAt(i)));
         return resbuf.toString();
     }
 }

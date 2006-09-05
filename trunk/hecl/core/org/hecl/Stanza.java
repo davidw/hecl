@@ -226,19 +226,23 @@ class Stanza {
     public String toString() {
 	StringBuffer out = new StringBuffer(argv[0].toString());
 	for (int i = 1; i < argv.length; i++) {
-	    out.append(" ");
+	    out.append(' ');
 	    RealThing rt = argv[i].getVal();
 	    if (rt instanceof CodeThing) {
 		String avs = argv[i].toString();
 		if (((CodeThing)rt).marksubst) {
-		    out.append("[" + avs + "]");
+		    //out.append("[" + avs + "]");
+		    out.append('[').append(avs).append(']');
 		} else {
-		    out.append("{" + avs + "}");
+		    //out.append("{" + avs + "}");
+		    out.append('{').append(avs).append('}');
 		}
 	    } else if (rt instanceof GroupThing) {
-		out.append("\"" + argv[i].toString() + "\"");
+		//out.append("\"" + argv[i].toString() + "\"");
+		out.append('\"').append(argv[i].toString()).append('\"');
 	    } else if (rt instanceof StringThing) {
-		out.append(ListThing.toListString(argv[i]));
+		//out.append(ListThing.toListString(argv[i]));
+		ListThing.appendListItem(out,argv[i]);
 	    } else {
 		out.append(argv[i].toString());
 	    }
