@@ -84,33 +84,12 @@ public class CommandCmd extends OwnedThingCmd {
 	    ip.setResult(IntThing.create(cmd.getPriority()));
 	    return;
 	}
-	if(optname.equals(WidgetInfo.NCOMMAND)) {
-	    ip.setResult(new Thing(commandcode != null ? commandcode : ""));
-	    return;
-	}
 	super.cget(ip,optname);
     }
     
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	if(optname.equals(WidgetInfo.NCOMMAND)) {
-	    commandcode = optval.toString();
-	    return;
-	}
 	super.cset(ip,optname,optval);
     }
-
-    
-    public String getCode(String tag) {
-	return commandcode;
-    }
-
-
-    public void setCode(String tag,String code) {
-	commandcode = code;
-    }
-    
-
-    protected String commandcode;	    // Callback code
 }
     

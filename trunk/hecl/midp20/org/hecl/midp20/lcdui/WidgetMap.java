@@ -124,22 +124,14 @@ public class WidgetMap extends CmdDataMap {
     }
     
 
-    static void commandAction(OwnedThingCmd tcmd,char[] expchars,String[] replace) {
-	if(tcmd != null && tcmd instanceof CommandCmd) {
-	    eval(tcmd.getCreator(),((CommandCmd)tcmd).getCode(WidgetInfo.NCOMMAND),
-		 expchars,replace);
-	}
-    }
-    
-
     static void eval(Interp ip,String s,char[] expchars,String[] replace) {
 	if(s != null && s.length() > 0) {
+	    //System.err.println("WidgetMap::eval(" + ip + ", "+s);
 	    // Perform %-substitution and evaluate
-	    System.err.println("WidgetMap::eval(" + ip + ", "+s);
 	    ip.evalAsync(new Thing(expandPercent(s, expchars, replace)));
 	}
     }
-    
+
 
     public String nameOf(Object w) {
 	String s = super.nameOf(w);

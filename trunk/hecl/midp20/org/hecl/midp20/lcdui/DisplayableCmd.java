@@ -31,22 +31,24 @@ import org.hecl.Thing;
 
 import org.hecl.midp20.MidletCmd;
 
-public abstract class DisplayableCmd extends OwnedThingCmd implements CommandListener {
-    protected DisplayableCmd(Interp ip,Displayable displayable,Properties p)
+public abstract class DisplayableCmd extends OwnedThingCmd {
+    protected DisplayableCmd(final Interp ip,Displayable displayable,Properties p)
 	throws HeclException {
 	super(ip,displayable,p);
-	displayable.setCommandListener(this);
-    }
-
-
-    public void commandAction(Command c,Displayable d) {
-	WidgetMap wm = WidgetMap.mapOf(getCreator());
-	String dname = wm.nameOf(d);
-	String cname = wm.nameOf(c);
-	//System.out.println(" -->"+getClass().getName()+"::commandAction(" +cname+" - "+c.getLabel() +", "+dname+")");
-	String expansions[] = {cname,dname};
-	wm.commandAction((OwnedThingCmd)wm.commandOf(c),
-			 commandActionExpandChars, expansions);
+	displayable.setCommandListener(new CommandListener() {
+		public void commandAction(Command c,Displayable d) {
+		    //System.err.println("cmd="+c+", label="+c.getLabel());
+		    WidgetMap wm = WidgetMap.mapOf(ip);
+		    String dname = wm.nameOf(d);
+		    String cname = wm.nameOf(c);
+		    //System.out.println(" -->"+getClass().getName()+"::commandAction(" +cname+" - "+c.getLabel() +", "+dname+")");
+		    if(commandcode != null && dname != null && cname != null) {
+			String expansions[] = {cname,dname};
+			wm.eval(ip,commandcode,
+				commandActionExpandChars,expansions);
+		    }
+		}
+	    });
     }
     
 
@@ -69,6 +71,14 @@ public abstract class DisplayableCmd extends OwnedThingCmd implements CommandLis
 	    ip.setResult(d.getHeight());
 	    return;
 	}
+	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
+	    ip.setResult(new Thing(commandcode != null ? commandcode : ""));
+	    return;
+	}
+	if(optname.equals("-isshown")) {
+	    ip.setResult(d.isShown());
+	    return;
+	}
 	super.cget(ip,optname);
     }
     
@@ -81,6 +91,12 @@ public abstract class DisplayableCmd extends OwnedThingCmd implements CommandLis
 	}
 	if(optname.equals(WidgetInfo.NTITLE)) {
 	    d.setTitle(optval.toString());
+	    return;
+	}
+	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
+	    commandcode = optval.toString();
+	    if(commandcode.length() == 0)
+		commandcode = null;
 	    return;
 	}
 	super.cset(ip,optname,optval);
@@ -113,18 +129,19 @@ public abstract class DisplayableCmd extends OwnedThingCmd implements CommandLis
 	    Display.getDisplay(MidletCmd.midlet()).setCurrent(d);
 	    return;
 	}
-	if(subcmd.equals("delete")) {
-	    String name = wm.nameOf(getData());
-	    System.err.println("v="+getData());
-	    if(name != null) {
-		System.err.println("name="+name);
-		wm.remove(name);
-	    }
-	    return;
-	}
-	
 	super.handlecmd(ip,subcmd,argv,startat);
     }
 
+    public String getCode(String tag) {
+	return commandcode;
+    }
+
+
+    public void setCode(String tag,String code) {
+	commandcode = code;
+    }
+    
+
+    protected String commandcode;	    // Callback code
     private static final char commandActionExpandChars[] = {'W','D'};
 }

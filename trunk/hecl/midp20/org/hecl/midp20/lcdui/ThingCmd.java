@@ -75,29 +75,29 @@ public abstract class ThingCmd implements org.hecl.Command {
     
 
     protected void cget(Interp ip,String optname) throws HeclException {
-	throw new HeclException("Unknown cget option '"+optname+"'");
+	throw new OptException(optname);
     }
     
 
     protected void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	throw new HeclException("unknown configure option '"+optname+"'");
+	throw new OptException(optname);
     }
     
 
     protected void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	throw new HeclException("Unknown item cget option '"+optname+"'");
+	throw new ItemOptException("item cget "+optname);
     }
     
 
     protected void itemcset(Interp ip,int itemno,String optname,Thing optval)
 	throws HeclException {
-	throw new HeclException("unknown item option '"+optname+"'");
+	throw new ItemOptException("item cset "+optname);
     }
 
 
     protected void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-	throw new HeclException("Invalid command '"+subcmd+"'!");
+	throw new SubCmdException(subcmd);
     }
 
     private Object data;

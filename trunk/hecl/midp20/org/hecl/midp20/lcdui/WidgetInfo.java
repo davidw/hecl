@@ -33,6 +33,7 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.Spacer;
@@ -344,11 +345,14 @@ public class WidgetInfo {
     public static final String NCODE = "-code";
     public static final String NCOLOR = "-color";
     public static final String NCOMMAND = "-command";
+    public static final String NCOMMANDACTION = "-commandaction";
+    public static final String NEXPAND = "-expand";
     public static final String NFIT = "-fit";
     public static final String NFONT = "-font";
     public static final String NHEIGHT = "-height";
     public static final String NIMAGE = "-image";
     public static final String NINTERACTIVE = "-interactive";
+    public static final String NITEMCOMMANDACTION = "-itemcommandaction";
     public static final String NLABEL = "-label";
     public static final String NLINETYPE = "-linetype";
     public static final String NLONGLABEL = "-longlabel";
@@ -357,13 +361,17 @@ public class WidgetInfo {
     public static final String NMINHEIGHT = "-minheight";
     public static final String NMINWIDTH = "-minwidth";
     public static final String NPRIO = "-priority";
-    public static final String NSELECT = "-selection";
+    public static final String NPREFERREDWIDTH = "-preferredwidth";
+    public static final String NPREFERREDHEIGHT = "-preferredheight";
+    public static final String NSELECTMODE = "-selectmode";
+    public static final String NSELECTION = "-selection";
     public static final String NSUPPRESSKEYS = "-suppresskeys";
     public static final String NTEXT = "-text";
     public static final String NTICKER = "-ticker";
     public static final String NTITLE = "-title";
     public static final String NTYPE = "-type";
     public static final String NVALUE = "-value";
+    public static final String NVEXPAND = "-vexpand";
     public static final String NWIDTH = "-width";
     
     static final Thing defaultthing = new Thing("default");
@@ -380,7 +388,7 @@ public class WidgetInfo {
     public static final WidgetProp longlabelprop = new WidgetProp(NLONGLABEL,Thing.EMPTYTHING); 
     public static final WidgetProp titleprop = new WidgetProp(NTITLE,Thing.EMPTYTHING); 
     public static final WidgetProp fitprop = new WidgetProp(NFIT,defaultthing);
-    public static final WidgetProp selectprop = new WidgetProp(NSELECT,
+    public static final WidgetProp selectprop = new WidgetProp(NSELECTMODE,
 							       new Thing("exclusive")); 
     public static final WidgetProp tickerprop = new WidgetProp(NTICKER,Thing.EMPTYTHING);
     public static final WidgetProp prioprop = new WidgetProp(NPRIO,one);
@@ -566,6 +574,13 @@ public class WidgetInfo {
 	v.addElement(new WidgetProp(NTYPE,new Thing("exclusive"),true));
 	v.addElement(fitprop);
 	widgetprops.put(ChoiceGroup.class,v);
+
+	/* ImageItem defaults */
+	v = new Vector();
+	v.addElement(textprop);
+	v.addElement(labelprop);
+	v.addElement(appearanceprop);
+	widgetprops.put(ImageItem.class,v);
 
 	/* Spacer defaults */
 	v = new Vector();

@@ -47,8 +47,7 @@ public class Drawable {
     
     public Drawable(Graphics agraphics,int width,int height) {
 	super();
-	w = width;
-	h = height;
+	resize(width,height);
 	g = agraphics;
 	setColor(Color.BLACK);
 	bgcol = Color.WHITE;
@@ -72,8 +71,7 @@ public class Drawable {
     public void clear() {
 	// save status, erase, restore status
 	Rectangle r = getClipBounds();
-	System.err.println("old clip=" + r.x + "," + r.y + ","
-			   + r.width + "," + r.height);
+	//System.err.println("old clip=" + r.x + "," + r.y + "," + r.width + "," + r.height);
 	//double x = getTranslateX();
 	//double y = getTranslateY();
 	Color oldfg = getColor();
@@ -194,6 +192,15 @@ public class Drawable {
     }
     
 
+    public void xline(Point2D from,Point2D to) {
+	xline(round(from.getX()),round(from.getY()),
+	      round(to.getX()),round(to.getY()));
+    }
+    public void xline(int fromx,int fromy,int tox,int toy) {
+	g.drawLine(fromx,fromy,tox,toy);
+    }
+    
+
     public void drawPolygon(int n,Point2D[] points,boolean filled) {
 	Point[] p = new Point[n];
 	for(int i=0; i<n; ++i) {
@@ -205,7 +212,7 @@ public class Drawable {
 
     public void drawRect(int x,int y,int width,int height, boolean filled) {
 	int dx = toX(x);
-	int dy = toY(height > 0 ? y+height-1 : y);
+	int dy = toY(y+height);
 	if(filled)
 	    g.fillRect(dx, dy, width, height);
 	g.drawRect(dx, dy, width, height);
@@ -219,7 +226,7 @@ public class Drawable {
 
     public void drawRoundRect(int x, int y, int width, int height,
 			      int arcWidth, int arcHeight) {
-	g.drawRoundRect(toX(x),toY(height > 0 ? y+height-1 :y),
+	g.drawRoundRect(toX(x),toY(y+height),
 			width,height,arcHeight,arcHeight);
     }
     
@@ -337,6 +344,12 @@ public class Drawable {
     }
     
 
+    public void resize(int newWidth,int newHeight) {
+	w = newWidth;
+	h = newHeight;
+	h1 = h - 1;
+    }
+    
     public void setGrayScale(int value) {
 	g.setGrayScale(value);
     }
@@ -417,7 +430,7 @@ public class Drawable {
     */
 	    
     public void setClip(int x, int y, int width, int height) {
-	g.setClip(toX(x),toY(height > 0 ? y+height-1 : y),width,height);
+	g.setClip(toX(x),toY(y+height),width,height);
     }
     
 
@@ -534,11 +547,12 @@ public class Drawable {
     }
     
     protected int toY(int y) {
-	return h-1-y;
+	//System.err.println("toY("+y+") - h="+h+ ", h1="+h1+ " --> " + (h1-y));
+	return h1-y;
     }
     
     protected int fromY(int y) {
-	return y+1-h;
+	return y-h1;
     }
     
     protected static int round(double x) {
@@ -571,8 +585,9 @@ public class Drawable {
     protected static Hashtable vfonttab = new Hashtable();
 
     protected Graphics g = null;
-    protected int w = 0;		    // screen width
-    protected int h = 0;		    // screen height
+    protected int w = 1;		    // screen width
+    protected int h = 1;		    // screen height
+    private int h1 = 0;			    // screen height-1
     protected short linestipple = LT_SOLID;   // line stipple
     protected int linestipplefactor = 1;
     protected int linewidth = 1;

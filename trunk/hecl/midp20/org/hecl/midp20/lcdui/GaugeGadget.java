@@ -34,7 +34,7 @@ class GaugeGadget extends FormGadget {
 	
 
     public void cget(Interp ip,String optname) throws HeclException {
-	Gauge g = (Gauge)anitem;
+	Gauge g = (Gauge)theitem;
 	
 	if(optname.equals(WidgetInfo.NVALUE)) {
 	    ip.setResult(WidgetInfo.fromGaugeInitial(g.getValue()));
@@ -53,7 +53,7 @@ class GaugeGadget extends FormGadget {
 
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Gauge g = (Gauge)anitem;
+	Gauge g = (Gauge)theitem;
 	
 	if(optname.equals(WidgetInfo.NVALUE)) {
 	    int v = WidgetInfo.toGaugeInitial(optval);

@@ -19,53 +19,51 @@
 
 package org.hecl.midp20.lcdui;
 
-import java.util.Date;
-
-import javax.microedition.lcdui.DateField;
+import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.ImageItem;
+import javax.microedition.lcdui.Item;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-import org.hecl.LongThing;
 import org.hecl.Thing;
 
-public class DateGadget extends FormGadget {
-    public DateGadget(String label,int mode,FormCmd f) {
-	super(new DateField(label,mode),f);
-    }
+import org.hecl.misc.HeclUtils;
 
-    
-    public DateField getDateField() {
-	return (DateField)getItem();
+public class ImageGadget extends FormGadget {
+    public ImageGadget(String label,String alttext,int appearance,FormCmd f) {
+	super(new ImageItem(label,null,Item.LAYOUT_DEFAULT,alttext,appearance),f);
     }
     
-
+    
     public void cget(Interp ip,String optname) throws HeclException {
-	DateField df = (DateField)theitem;
-
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    ip.setResult(WidgetInfo.fromDateFieldMode(df.getInputMode()));
+	ImageItem item = (ImageItem)theitem;
+	
+	if(optname.equals(WidgetInfo.NTEXT)) {
+	    ip.setResult(item.getAltText());
 	    return;
 	}
-	if(optname.equals("-date")) {
-	    ip.setResult(df.getDate().getTime());
+	if(optname.equals(WidgetInfo.NIMAGE)) {
+	    ip.setResult(ImageMap.mapOf(ip).nameOf(item.getImage()));
+	    return;
+	}
+	if(optname.equals(WidgetInfo.NAPPEARANCE)) {
+	    ip.setResult(WidgetInfo.fromItemAppearance(item.getAppearanceMode()));
 	    return;
 	}
 	super.cget(ip,optname);
     }
-
-
+    
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	DateField df = (DateField)theitem;
+	ImageItem item = (ImageItem)theitem;
 
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    df.setInputMode(WidgetInfo.toDateFieldMode(optval));
+	if(optname.equals(WidgetInfo.NTEXT)) {
+	    item.setAltText(optval.toString());
 	    return;
 	}
-	if(optname.equals("-date")) {
-	    df.setDate(new Date(LongThing.get(optval)));
+	if(optname.equals(WidgetInfo.NIMAGE)) {
+	    item.setImage(ImageMap.asImage(ip,optval,false));
 	    return;
 	}
 	super.cset(ip,optname,optval);
     }
 }
-

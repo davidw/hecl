@@ -20,33 +20,11 @@
 package org.hecl.midp20.lcdui;
 
 import org.hecl.HeclException;
-import org.hecl.Interp;
-import org.hecl.Properties;
-import org.hecl.Thing;
 
-public abstract class OwnedThingCmd extends ThingCmd {
-    public OwnedThingCmd(Interp ip,Object x,Properties p) throws HeclException {
-	super(x);
-	if(p != null) {
-	    Thing optargs[] = p.getProps();
-	    configure(ip,optargs,0,optargs.length);
-	}
-    }
-
-
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
-	throws HeclException {
-	if(subcmd.equals("destroy")) {
-	    WidgetMap wm = WidgetMap.mapOf(ip);
-	    String name = wm.nameOf(getData());
-	    //System.err.println("v="+getData());
-	    if(name != null) {
-		//System.err.println("name="+name);
-		wm.remove(name);
-	    }
-	    return;
-	}
-	super.handlecmd(ip,subcmd,argv,startat);
+public abstract class CmdException extends HeclException {
+    CmdException(String s) {
+	super(s);
     }
 }
-    
+
+	    

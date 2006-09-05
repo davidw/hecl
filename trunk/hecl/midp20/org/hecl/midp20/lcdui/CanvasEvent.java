@@ -39,25 +39,19 @@ public class CanvasEvent {
     public static final int E_UNKNOWN = -1;
 
 
-    public interface Callback {
-	void call(CanvasEvent e);
-    }
-    
-
-    public String asString() {
-	return "CanvasEvent-"+toString()+reason+" - "+eventName(reason);
-    }
-    
     public static int eventOf(String s) {
-	Integer ii = (Integer)cbnames.get(s);
-
-	return ii != null ? ii.intValue() : E_UNKNOWN;
+	for(int i=0; i<eventcodes.length; ++i)
+	    if(eventnames[i].equals(s))
+		return eventcodes[i];
+	return E_UNKNOWN;
     }
     
 
-    public static String eventName(int i) {
-	String s = (String)cbnames.get(new Integer(i));
-	return s != null ? s : "unknown";
+    public static String eventName(int eventcode) {
+	for(int i=0; i<eventcodes.length; ++i)
+	    if(eventcodes[i] == eventcode)
+		return eventnames[i];
+	return "unknown";
     }
     
 
@@ -76,6 +70,21 @@ public class CanvasEvent {
 	this.keycode = keycode;
     }
     
+
+    public String asString() {
+	return "CanvasEvent-"+toString()+" - " + reason+" - "+eventName(reason);
+    }
+    
+
+    public void consume() {
+	consumed = true;
+    }
+    
+
+    public boolean isConsumed() {
+	return consumed;
+    }
+    
     public Canvas canvas;
     public int reason;
     public int x;
@@ -83,28 +92,19 @@ public class CanvasEvent {
     public int width;
     public int height;
     public int keycode;
+    public boolean consumed = false;
 
-    private static Hashtable cbnames = new Hashtable();
-
-    private static void remember(String s,int i) {
-	Integer ii = new Integer(i);
-	cbnames.put(s,ii);
-	cbnames.put(ii,s);
-    }
-	
-    static {
-	remember("none",E_NONE);
-	remember("paint",E_PAINT);
-	remember("ppress",E_PPRESS);
-	remember("prelease",E_PRELEASE);
-	remember("pdrag",E_PDRAG);
-	remember("kpress",E_KPRESS);
-	remember("krelease",E_KRELEASE);
-	remember("krepeat",E_KREPEAT);
-	remember("hide",E_HIDE);
-	remember("show",E_SHOW);
-	remember("resize",E_RESIZE);
-    }
+    private static int[] eventcodes = {
+	E_NONE,E_PAINT,E_PPRESS,E_PRELEASE,E_PDRAG,
+	    E_KPRESS,E_KREPEAT,E_KREPEAT,
+	    E_HIDE,E_SHOW,E_RESIZE
+    };
+    
+    private static String[] eventnames = {
+	"none","paint","ppress", "prelease","pdrag",
+	    "kpress", "krelease", "krepeat",
+	    "hide", "show", "resize"
+    };
     
 }
     

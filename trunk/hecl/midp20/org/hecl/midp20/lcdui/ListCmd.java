@@ -104,15 +104,10 @@ public class ListCmd extends ScreenCmd {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    Image img = l.getImage(itemno);
-	    String imgname = null;
-	    
-	    if(img != null)
-		imgname = ImageMap.mapOf(ip).nameOf(img);
-	    ip.setResult(imgname);
+	    ip.setResult(ImageMap.mapOf(ip).nameOf(l.getImage(itemno)));
 	    return;
 	}
-	if(optname.equals("-selected")) {
+	if(optname.equals(WidgetInfo.NSELECTION)) {
 	    ip.setResult(l.isSelected(itemno));
 	    return;
 	}
@@ -132,10 +127,10 @@ public class ListCmd extends ScreenCmd {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    l.set(itemno,l.getString(itemno),ImageMap.asImage(ip,optval,false));
+	    l.set(itemno,l.getString(itemno),ImageMap.asImage(ip,optval,true));
 	    return;
 	}
-	if(optname.equals("-selected")) {
+	if(optname.equals(WidgetInfo.NSELECTION)) {
 	    l.setSelectedIndex(itemno,HeclUtils.thing2bool(optval));
 	    return;
 	}

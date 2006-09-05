@@ -47,7 +47,7 @@ public class SpacerGadget extends FormGadget {
     }
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Spacer spacer = (Spacer)anitem;
+	Spacer spacer = (Spacer)theitem;
 
 	if(optname.equals(WidgetInfo.NLABEL)) {
 	    // Ignore
@@ -73,11 +73,11 @@ public class SpacerGadget extends FormGadget {
 
     public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-	if(subcmd.equals("addcommand")) {
+	if(subcmd.equals(WidgetInfo.NADDCOMMAND)) {
 	    // Ignore
 	    //throw new HeclException("Spacer does not support commands.");
 	}
-	if(subcmd.equals("removecommand")) {
+	if(subcmd.equals(WidgetInfo.NREMOVECOMMAND)) {
 	    // Ignore
 	    //throw new HeclException("Spacer does not support commands.");
 	}

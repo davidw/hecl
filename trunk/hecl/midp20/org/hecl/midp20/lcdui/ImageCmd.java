@@ -63,11 +63,8 @@ public class ImageCmd extends OwnedThingCmd {
 		    String imagename = null;
 		    if(argv.length <= startat) {
 			throw HeclException.createWrongNumArgsException(
-			    argv,startat,"type ?name? ?option value ...?");
+			    argv,startat,"?name? ?option value ...?");
 		    }
-		    
-		    // ignore image type
-		    ++startat;
 		    
 		    //System.out.println("***** create2: "+startat + ", length="+argv.length);
 		    // Check for name. # of remaining args must be even for
@@ -94,14 +91,7 @@ public class ImageCmd extends OwnedThingCmd {
 			}
 		    } else if((t = p.getProp("-resource")) != null) {
 			p.delProp("-resource");
-			try {
-			    image = Image.createImage(t.toString());
-			}
-			catch (IOException e) {
-			    throw new HeclException("Cannot convert resource '"
-						    + t.toString()
-						    + "' to image.");
-			}
+			image = ImageMap.loadImage(t.toString());
 		    } else if((t = p.getProp("-data")) != null) {
 			p.delProp("-data");
 			try {
@@ -127,12 +117,23 @@ public class ImageCmd extends OwnedThingCmd {
 		    }
 		    if(image == null) {
 			throw HeclException.createWrongNumArgsException(
-			    argv, 2,
-			    "type ?name? ?option value ...?");
+			    argv, 1,
+			    "?name? ?option value ...?");
 		    }
 		    addImage(ip,imagename,image);
 		    return;
 		}
+
+		if(subcmd.equals("delete")) {
+		    if(startat >= argv.length)
+			throw HeclException.createWrongNumArgsException(
+			    argv, startat,"image");
+		    String imagename = argv[startat].toString();
+		    System.err.println("deleting image="+imagename);
+		    ImageMap.mapOf(ip).remove(imagename);
+		    return;
+		}
+		
 		super.handlecmd(ip,subcmd,argv,startat);
 	    }
 	};

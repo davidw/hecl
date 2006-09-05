@@ -32,7 +32,7 @@ import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
-public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
+public class CanvasCmd extends DisplayableCmd {
     public static final org.hecl.Command CREATE = new org.hecl.Command() {
 	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
 		Properties p = WidgetInfo.defaultProps(Canvas.class);
@@ -46,26 +46,73 @@ public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
 	};
 
     
-    protected CanvasCmd(Interp ip,HeclCanvas acanvas,Properties p) throws HeclException {
+    protected CanvasCmd(final Interp ip,HeclCanvas acanvas,Properties p)
+	throws HeclException {
 	super(ip,acanvas,p);
 	callbacks = new Hashtable();
-	g = new GraphicsCmd(acanvas.getGraphics(),
-			    acanvas.getWidth(),acanvas.getHeight());
-	acanvas.setOwner(this);
-	fullscreen = false;
-	autoflush = true;
+	canvasg = acanvas.getGraphics();
+	acanvas.setEventHandler(new EventHandler() {
+		public void handleEvent(CanvasEvent e) {
+		    String cb = (String)callbacks.get(new Integer(e.reason));
+		    if(cb != null) {
+			HeclCanvas c = (HeclCanvas)e.canvas;
+			WidgetMap wm = WidgetMap.mapOf(ip);
+			String canvasname = wm.nameOf(c);
+			
+			if(canvasname != null) {
+			    // Perform %-substitution and call the callback
+			    // %W --> e.canvas
+			    // %T --> e.reason
+			    // %x --> e.x
+			    // %y --> e.y
+			    // %w --> e.width
+			    // %h --> e.height
+			    // %k --> e.keycode
+			    char expandchars[] = {'W','T','x','y','w','h','k','K','g'};
+			    String expansions[] = {
+				canvasname, CanvasEvent.eventName(e.reason),
+				    String.valueOf(e.x), String.valueOf(e.y),
+				    String.valueOf(e.width), String.valueOf(e.height),
+				    String.valueOf(e.keycode),
+				    "none","none"
+			    };
+			    try {
+				expansions[7] = c.getKeyName(e.keycode);
+				expansions[8] = String.valueOf(c.getGameAction(e.keycode));
+			    }
+			    catch(IllegalArgumentException illgl) {
+			    }
+			    String todo = WidgetMap.expandPercent(cb,expandchars,expansions);
+			    //System.out.println("we evaluate: "+todo+"<<");
+			    ip.evalAsync(new Thing(todo));
+			}
+		    }
+		}
+	    });
     }
     
 
     public void cget(Interp ip,String optname) throws HeclException {
 	HeclCanvas c = (HeclCanvas)getData();
 	
-	if(optname.equals("-autoflush")) {
-	    ip.setResult(autoflush);
+	if(optname.equals(WidgetInfo.NWIDTH)) {
+	    ip.setResult(c.getWidth());
+	    return;
+	}
+	if(optname.equals(WidgetInfo.NHEIGHT)) {
+	    ip.setResult(c.getHeight());
+	    return;
+	}
+	if(optname.equals("-fullwidth")) {
+	    ip.setResult(c.getFullWidth());
+	    return;
+	}
+	if(optname.equals("-fullheight")) {
+	    ip.setResult(c.getFullHeight());
 	    return;
 	}
 	if(optname.equals("-fullscreen")) {
-	    ip.setResult(fullscreen);
+	    ip.setResult(c.getFullScreenMode());
 	    return;
 	}
 	if(optname.equals("-doublebuffered")) {
@@ -84,40 +131,44 @@ public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
 	    ip.setResult(c.hasRepeatEvents());
 	    return;
 	}
-	try {
-	    super.cget(ip,optname);
+	if(optname.equals("-autoflush")) {
+	    ip.setResult(getAutoFlushMode());
 	    return;
 	}
-	catch (HeclException e) {
-	    if(g == null)
-		throw e;
+	GraphicsCmd gcmd = c.getGraphicsCmd();
+	if(gcmd != null) {
+	    try {
+		gcmd.cget(ip,optname);
+		return;
+	    }
+	    catch (CmdException e) {
+	    }
 	}
-	g.cget(ip,optname);
+	super.cget(ip,optname);
     }
     
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
 	HeclCanvas c = (HeclCanvas)getData();
 
-	if(optname.equals("-autoflush")) {
-	    autoflush = HeclUtils.thing2bool(optval);
-	    c.setFullScreenMode(fullscreen);
-	    return;
-	}
 	if(optname.equals("-fullscreen")) {
-	    fullscreen = HeclUtils.thing2bool(optval);
-	    c.setFullScreenMode(fullscreen);
+	    c.setFullScreenMode(HeclUtils.thing2bool(optval));
 	    return;
 	}
-	try {
-	    super.cset(ip,optname,optval);
+	if(optname.equals("-autoflush")) {
+	    setAutoFlushMode(HeclUtils.thing2bool(optval));
 	    return;
 	}
-	catch (HeclException e) {
-	    if(g == null)
-		throw e;
+	GraphicsCmd gcmd = c.getGraphicsCmd();
+	if(gcmd != null) {
+	    try {
+		gcmd.cset(ip,optname,optval);
+		return;
+	    }
+	    catch (CmdException e) {
+	    }
 	}
-	g.cset(ip,optname,optval);
+	super.cset(ip,optname,optval);
     }
     
 
@@ -148,8 +199,7 @@ public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
 	    return;
 	}
 	if(subcmd.equals("servicerepaints")) {
-	    if(!c.isPainting())
-		c.serviceRepaints();
+	    c.serviceRepaints();
 	    return;
 	}
 	if(subcmd.equals("flush")) {
@@ -159,7 +209,7 @@ public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
 		return;
 	    }
 	    
-	    /* x, y, w, h, */
+	    // x, y, w, h
 	    if(startat+4 != argv.length)
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "x y w h");
@@ -173,79 +223,44 @@ public class CanvasCmd extends DisplayableCmd implements CanvasEvent.Callback {
 
 	// Draw commands go here
 	try {
-	    super.handlecmd(ip,subcmd,argv,startat);
-	    return;
-	}
-	catch (HeclException e) {
-	    if(null == g)
-		throw e;
-	}
-	try {
-	    g.handlecmd(ip,subcmd,argv,startat);
-	}
-	finally {
-	    if(autoflush)
-		c.flushGraphics();
-	}
-    }
-
-    public void addCallback(int reason,String s) {
-	if(s != null)
-	    callbacks.put(new Integer(reason),s);
-	else
-	    removeCallback(reason);
-    }
-	    
-    
-    public void removeCallback(int reason) {
-	callbacks.remove(new Integer(reason));
-    }
-	    
-
-    public void call(CanvasEvent e) {
-	System.out.println("callback for: "+CanvasEvent.eventName(e.reason));
-	
-	String cb = (String)callbacks.get(new Integer(e.reason));
-	if(cb != null) {
-	    HeclCanvas c = (HeclCanvas)getData();
-	    Interp ip = getCreator();
-	    WidgetMap wm = WidgetMap.mapOf(ip);
-	    String canvasname = wm.nameOf(e.canvas);
-	    
-	    if(canvasname != null) {
-		// Perform %-substitution and call the callback
-		// %W --> e.canvas
-		// %T --> e.reason
-		// %x --> e.x
-		// %y --> e.y
-		// %w --> e.width
-		// %h --> e.height
-		// %k --> e.keycode
-		char expandchars[] = {'W','T','x','y','w','h','k','K','g'};
-		String expansions[] = {
-		    canvasname, CanvasEvent.eventName(e.reason),
-			String.valueOf(e.x), String.valueOf(e.y),
-			String.valueOf(e.width), String.valueOf(e.height),
-			String.valueOf(e.keycode),
-			"none","none"
-		};
-		try {
-		    expansions[7] = c.getKeyName(e.keycode);
-		    expansions[8] = String.valueOf(c.getGameAction(e.keycode));
+	    GraphicsCmd gcmd = c.getGraphicsCmd();
+	    if(gcmd != null) {
+		gcmd.handlecmd(ip,subcmd,argv,startat);
+		if(autoflush && gcmd.needsFlush()) {
+		    c.flushGraphics();
+		    gcmd.flush();
 		}
-		catch(IllegalArgumentException illgl) {
-		}
-		String todo = WidgetMap.expandPercent(cb,expandchars,expansions);
-		
-		System.out.println("we evaluate: "+todo+"<<");
-		ip.evalAsync(new Thing(todo));
+		return;
 	    }
 	}
+	catch (CmdException e) {
+	}
+	super.handlecmd(ip,subcmd,argv,startat);
+    }
+
+    public void addCallback(int eventCode,String s) {
+	if(s != null)
+	    callbacks.put(new Integer(eventCode),s);
+	else
+	    removeCallback(eventCode);
+    }
+	    
+
+    public boolean getAutoFlushMode() {
+	return autoflush;
     }
     
 
-    protected GraphicsCmd g;
+    public void removeCallback(int eventCode) {
+	callbacks.remove(new Integer(eventCode));
+    }
+	    
+    
+    public void setAutoFlushMode(boolean b) {
+	autoflush = b;
+    }
+    
+    protected Graphics canvasg;
     protected Hashtable callbacks;
-    boolean fullscreen;
-    boolean autoflush;
+    private boolean autoflush = true;
 }

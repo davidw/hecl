@@ -17,18 +17,3 @@
  * limitations under the License.
  */
 
-package org.hecl.midp20.lcdui;
-
-import org.hecl.HeclException;
-import org.hecl.Interp;
-import org.hecl.Thing;
-
-public interface Gadget {
-    void cget(Interp ip,String optname) throws HeclException;
-    void cset(Interp ip,String optname,Thing optval) throws HeclException;
-    void itemcget(Interp ip,int itemno,String optname) throws HeclException;
-    void itemcset(Interp ip,int itemno,String optname,Thing optval)
-	throws HeclException;
-    void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
-	throws HeclException;
-}

@@ -40,7 +40,7 @@ public class ChoiceGadget extends FormGadget {
 
 
     public void cget(Interp ip,String optname) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)anitem;
+	ChoiceGroup cg = (ChoiceGroup)theitem;
 	
 	if(optname.equals(WidgetInfo.NTYPE)) {
 	    ip.setResult(WidgetInfo.fromChoiceType(choicetype));
@@ -55,7 +55,7 @@ public class ChoiceGadget extends FormGadget {
 
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)anitem;
+	ChoiceGroup cg = (ChoiceGroup)theitem;
 	
 	if(optname.equals(WidgetInfo.NFIT)) {
 	    cg.setFitPolicy(WidgetInfo.toWrap(optval));
@@ -66,7 +66,7 @@ public class ChoiceGadget extends FormGadget {
 
 
     public void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)anitem;
+	ChoiceGroup cg = (ChoiceGroup)theitem;
 	
 	if(optname.equals(WidgetInfo.NFONT)) {
 	    FontMap.setResult(ip,cg.getFont(itemno));
@@ -77,11 +77,7 @@ public class ChoiceGadget extends FormGadget {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    Image img = cg.getImage(itemno);
-	    String imgname = null;
-	    if(img != null)
-		imgname = ImageMap.mapOf(ip).nameOf(img);
-	    ip.setResult(imgname);
+	    ip.setResult(ImageMap.mapOf(ip).nameOf(cg.getImage(itemno)));
 	    return;
 	}
 	if(optname.equals("-selected")) {
@@ -94,7 +90,7 @@ public class ChoiceGadget extends FormGadget {
 
     public void itemcset(Interp ip,int itemno,String optname,Thing optval)
 	throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)anitem;
+	ChoiceGroup cg = (ChoiceGroup)theitem;
 	
 	if(optname.equals(WidgetInfo.NFONT)) {
 	    cg.setFont(itemno,FontMap.get(optval));
@@ -118,9 +114,9 @@ public class ChoiceGadget extends FormGadget {
 	
     public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)anitem;
+	ChoiceGroup cg = (ChoiceGroup)theitem;
 	
-	System.err.println("-->ChoiceGadget::handlecmd("+subcmd+")\n\tcg="+cg);
+	//System.err.println("-->ChoiceGadget::handlecmd("+subcmd+")\n\tcg="+cg);
 
 	if(subcmd.equals("selection")) {
 	    int n = startat+1;
@@ -197,7 +193,7 @@ public class ChoiceGadget extends FormGadget {
 		throw new IndexOutOfBoundsException("Invalid ChoiceGroup element '"
 						    +itempos+"'.");
 	    }
-	    System.out.println("ChoiceGroup element#="+itempos);
+	    //System.out.println("ChoiceGroup element#="+itempos);
 
 	    if(subcmd.equals("itemconfigure")) {
 		for(int i = n; i<argv.length; i+= 2) {

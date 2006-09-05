@@ -24,21 +24,20 @@ import javax.microedition.lcdui.Item;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
 public abstract class FormGadget implements Gadget {
     protected FormGadget(Item i,FormCmd owner) {
-	anitem = i;
+	theitem = i;
 	formcmd = owner;
-	defcmd = null;
-	changedcallback = "";
     }
 
     
     public Item getItem() {
-	return anitem;
+	return theitem;
     }
     
 
@@ -47,67 +46,70 @@ public abstract class FormGadget implements Gadget {
     }
     
 
-    public void configure(Interp ip,Thing[] argv,int start,int n) throws HeclException {
-	if(n < 0 || n % 2 != 0) {
+    public void configure(Interp ip,Thing[] argv,int start,int n)
+	throws HeclException {
+	int count = n-start;
+	if(count < 0 || count % 2 != 0) {
 	    throw new HeclException("configure needs name-value pairs");
 	}
 	// deal with option/value pairs
-	for(int i = start ; n > 0; n -= 2, i += 2) {
+	for(int i = start ; i<n; i += 2) {
+	    //System.err.println("formgadget.cset for "+argv[i].toString() +", val="+argv[i+1].toString());
 	    cset(ip,argv[i].toString(),argv[i+1]);
 	}
     }
     
     public void cget(Interp ip,String optname) throws HeclException {
 	if(optname.equals(WidgetInfo.NLABEL)) {
-	    ip.setResult(anitem.getLabel());
+	    ip.setResult(theitem.getLabel());
 	    return;
 	}
 	if(optname.equals("-anchor")) {
-	    ip.setResult(WidgetInfo.fromItemAnchor(anitem.getLayout()));
+	    ip.setResult(WidgetInfo.fromItemAnchor(theitem.getLayout()));
 	    return;
 	}
 	if(optname.equals("-shrink")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_SHRINK));
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_SHRINK));
 	    return;
 	}
 	if(optname.equals("-vshrink")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_VSHRINK));
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_VSHRINK));
 	    return;
 	}
-	if(optname.equals("-expand")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_EXPAND));
+	if(optname.equals(WidgetInfo.NEXPAND)) {
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_EXPAND));
 	    return;
 	}
-	if(optname.equals("-vexpand")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_VEXPAND));
+	if(optname.equals(WidgetInfo.NVEXPAND)) {
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_VEXPAND));
 	    return;
 	}
 	if(optname.equals("-newlinebefore")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_NEWLINE_BEFORE));
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_BEFORE));
 	    return;
 	}
 	if(optname.equals("-newlineafter")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_NEWLINE_AFTER));
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_AFTER));
 	    return;
 	}
 	if(optname.equals("-layout2")) {
-	    ip.setResult(0 != (anitem.getLayout()&Item.LAYOUT_2));
+	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_2));
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NMINWIDTH)) {
-	    ip.setResult(anitem.getMinimumWidth());
+	    ip.setResult(theitem.getMinimumWidth());
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NMINHEIGHT)) {
-	    ip.setResult(anitem.getMinimumHeight());
+	    ip.setResult(theitem.getMinimumHeight());
 	    return;
 	}
-	if(optname.equals("-preferredwidth")) {
-	    ip.setResult(anitem.getPreferredWidth());
+	if(optname.equals(WidgetInfo.NPREFERREDWIDTH)) {
+	    ip.setResult(theitem.getPreferredWidth());
 	    return;
 	}
-	if(optname.equals("-preferredheight")) {
-	    ip.setResult(anitem.getPreferredHeight());
+	if(optname.equals(WidgetInfo.NPREFERREDHEIGHT)) {
+	    ip.setResult(theitem.getPreferredHeight());
 	    return;
 	}
 	if(optname.equals("-defaultcommand")) {
@@ -115,7 +117,7 @@ public abstract class FormGadget implements Gadget {
 	    return;
 	}
 	if(optname.equals("-changedcallback")) {
-	    ip.setResult(changedcallback);
+	    ip.setResult(changedcallback != null ? changedcallback : "");
 	    return;
 	}
 	throw new HeclException("Unknown cget option '"+optname+"'");
@@ -124,53 +126,61 @@ public abstract class FormGadget implements Gadget {
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
 	if(optname.equals(WidgetInfo.NLABEL)) {
-	    anitem.setLabel(optval.toString());
+	    theitem.setLabel(optval.toString());
 	    return;
 	}
 	if(optname.equals("-anchor")) {
-	    int t = anitem.getLayout() & ~0x33;
-	    anitem.setLayout(t | WidgetInfo.toItemAnchor(optval));
+	    int t = theitem.getLayout() & ~0x33;
+	    theitem.setLayout(t | WidgetInfo.toItemAnchor(optval));
 	    return;
 	}
 	if(optname.equals("-shrink")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_SHRINK;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_SHRINK : 0));
+	    int t = theitem.getLayout() & ~Item.LAYOUT_SHRINK;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_SHRINK : 0));
 	    return;
 	}
 	if(optname.equals("-vshrink")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_VSHRINK;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_VSHRINK : 0));
+	    int t = theitem.getLayout() & ~Item.LAYOUT_VSHRINK;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_VSHRINK : 0));
 	    return;
 	}
-	if(optname.equals("-expand")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_EXPAND;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_EXPAND : 0));
+	if(optname.equals(WidgetInfo.NEXPAND)) {
+	    int t = theitem.getLayout() & ~Item.LAYOUT_EXPAND;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_EXPAND : 0));
 	    return;
 	}
-	if(optname.equals("-vexpand")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_VEXPAND;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_VEXPAND : 0));
+	if(optname.equals(WidgetInfo.NVEXPAND)) {
+	    int t = theitem.getLayout() & ~Item.LAYOUT_VEXPAND;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_VEXPAND : 0));
 	    return;
 	}
 	if(optname.equals("-newlinebefore")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_NEWLINE_BEFORE;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_NEWLINE_BEFORE : 0));
+	    int t = theitem.getLayout() & ~Item.LAYOUT_NEWLINE_BEFORE;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_NEWLINE_BEFORE : 0));
 	    return;
 	}
 	if(optname.equals("-newlineafter")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_NEWLINE_AFTER;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_NEWLINE_AFTER : 0));
+	    int t = theitem.getLayout() & ~Item.LAYOUT_NEWLINE_AFTER;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_NEWLINE_AFTER : 0));
 	    return;
 	}
 	if(optname.equals("-layout2")) {
-	    int t = anitem.getLayout() & ~Item.LAYOUT_2;
-	    anitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_2 : 0));
+	    int t = theitem.getLayout() & ~Item.LAYOUT_2;
+	    theitem.setLayout(t | (HeclUtils.thing2bool(optval) ? Item.LAYOUT_2 : 0));
 	    return;
 	}
-	if(optname.equals("-preferredsize")) {
-	    //anitem.setLayout();
+	if(optname.equals(WidgetInfo.NPREFERREDWIDTH)) {
+	    theitem.setPreferredSize(IntThing.get(optval),theitem.getPreferredHeight());
 	    return;
 	}
+	if(optname.equals(WidgetInfo.NPREFERREDHEIGHT)) {
+	    theitem.setPreferredSize(theitem.getPreferredWidth(),IntThing.get(optval));
+	    return;
+	}
+	//if(optname.equals("-preferredsize")) {
+	//theitem.setLayout();
+	//  return;
+	//}
 	if(optname.equals("-defaultcommand")) {
 	    String s = optval.toString();
 	    Command c = null;
@@ -178,12 +188,14 @@ public abstract class FormGadget implements Gadget {
 		c = WidgetMap.mapOf(ip).asCommand(optval,true,true);
 	    }
 	    defcmd = c;
-	    anitem.setDefaultCommand(c);
+	    theitem.setDefaultCommand(c);
 	    return;
 	}
 	if(optname.equals("-changedcallback")) {
 	    changedcallback = optval.toString();
-	    System.err.println("*** set to " + changedcallback);
+	    if(changedcallback.length() == 0)
+		changedcallback = null;
+	    //System.err.println("*** set to " + changedcallback);
 	    return;
 	}
 	throw new HeclException("unknown configure option '"+optname+"'");
@@ -211,7 +223,7 @@ public abstract class FormGadget implements Gadget {
 		throw HeclException.createWrongNumArgsException(
 		    argv, n, subcmd+" command");
 	    }
-	    anitem.addCommand(wm.asCommand(argv[2],false,true));
+	    theitem.addCommand(wm.asCommand(argv[2],false,true));
 	    return;
 	}
 	if(subcmd.equals(WidgetInfo.NREMOVECOMMAND)) {
@@ -224,7 +236,7 @@ public abstract class FormGadget implements Gadget {
 	    if(c == defcmd) {
 		defcmd = null;
 	    }
-	    anitem.removeCommand(c);
+	    theitem.removeCommand(c);
 	    return;
 	}
 	throw new HeclException("Invalid command '"+subcmd+"'!");
@@ -235,9 +247,15 @@ public abstract class FormGadget implements Gadget {
 	return changedcallback;
     }
 
+    public String getCommandAction() {
+	return commandaction;
+    }
     
-    protected Item anitem;
+
+    
+    protected Item theitem;
     protected FormCmd formcmd;
-    protected Command defcmd;
-    protected String changedcallback;
+    protected Command defcmd = null;
+    protected String changedcallback = null;
+    protected String commandaction = null;
 }

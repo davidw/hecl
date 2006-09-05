@@ -68,8 +68,8 @@ public class GraphicsCmd extends ThingCmd {
 	    linewidth = d.getLineWidth();
 	    d.getClipBounds(cliprect);
 //#ifdef notdef
-	    tx = d.getTranslateX();
-	    ty = d.getTranslateY();
+	    mytx = d.getTranslateX();
+	    myty = d.getTranslateY();
 //#endif
 	}
 	
@@ -86,7 +86,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.setClip(cliprect);
 	    d.setFont(font);
 //#ifdef notdef
-	    d.translate(tx,ty);
+	    d.translate(mytx,myty);
 //#endif
 	}
 
@@ -98,18 +98,18 @@ public class GraphicsCmd extends ThingCmd {
 	private int linewidth;
 	private Rectangle cliprect;
 //#ifdef notdef
-	private double tx;
-	private double ty;
+	private double mytx;
+	private double myty;
 //#endif
     }
     
 
-    protected GraphicsCmd(Graphics g,int width,int height) throws HeclException {
+    protected GraphicsCmd(Graphics g,int width,int height) {
 	super(new Drawable(g,width,height));
-	w = width;
-	h = height;
+	mywidth = width;
+	myheight = height;
 //#ifdef notdef
-	tx = ty = 0;
+	mytx = myty = 0;
 //#endif
     }
 
@@ -228,6 +228,14 @@ public class GraphicsCmd extends ThingCmd {
     }
     
 
+    public boolean needsFlush() {
+	return needflush;
+    }
+    
+    public void flush() {
+	needflush = false;
+    }
+    
     private synchronized boolean sequence(Stack st,Interp ip,
 					  String subcmd, Thing[] argv,int startat)
 	throws HeclException {
@@ -247,7 +255,7 @@ public class GraphicsCmd extends ThingCmd {
 	    return true;
 	}
 	if(subcmd.equals("draw")) {
-	    Vector errs = new Vector();
+	    StringBuffer errs = null;
 	    for(; startat+1 <= argv.length; ++startat) {
 		Vector v = ListThing.get(argv[startat]);
 		int cmdlen = v.size();
@@ -259,29 +267,20 @@ public class GraphicsCmd extends ThingCmd {
 			sequence(st,ip,xargs[0].toString().toLowerCase(),xargs,1);
 		    }
 		    catch (HeclException e) {
-			errs.addElement(new Integer(startat));
-			errs.addElement(new Integer(pos));
-			errs.addElement(e);
+			// OOPS, error
+			// We create a comfortable error message with index
+			// into command sequence and error message for the
+			// errorneous command.
+			if(errs == null) {
+			    errs = new StringBuffer("Error in "+subcmd+":");
+			}
+			errs.append(' ').append(startat).append(',')
+			    .append(pos).append('-').append(e.toString());
 		    }
 		}
 	    }
-	    
-	    if(errs.size() > 0) {
-		// OOPS, error
-		// We create a comfortable error message with index into
-		// command sequence and error message for the errorneous
-		// command.
-		StringBuffer s = new StringBuffer("Error in "+subcmd+":");
-		
-		n = errs.size();
-		for(int i=0; i<n; i += 3) {
-		    int drawcmd = ((Integer)errs.elementAt(i)).intValue();
-		    int idx = ((Integer)errs.elementAt(i+1)).intValue();
-		    s.append(" ").append(drawcmd).append(",").
-			append(idx).append(": ").
-			append(((Exception)errs.elementAt(i+2)).getMessage());
-		}
-		throw new HeclException(s.toString());
+	    if(errs != null) {
+		throw new HeclException(errs.toString());
 	    }
 	    return true;
 	}
@@ -297,11 +296,11 @@ public class GraphicsCmd extends ThingCmd {
 		      IntThing.get(argv[startat+2]),
 		      IntThing.get(argv[startat+3]),
 		      false);
-	    return true;
+	    return needflush = true;
 	}
 	if(subcmd.equals("clear")) {
 	    d.clear();
-	    return true;
+	    return needflush = true;
 	}
 	if(subcmd.equals("copyarea")) {
 	    /* vsrc(x,y), dim(w,h) vdst(x,y), anchor */
@@ -315,7 +314,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.copyArea(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       HeclUtils.thing2Point(argv,startat+2), anchor);
-	    return true;
+	    return needflush = true;
 	}
 	if(subcmd.equals("image")) {
 	    // image, v(x,y), anchor
@@ -326,10 +325,35 @@ public class GraphicsCmd extends ThingCmd {
 	    int anchor = startat+2 < argv.length ?
 		WidgetInfo.toCanvasAnchor(argv[n]) : Graphics.TOP|Graphics.LEFT;
 	    System.err.println("anchor="+Integer.toHexString(anchor));
-	    d.drawImage(ImageMap.mapOf(ip).asImage(argv[startat],false),
+	    d.drawImage(ImageMap.asImage(ip,argv[startat],false),
 			HeclUtils.thing2Point(argv,startat+1), anchor);
-	    return true;
+	    return needflush = true;
 	}
+	if(subcmd.equals("line")) {
+	    // v0(x,y) v1(x,y)
+	    if(startat+2 != argv.length)
+		throw HeclException.createWrongNumArgsException(
+		    argv, startat, "frompt topt");
+	    Point2D v0 = new Point2D.Double();
+	    Point2D v1 = new Point2D.Double();
+	    HeclUtils.getPoint(v0,argv,startat);
+	    HeclUtils.getPoint(v1,argv,startat+1);
+	    d.drawLine(v0,v1);
+	    return needflush = true;
+	}
+	if(subcmd.equals("xline")) {
+	    // v0(x,y) v1(x,y) [...]
+	    if(startat+2 != argv.length)
+		throw HeclException.createWrongNumArgsException(
+		    argv, startat, "frompt topt");
+	    Point2D v0 = new Point2D.Double();
+	    Point2D v1 = new Point2D.Double();
+	    HeclUtils.getPoint(v0,argv,startat);
+	    HeclUtils.getPoint(v1,argv,startat+1);
+	    d.xline(v0,v1);
+	    return needflush = true;
+	}
+
 	if(subcmd.equals("lines")) {
 	    // v0(x,y) v1(x,y) [...]
 	    if(startat+1 > argv.length)
@@ -342,7 +366,7 @@ public class GraphicsCmd extends ThingCmd {
 		HeclUtils.getPoint(v1,argv,startat+1);
 		d.drawLine(v0,v1);
 	    }
-	    return true;
+	    return needflush = true;
 	}
 	
 	if(subcmd.equals("points")) {
@@ -351,7 +375,7 @@ public class GraphicsCmd extends ThingCmd {
 	    for(; startat < argv.length; ++startat) {
 		d.drawPoint(HeclUtils.getPoint(p,argv,startat));
 	    }
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("linestrip")) {
@@ -382,7 +406,7 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "p0 p1 p2 [...]");
 	    Point2D[] p = getPoints(argv,startat);
 	    d.drawPolygon(p.length,p,true);
-	    return true;
+	    return needflush = true;
 	}
 
 
@@ -394,7 +418,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.drawRect(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       false);
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("string")) {
@@ -407,7 +431,7 @@ public class GraphicsCmd extends ThingCmd {
 	    
 	    d.drawString(argv[startat+1].toString(),
 			 HeclUtils.thing2Point(argv,startat), anchor);
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("htext")) {
@@ -420,7 +444,7 @@ public class GraphicsCmd extends ThingCmd {
 	    
 	    d.drawVString(argv[startat+1].toString(),
 			  HeclUtils.thing2Point(argv,startat));
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("rrect")) {
@@ -432,7 +456,7 @@ public class GraphicsCmd extends ThingCmd {
 			    HeclUtils.thing2Dimension(argv,startat+1),
 			    IntThing.get(argv[startat+2]),
 			    IntThing.get(argv[startat+3]));
-	    return true;
+	    return needflush = true;
 	}
 
 
@@ -446,7 +470,7 @@ public class GraphicsCmd extends ThingCmd {
 		      IntThing.get(argv[startat+2]),
 		      IntThing.get(argv[startat+3]),
 		      true);
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("frect")) {
@@ -457,7 +481,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.drawRect(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       true);
-	    return true;
+	    return needflush = true;
 	}
 
 	if(subcmd.equals("frrect")) {
@@ -469,7 +493,7 @@ public class GraphicsCmd extends ThingCmd {
 			    HeclUtils.thing2Dimension(argv,startat+1),
 			    IntThing.get(argv[startat+2]),
 			    IntThing.get(argv[startat+3]));
-	    return true;
+	    return needflush = true;
 	}
 
 	// Get commands...
@@ -613,15 +637,16 @@ public class GraphicsCmd extends ThingCmd {
 	Point2D[] points = new Point2D[n];
 	for(int i=0; startat<argv.length; ++startat, ++i) {
 	    points[i] = HeclUtils.thing2Point(argv,startat);
-	    System.out.println("point["+i+"]="+points[i].getX()+", "+points[i].getY());
+	    //System.out.println("point["+i+"]="+points[i].getX()+", "+points[i].getY());
 	}
 	return points;
     }
     
-    private int w;
-    private int h;
+    private int mywidth;
+    private int myheight;
+    protected boolean needflush = false;
 //#ifdef notdef
-    private int tx;
-    private int ty;
+    private int mytx = 0;
+    private int myty = 0;
 //#endif
 }

@@ -35,7 +35,7 @@ public class TextGadget extends FormGadget {
 
 
     public void cget(Interp ip,String optname) throws HeclException {
-	TextField tf = (TextField)anitem;
+	TextField tf = (TextField)theitem;
 	
 	if(optname.equals(WidgetInfo.NTYPE)) {
 	    ip.setResult(WidgetInfo.fromTextType(
@@ -82,7 +82,7 @@ public class TextGadget extends FormGadget {
     }
 
     public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	TextField tf = (TextField)anitem;
+	TextField tf = (TextField)theitem;
 
 	if(optname.equals(WidgetInfo.NTYPE)) {
 	    int c = (tf.getConstraints() & TextField.CONSTRAINT_MASK);

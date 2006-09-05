@@ -20,6 +20,7 @@
 package org.hecl.midp20.lcdui;
 
 import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.Gauge;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -60,7 +61,7 @@ public class AlertCmd extends ScreenCmd {
 	    return;
 	}
 	if(optname.equals("-timeout")) {
-	    ip.setResult(a.getTimeout());
+	    ip.setResult(indicator != null);
 	    return;
 	}
 	super.cget(ip,optname);
@@ -91,6 +92,19 @@ public class AlertCmd extends ScreenCmd {
 	    a.setTimeout(timeout);
 	    return;
 	}
+	if(optname.equals("-indicator")) {
+	    if(HeclUtils.thing2bool(optval)) {
+		if(indicator == null)
+		    indicator = new Gauge(null, false, Gauge.INDEFINITE,
+					  Gauge.CONTINUOUS_RUNNING);
+	    } else {
+		indicator = null;
+	    }
+	    a.setIndicator(indicator);
+	    return;
+	}
 	super.cset(ip,optname,optval);
     }
+
+    Gauge indicator = null;
 }

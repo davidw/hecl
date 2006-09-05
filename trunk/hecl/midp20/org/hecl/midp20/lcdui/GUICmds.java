@@ -25,45 +25,18 @@ import java.util.Hashtable;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.List;
-//import javax.microedition.lcdui.Screen;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Thing;
-import org.hecl.IntThing;
-import org.hecl.Properties;
 import org.hecl.HeclModule;
 
 public class GUICmds implements HeclModule {
-    public static GUICmds phoneOf(Interp ip) {
-	// Currently only one Phone supported!!!
-	GUICmds phone = (GUICmds)phonetab.get(ip);
-	if(phone == null) {
-	    System.err.println("No phone found for interpreter '" + ip + "'.");
-	}
-	return phone;
-    }
-    
-    public GUICmds() {
-	phoneinterp = null;
-    }
-    
-    static private void initialConfigure(Interp ip,Object w,
-					 OwnedThingCmd c,Properties p) 
-	throws HeclException {
-	Thing optargs[] = p.getProps();
-	c.configure(ip,optargs,0,optargs.length);
-	WidgetMap.addWidget(ip,null,w,c);
-    }
-    
-    
     public void loadModule(Interp ip) throws HeclException {
 	System.err.println("Loading new phone");
-	phoneinterp = ip;
 
 	// Add some default widgets
 	String name = "lcdui.select_command";
@@ -94,7 +67,6 @@ public class GUICmds implements HeclModule {
 	ip.addCommand("lcdui.textbox",TextBoxCmd.CREATE);
 	ip.addCommand("lcdui.ticker",TickerCmd.CREATE);
 	ip.addCommand("lcdui.widgetmap",WidgetMap.CMD);
-	phonetab.put(ip,this);
     }
     
 
@@ -104,17 +76,4 @@ public class GUICmds implements HeclModule {
 	ip.unSetVar("lcdui.select_command");
 	ip.unSetVar("lcdui.dismiss_command");
     }
-
-
-    // instance vars for this class
-    private Interp phoneinterp;
-
-    // Table of phone (interpreter --> phone)
-    // !!We allow only one phone per interpreter!!
-    private static Hashtable phonetab;
-
-    static {
-	phonetab = new Hashtable();
-    }
-    
 }

@@ -80,10 +80,11 @@ public class CmdDataMap extends AuxDataMap {
     }
 
     protected String newKey() {
-	return itemprefix + "-" + ++itemcounter;
+	return itemprefix + SEPARATOR + ++itemcounter;
     }
     
-    protected String itemprefix = "cdmdataitem";
+    protected String itemprefix = "cmddataitem";
     protected Hashtable cmdtab = new Hashtable();
     private int itemcounter = 0;
+    static private final char SEPARATOR = '#';
 }

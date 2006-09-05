@@ -26,6 +26,7 @@ import javax.microedition.lcdui.DateField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
+import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.ItemStateListener;
@@ -43,8 +44,7 @@ import org.hecl.Thing;
 import org.hecl.midp20.MidletCmd;
 import org.hecl.misc.HeclUtils;
 
-public class FormCmd extends DisplayableCmd
-    implements ItemCommandListener, ItemStateListener {
+public class FormCmd extends DisplayableCmd {
 
     public static final org.hecl.Command CREATE = new org.hecl.Command() {
 	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
@@ -57,39 +57,36 @@ public class FormCmd extends DisplayableCmd
 	};
 
 
-    public void itemStateChanged(Item item) {
-	System.out.println("-->"+getClass().getName()
-			   +"::itemStateChanged(" + item + ")");
-	WidgetMap wm = WidgetMap.mapOf(getCreator());
-	String expansions[] = {"", wm.nameOf(getForm())};
-	int i = findItem(expansions,item);
-
-	if(i >= 0) {
-	    wm.eval(getCreator(),
-		    ((FormGadget)gadgets.elementAt(i)).getChangedCallback(),
-		    ITEMCHANGEDEXPANDCHARS,
-		    expansions);
-	}
-    }
-    
-    
-    public void commandAction(Command c,Item item) {
-	System.out.println("-->FormCmd::commandAction(" + c + ", " + item + ")");
-	WidgetMap wm = WidgetMap.mapOf(getCreator());
-	String expansions[] = {"", wm.nameOf(c), wm.nameOf(getForm())};
-
-	if(findItem(expansions,item) >= 0) {
-	    wm.commandAction((OwnedThingCmd)wm.commandOf(c),
-			     ITEMCOMMANDACTIONEXPANDCHARS,
-			     expansions);
-	}
-    }
-    
-
-    protected FormCmd(Interp ip,Form form,Properties p) throws HeclException {
+    protected FormCmd(final Interp ip,Form form,Properties p) throws HeclException {
 	super(ip,form,p);
 	gadgets = new Vector();
-	form.setItemStateListener(this);
+	form.setItemStateListener(new ItemStateListener() {
+		public void itemStateChanged(Item item) {
+		    //System.out.println("-->"+getClass().getName() +"::itemStateChanged(" + item + ")");
+		    WidgetMap wm = WidgetMap.mapOf(ip);
+		    String expansions[] = {null, wm.nameOf(getForm())};
+		    int i = findItem(expansions,item);
+		    
+		    if(i >= 0) {
+			wm.eval(ip,
+				((FormGadget)gadgets.elementAt(i)).getChangedCallback(),
+				ITEMCHANGEDEXPANDCHARS,
+				expansions);
+		    }
+		}
+	    });
+	myitemcmdlistener = new ItemCommandListener() {
+		public void commandAction(Command c,Item item) {
+		    //System.out.println("-->FormCmd::commandAction(" + c + ", " + item + ")");
+		    WidgetMap wm = WidgetMap.mapOf(ip);
+		    String expansions[] = {"", wm.nameOf(c), wm.nameOf(getForm())};
+		    
+		    if(findItem(expansions,item) >= 0) {
+			//wm.commandAction((OwnedThingCmd)wm.commandOf(c), ITEMCOMMANDACTIONEXPANDCHARS, expansions);
+			wm.eval(ip,icmdact,ITEMCOMMANDACTIONEXPANDCHARS, expansions);
+		    }
+		}
+	    };
     }
 
     
@@ -132,7 +129,21 @@ public class FormCmd extends DisplayableCmd
     
 
     public void cget(Interp ip,String optname) throws HeclException {
+	if(optname.equals(WidgetInfo.NITEMCOMMANDACTION)) {
+	    ip.setResult(new Thing(icmdact != null ? icmdact : ""));
+	    return;
+	}
 	super.cget(ip,optname);
+    }
+    
+    public void cget(Interp ip,String optname,Thing optval) throws HeclException {
+	if(optname.equals(WidgetInfo.NITEMCOMMANDACTION)) {
+	    icmdact = optval.toString();
+	    if(icmdact.length() == 0)
+		icmdact = null;
+	    return;
+	}
+	super.cset(ip,optname,optval);
     }
     
 
@@ -157,8 +168,7 @@ public class FormCmd extends DisplayableCmd
 			      Thing[] argv,int startat)
 	throws HeclException {
 	Gadget g = (FormGadget)(gadgets.elementAt(itemno));
-	System.err.println("FormGadget::handleitemcmd("+itemno+", "+itemcmd+")");
-	
+	//System.err.println("FormGadget::handleitemcmd("+itemno+", "+itemcmd+")");
 	if(g != null) {
 	    g.handlecmd(ip,itemcmd,argv,startat);
 	}
@@ -181,12 +191,15 @@ public class FormCmd extends DisplayableCmd
 	    p.delProp(WidgetInfo.NTYPE);
 	} else if(what.equals("date")) {
 	    p = WidgetInfo.defaultProps(DateField.class);
+	    p.setProps(argv,startat);
 	    g = new DateGadget(p.getProp(WidgetInfo.NLABEL).toString(),
 			       WidgetInfo.toDateFieldMode(
 				   p.getProp(WidgetInfo.NTYPE)),
 			       this);
 	} else if(what.equals("gauge")) {
 	    p = WidgetInfo.defaultProps(Gauge.class);
+	    p.setProps(argv,startat);
+//#ifdef notdef
 	    System.err.println("GAUGE");
 	    System.err.println("gauge: "
 			       +p.getProp(WidgetInfo.NLABEL).toString()+", "
@@ -194,7 +207,7 @@ public class FormCmd extends DisplayableCmd
 			       +p.getProp(WidgetInfo.NVALUE).toString()+", "
 			       +p.getProp(WidgetInfo.NMAXVALUE).toString());
 	    System.err.println("GAUGE2");
-		
+//#endif		
 	    g = new GaugeGadget(p.getProp(WidgetInfo.NLABEL).toString(),
 				HeclUtils.thing2bool(
 				    p.getProp(WidgetInfo.NINTERACTIVE)),
@@ -205,11 +218,19 @@ public class FormCmd extends DisplayableCmd
 				this);
 	    p.delProp(WidgetInfo.NINTERACTIVE);
 	} else if(what.equals("image")) {
-	    String s = "Image item not supported!";
-	    System.err.println(s);
-	    throw new HeclException(s);
+	    p = WidgetInfo.defaultProps(ImageItem.class);
+	    p.setProps(argv,startat);
+	    g = new ImageGadget(p.getProp(WidgetInfo.NLABEL).toString(),
+				p.getProp(WidgetInfo.NTEXT).toString(),
+				WidgetInfo.toItemAppearance(
+				    p.getProp(WidgetInfo.NAPPEARANCE)),
+				this);
+	    p.delProp(WidgetInfo.NLABEL);
+	    p.delProp(WidgetInfo.NTEXT);
+	    p.delProp(WidgetInfo.NAPPEARANCE);
 	} else if(what.equals("spacer")) {
 	    p = WidgetInfo.defaultProps(Spacer.class);
+	    p.setProps(argv,startat);
 	    g = new SpacerGadget(
 		IntThing.get(p.getProp(WidgetInfo.NMINWIDTH)),
 		IntThing.get(p.getProp(WidgetInfo.NMINHEIGHT)),
@@ -226,7 +247,6 @@ public class FormCmd extends DisplayableCmd
 	    p.delProp(WidgetInfo.NLABEL);
 	    p.delProp(WidgetInfo.NAPPEARANCE);
 	} else if(what.equals("text")) {
-	    int len = 256;
 	    p = WidgetInfo.defaultProps(TextField.class);
 	    p.setProps(argv,startat);
 	    g = new TextGadget(p.getProp(WidgetInfo.NLABEL).toString(),
@@ -245,7 +265,7 @@ public class FormCmd extends DisplayableCmd
 	}
 	Thing optargs[] = p.getProps();
 	g.configure(ip,optargs,0,optargs.length);
-	g.getItem().setItemCommandListener(this);
+	g.getItem().setItemCommandListener(myitemcmdlistener);
 	ip.setResult(append(g));
     }
 	
@@ -282,6 +302,7 @@ public class FormCmd extends DisplayableCmd
 	    if(subcmd.equals(WidgetInfo.NITEMCONF)
 	       || subcmd.equals(WidgetInfo.NITEMCONFIGURE)) {
 		for(int i = n; i<argv.length; i+= 2) {
+		    //System.err.println("itemconf for "+argv[i].toString());
 		    itemcset(ip,itempos,argv[i].toString(),argv[i+1]);
 		}
 		return;
@@ -292,6 +313,7 @@ public class FormCmd extends DisplayableCmd
 		    throw HeclException.createWrongNumArgsException(
 			argv, n-1, "optname");
 		}
+		//System.err.println("itemcget for "+argv[n-1].toString());
 		itemcget(ip,itempos,argv[n-1].toString());
 		return;
 	    }
@@ -399,8 +421,9 @@ public class FormCmd extends DisplayableCmd
     
 
     protected Vector gadgets;
+    protected String icmdact = null;
+    protected ItemCommandListener myitemcmdlistener = null;
 
     private static final char ITEMCHANGEDEXPANDCHARS[] = {'i','D'};
     private static final char ITEMCOMMANDACTIONEXPANDCHARS[] = {'i','W','D'};
 }
-

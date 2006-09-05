@@ -41,45 +41,56 @@ public class ImageMap extends CmdDataMap {
 	return map;
     }
     
-
-    public static Image asImage(Interp ip,Thing t,boolean allownull)
+    public static Image loadImage(String name)
 	throws HeclException {
-	Image img = null;
-	ImageMap m = mapOf(ip);
-	
-	if(m != null) {
-	    img = m.asImage(t,true);
-	    if(img == null) {
-		String name = t.toString();
-		if(!name.startsWith("/"))
-		    name = "/"+name;
-		if(!name.endsWith(".png"))
-		    name += ".png";
-		try {
-		    img = Image.createImage(name);
-		    m.put(t.toString(),img,new ImageCmd(ip,img,new Properties()));
+	Image im = null;
+	while(true) {
+	    //System.err.println("IMAGE TRYLOAD for name="+name);
+	    try {
+		im = Image.createImage(name);
+		return im;
+	    }
+	    catch(IOException e) {
+		if(im == null && !name.endsWith(PNGSUFFIX)) {
+		    name = name + PNGSUFFIX;
+		    continue;
 		}
-		catch(IOException e) {
-		    e.printStackTrace();
+		if(im == null && !name.startsWith("/")) {
+		    name = '/' + name;
+		    continue;
 		}
+		throw new HeclException("Can't load image '"
+					+name+"': "+e.toString());
 	    }
 	}
-	
-	if(!allownull && img == null)
-	    invalidImage(t.toString());
-	return img;
     }
     
-    public Image asImage(Thing t,boolean allownull) throws HeclException {
-	String s = t.toString();
-	if(allownull && s.length() == 0) {
+    public static Image asImage(Interp ip,Thing t,boolean allownull)
+	throws HeclException {
+	return asImage(ip,t.toString(),allownull);
+    }
+
+    public static Image asImage(Interp ip,String name,boolean allownull)
+	throws HeclException {
+	ImageMap m = mapOf(ip);
+	return mapOf(ip).asImage(name,allownull);
+    }
+    
+    
+    public Image asImage(String name,boolean allownull) throws HeclException {
+	if(allownull && name.length() == 0) {
 	    return null;
 	}
-	Image image = (Image)valueOf(s);
-	if(null == image && !allownull) {
-	    invalidImage(s);
+	Image image = (Image)valueOf(name);
+	if(null == image) {
+	    invalidImage(name);
 	}
 	return image;
+    }
+    
+
+    public Image asImage(Thing t,boolean allownull) throws HeclException {
+	return asImage(t.toString(),allownull);
     }
     
 
@@ -93,5 +104,5 @@ public class ImageMap extends CmdDataMap {
     }
     
 
-    private static int cnt = 0;
+    private static String PNGSUFFIX = ".png";
 }

@@ -76,8 +76,7 @@ public class MidletCmd extends Operator {
 
 	  case PLATFORMREQUEST:
 	    try {
-		return themidlet.platformRequest(argv[1].toString()) ?
-		    IntThing.ONE : IntThing.ZERO;
+		return new IntThing(themidlet.platformRequest(argv[1].toString()));
 	    }
 	    catch(Exception e) {
 		throw new HeclException(e.toString());
@@ -117,7 +116,40 @@ public class MidletCmd extends Operator {
 	      205 	wireless.messaging.sms.smsc 	(impl-dep)
 	      205 	wireless.messaging.mms.mmsc 	(impl-dep)
 	      211 	CHAPI-Version 	1.0
-	    */
+
+	      microedition.media.version
+	      returns a string representing the version of MMAPI implemented,
+	      "1.0" or "1.1" if MMAPI is supported, or null if it isn't.
+
+	      supports.mixing returns
+	      true if mixing is supported, false if it isn't.
+
+	      supports.audio.capture
+	      returns true if audio capture is supported, false if it isn't.
+
+	      supports.video.capture
+	      returns true if video capture is supported, false if it isn't.
+
+	      supports.recording
+	      returns true if recording is supported, false if it isn't.
+
+	      audio.encodings
+	      returns a string representing the supported audio capture
+	      formats, or null if audio capture isn't supported. 
+
+	      video.encodings
+	      returns a string representing the supported video capture
+	      formats, or null if video capture isn't supported. 
+
+	      video.snapshot.encodings
+	      returns a string representing the supported image capture
+	      formats, or null if video snapshot isn't supported. 
+
+	      streamable.contents
+	      returns a string representing the supported streamable content
+	      types, in MIME syntax.
+	    */ 
+
 	    String s = themidlet.getAppProperty(str);
 	    if(s == null)
 		s = "";
