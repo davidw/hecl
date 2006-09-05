@@ -275,7 +275,7 @@ public class HttpRequest extends Thread {
 		       boolean validate, Hashtable headerfields,
 		       Object requestnotify) {
 	urlstr = url;
-	body = new String();
+	body = "";
 	qdata = queryData;
 	if(headerfields != null) {
 	    Enumeration e = headerfields.keys();
@@ -348,11 +348,14 @@ public class HttpRequest extends Thread {
 	    String ct = (String)responseFields.get("content-type");
 	    String coding = (String)responseFields.get("content-encoding");
 	    
+	    if(coding == null) {
+		coding = "text/plain";
+		responseFields.put("content-encoding",coding);
+	    }
+		
 	    if((ct != null && !ct.toLowerCase().startsWith("text"))
 	       || (coding != null &&
-		   (coding.indexOf("gzip") >= 0
-		    || coding.indexOf("compress") >= 0)
-		   )
+		   (coding.indexOf("gzip") >= 0 || coding.indexOf("compress") >= 0))
 		) {
 		// binary transfer
 		responseFields.put("binary","1");
@@ -365,7 +368,7 @@ public class HttpRequest extends Thread {
 			// In a midlet, an empty encoding string would result
 			// in an UnsupportedEncodingException when creating a
 			// string object.
-			begin += 8;
+			begin += 8;	    // # of chars in 'charset='
 			int end = ct.indexOf(';', begin);
 			if (end == -1) {
 			    end = ct.length();
@@ -374,7 +377,6 @@ public class HttpRequest extends Thread {
 		    }
 		}
 	    }
-	    responseFields.put("charset",charset);
 	    // charset is now detected, create a string holding the result.
 	    for(int i=0; i<3; ++i) {
 		switch(i) {
@@ -387,6 +389,7 @@ public class HttpRequest extends Thread {
 		    charset = charset.toUpperCase();
 		    break;
 		}
+		responseFields.put("charset",charset);
 		try {
 		    //System.err.println("trying to decode with charset="+charset);
 		    body = new String(inData,charset);
@@ -524,11 +527,13 @@ public class HttpRequest extends Thread {
 
     public static String urlencode(String[] elems) {
 	StringBuffer b = new StringBuffer();
-	for (int i = 0; i < elems.length; ++i) {
-	    if (i > 0) {
-		b.append((i % 2) != 0 ? '=' : '&');
+	if(elems != null) {
+	    for(int i = 0; i < elems.length; ++i) {
+		if(i > 0) {
+		    b.append((i % 2) != 0 ? '=' : '&');
+		}
+		b.append(urlencode(IRIencode(elems[i])));
 	    }
-	    b.append(urlencode(IRIencode(elems[i])));
 	}
 	return b.toString();
     }
@@ -550,7 +555,7 @@ public class HttpRequest extends Thread {
     private static String validUrlChars =
     "-_.!~*'()\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final char[] hexchars = (new String("0123456789ABCDEF")).toCharArray();
-    public static String defcharset = "ISO8859-1";
+    public static String defcharset = "ISO8859_1";
     
     static {
 	char[] cbuf = new char[3];

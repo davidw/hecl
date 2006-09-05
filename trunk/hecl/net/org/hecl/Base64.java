@@ -59,7 +59,12 @@ public class Base64 {
 	cv = cv;
     }
 
+    
     static public String encode(byte[] b) {
+	return encode2sb(b).toString();
+    }
+    
+    static public StringBuffer encode2sb(byte[] b) {
 	// Each group or partial group of 3 bytes becomes four chars
 	// covered quotient
 	int outputLength = ((b.length + 2) / 3) * 4;
@@ -157,8 +162,7 @@ public class Base64 {
 	    //System.out.println("estimate:" + outputLength);
 	    //System.out.println("actual:" + sb.length());
 	}
-
-	return sb.toString();
+	return sb;
     }
 
     /**
