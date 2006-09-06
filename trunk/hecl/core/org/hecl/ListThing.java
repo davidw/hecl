@@ -40,8 +40,7 @@ public class ListThing implements RealThing {
     /**
      * Creates a new <code>ListThing</code> instance from a vector.
      * 
-     * @param v
-     *            a <code>Vector</code> value
+     * @param v a <code>Vector</code> value
      */
     public ListThing(Vector v) {
         val = v;
@@ -51,10 +50,8 @@ public class ListThing implements RealThing {
      * Attempts to create a new <code>ListThing</code> instance from a string.
      * May fail if the string can't be parsed into a list.
      * 
-     * @param s
-     *            a <code>String</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param s a <code>String</code> value
+     * @exception HeclException if an error occurs
      */
     public ListThing(String s) throws HeclException {
         ParseList parseList = new ParseList(s);
@@ -115,11 +112,9 @@ public class ListThing implements RealThing {
      * <code>get</code> attempts to transform the given Thing into a List, and
      * return its Vector value.
      * 
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Vector</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public static Vector get(Thing thing) throws HeclException {
         setListFromAny(thing);
@@ -166,8 +161,8 @@ public class ListThing implements RealThing {
 	    || elementstring.indexOf('\t') >= 0) {
 	    StringBuffer resbuf = new StringBuffer();
             resbuf.append('{').append(elementstring).append('}');
-	    
-	    System.err.println("toListString: >"+elementstring+"< --> " + resbuf.toString());
+
+	    // System.err.println("toListString: >"+elementstring+"< --> " + resbuf.toString());
 	    return resbuf.toString();
         }
 	return elementstring;
