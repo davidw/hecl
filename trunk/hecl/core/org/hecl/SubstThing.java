@@ -35,9 +35,8 @@ public class SubstThing implements RealThing {
     }
 
     /**
-     * Creates a new <code>SubstThing</code> instance from a string, which is
-     * the variable name to reference, and a boolean indicating whether this is
-     * a reference (&) or not ($).
+     * Creates a new <code>SubstThing</code> instance from a string,
+     * which is the variable name to reference.
      *
      * @param s a <code>String</code> value
      */

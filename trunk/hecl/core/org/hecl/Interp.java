@@ -604,24 +604,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	     if (oldval.global && level != 0) {
 		 value.global = true;
 		 Hashtable globalhash = getVarhash(0);
-		 if (globalhash.containsKey(varname)) {
-		     Thing globaloldval = (Thing) globalhash.get(varname);
-		     if (!globaloldval.copy && !value.copy) {
-			 globaloldval.makeref(value);
-		     } else {
-			 globalhash.put(varname, value);
-		     }
-		 } else {
-		     globalhash.put(varname, value);
-		 }
-	     }
-
-	     /* If Stanza has indicated that this value should be
-	      * copied if a write is attempted to it, don't use the
-	      * existing reference. */
-	     if (!oldval.copy && !value.copy) {
-		 oldval.makeref(value);
-		 return;
+		 globalhash.put(varname, value);
 	     }
 	}
 	lookup.put(varname, value);

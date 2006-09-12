@@ -47,10 +47,8 @@ class Stanza {
      * Creates a new <code>Stanza</code> instance, taking a Command and
      * its arguments as input.
      *
-     * @param newcmd
-     *            a <code>Command</code> value
-     * @param newargv
-     *            a <code>Thing[]</code> value
+     * @param newcmd a <code>Command</code> value
+     * @param newargv a <code>Thing[]</code> value
      */
     Stanza(Command newcmd, Thing[] newargv, int ln) {
 	command = newcmd;
@@ -79,10 +77,8 @@ class Stanza {
      * creating a new newargv each time, the most common cases are
      * preallocated.
      *
-     * @param interp
-     *            <code>Interp</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param interp <code>Interp</code> value
+     * @exception HeclException if an error occurs
      */
     public void run(Interp interp) throws HeclException {
 	RealThing realthing = null;

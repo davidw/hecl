@@ -36,8 +36,6 @@ public class Thing extends Object {
     /* Refers to a global variable? */
     public boolean global = false;
 
-    protected String stringval = null;
-
     /* Used to keep track of nesting depth. */
     private int depth = 0;
 
@@ -52,7 +50,6 @@ public class Thing extends Object {
      */
     public Thing(String s) {
         val = new StringThing(s);
-        stringval = s;
     }
 
     /**
@@ -63,7 +60,6 @@ public class Thing extends Object {
      */
     public Thing(StringBuffer s) {
         val = new StringThing(s);
-        stringval = s.toString();
     }
 
     /**
@@ -75,7 +71,6 @@ public class Thing extends Object {
      */
     public Thing(RealThing realthing) {
         val = realthing;
-        stringval = null;
     }
 
     /**
@@ -87,7 +82,6 @@ public class Thing extends Object {
      */
     public void setVal(RealThing realthing) {
         val = realthing;
-        stringval = null;
     }
 
     public void setCopyVal(RealThing realthing) {
@@ -127,7 +121,6 @@ public class Thing extends Object {
      */
     public void makeref(Thing newval) {
 	this.val = newval.val;
-        this.stringval = newval.stringval;
     }
 
     /**
@@ -137,9 +130,7 @@ public class Thing extends Object {
      * @return a <code>String</code> value
      */
     public String toString() {
-	if(stringval == null)
-	    stringval = val.getStringRep();
-	return stringval;
+	return val.getStringRep();
     }
 
     /**

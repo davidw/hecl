@@ -49,12 +49,9 @@ public class CodeThing implements RealThing {
      * The <code>setCodeFromAny</code> method makes the Thing passed to it
      * into a CodeThing representation.
      * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
+     * @exception HeclException if an error occurs
      */
     private static void setCodeFromAny(Interp interp, Thing thing)
             throws HeclException {
@@ -85,10 +82,8 @@ public class CodeThing implements RealThing {
      * <code>get</code> returns a CodeThing object from any kind of Thing - or
      * returns an error.
      * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>CodeThing</code> value
      * @exception HeclException
      *                if an error occurs
@@ -124,10 +119,8 @@ public class CodeThing implements RealThing {
      * can't be broken up. doCodeSubst operates on the [bar] word in the above
      * case.
      * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Thing</code> value
      * @exception HeclException
      *                if an error occurs
@@ -150,10 +143,8 @@ public class CodeThing implements RealThing {
      * <code>doSubstSubst</code> runs substitutions on things of the
      * SubstThing type, which means $foo or &foo in Hecl.
      * 
-     * @param interp
-     *            an <code>Interp</code> value
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param interp an <code>Interp</code> value
+     * @param thing a <code>Thing</code> value
      * @return a <code>Thing</code> value
      * @exception HeclException
      *                if an error occurs
@@ -203,10 +194,8 @@ public class CodeThing implements RealThing {
     /**
      * The <code>addStanza</code> method adds a new command and its arguments.
      * 
-     * @param interp
-     *            <code>Interp</code> value
-     * @param argv
-     *            <code>Thing[]</code> value
+     * @param interp <code>Interp</code> value
+     * @param argv <code>Thing[]</code> value
      */
     public void addStanza(Interp interp, Thing []argv, int lineno) {
 	stanzas.addElement(new Stanza(null, argv, lineno));
@@ -215,10 +204,8 @@ public class CodeThing implements RealThing {
     /**
      * The <code>run</code> method runs the CodeThing.
      * 
-     * @param interp
-     *            <code>Interp</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @param interp <code>Interp</code> value
+     * @exception HeclException if an error occurs
      */
     public synchronized void run(Interp interp) throws HeclException {
 /* 	level ++;

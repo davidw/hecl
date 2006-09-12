@@ -1,3 +1,10 @@
+2006-09-12  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Eliminate reference code in setVar.
+
+	* core/org/hecl/Thing.java: Don't cache a string representation.
+	We'll save optimization for later.
+
 2006-09-05  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* build.xml: More fiddling with j2megui20 target.
