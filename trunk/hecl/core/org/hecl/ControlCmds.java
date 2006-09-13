@@ -49,10 +49,10 @@ class ControlCmds extends Operator {
 
 	    /*
 	     * We loop through to capture all else if...else if...else
-		 * possibilities.
-		 */
+	     * possibilities.
+	     */
 	    if (argv.length > 3) {
-		for (int i = 3; i <= argv.length; i += 3) {
+		for (int i = 3; i < argv.length; i += 3) {
 		    if (argv[i].toString().equals("else")) {
 			/* It's an else block, evaluate it and return. */
 			interp.eval(argv[i + 1]);
@@ -124,7 +124,7 @@ class ControlCmds extends Operator {
 					  * with the original value. */
 		    String varname = ((Thing) e.nextElement()).toString();
 
-		    //System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
+		    // System.out.println("set " +varname+ " to " +element+ " copy: " + element.copy);
 
 		    interp.setVar(varname, element);
 		    i++;
