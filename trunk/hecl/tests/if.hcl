@@ -28,3 +28,15 @@ test if-3 {
     }
     set foo
 } {2}
+
+test if-4 {
+    set foo ""
+    set a 1
+    set b 2
+    if {< $a 0} {
+	set foo a
+    } elseif {> $a $b} {
+	set foo b
+    }
+    set foo
+} {}
