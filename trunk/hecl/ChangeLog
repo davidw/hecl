@@ -1,5 +1,10 @@
 2006-09-14  David N. Welton  <davidw@dedasys.com>
 
+	* TODO-tests-docs: A list of commands to be documented and tested,
+	where possible.
+
+	* TODO: Removed - it wasn't being used.
+
 	* tests/if.hcl: Added two more if tests.
 
 	* core/org/hecl/ControlCmds.java: Added Wolfgang's patch for
