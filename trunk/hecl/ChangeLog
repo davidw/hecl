@@ -1,5 +1,7 @@
 2006-09-14  David N. Welton  <davidw@dedasys.com>
 
+	* tests/if.hcl: Added two more if tests.
+
 	* core/org/hecl/ControlCmds.java: Added Wolfgang's patch for
 	if/elseif.
 

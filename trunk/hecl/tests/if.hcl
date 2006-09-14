@@ -40,3 +40,29 @@ test if-4 {
     }
     set foo
 } {}
+
+test if-5 {
+    set foo ""
+    set a 10
+    if { < $a 20 } {
+	set foo bar
+    }
+    set foo
+} {bar}
+
+test if-6 {
+    set foo ""
+    set a 1000
+
+    if { < $a 10 } {
+	set foo 1
+    } elseif { < $a 100 } {
+	set foo 2
+    } elseif { < $a 200 } {
+	set foo 3
+    } else {
+	set foo 4
+    }
+
+    set foo
+} {4}
