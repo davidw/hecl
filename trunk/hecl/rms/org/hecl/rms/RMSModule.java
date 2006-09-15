@@ -29,10 +29,10 @@ import org.hecl.HeclModule;
 public class RMSModule implements HeclModule {
 
     public void loadModule(Interp interp) throws HeclException {
-	HeclRecordStoreCmds.load(interp);
+	RMSCmd.load(interp);
     }
 
     public void unloadModule(Interp interp) throws HeclException {
-	HeclRecordStoreCmds.unload(interp);
+	RMSCmd.unload(interp);
     }
 }

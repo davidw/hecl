@@ -39,15 +39,19 @@ public class RMSInputStream extends InputStream {
 
 	    // sort the record nums to be ascending
 	    while(records.hasNextElement()) {
-		int i;
+		boolean done = false;
 		int tosort = records.nextRecordId();
-		for(i=0; i<nfilled; ++i) {
-		    if(ids[i] > tosort)
+		for(int i=0; i<nfilled; ++i) {
+		    if(ids[i] > tosort) {
+			System.arraycopy(ids,i,ids,i+1,nfilled);
+			ids[i] = tosort;
+			nfilled++;
+			done = true;
 			break;
+		    }
 		}
-		System.arraycopy(ids,i,ids,i+1,nfilled);
-		ids[i] = tosort;
-		nfilled++;
+		if(!done)
+		    ids[nfilled++] = tosort;
 	    }
 //#ifdef notdef
 	    for(int i=0; i<ids.length; ++i) {
