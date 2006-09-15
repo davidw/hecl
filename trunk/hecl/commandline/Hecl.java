@@ -113,7 +113,7 @@ public class Hecl {
 		Thing res = interp.evalAsyncAndWait(new Thing(morebuffer + line));
 		if(res != null
 		   && 0 != Compare.compareString(res, Thing.EMPTYTHING)) {
-		    System.out.println(interp.result);
+		    System.out.println(interp.getResult());
 		}
 	    }
 	    catch (HeclException he) {
