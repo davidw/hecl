@@ -188,6 +188,28 @@ public class WidgetInfo {
     }
 
 
+    public static String commandLabel(Command c,boolean shortonly) {
+	String l = shortonly ? null : c.getLongLabel();
+
+	if(l == null || l.length() == 0) {
+	    l = c.getLabel();
+	}
+	if(l == null && l.length() == 0) {
+//#ifdef notdef	    
+	    // unfortunately there is no way to detect the command type :-(
+	    int t = c.getType();
+	    for(int i=0; i<cmdlabels.length; ++i) {
+		if(t == cmdtypes[i]) {
+		    l = cmdlabels[i];
+		    break;
+		}
+	    }
+//#endif
+	    l = "???";
+	}
+	return l;
+    }
+    
     public static int toCommandType(Thing t) throws HeclException {
 	return t2int(t,cmdtypenames,cmdtypevals,"command type");
     }
@@ -470,6 +492,8 @@ public class WidgetInfo {
     // Command types
     static final String cmdtypenames[] = {"screen","back","cancel","ok",
 					      "help", "stop","exit","item"};
+    static final String cmdlabels[] = {"Screen","Back","Cancel","OK",
+					      "Help", "Stop","Exit","Item"};
     static final int cmdtypevals[] = {Command.SCREEN,Command.BACK,
 					  Command.CANCEL,Command.OK,
 					  Command.HELP,Command.STOP,

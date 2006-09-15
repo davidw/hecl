@@ -25,6 +25,8 @@ import java.util.Vector;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
+import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.List;
@@ -33,10 +35,9 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.awt.Color;
 import org.graphics.Drawable;
 
-//import org.hecl.Thing;
-//import org.hecl.Interp;
+import org.hecl.midp20.MidletCmd;
 
-public class HeclCanvas extends GameCanvas {
+public class HeclCanvas extends GameCanvas implements CommandListener {
     // We treat the left/rihgt softkey on our own and provide two additional
     // gamekeys to simplify the programming.
     public static final int GAME_LEFT_SK = -1;
@@ -86,6 +87,30 @@ public class HeclCanvas extends GameCanvas {
 	updateCommands();
     }
 
+    public void commandAction(Command c,Displayable d) {
+	// command handler for the menu
+	if(c == CMD_BACK) {
+	    MidletCmd.display().setCurrent(this);
+	    return;
+	}
+	if(c == List.SELECT_COMMAND) {
+	    int n = menulist.getSelectedIndex();
+	    if(n == -1)
+		return;
+	    ++n;
+	    if(n >= 1 && n < cmds.size()) {
+		Command mycmd = (Command)cmds.elementAt(n);
+		MidletCmd.display().setCurrent(this);
+		handleCommand(mycmd);
+	    }
+	}
+    }
+    
+    public void handleCommand(Command c) {
+	if(savecmdlistener != null)
+	    savecmdlistener.commandAction(c,this);
+    }
+    
     public void flushGraphics() {
 //#ifdef debug
 	System.err.println("HeclCanvas.flushgraphics()");
@@ -287,9 +312,6 @@ public class HeclCanvas extends GameCanvas {
 		g.drawString(l != null ? l : "Mitte",
 			     drawwidth/2,ypos,Graphics.TOP|Graphics.HCENTER);
 	    }
-	    if(cmds.size() > 3) {
-		System.err.println("Warning: ignorting more than 3 commands!");
-	    }
 	    g.setColor(oldcol);
 	    g.setFont(oldfont);
 //#ifdef debug
@@ -336,9 +358,14 @@ public class HeclCanvas extends GameCanvas {
     public void keyPressed(int keycode) {
 	if(isfullscreen && cmds.size() > 0) {
 	    Command c = findCommand(keycode);
-	    if(c != null && savecmdlistener != null) {
-		savecmdlistener.commandAction(c,this);
-		return;
+	    if(c != null) {
+		if(c == CMD_MENU) {
+		    menulist.setCommandListener(this);
+		    menulist.addCommand(CMD_BACK);
+		    MidletCmd.display().setCurrent(menulist);
+		    return;
+		}
+		handleCommand(c);
 	    }
 	}
 	callEventHandler(new CanvasEvent(this,CanvasEvent.E_KPRESS,
@@ -465,50 +492,67 @@ public class HeclCanvas extends GameCanvas {
 		}
 	    }			
 	}
-	if (commandsTable.size() <= buttons.length) {
-	    assignCommands(commandsTable);			
-	} else {
+	if(commandsTable.size() > buttons.length) {
 	    // Menu is needed
 	    commandsTable.insertElementAt(CMD_MENU, 0);
-	    assignCommands(commandsTable);
-	    menulist.deleteAll();
-	    for (int i = 0; i < commandsTable.size(); i++) {
-		menucommands = commandsTable;
-		Command c = (Command)commandsTable.elementAt(i);
-		String l = c.getLongLabel();
-		if(l == null) {
-		    l - c.getLabel();
-		}
-		menulist.append(l != null ? l : "???", null);
-	    }
 	}
+	assignCommands(commandsTable);			
 	showCommands(mygraphics);
     }
     
     private void assignCommands(Vector commandsTable) {
-	for (int i = 0; i < commandsTable.size(); i++) {
-	    for(int j=0; j<buttons.length; ++j) {
-		if (buttons[j].getCommand() == null 
-		    && buttons[j].isPreferred((Command)commandsTable.elementAt(i))) {
-		    buttons[j].cmd = (Command)commandsTable.elementAt(i);
-		    commandsTable.removeElementAt(i);
-		    i--;
-		    break;
+	if(commandsTable.size() <= buttons.length) {
+	    // we have one button for each command
+	    for (int i = 0; i < commandsTable.size(); i++) {
+		for(int j=0; j<buttons.length; ++j) {
+		    Command c = (Command)commandsTable.elementAt(i);
+		    if (buttons[j].getCommand() == null && buttons[j].isPreferred(c)) {
+			buttons[j].setCommand(c);
+			commandsTable.removeElementAt(i);
+			i--;
+			break;
+		    }
 		}
 	    }
-	}
-	for (int i = 0; i < commandsTable.size(); i++) {
-	    for(int j=0; j<buttons.length; ++j) {
-		if (buttons[j].cmd == null) {
-		    buttons[j].cmd = (Command)commandsTable.elementAt(i);
-		    commandsTable.removeElementAt(i);
-		    i--;
-		    break;
+	    for (int i = 0; i < commandsTable.size(); i++) {
+		for(int j=0; j<buttons.length; ++j) {
+		    if (buttons[j].getCommand() == null) {
+			buttons[j].setCommand((Command)commandsTable.elementAt(i));
+			commandsTable.removeElementAt(i);
+			i--;
+			break;
+		    }
 		}
+	    }
+	} else {
+	    // more cmds than buttons
+	    if(buttons.length > 0) {
+		buttons[0].setCommand((Command)commandsTable.firstElement());
+		commandsTable.removeElementAt(0);
+	    }
+	    if(buttons.length > 1) {
+		for(int i=0; i<commandsTable.size(); ++i) {
+		    Command c = (Command)commandsTable.elementAt(i);
+		    if(null == buttons[1].getCommand() && buttons[1].isPreferred(c)) {
+			buttons[1].setCommand(c);
+			commandsTable.removeElementAt(i);
+		    }
+		}
+	    }
+	    for(int i=2; i<buttons.length; ++i)
+		buttons[i].setCommand(null);
+	    
+	    menulist.deleteAll();
+	    menucommands = new Vector();
+	    for (int i = 0; i < commandsTable.size(); i++) {
+		Command c = (Command)commandsTable.elementAt(i);
+		menucommands.addElement(c);
+		menulist.append(WidgetInfo.commandLabel(c,false), null);
 	    }
 	}
     }
 
+    
     private void calcScreenWidth() {
 	fullwidth = super.getWidth();
 	fullheight = super.getHeight();
@@ -575,7 +619,7 @@ public class HeclCanvas extends GameCanvas {
 	
 	public int keycode = 0;
 	public int gamecode = 0;
-	public Command cmd = null;
+	protected Command cmd = null;
 	public int[] preferredtype = null;
     }
 
