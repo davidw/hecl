@@ -62,6 +62,6 @@ public class Compare {
 	/* FIXME - addstanza lineno*/
 	ct.addStanza(interp, new Thing[] {sortproc, a, b}, -1);
 	ct.run(interp);
-	return IntThing.get(interp.result);
+	return IntThing.get(interp.getResult());
     }
 }
