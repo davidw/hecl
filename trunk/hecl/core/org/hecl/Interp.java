@@ -318,7 +318,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    }
 
 	    // Determine maxblocktime
-	    maxblocktime = (flags & DONT_WAIT) != 0 ? 0 : 10000;
+	    maxblocktime = (flags & DONT_WAIT) != 0 ? 0 : 1000;
 	    synchronized(this) {
 		if(timers.size() > 0) {
 		    t = (HeclTask)timers.elementAt(0);
@@ -615,15 +615,18 @@ public class Interp extends Thread/*implements Runnable*/ {
      * <code>unSetVar</code> unsets a variable in the current stack
      * frame.
      *
-     * @param varname
-     *            a <code>Thing</code> value
+     * @param varname a <code>Thing</code> value
      */
     public void unSetVar(Thing varname) throws HeclException {
-	unSetVar(varname.toString());
+	unSetVar(varname.toString(),-1);
     }
 
     public synchronized void unSetVar(String varname) throws HeclException {
-        Hashtable lookup = getVarhash(-1);
+	unSetVar(varname,-1);
+    }
+    
+    public synchronized void unSetVar(String varname,int level) throws HeclException {
+        Hashtable lookup = getVarhash(level);
 	/* Bump the cache number so that SubstThing.get refetches the
 	 * variable. */
 	Thing value = (Thing)lookup.get(varname);
@@ -641,8 +644,8 @@ public class Interp extends Thread/*implements Runnable*/ {
             throw new HeclException("Variable " + varname + " does not exist");
 	}
     }
-
-
+    
+	    
     /**
      * <code>existsVar</code> returns <code>true</code> if the given
      * variable exists in the current variable stack frame, <code>false</code>
