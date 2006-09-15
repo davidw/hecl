@@ -1,3 +1,12 @@
+2006-09-16  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* tests/foreach.hcl: Corrected test foreach-6.
+
+	* core/org/hecl/Thing.java: Beautification of deepcopy, no
+	functional changes.
+
+	* commandline/Hecl.java: Use proper function to access evaluation result.
+
 2006-09-15  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* build.xml: Corrected compileJ2MEHttp and defines for j2me compile.
