@@ -34,17 +34,14 @@ class ControlCmds extends Operator {
     public static final int BREAK = 5;
     public static final int CONTINUE = 6;
 
-
     public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
-	    /* The 'if' command. */
 	  case IF:
-	    interp.eval(argv[1]);
-	    Thing result = interp.result;
-
-	    if (Thing.isTrue(result)) {
+	    /* The 'if' command. */
+	    Thing result = interp.eval(argv[1]);
+	    if (result != null && Thing.isTrue(result)) {
 		interp.eval(argv[2]);
-		    return null;
+		return null;
 	    }
 
 	    /*
@@ -55,6 +52,8 @@ class ControlCmds extends Operator {
 		for (int i = 3; i < argv.length; i += 3) {
 		    if (argv[i].toString().equals("else")) {
 			/* It's an else block, evaluate it and return. */
+			if(argv.length != i+2)
+			    throw new HeclException("malformed \"else\"");
 			interp.eval(argv[i + 1]);
 			return null;
 		    } else if (argv[i].toString().equals("elseif")) {
@@ -62,19 +61,21 @@ class ControlCmds extends Operator {
 			 * elseif - check and see if the condition is true, if so
 			 * evaluate it and return.
 			 */
-			interp.eval(argv[i + 1]);
-			result = interp.result;
-			if (Thing.isTrue(result)) {
+			if(i+3 > argv.length)
+			    throw new HeclException("malformed \"elseif\"");
+			result = interp.eval(argv[i + 1]);
+			if (result != null && Thing.isTrue(result)) {
 			    interp.eval(argv[i + 2]);
 			    return null;
 			}
-		    }
+		    } else
+			throw new HeclException("missing \"else/elseif\" in \"if\"");
 		}
 	    }
 	    break;
 
-	    /* The 'for' command. */
 	  case FOR:
+	    /* The 'for' command. */
 	    /* start */
 	    interp.eval(argv[1]);
 
@@ -96,8 +97,8 @@ class ControlCmds extends Operator {
 	    }
 	    break;
 
-	    /* The 'foreach' command. */
 	  case FOREACH:
+	    /* The 'foreach' command. */
 	    Vector list = ListThing.get(argv[2]);
 	    if (list.size() == 0) {
 		break;
