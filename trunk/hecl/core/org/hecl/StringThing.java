@@ -93,9 +93,7 @@ public class StringThing implements RealThing {
      * @return a <code>RealThing</code> value
      */
     public RealThing deepcopy() {
-        StringBuffer newsb = new StringBuffer();
-        newsb.append(val.toString());
-        return new StringThing(newsb);
+        return new StringThing(new StringBuffer(val.toString()));
     }
 
     /**
