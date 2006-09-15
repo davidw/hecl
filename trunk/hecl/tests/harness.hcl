@@ -13,6 +13,9 @@ proc test {name code result} {
 }
 
 proc testfiles {files} {
+    global failed;
+    # clear error list
+    set failed [list];
     foreach f $files {
 	puts "Running $f"
 	source $f

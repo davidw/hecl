@@ -66,3 +66,28 @@ test if-6 {
 
     set foo
 } {4}
+
+test if-7 {
+     set i 1;
+     if {> $i 4} {set foo 4} elseif {> $i 2} {set foo 2} else {set foo 1}
+} {1}
+
+test if-8 {
+     set i 1;
+     if {> $i 4} {set foo 4} elseif {> $i 2} {set foo 2} {set foo 1}
+} {{ERROR {missing "else/elseif" in "if"}} {if 3}}
+
+test if-9 {
+     set i 1;
+     if {> $i 4} {set foo 4} else {set foo 2} {set foo 1}
+} {{ERROR {malformed "else"}} {if 3}}
+
+test if-10 {
+     set i 1;
+     if {> $i 4} {set foo 4} {set foo 2}
+} {{ERROR {missing "else/elseif" in "if"}} {if 3}}
+
+test if-11 {
+     set i 1;
+     if {> $i 4} {set foo 4} else
+} {{ERROR {malformed "else"}} {if 3}}
