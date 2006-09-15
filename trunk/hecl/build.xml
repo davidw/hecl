@@ -166,7 +166,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
-  <property name="j2me.defines" value="${sms}"/>
+  <property name="j2me.defines" value="ant:j2me,${sms}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/${wtk.cldc.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/${wtk.cldc.version}"/>
@@ -474,7 +474,7 @@
   </target>
 
   <target name="compileJ2MEHttp"
-    depends="initCompile,compileJ2MECore"
+    depends="initCompile,compileJ2MECore,compileJ2MErms"
     description="Compile J2ME Hecl http support">
     <mkdir dir="${j2me.httpclasspath}"/>
     <!--<mkdir dir="${j2me.pre}/http"/>
