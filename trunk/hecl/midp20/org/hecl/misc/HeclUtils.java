@@ -220,16 +220,6 @@ public class HeclUtils {
     }
     
 
-    public static boolean classExists(String name) {
-	try {
-	    return null != Class.forName(name) ? true : false;
-	}
-	catch (Exception e) {
-	    return false;
-	}
-    }
-
-    
     public static void readEvalPrint(Interp ip,
 				     InputStream in, PrintStream out,
 				     PrintStream err) {

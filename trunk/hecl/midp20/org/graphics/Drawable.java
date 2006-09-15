@@ -47,8 +47,8 @@ public class Drawable {
     
     public Drawable(Graphics agraphics,int width,int height) {
 	super();
-	resize(width,height);
 	g = agraphics;
+	resize(width,height);
 	setColor(Color.BLACK);
 	bgcol = Color.WHITE;
 	tx = ty = .0;
@@ -69,6 +69,8 @@ public class Drawable {
 
 
     public void clear() {
+	//System.err.println("-->Drawable.clear()");
+
 	// save status, erase, restore status
 	Rectangle r = getClipBounds();
 	//System.err.println("old clip=" + r.x + "," + r.y + "," + r.width + "," + r.height);
@@ -82,7 +84,7 @@ public class Drawable {
 	setColor(oldfg);
 	//translate(x,y);
 	setClip(r);
-	//System.out.println("trans="+x+","+y +", clip=("+r.x+","+r.y+","+r.width+","+r.height+")");
+	//System.err.println("trans="+x+","+y +", clip=("+r.x+","+r.y+","+r.width+","+r.height+")");
     }
     
 
@@ -308,14 +310,16 @@ public class Drawable {
     
 
     public Rectangle getClipBounds(Rectangle r) {
-	System.err.println("getclipbounds clip=" + g.getClipX() + ","
-			   + g.getClipY() + ","
-			   + g.getClipWidth() + ","
-			   + g.getClipHeight());
 	r.width = g.getClipWidth();
 	r.height = g.getClipHeight();
 	r.x = fromX(g.getClipX());
-	r.y = fromY(g.getClipY()) - r.height > 0 ? r.height-1 : 0;
+	r.y = fromY(g.getClipY() + (r.height > 0 ? r.height - 1 : 0));
+//#ifdef debug
+	System.err.println("Drawable.getclipbounds clip=" + r.x
+			   + ", " + r.y + " - " + g.getClipY()
+			   + ", " + r.width
+			   + ", " + r.height);
+//#endif
 	return r;
     }
     
@@ -348,6 +352,7 @@ public class Drawable {
 	w = newWidth;
 	h = newHeight;
 	h1 = h - 1;
+	setClip(0,0,w,h);
     }
     
     public void setGrayScale(int value) {
@@ -358,7 +363,7 @@ public class Drawable {
 //#else
     public Rectangle getClipBounds(Rectangle r) {
 	Rectangle r = g.getClipBounds(r);
-	r.y = fromY(g.getClipY()) - r.height > 0 ? r.height-1 : 0;
+	r.y = fromY(g.getClipY()) + (r.height > 0 ? r.height-1 : 0);
 	return r;
     }
 //#endif
@@ -430,7 +435,13 @@ public class Drawable {
     */
 	    
     public void setClip(int x, int y, int width, int height) {
-	g.setClip(toX(x),toY(y+height),width,height);
+//#ifdef debug
+	System.err.println("Drawable.setClip to: "+x+" - "+toX(x)
+			   +", "+y+" - "+toY(y+(height > 0 ? height-1:0))
+			   +", "+width
+			   +", "+height);
+//#endif
+	g.setClip(toX(x),toY(y+(height > 0 ? height-1:0)),width,height);
     }
     
 
