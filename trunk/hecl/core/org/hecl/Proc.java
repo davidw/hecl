@@ -84,7 +84,8 @@ class Proc implements Command {
 	for (; i < argv.length - 1; i++ ) {
 	    vargvals.addElement(argv[i + 1]);
 	}
-	interp.setVar(varargvarname, ListThing.create(vargvals));
+	if(vargvals != null)
+	    interp.setVar(varargvarname, ListThing.create(vargvals));
 
 	/* We actually run the code here. */
         try {
