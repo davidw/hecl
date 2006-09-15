@@ -245,8 +245,11 @@ public class ListThing implements RealThing {
      */
     public String getStringRep() {
         int sz = val.size();
-	if(sz == 0)
+	if(sz == 0) {
 	    return "";
+	    //return "{}";
+	}
+	
 	int i = 0;
 //#ifdef notdef
 	int[] flags = new int[sz];
