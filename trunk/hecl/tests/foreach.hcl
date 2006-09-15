@@ -50,15 +50,14 @@ proc foreach6cmd {} {
     foreach v {a b c d e} {
 	append $foreach6 "v is $v\n"
     }
-    return $foreach6
+    return $foreach6;
 }
 
 test foreach-6 {
     global foreach6;
     # make sure var does not exist to allow
     # multiple runs of the test
-    set foreach6 xx;
-    unset foreach6;
+    set foreach6 "";
     foreach6cmd;
     foreach6cmd;
 } {v is a
