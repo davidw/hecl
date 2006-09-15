@@ -19,85 +19,15 @@
 
 package org.hecl.midp20.lcdui;
 
-import org.hecl.HeclException;
-import org.hecl.Interp;
-import org.hecl.Properties;
-import org.hecl.Thing;
-
-public abstract class ThingCmd implements org.hecl.Command {
+public abstract class ThingCmd extends OptionCmd {
     protected ThingCmd(Object x) {
+	super();
 	data = x;
     }
 
 
     public Object getData() {
 	return data;
-    }
-    
-
-    public void cmdCode(Interp ip,Thing[] argv) throws HeclException {
-	if(argv.length > 1) {
-	    String subcmd = argv[1].toString().toLowerCase();
-
-	    //System.out.println("ThingCmd::cmdCode("+argv[0].toString() +", "+this+"), subcmd="+subcmd);
-
-	    if(subcmd.equals(WidgetInfo.NCGET)) {
-		if(argv.length != 3) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, 2, "option");
-		}
-		//System.out.println("optname="+argv[2].toString());
-		cget(ip,argv[2].toString());
-		return;
-	    }
-	    if(subcmd.equals(WidgetInfo.NCONF)
-	       || subcmd.equals(WidgetInfo.NCONFIGURE)) {
-		configure(ip,argv,2,argv.length-2);
-		return;
-	    }
-	    handlecmd(ip,subcmd,argv,2);
-	    return;
-	}
-	throw HeclException.createWrongNumArgsException(argv, 2, "cmd [arg...]");
-    }
- 
-
-    public void configure(Interp ip,Thing[] argv,int start,int n) 
-	throws HeclException {
-	if(n < 0 || n % 2 != 0) {
-	    throw new HeclException("configure needs name-value pairs");
-	}
-	// deal with option/value pairs
-	for(int i = start ; n > 0; n -= 2, i += 2) {
-	    cset(ip,argv[i].toString().toLowerCase(),argv[i+1]);
-	}
-    }
-    
-
-    protected void cget(Interp ip,String optname) throws HeclException {
-	throw new OptException(optname);
-    }
-    
-
-    protected void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	throw new OptException(optname);
-    }
-    
-
-    protected void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	throw new ItemOptException("item cget "+optname);
-    }
-    
-
-    protected void itemcset(Interp ip,int itemno,String optname,Thing optval)
-	throws HeclException {
-	throw new ItemOptException("item cset "+optname);
-    }
-
-
-    protected void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
-	throws HeclException {
-	throw new SubCmdException(subcmd);
     }
 
     private Object data;

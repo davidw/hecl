@@ -48,10 +48,6 @@ public class HeclCanvas extends GameCanvas {
     public static int KEYCODE_LEFT_SK = -6;
     public static int KEYCODE_RIGHT_SK = -7;
 
-    // Customizable colors for our own command labels in fullscreen mode
-    public static Color CMDFGCOLOR = Color.black;
-    public static Color CMDBGCOLOR = Color.green/*Color.white*/;
-
     public HeclCanvas(boolean suppressKeyEvents) {
 	super(suppressKeyEvents);
 	nokeyevents = !suppressKeyEvents;
@@ -71,7 +67,7 @@ public class HeclCanvas extends GameCanvas {
 		return;
 	    }
 	}
-	if(!isfullscreen)
+	if(!isfullscreen || SettingsCmd.cvkeepcmdsinfullscreen)
 	    super.addCommand(cmd);
 
 	// Now insert it in order (according to priority)
@@ -87,13 +83,30 @@ public class HeclCanvas extends GameCanvas {
 	    // Not inserted just place it at the end
 	    cmds.addElement(cmd);
 	}
-	// update display
-	if(cmds.size() > 3) {
-	    System.err.println("Warning: more than 3 commands ignored when fullscreen");
-	}
 	updateCommands();
     }
 
+    public void flushGraphics() {
+//#ifdef debug
+	System.err.println("HeclCanvas.flushgraphics()");
+	System.err.println("clip is: "+mygraphics.getClipX()
+			   +", "+mygraphics.getClipY()
+			   +", "+mygraphics.getClipWidth()
+			   +", "+mygraphics.getClipHeight());
+//#endif
+	super.flushGraphics();
+    }
+
+
+    public Color getCmdBgColor() {
+	return cmdbgcolor;
+    }
+
+
+    public Color getCmdFgColor() {
+	return cmdfgcolor;
+    }
+    
 
     public Vector getCommands() {
 	return cmds;
@@ -164,6 +177,18 @@ public class HeclCanvas extends GameCanvas {
     }
     
 
+    public void setCmdBgColor(Color c) {
+	cmdbgcolor = c;
+	showCommands(mygraphics);
+    }
+
+
+    public void setCmdFgColor(Color c) {
+	cmdfgcolor = c;
+	showCommands(mygraphics);
+    }
+    
+
     public void setCommandListener(CommandListener l) {
 	// we need to take care of the listener here since we override the
 	// default behavior in fullscreen mode!
@@ -186,8 +211,17 @@ public class HeclCanvas extends GameCanvas {
     public void setFullScreenMode(boolean b) {
 	if(b == isfullscreen)
 	    return;
+
+	// ignore request for fullscreen canvas when disabled
+	if(b && !SettingsCmd.cvallowfullscreen)
+	    return;
+	
 	isfullscreen = b;
 	super.setFullScreenMode(isfullscreen);
+
+	if(SettingsCmd.cvkeepcmdsinfullscreen)
+	    return;
+
 	int n = cmds.size();
 	if(isfullscreen) {
 	    // disable commands
@@ -195,9 +229,6 @@ public class HeclCanvas extends GameCanvas {
 	    super.setCommandListener(null);
 	    for(int i=0; i<n; ++i) {
 		super.removeCommand((Command)cmds.elementAt(i));
-	    }
-	    if(n > 3) {
-		System.err.println("Warning: more than 3 command ignored on cancas!");
 	    }
 	    showCommands(mygraphics);
 	} else {
@@ -212,23 +243,32 @@ public class HeclCanvas extends GameCanvas {
     
 
     private void showCommands(Graphics g) {
-	//System.err.println("showCommands, fullscreen="+isfullscreen+", isshown="+isShown());
+//#ifdef debug
+	System.err.println("showCommands, fullscreen="+isfullscreen+", isshown="+isShown());
+//#endif
 	// Unfortunately, isShown does not work on some emulators, therefor we
 	// simply draw the commands in any case here.
-	if(isfullscreen && isShown()) {
+	if(SettingsCmd.cvdocmds && isfullscreen && cmds.size() > 0 && isShown()) {
 	    int oldcol = g.getColor();
 	    Font oldfont = g.getFont();
-
+	    int oldcx = g.getClipX();
+	    int oldcy = g.getClipY();
+	    int oldcw = g.getClipWidth();
+	    int oldch = g.getClipHeight();
+	    
 	    // clear rect in bg color
-	    g.setColor(CMDBGCOLOR.getRGB());
-	    System.err.println("drawing rect: y="+(drawheight+3)+", h="+drawheight);
-	    g.fillRect(0,drawheight+3,drawwidth,CMDBARHEIGHT);
-	    g.drawLine(0,drawheight+3,drawwidth-1,drawheight);
+	    g.setColor(cmdbgcolor.getRGB());
+//#ifdef debug
+	    System.err.println("drawing rect: y="+drawheight+", h="+CMDBARHEIGHT);
+//#endif
+	    g.setClip(0,drawheight,drawheight,CMDBARHEIGHT);
+	    g.fillRect(0,drawheight,drawwidth,CMDBARHEIGHT);
+	    //g.drawLine(0,drawheight,drawwidth-1,drawheight+3);
 	    
 	    // Draw the labels
-	    g.setColor(CMDFGCOLOR.getRGB());
+	    g.setColor(cmdfgcolor.getRGB());
 	    g.setFont(CMDFONT);
-	    int ypos = drawheight+4;
+	    int ypos = drawheight+1;
 	    Command c = buttons[0].getCommand();
 	    if(c != null) {
 		String l = c.getLabel();
@@ -247,10 +287,18 @@ public class HeclCanvas extends GameCanvas {
 		g.drawString(l != null ? l : "Mitte",
 			     drawwidth/2,ypos,Graphics.TOP|Graphics.HCENTER);
 	    }
+	    if(cmds.size() > 3) {
+		System.err.println("Warning: ignorting more than 3 commands!");
+	    }
 	    g.setColor(oldcol);
 	    g.setFont(oldfont);
-	    //System.err.println("flushing: 0,"+drawheight +", "+drawwidth+", "+CMDBARHEIGHT);
-	    super.flushGraphics(0,drawheight+3,drawwidth,CMDBARHEIGHT);
+//#ifdef debug
+	    System.err.println("flushing: 0, "+drawheight +", "+drawwidth+", "+CMDBARHEIGHT);
+//#endif
+	    flushGraphics(0,drawheight,drawwidth,CMDBARHEIGHT);
+	    g.setClip(oldcx,oldcy,oldcw,oldch);
+	} else {
+	    //System.err.println("no commands");
 	}
     }
 
@@ -259,7 +307,9 @@ public class HeclCanvas extends GameCanvas {
 	//System.err.println("PAINT called");
 	callEventHandler(new CanvasEvent(this,CanvasEvent.E_PAINT,
 					 0,0,drawwidth,drawheight,0));
-	flushGraphics();
+	if(graphicscmd != null && graphicscmd.needsFlush()) {
+	    flushGraphics();
+	}
 	showCommands(mygraphics);
 	super.paint(g);
     }
@@ -334,10 +384,11 @@ public class HeclCanvas extends GameCanvas {
     
 
     protected void sizeChanged(int w,int h) {
+//#ifdef debug
 	System.err.println("size changed, w="+w+", h="+h);
 	System.err.println("size changed, w="+super.getWidth()+", h="+super.getHeight());
-
 	System.err.println("resizing GraphicsCmd...");
+//#endif
 	// go calculate. remind: some nokia devices have a bug that cause
 	// wrong values to be passed as arguments to this function.
 	calcScreenWidth();
@@ -384,6 +435,9 @@ public class HeclCanvas extends GameCanvas {
     
     
     private void updateCommands() {
+	if(!SettingsCmd.cvdocmds)
+	    return;
+	
 	for(int i=0; i<buttons.length; ++i)
 	    buttons[i].setCommand(null);
 	
@@ -422,7 +476,10 @@ public class HeclCanvas extends GameCanvas {
 		menucommands = commandsTable;
 		Command c = (Command)commandsTable.elementAt(i);
 		String l = c.getLongLabel();
-		menulist.append(l != null ? l : "unknown", null);
+		if(l == null) {
+		    l - c.getLabel();
+		}
+		menulist.append(l != null ? l : "???", null);
 	    }
 	}
 	showCommands(mygraphics);
@@ -456,7 +513,8 @@ public class HeclCanvas extends GameCanvas {
 	fullwidth = super.getWidth();
 	fullheight = super.getHeight();
 	drawwidth = fullwidth;
-	drawheight = getFullScreenMode() ? fullheight-CMDBARHEIGHT : fullheight;
+	drawheight = getFullScreenMode() && !SettingsCmd.cvkeepcmdsinfullscreen ?
+	    fullheight-CMDBARHEIGHT : fullheight;
     }
 
     protected boolean nokeyevents;
@@ -474,6 +532,8 @@ public class HeclCanvas extends GameCanvas {
     private int fullheight = 1;
     private int drawwidth = 1;
     private int drawheight = 1;
+    private Color cmdbgcolor = SettingsCmd.cvcmdbgcolor;
+    private Color cmdfgcolor = SettingsCmd.cvcmdfgcolor;
 
     static class SoftButton {
 	private static SoftButton[] makeSoftButtons() {

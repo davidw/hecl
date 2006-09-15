@@ -113,6 +113,11 @@ public class WidgetInfo {
     }
     
     
+    public static Thing fromColor(org.awt.Color color) throws HeclException {
+	return fromColor(color.getRGB());
+    }
+    
+    
     public static Thing fromColor(int t) throws HeclException {
 	try {
 	    return int2t(t,colornames,colorvals,"");
@@ -538,7 +543,7 @@ public class WidgetInfo {
 	v = new Vector();
 	v.addElement(labelprop);
 	v.addElement(longlabelprop);
-	v.addElement(new WidgetProp(NTYPE,IntThing.create(Command.BACK),true));
+	v.addElement(new WidgetProp(NTYPE,new Thing("back"),true));
 	v.addElement(prioprop);
 	widgetprops.put(Command.class,v);
 

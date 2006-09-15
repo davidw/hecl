@@ -134,11 +134,11 @@ public class GraphicsCmd extends ThingCmd {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NCOLOR)) {
-	    ip.setResult(WidgetInfo.fromColor(d.getColor().getRGB()));
+	    ip.setResult(WidgetInfo.fromColor(d.getColor()));
 	    return;
 	}
 	if(optname.equals("-background")) {
-	    ip.setResult(WidgetInfo.fromColor(d.getColor().getRGB()));
+	    ip.setResult(WidgetInfo.fromColor(d.getColor()));
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NFONT)) {
@@ -309,8 +309,8 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "psrc dimension pdst [anchor]");
 	    
 	    int anchor = startat+3 < argv.length ?
-		WidgetInfo.toCanvasAnchor(argv[n]) : Graphics.TOP|Graphics.LEFT;
-	    System.err.println("anchor="+Integer.toHexString(anchor));
+		WidgetInfo.toCanvasAnchor(argv[n]) : Graphics.BOTTOM|Graphics.LEFT;
+	    //System.err.println("anchor="+Integer.toHexString(anchor));
 	    d.copyArea(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       HeclUtils.thing2Point(argv,startat+2), anchor);
@@ -323,8 +323,8 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "animage point [anchor]");
 	    
 	    int anchor = startat+2 < argv.length ?
-		WidgetInfo.toCanvasAnchor(argv[n]) : Graphics.TOP|Graphics.LEFT;
-	    System.err.println("anchor="+Integer.toHexString(anchor));
+		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.BOTTOM|Graphics.LEFT;
+	    //System.err.println("anchor="+Integer.toHexString(anchor));
 	    d.drawImage(ImageMap.asImage(ip,argv[startat],false),
 			HeclUtils.thing2Point(argv,startat+1), anchor);
 	    return needflush = true;
@@ -427,7 +427,7 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "point text [anchor]");
 
 	    int anchor = startat+2 < argv.length ?
-		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.TOP|Graphics.LEFT;
+		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.BOTTOM|Graphics.LEFT;
 	    
 	    d.drawString(argv[startat+1].toString(),
 			 HeclUtils.thing2Point(argv,startat), anchor);
@@ -440,7 +440,7 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "point text [anchor]");
 
 	    int anchor = startat+2 < argv.length ?
-		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.TOP|Graphics.LEFT;
+		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.BOTTOM|Graphics.LEFT;
 	    
 	    d.drawVString(argv[startat+1].toString(),
 			  HeclUtils.thing2Point(argv,startat));
@@ -530,11 +530,11 @@ public class GraphicsCmd extends ThingCmd {
 		return true;
 	    }
 	    if(subcmd.equals("getcolor")) {
-		ip.setResult(WidgetInfo.fromColor(d.getColor().getRGB()));
+		ip.setResult(WidgetInfo.fromColor(d.getColor()));
 		return true;
 	    }
 	    if(subcmd.equals("getbackground")) {
-		ip.setResult(WidgetInfo.fromColor(d.getBackground().getRGB()));
+		ip.setResult(WidgetInfo.fromColor(d.getBackground()));
 		return true;
 	    }
 	}
@@ -595,8 +595,8 @@ public class GraphicsCmd extends ThingCmd {
 
 	// Misc commands
 	if(subcmd.equals("clip")) {
-	    // x, y, w, h
-	    if(startat+4 != argv.length)
+	    // {x, y} {w, h}
+	    if(startat+2 != argv.length)
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "point dimension");
 	    Point2D p = HeclUtils.thing2Point(argv,startat);
@@ -606,8 +606,8 @@ public class GraphicsCmd extends ThingCmd {
 	    return true;
 	}
 	if(subcmd.equals("cliprect")) {
-	    /* x, y, w, h, */
-	    if(startat+4 != argv.length)
+	    /* {x, y} {w, h} */
+	    if(startat+2 != argv.length)
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "x y w h");
 	    Point2D p = HeclUtils.thing2Point(argv,startat);
@@ -644,7 +644,7 @@ public class GraphicsCmd extends ThingCmd {
     
     private int mywidth;
     private int myheight;
-    protected boolean needflush = false;
+    protected boolean needflush = true;
 //#ifdef notdef
     private int mytx = 0;
     private int myty = 0;

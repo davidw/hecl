@@ -39,18 +39,16 @@ public class GUICmds implements HeclModule {
 	System.err.println("Loading new phone");
 
 	// Add some default widgets
-	String name = "lcdui.select_command";
-	ip.setVar("lcdui.select_command",
+	ip.setVar(SELVARNAME,
 		  new Thing(
-		      WidgetMap.addWidget(ip,name,List.SELECT_COMMAND,
-					  new CommandCmd(ip,List.SELECT_COMMAND,null)))
-	    );
-	name = "lcdui.dismiss_command";
-	ip.setVar(name,
+		      WidgetMap.addWidget(ip,SELVARNAME,List.SELECT_COMMAND,
+					  new CommandCmd(ip,List.SELECT_COMMAND,null))),
+		  0);
+	ip.setVar(DISMISSVARNAME,
 		  new Thing(
-		      WidgetMap.addWidget(ip,name,Alert.DISMISS_COMMAND,
-					  new CommandCmd(ip,Alert.DISMISS_COMMAND,null)))
-	    );
+		      WidgetMap.addWidget(ip,DISMISSVARNAME,Alert.DISMISS_COMMAND,
+					  new CommandCmd(ip,Alert.DISMISS_COMMAND,null))),
+		  0);
 	
 	// Add font commands...
 	ip.addCommand("lcdui.font",FontMap.FONTCMD);
@@ -58,6 +56,9 @@ public class GUICmds implements HeclModule {
 	// Image map and command
 	ip.addCommand("lcdui.image",ImageCmd.CREATE);
 
+	// configuration commands
+	ip.addCommand("lcdui.settings",new SettingsCmd());
+	
 	// Add widget commands...
 	ip.addCommand("lcdui.alert",AlertCmd.CREATE);
 	ip.addCommand("lcdui.canvas",CanvasCmd.CREATE);
@@ -71,9 +72,29 @@ public class GUICmds implements HeclModule {
     
 
     public void unloadModule(Interp ip) throws HeclException {
-	System.err.println("Warning: module phone does currently not support unload!");
+	for(int i=0; i<varnames.length; ++i) {
+	    try {
+		ip.unSetVar(varnames[i],0);
+	    }
+	    catch(HeclException he){
+	    }
+	}
 	ip.removeCommand("lcdui.font");
-	ip.unSetVar("lcdui.select_command");
-	ip.unSetVar("lcdui.dismiss_command");
+	ip.removeCommand("lcdui.image");
+
+	ip.removeCommand("lcdui.settings");
+	
+	ip.removeCommand("lcdui.alert");
+	ip.removeCommand("lcdui.canvas");
+	ip.removeCommand("lcdui.command");
+	ip.removeCommand("lcdui.form");
+	ip.removeCommand("lcdui.list");
+	ip.removeCommand("lcdui.textbox");
+	ip.removeCommand("lcdui.ticker");
+	ip.removeCommand("lcdui.widgetmap");
+
     }
+    public static final String SELVARNAME = "lcdui.select_command";
+    public static final String DISMISSVARNAME = "lcdui.dismiss_command";
+    private static final String varnames[] = new String[]{SELVARNAME,DISMISSVARNAME};
 }

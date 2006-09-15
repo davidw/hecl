@@ -24,6 +24,12 @@ import java.util.Hashtable;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
+//#ifdef ant:j2se
+import java.awt.Color;
+//#else
+import org.awt.Color;
+//#endif
+
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -135,6 +141,14 @@ public class CanvasCmd extends DisplayableCmd {
 	    ip.setResult(getAutoFlushMode());
 	    return;
 	}
+	if(optname.equals("-cmdbg")) {
+	    ip.setResult(WidgetInfo.fromColor(c.getCmdBgColor()));
+	    return;
+	}
+	if(optname.equals("-cmdfg")) {
+	    ip.setResult(WidgetInfo.fromColor(c.getCmdFgColor()));
+	    return;
+	}
 	GraphicsCmd gcmd = c.getGraphicsCmd();
 	if(gcmd != null) {
 	    try {
@@ -157,6 +171,14 @@ public class CanvasCmd extends DisplayableCmd {
 	}
 	if(optname.equals("-autoflush")) {
 	    setAutoFlushMode(HeclUtils.thing2bool(optval));
+	    return;
+	}
+	if(optname.equals("-cmdbg")) {
+	    c.setCmdBgColor(new Color(WidgetInfo.toColor(optval)));
+	    return;
+	}
+	if(optname.equals("-cmdfg")) {
+	    c.setCmdFgColor(new Color(WidgetInfo.toColor(optval)));
 	    return;
 	}
 	GraphicsCmd gcmd = c.getGraphicsCmd();
@@ -226,7 +248,7 @@ public class CanvasCmd extends DisplayableCmd {
 	    GraphicsCmd gcmd = c.getGraphicsCmd();
 	    if(gcmd != null) {
 		gcmd.handlecmd(ip,subcmd,argv,startat);
-		if(autoflush && gcmd.needsFlush()) {
+		if(autoflush && gcmd.needsFlush() && c.isShown()) {
 		    c.flushGraphics();
 		    gcmd.flush();
 		}

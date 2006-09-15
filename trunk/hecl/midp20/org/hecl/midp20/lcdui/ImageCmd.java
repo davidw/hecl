@@ -35,6 +35,8 @@ import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
+import org.hecl.rms.RMSInputStream;
+
 public class ImageCmd extends OwnedThingCmd {
     public static String addImage(Interp ip,String imagename,Image image)
 	throws HeclException{
@@ -89,17 +91,54 @@ public class ImageCmd extends OwnedThingCmd {
 						    + t.toString()
 						    + "' to image.");
 			}
+		    } else if((t = p.getProp("-rms")) != null) {
+			p.delProp("-rms");
+			RMSInputStream is = null;
+			try {
+			    is = new RMSInputStream(t.toString());
+			    System.err.println("creating image from rms...");
+			    image = Image.createImage(is);
+			    System.err.println("done");
+			    is.close();
+			    is = null;
+			}
+			catch(IOException e) {
+			    e.printStackTrace();
+			    if(is != null) {
+				try {
+				    is.close();
+				}
+				catch(Exception iox){
+				    iox.printStackTrace();
+				}
+				is = null;
+			    }
+			    throw new HeclException(e.toString());
+			}
 		    } else if((t = p.getProp("-resource")) != null) {
 			p.delProp("-resource");
 			image = ImageMap.loadImage(t.toString());
 		    } else if((t = p.getProp("-data")) != null) {
 			p.delProp("-data");
-			try {
-			    byte[] b = t.toString().getBytes("iso-8859-1");
-			    image = Image.createImage(b,0,b.length);
+			String s = t.toString();
+//#ifdef notdef
+			boolean success = false;
+			for(int i=0; i<ISONAMES.length; ++i) {
+			    try {
+				byte[] b = s.getBytes(ISONAMES[i]);
+				image = Image.createImage(b,0,b.length);
+				success = true;
+				break;
+			    }
+			    catch (Exception e) {}
 			}
-			catch (Exception e) {
+			if(!success) {
+			    throw new HeclException("Can't decode image data.");
 			}
+//#else
+			byte[] b = asISOBytes(s);
+			image = Image.createImage(b,0,b.length);
+//#endif
 		    } else if((t = p.getProp("-image")) != null) {
 			p.delProp("-image");
 			image = Image.createImage((Image)map.valueOf(t.toString()));
@@ -129,7 +168,6 @@ public class ImageCmd extends OwnedThingCmd {
 			throw HeclException.createWrongNumArgsException(
 			    argv, startat,"image");
 		    String imagename = argv[startat].toString();
-		    System.err.println("deleting image="+imagename);
 		    ImageMap.mapOf(ip).remove(imagename);
 		    return;
 		}
@@ -232,6 +270,7 @@ public class ImageCmd extends OwnedThingCmd {
 	    addImage(ip,null,im2);
 	    return;
 	}
+	
 	if(subcmd.equals("delete")) {
 	    ImageMap map = ImageMap.mapOf(ip);
 	    String name = map.nameOf(image);
@@ -251,5 +290,22 @@ public class ImageCmd extends OwnedThingCmd {
 	g.handlecmd(ip,subcmd,argv,startat);
     }
 
+
+    public static byte[] asISOBytes(String s) {
+	byte[] buf = new byte[s.length()];
+	for(int i=0; i<s.length(); ++i) {
+	    char ch = s.charAt(i);
+	    buf[i] = (byte)ch;
+	}
+	return buf;
+    }
+    
+
     GraphicsCmd g;
+//#ifdef notdef
+    static private final String ISONAMES[]= {
+	"ISO-8859-1","ISO8859-1","ISO8859_1","ISO_8859_1","ISO-8859_1","ISO_8859-1",
+	"iso-8859-1","iso8859-1","iso8859_1","iso_8859_1","iso-8859_1","iso_8859-1"
+    };
+//#endif    
 }
