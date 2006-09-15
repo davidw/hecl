@@ -55,7 +55,7 @@ public class HttpCmd extends org.hecl.Operator {
 	    String qdata = null;
 	    Thing t = null;
 	    try {
-		t = interp.getVar("http::useragent");
+		t = interp.getVar("http.useragent",0);
 	    }
 	    catch(HeclException e) {
 	    }
@@ -88,14 +88,16 @@ public class HttpCmd extends org.hecl.Operator {
 					    validate, h, interp);
 	    r.start();
 	    while(r.isAlive()) {
-		interp.doOneEvent(Interp.ALL_EVENTS);
+		interp.doOneEvent(Interp.ALL_EVENTS|Interp.DONT_WAIT);
+		// allow for other threads to do some work
+		Thread.currentThread().yield();
 	    }
 	    int status = r.getStatus();
 	    System.err.println("status="+status);
 	    if(status != HttpRequest.OK) {
 		Exception e = r.getException();
 		// wke 31.08.2006
-		// need a strngbuffer here, otherwise error message is not
+		// need a stringbuffer here, otherwise error message is not
 		// complete. May be a compiler problem.
 		StringBuffer s = new StringBuffer();
 		s.append("HTTP geturl failed '").append(HttpRequest.getStatusText(status))
@@ -116,61 +118,7 @@ public class HttpCmd extends org.hecl.Operator {
 		    String key = (String)e.nextElement();
 		    ht.put(key,new Thing(r.getResponseFieldValue(key)));
 		}
-		
-		t = null;
-		try {
-		    t = interp.getVar("http::charset");
-		}
-		catch (HeclException hecle) {
-		}
-		String encoding = t != null ? t.toString() : defcharset;
-		
-		t = (Thing)ht.get("content-type");
-		String ct = t != null ? t.toString() : null;
-		
-		if(ct != null) {
-		    int begin = ct.toLowerCase().indexOf("charset=");
-		    if (begin >= 0) {
-			// If no charset is given, iso8859-1 is the default.
-			// In a midlet, an empty encoding string would result
-			// in an UnsupportedEncodingException when creating a
-			// string object.
-			begin += 8;
-			int end = ct.indexOf(';', begin);
-			if (end == -1) {
-			    end = ct.length();
-			}
-			encoding = ct.substring(begin, end);
-		    }
-		}
-		byte[] content = r.getBytes();
-		if(content == null) {
-		    System.out.println("OOPS, content == null");
-		    content = new byte[0];
-		}
-		
-		ht.put("charset",new Thing(encoding));
-		for(int i=0; i<3; ++i) {
-		    switch(i) {
-		      case 0:
-			break;
-		      case 1:
-			encoding = encoding.toLowerCase();
-			break;
-		      case 2:
-			encoding = encoding.toUpperCase();
-			break;
-		    }
-		    try {
-			ct = new String(content,encoding);
-			break;
-		    }
-		    catch(Exception e2) {
-			ct = "xxx-encoding-failed-xxx\n"+e2.getMessage();
-		    }
-		}
-		
-		ht.put("data",new Thing(ct != null ? ct : ""));
+		ht.put("data",new Thing(new StringThing(r.getBody())));
 		return new HashThing(ht);
 	    }
 	    catch (Exception e) {

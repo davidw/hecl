@@ -39,7 +39,6 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 //#endif
 
-
 public class HttpRequest extends Thread {
     static public final int SETUP = 0;
     static public final int CONNECTED = 1;
@@ -103,7 +102,8 @@ public class HttpRequest extends Thread {
 	}
 
 
-	public void connect(String rm, Hashtable rfields,String qdata)
+	public void connect(String rm, Hashtable rfields,
+			    String qdata,QParam[] qparams)
 	    throws IOException {
 	    conn.setRequestMethod(rm);
 	    //System.err.println("requestMethod="+rm);
@@ -117,21 +117,31 @@ public class HttpRequest extends Thread {
 	    }
 
 //#ifndef ant:j2me
-	    if (qdata != null) {
+	    if (qdata != null || qparams != null) {
 		conn.setDoOutput(true);
 	    }
 	    // Only JDK: Calling connect will open the connection
 	    conn.connect();
 //#endif
 	    
-	    if (qdata != null) {
+	    if (qdata != null || qparams != null) {
 //#ifdef ant:j2me
 		os = conn.openOutputStream();
 //#else
 		os = conn.getOutputStream();
 //#endif
-		//System.err.println("writing " + qdata.getBytes(defcharset).length + " bytes");
-		os.write(qdata.getBytes(defcharset));
+		if(qdata != null) {
+		    //System.err.println("writing " + qdata.getBytes(defcharset).length + " bytes");
+		    os.write(qdata.getBytes(/*defcharset*/));
+		} else if (qparams != null) {
+		    for(int i=0; i<qparams.length; ++i) {
+			//System.err.print("qparams["+i+"]: ");
+			//qparams[i].printon(System.err).println("");
+			if(i != 0)
+			    os.write('&');
+			qparams[i].send(os);
+		    }
+		}
 		os.flush();
 		os.close();
 		os = null;
@@ -271,12 +281,24 @@ public class HttpRequest extends Thread {
     }
 
 
+    public HttpRequest(String url, QParam[] params,
+		       boolean validate, Hashtable headerfields,
+		       Object requestnotify) {
+	qparams = params;
+	setup(url,validate,headerfields,requestnotify);
+    }
+    
+
     public HttpRequest(String url, String queryData,
 		       boolean validate, Hashtable headerfields,
 		       Object requestnotify) {
-	urlstr = url;
-	body = "";
 	qdata = queryData;
+	setup(url,validate,headerfields,requestnotify);
+    }
+
+    private void setup(String url, boolean validate, Hashtable headerfields,
+		       Object requestnotify) {
+	urlstr = url;
 	if(headerfields != null) {
 	    Enumeration e = headerfields.keys();
 	    while(e.hasMoreElements()) {
@@ -284,8 +306,7 @@ public class HttpRequest extends Thread {
 		requestFields.put(key,(String)headerfields.get(key));
 	    }
 	}
-	requestMethod = HttpConstants.GET;
-	if(qdata != null) {
+	if(qdata != null || qparams != null) {
 	    requestMethod = HttpConstants.POST;
 	} else {
 	    if(validate)
@@ -293,7 +314,7 @@ public class HttpRequest extends Thread {
 	}
 	notifywhendone = requestnotify;
     }
-
+    
     // Add a header field with key and value when sending a request
     // Must be called before the request.
     public void addRequestField(String key, String value) {
@@ -313,6 +334,31 @@ public class HttpRequest extends Thread {
     }
     
 
+    public String getURL() {
+	return urlstr;
+    }
+    
+
+    public static String hexdump(byte[] buf) {
+	StringBuffer sb = new StringBuffer();
+	
+	for(int i=0; i<buf.length; ++i) {
+	    byte b = buf[i];
+	    
+	    sb.append(Integer.toHexString((b&0xf0)>>4));
+	    sb.append(Integer.toHexString(b&0x0f));
+	    sb.append(' ');
+	    if(i!=0 && ((i+1)%8) == 0)
+		sb.append(' ');
+	    if(i != 0 && ((i+1)%16) == 0)
+		sb.append('\n');
+	}
+	if(sb.charAt(sb.length()-1) != '\n')
+	    sb.append('\n');
+	return new String(sb);
+    }
+ 
+
     public synchronized void run() {
 	MyHttpConn co = null;
 	rc = -1;
@@ -329,7 +375,7 @@ public class HttpRequest extends Thread {
 	}
 
 	try {
-	    co.connect(requestMethod,requestFields,qdata);
+	    co.connect(requestMethod,requestFields,qdata,qparams);
 	    status = CONNECTED;
 	    //System.err.println("Connected");
 	    rc = co.getResponseCode();
@@ -345,14 +391,15 @@ public class HttpRequest extends Thread {
 	    
 	    // If no charset is given, use the default (see below).
 	    String charset = defcharset;
-	    String ct = (String)responseFields.get("content-type");
-	    String coding = (String)responseFields.get("content-encoding");
+	    String ct = (String)responseFields.get(CONTENTTYPE);
+	    String coding = (String)responseFields.get(CONTENTENCODING);
 	    
-	    if(coding == null) {
-		coding = "text/plain";
-		responseFields.put("content-encoding",coding);
+	    if(ct == null) {
+		// should be present, but who nows...
+		ct = "text/plain";
+		responseFields.put(CONTENTTYPE,ct);
 	    }
-		
+	    
 	    if((ct != null && !ct.toLowerCase().startsWith("text"))
 	       || (coding != null &&
 		   (coding.indexOf("gzip") >= 0 || coding.indexOf("compress") >= 0))
@@ -374,31 +421,44 @@ public class HttpRequest extends Thread {
 			    end = ct.length();
 			}
 			charset = ct.substring(begin, end);
+			//System.err.println("charset in reply="+charset);
 		    }
 		}
 	    }
+	    //System.err.println("charset now="+charset +", isocharset="+isISOCharset(charset));
+	    
 	    // charset is now detected, create a string holding the result.
-	    for(int i=0; i<3; ++i) {
-		switch(i) {
-		  case 0:
-		    break;
-		  case 1:
-		    charset = charset.toLowerCase();
-		    break;
-		  case 2:
-		    charset = charset.toUpperCase();
-		    break;
-		}
+	    if(charset == defcharset || isISOCharset(charset)) {
+		//System.err.println("internal ISO 8859 decode");
+		body = bytesToString(inData,0,inData.length);
+		//System.err.println("ISO 8859 decode done");
+		charset = defcharset;
 		responseFields.put("charset",charset);
-		try {
-		    //System.err.println("trying to decode with charset="+charset);
-		    body = new String(inData,charset);
-		    //System.err.println("decode success");
-		    break;
+	    } else {
+		for(int i=0; i<3; ++i) {
+		    switch(i) {
+		      case 0:
+			break;
+		      case 1:
+			charset = charset.toLowerCase();
+			break;
+		      case 2:
+			charset = charset.toUpperCase();
+			break;
+		    }
+		    responseFields.put("charset",charset);
+		    try {
+			//System.err.println("trying to decode with charset="+charset);
+			body = new String(inData,charset);
+			//System.err.println("decode success");
+			break;
+		    }
+		    catch(Exception e2) {
+			body = "xxx-encoding-failed-xxx\n"+e2.getMessage();
+		    }
 		}
-		catch(Exception e2) {
-		    body = "xxx-encoding-failed-xxx\n"+e2.getMessage();
-		}
+		//System.err.println("decode bytelen="+inData.length);
+		//System.err.println("decode strlen="+body.length());
 	    }
 	}
 	catch (Exception e) {
@@ -414,9 +474,43 @@ public class HttpRequest extends Thread {
 		notifywhendone.notify();
 	    }
 	}
+	// no longer needed
+	inData = null;
     }
 
-
+    public static byte[] asISOBytes(String s) {
+	byte[] buf = new byte[s.length()];
+	for(int i=0; i<s.length(); ++i) {
+	    char ch = s.charAt(i);
+	    buf[i] = (byte)ch;
+	}
+	return buf;
+    }
+    
+    public static String bytesToString(byte[] buf) {
+	return bytesToString(buf,0,buf.length);
+    }
+    
+    public static String bytesToString(byte[] buf,int start,int n) {
+	return bytesToStringBuffer(buf,start,n).toString();
+    }
+    
+    public static StringBuffer bytesToStringBuffer(byte[] buf) {
+	return bytesToStringBuffer(buf,0,buf.length);
+    }
+    
+    public static StringBuffer bytesToStringBuffer(byte[] buf,int start,int n) {
+	StringBuffer sb = new StringBuffer(buf.length);
+	//System.err.println("old data:");
+	//System.err.println(hexdump(buf));
+	for(int i=start; n>0; ++i, --n) {
+	    sb.append((char)buf[i]);
+	}
+	//System.err.println("new data:");
+	//System.err.println(hexdump(asISOBytes(sb.toString())));
+	return sb;
+    }
+    
     public int getStatus() {
 	return status;
     }
@@ -431,11 +525,11 @@ public class HttpRequest extends Thread {
 	return body;
     }
     
-
+//#ifdef notdef
     public byte[] getBytes() {
 	return inData;
     }
-
+//#endif
 
     public int getRC() {
 	return rc;
@@ -515,17 +609,22 @@ public class HttpRequest extends Thread {
 	*/
     }
 
-    public static String urlencode(byte[] s) {
+    public static String urlencode(byte[] s,int start, int n) {
 	StringBuffer b = new StringBuffer();
-
-	for(int i = 0; i < s.length; i++) {
-	    int ch = s[i] & 0xff;
-	    b.append(urlencodemap[ch]);
+	for(int i = start; n>0; ++i, --n) {
+	    b.append(urlencodemap[s[i] & 0xff]);
 	}
 	return b.toString();
     }
 
+    public static String urlencode(byte[] s) {
+	return urlencode(s,0,s.length);
+    }
+
     public static String urlencode(String[] elems) {
+	if(elems == null || elems.length == 0)
+	    return null;
+	
 	StringBuffer b = new StringBuffer();
 	if(elems != null) {
 	    for(int i = 0; i < elems.length; ++i) {
@@ -539,10 +638,21 @@ public class HttpRequest extends Thread {
     }
 
 
+    private boolean isISOCharset(String charset) {
+	String lower = charset.toLowerCase();
+	
+	for(int i=0; i<ISOALIASES.length; ++i) {
+	    if(lower.equals(ISOALIASES[i]))
+		return true;
+	}
+	return false;
+    }
+    
     private String urlstr = null;
     private byte[] inData = null;
-    private String body = null;
+    private String body = "";
     private String qdata = null;
+    private QParam[] qparams = null;
     private String requestMethod = HttpConstants.GET;
     private int rc = -1;
     private int status = SETUP;
@@ -555,7 +665,12 @@ public class HttpRequest extends Thread {
     private static String validUrlChars =
     "-_.!~*'()\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final char[] hexchars = (new String("0123456789ABCDEF")).toCharArray();
-    public static String defcharset = "ISO8859_1";
+    public static String defcharset = "ISO8859-1";
+    public static final String CONTENTTYPE = "content-type";
+    public static final String CONTENTENCODING = "content-encoding";
+    static private final String ISOALIASES[]= {
+	"iso-8859-1","iso8859-1","iso8859_1","iso_8859_1","iso-8859_1","iso_8859-1"
+    };
     
     static {
 	char[] cbuf = new char[3];
