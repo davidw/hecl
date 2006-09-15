@@ -76,8 +76,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * Creates a new <code>Interp</code> instance, initializing command and
      * variable hashtables, a stack, and an error stack.
      *
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public Interp() throws HeclException {
         // Set up stack frame for globals.
@@ -90,10 +89,8 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * Add a new command to an <code>Interp</code>.
      *
-     * @param name
-     *            the name of the command to add.
-     * @param c
-     *            the command to add.
+     * @param name the name of the command to add.
+     * @param c the command to add.
      */
     public synchronized String addCommand(String name,Command c) {
 	commands.put(name,c);
@@ -103,8 +100,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * Remove a command from an <code>Interp</code>.
      *
-     * @param name
-     *            the name of the command to add.
+     * @param name the name of the command to add.
      */
     public synchronized void removeCommand(String name) {
 	commands.remove(name);
@@ -143,8 +139,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      *
      * @return a <code>Thing</code> value - the result of the
      * evaluation.
-     * @exception HeclException
-     *                if an error occurs.
+     * @exception HeclException if an error occurs.
      */
     public Thing eval(Thing in) throws HeclException {
 	result = null;
@@ -413,8 +408,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * commands are initialized in Standard.java, and J2ME commands in
      * Micro.java.
      *
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     private void initInterp() throws HeclException {
 	/* Do not use the 'Facade' style commands as an example if you
@@ -651,8 +645,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * variable exists in the current variable stack frame, <code>false</code>
      * if it does not.
      *
-     * @param varname
-     *            a <code>Thing</code> value
+     * @param varname a <code>Thing</code> value
      * @return a <code>boolean</code> value
      */
     public boolean existsVar(Thing varname) throws HeclException {
@@ -664,8 +657,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * variable exists in the current variable stack frame, <code>false</code>
      * if it does not.
      *
-     * @param varname
-     *            a <code>String</code> value
+     * @param varname a <code>String</code> value
      * @return a <code>boolean</code> value
      */
     public boolean existsVar(String varname) {
@@ -677,10 +669,8 @@ public class Interp extends Thread/*implements Runnable*/ {
      * variable exists in the variable stack frame given by <code>level</code>,
      * <code>false</code> if it does not.
      *
-     * @param varname
-     *            a <code>String</code> value
-     * @param level
-     *            an <code>int</code> value
+     * @param varname a <code>String</code> value
+     * @param level an <code>int</code> value
      * @return a <code>boolean</code> value
      */
     public synchronized boolean existsVar(String varname, int level) {
@@ -692,8 +682,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * <code>setResult</code> sets the interpreter result of the most recent
      * command.
      *
-     * @param newresult
-     *            a <code>Thing</code> value
+     * @param newresult a <code>Thing</code> value
      */
     public synchronized void setResult(Thing newresult) {
         result = newresult;
@@ -742,8 +731,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * <code>addError</code> adds a Thing as an error message.
      *
-     * @param err
-     *            a <code>Thing</code> value
+     * @param err a <code>Thing</code> value
      */
     public void addError(Thing err) {
         error.push(err);
@@ -763,14 +751,13 @@ public class Interp extends Thread/*implements Runnable*/ {
      * This function operates in a synchronized manner on the argument
      * <code>v</code>.
      *
-     * @param v
-     * A <code>Vector</code> of tasks.
-     * @param until
-     * A value to compare the result of <code>getGeneration</code> of the
-     * <code>HeclTask</code>. If <code>until</code> is less than 0 or
-     * <code>getGeneration</code> is less than <code>until</code> for the
-     * first  element of <code>v</code>, the first task in the vector is
-     * returned, null otherwise.
+     * @param v A <code>Vector</code> of tasks.
+     * @param until A value to compare the result of
+     * <code>getGeneration</code> of the <code>HeclTask</code>. If
+     * <code>until</code> is less than 0 or <code>getGeneration</code>
+     * is less than <code>until</code> for the first element of
+     * <code>v</code>, the first task in the vector is returned, null
+     * otherwise.
      */
     protected synchronized HeclTask nextTask(Vector v,long until) {
 	HeclTask t = null;
@@ -832,14 +819,12 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * Service at most one idle task of the idle task queue.
      *
-     * @param v
-     * A <code>Vector</code> of tasks to add the task to.
-     * @param task
-     * The <code>HeclTask</code> to add.
-     * @param pos
-     * The </code>int</code> position of <code>v</code> where to add
-     * <code>task</code> being in the range from 0 to <code>v.size()</code>.
-     * -1 indicates to add <code>task</code> to the end of <code>v</code>.
+     * @param v A <code>Vector</code> of tasks to add the task to.
+     * @param task The <code>HeclTask</code> to add.
+     * @param pos The </code>int</code> position of <code>v</code>
+     * where to add <code>task</code> being in the range from 0 to
+     * <code>v.size()</code>.  -1 indicates to add <code>task</code>
+     * to the end of <code>v</code>.
      *
      * @return A <code>String</code> being the name of the inserted task.
      */
@@ -859,11 +844,9 @@ public class Interp extends Thread/*implements Runnable*/ {
      * The functions performs nothing when no task of the specified name is
      * an element of the vector.
      *
-     * @param v
-     * A vector of <code>HeclTask</code>s.
-     * @param name
-     * A <code>String</code> specifying the name of the task to be removed
-     * from <code>v</code>.
+     * @param v A vector of <code>HeclTask</code>s.
+     * @param name A <code>String</code> specifying the name of the
+     * task to be removed from <code>v</code>.
      */
     private synchronized void cancelTask(Vector v,String name) {
 	int n = v.size();
@@ -880,8 +863,8 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * Execute a <code>task</code>.
      *
-     * @return Always the boolean value <code>true</code> to indicate that a
-     * task has been serviced.
+     * @return Always the boolean value <code>true</code> to indicate
+     * that a task has been serviced.
      */
     private boolean executeTask(HeclTask task) {
 	try {
