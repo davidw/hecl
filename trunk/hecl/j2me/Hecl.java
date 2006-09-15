@@ -23,7 +23,7 @@ import javax.microedition.midlet.MIDlet;
 
 import org.hecl.Interp;
 import org.hecl.Thing;
-import org.hecl.rms.HeclRecordStoreCmds;
+import org.hecl.rms.RMSCmd;
 
 //import org.hecl.http.*;
 import org.hecl.net.Base64Cmd;
@@ -114,7 +114,7 @@ public class Hecl extends MIDlet {
 		Base64Cmd.load(interp);
 		HttpCmd.load(interp);
 		//new HttpModule().loadModule(interp);
-		HeclRecordStoreCmds.load(interp);
+		RMSCmd.load(interp);
 	    } catch (Exception e) {
 		f.append(e.toString());
 	    }
