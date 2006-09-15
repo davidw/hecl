@@ -1,3 +1,41 @@
+2006-09-15  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* j2me/Hecl.java: Uses new RMS class names.
+
+	* core/org/hecl/Interp.java: New clock command.
+
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: Now properly unsets
+	global variables.
+
+	* net/org/hecl/HttpCmd.java: 
+	* net/org/hecl/StringQParam.java: 
+	* net/org/hecl/QParam.java: Corrected copyright.
+
+	* midp20/org/hecl/midp20/lcdui/WidgetInfo.java: Added function to
+	retrieve command labels.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Added support for
+	more than 3 commands via a menu implemented using a list.
+
+	* rms/org/hecl/rms/RMSInputStream.java: 
+	* rms/org/hecl/rms/RMSOututStream.java: 
+	* rms/org/hecl/rms/RMSCmd.java: New functionality, renamed files.
+
+	* core/org/hecl/ControlCmds.java: Enhanced treatment of
+	if/then/else/elseif to throw error on invalid sequences.
+
+	* tests/if.hcl: Added more tests.
+
+	* tests/harness.hcl (testfiles): Clear failure list when starting
+	new test.
+
+	* core/org/hecl/StringThing.java: Simplified deepcopy().
+
+	* midp20/org/graphics/Drawable.java: Added/disabled debug printout,
+	corrected clipping.
+
+	* midp20/org/hecl/misc/HeclUtils.java: removed function classExists.
+
 2006-09-14  David N. Welton  <davidw@dedasys.com>
 
 	* TODO-tests-docs: A list of commands to be documented and tested,
@@ -10,6 +48,13 @@
 	* core/org/hecl/ControlCmds.java: Added Wolfgang's patch for
 	if/elseif.
 
+2006-09-13  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/ControlCmds.java: hack for if elseif...
+
+	* core/org/hecl/Interp.java: Added unSetVar with level. Reduced
+	sleep time when waiting for events.
+
 2006-09-13  David N. Welton  <davidw@dedasys.com>
 
 	* tests/if.hcl: New if/elseif test that demonstrates a bug
@@ -21,6 +66,19 @@
 
 	* core/org/hecl/Thing.java: Don't cache a string representation.
 	We'll save optimization for later.
+
+2006-09-09  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* midp20/org/hecl/midp20/lcdui/ImageCmd.java: Fixed creation of
+	image from string via '-data'.
+
+2006-09-07  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/InterpCmds.java: New command 'hasclass <name>'
+	that gives access to Class.forName(..) at the script level.
+	Rename 'system.time' into 'clock' with options, now supports
+	'clock milli/time', 'clock seconds' and 'clock format <millisecs>'
+	with the latter allowing to get a printable format of the time.
 
 2006-09-05  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
