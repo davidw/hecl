@@ -1,5 +1,7 @@
 2006-09-16  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Added after and bgerror commands.
+
 	* tests/global.hcl: Test for global problems by setting a variable
 	at three different stack levels - 0, and in two procs.
 

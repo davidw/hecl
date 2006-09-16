@@ -482,6 +482,114 @@ puts [/ 100 5]
       </refsect1>
     </refentry>
 
+    <!-- after -->
+    <refentry id="after">
+      <refnamediv>
+	<refname>after</refname>
+	<refpurpose>Sleep / delayed script evaluation</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>after</command>
+
+	  <group choice="req">
+	    <arg choice="plain">
+	      <replaceable>milliseconds</replaceable>
+	      <arg><replaceable>script</replaceable></arg>
+	    </arg>
+
+	    <arg choice="plain">
+	      info
+	      <arg choice="opt"><replaceable>event</replaceable></arg>
+	    </arg>
+
+	    <arg choice="plain">
+	      cancel
+	      <arg choice="req"><replaceable>event</replaceable></arg>
+	      <arg choice="opt" rep="repeat"><replaceable>event</replaceable></arg>
+	    </arg>
+
+	    <arg choice="plain">
+	      idle
+	      <arg><replaceable>script</replaceable></arg>
+	    </arg>
+
+	  </group>
+
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>after</command> command is used, in the simple
+	  case, to simply halt evaluation of the script for
+	  <option><replaceable>milliseconds</replaceable></option>
+	  milliseconds, or execute a script after that number of
+	  milliseconds.
+	</para>
+	<para>
+	  The after command can also be used to manage timer events in
+	  Hecl via the <command>info</command> and
+	  <command>cancel</command> subcommands, which, respectively,
+	  return information about existing events, and allow the
+	  cancellation of events.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<para>Pause for 1 second:</para>
+
+	  <programlisting>after 1000</programlisting>
+
+	<para>
+	  Run <option><replaceable>script</replaceable></option> after
+	  10 seconds, but do not pause execution of the main script:
+	</para>
+
+	<programlisting>after 10000 { puts "hello, later world"	}</programlisting>
+
+	<para>Cancel all timers:</para>
+
+	<programlisting>for {set i 1} {&lt; $i 11} {incr $i} {
+    puts [after [* 10000 [random]] [list puts "Event number $i"]]
+}
+
+after 5000
+
+foreach e [after info] {
+    after cancel $e
+    puts "Event $e cancelled"
+}
+
+twait forever</programlisting>
+	<para>Will produce, on average, something like the
+	following:</para>
+	<screen>timer#1
+timer#2
+timer#3
+timer#4
+timer#5
+timer#6
+timer#7
+timer#8
+timer#9
+timer#10
+Event number 9
+Event number 4
+Event number 10
+Event timer#5 cancelled
+Event timer#1 cancelled
+Event timer#7 cancelled
+Event timer#3 cancelled
+Event timer#2 cancelled
+Event timer#6 cancelled
+Event timer#8 cancelled
+	</screen>
+
+      </refsect1>
+    </refentry>
+
+
     <!-- and -->
     <refentry id="and">
       <refnamediv>
@@ -524,7 +632,6 @@ hecl> and 1 2 4 8
 	</programlisting>
       </refsect1>
     </refentry>
-
 
 
     <!-- append -->
@@ -595,6 +702,38 @@ while { true } {
 	</para>
       </refsect1>
     </refentry>
+
+    <refentry id="bgerror">
+      <refnamediv>
+       <refname>bgerror</refname>
+       <refpurpose>Called for background task errors.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+       <cmdsynopsis>
+         <command>append</command>
+         <arg choice="req"><replaceable>message</replaceable></arg>
+       </cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+       <title>Description</title>
+       <para>
+         Hecl calls <command>bgerror</command> when there is a
+         problem in a background task (created with the
+         <command>after</command> command, for instance).
+       </para>
+      </refsect1>
+      <refsect1>
+       <title>Example</title>
+         <programlisting>
+hecl> proc bgerror {msg} { puts "Houston, we have a problem: $msg" }
+hecl> after 1 { beebop }
+timer#7
+         </programlisting>
+         <para>Produces:</para>
+         <screen>Houston, we have a problem: Command beebop does not exist</screen>
+      </refsect1>
+    </refentry>
+
 
     <!-- catch -->
     <refentry id="catch">

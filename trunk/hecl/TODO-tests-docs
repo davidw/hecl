@@ -1,9 +1,9 @@
 # This commands need to be documented and tested.
 
-after
+after - documented, not tested.
 
 base64::encode / decode
-bgerror
+bgerror - documented, not tested.
 
 exp
 false
