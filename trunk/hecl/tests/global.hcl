@@ -46,3 +46,23 @@ test global-3 {
 	set testres
     }
 } {1 2}
+
+test global-4 {
+    global g4res
+
+    proc global-4-2 {} { global b
+	global g4res
+	set b 5
+	append $g4res "b = $b"
+    }
+    proc global-4-1 {} { global b
+	global g4res
+	global-4-2
+	append $g4res "b = $b"
+    }
+
+    upeval 0 {
+	global-4-1
+	list $b $g4res
+    }
+} {5 {b = 5b = 5}}
