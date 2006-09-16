@@ -1,3 +1,13 @@
+2006-09-17  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Interp.java: Made result a private member. Cosmetics.
+
+	* core/org/hecl/InterpCmds.java: Now correctly uses the proper
+	async indicator prefixes from Interp.
+
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/Stanza.java: Cosmetics.
+
 2006-09-16  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added after and bgerror commands.

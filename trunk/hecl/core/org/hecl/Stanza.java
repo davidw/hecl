@@ -182,7 +182,7 @@ class Stanza {
 	}
 
 	try {
-	    interp.result = new Thing("");
+	    interp.setResult(new Thing(""));
 	    tmpcommand.cmdCode(interp, newargv);
 	} catch (HeclException e) {
 	    /* Uh oh, an "issue"! */

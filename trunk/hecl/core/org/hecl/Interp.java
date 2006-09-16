@@ -60,7 +60,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     protected Hashtable auxdata = new Hashtable();
 
-    public Thing result = null;
+    private Thing result = null;
     protected Stack stack = new Stack();
     protected Stack error = new Stack();
 
@@ -143,7 +143,9 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     public Thing eval(Thing in) throws HeclException {
 	result = null;
+	//System.err.println("-->eval: "+in.toString());
 	CodeThing.get(this, in).run(this);
+	//System.err.println("<--eval");
 	return result;
     }
 
@@ -493,21 +495,17 @@ public class Interp extends Thread/*implements Runnable*/ {
      * @return a <code>Hashtable</code> value
      */
     private Hashtable getVarhash(int level) {
-        if (level < 0) {
-            return (Hashtable) stack.peek();
-        } else {
-            return (Hashtable) stack.elementAt(level);
-        }
+	return level < 0 ? (Hashtable)stack.peek()
+	    : (Hashtable)stack.elementAt(level);
     }
 
     /**
      * <code>getVar</code> returns the value of a variable given its name.
      *
-     * @param varname
-     *            a <code>Thing</code> value
+     * @param varname a <code>Thing</code> value
+     *
      * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public Thing getVar(Thing varname) throws HeclException {
         return getVar(varname.toString(), -1);
@@ -516,11 +514,9 @@ public class Interp extends Thread/*implements Runnable*/ {
     /**
      * <code>getVar</code> returns the value of a variable given its name.
      *
-     * @param varname
-     *            a <code>String</code> value
+     * @param varname a <code>String</code> value
      * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public Thing getVar(String varname) throws HeclException {
         return getVar(varname, -1);
@@ -530,13 +526,10 @@ public class Interp extends Thread/*implements Runnable*/ {
      * <code>getVar</code> returns the value of a variable given its name and
      * level.
      *
-     * @param varname
-     *            a <code>String</code> value
-     * @param level
-     *            an <code>int</code> value
+     * @param varname a <code>String</code> value
+     * @param level an <code>int</code> value
      * @return a <code>Thing</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public synchronized Thing getVar(String varname, int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
@@ -553,10 +546,8 @@ public class Interp extends Thread/*implements Runnable*/ {
      * <code>setVar</code> sets a variable in the innermost variable stack
      * frame to a value.
      *
-     * @param varname
-     *            a <code>Thing</code> value
-     * @param value
-     *            a <code>Thing</code> value
+     * @param varname a <code>Thing</code> value
+     * @param value a <code>Thing</code> value
      */
     public void setVar(Thing varname, Thing value) throws HeclException {
         setVar(varname.toString(), value);
@@ -584,8 +575,8 @@ public class Interp extends Thread/*implements Runnable*/ {
     public synchronized void setVar(String varname, Thing value, int level) {
         Hashtable lookup = getVarhash(level);
 
-	/* Bump the cache number so that SubstThing.get refetches the
-	 * variable. */
+	// Bump the cache number so that SubstThing.get refetches the
+	// variable.
         cacheversion++;
 	if (lookup.containsKey(varname)) {
 	     Thing oldval = (Thing) lookup.get(varname);
@@ -621,8 +612,8 @@ public class Interp extends Thread/*implements Runnable*/ {
     
     public synchronized void unSetVar(String varname,int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
-	/* Bump the cache number so that SubstThing.get refetches the
-	 * variable. */
+	// Bump the cache number so that SubstThing.get refetches the
+	// variable.
 	Thing value = (Thing)lookup.get(varname);
 	if (value != null) {
 	    cacheversion++;
@@ -821,10 +812,10 @@ public class Interp extends Thread/*implements Runnable*/ {
      *
      * @param v A <code>Vector</code> of tasks to add the task to.
      * @param task The <code>HeclTask</code> to add.
-     * @param pos The </code>int</code> position of <code>v</code>
-     * where to add <code>task</code> being in the range from 0 to
-     * <code>v.size()</code>.  -1 indicates to add <code>task</code>
-     * to the end of <code>v</code>.
+     * @param pos The </code>int</code> position of <code>v</code> where to
+     * add <code>task</code> being in the range from 0 to
+     * <code>v.size()</code>.  -1 indicates to add <code>task</code> to the
+     * end of <code>v</code>.
      *
      * @return A <code>String</code> being the name of the inserted task.
      */

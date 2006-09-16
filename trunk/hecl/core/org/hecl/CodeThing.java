@@ -128,15 +128,9 @@ public class CodeThing implements RealThing {
     protected static Thing doCodeSubst(Interp interp, Thing thing)
             throws HeclException {
         RealThing realthing = thing.getVal();
-        Thing newthing = null;
 
-        if (((CodeThing)realthing).marksubst) {
-            interp.eval(thing);
-            newthing = interp.result;
-        } else {
-            newthing = thing;
-        }
-        return newthing;
+        return (((CodeThing)realthing).marksubst) ?
+            interp.eval(thing) : thing;
     }
 
     /**
@@ -208,15 +202,15 @@ public class CodeThing implements RealThing {
      * @exception HeclException if an error occurs
      */
     public synchronized void run(Interp interp) throws HeclException {
-/* 	level ++;
-	System.err.println("starting CodeThing run" + level);  */
+ 	//++level;
+	//System.err.println("starting CodeThing run" + level);
         //System.out.println("RUNNING: " + this.getStringRep() + "</RUNNING>");
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
 	    Stanza s = (Stanza) e.nextElement();
 	    s.run(interp);
 	}
-/* 	System.err.println("ending CodeThing run" + level);
-	level --;  */
+ 	//System.err.println("ending CodeThing run" + level);
+	//--level;
     }
 
     /**

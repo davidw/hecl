@@ -140,8 +140,7 @@ class InterpCmds extends Operator {
 
 	  case CATCH:
 	    try {
-		interp.eval(argv[1]);
-		result = interp.result;
+		result = interp.eval(argv[1]);
 		retval = 0;
 	    } catch (HeclException e) {
 		result = e.getStack();
@@ -190,11 +189,11 @@ class InterpCmds extends Operator {
 	    if(subcmd.equals("cancel")) {
 		for(int i=2; i<argv.length; ++i) {
 		    String s = argv[2].toString();
-		    if(s.startsWith("idle"))
+		    if(s.startsWith(Interp.IDLEPREFIX))
 			interp.cancelIdle(s);
-		    else if(s.startsWith("after"))
+		    else if(s.startsWith(Interp.TIMERPREFIX))
 			interp.cancelTimer(s);
-		    else if(s.startsWith("async"))
+		    else if(s.startsWith(Interp.ASYNCPREFIX))
 			interp.cancelAsync(s);
 		}
 		break;
