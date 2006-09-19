@@ -13,8 +13,10 @@ proc test {name code result} {
 }
 
 proc testfiles {files} {
+    global ok;
     global failed;
-    # clear error list
+    # clear success/error list
+    set ok [list];
     set failed [list];
     foreach f $files {
 	puts "Running $f"

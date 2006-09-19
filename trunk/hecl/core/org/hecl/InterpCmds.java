@@ -95,6 +95,7 @@ class InterpCmds extends Operator {
 	    break;
 
 	  case GLOBAL:
+//#ifdef notdef
 	  {
 	      String varname = null;
 	      Thing newThing = null;
@@ -116,6 +117,11 @@ class InterpCmds extends Operator {
 	      }
 	      break;
 	  }
+//#else
+	  for (int i = 1; i < argv.length; i ++) {
+	      interp.setVar(argv[i].toString(),Interp.GLOBALREFTHING,-1);
+	  }
+//#endif
 	  case INTROSPECT:
 	    subcmd = argv[1].toString();
 	    Vector results = new Vector();

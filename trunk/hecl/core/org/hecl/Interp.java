@@ -40,6 +40,8 @@ public class Interp extends Thread/*implements Runnable*/ {
     public static final String IDLEPREFIX = "idle";
     public static final String TIMERPREFIX = "timer";
 
+    static final Thing GLOBALREFTHING = new Thing("");
+
     public long cacheversion = 0;
 
     /**
@@ -534,12 +536,39 @@ public class Interp extends Thread/*implements Runnable*/ {
     public synchronized Thing getVar(String varname, int level) throws HeclException {
         Hashtable lookup = getVarhash(level);
 	//System.out.println("getvar: " + varname + " " + level + " " + lookup);
-
         Thing res = (Thing) lookup.get(varname);
+//#ifdef old
         if (res == null) {
             throw new HeclException("Variable " + varname + " does not exist");
         }
         return res;
+//#else
+	if(res == GLOBALREFTHING) {
+	    // ref to a global var
+	    Hashtable globalhash = getVarhash(0);
+	    res = (Thing)globalhash.get(varname);
+	    if(res == GLOBALREFTHING) {
+		// should not happen, but just in case...
+		System.err.println("Unexpected GLOBALREFTHING in globalhash");
+		res = null;
+	    }
+//#ifdef emptyglobals
+	    else if (res == null) {
+		// Return a fake empty value for a non-set global variable for
+		// the sake of modifying commands.
+		// !!!! THIS IS STRANGE !!!
+		System.err.println("FAKE EMPTY VALUE for global var");
+		res = new Thing("");
+		globalhash.put(varname,res);
+	    }
+//#endif
+	}
+        if (res == null) {
+            throw new HeclException("Variable " + varname + " does not exist");
+        }
+	//System.err.println("<<getvar, res="+res);
+        return res;
+//#endif
     }
 
     /**
@@ -578,6 +607,10 @@ public class Interp extends Thread/*implements Runnable*/ {
 	// Bump the cache number so that SubstThing.get refetches the
 	// variable.
         cacheversion++;
+	//if(value == GLOBALREFTHING) System.err.println("flag '"+varname+"' as global on level="+level);
+	//System.err.println("set local("+level+") var="+varname + ", val="+value.toString());
+
+//#ifdef old
 	if (lookup.containsKey(varname)) {
 	     Thing oldval = (Thing) lookup.get(varname);
 
@@ -593,6 +626,38 @@ public class Interp extends Thread/*implements Runnable*/ {
 	     }
 	}
 	lookup.put(varname, value);
+//#else
+	// first take care of GLOBALREFTHING used to flag ref to global var
+	if(value == GLOBALREFTHING) {
+	    // do not clutter global table with GLOBALREFTHING
+	    Hashtable globalhash = getVarhash(0);
+	    if(lookup != globalhash) {
+		//System.err.println(" not on global level");
+		lookup.put(varname,value);
+//#ifdef emptyglobals
+		if(null == globalhash.get(varname)) {
+		    // Insert a new empty thing at top level for the sake of
+		    // modifying commands.
+		    //System.err.println(" inserting empty global value");
+		    globalhash.put(varname,new Thing(""));
+		}
+//#endif
+	    } else {
+		//System.err.println(" ignored, already in global scope");
+	    }
+	    return;
+	}
+	
+	if(lookup.containsKey(varname)) {
+	    Thing oldval = (Thing)lookup.get(varname);
+	    if(oldval == GLOBALREFTHING) {
+		// level must be at != 0
+		//System.err.println(" forwarded to global value");
+		lookup = getVarhash(0);
+	    }
+	}
+	lookup.put(varname,value);
+//#endif
     }
 
 
