@@ -1,3 +1,16 @@
+2006-09-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/InterpCmds.java: Uses new implementation for
+	global command.
+
+	* core/org/hecl/Interp.java: Changed treatment of global variables
+	during variable lookup for set/unset/get of variable value.
+	USER VISIBLE CHANGE: this might affect script code that uses not
+	properly initialized global variables!
+
+	* tests/harness.hcl: Properly initialize global vars before
+	starting a test run.
+
 2006-09-17  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* tests/global.hcl (global-6-1): Added test.
