@@ -30,8 +30,7 @@ public class HeclTask {
     public void execute(Interp ip) {
 	try {
 	    //System.err.println("exec="+tscript.toString());
-	    ip.eval(tscript);
-	    result = ip.getResult();
+	    result = ip.eval(tscript,0);
 	}
 	catch(Exception e) {
 	    error = e;
@@ -40,7 +39,7 @@ public class HeclTask {
 		    Vector v = new Vector();
 		    v.addElement(new Thing("bgerror"));
 		    v.addElement(new Thing(e.getMessage()));
-		    ip.eval(ListThing.create(v));
+		    ip.eval(ListThing.create(v),0);
 		}
 		catch(Exception e2) {
 		    System.err.println("Hecl severe bg error: "+e.getMessage());

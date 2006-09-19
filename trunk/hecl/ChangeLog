@@ -1,5 +1,8 @@
 2006-09-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
+	* core/org/hecl/HeclTask.java: Evaluation of all HeclTasks now
+	starts at level 0 (global).
+
 	* core/org/hecl/InterpCmds.java: Uses new implementation for
 	global command.
 
