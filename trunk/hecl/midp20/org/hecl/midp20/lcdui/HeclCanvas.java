@@ -90,7 +90,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     public void commandAction(Command c,Displayable d) {
 	// command handler for the menu
 	if(c == CMD_BACK) {
-	    MidletCmd.display().setCurrent(this);
+	    MidletCmd.getDisplay().setCurrent(this);
 	    return;
 	}
 	if(c == List.SELECT_COMMAND) {
@@ -100,7 +100,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    ++n;
 	    if(n >= 1 && n < cmds.size()) {
 		Command mycmd = (Command)cmds.elementAt(n);
-		MidletCmd.display().setCurrent(this);
+		MidletCmd.getDisplay().setCurrent(this);
 		handleCommand(mycmd);
 	    }
 	}
@@ -362,7 +362,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 		if(c == CMD_MENU) {
 		    menulist.setCommandListener(this);
 		    menulist.addCommand(CMD_BACK);
-		    MidletCmd.display().setCurrent(menulist);
+		    MidletCmd.getDisplay().setCurrent(menulist);
 		    return;
 		}
 		handleCommand(c);

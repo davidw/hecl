@@ -19,18 +19,87 @@
 
 package org.hecl.midp20.lcdui;
 
+import javax.microedition.lcdui.Display;
+
 import org.awt.Color;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.Thing;
 import org.hecl.misc.HeclUtils;
 
 public class SettingsCmd extends OptionCmd {
-    public SettingsCmd() {
+    public SettingsCmd(Display d) {
+	super();
+	display = d;
     }
     
     public void cget(Interp ip,String optname) throws HeclException {
+	if(optname.equals("-color")) {
+	    ip.setResult(display.isColor());
+	    return;
+	}
+	if(optname.equals("-alphalevels")) {
+	    ip.setResult(display.numAlphaLevels());
+	    return;
+	}
+	if(optname.equals("-alertimagewidth")) {
+	    ip.setResult(display.getBestImageWidth(Display.ALERT));
+	    return;
+	}
+	if(optname.equals("-alertimageheight")) {
+	    ip.setResult(display.getBestImageHeight(Display.ALERT));
+	    return;
+	}
+	if(optname.equals("-listimagewidth")) {
+	    ip.setResult(display.getBestImageWidth(Display.LIST_ELEMENT));
+	    return;
+	}
+	if(optname.equals("-listimageheight")) {
+	    ip.setResult(display.getBestImageHeight(Display.LIST_ELEMENT));
+	    return;
+	}
+	if(optname.equals("-choiceimagewidth")) {
+	    ip.setResult(display.getBestImageWidth(Display.CHOICE_GROUP_ELEMENT));
+	    return;
+	}
+	if(optname.equals("-choiceimageheight")) {
+	    ip.setResult(display.getBestImageHeight(Display.CHOICE_GROUP_ELEMENT));
+	    return;
+	}
+	if(optname.equals("-bg")) {
+	    setResult(ip,display.getColor(Display.COLOR_BACKGROUND));
+	    return;
+	}
+	if(optname.equals("-fg")) {
+	    setResult(ip,display.getColor(Display.COLOR_FOREGROUND));
+	    return;
+	}
+	if(optname.equals("-hilightbg")) {
+	    setResult(ip,display.getColor(Display.COLOR_HIGHLIGHTED_BACKGROUND));
+	    return;
+	}
+	if(optname.equals("-hilightfg")) {
+	    setResult(ip,display.getColor(Display.COLOR_HIGHLIGHTED_FOREGROUND));
+	    return;
+	}
+	if(optname.equals("-border")) {
+	    setResult(ip,display.getColor(Display.COLOR_BORDER));
+	    return;
+	}
+	if(optname.equals("-hilightborder")) {
+	    setResult(ip,display.getColor(Display.COLOR_HIGHLIGHTED_BORDER));
+	    return;
+	}
+	if(optname.equals("-borderstyle")) {
+	    ip.setResult(display.getBorderStyle(false));
+	    return;
+	}
+	if(optname.equals("-hilightborderstyle")) {
+	    ip.setResult(display.getBorderStyle(true));
+	    return;
+	}
 	if(optname.equals(NCVFULLSCREEN)) {
 	    ip.setResult(cvallowfullscreen);
 	    return;
@@ -79,6 +148,33 @@ public class SettingsCmd extends OptionCmd {
 	super.cset(ip,optname,optval);
     }
 
+
+    protected void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+	throws HeclException {
+
+	if(subcmd.equals("flash")) {
+	    if(argv.length == startat+1) {
+		display.flashBacklight(IntThing.get(argv[startat]));
+		return;
+	    }
+	    throw HeclException.createWrongNumArgsException(argv, startat, "duration");
+	}
+	if(subcmd.equals("vibrate")) {
+	    if(argv.length == startat+1) {
+		display.vibrate(IntThing.get(argv[startat]));
+		return;
+	    }
+	    throw HeclException.createWrongNumArgsException(argv, startat, "duration");
+	}
+	super.handlecmd(ip,subcmd,argv,startat);
+    }
+
+
+    private static void setResult(Interp ip,int c) throws HeclException {
+	ip.setResult(WidgetInfo.fromColor(c));
+    }
+    
+
     public static boolean cvallowfullscreen = true;
     public static boolean cvdocmds = true;
     public static boolean cvkeepcmdsinfullscreen = false;
@@ -91,6 +187,7 @@ public class SettingsCmd extends OptionCmd {
     private static final String NCVKEEPCMDSINFULLSCREEN = "-cvkeepcmdsinfullscreen";
     private static final String NCVCMDBGCOLOR = "-cvcmdbg";
     private static final String NCVCMDFGCOLOR = "-cvcmdfg";
-    
+
+    private Display display;
 }
 

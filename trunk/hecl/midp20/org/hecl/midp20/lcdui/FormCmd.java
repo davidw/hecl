@@ -387,7 +387,7 @@ public class FormCmd extends DisplayableCmd {
 		    int itempos = IntThing.get(argv[n]);
 		    checkItemPosition(itempos);
 		    
-		    Display.getDisplay(MidletCmd.midlet()).setCurrentItem(
+		    MidletCmd.getDisplay().setCurrentItem(
 			((FormGadget)gadgets.elementAt(itempos)).getItem());
 		    return;
 		}

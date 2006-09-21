@@ -31,13 +31,12 @@ import javax.microedition.lcdui.List;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.Operator;
+import org.hecl.RealThing;
 import org.hecl.Thing;
-import org.hecl.HeclModule;
 
-public class GUICmds implements HeclModule {
-    public void loadModule(Interp ip) throws HeclException {
-	System.err.println("Loading new phone");
-
+public class GUICmds extends Operator {
+    public static void load(Interp ip,Display display) throws HeclException {
 	// Add some default widgets
 	ip.setVar(SELVARNAME,
 		  new Thing(
@@ -52,12 +51,12 @@ public class GUICmds implements HeclModule {
 	
 	// Add font commands...
 	ip.addCommand("lcdui.font",FontMap.FONTCMD);
-
+	
 	// Image map and command
 	ip.addCommand("lcdui.image",ImageCmd.CREATE);
 
 	// configuration commands
-	ip.addCommand("lcdui.settings",new SettingsCmd());
+	ip.addCommand("lcdui.settings",new SettingsCmd(display));
 	
 	// Add widget commands...
 	ip.addCommand("lcdui.alert",AlertCmd.CREATE);
@@ -71,7 +70,7 @@ public class GUICmds implements HeclModule {
     }
     
 
-    public void unloadModule(Interp ip) throws HeclException {
+    public static void unload(Interp ip) throws HeclException {
 	for(int i=0; i<varnames.length; ++i) {
 	    try {
 		ip.unSetVar(varnames[i],0);
@@ -94,6 +93,17 @@ public class GUICmds implements HeclModule {
 	ip.removeCommand("lcdui.widgetmap");
 
     }
+
+    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+	throw new HeclException("Unknown GUI command '"
+				+ argv[0].toString() + "' with code '"
+				+ cmd + "'.");
+    }
+	
+    protected GUICmds(int cmdcode,int minargs,int maxargs) {
+	super(cmdcode,minargs,maxargs);
+    }
+    
     public static final String SELVARNAME = "lcdui.select_command";
     public static final String DISMISSVARNAME = "lcdui.dismiss_command";
     private static final String varnames[] = new String[]{SELVARNAME,DISMISSVARNAME};

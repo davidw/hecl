@@ -20,6 +20,7 @@
 package org.hecl.midp20.lcdui;
 
 import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Gauge;
 
 import org.hecl.HeclException;
@@ -27,7 +28,10 @@ import org.hecl.Interp;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
+import org.hecl.midp20.MidletCmd;
+
 import org.hecl.misc.HeclUtils;
+
 
 public class AlertCmd extends ScreenCmd {
     public static final org.hecl.Command CREATE = new org.hecl.Command() {
@@ -106,5 +110,23 @@ public class AlertCmd extends ScreenCmd {
 	super.cset(ip,optname,optval);
     }
 
+    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+	throws HeclException {
+	if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
+	    // extension: setcurrent alert ?nextdisplayable?
+	    if(argv.length == startat+1) {
+		WidgetMap wm = WidgetMap.mapOf(ip);
+		Displayable d = (Displayable)wm.asWidget(argv[startat],Displayable.class,
+							 "Displayable",false);
+		if(d != null) {
+		    MidletCmd.getDisplay().setCurrent((Alert)getData(),d);
+		    return;
+		}
+		throw new HeclException("Invalid displayable.");
+	    }
+	    // fall thru, baseclass 
+	}
+	super.handlecmd(ip,subcmd,argv,startat);
+    }
     Gauge indicator = null;
 }
