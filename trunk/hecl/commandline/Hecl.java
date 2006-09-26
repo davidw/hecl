@@ -39,7 +39,7 @@ import org.hecl.net.HttpCmd;
  */
 public class Hecl {
     public static boolean VERBOSE = false;
-    
+
     /**
      * <code>main</code> is what actually runs things.
      *
@@ -50,7 +50,7 @@ public class Hecl {
 	try {
 	    interp = new Interp();
 	} catch (HeclException he) {
-	    System.err.println("Error initializing the Hecl interpreter!");
+	    System.err.println("Error initializing the Hecl interpreter: " + he);
 	    System.exit(1);
 	}
 
@@ -76,8 +76,12 @@ public class Hecl {
 	    }
 
         } catch (Exception e) {
+	    System.err.println("Java exception :" + e);
             e.printStackTrace();
-        }
+        } catch (Throwable t) {
+	    System.err.println("Java error :" + t);
+	    t.printStackTrace();
+	}
 	interp.terminate();
 	System.exit(0);
     }
