@@ -30,9 +30,9 @@ import java.io.PrintStream;
  */
 public class QParam {
     public QParam(String paramName,byte[] data) {
-	namebytes = paramName != null ? HttpRequest.urlencode(
-	    HttpRequest.IRIencode(paramName)).getBytes():
-	    null;
+	if(paramName != null)
+	    namebytes = HttpRequest.urlencode(
+		HttpRequest.IRIencode(paramName)).getBytes();
 	databytes = data;
     }
     
@@ -73,7 +73,8 @@ public class QParam {
 
     public PrintStream printon(PrintStream s) {
 	s.print("namebytes=>");
-	s.write(namebytes,0,namebytes.length);
+	if(namebytes != null)
+	    s.write(namebytes,0,namebytes.length);
 	s.print("< - data=>");
 	if(databytes != null)
 	    s.write(databytes,0,databytes.length);
@@ -81,7 +82,7 @@ public class QParam {
 	return s;
     }
     
-    protected byte[] namebytes;
+    protected byte[] namebytes = null;
     protected byte[] databytes = null;
 
 }

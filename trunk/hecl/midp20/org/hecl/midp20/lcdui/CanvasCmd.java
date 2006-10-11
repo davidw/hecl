@@ -61,6 +61,7 @@ public class CanvasCmd extends DisplayableCmd {
 		public void handleEvent(CanvasEvent e) {
 		    String cb = (String)callbacks.get(new Integer(e.reason));
 		    if(cb != null) {
+			//System.err.println("cb="+cb);
 			HeclCanvas c = (HeclCanvas)e.canvas;
 			WidgetMap wm = WidgetMap.mapOf(ip);
 			String canvasname = wm.nameOf(c);

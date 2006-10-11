@@ -1,3 +1,18 @@
+2006-10-11  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* midp20/org/hecl/midp20/lcdui/CanvasEvent.java: Minor
+	beautification, changed asString to StringBuffer directly.
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Now add GUI commands directly.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: CanvasEvent only
+	created when eventhandler installed.
+
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java:
+	* net/org/hecl/HttpCmd.java (http): Disabled debug printout.
+
+	* net/org/hecl/QParam.java: printon now works with empty name and data.
+
 2006-09-26  David N. Welton  <davidw@dedasys.com>
 
 	* commandline/Hecl.java: Show more in the way of errors when there

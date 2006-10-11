@@ -90,7 +90,7 @@ public class HttpCmd extends org.hecl.Operator {
 		Thread.currentThread().yield();
 	    }
 	    int status = r.getStatus();
-	    System.err.println("status="+status);
+	    //System.err.println("status="+status);
 	    if(status != HttpRequest.OK) {
 		Exception e = r.getException();
 		// wke 31.08.2006

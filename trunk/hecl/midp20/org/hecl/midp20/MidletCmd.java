@@ -36,6 +36,7 @@ import org.hecl.misc.HeclUtils;
 
 import org.awt.Point;
 
+import org.hecl.midp20.lcdui.GUICmds;
 
 public class MidletCmd extends Operator {
     public static final int EXIT = 1;
@@ -53,7 +54,7 @@ public class MidletCmd extends Operator {
     }
 
 
-    public static Display display() {
+    public static Display getDisplay() {
 	return Display.getDisplay(themidlet);
     }
     
@@ -184,11 +185,13 @@ public class MidletCmd extends Operator {
     public static void load(Interp ip,MIDlet m) throws HeclException {
 	themidlet = m;
 	Operator.load(ip);
+	GUICmds.load(ip,getDisplay());
     }
 
 
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip);
+	GUICmds.unload(ip);
     }
 
 
@@ -196,8 +199,6 @@ public class MidletCmd extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
     
-
-
     static protected MIDlet themidlet = null;
     
     static {

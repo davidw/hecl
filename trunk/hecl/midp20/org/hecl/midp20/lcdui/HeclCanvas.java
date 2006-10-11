@@ -197,8 +197,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     
     
     public void hideNotify() {
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_HIDE,
-					 0,0,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_HIDE,0,0,drawwidth,drawheight,0);
     }
     
 
@@ -327,8 +326,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
     public void paint(Graphics g) {
 	//System.err.println("PAINT called");
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_PAINT,
-					 0,0,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_PAINT,0,0,drawwidth,drawheight,0);
 	if(graphicscmd != null && graphicscmd.needsFlush()) {
 	    flushGraphics();
 	}
@@ -338,20 +336,17 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
 
     public void pointerPressed(int x,int y) {
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_PPRESS,
-					 x,y,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_PPRESS,x,y,drawwidth,drawheight,0);
     }
 
 
     public void pointerReleased(int x,int y) {
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_PRELEASE,
-					 x,y,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_PRELEASE,x,y,drawwidth,drawheight,0);
     }
     
 
     public void pointerDragged(int x,int y) {
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_PDRAG,
-					 x,y,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_PDRAG,x,y,drawwidth,drawheight,0);
     }
     
 
@@ -366,10 +361,10 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 		    return;
 		}
 		handleCommand(c);
+		return;
 	    }
 	}
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_KPRESS,
-					 0,0,drawwidth,drawheight,keycode));
+	callEventHandler(CanvasEvent.E_KPRESS,0,0,drawwidth,drawheight,keycode);
     }
     
 
@@ -379,8 +374,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    if(findCommand(keycode) != null)
 		return;
 	}
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_KRELEASE,
-					 0,0,drawwidth,drawheight,keycode));
+	callEventHandler(CanvasEvent.E_KRELEASE,0,0,drawwidth,drawheight,keycode);
     }
     
 
@@ -390,8 +384,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    if(findCommand(keycode) != null)
 		return;
 	}
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_KREPEAT,
-					 0,0,drawwidth,drawheight,keycode));
+	callEventHandler(CanvasEvent.E_KREPEAT,0,0,drawwidth,drawheight,keycode);
     }
     
 
@@ -405,8 +398,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
 
     public void showNotify() {
-	callEventHandler(
-	    new CanvasEvent(this,CanvasEvent.E_SHOW,0,0,drawwidth,drawheight,0));
+	callEventHandler(CanvasEvent.E_SHOW,0,0,drawwidth,drawheight,0);
     }
     
 
@@ -423,15 +415,31 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	if(d != null) {
 	    d.resize(drawwidth,drawheight);
 	}
-	callEventHandler(new CanvasEvent(this,CanvasEvent.E_RESIZE,0,0,drawwidth,drawheight,0));
+	try {
+	    callEventHandler(CanvasEvent.E_RESIZE,0,0,drawwidth,drawheight,0);
+	}
+	catch(Exception e) {
+	    e.printStackTrace();
+	}
 	showCommands(mygraphics);
     }
 
 
-    protected void callEventHandler(CanvasEvent e) {
-	//System.out.println(e.asString());
-	if(evh != null)
-	    evh.handleEvent(e);
+    protected void callEventHandler(int reason,int x,int y,
+				    int width,int height,int keycode) {
+	if(evh != null) {
+	    try {
+		//System.err.println("*** calling evh, reason="+reason);
+		CanvasEvent ce = new CanvasEvent(this,reason,x,y,width,height,keycode);
+		//System.err.println(ce.toString());
+		evh.handleEvent(ce);
+		//System.err.println("*** evh done");
+	    }
+	    catch(Exception e) {
+		//System.err.println("**** CANVASEVENT PROBLEM");
+		e.printStackTrace();
+	    }
+	}
     }
 
     public GraphicsCmd getGraphicsCmd() {

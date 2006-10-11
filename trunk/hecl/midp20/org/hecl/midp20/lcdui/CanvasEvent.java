@@ -19,8 +19,6 @@
 
 package org.hecl.midp20.lcdui;
 
-import java.util.Hashtable;
-
 import javax.microedition.lcdui.Canvas;
 
 public class CanvasEvent {
@@ -61,6 +59,7 @@ public class CanvasEvent {
     
     public CanvasEvent(Canvas acanvas,int reason,int x,int y,
 		       int width,int height,int keycode) {
+	//System.err.println("creating event");
 	this.canvas = acanvas;
 	this.reason = reason;
 	this.x = x;
@@ -68,11 +67,15 @@ public class CanvasEvent {
 	this.width = width;
 	this.height = height;
 	this.keycode = keycode;
+	//System.err.println("event created");
     }
     
 
     public String asString() {
-	return "CanvasEvent-"+toString()+" - " + reason+" - "+eventName(reason);
+	StringBuffer sb = new StringBuffer();
+	sb.append("CanvasEvent-").append(toString()).append(" - ")
+	    .append(reason).append(" - ").append(eventName(reason));
+	return sb.toString();
     }
     
 
