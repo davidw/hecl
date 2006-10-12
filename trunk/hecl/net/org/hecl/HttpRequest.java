@@ -79,21 +79,19 @@ public class HttpRequest extends Thread {
 	    secure = url.toLowerCase().startsWith("https");
 //#endif
 
+	    if(DEBUGURL)
+		System.err.println("url="+url);
 //#ifdef ant:j2me 
-	    if(false) {
-		conn = (HttpConnection)Connector.open(url,Connector.READ_WRITE,true);
-	    } else {
 //#ifndef ant:cldc1.0
-		conn = secure ?
-		    (HttpsConnection)
-		    Connector.open(url,Connector.READ_WRITE, true) :
-		    (HttpConnection)
-		    Connector.open(url,Connector.READ_WRITE, true);
+	    conn = secure ?
+		(HttpsConnection)
+		Connector.open(url,Connector.READ_WRITE, true) :
+		(HttpConnection)
+		Connector.open(url,Connector.READ_WRITE, true);
 //#else
-		conn = (HttpConnection)
-		    Connector.open(url,Connector.READ_WRITE, true);
+	    conn = (HttpConnection)
+		Connector.open(url,Connector.READ_WRITE, true);
 //#endif
-	    }
 //#else
 	    URL myurl = new URL(url);
 	    conn = secure ? (HttpsURLConnection) myurl.openConnection() :
@@ -103,7 +101,7 @@ public class HttpRequest extends Thread {
 
 
 	public void connect(String rm, Hashtable rfields,
-			    String qdata,QParam[] qparams)
+			    String qdata,QueryParam[] qparams)
 	    throws IOException {
 	    conn.setRequestMethod(rm);
 	    //System.err.println("requestMethod="+rm);
@@ -131,8 +129,8 @@ public class HttpRequest extends Thread {
 		os = conn.getOutputStream();
 //#endif
 		if(qdata != null) {
-		    //System.err.println("writing " + qdata.getBytes(defcharset).length + " bytes");
-		    os.write(qdata.getBytes(/*defcharset*/));
+		    //System.err.println("writing " + qdata.getBytes(DEFCHARSET).length + " bytes");
+		    os.write(qdata.getBytes(/*DEFCHARSET*/));
 		} else if (qparams != null) {
 		    for(int i=0; i<qparams.length; ++i) {
 			//System.err.print("qparams["+i+"]: ");
@@ -281,7 +279,7 @@ public class HttpRequest extends Thread {
     }
 
 
-    public HttpRequest(String url, QParam[] params,
+    public HttpRequest(String url, QueryParam[] params,
 		       boolean validate, Hashtable headerfields,
 		       Object requestnotify) {
 	qparams = params;
@@ -377,9 +375,11 @@ public class HttpRequest extends Thread {
 	try {
 	    co.connect(requestMethod,requestFields,qdata,qparams);
 	    status = CONNECTED;
-	    //System.err.println("Connected");
+	    if(DEBUGRC)
+		System.err.println("Connected");
 	    rc = co.getResponseCode();
-	    //System.err.println("rc="+rc);
+	    if(DEBUGRC)
+		System.err.println("rc="+rc);
 	    if(rc == -1) {
 		status = ERROR;
 		return;
@@ -390,7 +390,7 @@ public class HttpRequest extends Thread {
 	    status = OK;
 	    
 	    // If no charset is given, use the default (see below).
-	    String charset = defcharset;
+	    String charset = DEFCHARSET;
 	    String ct = (String)responseFields.get(CONTENTTYPE);
 	    String coding = (String)responseFields.get(CONTENTENCODING);
 	    
@@ -428,11 +428,11 @@ public class HttpRequest extends Thread {
 	    //System.err.println("charset now="+charset +", isocharset="+isISOCharset(charset));
 	    
 	    // charset is now detected, create a string holding the result.
-	    if(charset == defcharset || isISOCharset(charset)) {
+	    if(charset == DEFCHARSET || isISOCharset(charset)) {
 		//System.err.println("internal ISO 8859 decode");
 		body = bytesToString(inData,0,inData.length);
 		//System.err.println("ISO 8859 decode done");
-		charset = defcharset;
+		charset = DEFCHARSET;
 		responseFields.put("charset",charset);
 	    } else {
 		for(int i=0; i<3; ++i) {
@@ -466,6 +466,8 @@ public class HttpRequest extends Thread {
 	    error = e;
 	    e.printStackTrace();
 	}
+	if(DEBUGBODY)
+	    System.err.println(getBody());
 	if(co != null) {
 	    co.close();
 	}
@@ -652,7 +654,7 @@ public class HttpRequest extends Thread {
     private byte[] inData = null;
     private String body = "";
     private String qdata = null;
-    private QParam[] qparams = null;
+    private QueryParam[] qparams = null;
     private String requestMethod = HttpConstants.GET;
     private int rc = -1;
     private int status = SETUP;
@@ -665,7 +667,10 @@ public class HttpRequest extends Thread {
     private static String validUrlChars =
     "-_.!~*'()\"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final char[] hexchars = (new String("0123456789ABCDEF")).toCharArray();
-    public static String defcharset = "ISO8859-1";
+    public static boolean DEBUGURL = false;
+    public static boolean DEBUGRC = false;
+    public static boolean DEBUGBODY = false;
+    public static String DEFCHARSET = "ISO8859-1";
     public static final String CONTENTTYPE = "content-type";
     public static final String CONTENTENCODING = "content-encoding";
     static private final String ISOALIASES[]= {

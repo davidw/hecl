@@ -1,4 +1,4 @@
-/* Copyright 2005-2006 by data2c.com
+/* Copyright 2005-2006 by daa2c.com
 
 Authors:
 Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -15,11 +15,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 package org.hecl.net;
 
-public class StringQParam extends QParam {
-    public StringQParam(String paramName,String data) {
-	super(paramName,
-	      HttpRequest.urlencode(HttpRequest.IRIencode(data)).getBytes());
-    }
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+public interface QueryParam {
+    public void send(OutputStream os) throws IOException;
+    public PrintStream printon(PrintStream s);
 }

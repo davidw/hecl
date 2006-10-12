@@ -31,6 +31,7 @@ public class RMSInputStream extends InputStream {
 	throws IOException {
 	super();
 	rsname = storename;
+	numbytes = 0;
 	try {
 	    rs = RecordStore.openRecordStore(rsname, false);
 	    RecordEnumeration records = rs.enumerateRecords(null,null,false);
@@ -53,11 +54,14 @@ public class RMSInputStream extends InputStream {
 		if(!done)
 		    ids[nfilled++] = tosort;
 	    }
-//#ifdef notdef
 	    for(int i=0; i<ids.length; ++i) {
+//#ifdef notdef
 		System.err.println("r["+i+"]="+ids[i]);
-	    }
 //#endif
+		byte[] buf = rs.getRecord(ids[i]);
+		numbytes += buf.length;
+		buf = null;
+	    }
 	    records.destroy();
 	}
 	catch(Exception e) {
@@ -72,7 +76,7 @@ public class RMSInputStream extends InputStream {
 	    throw new IOException(e.toString());
 	}
     }
-	
+
     public int available() throws IOException {
 	//System.err.println("RMSInputStream.available() --> "+nremaining);
 	return nremaining;
@@ -98,6 +102,12 @@ public class RMSInputStream extends InputStream {
 	}
     }
 
+
+    public int getSize() {
+	return numbytes;
+    }
+
+    
     public void mark(int readLimit) {
 	if(rs != null)
 	    markposition = readLimit;
@@ -107,6 +117,7 @@ public class RMSInputStream extends InputStream {
 	return true;
     }
 	
+
     public int read() throws IOException {
 	if(rs == null)
 	    throw new IOException("record store closed.");
@@ -184,6 +195,7 @@ public class RMSInputStream extends InputStream {
     private int ididx = -1;
     private int nremaining = 0;
     private int markposition = 0;
+    private int numbytes = 0;
     private byte[] buf = null;
 }
     

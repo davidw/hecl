@@ -285,7 +285,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 //#ifdef debug
 	    System.err.println("drawing rect: y="+drawheight+", h="+CMDBARHEIGHT);
 //#endif
-	    g.setClip(0,drawheight,drawheight,CMDBARHEIGHT);
+	    g.setClip(0,drawheight,drawwidth,CMDBARHEIGHT);
 	    g.fillRect(0,drawheight,drawwidth,CMDBARHEIGHT);
 	    //g.drawLine(0,drawheight,drawwidth-1,drawheight+3);
 	    
