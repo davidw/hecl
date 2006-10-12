@@ -506,7 +506,7 @@ public class HttpRequest extends Thread {
 	//System.err.println("old data:");
 	//System.err.println(hexdump(buf));
 	for(int i=start; n>0; ++i, --n) {
-	    sb.append((char)buf[i]);
+	    sb.append((char)(buf[i]&0xff));
 	}
 	//System.err.println("new data:");
 	//System.err.println(hexdump(asISOBytes(sb.toString())));
