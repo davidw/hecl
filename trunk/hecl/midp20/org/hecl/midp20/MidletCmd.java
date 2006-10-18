@@ -21,12 +21,18 @@ package org.hecl.midp20;
 
 import java.io.IOException;
 
+import java.util.Vector;
+
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
+
+import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ListThing;
 import org.hecl.Operator;
 import org.hecl.RealThing;
 import org.hecl.StringThing;
@@ -48,6 +54,9 @@ public class MidletCmd extends Operator {
     public static final int HASPROP = 7;
     public static final int RESASSTRING = 8;
 
+    protected static final int PLAYTONE = 20;
+    protected static final int CONTENTTYPES = 21;
+    protected static final int PROTOCOLS = 22;
 
     public static MIDlet midlet() {
 	return themidlet;
@@ -172,16 +181,49 @@ public class MidletCmd extends Operator {
 					+ str + "' - " + e.getMessage());
 	    }
 
+	  case PLAYTONE:
+	    try {
+		// sorry, no math.ln in j2me
+		//int note = Math.ln(DoubleThing.get(argv[1])/8.176*SEMITONE_CONST);
+		Manager.playTone(
+		    IntThing.get(argv[1]),  // note
+		    IntThing.get(argv[1]),  // duration
+		    IntThing.get(argv[1])  // volume
+		    );
+	    }
+	    catch(MediaException mex) {
+		throw new HeclException(mex.getMessage());
+	    }
+	    catch(IllegalArgumentException illgl) {
+		throw new HeclException("Invalid argumument for playtone - "
+					+illgl.getMessage());
+	    }
+	    break;
+
+	  case CONTENTTYPES:
+	    return new ListThing(tov(Manager.getSupportedContentTypes(
+					 argv[1].toString())));
+	    
+	  case PROTOCOLS:
+	    return new ListThing(tov(Manager.getSupportedContentTypes(
+					 argv[1].toString())));
 	  default:
 	    throw new HeclException("Unknown midlet command '"
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 	}
 	// notreached
-	//return null;
+	return null;
     }
 
 
+    public static Vector tov(String[] s) {
+	Vector v = new Vector();
+	for(int i = 0; i<s.length; ++i)
+	    v.addElement(new Thing(s[i]));
+	return v;
+    }
+    
     public static void load(Interp ip,MIDlet m) throws HeclException {
 	themidlet = m;
 	Operator.load(ip);
@@ -202,13 +244,23 @@ public class MidletCmd extends Operator {
     static protected MIDlet themidlet = null;
     
     static {
-        cmdtable.put("midlet.exit", new MidletCmd(EXIT,0,0));
-        cmdtable.put("midlet.pause", new MidletCmd(PAUSE,0,0));
-        cmdtable.put("midlet.resume", new MidletCmd(RESUME,0,0));
-        cmdtable.put("midlet.platformrequest", new MidletCmd(PLATFORMREQUEST,1,1));
-	cmdtable.put("midlet.checkpermissions", new MidletCmd(CHECKPERMISSIONS,1,1));
-	cmdtable.put("midlet.getappproperty", new MidletCmd(GETPROP,1,1));
-	cmdtable.put("midlet.hasappproperty", new MidletCmd(HASPROP,1,1));
-	cmdtable.put("midlet.resourceasstring", new MidletCmd(RESASSTRING,1,2));
+	try {
+	    cmdtable.put("midlet.exit", new MidletCmd(EXIT,0,0));
+	    cmdtable.put("midlet.pause", new MidletCmd(PAUSE,0,0));
+	    cmdtable.put("midlet.resume", new MidletCmd(RESUME,0,0));
+	    cmdtable.put("midlet.platformrequest", new MidletCmd(PLATFORMREQUEST,1,1));
+	    cmdtable.put("midlet.checkpermissions", new MidletCmd(CHECKPERMISSIONS,1,1));
+	    cmdtable.put("midlet.getappproperty", new MidletCmd(GETPROP,1,1));
+	    cmdtable.put("midlet.hasappproperty", new MidletCmd(HASPROP,1,1));
+	    cmdtable.put("midlet.resourceasstring", new MidletCmd(RESASSTRING,1,2));
+	    cmdtable.put("manager.playtone", new MidletCmd(PLAYTONE,3,3));
+	    cmdtable.put("manager.contentypes", new MidletCmd(CONTENTTYPES,1,1));
+	    cmdtable.put("manager.protocols", new MidletCmd(PROTOCOLS,1,1));
+	}
+	catch (Exception e) {
+	    e.printStackTrace();
+	    System.out.println("Can't establish midlet commands.");
+	}
     }
+    
 }

@@ -1,3 +1,7 @@
+2006-10-18  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Added manager commands.
+
 2006-10-12  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Fixed bug in
