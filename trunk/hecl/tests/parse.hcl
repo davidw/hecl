@@ -86,6 +86,11 @@ test parse-14 {
     lindex $foo 1
 } "\["
 
+test parse-15 {
+    set foo {a \[ b}
+    lindex $foo 1
+} "\\\["
+
 #test parse-15 {
 #     lindex "a\[ b" 0
 #} "a\["

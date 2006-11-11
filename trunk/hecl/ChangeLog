@@ -1,6 +1,8 @@
 2006-11-11  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl (parse-14): Fixed test for list parsing.
+	(parse-15): Test to make sure that quoted square braces aren't
+	unquoted inside braces, when treated as a list.
 
 	* core/org/hecl/ParseList.java: Lists should ignore [].
 
