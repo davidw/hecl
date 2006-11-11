@@ -1,3 +1,9 @@
+2006-11-11  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-14): Fixed test for list parsing.
+
+	* core/org/hecl/ParseList.java: Lists should ignore [].
+
 2006-10-18  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* midp20/org/hecl/midp20/MidletCmd.java: Added manager commands.

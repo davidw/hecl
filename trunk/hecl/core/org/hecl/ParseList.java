@@ -56,20 +56,10 @@ public class ParseList extends Parse {
                     parseBlock(state);
                     addCurrent();
                     break;
-                case '[' :
-                    parseCommand(state);
-                    addCurrent();
-                    break;
                 case '"' :
                     parseText(state);
                     addCurrent();
                     break;
-		case '\\':
-		    if (!parseEscape(state)) {
-			parseWord(state);
-			addCurrent();
-		    }
-		    break;
                 default :
                     appendToCurrent(ch);
                     parseWord(state);
