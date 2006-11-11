@@ -91,6 +91,11 @@ test parse-15 {
     lindex $foo 1
 } "\\\["
 
+test parse-16 {
+    set foo {a "b c}
+    lindex $foo 1
+} {{PARSE_ERROR {Unbalanced open quote in list}} {lindex 3}}
+
 #test parse-15 {
 #     lindex "a\[ b" 0
 #} "a\["

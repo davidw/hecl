@@ -1,3 +1,12 @@
+2006-11-12  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-16): Check unbalanced "quotes" behavior.
+
+	* core/org/hecl/ParseList.java: Check for unbalanced "quotes" in
+	lists, and throw an error if they occur.  Don't parse \backslashes
+	in list text, as they should already have been parsed or not by
+	Hecl.
+
 2006-11-11  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl (parse-14): Fixed test for list parsing.

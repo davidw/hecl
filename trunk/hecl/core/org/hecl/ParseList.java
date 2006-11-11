@@ -81,17 +81,13 @@ public class ParseList extends Parse {
         while (true) {
             ch = state.nextchar();
             if (state.done()) {
-                return;
+		throw new HeclException("Unbalanced open quote in list",
+					"PARSE_ERROR");
             }
-            switch (ch) {
-                case '\\' :
-		    parseEscape(state);
-                    break;
-                case '"' :
-                    return;
-                default :
-                    appendToCurrent(ch);
-                    break;
+	    if (ch == '"') {
+		return;
+	    } else {
+		appendToCurrent(ch);
             }
         }
     }
@@ -107,7 +103,7 @@ public class ParseList extends Parse {
         while (true) {
             ch = state.nextchar();
             if (state.done()) {
-                return;
+		return;
             }
             if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
                 return;
