@@ -1,3 +1,44 @@
+2007-01-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* files/org/hecl/files/FileCmds.java: 
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* midp20/org/hecl/midp20/MidletCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/ListCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: 
+	* core/org/hecl/StringCmds.java: 
+	* core/org/hecl/Operator.java: 
+	* core/org/hecl/MathCmds.java: 
+	* core/org/hecl/ListCmds.java: 
+	* core/org/hecl/Interp.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/HashCmds.java: 
+	* core/org/hecl/ControlCmds.java: 
+	* net/org/hecl/HttpRequest.java: 
+	* net/org/hecl/HttpCmd.java: 
+	* net/org/hecl/Base64Cmd.java:
+	Corrected usage of command table. Former versions treated static
+	variable of base class incorrect.
+	
+	* midp20/org/hecl/midp20/lcdui/SettingsCmd.java: 
+	Proper handling of command table (see above), added skleft/skright to allow
+	configuration of left and right soft key code.
+
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	Minor changes for use with j2mepolish.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java: 
+	New attributes drawwidth/drawheight, no longer ovberwrites methods
+	getWidth/getHeight of base class, ifdefs for blackberry usage.
+	All this done to allow usage with j2mepolish.
+	
+	* midp20/org/hecl/midp20/lcdui/AlertCmd.java: 
+	Minor changes to allow usage with j2mepolish.
+
+	* midp20/org/awt/Point.java: 
+	Use import for org.awt.geom.Point2D.
+
 2006-11-12  David N. Welton  <davidw@dedasys.com>
 
 	* tests/parse.hcl (parse-16): Check unbalanced "quotes" behavior.
