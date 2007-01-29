@@ -282,7 +282,7 @@ public class FormCmd extends DisplayableCmd {
 	if(subcmd.equals(WidgetInfo.NCREATE)) {
 	    if(argv.length < n) {
 		throw HeclException.createWrongNumArgsException(
-		    argv, n, "class [itemcreateargs...]");
+		    argv, n, "class [itemcreate args...]");
 	    }
 	    itemcreate(ip,argv[n-1].toString(),argv,n);
 	    return;
@@ -386,9 +386,12 @@ public class FormCmd extends DisplayableCmd {
 		if(argv.length == n+1) {
 		    int itempos = IntThing.get(argv[n]);
 		    checkItemPosition(itempos);
-		    
-		    MidletCmd.getDisplay().setCurrentItem(
-			((FormGadget)gadgets.elementAt(itempos)).getItem());
+		    // start j2mepolish break down
+		    // to allow correct preprocessing
+		    Item item = ((FormGadget)gadgets.elementAt(itempos)).getItem();
+		    Display displ = MidletCmd.getDisplay();
+		    displ.setCurrentItem(item);
+		    // end j2mepolish break down
 		    return;
 		}
 		// fall thru, baseclass 

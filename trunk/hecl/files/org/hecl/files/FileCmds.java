@@ -16,6 +16,7 @@ limitations under the License.
 package org.hecl.files;
 
 import java.io.File;
+import java.util.Hashtable;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -84,12 +85,14 @@ public class FileCmds extends Operator {
     }
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
+
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
         cmdtable.put("cd", new FileCmds(CD,1,1));

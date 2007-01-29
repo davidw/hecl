@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import org.hecl.HeclException;
@@ -117,7 +118,7 @@ public class RMSCmd extends Operator {
 	    
 	  case RMS_SET:
 	    // rs_put name [recordid=1] data
-	    System.err.println("argv.length="+argv.length);
+	    //System.err.println("argv.length="+argv.length);
 	    
 	    if(argv.length>3) {
 		recordid = IntThing.get(argv[2]);
@@ -242,7 +243,7 @@ public class RMSCmd extends Operator {
 	    
 	  case RMS_HEXISTS:
 	    // hget name key
-	    try {
+	    try {	
 		rs = RecordStore.openRecordStore(name, true);
 		Object[] v = recordOf(rs,argv[2].toString());
 		recordid = ((Integer)v[0]).intValue();
@@ -397,7 +398,6 @@ public class RMSCmd extends Operator {
 	throws Exception {
 	String value = null;
 	int id = -1;
-	
 	RecordEnumeration enumeration = rs.enumerateRecords(null, null, false);
 	for (int i = 0; i < enumeration.numRecords(); i++) {
 	    int tmpid = enumeration.nextRecordId();
@@ -420,12 +420,14 @@ public class RMSCmd extends Operator {
     }
     
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
+
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
         cmdtable.put("rms.list", new RMSCmd(RMS_LIST,0,1));

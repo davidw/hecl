@@ -21,14 +21,17 @@ package org.hecl.midp20;
 
 import java.io.IOException;
 
+import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
+
+//#ifndef polish.blackberry
 import javax.microedition.media.Manager;
 import javax.microedition.media.MediaException;
-
+//#endif
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -180,7 +183,7 @@ public class MidletCmd extends Operator {
 		throw new HeclException("Unable to read resource '"
 					+ str + "' - " + e.getMessage());
 	    }
-
+//#ifndef polish.blackberry
 	  case PLAYTONE:
 	    try {
 		// sorry, no math.ln in j2me
@@ -198,8 +201,8 @@ public class MidletCmd extends Operator {
 		throw new HeclException("Invalid argumument for playtone - "
 					+illgl.getMessage());
 	    }
-	    break;
 
+	    break;
 	  case CONTENTTYPES:
 	    return new ListThing(tov(Manager.getSupportedContentTypes(
 					 argv[1].toString())));
@@ -207,13 +210,17 @@ public class MidletCmd extends Operator {
 	  case PROTOCOLS:
 	    return new ListThing(tov(Manager.getSupportedContentTypes(
 					 argv[1].toString())));
+//#endif
+
 	  default:
 	    throw new HeclException("Unknown midlet command '"
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 	}
 	// notreached
+//#ifndef polish.blackberry
 	return null;
+//#endif
     }
 
 
@@ -226,13 +233,13 @@ public class MidletCmd extends Operator {
     
     public static void load(Interp ip,MIDlet m) throws HeclException {
 	themidlet = m;
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
 	GUICmds.load(ip,getDisplay());
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
 	GUICmds.unload(ip);
     }
 
@@ -242,6 +249,8 @@ public class MidletCmd extends Operator {
     }
     
     static protected MIDlet themidlet = null;
+
+    private static Hashtable cmdtable = new Hashtable();
     
     static {
 	try {

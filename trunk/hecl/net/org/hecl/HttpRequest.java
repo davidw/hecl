@@ -40,244 +40,29 @@ import javax.net.ssl.HttpsURLConnection;
 //#endif
 
 public class HttpRequest extends Thread {
-    static public final int SETUP = 0;
-    static public final int CONNECTED = 1;
-    static public final int ERROR = 2;
-    static public final int TIMEOUT = 3;
-    static public final int OK = 4;
+    static public final short SETUP = 0;
+    static public final short CONNECTED = 1;
+    static public final short ERROR = 2;
+    static public final short TIMEOUT = 3;
+    static public final short OK = 4;
     
-    public interface HttpConstants
 //#ifdef ant:j2me
-	extends HttpConnection
+    public static final int HTTP_UNAUTHORIZED = HttpConnection.HTTP_UNAUTHORIZED;
+    public static final int HTTP_FORBIDDEN = HttpConnection.HTTP_FORBIDDEN;
 //#else
-	     //HttpURLConnection
-//#endif
-    {
-	public final int MY_HTTP_UNAUTHORIZED =
-//#ifdef ant:j2me
-	HTTP_UNAUTHORIZED
-//#else
-	HttpURLConnection.HTTP_FORBIDDEN
-//#endif
-	;
-	public final String GET = "GET";
-	public final String POST = "POST";
-	public final String HEAD = "HEAD";
-//	public final String OPTIONS = "OPTIONS";
-//	public final String PUT = "PUT";
-//	public final String DELETE = "DELETE";
-//	public final String TRACE = "TRACE";
-}
+    public static final int HTTP_UNAUTHORIZED = HttpURLConnection.HTTP_UNAUTHORIZED;
+    public static final int HTTP_FORBIDDEN = HttpURLConnection.HTTP_FORBIDDEN;
     
-    public static class MyHttpConn {
-	MyHttpConn(String url) throws IOException {
-	    state = SETUP;
-	    is = null;
-	    os = null;
-	    conn = null;
-//#ifndef ant:cldc1.0
-	    secure = url.toLowerCase().startsWith("https");
+    public static final String GET = "GET";
+    public static final String POST ="POST";
+    public static final String HEAD = "HEAD";
+    public static final String OPTIONS = "OPTIONS";
+    public static final String PUT = "PUT";
+    public static final String DELETE = "DELETE";
+    public static final String TRACE = "TRACE";
 //#endif
-
-	    if(DEBUGURL)
-		System.err.println("url="+url);
-//#ifdef ant:j2me 
-//#ifndef ant:cldc1.0
-	    conn = secure ?
-		(HttpsConnection)
-		Connector.open(url,Connector.READ_WRITE, true) :
-		(HttpConnection)
-		Connector.open(url,Connector.READ_WRITE, true);
-//#else
-	    conn = (HttpConnection)
-		Connector.open(url,Connector.READ_WRITE, true);
-//#endif
-//#else
-	    URL myurl = new URL(url);
-	    conn = secure ? (HttpsURLConnection) myurl.openConnection() :
-		(HttpURLConnection)myurl.openConnection();
-//#endif
-	}
-
-
-	public void connect(String rm, Hashtable rfields,
-			    String qdata,QueryParam[] qparams)
-	    throws IOException {
-	    conn.setRequestMethod(rm);
-	    //System.err.println("requestMethod="+rm);
-	    // Set the request fields.
-	    Enumeration e = rfields.keys();
-	    //System.err.println("--- REQUEST -------------------------------------");
-	    while (e.hasMoreElements()) {
-		String key = (String)e.nextElement();
-		//System.err.println("key: " + key + ", value: " + (String)rfields.get(key));
-		conn.setRequestProperty(key, (String)rfields.get(key));
-	    }
-
-//#ifndef ant:j2me
-	    if (qdata != null || qparams != null) {
-		conn.setDoOutput(true);
-	    }
-	    // Only JDK: Calling connect will open the connection
-	    conn.connect();
-//#endif
-	    
-	    if (qdata != null || qparams != null) {
-//#ifdef ant:j2me
-		os = conn.openOutputStream();
-//#else
-		os = conn.getOutputStream();
-//#endif
-		if(qdata != null) {
-		    //System.err.println("writing " + qdata.getBytes(DEFCHARSET).length + " bytes");
-		    os.write(qdata.getBytes(/*DEFCHARSET*/));
-		} else if (qparams != null) {
-		    for(int i=0; i<qparams.length; ++i) {
-			//System.err.print("qparams["+i+"]: ");
-			//qparams[i].printon(System.err).println("");
-			if(i != 0)
-			    os.write('&');
-			qparams[i].send(os);
-		    }
-		}
-		os.flush();
-		os.close();
-		os = null;
-	    }
-	}
-
-
-	public int getResponseCode() {
-	    try {
-		// Only MIDP:
-		// Getting the response code will open the connection,
-		// send the request, and read the HTTP response headers.
-		// The headers are stored until requested.
-		return conn.getResponseCode();
-	    }
-	    catch(IOException e) {
-		e.printStackTrace();
-	    }
-	    return -1;
-	}
-	
-
-	public Hashtable readHeader() {
-	    Hashtable tab = new Hashtable();
-	    
-	    // Getting the response fields.
-	    int idx = 0;
-	    // Some implementations may treat the 0th header field as special,
-	    // i.e. as the status line returned by the HTTP server.
-	    // In this case, getHeaderField(0) returns the status line,
-	    // but getHeaderFieldKey(0) returns null.
-	    // For now, it is not clear if this happens on midlets as well.
-//#ifndef ant:j2me
-	    if (conn.getHeaderFieldKey(0) == null) {
-		++idx;
-	    }
-//#endif
-	    //System.err.println("--- RESPONSE HEADER-----------------");
-	    String key = "";
-	    while (key != null) {
-//#ifdef ant:j2me
-		try {
-//#endif
-		    key = conn.getHeaderFieldKey(idx++);
-		    if (key != null) {
-			tab.put(key.toLowerCase(), conn.getHeaderField(key));
-			//System.err.println("key: " + key + ", value: " + conn.getHeaderField(key));
-		    }
-//#ifdef ant:j2me
-		}
-		catch (IOException shouldnothappen) {
-		    shouldnothappen.printStackTrace();
-		}
-//#endif
-	    }
-	    return tab;
-	}
-
-
-	public byte[] readBody() throws IOException {
-	    int len = 0;
-	    byte[] buf = new byte[0];
-	    
-//#ifdef ant:j2me
-	    is = conn.openInputStream();
-	    len = (int)conn.getLength();
-//#else
-	    is = conn.getInputStream();
-	    len = conn.getContentLength();
-//#endif
-	    
-	    int bytesread = 0;
-	    int actual = 0;
-	    if (len >= 0) {
-		buf = new byte[len];
-		
-		while ((bytesread != len) && (actual != -1)) {
-		    actual = is.read(buf, bytesread, len - bytesread);
-		    bytesread += actual;
-		}
-	    } else {
-		buf = new byte[512];
-		do {
-		    if(bytesread == buf.length) {
-			byte[] newbuf = new byte[buf.length+512];
-			System.arraycopy(buf,0,newbuf,0,bytesread);
-			buf = newbuf;
-		    }
-		    actual = is.read(buf, bytesread, buf.length - bytesread);
-		    if(actual > 0)
-			bytesread += actual;
-		} while(actual > 0);
-	    }
-	    if(bytesread != buf.length) {
-		byte[] tmp = new byte[buf.length];
-		System.arraycopy(buf,0,tmp,0,bytesread);
-		buf = tmp;
-	    }
-	    return buf;
-	}
-
-
-	public void close() {
-	    if (os != null) {
-		try {os.close();}
-		catch (IOException e) {}
-	    }
-	    if (is != null) {
-		try {is.close();}
-		catch (IOException e) {}
-	    }
-	    if (conn != null) {
-//#ifdef ant:j2me
-		try {
-//#endif
-//#ifndef ant:j2me
-		    conn.disconnect();
-//#else
-		    conn.close();
-//#endif
-//#ifdef ant:j2me
-		}
-		catch (IOException e) {}
-//#endif
-	    }
-	}
-	
-//#ifdef ant:j2me
-	public HttpConnection conn;
-//#else
-	public HttpURLConnection conn;
-//#endif
-	int state;
-	boolean secure = false;
-	InputStream is;
-	OutputStream os;
-    }
-
+    
+    
 
     public HttpRequest(String url, QueryParam[] params,
 		       boolean validate, Hashtable headerfields,
@@ -305,10 +90,22 @@ public class HttpRequest extends Thread {
 	    }
 	}
 	if(qdata != null || qparams != null) {
-	    requestMethod = HttpConstants.POST;
+	    requestMethod =
+//#ifdef ant:j2me
+		HttpConnection.POST
+//#else
+		POST
+//#endif
+		;
 	} else {
 	    if(validate)
-		requestMethod = HttpConstants.HEAD;
+		requestMethod =
+//#ifdef ant:j2me
+		    HttpConnection.HEAD
+//#else
+		    HEAD
+//#endif
+		    ;
 	}
 	notifywhendone = requestnotify;
     }
@@ -362,17 +159,21 @@ public class HttpRequest extends Thread {
 	rc = -1;
 	error = null;
 	inData = null;
-	//System.err.println("urlstr="+urlstr);
+
 	try {
 	    co = new MyHttpConn(urlstr);
 	}
 	catch (IOException e) {
 	    status = ERROR;
 	    error = e;
+	    e.printStackTrace();
+	    System.err.println("HttpRequest.preparation error");
 	    return;
 	}
 
 	try {
+	    if(DEBUGRC)
+		System.err.println("Connecting...");
 	    co.connect(requestMethod,requestFields,qdata,qparams);
 	    status = CONNECTED;
 	    if(DEBUGRC)
@@ -384,7 +185,6 @@ public class HttpRequest extends Thread {
 		status = ERROR;
 		return;
 	    }
-	    
 	    responseFields = co.readHeader();
 	    inData = co.readBody();
 	    status = OK;
@@ -506,7 +306,7 @@ public class HttpRequest extends Thread {
 	//System.err.println("old data:");
 	//System.err.println(hexdump(buf));
 	for(int i=start; n>0; ++i, --n) {
-	    sb.append((char)(buf[i]&0xff));
+	    sb.append((char)buf[i]);
 	}
 	//System.err.println("new data:");
 	//System.err.println(hexdump(asISOBytes(sb.toString())));
@@ -588,27 +388,7 @@ public class HttpRequest extends Thread {
 		bytearr[count++] = (byte)(0x80 | ((c >>  0) & 0x3F));
 	    }
 	}
-
 	return bytearr;
-
-	/*
-	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	DataOutputStream os = new DataOutputStream(baos);
-
-	try {
-	    os.writeUTF(s);
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-
-	byte[] tmp = baos.toString().getBytes();
-	byte[] res = new byte[tmp.length - 2];
-	for (int i = 0; i < res.length; i++) {
-	    res[i] = tmp[i + 2];
-	}
-
-	return res;
-	*/
     }
 
     public static String urlencode(byte[] s,int start, int n) {
@@ -655,9 +435,15 @@ public class HttpRequest extends Thread {
     private String body = "";
     private String qdata = null;
     private QueryParam[] qparams = null;
-    private String requestMethod = HttpConstants.GET;
+    private String requestMethod =
+//#ifdef ant:j2me
+    HttpConnection.GET
+//#else
+    GET
+//#endif
+    ;
     private int rc = -1;
-    private int status = SETUP;
+    private short status = SETUP;
     private Object notifywhendone = null;
     Exception error = null;
     private Hashtable requestFields = new Hashtable();
@@ -699,3 +485,211 @@ public class HttpRequest extends Thread {
     }
 
 }
+
+class MyHttpConn {
+    MyHttpConn(String url) throws IOException {
+	is = null;
+	os = null;
+	conn = null;
+//#ifndef ant:cldc1.0
+	secure = url.toLowerCase().startsWith("https");
+//#endif
+
+	if(HttpRequest.DEBUGURL)
+	    System.err.println("url="+url);
+//#ifdef ant:j2me 
+//#ifndef ant:cldc1.0
+	conn = secure ?
+	    (HttpsConnection)
+	    Connector.open(url/*,Connector.READ_WRITE, true*/) :
+	    (HttpConnection)
+	    Connector.open(url/*,Connector.READ_WRITE, true*/);
+//#else
+	conn = (HttpConnection)
+	    Connector.open(url/*,Connector.READ_WRITE, true*/);
+//#endif
+//#else
+	URL myurl = new URL(url);
+	conn = secure ? (HttpsURLConnection) myurl.openConnection() :
+	    (HttpURLConnection)myurl.openConnection();
+//#endif
+    }
+
+
+    void connect(String rm, Hashtable rfields,
+			String qdata,QueryParam[] qparams)
+	throws IOException {
+	conn.setRequestMethod(rm);
+	System.err.println("requestMethod="+rm);
+	// Set the request fields.
+	Enumeration e = rfields.keys();
+	//System.err.println("--- REQUEST -------------------------------------");
+	while (e.hasMoreElements()) {
+	    String key = (String)e.nextElement();
+	    //System.err.println("key: " + key + ", value: " + (String)rfields.get(key));
+	    conn.setRequestProperty(key, (String)rfields.get(key));
+	}
+
+//#ifndef ant:j2me
+	if (qdata != null || qparams != null) {
+	    conn.setDoOutput(true);
+	}
+	// Only JDK: Calling connect will open the connection
+	conn.connect();
+//#endif
+	    
+	if (qdata != null || qparams != null) {
+//#ifdef ant:j2me
+	    os = conn.openOutputStream();
+//#else
+	    os = conn.getOutputStream();
+//#endif
+	    if(qdata != null) {
+		//System.err.println("writing " + qdata.getBytes(DEFCHARSET).length + " bytes");
+		os.write(qdata.getBytes(/*DEFCHARSET*/));
+	    } else if (qparams != null) {
+		for(int i=0; i<qparams.length; ++i) {
+		    //System.err.print("qparams["+i+"]: ");
+		    //qparams[i].printon(System.err).println("");
+		    if(i != 0)
+			os.write('&');
+		    qparams[i].send(os);
+		}
+	    }
+	    os.flush();
+	    os.close();
+	    os = null;
+	}
+    }
+
+
+    int getResponseCode() {
+	try {
+	    // Only MIDP:
+	    // Getting the response code will open the connection,
+	    // send the request, and read the HTTP response headers.
+	    // The headers are stored until requested.
+	    return conn.getResponseCode();
+	}
+	catch(IOException e) {
+	    e.printStackTrace();
+	}
+	return -1;
+    }
+	
+
+    Hashtable readHeader() {
+	Hashtable tab = new Hashtable();
+	    
+	// Getting the response fields.
+	int idx = 0;
+	// Some implementations may treat the 0th header field as special,
+	// i.e. as the status line returned by the HTTP server.
+	// In this case, getHeaderField(0) returns the status line,
+	// but getHeaderFieldKey(0) returns null.
+	// For now, it is not clear if this happens on midlets as well.
+//#ifndef ant:j2me
+	if (conn.getHeaderFieldKey(0) == null) {
+	    ++idx;
+	}
+//#endif
+	//System.err.println("--- RESPONSE HEADER-----------------");
+	String key = "";
+	while (key != null) {
+//#ifdef ant:j2me
+	    try {
+//#endif
+		key = conn.getHeaderFieldKey(idx++);
+		if (key != null) {
+		    tab.put(key.toLowerCase(), conn.getHeaderField(key));
+		    //System.err.println("key: " + key + ", value: " + conn.getHeaderField(key));
+		}
+//#ifdef ant:j2me
+	    }
+	    catch (IOException shouldnothappen) {
+		shouldnothappen.printStackTrace();
+	    }
+//#endif
+	}
+	return tab;
+    }
+
+
+    byte[] readBody() throws IOException {
+	int len = 0;
+	byte[] buf = new byte[0];
+	    
+//#ifdef ant:j2me
+	is = conn.openInputStream();
+	len = (int)conn.getLength();
+//#else
+	is = conn.getInputStream();
+	len = conn.getContentLength();
+//#endif
+	    
+	int bytesread = 0;
+	int actual = 0;
+	if (len >= 0) {
+	    buf = new byte[len];
+		
+	    while ((bytesread != len) && (actual != -1)) {
+		actual = is.read(buf, bytesread, len - bytesread);
+		bytesread += actual;
+	    }
+	} else {
+	    buf = new byte[512];
+	    do {
+		if(bytesread == buf.length) {
+		    byte[] newbuf = new byte[buf.length+512];
+		    System.arraycopy(buf,0,newbuf,0,bytesread);
+		    buf = newbuf;
+		}
+		actual = is.read(buf, bytesread, buf.length - bytesread);
+		if(actual > 0)
+		    bytesread += actual;
+	    } while(actual > 0);
+	}
+	if(bytesread != buf.length) {
+	    byte[] tmp = new byte[buf.length];
+	    System.arraycopy(buf,0,tmp,0,bytesread);
+	    buf = tmp;
+	}
+	return buf;
+    }
+
+
+    void close() {
+	if (os != null) {
+	    try {os.close();}
+	    catch (IOException e) {}
+	}
+	if (is != null) {
+	    try {is.close();}
+	    catch (IOException e) {}
+	}
+	if (conn != null) {
+//#ifdef ant:j2me
+	    try {
+//#endif
+//#ifndef ant:j2me
+		conn.disconnect();
+//#else
+		conn.close();
+//#endif
+//#ifdef ant:j2me
+	    }
+	    catch (IOException e) {}
+//#endif
+	}
+    }
+	
+//#ifdef ant:j2me
+    HttpConnection conn;
+//#else
+    HttpURLConnection conn;
+//#endif
+    boolean secure = false;
+    InputStream is;
+    OutputStream os;
+}
+

@@ -21,6 +21,8 @@ limitations under the License.
 
 package org.hecl.net;
 
+import java.util.Hashtable;
+
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Operator;
@@ -50,12 +52,12 @@ public class Base64Cmd extends org.hecl.Operator {
     
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
@@ -66,6 +68,8 @@ public class Base64Cmd extends org.hecl.Operator {
     public static final int ENCODE = 1;
     public static final int DECODE = 2;
     
+    private static Hashtable cmdtable = new Hashtable();
+
     static {
         cmdtable.put("base64::encode", new Base64Cmd(ENCODE,1,1));
         cmdtable.put("base64::decode", new Base64Cmd(DECODE,1,1));

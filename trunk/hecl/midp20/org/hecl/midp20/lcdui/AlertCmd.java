@@ -20,6 +20,7 @@
 package org.hecl.midp20.lcdui;
 
 import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Gauge;
 
@@ -119,7 +120,12 @@ public class AlertCmd extends ScreenCmd {
 		Displayable d = (Displayable)wm.asWidget(argv[startat],Displayable.class,
 							 "Displayable",false);
 		if(d != null) {
-		    MidletCmd.getDisplay().setCurrent((Alert)getData(),d);
+		    // start j2mepolish break down
+		    // to allow correct preprocessing
+		    Alert alert = (Alert)getData();
+		    Display displ = MidletCmd.getDisplay();
+		    displ.setCurrent(alert,d);
+		    // end j2mepolish break down
 		    return;
 		}
 		throw new HeclException("Invalid displayable.");

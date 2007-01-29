@@ -84,11 +84,27 @@ public class HttpCmd extends org.hecl.Operator {
 	    HttpRequest r = new HttpRequest(argv[1].toString(), qdata,
 					    validate, h, interp);
 	    r.start();
-	    while(r.isAlive()) {
-		interp.doOneEvent(Interp.ALL_EVENTS|Interp.DONT_WAIT);
-		// allow for other threads to do some work
-		Thread.currentThread().yield();
+
+	    try {
+		Thread.sleep(1L);
+	    } catch(Exception e) {}
+
+	    // (Jan 2007, rene+wke: Nokia n70 yield bug - needs join on first call!
+	    if(firsttime) {
+		try {
+		    r.join();
+		    firsttime = false;
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+	    } else {
+		while(r.isAlive()) {
+		    interp.doOneEvent(Interp.ALL_EVENTS|Interp.DONT_WAIT);
+		    // allow for other threads to do some work
+		    Thread.currentThread().yield();
+		}
 	    }
+
 	    int status = r.getStatus();
 	    //System.err.println("status="+status);
 	    if(status != HttpRequest.OK) {
@@ -148,12 +164,12 @@ public class HttpCmd extends org.hecl.Operator {
     
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
@@ -173,7 +189,10 @@ public class HttpCmd extends org.hecl.Operator {
     public static final String defcharset = "ISO8859-1";
     private static String defuseragent = "Hecl http-module";
     private static String deflocale = "en-US";
-    
+    private static boolean firsttime = true;
+
+    private static Hashtable cmdtable = new Hashtable();
+
     static {
 //#ifdef ant:j2me
 	String conf = System.getProperty("microedition.configuration");

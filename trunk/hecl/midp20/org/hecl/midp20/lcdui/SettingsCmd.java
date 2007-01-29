@@ -120,6 +120,14 @@ public class SettingsCmd extends OptionCmd {
 	    ip.setResult(WidgetInfo.fromColor(cvcmdfgcolor));
 	    return;
 	}
+	if(optname.equals("-skleft")) {
+	    ip.setResult(HeclCanvas.KEYCODE_LEFT_SK);
+	    return;
+	}
+	if(optname.equals("-skright")) {
+	    ip.setResult(HeclCanvas.KEYCODE_RIGHT_SK);
+	    return;
+	}
 	super.cget(ip,optname);
     }
     
@@ -143,6 +151,14 @@ public class SettingsCmd extends OptionCmd {
 	}
 	if(optname.equals(NCVCMDFGCOLOR)) {
 	    cvcmdfgcolor = new Color(WidgetInfo.toColor(optval));
+	    return;
+	}
+	if(optname.equals("-skleft")) {
+	    HeclCanvas.KEYCODE_LEFT_SK = IntThing.get(optval);
+	    return;
+	}
+	if(optname.equals("-skright")) {
+	    HeclCanvas.KEYCODE_RIGHT_SK = IntThing.get(optval);
 	    return;
 	}
 	super.cset(ip,optname,optval);

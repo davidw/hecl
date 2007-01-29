@@ -159,17 +159,16 @@ public class ListCmd extends ScreenCmd {
 	    }
 	    */
 	    if(selcmd.equals("get")) {
+		int m = l.size();
+		boolean[] b = new boolean[m];
+		l.getSelectedFlags(b);
 		Vector v = new Vector();
-		boolean[] b = new boolean[l.size()];
-		if(l.getSelectedFlags(b) > 0) {
-		    for(int i=0; i<b.length; ++i) {
-			if(b[i])
-			    v.addElement(IntThing.create(i));
-		    }
-		} else {
-		    if(l.getSelectedIndex() >= 0)
-			v.addElement(IntThing.create(l.getSelectedIndex()));
+		int sel = l.getSelectedIndex(); //added by rnebel
+		for(int i=0; i<m; ++i) {
+		    if(b[i] || sel == i)
+			v.addElement(IntThing.create(i));
 		}
+
 		ip.setResult(ListThing.create(v));
 		return;
 	    }

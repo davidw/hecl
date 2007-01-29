@@ -106,8 +106,16 @@ public class CanvasCmd extends DisplayableCmd {
 	    ip.setResult(c.getWidth());
 	    return;
 	}
+	if(optname.equals("-drawwidth")) {
+	    ip.setResult(c.getDrawWidth());
+	    return;
+	}
 	if(optname.equals(WidgetInfo.NHEIGHT)) {
 	    ip.setResult(c.getHeight());
+	    return;
+	}
+	if(optname.equals("-drawheight")) {
+	    ip.setResult(c.getDrawHeight());
 	    return;
 	}
 	if(optname.equals("-fullwidth")) {

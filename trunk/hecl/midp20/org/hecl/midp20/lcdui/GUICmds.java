@@ -36,6 +36,8 @@ import org.hecl.RealThing;
 import org.hecl.Thing;
 
 public class GUICmds extends Operator {
+    protected Hashtable getCommands() {return null;}
+
     public static void load(Interp ip,Display display) throws HeclException {
 	// Add some default widgets
 	ip.setVar(SELVARNAME,

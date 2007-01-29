@@ -23,6 +23,11 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
+//#ifdef polish.usePolishGui 
+import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Screen;
+import javax.microedition.lcdui.Ticker;
+//#endif
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -42,7 +47,7 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 		    String dname = wm.nameOf(d);
 		    String cname = wm.nameOf(c);
 		    //System.out.println(" -->"+getClass().getName()+"::commandAction(" +cname+" - "+c.getLabel() +", "+dname+")");
-		    if(commandcode != null && dname != null && cname != null) {
+		    if(commandcode != null && dname != null && cname != null) {  
 			String expansions[] = {cname,dname};
 			wm.eval(ip,commandcode,
 				commandActionExpandChars,expansions);
@@ -56,7 +61,24 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 	Displayable d = (Displayable)getData();
 	
 	if(optname.equals(WidgetInfo.NTICKER)) {
+//#ifdef polish.usePolishGui 
+	    if(d instanceof Screen) {
+		Screen s = (Screen)d;
+		Ticker t = s.getTicker();
+		WidgetMap.setWidgetResult(ip,t);
+//#ifdef notdef
+	    } else if(d instanceof Canvas) {
+		Canvas c = (Canvas)d;
+		Ticker t = c.getTicker();
+		WidgetMap.setWidgetResult(ip,t);
+//#endif
+	    } else {
+		WidgetMap.setWidgetResult(ip,null);
+	    }
+	    
+//#else
 	    WidgetMap.setWidgetResult(ip,d.getTicker());
+//#endif
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NTITLE)) {
@@ -86,7 +108,22 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 	Displayable d = (Displayable)getData();
 
 	if(optname.equals(WidgetInfo.NTICKER)) {
+//#ifdef polish.usePolishGui 
+	    Ticker t = WidgetMap.mapOf(ip).asTicker(optval,true,true);
+	    if(d instanceof Screen) {
+		Screen s = (Screen)d;
+		s.setTicker(t);
+//#ifdef notdef
+	    } else if(d instanceof Canvas) {
+		Canvas c = (Canvas)d;
+		c.setTicker(t);
+	    } else {
+		d.setTicker(t);
+//#endif
+	    }
+//#else
 	    d.setTicker(WidgetMap.mapOf(ip).asTicker(optval,true,true));
+//#endif
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NTITLE)) {

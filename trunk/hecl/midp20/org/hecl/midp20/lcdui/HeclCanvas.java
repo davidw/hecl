@@ -52,7 +52,13 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     public HeclCanvas(boolean suppressKeyEvents) {
 	super(suppressKeyEvents);
 	nokeyevents = !suppressKeyEvents;
+
+	//de.enough.polish.ui.game.GameCanvas has no getGraphics method
+//#ifdef polish.blackberry 
+	mygraphics = super.getPolishGraphics();
+//#else
 	mygraphics = super.getGraphics();
+//#endif
 	calcScreenWidth();
 	graphicscmd = new GraphicsCmd(mygraphics,drawwidth,drawheight);
 	// Force initial draw
@@ -147,16 +153,13 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	return fullheight;
     }
     
-
-    public int getWidth() {
+    public int getDrawWidth() {
 	return drawwidth;
     }
     
-
-    public int getHeight() {
+    public int getDrawHeight() {
 	return drawheight;
     }
-    
 
     public int getGameAction(int keyCode) {
 	if(keyCode == KEYCODE_LEFT_SK)
@@ -231,15 +234,15 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	evh = eventHandler;
     }
     
+    public void setFullScreenMode(boolean b) {	
 
-    public void setFullScreenMode(boolean b) {
 	if(b == isfullscreen)
 	    return;
 
 	// ignore request for fullscreen canvas when disabled
 	if(b && !SettingsCmd.cvallowfullscreen)
 	    return;
-	
+
 	isfullscreen = b;
 	super.setFullScreenMode(isfullscreen);
 
@@ -264,7 +267,6 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    super.setCommandListener(cmdlistener);
 	}
     }
-    
 
     private void showCommands(Graphics g) {
 //#ifdef debug
@@ -280,12 +282,22 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    int oldcw = g.getClipWidth();
 	    int oldch = g.getClipHeight();
 	    
-	    // clear rect in bg color
-	    g.setColor(cmdbgcolor.getRGB());
 //#ifdef debug
 	    System.err.println("drawing rect: y="+drawheight+", h="+CMDBARHEIGHT);
+
+	    System.err.println("size - w="+getWidth()+" h="+getHeight());
+	    System.err.println("draw - w"+getDrawWidth()+" h="+getDrawHeight());
+	    System.err.println("oldclip("+oldcx+","+oldcy+","+oldcw+","+oldch+")");
+	    System.err.println("setclip(0,"+drawheight+","+drawwidth+","+CMDBARHEIGHT+")");
+	    g.setColor(0xff0000);
+	    g.drawLine(0,0,getWidth(),getHeight());
 //#endif
+
+	    // set clipping region to area where commands are shown
 	    g.setClip(0,drawheight,drawwidth,CMDBARHEIGHT);
+
+	    // clear rect in bg color
+	    g.setColor(cmdbgcolor.getRGB());
 	    g.fillRect(0,drawheight,drawwidth,CMDBARHEIGHT);
 	    //g.drawLine(0,drawheight,drawwidth-1,drawheight+3);
 	    
@@ -400,9 +412,21 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     public void showNotify() {
 	callEventHandler(CanvasEvent.E_SHOW,0,0,drawwidth,drawheight,0);
     }
-    
 
-    protected void sizeChanged(int w,int h) {
+//#ifdef polish.blackberry
+
+//#ifdef polish.usePolishGui
+    //de.enough.polish.ui.AccessibleCanvas sizeChanged is public
+    public
+//#else
+    protected
+//#endif //polish.usePolishGui
+
+//#else
+    protected
+//#endif // polish.blackberry
+	void sizeChanged(int w,int h) {
+
 //#ifdef debug
 	System.err.println("size changed, w="+w+", h="+h);
 	System.err.println("size changed, w="+super.getWidth()+", h="+super.getHeight());

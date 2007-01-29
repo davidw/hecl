@@ -9,7 +9,9 @@
 package org.awt;
 
 //#ifndef ant:j2se
-public class Point extends org.awt.geom.Point2D {
+import org.awt.geom.Point2D;
+
+public class Point extends Point2D {
     /**
      * The <i>x</i> coordinate.
      * If no <i>x</i> coordinate is set it will default to 0.
