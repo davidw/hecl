@@ -16,6 +16,7 @@ limitations under the License.
 package org.hecl;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Vector;
 
 /**
@@ -217,12 +218,12 @@ class ListCmds extends Operator {
     }
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
@@ -230,6 +231,7 @@ class ListCmds extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
 
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
 	cmdtable.put("list", new ListCmds(LIST,-1,-1));

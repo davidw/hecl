@@ -16,6 +16,7 @@ limitations under the License.
 package org.hecl;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Vector;
 
 /**
@@ -180,18 +181,20 @@ class ControlCmds extends Operator {
 
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
     protected ControlCmds(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode, minargs, maxargs);
     }
+
+    private static Hashtable cmdtable = new Hashtable();
 
     /* Creates these commands when this class is loaded. */
     static {

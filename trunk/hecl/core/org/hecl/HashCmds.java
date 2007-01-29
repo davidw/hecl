@@ -90,12 +90,12 @@ class HashCmds extends Operator {
 
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
@@ -103,6 +103,7 @@ class HashCmds extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
 
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
         cmdtable.put("hash", new HashCmds(HASH,1,1));

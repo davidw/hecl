@@ -48,8 +48,6 @@ public abstract class Operator implements Command {
      */
     protected int maxargs;
 
-    static protected Hashtable cmdtable = new Hashtable();
-
     /**
      * Creates a new <code>Operator</code> instance.
      *
@@ -130,12 +128,15 @@ public abstract class Operator implements Command {
      * @param ip an <code>Interp</code> value
      * @exception HeclException if an error occurs
      */
-    protected static void load(Interp ip) throws HeclException {
+    protected static void load(Interp ip,Hashtable cmdtable) throws HeclException {
+	//	System.err.println("-->Operator.load, ip="+ip+", cmdtable="+cmdtable);
 	Enumeration e = cmdtable.keys();
 	while(e.hasMoreElements()) {
 	    String k = (String)e.nextElement();
+	    //	    System.err.println("cmd="+k);
 	    ip.addCommand(k, (Command)cmdtable.get(k));
 	}
+	//	System.err.println("<<--Operator.load");
     }
 
 
@@ -146,7 +147,7 @@ public abstract class Operator implements Command {
      * @param ip an <code>Interp</code> value
      * @exception HeclException if an error occurs
      */
-    protected static void unload(Interp ip) throws HeclException {
+    protected static void unload(Interp ip,Hashtable cmdtable) throws HeclException {
 	Enumeration e = cmdtable.keys();
 	while(e.hasMoreElements()) {
 	    ip.removeCommand((String)e.nextElement());

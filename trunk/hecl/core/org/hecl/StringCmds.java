@@ -17,6 +17,7 @@
 package org.hecl;
 
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import org.hecl.IntThing;
@@ -233,12 +234,12 @@ class StringCmds extends Operator {
 
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
     protected StringCmds(int cmdcode, int minargs, int maxargs) {
@@ -318,6 +319,8 @@ class StringCmds extends Operator {
 
     private static Vector defsplitstrings;
     private static String deftrimchars = "\t\n\r ";
+
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
 	defsplitstrings = new Vector();

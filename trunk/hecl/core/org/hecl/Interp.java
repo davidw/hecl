@@ -397,12 +397,12 @@ public class Interp extends Thread/*implements Runnable*/ {
     }
 
     public void run() {
-	//System.err.println("interp running...");
+	//	System.err.println("interp running...");
 	long now = System.currentTimeMillis();
 	while(running) {
 	    doOneEvent(ALL_EVENTS);
 	}
-	//System.err.println("interp stopped!");
+	//	System.err.println("interp stopped!");
     }
 
 
@@ -420,27 +420,35 @@ public class Interp extends Thread/*implements Runnable*/ {
 	 * works best when you need to add several commands with
 	 * related functionality. */
 
+	//	System.err.println("-->initinterp");
+	//	System.err.println("loading interp cmds...");
 	/* Commands that manipulate interp data structures -
 	 * variables, procs, commands, and so forth.  */
 	InterpCmds.load(this);
 
+	//	System.err.println("loading math cmds...");
 	/* Math and logic commands. */
 	MathCmds.load(this);
 
+	//	System.err.println("loading list cmds...");
 	/* List related commands. */
 	ListCmds.load(this);
 
+	//	System.err.println("loading control cmds...");
 	/* Control commands. */
 	ControlCmds.load(this);
 
+	//	System.err.println("loading string cmds...");
 	/* String commands. */
 	StringCmds.load(this);
 
+	//	System.err.println("loading hash cmds...");
 	/* Hash table commands. */
 	HashCmds.load(this);
 
         commands.put("puts", new PutsCmd());
         commands.put("sort", new SortCmd());
+	//	System.err.println("<--initinterp");
     }
 
     /**

@@ -422,12 +422,12 @@ public class MathCmds extends org.hecl.Operator {
 	    String k = (String)e.nextElement();
 	    ip.setVar(k,(Thing)vars.get(k));
 	}
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
  	Enumeration e = vars.keys();
 	while(e.hasMoreElements()) {
 	    ip.unSetVar((String)e.nextElement());
@@ -458,6 +458,8 @@ public class MathCmds extends org.hecl.Operator {
     private static int nextop = 1000;
     private static Hashtable vars = new Hashtable();
     private static Hashtable extensions = new Hashtable();
+
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
 

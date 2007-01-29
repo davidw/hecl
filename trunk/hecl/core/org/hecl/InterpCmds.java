@@ -403,12 +403,12 @@ class InterpCmds extends Operator {
 
 
     public static void load(Interp ip) throws HeclException {
-	Operator.load(ip);
+	Operator.load(ip,cmdtable);
     }
 
 
     public static void unload(Interp ip) throws HeclException {
-	Operator.unload(ip);
+	Operator.unload(ip,cmdtable);
     }
 
 
@@ -416,6 +416,7 @@ class InterpCmds extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
 
+    private static Hashtable cmdtable = new Hashtable();
 
     static {
 	cmdtable.put("set", new InterpCmds(SET, 1 ,2));
