@@ -2,6 +2,10 @@
 
 	* core/org/hecl/Stanza.java: Removed premade new argv arrays.
 
+	* core/org/hecl/Stanza.java: Moved newargv creation and
+  	initialization to the run method, where it is now a local
+	variable.
+
 2007-01-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* files/org/hecl/files/FileCmds.java: 
