@@ -17,8 +17,6 @@ package org.hecl;
 
 import java.util.Vector;
 
-//import java.util.Arrays;
-
 /**
  * The <code>Stanza</code> class represents one command. A CodeThing
  * object may have several Stanzas.
@@ -34,8 +32,6 @@ class Stanza {
     private Command command = null;
 
     private Thing[] argv = null;
-
-    private Thing[] newargv;
 
     /**
      * Creates a new <code>Stanza</code> instance, taking a Command and
@@ -78,7 +74,7 @@ class Stanza {
 	RealThing realthing = null;
 	Command tmpcommand = null;
 
-	newargv = new Thing[argv.length];
+	Thing[] newargv = new Thing[argv.length];
 
 	/* If we have a CodeThing, GroupThing or SubstThing as
 	 * argv[0], we don't want to save 'command'. */
