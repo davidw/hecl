@@ -35,12 +35,6 @@ class Stanza {
 
     private Thing[] argv = null;
 
-    private Thing[] nav1 = new Thing[1];
-
-    private Thing[] nav2 = new Thing[2];
-
-    private Thing[] nav3 = new Thing[3];
-
     private Thing[] newargv;
 
     /**
@@ -84,20 +78,7 @@ class Stanza {
 	RealThing realthing = null;
 	Command tmpcommand = null;
 
-	/* These are the three most common argv lengths. */
-	switch (argv.length) {
-	case 1 :
-	    newargv = nav1;
-	    break;
-	case 2 :
-	    newargv = nav2;
-	    break;
-	case 3 :
-	    newargv = nav3;
-	    break;
-	default :
-	    newargv = new Thing[argv.length];
-	}
+	newargv = new Thing[argv.length];
 
 	/* If we have a CodeThing, GroupThing or SubstThing as
 	 * argv[0], we don't want to save 'command'. */

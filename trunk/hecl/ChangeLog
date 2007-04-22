@@ -1,3 +1,7 @@
+2007-04-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Stanza.java: Removed premade new argv arrays.
+
 2007-01-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* files/org/hecl/files/FileCmds.java: 
