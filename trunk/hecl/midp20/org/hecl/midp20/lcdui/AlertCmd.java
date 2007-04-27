@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -26,7 +26,10 @@ import javax.microedition.lcdui.Gauge;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.midp20.MidletCmd;
@@ -35,45 +38,49 @@ import org.hecl.misc.HeclUtils;
 
 
 public class AlertCmd extends ScreenCmd {
-    public static final org.hecl.Command CREATE = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		Properties p = WidgetInfo.defaultProps(Alert.class);
-		p.setProps(argv,1);
-		Alert w = new Alert(p.getProp(WidgetInfo.NTITLE).toString(),
-				    p.getProp(WidgetInfo.NTEXT).toString(),
-				    null,
-				    WidgetInfo.toAlertType(p.getProp(WidgetInfo.NTYPE)));
-		p.delProp(WidgetInfo.NTITLE);
-		p.delProp(WidgetInfo.NTEXT);
-		p.delProp(WidgetInfo.NTYPE);
-		WidgetMap.addWidget(interp,null,w, new AlertCmd(interp,w,p));
-	    }
-	};
-    
-    protected AlertCmd(Interp ip,Alert a,Properties p) throws HeclException {
-	super(ip,a,p);
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(Alert.class,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(Alert.class);
     }
     
-    public void cget(Interp ip,String optname) throws HeclException {
-	Alert a = (Alert)getData();
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(Alert.class);
+	p.setProps(argv,1);
+	Alert w = new Alert(p.getProp(WidgetInfo.NTITLE).toString(),
+			    p.getProp(WidgetInfo.NTEXT).toString(),
+			    null,
+			    WidgetInfo.toAlertType(p.getProp(WidgetInfo.NTYPE)));
+	p.delProp(WidgetInfo.NTITLE);
+	p.delProp(WidgetInfo.NTEXT);
+	p.delProp(WidgetInfo.NTYPE);
+	return ObjectThing.create(setInstanceProperties(interp,w,p));
+    };
+    
+    private AlertCmd() {}
+    
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	Alert a = (Alert)target;
 	
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    ip.setResult(WidgetInfo.fromAlertType(a.getType()));
-	    return;
+	if(optname.equals(WidgetInfo.NTYPE))
+	    return WidgetInfo.fromAlertType(a.getType());
+	if(optname.equals(WidgetInfo.NTEXT))
+	    return StringThing.create(a.getString());
+	if(optname.equals("-timeout"))
+	    return IntThing.create(a.getTimeout());
+	if(optname.equals("-indicator")) {
+	    return IntThing.create(a.getIndicator() != null);
 	}
-	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ip.setResult(a.getString());
-	    return;
-	}
-	if(optname.equals("-timeout")) {
-	    ip.setResult(indicator != null);
-	    return;
-	}
-	super.cget(ip,optname);
+	return super.cget(ip,target,optname);
     }
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Alert a = (Alert)getData();
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Alert a = (Alert)target;
 
 	if(optname.equals(WidgetInfo.NTEXT)) {
 	    a.setString(optval.toString());
@@ -98,6 +105,7 @@ public class AlertCmd extends ScreenCmd {
 	    return;
 	}
 	if(optname.equals("-indicator")) {
+	    Gauge indicator = a.getIndicator();
 	    if(HeclUtils.thing2bool(optval)) {
 		if(indicator == null)
 		    indicator = new Gauge(null, false, Gauge.INDEFINITE,
@@ -108,31 +116,38 @@ public class AlertCmd extends ScreenCmd {
 	    a.setIndicator(indicator);
 	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
 
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
 	if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
 	    // extension: setcurrent alert ?nextdisplayable?
 	    if(argv.length == startat+1) {
-		WidgetMap wm = WidgetMap.mapOf(ip);
-		Displayable d = (Displayable)wm.asWidget(argv[startat],Displayable.class,
-							 "Displayable",false);
+		Displayable d = (Displayable)WidgetInfo.asWidget(argv[startat],Displayable.class,
+								"Displayable",false);
 		if(d != null) {
 		    // start j2mepolish break down
 		    // to allow correct preprocessing
-		    Alert alert = (Alert)getData();
+		    Alert alert = (Alert)target;
 		    Display displ = MidletCmd.getDisplay();
 		    displ.setCurrent(alert,d);
 		    // end j2mepolish break down
-		    return;
+		    return null;
 		}
 		throw new HeclException("Invalid displayable.");
 	    }
 	    // fall thru, baseclass 
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
-    Gauge indicator = null;
+
+    private static AlertCmd cmd = new AlertCmd();
+    private static final String CMDNAME = "lcdui.alert";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

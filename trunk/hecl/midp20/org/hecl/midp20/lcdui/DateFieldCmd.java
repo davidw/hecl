@@ -19,58 +19,77 @@
 
 package org.hecl.midp20.lcdui;
 
-import javax.microedition.lcdui.Ticker;
+import java.util.Date;
+
+import javax.microedition.lcdui.DateField;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
-import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class TickerCmd extends OptionCmd {
+public class DateFieldCmd extends ItemCmd {
     public static void load(Interp ip) {
 	ip.addCommand(CMDNAME,cmd);
-	ip.addClassCmd(Ticker.class,cmd);
+	ip.addClassCmd(DateField.class,cmd);
     }
     public static void unload(Interp ip) {
 	ip.removeCommand(CMDNAME);
-	ip.removeClassCmd(Ticker.class);
-    }
-    
-    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
-	Properties p = WidgetInfo.defaultProps(Ticker.class);
-	p.setProps(argv,1);
-	Ticker w = new Ticker(p.getProp(WidgetInfo.NTEXT).toString());
-	p.delProp(WidgetInfo.NTEXT);
-	return ObjectThing.create(setInstanceProperties(interp,w,p));
+	ip.removeClassCmd(DateField.class);
     }
 
-    private TickerCmd() {}
-	
+    /*
+    public DateGadget(String label,int mode,FormCmd f) {
+	super(new DateField(label,mode),f);
+    }
+    */
+    protected DateFieldCmd() {}
+    
+    
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(DateField.class);
+	p.setProps(argv,1);
+	DateField df = new DateField(p.getProp(WidgetInfo.NLABEL).toString(),
+				     WidgetInfo.toDateFieldMode(
+					 p.getProp(WidgetInfo.NTYPE)));
+	p.delProp(WidgetInfo.NLABEL);
+	p.delProp(WidgetInfo.NTYPE);
+	return ObjectThing.create(setInstanceProperties(interp,df,p));
+    }
+
+
     public Thing cget(Interp ip,Object target,String optname) throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
-	if(optname.equals(WidgetInfo.NTEXT))
-	    return StringThing.create(ticker.getString());
+	DateField df = (DateField)target;
+
+	if(optname.equals(WidgetInfo.NTYPE))
+	    return WidgetInfo.fromDateFieldMode(df.getInputMode());
+	if(optname.equals("-date"))
+	    return LongThing.create(df.getDate().getTime());
 	return super.cget(ip,target,optname);
     }
 
+
     public void cset(Interp ip,Object target,String optname,Thing optval)
 	throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
-	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ticker.setString(optval.toString());
+	DateField df = (DateField)target;
+
+	if(optname.equals(WidgetInfo.NTYPE)) {
+	    df.setInputMode(WidgetInfo.toDateFieldMode(optval));
+	    return;
+	}
+	if(optname.equals("-date")) {
+	    df.setDate(new Date(LongThing.get(optval)));
 	    return;
 	}
 	super.cset(ip,target,optname,optval);
     }
 
-    private static TickerCmd cmd = new TickerCmd();
-    private static final String CMDNAME = "lcdui.ticker";
+    private static DateFieldCmd cmd = new DateFieldCmd();
+    private static final String CMDNAME = "lcdui.date";
 }
-    
+
 // Variables:
 // mode:java
 // coding:utf-8

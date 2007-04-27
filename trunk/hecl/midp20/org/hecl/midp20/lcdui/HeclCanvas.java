@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -51,16 +51,16 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
     public HeclCanvas(boolean suppressKeyEvents) {
 	super(suppressKeyEvents);
-	nokeyevents = !suppressKeyEvents;
+	this.nokeyevents = !suppressKeyEvents;
 
 	//de.enough.polish.ui.game.GameCanvas has no getGraphics method
 //#ifdef polish.blackberry 
-	mygraphics = super.getPolishGraphics();
+	this.mygraphics = super.getPolishGraphics();
 //#else
-	mygraphics = super.getGraphics();
+	this.mygraphics = super.getGraphics();
 //#endif
 	calcScreenWidth();
-	graphicscmd = new GraphicsCmd(mygraphics,drawwidth,drawheight);
+	this.drawable = new Drawable(this.mygraphics,this.drawwidth,this.drawheight);
 	// Force initial draw
 	showCommands(mygraphics);
 	flushGraphics();
@@ -68,8 +68,8 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     
 
     public void addCommand(Command cmd) {
-	for (int i=0; i<cmds.size(); i++) {
-	    if (cmd == (Command)cmds.elementAt(i)) {
+	for (int i=0; i<this.cmds.size(); i++) {
+	    if (cmd == (Command)this.cmds.elementAt(i)) {
 		// Its the same just return
 		return;
 	    }
@@ -79,16 +79,16 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
 	// Now insert it in order (according to priority)
 	boolean inserted = false;
-	for (int i=0; i<cmds.size(); i++) {
-	    if (cmd.getPriority() < ((Command)cmds.elementAt(i)).getPriority()) {
-		cmds.insertElementAt(cmd,i);
+	for (int i=0; i<this.cmds.size(); i++) {
+	    if (cmd.getPriority() < ((Command)this.cmds.elementAt(i)).getPriority()) {
+		this.cmds.insertElementAt(cmd,i);
 		inserted = true;
 		break;
 	    }
 	}
 	if (inserted == false) {
 	    // Not inserted just place it at the end
-	    cmds.addElement(cmd);
+	    this.cmds.addElement(cmd);
 	}
 	updateCommands();
     }
@@ -129,37 +129,19 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
 
 
-    public Color getCmdBgColor() {
-	return cmdbgcolor;
-    }
+    public Color getCmdBgColor() {return cmdbgcolor;}
 
-
-    public Color getCmdFgColor() {
-	return cmdfgcolor;
-    }
+    public Color getCmdFgColor() {return cmdfgcolor;}
     
+    public Vector getCommands() {return cmds;}
 
-    public Vector getCommands() {
-	return cmds;
-    }
-
-
-    public int getFullWidth() {
-	return fullwidth;
-    }
+    public int getFullWidth() {return fullwidth;}
     
-
-    public int getFullHeight() {
-	return fullheight;
-    }
+    public int getFullHeight() {return fullheight;}
     
-    public int getDrawWidth() {
-	return drawwidth;
-    }
+    public int getDrawWidth() {return drawwidth;}
     
-    public int getDrawHeight() {
-	return drawheight;
-    }
+    public int getDrawHeight() {return drawheight;}
 
     public int getGameAction(int keyCode) {
 	if(keyCode == KEYCODE_LEFT_SK)
@@ -170,15 +152,9 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
 
 
-    public boolean getFullScreenMode() {
-	return isfullscreen;
-    }
+    public boolean getFullScreenMode() {return isfullscreen;}
 
-   
-    public Graphics getGraphics() {
-	//return super.getGraphics();
-	return mygraphics;
-    }
+    public Graphics getGraphics() {return mygraphics;}
     
 
     public int getKeyCode(int gameAction) {
@@ -339,7 +315,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     public void paint(Graphics g) {
 	//System.err.println("PAINT called");
 	callEventHandler(CanvasEvent.E_PAINT,0,0,drawwidth,drawheight,0);
-	if(graphicscmd != null && graphicscmd.needsFlush()) {
+	if(this.drawable != null && this.drawable.needsFlush()) {
 	    flushGraphics();
 	}
 	showCommands(mygraphics);
@@ -430,14 +406,12 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 //#ifdef debug
 	System.err.println("size changed, w="+w+", h="+h);
 	System.err.println("size changed, w="+super.getWidth()+", h="+super.getHeight());
-	System.err.println("resizing GraphicsCmd...");
 //#endif
 	// go calculate. remind: some nokia devices have a bug that cause
 	// wrong values to be passed as arguments to this function.
 	calcScreenWidth();
-	Drawable d = (Drawable)graphicscmd.getData();
-	if(d != null) {
-	    d.resize(drawwidth,drawheight);
+	if(this.drawable != null) {
+	    this.drawable.resize(drawwidth,drawheight);
 	}
 	try {
 	    callEventHandler(CanvasEvent.E_RESIZE,0,0,drawwidth,drawheight,0);
@@ -466,9 +440,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	}
     }
 
-    public GraphicsCmd getGraphicsCmd() {
-	return graphicscmd;
-    }
+    public Drawable getDrawable() {return this.drawable;}
     
 
     protected boolean isSoftKey(int keycode) {
@@ -586,13 +558,22 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
     
     private void calcScreenWidth() {
-	fullwidth = super.getWidth();
-	fullheight = super.getHeight();
-	drawwidth = fullwidth;
-	drawheight = getFullScreenMode() && !SettingsCmd.cvkeepcmdsinfullscreen ?
-	    fullheight-CMDBARHEIGHT : fullheight;
+	this.fullwidth = super.getWidth();
+	this.fullheight = super.getHeight();
+	this.drawwidth = fullwidth;
+	this.drawheight = getFullScreenMode() && !SettingsCmd.cvkeepcmdsinfullscreen ?
+	    this.fullheight-CMDBARHEIGHT : this.fullheight;
     }
 
+    public boolean getAutoFlushMode() {
+	return this.autoflush;
+    }
+    
+
+    public void setAutoFlushMode(boolean b) {
+	this.autoflush = b;
+    }
+    
     protected boolean nokeyevents;
     protected EventHandler evh = null;
     protected Vector cmds = new Vector();
@@ -600,7 +581,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     protected CommandListener savecmdlistener = null;
     private Graphics mygraphics = null;
     private boolean isfullscreen = false;
-    private GraphicsCmd graphicscmd;
+    private Drawable drawable;
     private SoftButton buttons[] = SoftButton.makeSoftButtons();
     private Vector menucommands = null;
     private List menulist = new List("Menu", List.IMPLICIT);
@@ -610,6 +591,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     private int drawheight = 1;
     private Color cmdbgcolor = SettingsCmd.cvcmdbgcolor;
     private Color cmdfgcolor = SettingsCmd.cvcmdfgcolor;
+    private boolean autoflush = true;
 
     static class SoftButton {
 	private static SoftButton[] makeSoftButtons() {
@@ -682,3 +664,8 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	}
     }
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

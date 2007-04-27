@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -28,69 +28,82 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.ObjectThing;
+import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
-public class ChoiceGadget extends FormGadget {
-    public ChoiceGadget(String label,int choiceType,FormCmd f) {
-	super(new ChoiceGroup(label,choiceType),f);
-	choicetype = choiceType;
+public class ChoiceGroupCmd extends ItemCmd {
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(ChoiceGroup.class,cmd);
     }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(ChoiceGroup.class);
+    }
+    
 
+    protected ChoiceGroupCmd() {}
+    
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(ChoiceGroup.class);
+	p.setProps(argv,1);
+	ChoiceGroup cg = new ChoiceGroup(p.getProp(WidgetInfo.NLABEL).toString(),
+					 WidgetInfo.toChoiceType(p.getProp(WidgetInfo.NTYPE)));
+	p.delProp(WidgetInfo.NLABEL);
+	p.delProp(WidgetInfo.NTYPE);
+	return ObjectThing.create(setInstanceProperties(interp,cg,p));
+    }
+    
 
-    public void cget(Interp ip,String optname) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)theitem;
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	ChoiceGroup cg = (ChoiceGroup)target;
 	
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    ip.setResult(WidgetInfo.fromChoiceType(choicetype));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NFIT)) {
-	    ip.setResult(WidgetInfo.fromWrap(cg.getFitPolicy()));
-	    return;
-	}
-	super.cget(ip,optname);
+	/*
+	if(optname.equals(WidgetInfo.NTYPE))
+	    return WidgetInfo.fromChoiceType(cg.getType());
+	*/
+	if(optname.equals(WidgetInfo.NFIT))
+	    return WidgetInfo.fromWrap(cg.getFitPolicy());
+	return super.cget(ip,target,optname);
     }
 
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)theitem;
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	ChoiceGroup cg = (ChoiceGroup)target;
 	
 	if(optname.equals(WidgetInfo.NFIT)) {
 	    cg.setFitPolicy(WidgetInfo.toWrap(optval));
 	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
 
 
-    public void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)theitem;
-	
-	if(optname.equals(WidgetInfo.NFONT)) {
-	    FontMap.setResult(ip,cg.getFont(itemno));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ip.setResult(cg.getString(itemno));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    ip.setResult(ImageMap.mapOf(ip).nameOf(cg.getImage(itemno)));
-	    return;
-	}
-	if(optname.equals("-selected")) {
-	    ip.setResult(cg.isSelected(itemno));
-	    return;
-	}
-	super.itemcget(ip,itemno,optname);
-    }
-
-
-    public void itemcset(Interp ip,int itemno,String optname,Thing optval)
+    public Thing itemcget(Interp ip,Object target,int itemno,String optname)
 	throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)theitem;
+	ChoiceGroup cg = (ChoiceGroup)target;
+	
+	if(optname.equals(WidgetInfo.NFONT))
+	    return FontMap.fontThing(cg.getFont(itemno));
+	if(optname.equals(WidgetInfo.NTEXT))
+	    return StringThing.create(cg.getString(itemno));
+	if(optname.equals(WidgetInfo.NIMAGE))
+	    return ObjectThing.create(cg.getImage(itemno));
+	if(optname.equals("-selected"))
+	    return IntThing.create(cg.isSelected(itemno));
+	return super.itemcget(ip,target,itemno,optname);
+    }
+
+
+    public void itemcset(Interp ip,Object target,int itemno,String optname,Thing optval)
+	throws HeclException {
+	ChoiceGroup cg = (ChoiceGroup)target;
 	
 	if(optname.equals(WidgetInfo.NFONT)) {
 	    cg.setFont(itemno,FontMap.get(optval));
@@ -101,22 +114,23 @@ public class ChoiceGadget extends FormGadget {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    //l.set(itemno,cg.toString(itemno),thing2image(optval));
+	    cg.set(itemno,cg.getString(itemno),WidgetInfo.asImage(optval,true,true));
 	    return;
 	}
 	if(optname.equals("-selected")) {
 	    cg.setSelectedIndex(itemno,HeclUtils.thing2bool(optval));
 	    return;
 	}
-	super.itemcset(ip,itemno,optname,optval);
+	super.itemcset(ip,target,itemno,optname,optval);
     }
 	
 	
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
-	ChoiceGroup cg = (ChoiceGroup)theitem;
+	ChoiceGroup cg = (ChoiceGroup)target;
 	
-	//System.err.println("-->ChoiceGadget::handlecmd("+subcmd+")\n\tcg="+cg);
+	//System.err.println("-->ChoiceGroupCmd::handlecmd("+subcmd+")\n\tcg="+cg);
 
 	if(subcmd.equals("selection")) {
 	    int n = startat+1;
@@ -129,7 +143,7 @@ public class ChoiceGadget extends FormGadget {
 	    /*
 	    if(selcmd.equals("index")) {
 		ip.setResult(IntThing.create(l.getSelectedIndex()));
-		return;
+		return null;
 	    }
 	    */
 	    if(selcmd.equals("get")) {
@@ -141,8 +155,7 @@ public class ChoiceGadget extends FormGadget {
 		    if(b[i])
 			v.addElement(IntThing.create(i));
 		}
-		ip.setResult(ListThing.create(v));
-		return;
+		return ListThing.create(v);
 	    }
 	    if(selcmd.equals("set")) {
 		// Need index arg.
@@ -153,7 +166,7 @@ public class ChoiceGadget extends FormGadget {
 			argv, n, "selection set index");
 		}
 		cg.setSelectedIndex(HeclUtils.thing2int(argv[startat],true,0),true);
-		return;
+		return null;
 	    }
 	    if(selcmd.equals("clear")) {
 		// Need index arg.
@@ -170,15 +183,13 @@ public class ChoiceGadget extends FormGadget {
 		    }
 		    cg.setSelectedFlags(sels);
 		}
-		return;
+		return null;
 	    }
 	    // unknown selection subcmd
-	    return;
+	    return null;
 	}
-	if(subcmd.equals("size")) {
-	    ip.setResult(cg.size());
-	    return;
-	}
+	if(subcmd.equals("size"))
+	    return IntThing.create(cg.size());
 	if(subcmd.startsWith("item",0)) {
 	    // item<something> requires an item as parameter
 	    int n = startat+1;
@@ -197,9 +208,9 @@ public class ChoiceGadget extends FormGadget {
 
 	    if(subcmd.equals("itemconfigure")) {
 		for(int i = n; i<argv.length; i+= 2) {
-		    itemcset(ip,itempos,argv[i].toString(),argv[i+1]);
+		    itemcset(ip,cg,itempos,argv[i].toString(),argv[i+1]);
 		}
-		return;
+		return null;
 	    }
 	    if(subcmd.equals("itemcget")) {
 		++n;
@@ -207,8 +218,7 @@ public class ChoiceGadget extends FormGadget {
 		    throw HeclException.createWrongNumArgsException(
 			argv, n, "item itemoptname");
 		}
-		itemcget(ip,itempos,argv[n-1].toString());
-		return;
+		return itemcget(ip,cg,itempos,argv[n-1].toString());
 	    }
 	}
 	if(subcmd.equals("delete")) {
@@ -219,12 +229,13 @@ public class ChoiceGadget extends FormGadget {
 	    }
 	    int itempos = HeclUtils.thing2int(argv[n-1],true,0);
 	    cg.delete(itempos);
-	    return;
+	    return null;
 	}
 	if(subcmd.equals("deleteall")) {
 	    cg.deleteAll();
-	    return;
+	    return null;
 	}
+
 	if(subcmd.equals("append")) {
 	    if(startat+1 != argv.length && startat+2 != argv.length) {
 		throw HeclException.createWrongNumArgsException(
@@ -232,9 +243,10 @@ public class ChoiceGadget extends FormGadget {
 	    }
 	    cg.append(argv[startat].toString(),
 		      startat+1 < argv.length ?
-		      ImageMap.asImage(ip,argv[startat+1],true) : null);
-	    return;
+		      GUICmds.asImage(argv[startat+1],true) : null);
+	    return null;
 	}
+
 	if(subcmd.equals("insert")) {
 	    int n = startat + 2;
 	    if(argv.length != n) {
@@ -244,10 +256,16 @@ public class ChoiceGadget extends FormGadget {
 	    int itemno = HeclUtils.thing2int(argv[startat],true,0);
 	    cg.insert(itemno,argv[startat+1].toString(),
 		     null/*thing2image(argv[startat+2])*/);
-	    return;
+	    return null;
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
-    protected int choicetype;
+    private static ChoiceGroupCmd cmd = new ChoiceGroupCmd();
+    private static final String CMDNAME = "lcdui.choicegroup";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

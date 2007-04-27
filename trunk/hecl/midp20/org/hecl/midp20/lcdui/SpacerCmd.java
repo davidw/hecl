@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -24,30 +24,48 @@ import javax.microedition.lcdui.Spacer;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.Properties;
+import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
-public class SpacerGadget extends FormGadget {
-    public SpacerGadget(int minWidth,int minHeight,FormCmd f) {
-	super(new Spacer(minWidth,minHeight),f);
+public class SpacerCmd extends ItemCmd {
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(Spacer.class,cmd);
     }
-
-
-    Spacer getSpacer() {
-	return (Spacer)getItem();
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(Spacer.class);
     }
     
 
-    public void cget(Interp ip,String optname) throws HeclException {
-	if(optname.equals(WidgetInfo.NLABEL)) {
+    public Thing cmdCode(Interp interp,Thing[] argv)
+	throws HeclException {
+	Properties p = WidgetInfo.defaultProps(Spacer.class);
+	p.setProps(argv,1);
+	Spacer sp = new Spacer(IntThing.get(p.getProp(WidgetInfo.NMINWIDTH)),
+			       IntThing.get(p.getProp(WidgetInfo.NMINHEIGHT)));
+	p.delProp(WidgetInfo.NMINWIDTH);
+	p.delProp(WidgetInfo.NMINHEIGHT);
+	return ObjectThing.create(setInstanceProperties(interp,sp,p));
+    }
+    
+
+    protected SpacerCmd() {}
+    
+
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	if(optname.equals(WidgetInfo.NLABEL))
 	    // no label
-	    ip.setResult(Thing.EMPTYTHING);
-	    return;
-	}
-	super.cget(ip,optname);
+	    return Thing.EMPTYTHING;
+	return super.cget(ip,target,optname);
     }
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Spacer spacer = (Spacer)theitem;
+
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Spacer spacer = (Spacer)target;
 
 	if(optname.equals(WidgetInfo.NLABEL)) {
 	    // Ignore
@@ -67,11 +85,12 @@ public class SpacerGadget extends FormGadget {
 	    spacer.setMinimumSize(spacer.getMinimumWidth(),newval);
 	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
 
 
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
 	if(subcmd.equals(WidgetInfo.NADDCOMMAND)) {
 	    // Ignore
@@ -81,8 +100,14 @@ public class SpacerGadget extends FormGadget {
 	    // Ignore
 	    //throw new HeclException("Spacer does not support commands.");
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
+    private static SpacerCmd cmd = new SpacerCmd();
+    private static final String CMDNAME = "lcdui.spacer";
 }
 
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

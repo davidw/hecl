@@ -19,58 +19,80 @@
 
 package org.hecl.midp20.lcdui;
 
-import javax.microedition.lcdui.Ticker;
+import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.ImageItem;
+import javax.microedition.lcdui.Item;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
-import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.ObjectThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class TickerCmd extends OptionCmd {
+import org.hecl.misc.HeclUtils;
+
+public class ImageItemCmd extends ItemCmd {
     public static void load(Interp ip) {
 	ip.addCommand(CMDNAME,cmd);
-	ip.addClassCmd(Ticker.class,cmd);
+	ip.addClassCmd(ImageItem.class,cmd);
     }
     public static void unload(Interp ip) {
 	ip.removeCommand(CMDNAME);
-	ip.removeClassCmd(Ticker.class);
-    }
-    
-    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
-	Properties p = WidgetInfo.defaultProps(Ticker.class);
-	p.setProps(argv,1);
-	Ticker w = new Ticker(p.getProp(WidgetInfo.NTEXT).toString());
-	p.delProp(WidgetInfo.NTEXT);
-	return ObjectThing.create(setInstanceProperties(interp,w,p));
+	ip.removeClassCmd(ImageItem.class);
     }
 
-    private TickerCmd() {}
-	
-    public Thing cget(Interp ip,Object target,String optname) throws HeclException {
-	Ticker ticker = (Ticker)target;
+    protected ImageItemCmd() {}
+
+
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(ImageItem.class);
+	p.setProps(argv,1);
+	ImageItem im = new ImageItem(p.getProp(WidgetInfo.NLABEL).toString(),
+				     null,
+				     Item.LAYOUT_DEFAULT,
+				     p.getProp(WidgetInfo.NTEXT).toString(),
+				     WidgetInfo.toItemAppearance(
+					 p.getProp(WidgetInfo.NAPPEARANCE)));
+	p.delProp(WidgetInfo.NLABEL);
+	p.delProp(WidgetInfo.NTEXT);
+	p.delProp(WidgetInfo.NAPPEARANCE);
+	return ObjectThing.create(setInstanceProperties(interp,im,p));
+    }
+
+    
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	ImageItem item = (ImageItem)target;
 	
 	if(optname.equals(WidgetInfo.NTEXT))
-	    return StringThing.create(ticker.getString());
+	    return StringThing.create(item.getAltText());
+	if(optname.equals(WidgetInfo.NIMAGE))
+	    return ObjectThing.create(item.getImage());
+	if(optname.equals(WidgetInfo.NAPPEARANCE))
+	    return WidgetInfo.fromItemAppearance(item.getAppearanceMode());
 	return super.cget(ip,target,optname);
     }
-
+    
     public void cset(Interp ip,Object target,String optname,Thing optval)
 	throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
+	ImageItem item = (ImageItem)target;
+
 	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ticker.setString(optval.toString());
+	    item.setAltText(optval.toString());
+	    return;
+	}
+	if(optname.equals(WidgetInfo.NIMAGE)) {
+	    item.setImage(WidgetInfo.asImage(optval,true,true));
 	    return;
 	}
 	super.cset(ip,target,optname,optval);
     }
 
-    private static TickerCmd cmd = new TickerCmd();
-    private static final String CMDNAME = "lcdui.ticker";
+    private static ImageItemCmd cmd = new ImageItemCmd();
+    private static final String CMDNAME = "lcdui.imageitem";
 }
-    
+
 // Variables:
 // mode:java
 // coding:utf-8

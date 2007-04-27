@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -27,137 +27,123 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
-class FontMap {
-    public static final Command FONTCMD = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		int numargs = argv.length;
+class FontMap implements org.hecl.Command {
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+    }
+    
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	int numargs = argv.length;
+	
+	if(numargs < 2)
+	    throw HeclException.createWrongNumArgsException(
+		argv, 1, "font names or font <font> command [args...]");
+	
+	String subcmd = argv[1].toString();
+	if(numargs == 2) {
+	    if(subcmd.equals("names")) {
+		Vector allfonts = new Vector();
 		
-		if(numargs < 2)
-		    throw HeclException.createWrongNumArgsException(
-			argv, 1, "font names or font <font> command [args...]");
-		
-		String subcmd = argv[1].toString();
-		if(numargs == 2) {
-		    if(subcmd.equals("names")) {
-			Vector allfonts = new Vector();
-			
-			for(int i=0; i<faces.length; ++i) {
-			    for(int j=0; j<styles.length; ++j) {
-				for(int k=0; k<sizes.length; ++k) {
-				    Font f = Font.getFont(faces[i],styles[j],sizes[k]);
-				    if(null != f) {
-					String fontname = get(f);
+		for(int i=0; i<faces.length; ++i) {
+		    for(int j=0; j<styles.length; ++j) {
+			for(int k=0; k<sizes.length; ++k) {
+			    Font f = Font.getFont(faces[i],styles[j],sizes[k]);
+			    if(null != f) {
+				String fontname = get(f);
 					allfonts.addElement(new Thing(fontname));
-				    }
-				}
 			    }
 			}
-			interp.setResult(ListThing.create(allfonts));
-			return;
 		    }
 		}
-		if(numargs > 2) {
-		    Font font = get(argv[1]);
-		    
-		    if(font == null) {
-			throw new HeclException("Invalid font '"
-						+argv[1].toString()+"'.");
-		    }
-		    
-		    subcmd = argv[2].toString().toLowerCase();
-		    int n = 3;
-		    if(subcmd.equals(WidgetInfo.NCGET)) {
-			if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
-			    throw HeclException.createWrongNumArgsException(
-				argv, n+1, "option");
-			}
-			String optname = argv[n].toString().toLowerCase();
-			if(optname.equals("-face")) {
-			    interp.setResult(WidgetInfo.fromFontFace(font.getFace()));
-			    return;
-			}
-			if(optname.equals("-size")) {
-			    interp.setResult(WidgetInfo.fromFontSize(font.getSize()));
-			    return;
-			}
-			if(optname.equals("-plain")) {
-			    interp.setResult(font.isPlain());
-			    return;
-			}
-			if(optname.equals("-bold")) {
-			    interp.setResult(font.isBold());
-			    return;
-			}
-			if(optname.equals("-italic")) {
-			    interp.setResult(font.isItalic());
-			    return;
-			}
-			if(optname.equals("-underlined")) {
-			    interp.setResult(font.isUnderlined());
-			    return;
-			}
-			if(optname.equals(WidgetInfo.NHEIGHT)) {
-			    interp.setResult(font.getHeight());
-			    return;
-			}
-			if(optname.equals("-baselineposition")) {
-			    interp.setResult(font.getBaselinePosition());
-			    return;
-			}
-			throw new HeclException("Unknown cget option '"+optname+"'");
-		    }
-		    /*
-		      if(subcmd.equals("configure")) {
-		      }
-		    */
-		    if(subcmd.equals("charwidth")) {
-			// charwidth string [offset [len]]
-			if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
-			    throw HeclException.createWrongNumArgsException(
-				argv, n+1, "string [offset [len]]");
-			}
-			char[] thechars = argv[n++].toString().toCharArray();
-			int offset = 0;
-			int len = thechars.length;
-			    
-			if(n < numargs) {
-			    offset = IntThing.get(argv[n++]);
-			    len = (n < numargs) ? IntThing.get(argv[n++]) : len - offset;
-			}
-			checkOffsetAndLength(offset,len,thechars.length);
-			interp.setResult(font.charsWidth(thechars,offset,len));
-			return;
-		    }
-		    if(subcmd.equals("stringwidth")) {
-			// stringwidth string [offset [len]]
-			if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
-			    throw HeclException.createWrongNumArgsException(
-				argv, n+1, "string [offset [len]]");
-			}
-			String s = argv[n++].toString();
-			int offset = 0;
-			int len = s.length();
-			    
-			if(n < numargs) {
-			    offset = IntThing.get(argv[n++]);
-			    len = (n < numargs) ? IntThing.get(argv[n++]) : len - offset;
-			}
-			checkOffsetAndLength(offset,len,s.length());
-			interp.setResult(font.substringWidth(s,offset,len));
-			return;
-		    }
-		}
-		throw new HeclException("Invalid font command '"+subcmd+"'!");
+		return ListThing.create(allfonts);
 	    }
-	};
+	}
+	if(numargs > 2) {
+	    Font font = get(argv[1]);
+	    
+	    if(font == null)
+		throw new HeclException("Invalid font '"
+					+argv[1].toString()+"'.");
+	    
+	    subcmd = argv[2].toString().toLowerCase();
+	    int n = 3;
+	    if(subcmd.equals(WidgetInfo.NCGET)) {
+		if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
+		    throw HeclException.createWrongNumArgsException(
+			argv, n+1, "option");
+		}
+		String optname = argv[n].toString().toLowerCase();
+		if(optname.equals("-face"))
+		    return WidgetInfo.fromFontFace(font.getFace());
+		if(optname.equals("-size"))
+		    return WidgetInfo.fromFontSize(font.getSize());
+		if(optname.equals("-plain"))
+		    return IntThing.create(font.isPlain());
+		if(optname.equals("-bold"))
+		   return IntThing.create(font.isBold());
+		if(optname.equals("-italic"))
+		    return IntThing.create(font.isItalic());
+		if(optname.equals("-underlined"))
+		    return IntThing.create(font.isUnderlined());
+		if(optname.equals(WidgetInfo.NHEIGHT))
+		    return IntThing.create(font.getHeight());
+		if(optname.equals("-baselineposition"))
+		    return IntThing.create(font.getBaselinePosition());
+		throw new HeclException("Unknown cget option '"+optname+"'");
+	    }
+	    /*
+	      if(subcmd.equals("configure")) {
+	      }
+	    */
+	    if(subcmd.equals("charwidth")) {
+		// charwidth string [offset [len]]
+		if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
+		    throw HeclException.createWrongNumArgsException(
+			argv, n+1, "string [offset [len]]");
+		}
+		char[] thechars = argv[n++].toString().toCharArray();
+		int offset = 0;
+		int len = thechars.length;
+		
+		if(n < numargs) {
+		    offset = IntThing.get(argv[n++]);
+		    len = (n < numargs) ? IntThing.get(argv[n++]) : len - offset;
+		}
+		checkOffsetAndLength(offset,len,thechars.length);
+		return IntThing.create(font.charsWidth(thechars,offset,len));
+	    }
+	    if(subcmd.equals("stringwidth")) {
+		// stringwidth string [offset [len]]
+		if(0 != HeclUtils.testArguments(argv,n+1,-1)) {
+		    throw HeclException.createWrongNumArgsException(
+			argv, n+1, "string [offset [len]]");
+		}
+		String s = argv[n++].toString();
+		int offset = 0;
+		int len = s.length();
+		
+		if(n < numargs) {
+		    offset = IntThing.get(argv[n++]);
+		    len = (n < numargs) ? IntThing.get(argv[n++]) : len - offset;
+		}
+		checkOffsetAndLength(offset,len,s.length());
+		return IntThing.create(font.substringWidth(s,offset,len));
+	    }
+	}
+	throw new HeclException("Invalid font command '"+subcmd+"'!");
+    }
     
     
-    public static void setResult(Interp ip,Font f) throws HeclException {
-	ip.setResult(new Thing(get(f)));
+    public static Thing fontThing(Font f) throws HeclException {
+	return StringThing.create(get(f));
     }
     
     
@@ -270,4 +256,11 @@ class FontMap {
 	    Font.STYLE_BOLD|Font.STYLE_ITALIC|Font.STYLE_UNDERLINED
     };
 
+    private static FontMap cmd = new FontMap();
+    private static final String CMDNAME = "lcdui.font";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

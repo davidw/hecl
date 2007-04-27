@@ -25,9 +25,7 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Properties;
 
-public class ScreenCmd extends DisplayableCmd {
-    protected ScreenCmd(Interp ip,Screen s,Properties p) throws HeclException {
-	super(ip,s,p);
-    }
+public abstract class ScreenCmd extends DisplayableCmd {
+    protected ScreenCmd() {}
 }
     

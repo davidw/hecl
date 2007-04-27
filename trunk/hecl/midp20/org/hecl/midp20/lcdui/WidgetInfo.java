@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -33,6 +33,7 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Gauge;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.ImageItem;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
@@ -46,11 +47,65 @@ import org.hecl.HeclException;
 import org.hecl.IntThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.RealThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
 public class WidgetInfo {
+
+    public static Object asWidget(Thing thing,Class clazz,
+				  String clazzname, boolean allownull)
+	throws HeclException {
+	if(allownull && thing.toString().length() == 0)
+	    return null;
+	RealThing rt = thing.getVal();
+	if(rt instanceof ObjectThing) {
+	    Object x = ((ObjectThing)rt).get();
+	    if(allownull && x == null)
+		return null;
+	    if(clazz.isAssignableFrom(x.getClass()))
+		return x;
+	}
+	if(clazzname != null) {
+	    throw HeclException.createInvalidParameter(
+		thing,"parameter",clazzname + " widget required.");
+	}
+    	return null;
+    }
+    
+
+    public static Command asCommand(Thing thing, boolean allownull,boolean throwerror)
+	throws HeclException {
+	return (Command)asWidget(thing, Command.class,
+				 throwerror? "Command" :null,allownull);
+    }
+
+
+    public static Gauge asGauge(Thing thing, boolean allownull,boolean throwerror)
+	throws HeclException {
+	return (Gauge)asWidget(thing, Gauge.class,
+			       throwerror ? "Gauge" : null,allownull);
+    }
+    
+
+    public static Image asImage(Thing thing, boolean allownull,boolean throwerror)
+	throws HeclException {
+	return (Image)asWidget(thing, Image.class, throwerror ? "Image" : null,allownull);
+    }
+
+    public static Item asItem(Thing thing, boolean allownull,boolean throwerror)
+	throws HeclException {
+	return (Item)asWidget(thing, Item.class, throwerror ? "Item" : null,allownull);
+    }
+
+    public static Ticker asTicker(Thing thing, boolean allownull,boolean throwerror)
+	throws HeclException {
+	return (Ticker)asWidget(thing, Ticker.class,
+				throwerror ? "Ticker" : null,allownull);
+    }
+
+
     public static AlertType toAlertType(Thing t) throws HeclException {
 	String s = t.toString().toLowerCase();
 	int l = alerttypenames.length;
@@ -345,6 +400,7 @@ public class WidgetInfo {
      * Some command names (in alphabetical order)
      */
     public static final String NADDCOMMAND = "addcommand";
+    public static final String NAPPEND = "append";
     public static final String NCGET = "cget";
     public static final String NCONF = "conf";
     public static final String NCONFIGURE = "configure";
@@ -354,7 +410,6 @@ public class WidgetInfo {
     public static final String NITEMCGET = "itemcget";
     public static final String NITEMCONF = "itemconf";
     public static final String NITEMCONFIGURE = "itemconfigure";
-    public static final String NITEMOP = "itemop";
     public static final String NREMOVECOMMAND = "removecommand";
     public static final String NREPAINT = "repaint";
     public static final String NSETCURRENT = "setcurrent";
@@ -379,7 +434,6 @@ public class WidgetInfo {
     public static final String NHEIGHT = "-height";
     public static final String NIMAGE = "-image";
     public static final String NINTERACTIVE = "-interactive";
-    public static final String NITEMCOMMANDACTION = "-itemcommandaction";
     public static final String NLABEL = "-label";
     public static final String NLINETYPE = "-linetype";
     public static final String NLONGLABEL = "-longlabel";
@@ -401,10 +455,10 @@ public class WidgetInfo {
     public static final String NVEXPAND = "-vexpand";
     public static final String NWIDTH = "-width";
     
-    static final Thing defaultthing = new Thing("default");
-    static final Thing anything = new Thing("any");
-    static final Thing zero = IntThing.create(0);
-    static final Thing one = IntThing.create(1);
+    static final Thing DEFAULTTHING = new Thing("default");
+    static final Thing ANYTHING = new Thing("any");
+    static final Thing ZERO = IntThing.create(0);
+    static final Thing ONE = IntThing.create(1);
     
     /*
      * Common Widget properties and default values.
@@ -414,18 +468,18 @@ public class WidgetInfo {
     public static final WidgetProp labelprop = new WidgetProp(NLABEL,Thing.EMPTYTHING); 
     public static final WidgetProp longlabelprop = new WidgetProp(NLONGLABEL,Thing.EMPTYTHING); 
     public static final WidgetProp titleprop = new WidgetProp(NTITLE,Thing.EMPTYTHING); 
-    public static final WidgetProp fitprop = new WidgetProp(NFIT,defaultthing);
+    public static final WidgetProp fitprop = new WidgetProp(NFIT,DEFAULTTHING);
     public static final WidgetProp selectprop = new WidgetProp(NSELECTMODE,
 							       new Thing("exclusive")); 
     public static final WidgetProp tickerprop = new WidgetProp(NTICKER,Thing.EMPTYTHING);
-    public static final WidgetProp prioprop = new WidgetProp(NPRIO,one);
+    public static final WidgetProp prioprop = new WidgetProp(NPRIO,ONE);
     public static final WidgetProp appearanceprop = new WidgetProp(NAPPEARANCE,
 								   new Thing("plain"));
-    public static final WidgetProp minwidthprop = new WidgetProp(NMINWIDTH,zero);
-    public static final WidgetProp minheightprop = new WidgetProp(NMINHEIGHT,zero);
+    public static final WidgetProp minwidthprop = new WidgetProp(NMINWIDTH,ZERO);
+    public static final WidgetProp minheightprop = new WidgetProp(NMINHEIGHT,ZERO);
 
     /*
-     * Widget attribute conversion tables (parallel arrays
+     * WIDGET attribute conversion tables (parallel arrays
      */
     static final String colornames[] = {"red","green","blue",
 					    "yellow","cyan","magenta",
@@ -588,7 +642,7 @@ public class WidgetInfo {
 	v.addElement(new WidgetProp(NTITLE,new Thing("TextBox")));
 	v.addElement(textprop);
 	v.addElement(tickerprop);
-	v.addElement(new WidgetProp(NTYPE,anything,true));
+	v.addElement(new WidgetProp(NTYPE,ANYTHING,true));
 	v.addElement(new WidgetProp(NMAXLEN,IntThing.create(256)));
 	widgetprops.put(TextBox.class,v);
 
@@ -628,7 +682,7 @@ public class WidgetInfo {
 	v = new Vector();
 	v.addElement(labelprop);
 	v.addElement(new WidgetProp(NMAXLEN,IntThing.create(256)));
-	v.addElement(new WidgetProp(NTYPE,anything,true));
+	v.addElement(new WidgetProp(NTYPE,ANYTHING,true));
 	widgetprops.put(TextField.class,v);
 
 	/* DateField defaults */
@@ -646,3 +700,8 @@ public class WidgetInfo {
 	widgetprops.put(Gauge.class,v);
     }
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

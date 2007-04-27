@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -29,51 +29,54 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
 public class ListCmd extends ScreenCmd {
-    public static final org.hecl.Command CREATE = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		Properties p = WidgetInfo.defaultProps(List.class);
-		p.setProps(argv,1);
-		int listtype = WidgetInfo.toListType(p.getProp(WidgetInfo.NTYPE));
-		List w = new List(p.getProp(WidgetInfo.NTITLE).toString(),listtype);
-		p.delProp(WidgetInfo.NTYPE);
-		p.delProp(WidgetInfo.NTITLE);
-		WidgetMap.addWidget(interp,null,w,new ListCmd(interp,w,p,listtype));
-	    }
-	};
-
-
-    protected ListCmd(Interp ip,List a,Properties p,int lt) throws HeclException {
-	super(ip,a,p);
-	listtype = lt;
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(List.class,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(List.class);
+    }
+    
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(List.class);
+	p.setProps(argv,1);
+	int listtype = WidgetInfo.toListType(p.getProp(WidgetInfo.NTYPE));
+	List w = new List(p.getProp(WidgetInfo.NTITLE).toString(),listtype);
+	p.delProp(WidgetInfo.NTYPE);
+	p.delProp(WidgetInfo.NTITLE);
+	return ObjectThing.create(setInstanceProperties(interp,w,p));
     }
 
+    protected ListCmd() {}
 
-    public void cget(Interp ip,String optname) throws HeclException {
-	List l = (List)getData();
+
+    public Thing cget(Interp ip,Object target,String optname) throws HeclException {
+	List l = (List)target;
 	
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    ip.setResult(WidgetInfo.fromChoiceType(listtype));
-	    return;
-	}
 	if(optname.equals(WidgetInfo.NFIT)) {
-	    ip.setResult(WidgetInfo.fromWrap(l.getFitPolicy()));
-	    return;
+	    return WidgetInfo.fromWrap(l.getFitPolicy());
 	}
-	if(optname.equals("-selectcommand")) {
-	    WidgetMap.setWidgetResult(ip,selectcommand/*l.getSelectCommand()*/);
-	    return;
-	}
-	super.cget(ip,optname);
+	//#ifdef notdef
+	if(optname.equals(WidgetInfo.NTYPE))
+	    return WidgetInfo.fromChoiceType(l.getListtype());
+	if(optname.equals("-selectcommand"))
+	    return ObjectThing.create(l.getSelectCommand());
+	//#endif
+	return super.cget(ip,target,optname);
     }
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	List l = (List)getData();
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	List l = (List)target;
 
 	if(optname.equals(WidgetInfo.NFIT)) {
 	    l.setFitPolicy(WidgetInfo.toWrap(optval));
@@ -83,40 +86,32 @@ public class ListCmd extends ScreenCmd {
 	    String s = optval.toString();
 	    Command c = null;
 	    if(0 != s.length()) {
-		c = WidgetMap.mapOf(ip).asCommand(optval,true,true);
+		c = WidgetInfo.asCommand(optval,true,true);
 	    }
 	    l.setSelectCommand(c);
-	    selectcommand = c;
 	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
 
-    public void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	List l = (List)getData();
-
-	if(optname.equals(WidgetInfo.NFONT)) {
-	    FontMap.setResult(ip,l.getFont(itemno));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ip.setResult(l.getString(itemno));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    ip.setResult(ImageMap.mapOf(ip).nameOf(l.getImage(itemno)));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NSELECTION)) {
-	    ip.setResult(l.isSelected(itemno));
-	    return;
-	}
-	super.itemcget(ip,itemno,optname);
-    }
-
-    public void itemcset(Interp ip,int itemno,String optname,Thing optval)
+    public Thing itemcget(Interp ip,Object target,int itemno,String optname)
 	throws HeclException {
-	List l = (List)getData();
+	List l = (List)target;
+
+	if(optname.equals(WidgetInfo.NFONT))
+	    return FontMap.fontThing(l.getFont(itemno));
+	if(optname.equals(WidgetInfo.NTEXT))
+	    return StringThing.create(l.getString(itemno));
+	if(optname.equals(WidgetInfo.NIMAGE))
+	    return ObjectThing.create(l.getImage(itemno));
+	if(optname.equals(WidgetInfo.NSELECTION))
+	    return IntThing.create(l.isSelected(itemno));
+	return super.itemcget(ip,target,itemno,optname);
+    }
+
+    public void itemcset(Interp ip,Object target,int itemno,String optname,Thing optval)
+	throws HeclException {
+	List l = (List)target;
 	    
 	if(optname.equals(WidgetInfo.NFONT)) {
 	    l.setFont(itemno,FontMap.get(optval));
@@ -127,20 +122,21 @@ public class ListCmd extends ScreenCmd {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NIMAGE)) {
-	    l.set(itemno,l.getString(itemno),ImageMap.asImage(ip,optval,true));
+	    l.set(itemno,l.getString(itemno),GUICmds.asImage(optval,true));
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NSELECTION)) {
 	    l.setSelectedIndex(itemno,HeclUtils.thing2bool(optval));
 	    return;
 	}
-	super.itemcset(ip,itemno,optname,optval);
+	super.itemcset(ip,target,itemno,optname,optval);
     }
 	
 	
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
-	List l = (List)getData();
+	List l = (List)target;
 
 	//System.err.println("\tl="+l);
 
@@ -169,8 +165,7 @@ public class ListCmd extends ScreenCmd {
 			v.addElement(IntThing.create(i));
 		}
 
-		ip.setResult(ListThing.create(v));
-		return;
+		return ListThing.create(v);
 	    }
 	    if(selcmd.equals("set")) {
 		// Need index arg.
@@ -181,7 +176,7 @@ public class ListCmd extends ScreenCmd {
 			argv, n, "selection set index");
 		}
 		l.setSelectedIndex(HeclUtils.thing2int(argv[startat],true,0),true);
-		return;
+		return null;
 	    }
 	    if(selcmd.equals("clear")) {
 		// Need index arg.
@@ -198,15 +193,13 @@ public class ListCmd extends ScreenCmd {
 		    }
 		    l.setSelectedFlags(sels);
 		}
-		return;
+		return null;
 	    }
 	    // unknown selection subcmd
-	    return;
+	    return null;
 	}
-	if(subcmd.equals("size")) {
-	    ip.setResult(l.size());
-	    return;
-	}
+	if(subcmd.equals("size"))
+	    return IntThing.create(l.size());
 	if(subcmd.startsWith("item",0)) {
 	    // item<something> requires an item as parameter
 	    int n = startat+1;
@@ -226,17 +219,16 @@ public class ListCmd extends ScreenCmd {
 
 	    if(subcmd.equals("itemconfigure")) {
 		for(int i = n; i<argv.length; i+= 2) {
-		    itemcset(ip,itempos,argv[i].toString(),argv[i+1]);
+		    itemcset(ip,target,itempos,argv[i].toString(),argv[i+1]);
 		}
-		return;
+		return null;
 	    } else if(subcmd.equals("itemcget")) {
 		++n;
 		if(argv.length != n) {
 		    throw HeclException.createWrongNumArgsException(
 			argv, n, "itemcget item itemoptname");
 		}
-		itemcget(ip,itempos,argv[n-1].toString());
-		return;
+		return itemcget(ip,target,itempos,argv[n-1].toString());
 	    }
 	}
 	if(subcmd.equals("delete")) {
@@ -245,11 +237,11 @@ public class ListCmd extends ScreenCmd {
 		    argv, startat+1, "delete item");
 	    }
 	    l.delete(HeclUtils.thing2int(argv[startat],true,0));
-	    return;
+	    return null;
 	}
 	if(subcmd.equals("deleteall")) {
 	    l.deleteAll();
-	    return;
+	    return null;
 	}
 	if(subcmd.equals("append")) {
 	    if(startat+1 != argv.length && startat+2 != argv.length) {
@@ -258,8 +250,8 @@ public class ListCmd extends ScreenCmd {
 	    }
 	    l.append(argv[startat].toString(),
 		     startat+1 < argv.length ?
-		     ImageMap.asImage(ip,argv[startat+1],true) : null);
-	    return;
+		     GUICmds.asImage(argv[startat+1],true) : null);
+	    return null;
 	}
 	if(subcmd.equals("insert")) {
 	    if(startat+1 != argv.length && startat+2 != argv.length) {
@@ -269,12 +261,17 @@ public class ListCmd extends ScreenCmd {
 	    l.insert(HeclUtils.thing2int(argv[startat],true,0),
 		     argv[startat+1].toString(),
 		     startat+1 < argv.length ?
-		     ImageMap.asImage(ip,argv[startat+1],true) : null);
-	    return;
+		     GUICmds.asImage(argv[startat+1],true) : null);
+	    return null;
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
-    protected int listtype;
-    protected Command selectcommand = null;
+    private static ListCmd cmd = new ListCmd();
+    private static final String CMDNAME = "lcdui.list";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

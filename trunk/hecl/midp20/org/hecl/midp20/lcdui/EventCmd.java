@@ -19,58 +19,79 @@
 
 package org.hecl.midp20.lcdui;
 
-import javax.microedition.lcdui.Ticker;
+import javax.microedition.lcdui.Canvas;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.ObjectThing;
-import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class TickerCmd extends OptionCmd {
+import org.hecl.misc.HeclUtils;
+
+public class EventCmd extends OptionCmd {
     public static void load(Interp ip) {
-	ip.addCommand(CMDNAME,cmd);
-	ip.addClassCmd(Ticker.class,cmd);
+	ip.addClassCmd(CanvasEvent.class,cmd);
     }
     public static void unload(Interp ip) {
-	ip.removeCommand(CMDNAME);
-	ip.removeClassCmd(Ticker.class);
+	ip.removeClassCmd(CanvasEvent.class);
     }
     
     public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
-	Properties p = WidgetInfo.defaultProps(Ticker.class);
-	p.setProps(argv,1);
-	Ticker w = new Ticker(p.getProp(WidgetInfo.NTEXT).toString());
-	p.delProp(WidgetInfo.NTEXT);
-	return ObjectThing.create(setInstanceProperties(interp,w,p));
+	throw new HeclException("cannot create event");
     }
 
-    private TickerCmd() {}
-	
+    protected EventCmd() {}
+    
     public Thing cget(Interp ip,Object target,String optname) throws HeclException {
-	Ticker ticker = (Ticker)target;
+	CanvasEvent e = (CanvasEvent)target;
 	
-	if(optname.equals(WidgetInfo.NTEXT))
-	    return StringThing.create(ticker.getString());
+	Canvas c = e.canvas;
+	if(optname.equals("-canvas"))
+	    return ObjectThing.create(c);
+	if(optname.equals("-reason"))
+	    return IntThing.create(e.reason);
+	if(optname.equals("-x"))
+	    return IntThing.create(e.x);
+	if(optname.equals("-y"))
+	    return IntThing.create(e.y);
+	if(optname.equals("-width"))
+	    return IntThing.create(e.width);
+	if(optname.equals("-height"))
+	    return IntThing.create(e.height);
+	if(optname.equals("-keycode"))
+	    return IntThing.create(e.keycode);
+	if(optname.equals("-keyname")) {
+	    String s = null;
+	    try {
+		s = c.getKeyName(e.keycode);
+	    }
+	    catch(IllegalArgumentException ex) {
+	    }
+	    return StringThing.create(s != null ? s : "none");
+	}
+	if(optname.equals("-gameaction")) {
+	    try {
+		return IntThing.create(c.getGameAction(e.keycode));
+	    }
+	    catch(IllegalArgumentException ex) {
+	    }
+	    return IntThing.create(-1);
+	}
 	return super.cget(ip,target,optname);
     }
 
     public void cset(Interp ip,Object target,String optname,Thing optval)
 	throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
-	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ticker.setString(optval.toString());
-	    return;
-	}
+	//CanvasEvent e = (CanvasEvent)target;
 	super.cset(ip,target,optname,optval);
     }
 
-    private static TickerCmd cmd = new TickerCmd();
-    private static final String CMDNAME = "lcdui.ticker";
+    private static EventCmd cmd = new EventCmd();
+    //private static final String CMDNAME = "lcdui.event";
 }
-    
+
 // Variables:
 // mode:java
 // coding:utf-8

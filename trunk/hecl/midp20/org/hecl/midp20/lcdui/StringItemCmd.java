@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2007
+ * Copyright 2005-2006
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -19,59 +19,82 @@
 
 package org.hecl.midp20.lcdui;
 
-import javax.microedition.lcdui.Ticker;
+import javax.microedition.lcdui.StringItem;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.StringThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class TickerCmd extends OptionCmd {
+public class StringItemCmd extends ItemCmd {
     public static void load(Interp ip) {
 	ip.addCommand(CMDNAME,cmd);
-	ip.addClassCmd(Ticker.class,cmd);
+	ip.addClassCmd(StringItem.class,cmd);
     }
     public static void unload(Interp ip) {
 	ip.removeCommand(CMDNAME);
-	ip.removeClassCmd(Ticker.class);
+	ip.removeClassCmd(StringItem.class);
     }
     
-    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
-	Properties p = WidgetInfo.defaultProps(Ticker.class);
-	p.setProps(argv,1);
-	Ticker w = new Ticker(p.getProp(WidgetInfo.NTEXT).toString());
-	p.delProp(WidgetInfo.NTEXT);
-	return ObjectThing.create(setInstanceProperties(interp,w,p));
+    /*
+    public StringItemCmd(String label,int appearanceMode,FormCmd f) {
+	super(new StringItem(label,"",appearanceMode),f);
     }
+    */
+    protected StringItemCmd() {}
 
-    private TickerCmd() {}
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(StringItem.class);
+	p.setProps(argv,1);
+	StringItem si = new StringItem(p.getProp(WidgetInfo.NLABEL).toString(),
+				       p.getProp(WidgetInfo.NTEXT).toString(),
+				       WidgetInfo.toItemAppearance(
+					   p.getProp(WidgetInfo.NAPPEARANCE)));
+	p.delProp(WidgetInfo.NLABEL);
+	p.delProp(WidgetInfo.NTEXT);
+	p.delProp(WidgetInfo.NAPPEARANCE);
+	return ObjectThing.create(setInstanceProperties(interp,si,p));
+    }
+    
+
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	StringItem si = (StringItem)target;
 	
-    public Thing cget(Interp ip,Object target,String optname) throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
+	if(optname.equals(WidgetInfo.NAPPEARANCE))
+	    return WidgetInfo.fromItemAppearance(si.getAppearanceMode());
 	if(optname.equals(WidgetInfo.NTEXT))
-	    return StringThing.create(ticker.getString());
+	    return StringThing.create(si.getText());
+	if(optname.equals(WidgetInfo.NFONT))
+	    return FontMap.fontThing(si.getFont());
 	return super.cget(ip,target,optname);
     }
 
+
     public void cset(Interp ip,Object target,String optname,Thing optval)
 	throws HeclException {
-	Ticker ticker = (Ticker)target;
-	
+	StringItem si = (StringItem)target;
+
 	if(optname.equals(WidgetInfo.NTEXT)) {
-	    ticker.setString(optval.toString());
+	    si.setText(optval.toString());
+	    return;
+	}
+	if(optname.equals(WidgetInfo.NFONT)) {
+	    si.setFont(FontMap.get(optval));
 	    return;
 	}
 	super.cset(ip,target,optname,optval);
     }
 
-    private static TickerCmd cmd = new TickerCmd();
-    private static final String CMDNAME = "lcdui.ticker";
+    private static StringItemCmd cmd = new StringItemCmd();
+    private static final String CMDNAME = "lcdui.stringitem";
 }
-    
+
 // Variables:
 // mode:java
 // coding:utf-8
 // End:
+

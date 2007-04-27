@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -48,142 +48,73 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
-public class GraphicsCmd extends ThingCmd {
-    protected static class Context {
-	protected Context(GraphicsCmd gcmd) {
-	    cliprect = new Rectangle();
-	    Drawable d = (Drawable)gcmd.getData();
-	    Graphics g = d.getGraphics();
-	    
-	    fcol = d.getColor();
-	    bcol = d.getBackground();
-	    gray = d.getGrayScale();
-	    font = d.getFont();
-	    linestipple = d.getLineStipple();
-	    linewidth = d.getLineWidth();
-	    d.getClipBounds(cliprect);
-//#ifdef notdef
-	    mytx = d.getTranslateX();
-	    myty = d.getTranslateY();
-//#endif
-	}
-	
-
-	protected void restore(GraphicsCmd gcmd) {
-	    Drawable d = (Drawable)gcmd.getData();
-	    Graphics g = d.getGraphics();
-
-	    d.setColor(fcol);
-	    d.setBackground(bcol);
-	    d.setGrayScale(gray);
-	    d.setLineStipple(linestipple);
-	    d.setLineWidth(linewidth);
-	    d.setClip(cliprect);
-	    d.setFont(font);
-//#ifdef notdef
-	    d.translate(mytx,myty);
-//#endif
-	}
-
-	private Color fcol;
-	private Color bcol;
-	private int gray;
-	private Font font;
-	private short linestipple;
-	private int linewidth;
-	private Rectangle cliprect;
-//#ifdef notdef
-	private double mytx;
-	private double myty;
-//#endif
+public class GraphicsCmd extends OptionCmd {
+    public static void load(Interp ip) {
+	ip.addClassCmd(Drawable.class,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeClassCmd(Drawable.class);
     }
     
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	throw new HeclException("Invalid direct call of GraphicsCmd.cmdCode");
+    };
 
-    protected GraphicsCmd(Graphics g,int width,int height) {
-	super(new Drawable(g,width,height));
-	mywidth = width;
-	myheight = height;
-//#ifdef notdef
-	mytx = myty = 0;
-//#endif
+    public static Thing createDrawable(Graphics g,int width,int height) {
+	return ObjectThing.create(new Drawable(g,width,height));
     }
+    
+    protected GraphicsCmd() {}
 
-
-    public void cget(Interp ip,String optname) throws HeclException {
-	Drawable d = (Drawable)getData();
+    public Thing cget(Interp ip,Object target,String optname) throws HeclException {
+	Drawable d = (Drawable)target;
 	
-	if(optname.equals(WidgetInfo.NCLIPHEIGHT)) {
-	    ip.setResult(d.getClipBounds().height);
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NCLIPWIDTH)) {
-	    ip.setResult(d.getClipBounds().width);
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NCLIPX)) {
-	    ip.setResult(d.getClipBounds().x);
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NCLIPY)) {
-	    ip.setResult(d.getClipBounds().y);
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NCOLOR)) {
-	    ip.setResult(WidgetInfo.fromColor(d.getColor()));
-	    return;
-	}
-	if(optname.equals("-background")) {
-	    ip.setResult(WidgetInfo.fromColor(d.getColor()));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NFONT)) {
-	    FontMap.setResult(ip,d.getFont());
-	    return;
-	}
-	if(optname.equals("-grayscale")) {
-	    ip.setResult(d.getGrayScale());
-	    return;
-	}
+	if(optname.equals(WidgetInfo.NCLIPHEIGHT))
+	    return IntThing.create(d.getClipBounds().height);
+	if(optname.equals(WidgetInfo.NCLIPWIDTH))
+	    return IntThing.create(d.getClipBounds().width);
+	if(optname.equals(WidgetInfo.NCLIPX))
+	    return IntThing.create(d.getClipBounds().x);
+	if(optname.equals(WidgetInfo.NCLIPY))
+	    return IntThing.create(d.getClipBounds().y);
+	if(optname.equals(WidgetInfo.NCOLOR))
+	    return WidgetInfo.fromColor(d.getColor());
+	if(optname.equals("-background"))
+	    return WidgetInfo.fromColor(d.getColor());
+	if(optname.equals(WidgetInfo.NFONT))
+	    return FontMap.fontThing(d.getFont());
+	if(optname.equals("-grayscale"))
+	    return IntThing.create(d.getGrayScale());
 //#ifdef notdef
-	if(optname.equals("-blue")) {
-	    ip.setResult(d.getBlueComponent());
-	    return;
-	}
-	if(optname.equals("-green")) {
-	    ip.setResult(d.getGreenComponent());
-	    return;
-	}
-	if(optname.equals("-red")) {
-	    ip.setResult(d.getRedComponent());
-	    return;
-	}
+	if(optname.equals("-blue"))
+	    return IntThing.create(d.getBlueComponent());
+	if(optname.equals("-green"))
+	    return IntThing.create(d.getGreenComponent());
+	if(optname.equals("-red"))
+	    return IntThing.create(d.getRedComponent());
 //#endif
-	if(optname.equals(WidgetInfo.NLINETYPE)) {
-	    ip.setResult((int)d.getLineType());
-	    return;
-	}
+	if(optname.equals(WidgetInfo.NLINETYPE))
+	    return IntThing.create((int)d.getLineType());
 //#ifdef notdef
-	if(optname.equals("-translatex")) {
-	    ip.setResult(DoubleThing.create(d.getTranslateX()));
-	    return;
-	}
-	if(optname.equals("-translatey")) {
-	    ip.setResult(DoubleThing.create(d.getTranslateY()));
-	    return;
-	}
+	if(optname.equals("-translatex"))
+	    return DoubleThing.create(d.getTranslateX());
+	if(optname.equals("-translatey"))
+	    return DoubleThing.create(d.getTranslateY());
 //#endif
-	super.cget(ip,optname);
+	return super.cget(ip,target,optname);
     }
 
 
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Drawable d = (Drawable)getData();
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Drawable d = (Drawable)target;
 	
 	if(optname.equals(WidgetInfo.NCOLOR)) {
 	    d.setColor(new Color(WidgetInfo.toColor(optval)));
@@ -215,44 +146,33 @@ public class GraphicsCmd extends ThingCmd {
 	    return;
 	}
 //#endif
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
 
 
-    public synchronized void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public synchronized Thing handlecmd(Interp ip,Object target,
+					String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-
-	if(!sequence(new Stack(),ip,subcmd,argv,startat)) {
-	    super.handlecmd(ip,subcmd,argv,startat);
-	}
+	return sequence(ip,new Stack(),(Drawable)target,subcmd,argv,startat);
     }
     
 
-    public boolean needsFlush() {
-	return needflush;
-    }
-    
-    public void flush() {
-	needflush = false;
-    }
-    
-    private synchronized boolean sequence(Stack st,Interp ip,
-					  String subcmd, Thing[] argv,int startat)
+    private synchronized Thing sequence(Interp ip,Stack st,Drawable d,
+					String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-	Drawable d = (Drawable)getData();
 	int n = startat;
 
 	// Stack manipulation
 	if(subcmd.equals("push")) {
-	    st.push(new Context(this));
-	    return true;
+	    st.push(new Context(d));
+	    return null;
 	}
 	if(subcmd.equals("pop")) {
 	    if(st.empty()) {
 		throw new HeclException("Empty context stack.");
 	    }
-	    ((Context)st.pop()).restore(this);
-	    return true;
+	    ((Context)st.pop()).restore(d);
+	    return null;
 	}
 	if(subcmd.equals("draw")) {
 	    StringBuffer errs = null;
@@ -264,7 +184,7 @@ public class GraphicsCmd extends ThingCmd {
 		    Thing[] xargs = new Thing[cmd.size()];
 		    cmd.copyInto(xargs);
 		    try {
-			sequence(st,ip,xargs[0].toString().toLowerCase(),xargs,1);
+			sequence(ip,st,d,xargs[0].toString().toLowerCase(),xargs,1);
 		    }
 		    catch (HeclException e) {
 			// OOPS, error
@@ -282,7 +202,7 @@ public class GraphicsCmd extends ThingCmd {
 	    if(errs != null) {
 		throw new HeclException(errs.toString());
 	    }
-	    return true;
+	    return null;
 	}
 	
 	// Draw commands
@@ -296,11 +216,11 @@ public class GraphicsCmd extends ThingCmd {
 		      IntThing.get(argv[startat+2]),
 		      IntThing.get(argv[startat+3]),
 		      false);
-	    return needflush = true;
+	    return null;
 	}
 	if(subcmd.equals("clear")) {
 	    d.clear();
-	    return needflush = true;
+	    return null;
 	}
 	if(subcmd.equals("copyarea")) {
 	    /* vsrc(x,y), dim(w,h) vdst(x,y), anchor */
@@ -314,7 +234,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.copyArea(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       HeclUtils.thing2Point(argv,startat+2), anchor);
-	    return needflush = true;
+	    return null;
 	}
 	if(subcmd.equals("image")) {
 	    // image, v(x,y), anchor
@@ -325,9 +245,9 @@ public class GraphicsCmd extends ThingCmd {
 	    int anchor = startat+2 < argv.length ?
 		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.BOTTOM|Graphics.LEFT;
 	    //System.err.println("anchor="+Integer.toHexString(anchor));
-	    d.drawImage(ImageMap.asImage(ip,argv[startat],false),
+	    d.drawImage(GUICmds.asImage(argv[startat],false),
 			HeclUtils.thing2Point(argv,startat+1), anchor);
-	    return needflush = true;
+	    return null;
 	}
 	if(subcmd.equals("line")) {
 	    // v0(x,y) v1(x,y)
@@ -339,7 +259,7 @@ public class GraphicsCmd extends ThingCmd {
 	    HeclUtils.getPoint(v0,argv,startat);
 	    HeclUtils.getPoint(v1,argv,startat+1);
 	    d.drawLine(v0,v1);
-	    return needflush = true;
+	    return null;
 	}
 	if(subcmd.equals("xline")) {
 	    // v0(x,y) v1(x,y) [...]
@@ -351,7 +271,7 @@ public class GraphicsCmd extends ThingCmd {
 	    HeclUtils.getPoint(v0,argv,startat);
 	    HeclUtils.getPoint(v1,argv,startat+1);
 	    d.xline(v0,v1);
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("lines")) {
@@ -366,7 +286,7 @@ public class GraphicsCmd extends ThingCmd {
 		HeclUtils.getPoint(v1,argv,startat+1);
 		d.drawLine(v0,v1);
 	    }
-	    return needflush = true;
+	    return null;
 	}
 	
 	if(subcmd.equals("points")) {
@@ -375,7 +295,7 @@ public class GraphicsCmd extends ThingCmd {
 	    for(; startat < argv.length; ++startat) {
 		d.drawPoint(HeclUtils.getPoint(p,argv,startat));
 	    }
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("linestrip")) {
@@ -390,6 +310,7 @@ public class GraphicsCmd extends ThingCmd {
 		d.drawLine(v0,HeclUtils.getPoint(v1,argv,startat));
 		v0.setLocation(v1.getX(),v1.getY());
 	    }
+	    return null;
 	}
 	
 	if(subcmd.equals("polygon")) {
@@ -398,6 +319,7 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "p0 p1 p2 [...]");
 	    Point2D[] p = getPoints(argv,startat);
 	    d.drawPolygon(p.length,p,false);
+	    return null;
 	}
 	
 	if(subcmd.equals("fpolygon")) {
@@ -406,7 +328,7 @@ public class GraphicsCmd extends ThingCmd {
 		    argv, startat, "p0 p1 p2 [...]");
 	    Point2D[] p = getPoints(argv,startat);
 	    d.drawPolygon(p.length,p,true);
-	    return needflush = true;
+	    return null;
 	}
 
 
@@ -418,7 +340,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.drawRect(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       false);
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("string")) {
@@ -431,7 +353,7 @@ public class GraphicsCmd extends ThingCmd {
 	    
 	    d.drawString(argv[startat+1].toString(),
 			 HeclUtils.thing2Point(argv,startat), anchor);
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("htext")) {
@@ -444,7 +366,7 @@ public class GraphicsCmd extends ThingCmd {
 	    
 	    d.drawVString(argv[startat+1].toString(),
 			  HeclUtils.thing2Point(argv,startat));
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("rrect")) {
@@ -456,7 +378,7 @@ public class GraphicsCmd extends ThingCmd {
 			    HeclUtils.thing2Dimension(argv,startat+1),
 			    IntThing.get(argv[startat+2]),
 			    IntThing.get(argv[startat+3]));
-	    return needflush = true;
+	    return null;
 	}
 
 
@@ -470,7 +392,7 @@ public class GraphicsCmd extends ThingCmd {
 		      IntThing.get(argv[startat+2]),
 		      IntThing.get(argv[startat+3]),
 		      true);
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("frect")) {
@@ -481,7 +403,7 @@ public class GraphicsCmd extends ThingCmd {
 	    d.drawRect(HeclUtils.thing2Point(argv,startat),
 		       HeclUtils.thing2Dimension(argv,startat+1),
 		       true);
-	    return needflush = true;
+	    return null;
 	}
 
 	if(subcmd.equals("frrect")) {
@@ -493,7 +415,7 @@ public class GraphicsCmd extends ThingCmd {
 			    HeclUtils.thing2Dimension(argv,startat+1),
 			    IntThing.get(argv[startat+2]),
 			    IntThing.get(argv[startat+3]));
-	    return needflush = true;
+	    return null;
 	}
 
 	// Get commands...
@@ -505,38 +427,28 @@ public class GraphicsCmd extends ThingCmd {
 
 //#ifdef notdef
 	    if(subcmd.equals("getblue")) {
-		ip.setResult(d.getBlueComponent());
-		return true;
+		//ip.setResult(d.getBlueComponent());
+		return null;
 	    }
 	    if(subcmd.equals("getgreen")) {
-		ip.setResult(d.getGreenComponent());
-		return true;
+		//ip.setResult(d.getGreenComponent());
+		return null;
 	    }
 	    if(subcmd.equals("getred")) {
-		ip.setResult(d.getRedComponent());
-		return true;
+		//ip.setResult(d.getRedComponent());
+		return null;
 	    }
 //#endif
-	    if(subcmd.equals("getfont")) {
-		FontMap.setResult(ip,d.getFont());
-		return true;
-	    }
-	    if(subcmd.equals("getgrayscale")) {
-		ip.setResult(d.getGrayScale());
-		return true;
-	    }
-	    if(subcmd.equals("getlinetype")) {
-		ip.setResult((int)d.getLineType());
-		return true;
-	    }
-	    if(subcmd.equals("getcolor")) {
-		ip.setResult(WidgetInfo.fromColor(d.getColor()));
-		return true;
-	    }
-	    if(subcmd.equals("getbackground")) {
-		ip.setResult(WidgetInfo.fromColor(d.getBackground()));
-		return true;
-	    }
+	    if(subcmd.equals("getfont"))
+		return FontMap.fontThing(d.getFont());
+	    if(subcmd.equals("getgrayscale"))
+		return IntThing.create(d.getGrayScale());
+	    if(subcmd.equals("getlinetype"))
+		IntThing.create((int)d.getLineType());
+	    if(subcmd.equals("getcolor"))
+		return WidgetInfo.fromColor(d.getColor());
+	    if(subcmd.equals("getbackground"))
+		return WidgetInfo.fromColor(d.getBackground());
 	}
 
 //#ifdef notdef	
@@ -546,8 +458,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<colorspec>");
 	    Color c = new Color(WidgetInfo.toColor(argv[startat]));
-	    ip.setResult(WidgetInfo.fromColor(d.getDisplayColor(c)));
-	    return true;
+	    return WidgetInfo.fromColor(d.getDisplayColor(c));
 	}
 //#endif
 
@@ -558,7 +469,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<colorspec>");
 	    d.setBackground(new Color(WidgetInfo.toColor(argv[startat])));
-	    return true;
+	    return null;
 	}
 	if(subcmd.equals("color")) {
 	    /* colorspec */
@@ -566,7 +477,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<colorspec>");
 	    d.setColor(new Color(WidgetInfo.toColor(argv[startat])));
-	    return true;
+	    return null;
 	}
 	if(subcmd.equals("font")) {
 	    /* font */
@@ -574,7 +485,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<font>");
 	    d.setFont(FontMap.get(argv[startat]));
-	    return true;
+	    return null;
 	}
 	if(subcmd.equals("grayscale")) {
 	    /* colorspec */
@@ -582,7 +493,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<greyspec>");
 	    d.setGrayScale(IntThing.get(argv[startat]));
-	    return true;
+	    return null;
 	}
 	if(subcmd.equals("linetype")) {
 	    /* linetype */
@@ -590,7 +501,7 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "<linetype>");
 	    d.setLineStipple((short)HeclUtils.thing2int(argv[startat],false,0));
-	    return true;
+	    return null;
 	}
 
 	// Misc commands
@@ -603,7 +514,7 @@ public class GraphicsCmd extends ThingCmd {
 	    Dimension dim = HeclUtils.thing2Dimension(argv,startat+1);
 	    d.setClip((int)Math.floor(.5+p.getX()),(int)Math.floor(.5+p.getY()),
 		      dim.width,dim.height);
-	    return true;
+	    return null;
 	}
 	if(subcmd.equals("cliprect")) {
 	    /* {x, y} {w, h} */
@@ -614,7 +525,7 @@ public class GraphicsCmd extends ThingCmd {
 	    Dimension dim = HeclUtils.thing2Dimension(argv,startat+1);
 	    d.clipRect((int)Math.floor(.5+p.getX()),(int)Math.floor(.5+p.getY()),
 		       dim.width,dim.height);
-	    return true;
+	    return null;
 	}
 //#ifdef notdef
 	if(subcmd.equals("translate")) {
@@ -623,11 +534,10 @@ public class GraphicsCmd extends ThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, startat, "point");
 	    d.translate(HeclUtils.thing2Point(argv,startat));
-	    return true;
+	    return null;
 	}
 //#endif
-	super.handlecmd(ip,subcmd,argv,startat);
-	return false;
+	return super.handlecmd(ip,d,subcmd,argv,startat);
     }
 
 
@@ -642,11 +552,65 @@ public class GraphicsCmd extends ThingCmd {
 	return points;
     }
     
-    private int mywidth;
-    private int myheight;
     protected boolean needflush = true;
 //#ifdef notdef
     private int mytx = 0;
     private int myty = 0;
 //#endif
+    private Drawable drawable;
+
+    private static GraphicsCmd cmd = new GraphicsCmd();
 }
+
+
+class Context {
+    protected Context(Drawable d) {
+	cliprect = new Rectangle();
+	Graphics g = d.getGraphics();
+	
+	fcol = d.getColor();
+	bcol = d.getBackground();
+	gray = d.getGrayScale();
+	font = d.getFont();
+	linestipple = d.getLineStipple();
+	linewidth = d.getLineWidth();
+	d.getClipBounds(cliprect);
+//#ifdef notdef
+	mytx = d.getTranslateX();
+	myty = d.getTranslateY();
+//#endif
+    }
+    
+    
+    protected void restore(Drawable d) {
+	Graphics g = d.getGraphics();
+	
+	d.setColor(fcol);
+	d.setBackground(bcol);
+	d.setGrayScale(gray);
+	d.setLineStipple(linestipple);
+	d.setLineWidth(linewidth);
+	d.setClip(cliprect);
+	d.setFont(font);
+//#ifdef notdef
+	d.translate(mytx,myty);
+//#endif
+    }
+    
+    private Color fcol;
+    private Color bcol;
+    private int gray;
+    private Font font;
+    private short linestipple;
+    private int linewidth;
+    private Rectangle cliprect;
+//#ifdef notdef
+    private double mytx;
+    private double myty;
+//#endif
+}
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

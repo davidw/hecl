@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -31,85 +31,64 @@ import javax.microedition.lcdui.Ticker;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
 import org.hecl.midp20.MidletCmd;
 
-public abstract class DisplayableCmd extends OwnedThingCmd {
-    protected DisplayableCmd(final Interp ip,Displayable displayable,Properties p)
-	throws HeclException {
-	super(ip,displayable,p);
-	displayable.setCommandListener(new CommandListener() {
-		public void commandAction(Command c,Displayable d) {
-		    //System.err.println("cmd="+c+", label="+c.getLabel());
-		    WidgetMap wm = WidgetMap.mapOf(ip);
-		    String dname = wm.nameOf(d);
-		    String cname = wm.nameOf(c);
-		    //System.out.println(" -->"+getClass().getName()+"::commandAction(" +cname+" - "+c.getLabel() +", "+dname+")");
-		    if(commandcode != null && dname != null && cname != null) {  
-			String expansions[] = {cname,dname};
-			wm.eval(ip,commandcode,
-				commandActionExpandChars,expansions);
-		    }
-		}
-	    });
-    }
+public abstract class DisplayableCmd extends OptionCmd {
+    protected DisplayableCmd() {}
     
-
-    public void cget(Interp ip,String optname) throws HeclException {
-	Displayable d = (Displayable)getData();
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	Displayable d = (Displayable)target;
 	
 	if(optname.equals(WidgetInfo.NTICKER)) {
 //#ifdef polish.usePolishGui 
 	    if(d instanceof Screen) {
 		Screen s = (Screen)d;
 		Ticker t = s.getTicker();
-		WidgetMap.setWidgetResult(ip,t);
+		return ObjectThing.create(t);
 //#ifdef notdef
 	    } else if(d instanceof Canvas) {
 		Canvas c = (Canvas)d;
 		Ticker t = c.getTicker();
-		WidgetMap.setWidgetResult(ip,t);
+		return ObjectThing.create(t);
 //#endif
 	    } else {
-		WidgetMap.setWidgetResult(ip,null);
+		return ObjectThing.create(null);
 	    }
 	    
 //#else
-	    WidgetMap.setWidgetResult(ip,d.getTicker());
+	    return ObjectThing.create(d.getTicker());
 //#endif
-	    return;
 	}
 	if(optname.equals(WidgetInfo.NTITLE)) {
-	    ip.setResult(d.getTitle());
-	    return;
+	    optname = d.getTitle();
+	    return new Thing(optname != null ? optname : "");
 	}
-	if(optname.equals(WidgetInfo.NWIDTH)) {
-	    ip.setResult(d.getWidth());
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NHEIGHT)) {
-	    ip.setResult(d.getHeight());
-	    return;
-	}
+	if(optname.equals(WidgetInfo.NWIDTH))
+	    return IntThing.create(d.getWidth());
+	if(optname.equals(WidgetInfo.NHEIGHT))
+	    return IntThing.create(d.getHeight());
 	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
-	    ip.setResult(new Thing(commandcode != null ? commandcode : ""));
-	    return;
+	    throw new HeclException("option '"
+				    +WidgetInfo.NCOMMANDACTION+"' is write only");
 	}
-	if(optname.equals("-isshown")) {
-	    ip.setResult(d.isShown());
-	    return;
-	}
-	super.cget(ip,optname);
+	if(optname.equals("-isshown"))
+	    return new Thing(d.isShown() ? IntThing.ONE : IntThing.ZERO);
+	return super.cget(ip,target,optname);
     }
     
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	Displayable d = (Displayable)getData();
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Displayable d = (Displayable)target;
 
 	if(optname.equals(WidgetInfo.NTICKER)) {
 //#ifdef polish.usePolishGui 
-	    Ticker t = WidgetMap.mapOf(ip).asTicker(optval,true,true);
+	    Ticker t = WidgetInfo.asTicker(optval,true,true);
 	    if(d instanceof Screen) {
 		Screen s = (Screen)d;
 		s.setTicker(t);
@@ -122,7 +101,7 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 //#endif
 	    }
 //#else
-	    d.setTicker(WidgetMap.mapOf(ip).asTicker(optval,true,true));
+	    d.setTicker(WidgetInfo.asTicker(optval,true,true));
 //#endif
 	    return;
 	}
@@ -131,18 +110,19 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 	    return;
 	}
 	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
-	    commandcode = optval.toString();
-	    if(commandcode.length() == 0)
-		commandcode = null;
+	    CommandListener listener = null;
+	    if(optval.toString().length() > 0) {
+		listener = new WidgetListener(ip,optval);
+	    }
+	    d.setCommandListener(listener);
 	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
     
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd, Thing[] argv,int startat)
 	throws HeclException {
-	Displayable d = (Displayable)getData();
-	WidgetMap wm = WidgetMap.mapOf(ip);
+	Displayable d = (Displayable)target;
 
 	if(subcmd.equals(WidgetInfo.NADDCOMMAND)) {
 	    int n = startat+1;
@@ -150,8 +130,8 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, n, "command");
 	    }
-	    d.addCommand(wm.asCommand(argv[2],false,true));
-	    return;
+	    d.addCommand(WidgetInfo.asCommand(argv[2],false,true));
+	    return null;
 	}
 	if(subcmd.equals(WidgetInfo.NREMOVECOMMAND)) {
 	    int n = startat+1;
@@ -159,26 +139,20 @@ public abstract class DisplayableCmd extends OwnedThingCmd {
 		throw HeclException.createWrongNumArgsException(
 		    argv, n, "command");
 	    }
-	    d.removeCommand(wm.asCommand(argv[2],false,true));
-	    return;
+	    d.removeCommand(WidgetInfo.asCommand(argv[2],false,true));
+	    return null;
 	}
 	if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
 	    Display.getDisplay(MidletCmd.midlet()).setCurrent(d);
-	    return;
+	    return null;
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
-    public String getCode(String tag) {
-	return commandcode;
-    }
-
-
-    public void setCode(String tag,String code) {
-	commandcode = code;
-    }
-    
-
-    protected String commandcode;	    // Callback code
-    private static final char commandActionExpandChars[] = {'W','D'};
+    private static final char COMMANDACTIONEXPANDCHARS[] = {'W','D'};
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

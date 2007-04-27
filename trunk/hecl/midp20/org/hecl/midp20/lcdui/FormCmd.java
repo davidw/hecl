@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -21,160 +21,70 @@ package org.hecl.midp20.lcdui;
 
 import java.util.Vector;
 import javax.microedition.lcdui.Command;
-import javax.microedition.lcdui.ChoiceGroup;
-import javax.microedition.lcdui.DateField;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Form;
-import javax.microedition.lcdui.Gauge;
-import javax.microedition.lcdui.ImageItem;
+import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Item;
-import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.ItemStateListener;
-import javax.microedition.lcdui.Spacer;
-import javax.microedition.lcdui.StringItem;
-import javax.microedition.lcdui.TextField;
-import javax.microedition.lcdui.Spacer;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ListThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.RealThing;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.midp20.MidletCmd;
 import org.hecl.misc.HeclUtils;
 
-public class FormCmd extends DisplayableCmd {
-
-    public static final org.hecl.Command CREATE = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		Properties p = WidgetInfo.defaultProps(Form.class);
-		p.setProps(argv,1);
-		Form w = new Form(p.getProp(WidgetInfo.NTITLE).toString());
-		p.delProp(WidgetInfo.NTITLE);
-		WidgetMap.addWidget(interp,null,w,new FormCmd(interp,w,p));
-	    }
-	};
-
-
-    protected FormCmd(final Interp ip,Form form,Properties p) throws HeclException {
-	super(ip,form,p);
-	gadgets = new Vector();
-	form.setItemStateListener(new ItemStateListener() {
-		public void itemStateChanged(Item item) {
-		    //System.out.println("-->"+getClass().getName() +"::itemStateChanged(" + item + ")");
-		    WidgetMap wm = WidgetMap.mapOf(ip);
-		    String expansions[] = {null, wm.nameOf(getForm())};
-		    int i = findItem(expansions,item);
-		    
-		    if(i >= 0) {
-			wm.eval(ip,
-				((FormGadget)gadgets.elementAt(i)).getChangedCallback(),
-				ITEMCHANGEDEXPANDCHARS,
-				expansions);
-		    }
-		}
-	    });
-	myitemcmdlistener = new ItemCommandListener() {
-		public void commandAction(Command c,Item item) {
-		    //System.out.println("-->FormCmd::commandAction(" + c + ", " + item + ")");
-		    WidgetMap wm = WidgetMap.mapOf(ip);
-		    String expansions[] = {"", wm.nameOf(c), wm.nameOf(getForm())};
-		    
-		    if(findItem(expansions,item) >= 0) {
-			//wm.commandAction((OwnedThingCmd)wm.commandOf(c), ITEMCOMMANDACTIONEXPANDCHARS, expansions);
-			wm.eval(ip,icmdact,ITEMCOMMANDACTIONEXPANDCHARS, expansions);
-		    }
-		}
-	    };
+public class FormCmd extends ScreenCmd {
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(Form.class,cmd);
     }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(Form.class);
+    }
+
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(Form.class);
+	p.setProps(argv,1);
+	Form w = new Form(p.getProp(WidgetInfo.NTITLE).toString());
+	p.delProp(WidgetInfo.NTITLE);
+	return ObjectThing.create(setInstanceProperties(interp,w,p));
+    }
+
+
+    protected FormCmd() {}
 
     
-    public Form getForm() {
-	return (Form)getData();
-    }
-    
-
-    protected int append(FormGadget g) {
-	//System.out.println("FormCmd::append("+g+")");
-	if(g != null && !gadgets.contains(g)) {
-	    if(!g.isOwnedBy(this))
-		throw new IllegalStateException("Gadget owned by other Form.");
-	    getForm().append(g.getItem());
-	    gadgets.addElement(g);
-	    return gadgets.size() - 1;
-	}
-	throw new IllegalStateException("Gadget '" + g + "' already present.");
-    }
-
-
-    protected void insert(FormGadget g,int itempos) {
-	if(!gadgets.contains(g)) {
-	    getForm().insert(itempos,g.getItem());
-	    gadgets.insertElementAt(g,itempos);
-	}
-    }
-    
-
-    protected void delete(int itempos) {
-	getForm().delete(itempos);
-	gadgets.removeElementAt(itempos);
-    }
-    
-    
-    protected void deleteAll() {
-	getForm().deleteAll();
-	gadgets.removeAllElements();
-    }
-    
-
-    public void cget(Interp ip,String optname) throws HeclException {
-	if(optname.equals(WidgetInfo.NITEMCOMMANDACTION)) {
-	    ip.setResult(new Thing(icmdact != null ? icmdact : ""));
-	    return;
-	}
-	super.cget(ip,optname);
-    }
-    
-    public void cget(Interp ip,String optname,Thing optval) throws HeclException {
-	if(optname.equals(WidgetInfo.NITEMCOMMANDACTION)) {
-	    icmdact = optval.toString();
-	    if(icmdact.length() == 0)
-		icmdact = null;
-	    return;
-	}
-	super.cset(ip,optname,optval);
-    }
-    
-
-    public void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	Gadget g = (FormGadget)(gadgets.elementAt(itemno));
-	if(g != null) {
-	    g.cget(ip,optname);
-	}
-    }
-
-
-    public void itemcset(Interp ip,int itemno,String optname,Thing optval)
+    public Thing cget(Interp ip,Object target,String optname)
 	throws HeclException {
-	FormGadget g = (FormGadget)(gadgets.elementAt(itemno));
-	if(g != null) {
-	    g.cset(ip,optname,optval);
-	}
-    }
-
-
-    public void handleitemcmd(Interp ip,int itemno,String itemcmd,
-			      Thing[] argv,int startat)
-	throws HeclException {
-	Gadget g = (FormGadget)(gadgets.elementAt(itemno));
-	//System.err.println("FormGadget::handleitemcmd("+itemno+", "+itemcmd+")");
-	if(g != null) {
-	    g.handlecmd(ip,itemcmd,argv,startat);
-	}
-    }
-    
+	Form f = (Form)target;
 	
+	return super.cget(ip,target,optname);
+    }
+    
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Form f = (Form)target;
+
+	if(optname.equals("-itemstatehandler")) {
+	    ItemStateListener listener = null;
+	    if(optval.toString().length() > 0)
+		listener = new WidgetListener(ip,optval,f);
+	    f.setItemStateListener(listener);
+	    return;
+	}
+	super.cset(ip,target,optname,optval);
+    }
+    
+
+    //#ifdef notdef
     public void itemcreate(Interp ip,String what,Thing[] argv,int startat)
 	throws HeclException {
 	Form f = getForm();
@@ -199,7 +109,7 @@ public class FormCmd extends DisplayableCmd {
 	} else if(what.equals("gauge")) {
 	    p = WidgetInfo.defaultProps(Gauge.class);
 	    p.setProps(argv,startat);
-//#ifdef notdef
+	    //#ifdef notdef
 	    System.err.println("GAUGE");
 	    System.err.println("gauge: "
 			       +p.getProp(WidgetInfo.NLABEL).toString()+", "
@@ -207,7 +117,7 @@ public class FormCmd extends DisplayableCmd {
 			       +p.getProp(WidgetInfo.NVALUE).toString()+", "
 			       +p.getProp(WidgetInfo.NMAXVALUE).toString());
 	    System.err.println("GAUGE2");
-//#endif		
+	    //#endif		
 	    g = new GaugeGadget(p.getProp(WidgetInfo.NLABEL).toString(),
 				HeclUtils.thing2bool(
 				    p.getProp(WidgetInfo.NINTERACTIVE)),
@@ -268,165 +178,90 @@ public class FormCmd extends DisplayableCmd {
 	g.getItem().setItemCommandListener(myitemcmdlistener);
 	ip.setResult(append(g));
     }
+    //#endif
 	
 	
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
-	Form f = getForm();
+	Form f = (Form)target;
 	
 	int n = startat+1;
-	if(subcmd.equals(WidgetInfo.NSIZE)) {
-	    ip.setResult(f.size());
-	    return;
-	}
-	if(subcmd.equals(WidgetInfo.NCREATE)) {
+	
+	if(subcmd.equals(WidgetInfo.NSIZE))
+	    return IntThing.create(f.size());
+	if(subcmd.equals(WidgetInfo.NAPPEND)) {
 	    if(argv.length < n) {
 		throw HeclException.createWrongNumArgsException(
-		    argv, n, "class [itemcreate args...]");
+		    argv, n, "append item|string|image");
 	    }
-	    itemcreate(ip,argv[n-1].toString(),argv,n);
-	    return;
+	    // append <item|string|image>
+	    Thing arg = argv[startat];
+	    RealThing rt = arg.getVal();
+	    try {
+		if(rt instanceof ObjectThing) {
+		    if(((ObjectThing)rt).get() != null) {
+			Item item = WidgetInfo.asItem(arg,false,false);
+			if(item != null) {
+			    f.append(item);
+			} else {
+			    Image im = WidgetInfo.asImage(arg,false,false);
+			    if(im != null)
+				f.append(im);
+			}
+		    } else {
+			throw new HeclException("cannot append null");
+		    }
+		} else {
+		    f.append(arg.toString());
+		}
+	    }
+	    catch(Exception ex) {
+		throw new HeclException("unable to append: "+ex);
+	    }
+	    return null;
 	}
-
-	if(subcmd.startsWith(WidgetInfo.NITEM,0)) {
+	if(subcmd.equals(WidgetInfo.NITEM)) {
 	    // item<something> requires an item as parameter
 	    if(argv.length < n) {
 		throw HeclException.createWrongNumArgsException(
-		    argv, n, "itemcget|itemconfigure|itemop item [moreargs...]");
+		    argv, n, "item itemnumber");
 	    }
-
-	    int itempos = IntThing.get(argv[n-1]);
-	    checkItemPosition(itempos);
-
-	    //System.out.println("Itempos="+itempos);
-	    if(subcmd.equals(WidgetInfo.NITEMCONF)
-	       || subcmd.equals(WidgetInfo.NITEMCONFIGURE)) {
-		for(int i = n; i<argv.length; i+= 2) {
-		    //System.err.println("itemconf for "+argv[i].toString());
-		    itemcset(ip,itempos,argv[i].toString(),argv[i+1]);
-		}
-		return;
-	    }
-	    if(subcmd.equals(WidgetInfo.NITEMCGET)) {
-		++n;
-		if(argv.length != n) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, n-1, "optname");
-		}
-		//System.err.println("itemcget for "+argv[n-1].toString());
-		itemcget(ip,itempos,argv[n-1].toString());
-		return;
-	    }
-	    if(subcmd.equals(WidgetInfo.NITEMOP)) {
-		++n;
-		if(argv.length < n) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, n-1, "itemcommand [itemcommandargs...]");
-		}
-		handleitemcmd(ip,itempos,argv[n-1].toString(),argv,n);
-		return;
-	    }
-	    throw new HeclException("Unknown item command '"+subcmd+"'.");
+	    return ObjectThing.create(f.get(IntThing.get(argv[startat])));
 	}
 	if(subcmd.equals(WidgetInfo.NDELETE)) {
 	    if(argv.length != n) {
 		throw HeclException.createWrongNumArgsException(
-		    argv, n, "delete item");
+		    argv, n, "delete itemnumber");
 	    }
-	    int itempos = IntThing.get(argv[n-1]);
-	    checkItemPosition(itempos);
-	    delete(itempos);
-	    return;
+	    f.delete(IntThing.get(argv[startat]));
+	    return null;
 	}
 	if(subcmd.equals("deleteall")) {
-	    deleteAll();
-	    return;
+	    f.deleteAll();
+	    return null;
 	}
-	if(subcmd.startsWith("move")) {
-	    boolean before = subcmd.equals("movebefore");
-	    boolean behind = subcmd.equals("movebehind");
-	    boolean moveto = subcmd.equals("moveto");
-	    if(before || behind || moveto) {
-		++n;
-		if(argv.length != n) {
-		    throw HeclException.createWrongNumArgsException(
-			argv, n, "position");
-		}
-		int itemtomove = IntThing.get(argv[n-2]);
-		int numgadgets = f.size();
-		int pos = numgadgets - 1;
-		String s = argv[n-1].toString();
-		
-		if(s.equals("start"))
-		    pos = 0;
-		else if(s.equals("end"))
-		    pos = numgadgets;
-		else
-		    pos = IntThing.get(argv[n-1]);
-		checkItemPosition(itemtomove);
-		checkItemPosition(pos);
-		
-		FormGadget g = (FormGadget)(gadgets.elementAt(itemtomove));
-		delete(itemtomove);
-		if(pos > itemtomove)
-		    --pos;
-		if(moveto || before) {
-		    insert(g,pos);
-		} else {
-		    if(pos >= gadgets.size() -1) {
-			append(g);
-		    } else {
-			insert(g,pos+1);
-		    }
-		}
-		return;
-	    }
-	    if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
-		// extension: setcurrent item
-		if(argv.length == n+1) {
-		    int itempos = IntThing.get(argv[n]);
-		    checkItemPosition(itempos);
-		    // start j2mepolish break down
-		    // to allow correct preprocessing
-		    Item item = ((FormGadget)gadgets.elementAt(itempos)).getItem();
-		    Display displ = MidletCmd.getDisplay();
-		    displ.setCurrentItem(item);
-		    // end j2mepolish break down
-		    return;
-		}
-		// fall thru, baseclass 
+	if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
+	    // extension: setcurrent itemnumber
+	    if(argv.length == n) {
+		// start j2mepolish break down
+		// to allow correct preprocessing
+		Display displ = MidletCmd.getDisplay();
+		Item item = f.get(IntThing.get(argv[startat]));
+		displ.setCurrentItem(item);
+		// end j2mepolish break down
+		return null;
 	    }
 	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
 
-    protected void checkItemPosition(int pos) throws HeclException {
-	int n = gadgets.size();
-	if(pos < 0 || pos >= n)
-	    throw new HeclException("Invalid item position '"+pos+"'.");
-    }
-	
-
-    private int findItem(String[] table,Item item) {
-	int i = 0;
-	int n = gadgets.size();
-	for(i=0; i<n; ++i) {
-	    if(item == ((FormGadget)(gadgets.elementAt(i))).getItem()) {
-		table[0] = String.valueOf(i);
-		return i;
-	    }
-	}
-	i = -1;
-	table[0] = String.valueOf(i);
-	return i;
-    }
-    
-
-    protected Vector gadgets;
-    protected String icmdact = null;
-    protected ItemCommandListener myitemcmdlistener = null;
-
-    private static final char ITEMCHANGEDEXPANDCHARS[] = {'i','D'};
-    private static final char ITEMCOMMANDACTIONEXPANDCHARS[] = {'i','W','D'};
+    private static FormCmd cmd = new FormCmd();
+    private static final String CMDNAME = "lcdui.form";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -21,110 +21,69 @@ package org.hecl.midp20.lcdui;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Item;
+import javax.microedition.lcdui.ItemCommandListener;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ListThing;
+import org.hecl.ObjectThing;
+import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
-public abstract class FormGadget implements Gadget {
-    protected FormGadget(Item i,FormCmd owner) {
-	theitem = i;
-	formcmd = owner;
-    }
+public abstract class ItemCmd extends OptionCmd {
+    protected ItemCmd() {}
 
-    
-    public Item getItem() {
-	return theitem;
-    }
-    
-
-    public boolean isOwnedBy(FormCmd f) {
-	return formcmd == f;
-    }
-    
-
-    public void configure(Interp ip,Thing[] argv,int start,int n)
+    public Thing cget(Interp ip,Object target,String optname)
 	throws HeclException {
-	int count = n-start;
-	if(count < 0 || count % 2 != 0) {
-	    throw new HeclException("configure needs name-value pairs");
-	}
-	// deal with option/value pairs
-	for(int i = start ; i<n; i += 2) {
-	    //System.err.println("formgadget.cset for "+argv[i].toString() +", val="+argv[i+1].toString());
-	    cset(ip,argv[i].toString(),argv[i+1]);
-	}
-    }
-    
-    public void cget(Interp ip,String optname) throws HeclException {
-	if(optname.equals(WidgetInfo.NLABEL)) {
-	    ip.setResult(theitem.getLabel());
-	    return;
-	}
-	if(optname.equals("-anchor")) {
-	    ip.setResult(WidgetInfo.fromItemAnchor(theitem.getLayout()));
-	    return;
-	}
-	if(optname.equals("-shrink")) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_SHRINK));
-	    return;
-	}
-	if(optname.equals("-vshrink")) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_VSHRINK));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NEXPAND)) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_EXPAND));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NVEXPAND)) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_VEXPAND));
-	    return;
-	}
-	if(optname.equals("-newlinebefore")) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_BEFORE));
-	    return;
-	}
-	if(optname.equals("-newlineafter")) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_AFTER));
-	    return;
-	}
-	if(optname.equals("-layout2")) {
-	    ip.setResult(0 != (theitem.getLayout()&Item.LAYOUT_2));
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NMINWIDTH)) {
-	    ip.setResult(theitem.getMinimumWidth());
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NMINHEIGHT)) {
-	    ip.setResult(theitem.getMinimumHeight());
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NPREFERREDWIDTH)) {
-	    ip.setResult(theitem.getPreferredWidth());
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NPREFERREDHEIGHT)) {
-	    ip.setResult(theitem.getPreferredHeight());
-	    return;
-	}
+	Item theitem = (Item)target;
+	
+	if(optname.equals(WidgetInfo.NLABEL))
+	    return StringThing.create(theitem.getLabel());
+	if(optname.equals("-anchor"))
+	    return WidgetInfo.fromItemAnchor(theitem.getLayout());
+	if(optname.equals("-shrink"))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_SHRINK));
+	if(optname.equals("-vshrink"))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_VSHRINK));
+	if(optname.equals(WidgetInfo.NEXPAND))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_EXPAND));
+	if(optname.equals(WidgetInfo.NVEXPAND))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_VEXPAND));
+	if(optname.equals("-newlinebefore"))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_BEFORE));
+	if(optname.equals("-newlineafter"))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_NEWLINE_AFTER));
+	if(optname.equals("-layout2"))
+	    return IntThing.create(0 != (theitem.getLayout()&Item.LAYOUT_2));
+	if(optname.equals(WidgetInfo.NMINWIDTH))
+	    return IntThing.create(theitem.getMinimumWidth());
+	if(optname.equals(WidgetInfo.NMINHEIGHT))
+	    return IntThing.create(theitem.getMinimumHeight());
+	if(optname.equals(WidgetInfo.NPREFERREDWIDTH))
+	    return IntThing.create(theitem.getPreferredWidth());
+	if(optname.equals(WidgetInfo.NPREFERREDHEIGHT))
+	    return IntThing.create(theitem.getPreferredHeight());
+	/*
 	if(optname.equals("-defaultcommand")) {
-	    WidgetMap.setWidgetResult(ip,defcmd);
+	    WidgetInfo.setWidgetResult(ip,defcmd);
 	    return;
 	}
-	if(optname.equals("-changedcallback")) {
-	    ip.setResult(changedcallback != null ? changedcallback : "");
-	    return;
+	*/
+	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
+	    throw new HeclException("option '"
+				    +WidgetInfo.NCOMMANDACTION+"' is write only");
 	}
 	throw new HeclException("Unknown cget option '"+optname+"'");
     }
 
-
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	Item theitem = (Item)target;
+	
 	if(optname.equals(WidgetInfo.NLABEL)) {
 	    theitem.setLabel(optval.toString());
 	    return;
@@ -185,46 +144,35 @@ public abstract class FormGadget implements Gadget {
 	    String s = optval.toString();
 	    Command c = null;
 	    if(0 != s.length()) {
-		c = WidgetMap.mapOf(ip).asCommand(optval,true,true);
+		c = WidgetInfo.asCommand(optval,true,true);
 	    }
-	    defcmd = c;
 	    theitem.setDefaultCommand(c);
 	    return;
 	}
-	if(optname.equals("-changedcallback")) {
-	    changedcallback = optval.toString();
-	    if(changedcallback.length() == 0)
-		changedcallback = null;
-	    //System.err.println("*** set to " + changedcallback);
+	if(optname.equals(WidgetInfo.NCOMMANDACTION)) {
+	    ItemCommandListener listener = null;
+	    if(optval.toString().length() > 0) {
+		listener = new WidgetListener(ip,optval);
+	    }
+	    theitem.setItemCommandListener(listener);
 	    return;
 	}
 	throw new HeclException("unknown configure option '"+optname+"'");
     }
-    
 
-    public void itemcget(Interp ip,int itemno,String optname) throws HeclException {
-	throw new HeclException("Unknown item cget option '"+optname+"'");
-    }
-    
-
-    public void itemcset(Interp ip,int itemno,String optname,Thing optval)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
-	throw new HeclException("unknown item option '"+optname+"'");
-    }
+	Item theitem = (Item)target;
 
-
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
-	throws HeclException {
-	WidgetMap wm = WidgetMap.mapOf(ip);
-	
 	if(subcmd.equals(WidgetInfo.NADDCOMMAND)) {
 	    int n = startat+1;
 	    if(argv.length != n) {
 		throw HeclException.createWrongNumArgsException(
 		    argv, n, subcmd+" command");
 	    }
-	    theitem.addCommand(wm.asCommand(argv[2],false,true));
-	    return;
+	    theitem.addCommand(WidgetInfo.asCommand(argv[2],false,true));
+	    return null;
 	}
 	if(subcmd.equals(WidgetInfo.NREMOVECOMMAND)) {
 	    int n = startat+1;
@@ -232,30 +180,32 @@ public abstract class FormGadget implements Gadget {
 		throw HeclException.createWrongNumArgsException(
 		    argv, n, subcmd+" command");
 	    }
-	    Command c = wm.asCommand(argv[2],false,true);
-	    if(c == defcmd) {
-		defcmd = null;
-	    }
-	    theitem.removeCommand(c);
-	    return;
+	    theitem.removeCommand(WidgetInfo.asCommand(argv[2],false,true));
+	    return null;
 	}
 	throw new HeclException("Invalid command '"+subcmd+"'!");
     }
 
     
-    public String getChangedCallback() {
-	return changedcallback;
-    }
-
-    public String getCommandAction() {
-	return commandaction;
+    private static void noItemOption(String optname) throws HeclException {
+	throw new HeclException("Unknown item cget option '"+optname+"'");
     }
     
-
+	    
+    protected Thing itemcget(Interp ip,Object target,int itemno,String optname)
+   	throws HeclException {
+	noItemOption(optname);
+	return null;
+    }
     
-    protected Item theitem;
-    protected FormCmd formcmd;
-    protected Command defcmd = null;
-    protected String changedcallback = null;
-    protected String commandaction = null;
+    public void itemcset(Interp ip,Object target,int itemno,String optname,Thing optval)
+	throws HeclException {
+	noItemOption(optname);
+    }
+    
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

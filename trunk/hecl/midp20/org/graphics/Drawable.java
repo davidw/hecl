@@ -85,6 +85,7 @@ public class Drawable {
 	//translate(x,y);
 	setClip(r);
 	//System.err.println("trans="+x+","+y +", clip=("+r.x+","+r.y+","+r.width+","+r.height+")");
+	this.needflush = true;
     }
     
 
@@ -104,6 +105,7 @@ public class Drawable {
 //#else
 	g.copyArea(toX(p),toY(p),d.width,d.height,toX(dst),toY(dst),anchor);
 //#endif
+	this.needflush = true;
     }
     
 
@@ -114,6 +116,7 @@ public class Drawable {
 	if(filled)
 	    g.fillArc(x,y,d.width,d.height,startAngle,arcAngle);
 	g.drawArc(x,y,d.width,d.height,startAngle,arcAngle);
+	this.needflush = true;
     }
 
 
@@ -155,6 +158,7 @@ public class Drawable {
 //#else
 	g.drawImage(img,toX(x),toY(y),Graphics.TOP|Graphics.LEFT);
 //#endif
+	this.needflush = true;
     }
     
     
@@ -181,16 +185,19 @@ public class Drawable {
 	int x = toX(p);
 	int y = toY(p);
 	g.drawLine(x,y,x,y);
+	this.needflush = true;
     }
     
 
     public void drawLine(int fromx,int fromy,int tox,int toy) {
 	g.drawLine(toX(fromx),toY(fromy),toX(tox),toY(toy));
+	this.needflush = true;
     }
     
 
     public void drawLine(Point2D from,Point2D to) {
 	g.drawLine(toX(from),toY(from),toX(to),toY(to));
+	this.needflush = true;
     }
     
 
@@ -200,6 +207,7 @@ public class Drawable {
     }
     public void xline(int fromx,int fromy,int tox,int toy) {
 	g.drawLine(fromx,fromy,tox,toy);
+	this.needflush = true;
     }
     
 
@@ -218,6 +226,7 @@ public class Drawable {
 	if(filled)
 	    g.fillRect(dx, dy, width, height);
 	g.drawRect(dx, dy, width, height);
+	this.needflush = true;
     }
     
 
@@ -230,6 +239,7 @@ public class Drawable {
 			      int arcWidth, int arcHeight) {
 	g.drawRoundRect(toX(x),toY(y+height),
 			width,height,arcHeight,arcHeight);
+	this.needflush = true;
     }
     
     
@@ -245,6 +255,7 @@ public class Drawable {
 //#else
 	g.drawString(str,toX(x),toY(y),anchor);
 //#endif
+	this.needflush = true;
     }
     
 
@@ -255,12 +266,14 @@ public class Drawable {
 //#else
 	g.drawString(str,toX(p),toY(p),anchor);
 //#endif
+	this.needflush = true;
     }
     
 
     public void fillRoundRect(int x, int y, int width, int height,
 			      int arcWidth, int arcHeight) {
 	g.fillRoundRect(toX(x),toY(y+height-1),width,height,arcHeight,arcHeight);
+	this.needflush = true;
     }
     
     
@@ -284,6 +297,7 @@ public class Drawable {
     public void drawRegion(Image src, int srcx,int srcy,int width,int height,
 			   int transform, int dstx,int dsty, int anchor) {
 	g.drawRegion(src,srcx,srcy,width,height,transform,toX(dstx),toY(dsty),anchor);
+	this.needflush = true;
     }
     
 
@@ -300,6 +314,7 @@ public class Drawable {
 			int x, int y, int width, int height,
 			boolean processAlpha) {
 	g.drawRGB(rgbData,offset,scanlength,toX(x),toY(y),width,height,processAlpha);
+	this.needflush = true;
     }
     
 
@@ -341,6 +356,7 @@ public class Drawable {
 
     public void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
 	g.fillTriangle(toX(x1),toY(y1),toX(x2),toY(y2),toX(x3),toY(y3));
+	this.needflush = true;
     }
     
     public void fillTriangle(Point p1,Point p2,Point p3) {
@@ -378,6 +394,7 @@ public class Drawable {
 	if(currvf == null)
 	    return;
 	currvf.drawString(str,toX(p),toY(p),null,g);
+	this.needflush = true;
     }
     
 
@@ -387,6 +404,7 @@ public class Drawable {
 	if(currvf == null)
 	    return;
 	currvf.drawString(str,toX(p),toY(p),anchor,sx,sy,rotindegree,slantintanrad,null,g);
+	this.needflush = true;
     }
     
 
@@ -434,6 +452,14 @@ public class Drawable {
     }
     */
 	    
+    public boolean needsFlush() {
+	return needflush;
+    }
+    
+    public void flush() {
+	needflush = false;
+    }
+    
     public void setClip(int x, int y, int width, int height) {
 //#ifdef debug
 	System.err.println("Drawable.setClip to: "+x+" - "+toX(x)
@@ -608,4 +634,5 @@ public class Drawable {
     protected Color bgcol = Color.white;    // background color
     protected VFont currvf = null;
     protected Font currf = null;
+    protected boolean needflush = true;
 }

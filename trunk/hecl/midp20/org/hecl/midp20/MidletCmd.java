@@ -70,7 +70,7 @@ public class MidletCmd extends Operator {
 	return Display.getDisplay(themidlet);
     }
     
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String str = null;
 	if(argv.length > 1)
 	    str = argv[1].toString();
@@ -89,14 +89,14 @@ public class MidletCmd extends Operator {
 
 	  case PLATFORMREQUEST:
 	    try {
-		return new IntThing(themidlet.platformRequest(argv[1].toString()));
+		return IntThing.create(themidlet.platformRequest(argv[1].toString()));
 	    }
 	    catch(Exception e) {
 		throw new HeclException(e.toString());
 	    }
 	    
 	  case CHECKPERMISSIONS:
-	    return new IntThing(themidlet.checkPermission(argv[1].toString()));
+	    return IntThing.create(themidlet.checkPermission(argv[1].toString()));
 
 	  case GETPROP:
 	    /*
@@ -166,18 +166,18 @@ public class MidletCmd extends Operator {
 	    String s = themidlet.getAppProperty(str);
 	    if(s == null)
 		s = "";
-	    return new StringThing(s);
+	    return new Thing(s);
 
 	  case HASPROP:
-	    return themidlet.getAppProperty(str) != null ?
-		IntThing.ONE : IntThing.ZERO;
+	    return IntThing.create(themidlet.getAppProperty(str) != null ?
+				   IntThing.ONE : IntThing.ZERO);
 
 	  case RESASSTRING:
 	    try {
-		return new StringThing(
+		return new Thing(
 		    HeclUtils.getResourceAsString(
 			themidlet.getClass(),str,
-			argv.length == 2 ? argv[2].toString() : null));
+			argv.length == 2 ? argv[2].toString() : ""));
 	    }
 	    catch(IOException e) {
 		throw new HeclException("Unable to read resource '"
@@ -190,8 +190,8 @@ public class MidletCmd extends Operator {
 		//int note = Math.ln(DoubleThing.get(argv[1])/8.176*SEMITONE_CONST);
 		Manager.playTone(
 		    IntThing.get(argv[1]),  // note
-		    IntThing.get(argv[1]),  // duration
-		    IntThing.get(argv[1])  // volume
+		    IntThing.get(argv[2]),  // duration
+		    IntThing.get(argv[3])   // volume
 		    );
 	    }
 	    catch(MediaException mex) {
@@ -201,15 +201,15 @@ public class MidletCmd extends Operator {
 		throw new HeclException("Invalid argumument for playtone - "
 					+illgl.getMessage());
 	    }
+	    return null;
 
-	    break;
 	  case CONTENTTYPES:
-	    return new ListThing(tov(Manager.getSupportedContentTypes(
-					 argv[1].toString())));
+	    return ListThing.create(tov(Manager.getSupportedContentTypes(
+					    argv[1].toString())));
 	    
 	  case PROTOCOLS:
-	    return new ListThing(tov(Manager.getSupportedContentTypes(
-					 argv[1].toString())));
+	    return ListThing.create(tov(Manager.getSupportedContentTypes(
+					    argv[1].toString())));
 //#endif
 
 	  default:
@@ -217,10 +217,6 @@ public class MidletCmd extends Operator {
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 	}
-	// notreached
-//#ifndef polish.blackberry
-	return null;
-//#endif
     }
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -19,8 +19,6 @@
 
 package org.hecl.midp20.lcdui;
 
-import java.util.Hashtable;
-
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
@@ -33,153 +31,88 @@ import org.awt.Color;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
 import org.hecl.misc.HeclUtils;
 
 public class CanvasCmd extends DisplayableCmd {
-    public static final org.hecl.Command CREATE = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		Properties p = WidgetInfo.defaultProps(Canvas.class);
-		p.setProps(argv,1);
-		HeclCanvas w = new HeclCanvas(HeclUtils.thing2bool(
-						  p.getProp(WidgetInfo.NSUPPRESSKEYS)));
-		p.delProp(WidgetInfo.NTITLE);
-		p.delProp(WidgetInfo.NSUPPRESSKEYS);
-		WidgetMap.addWidget(interp,null,w,new CanvasCmd(interp,w,p));
-	    }
-	};
-
-    
-    protected CanvasCmd(final Interp ip,HeclCanvas acanvas,Properties p)
-	throws HeclException {
-	super(ip,acanvas,p);
-	callbacks = new Hashtable();
-	canvasg = acanvas.getGraphics();
-	acanvas.setEventHandler(new EventHandler() {
-		public void handleEvent(CanvasEvent e) {
-		    String cb = (String)callbacks.get(new Integer(e.reason));
-		    if(cb != null) {
-			//System.err.println("cb="+cb);
-			HeclCanvas c = (HeclCanvas)e.canvas;
-			WidgetMap wm = WidgetMap.mapOf(ip);
-			String canvasname = wm.nameOf(c);
-			
-			if(canvasname != null) {
-			    // Perform %-substitution and call the callback
-			    // %W --> e.canvas
-			    // %T --> e.reason
-			    // %x --> e.x
-			    // %y --> e.y
-			    // %w --> e.width
-			    // %h --> e.height
-			    // %k --> e.keycode
-			    char expandchars[] = {'W','T','x','y','w','h','k','K','g'};
-			    String expansions[] = {
-				canvasname, CanvasEvent.eventName(e.reason),
-				    String.valueOf(e.x), String.valueOf(e.y),
-				    String.valueOf(e.width), String.valueOf(e.height),
-				    String.valueOf(e.keycode),
-				    "none","none"
-			    };
-			    try {
-				expansions[7] = c.getKeyName(e.keycode);
-				expansions[8] = String.valueOf(c.getGameAction(e.keycode));
-			    }
-			    catch(IllegalArgumentException illgl) {
-			    }
-			    String todo = WidgetMap.expandPercent(cb,expandchars,expansions);
-			    //System.out.println("we evaluate: "+todo+"<<");
-			    ip.evalAsync(new Thing(todo));
-			}
-		    }
-		}
-	    });
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(HeclCanvas.class,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(HeclCanvas.class);
     }
     
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	Properties p = WidgetInfo.defaultProps(Canvas.class);
+	p.setProps(argv,1);
+	HeclCanvas w = new HeclCanvas(HeclUtils.thing2bool(
+					  p.getProp(WidgetInfo.NSUPPRESSKEYS)));
+	p.delProp(WidgetInfo.NTITLE);
+	p.delProp(WidgetInfo.NSUPPRESSKEYS);
+	return ObjectThing.create(setInstanceProperties(interp,w,p));
+    }
 
-    public void cget(Interp ip,String optname) throws HeclException {
-	HeclCanvas c = (HeclCanvas)getData();
+    
+    protected CanvasCmd() {}
+    
+
+    public Thing cget(Interp ip,Object target,String optname) throws HeclException {
+	HeclCanvas c = (HeclCanvas)target;
 	
-	if(optname.equals(WidgetInfo.NWIDTH)) {
-	    ip.setResult(c.getWidth());
-	    return;
-	}
-	if(optname.equals("-drawwidth")) {
-	    ip.setResult(c.getDrawWidth());
-	    return;
-	}
-	if(optname.equals(WidgetInfo.NHEIGHT)) {
-	    ip.setResult(c.getHeight());
-	    return;
-	}
-	if(optname.equals("-drawheight")) {
-	    ip.setResult(c.getDrawHeight());
-	    return;
-	}
-	if(optname.equals("-fullwidth")) {
-	    ip.setResult(c.getFullWidth());
-	    return;
-	}
-	if(optname.equals("-fullheight")) {
-	    ip.setResult(c.getFullHeight());
-	    return;
-	}
-	if(optname.equals("-fullscreen")) {
-	    ip.setResult(c.getFullScreenMode());
-	    return;
-	}
-	if(optname.equals("-doublebuffered")) {
-	    ip.setResult(c.isDoubleBuffered());
-	    return;
-	}
-	if(optname.equals("-pointerevents")) {
-	    ip.setResult(c.hasPointerEvents());
-	    return;
-	}
-	if(optname.equals("-pointermotionevents")) {
-	    ip.setResult(c.hasPointerMotionEvents());
-	    return;
-	}
-	if(optname.equals("-repeatevents")) {
-	    ip.setResult(c.hasRepeatEvents());
-	    return;
-	}
-	if(optname.equals("-autoflush")) {
-	    ip.setResult(getAutoFlushMode());
-	    return;
-	}
-	if(optname.equals("-cmdbg")) {
-	    ip.setResult(WidgetInfo.fromColor(c.getCmdBgColor()));
-	    return;
-	}
-	if(optname.equals("-cmdfg")) {
-	    ip.setResult(WidgetInfo.fromColor(c.getCmdFgColor()));
-	    return;
-	}
+	if(optname.equals(WidgetInfo.NWIDTH))
+	    return IntThing.create(c.getWidth());
+	if(optname.equals("-drawwidth"))
+	    return IntThing.create(c.getDrawWidth());
+	if(optname.equals(WidgetInfo.NHEIGHT))
+	    return IntThing.create(c.getHeight());
+	if(optname.equals("-drawheight"))
+	    return IntThing.create(c.getDrawHeight());
+	if(optname.equals("-fullwidth"))
+	    return IntThing.create(c.getFullWidth());
+	if(optname.equals("-fullheight"))
+	    return IntThing.create(c.getFullHeight());
+	if(optname.equals("-fullscreen"))
+	    return IntThing.create(c.getFullScreenMode());
+	if(optname.equals("-doublebuffered"))
+	    return IntThing.create(c.isDoubleBuffered());
+	if(optname.equals("-pointerevents"))
+	    return IntThing.create(c.hasPointerEvents());
+	if(optname.equals("-pointermotionevents"))
+	    return IntThing.create(c.hasPointerMotionEvents());
+	if(optname.equals("-repeatevents"))
+	    return IntThing.create(c.hasRepeatEvents());
+	if(optname.equals("-autoflush"))
+	    return IntThing.create(c.getAutoFlushMode());
+	if(optname.equals("-cmdbg"))
+	    return WidgetInfo.fromColor(c.getCmdBgColor());
+	if(optname.equals("-cmdfg"))
+	    return WidgetInfo.fromColor(c.getCmdFgColor());
+	//#ifdef notdef
 	GraphicsCmd gcmd = c.getGraphicsCmd();
 	if(gcmd != null) {
-	    try {
-		gcmd.cget(ip,optname);
-		return;
-	    }
-	    catch (CmdException e) {
-	    }
+	    return gcmd.cget(ip,target,optname);
 	}
-	super.cget(ip,optname);
+	//#endif
+	return super.cget(ip,target,optname);
     }
     
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	HeclCanvas c = (HeclCanvas)getData();
+    public void cset(Interp ip,Object target,String optname,Thing optval)
+	throws HeclException {
+	HeclCanvas c = (HeclCanvas)target;
 
 	if(optname.equals("-fullscreen")) {
 	    c.setFullScreenMode(HeclUtils.thing2bool(optval));
 	    return;
 	}
 	if(optname.equals("-autoflush")) {
-	    setAutoFlushMode(HeclUtils.thing2bool(optval));
+	    c.setAutoFlushMode(HeclUtils.thing2bool(optval));
 	    return;
 	}
 	if(optname.equals("-cmdbg")) {
@@ -190,54 +123,35 @@ public class CanvasCmd extends DisplayableCmd {
 	    c.setCmdFgColor(new Color(WidgetInfo.toColor(optval)));
 	    return;
 	}
-	GraphicsCmd gcmd = c.getGraphicsCmd();
-	if(gcmd != null) {
-	    try {
-		gcmd.cset(ip,optname,optval);
-		return;
-	    }
-	    catch (CmdException e) {
-	    }
+	if(optname.equals("-eventhandler")) {
+	    EventHandler h = null;
+	    if(optval.toString().length() > 0)
+		h = new WidgetListener(ip,optval,c);
+	    c.setEventHandler(h);
+	    return;
 	}
-	super.cset(ip,optname,optval);
+	super.cset(ip,target,optname,optval);
     }
     
 
-    public void handlecmd(Interp ip,String subcmd, Thing[] argv,int startat)
+    public Thing handlecmd(Interp ip,Object target,String subcmd,
+			   Thing[] argv,int startat)
 	throws HeclException {
-	HeclCanvas c = (HeclCanvas)getData();
+	HeclCanvas c = (HeclCanvas)target;
 
 	if(subcmd.equals(WidgetInfo.NREPAINT)) {
 	    c.repaint();
-	    return;
-	}
-	if(subcmd.equals("addcallback")) {
-	    if(startat < argv.length) {
-		String eventname = argv[startat].toString();
-		int i = CanvasEvent.eventOf(eventname);
-		if(i != CanvasEvent.E_UNKNOWN)
-		    addCallback(i,argv[startat+1].toString());
-	    }
-	    return;
-	}
-	if(subcmd.equals("removecallback")) {
-	    if(startat < argv.length) {
-		String eventname = argv[startat].toString();
-		int i = CanvasEvent.eventOf(eventname);
-		if(i != CanvasEvent.E_UNKNOWN)
-		    removeCallback(i);
-	    }
-	    return;
+	    return null;
 	}
 	if(subcmd.equals("servicerepaints")) {
 	    c.serviceRepaints();
-	    return;
+	    return null;
 	}
 	if(subcmd.equals("flush")) {
 	    if(argv.length == startat) {
 		// Simple case, flush whole buffer
 		c.flushGraphics();
-		return;
+		return null;
 	    }
 	    
 	    // x, y, w, h
@@ -249,49 +163,18 @@ public class CanvasCmd extends DisplayableCmd {
 			    IntThing.get(argv[startat+1]),
 			    IntThing.get(argv[startat+2]),
 			    IntThing.get(argv[startat+3]));
-	    return;
+	    return null;
 	}
-
-	// Draw commands go here
-	try {
-	    GraphicsCmd gcmd = c.getGraphicsCmd();
-	    if(gcmd != null) {
-		gcmd.handlecmd(ip,subcmd,argv,startat);
-		if(autoflush && gcmd.needsFlush() && c.isShown()) {
-		    c.flushGraphics();
-		    gcmd.flush();
-		}
-		return;
-	    }
-	}
-	catch (CmdException e) {
-	}
-	super.handlecmd(ip,subcmd,argv,startat);
+	if(subcmd.equals("graphics"))
+	    return ObjectThing.create(c.getDrawable());
+	return super.handlecmd(ip,target,subcmd,argv,startat);
     }
 
-    public void addCallback(int eventCode,String s) {
-	if(s != null)
-	    callbacks.put(new Integer(eventCode),s);
-	else
-	    removeCallback(eventCode);
-    }
-	    
-
-    public boolean getAutoFlushMode() {
-	return autoflush;
-    }
-    
-
-    public void removeCallback(int eventCode) {
-	callbacks.remove(new Integer(eventCode));
-    }
-	    
-    
-    public void setAutoFlushMode(boolean b) {
-	autoflush = b;
-    }
-    
-    protected Graphics canvasg;
-    protected Hashtable callbacks;
-    private boolean autoflush = true;
+    private static CanvasCmd cmd = new CanvasCmd();
+    private static final String CMDNAME = "lcdui.canvas";
 }
+
+// Variables:
+// mode:java
+// coding:utf-8
+// End:

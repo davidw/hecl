@@ -1,5 +1,15 @@
 2007-04-27  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
+	* midp20/*:
+	Major changes with massive ussage of ObjectThing and class command
+	support from modified core. Removed many unused class formerly
+	necessary to keep a mapping between GUI elements and strings,
+	changed many methods. Many user visible changes on scripting
+	level, nameley: callback treatment, item handling, creation.
+	As a result, the code is much cleaner, simplier, smaller and
+	runtime behavior has been improved concerning memory requirements
+	and performance!
+
 	* j2me/Hecl.java: 
 	Simplified command creation.
 	

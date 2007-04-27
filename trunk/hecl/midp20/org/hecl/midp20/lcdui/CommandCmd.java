@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2006
+ * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
  * 
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -24,72 +24,72 @@ import javax.microedition.lcdui.Command;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class CommandCmd extends OwnedThingCmd {
-    public static final org.hecl.Command CREATE = new org.hecl.Command() {
-	    public void cmdCode(Interp interp,Thing[] argv) throws HeclException {
-		int prio = -1;
-		Properties p = WidgetInfo.defaultProps(Command.class);
-		
-		p.setProps(argv,1);
-		try {
-		    prio = IntThing.get(p.getProp(WidgetInfo.NPRIO));
-		}
-		catch (HeclException e) {
-		    prio = -1;
-		}
-		if(prio < 0) {
-		    throw new HeclException("invalid command priority");
-		}
-		Command w = new Command(
-		    p.getProp(WidgetInfo.NLABEL).toString(),
-		    p.getProp(WidgetInfo.NLONGLABEL).toString(),
-		    WidgetInfo.toCommandType(p.getProp(WidgetInfo.NTYPE)),
-		    prio);
-		
-		p.delProp(WidgetInfo.NPRIO);
-		p.delProp(WidgetInfo.NLABEL);
-		p.delProp(WidgetInfo.NLONGLABEL);
-		p.delProp(WidgetInfo.NTYPE);
-		WidgetMap.addWidget(interp,null,w,new CommandCmd(interp,w,p));
-	    }
-	};
-    
-
-    protected CommandCmd(Interp ip,Command c,Properties p) throws HeclException {
-	super(ip,c,p);
+public class CommandCmd extends OptionCmd {
+    public static void load(Interp ip) {
+	ip.addCommand(CMDNAME,cmd);
+	ip.addClassCmd(Command.class,cmd);
+    }
+    public static void unload(Interp ip) {
+	ip.removeCommand(CMDNAME);
+	ip.removeClassCmd(Command.class);
     }
     
-
-    public void cget(Interp ip,String optname) throws HeclException {
-	Command cmd = (Command)getData();
+    public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
+	int prio = -1;
+	Properties p = WidgetInfo.defaultProps(Command.class);
 	
-	if(optname.equals(WidgetInfo.NLABEL)) {
-	    String s = cmd.getLabel();
-	    ip.setResult(new Thing(s != null ? s : ""));
-	    return;
+	p.setProps(argv,1);
+	try {
+	    prio = IntThing.get(p.getProp(WidgetInfo.NPRIO));
 	}
-	if(optname.equals(WidgetInfo.NLONGLABEL)) {
-	    String s = cmd.getLongLabel();
-	    ip.setResult(new Thing(s != null ? s : ""));
-	    return;
+	catch (HeclException e) {
+	    prio = -1;
 	}
-	if(optname.equals(WidgetInfo.NTYPE)) {
-	    ip.setResult(WidgetInfo.fromCommandType(cmd.getCommandType()));
-	    return;
+	if(prio < 0) {
+	    throw new HeclException("invalid command priority");
 	}
-	if(optname.equals(WidgetInfo.NPRIO)) {
-	    ip.setResult(IntThing.create(cmd.getPriority()));
-	    return;
-	}
-	super.cget(ip,optname);
+	Command w = new Command(
+	    p.getProp(WidgetInfo.NLABEL).toString(),
+	    p.getProp(WidgetInfo.NLONGLABEL).toString(),
+	    WidgetInfo.toCommandType(p.getProp(WidgetInfo.NTYPE)),
+	    prio);
+	p.delProp(WidgetInfo.NPRIO);
+	p.delProp(WidgetInfo.NLABEL);
+	p.delProp(WidgetInfo.NLONGLABEL);
+	p.delProp(WidgetInfo.NTYPE);
+	return ObjectThing.create(setInstanceProperties(interp,w,p));
     }
     
 
-    public void cset(Interp ip,String optname,Thing optval) throws HeclException {
-	super.cset(ip,optname,optval);
+    protected CommandCmd() {}
+    
+
+    public Thing cget(Interp ip,Object target,String optname)
+	throws HeclException {
+	Command cmd = (Command)target;
+	
+	if(optname.equals(WidgetInfo.NLABEL))
+	    return StringThing.create(cmd.getLabel());
+	if(optname.equals(WidgetInfo.NLONGLABEL))
+	    return StringThing.create(cmd.getLongLabel());
+	if(optname.equals(WidgetInfo.NTYPE))
+	    return WidgetInfo.fromCommandType(cmd.getCommandType());
+	if(optname.equals(WidgetInfo.NPRIO))
+	    return IntThing.create(cmd.getPriority());
+	return super.cget(ip,target,optname);
     }
+    
+
+    private static CommandCmd cmd = new CommandCmd();
+    private static final String CMDNAME = "lcdui.command";
 }
     
+// Variables:
+// mode:java
+// coding:utf-8
+// End:
