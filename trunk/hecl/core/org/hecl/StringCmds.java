@@ -55,7 +55,7 @@ class StringCmds extends Operator {
     public static final int STRTRIMR = 19;
 
 
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String str = argv[1].toString();
 	StringBuffer sb = null;
 	String s = null;
@@ -72,48 +72,47 @@ class StringCmds extends Operator {
 		}
 		StringThing newval = new StringThing(sb);
 		result.setCopyVal(newval);
-		interp.setResult(new Thing(newval));
-		break;
+		return new Thing(newval);
 
 	    case STREQ:
 	    case STRNEQ:
 		/* 'eq' and 'ne' commands. */
 		int i = Compare.compareString(argv[1],argv[2]);
 		if(cmd == STREQ) {
-		    return i != 0 ? IntThing.ZERO : IntThing.ONE;
+		    return new Thing(i != 0 ? IntThing.ZERO : IntThing.ONE);
 		}
-		return i != 0 ? IntThing.ONE : IntThing.ZERO;
+		return new Thing(i != 0 ? IntThing.ONE : IntThing.ZERO);
 
 	    case STRBYTELEN:
 		/* strbytelen "string" */
-		return new IntThing(str.getBytes().length);
+		return IntThing.create(str.getBytes().length);
 
 	    case STRCMP:
-		return new IntThing(Compare.compareString(argv[1], argv[2]));
+		return IntThing.create(Compare.compareString(argv[1], argv[2]));
 
 	    case STRFIND:
 		// strfind str1 str2 ?startidx?
 		where = argv[2].toString();
-		return new IntThing(where.indexOf(argv[1].toString(),
-						  argv.length == 4 ?
-						  position(where, argv[3]) : 0));
+		return IntThing.create(where.indexOf(argv[1].toString(),
+						     argv.length == 4 ?
+						     position(where, argv[3]) : 0));
 
 	    case STRINDEX:
 		if (str.length() <= IntThing.get(argv[2])) {
-		    return new StringThing("");
+		    return new Thing("");
 		} else {
 		    sb = new StringBuffer();
 		    sb.append(str.charAt(position(str, argv[2])));
-		    return new StringThing(sb);
+		    return new Thing(sb);
 		}
 
 	    case STRLAST:
 		// strlast what where ?startidx?
 		where = argv[2].toString();
 //#ifdef ant:j2se
-		return new IntThing(where.lastIndexOf(str,
-						      argv.length == 4 ?
-						      position(where, argv[3]) : where.length()-1));
+		return IntThing.create(where.lastIndexOf(str,
+							 argv.length == 4 ?
+							 position(where, argv[3]) : where.length()-1));
 //#else
 		int len = where.length()-str.length();
 		int pos = where.indexOf(str, argv.length == 4 ?
@@ -125,21 +124,21 @@ class StringCmds extends Operator {
 		    }
 		    pos = pos2;
 		}
-		return new IntThing(pos);
+		return IntThing.create(pos);
 //#endif
 	    case STRLEN:
-		return new IntThing(str.length());
+		return IntThing.create(str.length());
 
 	    case STRRANGE:
 		//System.out.println("from="+position(s,argv[3]) +", to="+position(s,argv[4]));
-		return new StringThing(str.substring(position(str, argv[2]),
-						     position(str, argv[3]) + 1));
+		return new Thing(str.substring(position(str, argv[2]),
+					       position(str, argv[3]) + 1));
 	    case STRREP:
 		sb = new StringBuffer();
 		for(int cnt = IntThing.get(argv[2]); cnt > 0; --cnt) {
 		    sb.append(str);
 		}
-		return new StringThing(sb.toString());
+		return new Thing(sb.toString());
 
 /* 	      if(str.equals("split")) {
 	      if(argv.length != 3 && argv.length != 4)
@@ -175,10 +174,10 @@ class StringCmds extends Operator {
 	      }
 */
 	    case STRLOWER:
-		return new StringThing(str.toLowerCase());
+		return new Thing(str.toLowerCase());
 
 	    case STRUPPER:
-		return new StringThing(str.toUpperCase());
+		return new Thing(str.toUpperCase());
 
 	    case STRTRIM: {
 		String resstr;
@@ -188,12 +187,12 @@ class StringCmds extends Operator {
 		    trimstrings = ListThing.get(argv[2]);
 		} else {
 		    /* We just use the native method. */
-		    return new StringThing(str.trim());
+		    return new Thing(str.trim());
 		}
 
 		resstr = stripr(str, trimstrings);
 		resstr = stripl(resstr, trimstrings);
-		return new StringThing(resstr);
+		return new Thing(resstr);
 	    }
 
 	    case STRTRIML: {
@@ -207,7 +206,7 @@ class StringCmds extends Operator {
 		}
 
 		resstr = stripl(str, trimstrings);
-		return new StringThing(resstr);
+		return new Thing(resstr);
 	    }
 
 	    case STRTRIMR: {
@@ -221,7 +220,7 @@ class StringCmds extends Operator {
 		}
 
 		resstr = stripr(str, trimstrings);
-		return new StringThing(resstr);
+		return new Thing(resstr);
 	    }
 
 	    default:
@@ -229,7 +228,6 @@ class StringCmds extends Operator {
 					+ argv[1].toString() + "' with code '"
 					+ cmd + "'.");
 	}
-	return null;
     }
 
 

@@ -22,10 +22,11 @@ class Ensemble implements Command {
     protected void removeSubcommand(String name) {
         subcommands.remove(name);
     }
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
         if (argv.length < 2) {
             throw HeclException.createWrongNumArgsException(argv, 1,
                     "subcommand ?params");
         }
+	return null;
     }
 }

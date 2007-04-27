@@ -111,21 +111,21 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
     }
 
-    public static RealThing unary(int cmdcode,Interp ip,NumberThing a)
+    public static Thing unary(int cmdcode,Interp ip,NumberThing a)
 	throws HeclException {
 	switch(cmdcode) {
 	  case CASTINT:
-	    return new IntThing(a.intValue());
+	    return IntThing.create(a.intValue());
 	  case CASTLONG:
-	    return new LongThing(a.longValue());
+	    return LongThing.create(a.longValue());
 //#ifndef ant:cldc1.0
 	  case CASTFLOAT:
 	  case CASTDOUBLE:
-	    return new DoubleThing(a.doubleValue());
+	    return DoubleThing.create(a.doubleValue());
 	  case TODEGREES:
-	    return new DoubleThing(Math.toDegrees(a.doubleValue()));
+	    return DoubleThing.create(Math.toDegrees(a.doubleValue()));
 	  case TORADIANS:
-	    return new DoubleThing(Math.toRadians(a.doubleValue()));
+	    return DoubleThing.create(Math.toRadians(a.doubleValue()));
 //#endif
 	  case ABS:
 //#ifndef ant:cldc1.0
@@ -133,70 +133,70 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		IntegralThing i = (IntegralThing)a;
 		if(i.isLong())
-		    return new LongThing(Math.abs(i.longValue()));
-		return new IntThing(Math.abs(i.intValue()));
+		    return LongThing.create(Math.abs(i.longValue()));
+		return IntThing.create(Math.abs(i.intValue()));
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(Math.abs(a.doubleValue()));
+	    return DoubleThing.create(Math.abs(a.doubleValue()));
 //#endif
 //#ifndef ant:cldc1.0
 	  case SIN:
-	    return new DoubleThing(Math.sin(a.doubleValue()));
+	    return DoubleThing.create(Math.sin(a.doubleValue()));
 	  case COS:
-	    return new DoubleThing(Math.cos(a.doubleValue()));
+	    return DoubleThing.create(Math.cos(a.doubleValue()));
 	  case TAN:
-	    return new DoubleThing(Math.tan(a.doubleValue()));
+	    return DoubleThing.create(Math.tan(a.doubleValue()));
 	  case FLOOR:
-	    return new DoubleThing(Math.floor(a.doubleValue()));
+	    return DoubleThing.create(Math.floor(a.doubleValue()));
 	  case CEIL:
-	    return new DoubleThing(Math.ceil(a.doubleValue()));
+	    return DoubleThing.create(Math.ceil(a.doubleValue()));
 //#endif
 	  case INCR:
 	    return binary(BINADD,ip,a,IntThing.ONE);
 	  case DECR:
 	    return binary(BINSUB,ip,a,IntThing.ONE);
 	  case NOT:
-	    return a.intValue() != 0 ? IntThing.ZERO : IntThing.ONE;
+	    return boolres(!(a.intValue() != 0));
 //#ifdef ant:j2se
 	  case ROUND:
 	    if(a.isIntegral()) {
-		return a.deepcopy();
+		return new Thing(a.deepcopy());
 	    } else {
 		long l = Math.round(a.doubleValue());
 		if(l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
-		    return new IntThing((int)l);
+		    return IntThing.create((int)l);
 		}
-		return new LongThing(Math.round(a.doubleValue()));
+		return LongThing.create(Math.round(a.doubleValue()));
 	    }
 	  case SQRT:
-	    return new DoubleThing(Math.sqrt(a.doubleValue()));
+	    return DoubleThing.create(Math.sqrt(a.doubleValue()));
 	  case LOG:
-	    return new DoubleThing(Math.log(a.doubleValue()));
+	    return DoubleThing.create(Math.log(a.doubleValue()));
 	  case ASIN:
-	    return new DoubleThing(Math.asin(a.doubleValue()));
+	    return DoubleThing.create(Math.asin(a.doubleValue()));
 	  case ACOS:
-	    return new DoubleThing(Math.acos(a.doubleValue()));
+	    return DoubleThing.create(Math.acos(a.doubleValue()));
 	  case ATAN:
-	    return new DoubleThing(Math.atan(a.doubleValue()));
+	    return DoubleThing.create(Math.atan(a.doubleValue()));
 	  case EXP:
-	    return new DoubleThing(Math.exp(a.doubleValue()));
+	    return DoubleThing.create(Math.exp(a.doubleValue()));
 //#ifdef j2se.java15
 	  case SIGNUM:
-	    return new DoubleThing(Math.signum(a.doubleValue()));
+	    return DoubleThing.create(Math.signum(a.doubleValue()));
 	  case CBRT:
-	    return new DoubleThing(Math.cbrt(a.doubleValue()));
+	    return DoubleThing.create(Math.cbrt(a.doubleValue()));
 	  case LOG10:
-	    return new DoubleThing(Math.log10(a.doubleValue()));
+	    return DoubleThing.create(Math.log10(a.doubleValue()));
 	  case LOG1P:
-	    return new DoubleThing(Math.log1p(a.doubleValue()));
+	    return DoubleThing.create(Math.log1p(a.doubleValue()));
 	  case SINH:
-	    return new DoubleThing(Math.sinh(a.doubleValue()));
+	    return DoubleThing.create(Math.sinh(a.doubleValue()));
 	  case COSH:
-	    return new DoubleThing(Math.cosh(a.doubleValue()));
+	    return DoubleThing.create(Math.cosh(a.doubleValue()));
 	  case TANH:
-	    return new DoubleThing(Math.tanh(a.doubleValue()));
+	    return DoubleThing.create(Math.tanh(a.doubleValue()));
 	  case EXPM1:
-	    return new DoubleThing(Math.expm1(a.doubleValue()));
+	    return DoubleThing.create(Math.expm1(a.doubleValue()));
 //#endif
 //#endif
 	}
@@ -204,7 +204,7 @@ public class MathCmds extends org.hecl.Operator {
     }
 
 
-    public static RealThing binary(int cmdcode, Interp ip, NumberThing a, NumberThing b)
+    public static Thing binary(int cmdcode, Interp ip, NumberThing a, NumberThing b)
 	throws HeclException {
 
 	switch(cmdcode) {
@@ -214,12 +214,12 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue()+b.longValue());
+		    return LongThing.create(a.longValue()+b.longValue());
 		}
-		return new IntThing(a.intValue()+b.intValue());
+		return IntThing.create(a.intValue()+b.intValue());
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(a.doubleValue()+b.doubleValue());
+	    return DoubleThing.create(a.doubleValue()+b.doubleValue());
 //#endif
 	  case BINSUB:
 //#ifndef ant:cldc1.0
@@ -227,12 +227,12 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue()-b.longValue());
+		    return LongThing.create(a.longValue()-b.longValue());
 		}
-		return new IntThing(a.intValue()-b.intValue());
+		return IntThing.create(a.intValue()-b.intValue());
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(a.doubleValue()-b.doubleValue());
+	    return DoubleThing.create(a.doubleValue()-b.doubleValue());
 //#endif
 	  case BINMUL:
 //#ifndef ant:cldc1.0
@@ -240,12 +240,12 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue()*b.longValue());
+		    return LongThing.create(a.longValue()*b.longValue());
 		}
-		return new IntThing(a.intValue()*b.intValue());
+		return IntThing.create(a.intValue()*b.intValue());
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(a.doubleValue()*b.doubleValue());
+	    return DoubleThing.create(a.doubleValue()*b.doubleValue());
 //#endif
 	  case BINDIV:
 //#ifndef ant:cldc1.0
@@ -253,12 +253,12 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue()/b.longValue());
+		    return LongThing.create(a.longValue()/b.longValue());
 		}
-		return new IntThing(a.intValue()/b.intValue());
+		return IntThing.create(a.intValue()/b.intValue());
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(a.doubleValue()/b.doubleValue());
+	    return DoubleThing.create(a.doubleValue()/b.doubleValue());
 //#endif
 	  case MOD:
 //#ifndef ant:cldc1.0
@@ -266,12 +266,12 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue()%b.longValue());
+		    return LongThing.create(a.longValue()%b.longValue());
 		}
-		return new IntThing(a.intValue()%b.intValue());
+		return IntThing.create(a.intValue()%b.intValue());
 //#ifndef ant:cldc1.0
 	    }
-	    return new DoubleThing(a.doubleValue()%b.doubleValue());
+	    return DoubleThing.create(a.doubleValue()%b.doubleValue());
 //#endif
 	  case AND:
 //#ifndef ant:cldc1.0
@@ -279,9 +279,9 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue() & b.longValue());
+		    return LongThing.create(a.longValue() & b.longValue());
 		}
-		return new IntThing(a.intValue() & b.intValue());
+		return IntThing.create(a.intValue() & b.intValue());
 //#ifndef ant:cldc1.0
 	    }
 	    throw new HeclException("Integral argument required.");
@@ -292,9 +292,9 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 		if(((IntegralThing)a).isLong()
 		   || ((IntegralThing)b).isLong()) {
-		    return new LongThing(a.longValue() | b.longValue());
+		    return LongThing.create(a.longValue() | b.longValue());
 		}
-		return new IntThing(a.intValue() | b.intValue());
+		return IntThing.create(a.intValue() | b.intValue());
 //#ifndef ant:cldc1.0
 	    }
 	    throw new HeclException("Integral argument required.");
@@ -302,29 +302,33 @@ public class MathCmds extends org.hecl.Operator {
 
 //#ifdef ant:j2se
 	  case POW:
-	    return new DoubleThing(Math.pow(a.doubleValue(), b.doubleValue()));
+	    return DoubleThing.create(Math.pow(a.doubleValue(), b.doubleValue()));
 //#ifdef j2se.java15
 	  case HYPOT:
-	    return new DoubleThing(Math.hypot(a.doubleValue(), b.doubleValue()));
+	    return DoubleThing.create(Math.hypot(a.doubleValue(), b.doubleValue()));
 //#endif
 //#endif
 	  case EQ:
-	    return compare(a,b) == 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) == 0);
 	  case NEQ:
-	    return compare(a,b) != 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) != 0);
 	  case LT:
-	    return compare(a,b) < 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) < 0);
 	  case LE:
-	    return compare(a,b) <= 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) <= 0);
 	  case GT:
-	    return compare(a,b) > 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) > 0);
 	  case GE:
-	    return compare(a,b) >= 0 ? IntThing.ONE : IntThing.ZERO;
+	    return boolres(compare(a,b) >= 0);
 	}
 	throw new HeclException("Unknown binary mathcmdcode '"+cmdcode+"'.");
     }
 
-    public RealThing operate(int cmdcode,Interp ip,Thing[] argv)
+    private static Thing boolres(boolean res) {
+	return new Thing(res ? IntThing.ONE : IntThing.ZERO);
+    }
+    
+    public Thing operate(int cmdcode,Interp ip,Thing[] argv)
 	throws HeclException {
 	NumberThing num = null;
 
@@ -339,52 +343,55 @@ public class MathCmds extends org.hecl.Operator {
 	  case PLUS:
 	    num = IntThing.ZERO;
 	    for(int i=1; i<argv.length; ++i) {
-		num = (NumberThing)binary(BINADD,ip,num,NumberThing.asNumber(argv[i]));
+		num = (NumberThing)binary(BINADD, ip, num,
+					  NumberThing.asNumber(argv[i])).getVal();
 	    }
-	    return num;
+	    return new Thing(num);
 	  case MINUS:
 	    switch(argv.length) {
 	      case 1:
-		return IntThing.ZERO;
+		return new Thing(IntThing.ZERO);
 	      case 2:
 		return binary(BINSUB,ip,IntThing.ZERO,NumberThing.asNumber(argv[1]));
 	      default:
 		num = NumberThing.asNumber(argv[1]);
 		for(int i=2; i<argv.length; ++i) {
-		    num = (NumberThing)binary(BINSUB,ip,
-					      num,NumberThing.asNumber(argv[i]));
+		    num = (NumberThing)binary(BINSUB,ip, num,
+					      NumberThing.asNumber(argv[i])).getVal();
 		}
-		return num;
+		return new Thing(num);
 	    }
 	  case MUL:
 	    num = IntThing.ONE;
 	    for(int i=1; i<argv.length; ++i) {
-		num = (NumberThing)binary(BINMUL,ip,num,NumberThing.asNumber(argv[i]));
+		num = (NumberThing)binary(BINMUL,ip,num,
+					  NumberThing.asNumber(argv[i])).getVal();
 	    }
-	    return num;
+	    return new Thing(num);
 //#ifdef ant:j2se
 	  case RANDOM:
-	    return new DoubleThing(Math.random());
+	    return DoubleThing.create(Math.random());
 //#endif
 	  case TRUE:
-	    return IntThing.ONE;
+	    return new Thing(IntThing.ONE);
 	  case FALSE:
-	    return IntThing.ZERO;
+	    return new Thing(IntThing.ZERO);
 	  case AND:
 	    num = NumberThing.asNumber(argv[1]);
 	    for(int i=2; i<argv.length; ++i) {
-		num = (NumberThing)binary(AND,ip,num,NumberThing.asNumber(argv[i]));
+		num = (NumberThing)binary(AND,ip,num,
+					  NumberThing.asNumber(argv[i])).getVal();
 	    }
-	    return num;
+	    return new Thing(num);
 	  case OR:
 	    num = NumberThing.asNumber(argv[1]);
 	    for(int i=2; i<argv.length; ++i) {
-		num = (NumberThing)binary(OR,ip,num,NumberThing.asNumber(argv[i]));
+		num = (NumberThing)binary(OR,ip,num,
+					  NumberThing.asNumber(argv[i])).getVal();
 	    }
-	    return num;
+	    return new Thing(num);
 	  case INCR:
 	      num = NumberThing.asNumber(argv[1]);
-
 	      if(!num.isIntegral()) {
 		  throw new HeclException("Argument '" + argv[1].toString()
 					  + "' not an integer.");
@@ -397,8 +404,7 @@ public class MathCmds extends org.hecl.Operator {
 		  num = new IntThing(num.intValue() + offset.intValue());
 	      }
 	      argv[1].setCopyVal(num);
-	      ip.setResult(new Thing(num));
-	      return null;
+	      return new Thing(num);
 	  default:
 	    /*
 	    Command c = extensions.get(cmdcode);

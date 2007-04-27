@@ -21,20 +21,20 @@ public class HeclTask {
     protected final char sep = '#';
     
     public HeclTask(Thing script,long generation,String name) {
-	tscript = script;
-	tgeneration = generation;
-	tname = (name != null ? name : "task") + sep + ++tasknum;
+	this.tscript = script;
+	this.tgeneration = generation;
+	this.tname = (name != null ? name : "task") + sep + ++tasknum;
     }
 
 
-    public void execute(Interp ip) {
+    public Thing execute(Interp ip) {
 	try {
 	    //System.err.println("exec="+tscript.toString());
-	    result = ip.eval(tscript,0);
+	    this.result = ip.eval(tscript,0);
 	}
 	catch(Exception e) {
-	    error = e;
-	    if(showbgerror) {
+	    this.error = e;
+	    if(this.showbgerror) {
 		try {
 		    Vector v = new Vector();
 		    v.addElement(new Thing("bgerror"));
@@ -51,47 +51,34 @@ public class HeclTask {
 	    // awake all threads waiting for this task
 	    //System.err.println("notify for "+this);
 	    synchronized(this) {
-		done = true;
+		this.done = true;
 		notifyAll();
 	    }
 	}
+	return this.result;
     }
 
 
-    public Exception getError() {
-	return error;
-    }
+    public Exception getError() {return this.error;}
     
     public String getType() {
-	return tname.substring(0,tname.lastIndexOf('#'));
+	return this.tname.substring(0,this.tname.lastIndexOf('#'));
     }
     
-    public long getGeneration() {
-	return tgeneration;
-    }
+    public long getGeneration() {return this.tgeneration;}
 
 
-    public String getName() {
-	return tname;
-    }
+    public String getName() {return this.tname;}
 
 
-    public Thing getResult() {
-	return result;
-    }
+    public Thing getResult() {return this.result;}
 
     
-    public Thing getScript() {
-	return tscript;
-    }
+    public Thing getScript() {return this.tscript;}
 
-    public boolean isDone() {
-	return done;
-    }
+    public boolean isDone() {return this.done;}
     
-    public void setErrorPrint(boolean onoff) {
-	showbgerror = onoff;
-    }
+    public void setErrorPrint(boolean onoff) {this.showbgerror = onoff;}
 
     /*
     public void setScript(Thing script) {

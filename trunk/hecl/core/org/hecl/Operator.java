@@ -71,20 +71,13 @@ public abstract class Operator implements Command {
      *
      * @param interp an <code>Interp</code> value
      * @param argv a <code>Thing[]</code> value
+     * @return The computed <code>Thing</code>, or null when no value has been
+     * computed.
      * @exception HeclException if an error occurs
      */
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	checkArgCount(argv);
-
-	/* Allow operator to set result on its own an return null to
-	   indicate result has already been set. Of course, this
-	   disallows returning null as result of an operator, but this
-	   is not really an issue. */
-
-	RealThing rt = operate(cmdcode, interp, argv);
-	if(rt != null) {
-	    interp.setResult(new Thing(rt));
-	}
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
+	Interp.checkArgCount(argv,this.minargs,this.maxargs);
+	return operate(cmdcode, interp, argv);
     }
 
     /**
@@ -93,33 +86,12 @@ public abstract class Operator implements Command {
      * @param cmdcode an <code>int</code> value
      * @param interp an <code>Interp</code> value
      * @param argv a <code>Thing[]</code> value
-     * @return a <code>RealThing</code> value
+     * @return a <code>Thing</code> value, or null when no value has been
      * @exception HeclException if an error occurs
      */
-    public abstract RealThing operate(int cmdcode,Interp interp,Thing[] argv)
+    public abstract Thing operate(int cmdcode,Interp interp,Thing[] argv)
 	throws HeclException;
 
-
-    /**
-     * <code>checkArgCount</code> checks to see whether the command
-     * actually has the required number of arguments.
-     *
-     * @param argv a <code>Thing[]</code> value
-     * @exception HeclException if an error occurs
-     */
-    protected void checkArgCount(Thing[] argv) throws HeclException {
-	int n = argv.length-1;		    // Ignore command name
-	if(minargs >= 0 && n < minargs) {
-	    throw new HeclException("Too few arguments, at least "
-				    + minargs + " arguments required.");
-	}
-
-	if(maxargs >= 0 && n > maxargs) {
-	    throw new HeclException("Bad argument count, max. "
-				    + maxargs
-				    +" arguments allowed.");
-	}
-    }
 
     /**
      * The <code>load</code> method loads the commands in a class that

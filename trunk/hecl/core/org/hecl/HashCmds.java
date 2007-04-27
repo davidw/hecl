@@ -37,7 +37,7 @@ class HashCmds extends Operator {
     public static final int HCONTAINS = 6;
 
 
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Hashtable hash = cmd != 0 ? HashThing.get(argv[1]) : null;
 	Thing result = null;
 
@@ -61,7 +61,7 @@ class HashCmds extends Operator {
 		while(e.hasMoreElements()) {
 		    v.addElement(new Thing((String)e.nextElement()));
 		}
-		return new ListThing(v);
+		return ListThing.create(v);
 
 	    case HCLEAR:
 		hash.clear();
@@ -83,9 +83,7 @@ class HashCmds extends Operator {
 					+ argv[0].toString() + "' with code '"
 					+ cmd + "'.");
 	}
-	if(result != null)
-	    interp.setResult(result);
-	return null;
+	return result;
     }
 
 

@@ -42,7 +42,7 @@ class Proc implements Command {
 
     private static final String varargvarname = "args";
 
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Vector varnames = ListThing.get(vars);
         int i = 0;
 	Vector vargvals = null;
@@ -88,18 +88,23 @@ class Proc implements Command {
 	    interp.setVar(varargvarname, ListThing.create(vargvals));
 
 	/* We actually run the code here. */
+	Thing res = null;
         try {
-            interp.eval(code);
+            res = interp.eval(code);
         } catch (HeclException e) {
             if (e.code != HeclException.RETURN) {
 		interp.stackDecr();
                 throw e;
-            }
+            } else {
+		res = e.value;
+	    }
         }
 
         /* We're done, pop the stack. */
-        Hashtable ht = interp.stackDecr();
-	ht = null;
+        interp.stackDecr();
+        //Hashtable ht = interp.stackDecr();
+	//ht = null;
+	return res;
     }
 
     /**

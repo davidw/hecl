@@ -59,6 +59,17 @@ public class StringThing implements RealThing {
     }
 
     /**
+     * The <code>create</code> method creates and returns a newly allocated
+     * <code>Thing</code> with a <code>StringThing</code> internal representation.
+     *
+     * @param s A <code>String</code> value which may be <code>null</code>.
+     * @return A <code>Thing</code> value
+     */
+    public static Thing create(String s) {
+	return new Thing(new StringThing(s != null ? s : ""));
+    }
+	    
+    /**
      * The <code>setStringFromAny</code> method transforms the Thing into a
      * string type.
      *

@@ -35,14 +35,15 @@ class ControlCmds extends Operator {
     public static final int BREAK = 5;
     public static final int CONTINUE = 6;
 
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+	Thing res = null;
+	
 	switch (cmd) {
 	  case IF:
 	    /* The 'if' command. */
-	    Thing result = interp.eval(argv[1]);
-	    if (result != null && Thing.isTrue(result)) {
-		interp.eval(argv[2]);
-		return null;
+	    res = interp.eval(argv[1]);
+	    if (res != null && Thing.isTrue(res)) {
+		return interp.eval(argv[2]);
 	    }
 
 	    /*
@@ -55,8 +56,7 @@ class ControlCmds extends Operator {
 			/* It's an else block, evaluate it and return. */
 			if(argv.length != i+2)
 			    throw new HeclException("malformed \"else\"");
-			interp.eval(argv[i + 1]);
-			return null;
+			return interp.eval(argv[i + 1]);
 		    } else if (argv[i].toString().equals("elseif")) {
 			/*
 			 * elseif - check and see if the condition is true, if so
@@ -64,10 +64,9 @@ class ControlCmds extends Operator {
 			 */
 			if(i+3 > argv.length)
 			    throw new HeclException("malformed \"elseif\"");
-			result = interp.eval(argv[i + 1]);
-			if (result != null && Thing.isTrue(result)) {
-			    interp.eval(argv[i + 2]);
-			    return null;
+			res = interp.eval(argv[i + 1]);
+			if (res != null && Thing.isTrue(res)) {
+			    return interp.eval(argv[i + 2]);
 			}
 		    } else
 			throw new HeclException("missing \"else/elseif\" in \"if\"");
@@ -79,7 +78,6 @@ class ControlCmds extends Operator {
 	    /* The 'for' command. */
 	    /* start */
 	    interp.eval(argv[1]);
-
 	    /* test */
 	    while (Thing.isTrue(interp.eval(argv[2]))) {
 		try {
@@ -114,7 +112,7 @@ class ControlCmds extends Operator {
 		/*
 		 * This is for foreach loops where we have more than one variable to
 		 * set: foreach {m n} $somelist { code ... }
-		     */
+		 */
 		for (Enumeration e = varlist.elements(); e.hasMoreElements();) {
 		    if (cont == false) {
 			throw new HeclException(
@@ -136,7 +134,7 @@ class ControlCmds extends Operator {
 		}
 
 		try {
-		    interp.eval(argv[3]);
+		    res = interp.eval(argv[3]);
 		} catch (HeclException e) {
 		    if (e.code.equals(HeclException.BREAK)) {
 			break;

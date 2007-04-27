@@ -106,7 +106,7 @@ public class CodeThing implements RealThing {
 	Vector deststanzas = new Vector();
 
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
-            Stanza s = (Stanza) e.nextElement();
+            Stanza s = (Stanza)e.nextElement();
             deststanzas.addElement(s.deepcopy());
         }
         return new CodeThing(deststanzas);
@@ -129,8 +129,7 @@ public class CodeThing implements RealThing {
             throws HeclException {
         RealThing realthing = thing.getVal();
 
-        return (((CodeThing)realthing).marksubst) ?
-            interp.eval(thing) : thing;
+        return (((CodeThing)realthing).marksubst) ? interp.eval(thing) : thing;
     }
 
     /**
@@ -201,16 +200,18 @@ public class CodeThing implements RealThing {
      * @param interp <code>Interp</code> value
      * @exception HeclException if an error occurs
      */
-    public synchronized void run(Interp interp) throws HeclException {
+    public synchronized Thing run(Interp interp) throws HeclException {
  	//++level;
 	//System.err.println("starting CodeThing run" + level);
-        //System.out.println("RUNNING: " + this.getStringRep() + "</RUNNING>");
+        //System.out.println("RUNNING: " + this.getStringRep() +"</RUNNING>");
+	Thing res = Thing.EMPTYTHING;
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
 	    Stanza s = (Stanza) e.nextElement();
-	    s.run(interp);
+	    res = s.run(interp);
 	}
- 	//System.err.println("ending CodeThing run" + level);
+	//System.err.println("ending CodeThing run" + level);
 	//--level;
+	return res;
     }
 
     /**

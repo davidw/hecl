@@ -25,18 +25,18 @@ import java.util.*;
  */
 
 class SortCmd implements Command {
-    private Properties p = null;
+    //private Properties p = null;
     private int sortalgorithm = 0;
     private Thing sortproc = null;
     private Interp localinterp = null;
 
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
         Vector v = ListThing.get(argv[1]);
 	localinterp = interp;
 	sortalgorithm = Compare.STRINGCOMPARE;
 	sortproc = null;
 
-	p = new Properties(new Object[] {"by", new Thing("string")});
+	Properties p = new Properties(new Object[] {"by", new Thing("string")});
 	p.setProps(argv, 2);
 
 	String sortby = ((Thing)p.getProp("by")).toString();
@@ -50,8 +50,8 @@ class SortCmd implements Command {
 	if (v.size() != 0) {
 	    v = quicksort(v, 0, v.size() - 1);
 	}
-        interp.setResult(ListThing.create(v));
-	p = null;
+	//p = null;
+        return ListThing.create(v);
     }
 
     /* FIXME - speeding this up a bit wouldn't hurt things. */

@@ -1,3 +1,109 @@
+2007-04-27  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* j2me/Hecl.java: 
+	Simplified command creation.
+	
+	* j2me/GUICmdFacade.java:
+	* j2me/GUI.java: 
+	Adapted for new evaluation, cmdCode now returns Thing.
+
+	* load/org/hecl/load/HeclLoad:
+	Removed, no longer necessary.
+
+	* load/org/hecl/load/LoadCmd.java:
+	Adapted for new evaluation, cmdCode now returns Thing. Changed
+	loading of command to avoid class HeclLoad.
+	
+	* commandline/StandaloneHecl.java:
+	Fixed imports.
+	
+	* commandline/Hecl.java:
+	Moved read/eval/print to core.
+
+	* net/org/hecl/HttpCmd.java:
+	* net/org/hecl/Base64Cmd.java:
+	* core/org/hecl/MathCmds.java: 
+	* files/org/hecl/files/FileCmds.java:
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* core/org/hecl/MathCmds.java: 
+	* core/org/hecl/Proc.java: 
+	* core/org/hecl/SortCmd.java: 
+	* core/org/hecl/StringCmds.java: 
+	* core/org/hecl/ListCmds.java: 
+	* core/org/hecl/Compare.java: 
+	* core/org/hecl/ControlCmds.java: 
+	* core/org/hecl/Operator.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/Ensemble.java: 
+	* core/org/hecl/HashCmds.java: 
+	Adapted for new evaluation, cmdCode now returns Thing.
+
+        * files/org/hecl/files/HeclFile.java:
+	Now throws Hecl Exception on error instead of printing out.
+	
+	* core/org/hecl/ObjectThing.java: 
+	Added proper handling of null.
+
+	* core/org/hecl/Command.java: 
+	Adapted for new evaluation.
+
+	* core/org/hecl/HeclException.java: Modifications allow passing
+	return value for exceptions via constructor, used in break/continue/return.
+
+	* core/org/hecl/HeclTask.java: Beautfication.
+
+	* core/org/hecl/StringThing.java: New memethod create that treats
+	null properly.
+
+	* core/org/hecl/ListCmds.java: 
+	Fixed bug in lrange.
+	
+	* core/org/hecl/ClassCommandInfo.java: 
+	* core/org/hecl/ClassCommand.java: New classes to support
+	ObjectThing commands.
+
+	* core/org/hecl/Interp.java: Changed evaluation process to return
+	result. Removed member variable result and all related
+	methods. Added read/eval/print loop.
+
+2007-04-20  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Now adheres to new
+	signature of operate. Fixed bug in playtone command - it did ont
+	use the proper arguments.
+
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* j2me/GUICmdFacade.java: 
+	* j2me/GUI.java: Now adheres to new cmdCode signature.
+
+	* j2me/Hecl.java: Now uses Interp.addCommand to add commands.
+
+	* tests/catch.hcl: Changed to expect correct error message.
+
+	* commandline/StandaloneHecl.java: Reduced imports, added load command.
+
+	* commandline/Hecl.java: Simplified, moved readEvalPrint into
+	Interp class, reduced changed imports, added simple extensions
+	mechanism for quick tests.
+
+	* load/org/hecl/load/LoadCmd.java: Simplified, module HeclLoad no
+	longer needed.
+
+	* load/org/hecl/load/HeclLoad.java: Removed, no longer necessary.
+
+2007-04-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/ObjectThing.java: New method get to retrieve the
+	value, changed toString to support references to Java null.
+
+	* commandline/StandaloneHecl.java: 
+	Reduced import statements.
+
 2007-04-22  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Stanza.java: Removed premade new argv arrays.

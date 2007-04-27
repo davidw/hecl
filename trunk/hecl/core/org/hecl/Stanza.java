@@ -15,8 +15,6 @@
 
 package org.hecl;
 
-import java.util.Vector;
-
 /**
  * The <code>Stanza</code> class represents one command. A CodeThing
  * object may have several Stanzas.
@@ -30,7 +28,6 @@ class Stanza {
     private int lineno = 0;
 
     private Command command = null;
-
     private Thing[] argv = null;
 
     /**
@@ -41,9 +38,9 @@ class Stanza {
      * @param newargv a <code>Thing[]</code> value
      */
     Stanza(Command newcmd, Thing[] newargv, int ln) {
-	command = newcmd;
-	argv = newargv;
-	lineno = ln;
+	this.command = newcmd;
+	this.argv = newargv;
+	this.lineno = ln;
     }
 
 
@@ -54,69 +51,89 @@ class Stanza {
      */
 
     public Stanza deepcopy () throws HeclException {
-	Thing[] destargv = new Thing[argv.length];
+	Thing[] destargv = new Thing[this.argv.length];
 
-	for (int i = 0; i < argv.length; i++) {
-	    destargv[i] = argv[i].deepcopy();
+	for (int i = 0; i < this.argv.length; i++) {
+	    destargv[i] = this.argv[i].deepcopy();
 	}
-	return new Stanza(command, destargv, lineno);
+	return new Stanza(this.command, destargv, this.lineno);
     }
 
+    private static Thing cloneThing(Interp interp,Thing t) throws HeclException {
+	//System.err.println("-->cloneThing");
+	RealThing rt = t.getVal();
+	Thing res = null;
+	if (rt instanceof GroupThing) {
+	    res = CodeThing.doGroupSubst(interp, t);
+	    res.copy = true;
+	} else if (rt instanceof SubstThing) {
+	    res = CodeThing.doSubstSubst(interp, t);
+	} else if (rt instanceof CodeThing) {
+	    res = CodeThing.doCodeSubst(interp, t);
+	} else {
+	    res = t;
+	    res.copy = true;
+	}
+	//System.err.println("<--cloneThing, res="+res.toString());
+	return res;
+    }
+    
     /**
      * The <code>run</code> method runs the Stanza. In order to avoid
      * creating a new newargv each time, the most common cases are
      * preallocated.
      *
      * @param interp <code>Interp</code> value
+     * @return A <code>Thing</code> being the result of the evaluation, or
+     * <code>null</code> of no result has been computed.
+     *
      * @exception HeclException if an error occurs
      */
-    public void run(Interp interp) throws HeclException {
+    public Thing run(Interp interp) throws HeclException {
 	RealThing realthing = null;
 	Command tmpcommand = null;
-
-	Thing[] newargv = new Thing[argv.length];
+	ClassCommandInfo info = null;
+	
+	//System.err.println("-->Stanza.run, this="+this);
+	
+	Thing[] newargv = new Thing[this.argv.length];
 
 	/* If we have a CodeThing, GroupThing or SubstThing as
 	 * argv[0], we don't want to save 'command'. */
-
-	/* FIXME - this could get all messed up by renaming
-	 * commands. */
+	/* FIXME - this could get all messed up by renaming commands. */
 	boolean saveit = false;
 
-	realthing = argv[0].getVal();
-	if (command == null) {
-	    String cmdName = null;
-
-	    /*
-	     * If the argv[0] is a substitution waiting to happen,
-	     * substitute it to get the name.
-	     */
-	    if (realthing instanceof CodeThing) {
-		cmdName = CodeThing.doCodeSubst(interp, argv[0]).toString();
-	    } else if (realthing instanceof GroupThing) {
-		cmdName = CodeThing.doGroupSubst(interp, argv[0]).toString();
-	    } else if (realthing instanceof SubstThing) {
-		cmdName = CodeThing.doSubstSubst(interp, argv[0]).toString();
-	    } else {
-		saveit = true;
-		cmdName = argv[0].toString();
+	String cmdName = null;
+	newargv[0] = cloneThing(interp,this.argv[0]);
+	if (this.command == null) {
+	    realthing = newargv[0].getVal();
+	    if(realthing instanceof ObjectThing) {
+		info = interp.findClassCmd(((ObjectThing)realthing).get().getClass());
+		if(info != null && argv.length < 2) {
+		    throw new HeclException("Class-command required methodname",this.lineno);
+		}
 	    }
-
-	    //System.out.println("cmdname = " + cmdName);
-
-	    tmpcommand = (Command)interp.commands.get(cmdName);
-	    if (tmpcommand == null) {
-		HeclException he =  new HeclException("Command " + cmdName
-						      + " does not exist");
-		he.setLine(lineno);
-		throw he;
+	    if(info == null)
+		cmdName = newargv[0].toString();
+	    if(cmdName != null) {
+		//System.out.println("cmdname = " + cmdName);
+		tmpcommand = (Command)interp.commands.get(cmdName);
 	    }
 	} else {
-	    tmpcommand = command;
+	    /* FIXME - this could get all messed up by renaming commands. */
+	    cmdName = newargv[0].toString();
+	    tmpcommand = this.command;
 	}
 
+	if(tmpcommand == null && info == null) {
+	    throw new HeclException("Command '" + cmdName + "' does not exist",
+				    this.lineno);
+	}
+	
 	/* DEBUG - before. */
-	if (false) {
+	if (//true
+	    false
+	    ) {
 	    System.out.println("BEFORE COMMAND v");
 	    for (int i = 0; i < argv.length; i ++) {
 		PrintThing.printThing(argv[i]);
@@ -129,7 +146,8 @@ class Stanza {
 	 * running code where needs be.
 	 */
 	try {
-	    for (int i = 0; i < argv.length; i++) {
+	    //for (int i = 0; i < argv.length; i++) {
+	    for (int i = 1; i < argv.length; i++) {
 		realthing = argv[i].getVal();
 		if (realthing instanceof GroupThing) {
 		    newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
@@ -144,13 +162,14 @@ class Stanza {
 		}
 	    }
 	} catch (HeclException he) {
-	    he.setLine(lineno);
+	    he.setLine(this.lineno);
 	    throw he;
 	}
 
 	/* DEBUG - after. */
-
-	if (false) {
+	if (//true
+	    false
+	    ) {
 	    System.out.println("AFTER COMMAND v");
 	    for (int i = 0; i < newargv.length; i ++) {
 		PrintThing.printThing(newargv[i]);
@@ -158,14 +177,18 @@ class Stanza {
 	    System.out.println("AFTER ENDCOMMAND ^ ");
 	}
 
+	Thing res = null;
 	try {
-	    interp.setResult(new Thing(""));
-	    tmpcommand.cmdCode(interp, newargv);
+	    if(info != null) {
+		res = info.getCommand().method(interp,info,newargv);
+	    } else {
+		res = tmpcommand.cmdCode(interp, newargv);
+	    }
 	} catch (HeclException e) {
 	    /* Uh oh, an "issue"! */
 	    if (newargv[0] != null) {
 		/* Let the exception know where we are. */
-		e.where(newargv[0].toString(), lineno);
+		e.where(newargv[0].toString(), this.lineno);
 	    }
 	    throw e;
 	} catch (Exception e) {
@@ -180,15 +203,14 @@ class Stanza {
 	    } else {
 		msg = "Exception of type " + e.getClass() + ": " + msg;
 	    }
-	    HeclException he = new HeclException(msg);
-	    he.setLine(lineno);
-	    throw he;
+	    throw new HeclException(msg,this.lineno);
 	}
 
 	/* Go ahead and save the command. */
 	if (saveit) {
 	    command = tmpcommand;
 	}
+	return res != null ? res : Thing.EMPTYTHING;
     }
 
     /**

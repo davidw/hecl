@@ -51,6 +51,11 @@ public class ObjectThing implements RealThing {
     }
 
     /**
+     * Retrieve the object associated with this instance.
+     */
+    public Object get() {return this.val;}
+
+    /**
      * The <code>create</code> method creates and returns a newly allocated
      * Thing with an ObjectThing internal representation.
      *
@@ -63,6 +68,7 @@ public class ObjectThing implements RealThing {
     }
 
 
+    
     /**
      * <code>get</code> attempts to fetch an Object from the Thing.
      *
@@ -99,6 +105,7 @@ public class ObjectThing implements RealThing {
      */
     public String getStringRep() {
 	/* FIXME! */
-        return val.toString();
+	return val != null ? val.toString() : "null";
+        //return val.toString();
     }
 }

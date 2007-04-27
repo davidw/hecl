@@ -15,6 +15,14 @@
 
 package org.hecl;
 
+import java.io.InputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;
@@ -31,15 +39,35 @@ public class Interp extends Thread/*implements Runnable*/ {
      * Package name prefix of the module classes.
      */
     public static final String MODULE_CLASS_PACKAGE = "org.hecl";
+
+    /**
+     * Flags for the event loop.
+     */
     public static final int DONT_WAIT = 1;
     public static final int IDLE_EVENTS = 2;
     public static final int TIMER_EVENTS = 4;
     public static final int ALL_EVENTS = ~DONT_WAIT;
 
+    /**
+     * Some string constants used to generate names for internal events.
+     */
     public static final String ASYNCPREFIX = "async";
     public static final String IDLEPREFIX = "idle";
     public static final String TIMERPREFIX = "timer";
 
+    /**
+     * The prompt for the <code>readEvalPrint</code> loop.
+     */
+    public final String PROMPT = "hecl> ";
+
+    /**
+     * The prompt for continued lines in the <code>readEvalPrint</code> loop.
+     */
+    public final String PROMPT2 = "hecl+ ";
+
+    /**
+     * A <code>Thing</code> to indicate  global reference.
+     */
     static final Thing GLOBALREFTHING = new Thing("");
 
     public long cacheversion = 0;
@@ -53,7 +81,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * accessors.
      *
      */
-    public Hashtable commands = new Hashtable();
+    protected Hashtable commands = new Hashtable();
 
     /**
      * The <code>auxdata</code> <code>Hashtable</code> is a place to
@@ -62,7 +90,6 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     protected Hashtable auxdata = new Hashtable();
 
-    private Thing result = null;
     protected Stack stack = new Stack();
     protected Stack error = new Stack();
 
@@ -73,6 +100,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     protected long idlegeneration = 0;
     protected boolean running = true;
     protected long maxblocktime = 0;	    // block time in milliseconds
+    protected Vector ci = new Vector();
     
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
@@ -87,7 +115,146 @@ public class Interp extends Thread/*implements Runnable*/ {
 	start();
     }
 
+    /**
+     * The <code>commandLine</code> method implements a
+     * Read/Eval/Print Loop.
+     *
+     * @param in Input stream to read input from.
+     * @param out Output stream to print results to.
+     * @param err Output stream for error messages.
+     *
+     * This function never returns.
+     */
+    public void readEvalPrint(InputStream in, PrintStream out, PrintStream err) {
+	String prompt = PROMPT;
+	StringBuffer sb = new StringBuffer();
+	
+	InputStreamReader reader = new InputStreamReader(in);
+	while(true) {
+	    byte outbytes[] = null;
+	    out.print(prompt);
+	    out.flush();
 
+	    String line = readLine(reader);
+		
+	    if(line == null)
+		break;
+	    if(sb.length() > 0)
+		sb.append('\n');
+	    sb.append(line);
+	    try {
+		if(sb.length() <= 0)
+		    continue;
+		
+		Thing res = evalAsyncAndWait(new Thing(sb.toString()));
+		if (res != null) {
+		    String s = res.toString();
+		    if(s.length() > 0) {
+			// It seems that DataOutputStream.println(String)
+			// is broken and returns OutOfmemory when the
+			// string is to long, so we convert the string
+			// into bytes and write out the pure bytes
+			// directly.
+			outbytes = s.getBytes();
+		    }
+		}
+		sb.delete(0,sb.length());
+		prompt = PROMPT;
+	    }
+	    catch(HeclException he) {
+		if (he.code.equals("PARSE_ERROR")) {
+		    // Change prompt and get more input
+		    prompt = PROMPT2;
+		} else {
+		    sb.delete(0,sb.length());
+		    he.printStackTrace();
+		    outbytes = he.getMessage().getBytes();
+		    prompt = PROMPT;
+		}
+	    }
+	    if(outbytes != null) {
+		// result output
+		try {
+		    out.write(outbytes);
+		    out.println();
+		}
+		catch(IOException ioex) {
+		    err.println(ioex.getMessage());
+		    break;
+		}
+		outbytes = null;
+	    }
+	}
+    }
+
+    /**
+     * Add a new class command to an <code>Interp</code>.
+     *
+     * @param clazz The Java class the command should operate on.
+     * @param cmd The command to add. When this paramter is <code>null</code>,
+     * an existing command is removed.
+     */
+    public void addClassCmd(Class clazz,ClassCommand cmd) {
+	int l = ci.size();
+	for(int i=0; i<l; ++i) {
+	    ClassCommandInfo info = (ClassCommandInfo)ci.elementAt(i);
+	    if(info.forClass() == clazz) {
+		//identical, replace
+		if(cmd == null) {
+		    ci.removeElementAt(i);
+		} else {
+		    info.setCommand(cmd);
+		}
+		return;
+	    }
+	}
+	if(cmd != null)
+	    ci.addElement(new ClassCommandInfo(clazz,cmd));
+    }
+
+    /**
+     * Remove a command for a specific class from an <code>Interp</code>.
+     *
+     * @param clazz The class to remove the command for.
+     */
+    public void removeClassCmd(Class clazz) { addClassCmd(clazz,null);}
+	    
+    
+     /**
+     * Add a new class command to an <code>Interp</code>.
+     *<br>
+     * The current implementation does not support any subclassing and selects
+     * the first class command <code>clazz</code> is assignable to.
+     *
+     * @param clazz The Java class to look up the class command for.
+     * @return A <code>ClassCommandInfo</code> decsribing the class command,
+     * or <code>null</null> if no command was found.
+     */
+    ClassCommandInfo findClassCmd(Class clazz) {
+	int l = ci.size();
+	ClassCommandInfo found = null;
+	// we loop over all class commands and try yo detect the most specific one.
+	for(int i=0; i<l; ++i) {
+	    ClassCommandInfo info = (ClassCommandInfo)ci.elementAt(i);
+	    Class cl2 = info.forClass();
+	    if(cl2.isAssignableFrom(clazz)) {
+		//System.err.println("clazz="+clazz+" assignable to cl="+cl2);
+		if(found == null)
+		    found = info;
+		else {
+		    // check if this is more specialized than the one we
+		    // already have.
+		    if(found.forClass().isAssignableFrom(cl2)) {
+			//System.err.println("superclass="+found.forClass()+" for cl="+cl2);
+			found = info;
+		    }
+		}
+	    }
+	}
+	return found;
+    }
+    
+    
     /**
      * Add a new command to an <code>Interp</code>.
      *
@@ -144,17 +311,13 @@ public class Interp extends Thread/*implements Runnable*/ {
      * @exception HeclException if an error occurs.
      */
     public Thing eval(Thing in) throws HeclException {
-	result = null;
 	//System.err.println("-->eval: "+in.toString());
-	CodeThing.get(this, in).run(this);
-	//System.err.println("<--eval");
-	return result;
+	return CodeThing.get(this, in).run(this);
     }
 
     public HeclTask evalIdle(Thing idleThing) {
 	return addTask(idle,new HeclTask(idleThing,idlegeneration,IDLEPREFIX),-1);
     }
-
 
     public HeclTask evalAsync(Thing asyncThing) {
 	return addTask(asyncs, new HeclTask(asyncThing,0,ASYNCPREFIX),-1);
@@ -218,18 +381,19 @@ public class Interp extends Thread/*implements Runnable*/ {
 	for (i = stacklen - 1; i > end; i--) {
 	    savedstack.addElement(stackDecr());
 	}
-
 	result = eval(in);
-
 	/* ... and then restore them after evaluating the code. */
 	for (i = savedstack.size() - 1; i >= 0; i--) {
 	    stackPush((Hashtable)savedstack.elementAt(i));
 	}
-
 	return result;
     }
 
     
+    public boolean hasIdleTasks() {
+	return this.idle.size() == 0;
+    }
+	    
     public synchronized HeclTask getEvent(String name) {
 	int n = timers.size();
 	Vector v = new Vector();
@@ -742,55 +906,6 @@ public class Interp extends Thread/*implements Runnable*/ {
         return lookup.containsKey(varname);
     }
 
-    /**
-     * <code>setResult</code> sets the interpreter result of the most recent
-     * command.
-     *
-     * @param newresult a <code>Thing</code> value
-     */
-    public synchronized void setResult(Thing newresult) {
-        result = newresult;
-    }
-
-    /**
-     * <code>setResult</code> sets the interpreter result of the most recent
-     * command.
-     *
-     * @param newresult a <code>String</code> value
-     */
-    public synchronized void setResult(String newresult) {
-	if(newresult == null)
-	    newresult = "";
-	result = new Thing(newresult);
-    }
-
-    /**
-     * <code>setResult</code> sets the interpreter result to the specified value.
-     *
-     * @param newresult a <code>long</code> value
-     */
-    public synchronized void setResult(long newresult) {
-	result = LongThing.create(newresult);
-    }
-
-    /**
-     * <code>setResult</code> sets the interpreter result of the most recent
-     * command.
-     *
-     * @param newresult a <code>boolean</code> value
-     */
-    public synchronized void setResult(boolean newresult) {
-	result = new Thing(newresult ? IntThing.ONE : IntThing.ZERO);
-    }
-
-    /**
-     * <code>getResult</code> fetches the result saved by setResult.
-     *
-     * @return a <code>Thing</code> value
-     */
-    public synchronized Thing getResult() {
-        return result;
-    }
 
     /**
      * <code>addError</code> adds a Thing as an error message.
@@ -810,6 +925,31 @@ public class Interp extends Thread/*implements Runnable*/ {
     }
 
 
+    /**
+     * <code>checkArgCount</code> checks to see whether the command
+     * actually has the required number of arguments. The first element of the
+     * parameter array <code>argv</code> is not counted as argument!
+     *
+     * @param argv A <code>Thing[]</code> parameter array.
+     * @param minargs The minimal number of arguments or -1 if no check is required.
+     * @param maxargs The maximal number of arguments or -1 if no check is required.
+     * @exception HeclException if an error occurs
+     */
+    public static void checkArgCount(Thing[] argv,int minargs,int maxargs) 
+	throws HeclException {
+	int n = argv.length-1;		    // Ignore command name
+	if(minargs >= 0 && n < minargs) {
+	    throw new HeclException("Too few arguments, at least "
+				    + minargs + " arguments required.");
+	}
+	if(maxargs >= 0 && n > maxargs) {
+	    throw new HeclException("Bad argument count, max. "
+				    + maxargs
+				    +" arguments allowed.");
+	}
+    }
+    
+	    
     /**
      * <code>nextTask</code> extracts first element from given vector.
      * This function operates in a synchronized manner on the argument
@@ -898,7 +1038,6 @@ public class Interp extends Thread/*implements Runnable*/ {
 	else
 	    v.insertElementAt(task,pos);
 	notify();
-	setResult(task.getName());
 	return task;
     }
     
@@ -936,8 +1075,8 @@ public class Interp extends Thread/*implements Runnable*/ {
 	}
 	catch(Exception e) {
 	    // Nothing to do. It is expected that each task handles
-	    // its own locally exception but this block is to ensure
-	    // that the queue continues to operate
+	    // its exceptions locally but we use this block is to ensure
+	    // that the queue continues to operate.
 	}
 	return true;
     }
@@ -945,5 +1084,26 @@ public class Interp extends Thread/*implements Runnable*/ {
     protected static class WaitToken {
 	public volatile boolean waiting = true;
     }
-    
+
+    static String readLine(InputStreamReader is) {
+	StringBuffer b = new StringBuffer();
+	int ch = -1;
+	
+	try {
+	    while ((ch = is.read()) != -1) {
+		if(ch == '\r')
+		    continue;
+		if(ch == '\n')
+		    break;
+		b.append((char)ch);
+	    }
+	}
+	catch(IOException iox) {
+	}
+	if(b.length() > 0 || ch != -1)
+	    return b.toString();
+	return null;
+    }
+
+   
 }

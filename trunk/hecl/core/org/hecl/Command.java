@@ -29,16 +29,19 @@ public abstract interface Command {
 
     /**
      * The <code>cmdCode</code> method takes an interpreter and an array of
-     * Things, performs some calculations, and calls
-     * <code>interp.setResult()</code>, if it needs to, to set the result.
+     * Things, performs some calculations, and returns a <code>Thing</code>
+     * representing the computed value, or <code>null</code>.
      * 
      * @param interp
      *            an <code>Interp</code> value
      * @param argv
      *            a <code>Thing[]</code> value
+     * @return A <code>Thing</code> representing the computed value, or
+     * <code>null</code>.
      * @exception HeclException
      *                if an error occurs
      */
 
-    void cmdCode(Interp interp, Thing[] argv) throws HeclException;
+    //void cmdCode(Interp interp, Thing[] argv) throws HeclException;
+    Thing cmdCode(Interp interp, Thing[] argv) throws HeclException;
 }

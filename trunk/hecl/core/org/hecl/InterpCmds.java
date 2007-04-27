@@ -61,7 +61,7 @@ class InterpCmds extends Operator {
     public static final int CLASSINFO = 80; // hecl internal!!!
 
 
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Thing result = null;
 	int retval = 0;
 	String subcmd  = null;
@@ -70,13 +70,12 @@ class InterpCmds extends Operator {
 	  case SET:
 	    if (argv.length == 3) {
 		interp.setVar(argv[1], argv[2]);
+		return argv[2];
 	    }
-	    interp.setResult(interp.getVar(argv[1]));
-	    break;
+	    return interp.getVar(argv[1]);
 
 	  case COPY:
-	    interp.setResult(argv[1].deepcopy());
-	    break;
+	    return argv[1].deepcopy();
 
 	  case UNSET:
 	    interp.unSetVar(argv[1]);
@@ -91,37 +90,39 @@ class InterpCmds extends Operator {
 	    break;
 
 	  case EVAL:
-	    interp.eval(argv[1]);
-	    break;
+	    return interp.eval(argv[1]);
 
 	  case GLOBAL:
+	    ;
 //#ifdef notdef
-	  {
-	      String varname = null;
-	      Thing newThing = null;
-	      for (int i = 1; i < argv.length; i ++) {
-		  varname = argv[i].toString();
-		  newThing = null;
-
-		  if (!interp.existsVar(varname, 0)) {
-		      /* Create a new value for it. */
-		      newThing = new Thing("");
-		  } else {
-		      /* If it already exists, make a copy of it
-		       * that is no longer marked to be copied. */
-		      newThing = interp.getVar(varname, 0);
-		  }
-		  newThing.global = true;
-		  interp.setVar(varname, newThing);
-		  interp.setVar(varname, newThing, 0);
-	      }
-	      break;
-	  }
+	    {
+		String varname = null;
+		Thing newThing = null;
+		for (int i = 1; i < argv.length; i ++) {
+		    varname = argv[i].toString();
+		    newThing = null;
+		    
+		    if (!interp.existsVar(varname, 0)) {
+			/* Create a new value for it. */
+			newThing = new Thing("");
+		    } else {
+			/* If it already exists, make a copy of it
+			 * that is no longer marked to be copied. */
+			newThing = interp.getVar(varname, 0);
+		    }
+		    newThing.global = true;
+		    interp.setVar(varname, newThing);
+		    interp.setVar(varname, newThing, 0);
+		}
+		break;
+	    }
 //#else
-	  for (int i = 1; i < argv.length; i ++) {
-	      interp.setVar(argv[i].toString(),Interp.GLOBALREFTHING,-1);
-	  }
+	    for (int i = 1; i < argv.length; i ++) {
+		interp.setVar(argv[i].toString(),Interp.GLOBALREFTHING,-1);
+	    }
 //#endif
+	    break;
+	    
 	  case INTROSPECT:
 	    subcmd = argv[1].toString();
 	    Vector results = new Vector();
@@ -131,18 +132,17 @@ class InterpCmds extends Operator {
 		    Thing t = new Thing((String) e.nextElement());
 		    results.addElement(t);
 		}
-		return new ListThing(results);
-	    } else if (subcmd.equals("proccode")) {
+		return ListThing.create(results);
+	    }
+	    if (subcmd.equals("proccode")) {
 		Proc p = (Proc)interp.commands.get(argv[2].toString());
-		return p.getCode().getVal();
+		return new Thing(p.getCode().getVal());
 	    }
 	    break;
 
 	  case RETURN:
-	    if (argv.length > 1) {
-		interp.setResult(argv[1]);
-	    }
-	    throw new HeclException("", HeclException.RETURN);
+	    throw new HeclException("", HeclException.RETURN,
+				    argv.length > 1 ? argv[1] : Thing.EMPTYTHING);
 
 	  case CATCH:
 	    try {
@@ -154,17 +154,17 @@ class InterpCmds extends Operator {
 	    }
 
 	    if (argv.length == 3) {
-		interp.setVar(argv[2].toString(), result);
+		interp.setVar(argv[2].toString(),
+			      result!= null ? result : Thing.EMPTYTHING);
 	    }
-	    return retval != 0 ? IntThing.ONE : IntThing.ZERO;
+	    return new Thing(retval != 0 ? IntThing.ONE : IntThing.ZERO);
 
 	  case THROW:
 	    String errmsg = argv[1].toString();
 	    if (argv.length == 2) {
 		throw new HeclException(errmsg);
-	    } else {
-		throw new HeclException(errmsg, argv[2].toString());
 	    }
+	    throw new HeclException(errmsg, argv[2].toString());
 
 	  case AFTER:
 	    subcmd = argv[1].toString();
@@ -176,7 +176,7 @@ class InterpCmds extends Operator {
 			HeclTask t = (HeclTask)v.elementAt(i);
 			v.setElementAt(new Thing(t.getName()),i);
 		    }
-		    return new ListThing(v);
+		    return ListThing.create(v);
 		}
 		if(argv.length == 3) {
 		    String evname = argv[2].toString();
@@ -186,7 +186,7 @@ class InterpCmds extends Operator {
 			Vector v = new Vector();
 			v.addElement(new Thing(t.getScript().toString()));
 			v.addElement(new Thing(t.getType()));
-			return new ListThing(v);
+			return ListThing.create(v);
 		    }
 		    throw new HeclException("Event '"+evname+"' doesn't exist.");
 		}
@@ -266,8 +266,7 @@ class InterpCmds extends Operator {
 		code = argv[2];
 		level = IntThing.get(argv[1]);
 	    }
-	    interp.eval(code, level);
-	    break;
+	    return interp.eval(code, level);
 		
 	  case TIMECMD:
 	    int times = 1;
@@ -280,7 +279,7 @@ class InterpCmds extends Operator {
 		interp.eval(argv[1]);
 		times--;
 	    }
-	    return new LongThing(new Date().getTime() - then);
+	    return LongThing.create(new Date().getTime() - then);
 	    
 	  case HASCLASS:
 	    // beware: you may be get fooled in j2me when you use an
@@ -290,12 +289,11 @@ class InterpCmds extends Operator {
 	    try {
 		retval = null != Class.forName(argv[1].toString()) ? 1 : 0;
 	    }
-	    catch (Exception e) {
-	    }
-	    return new IntThing(retval);
+	    catch (Exception e) {}
+	    return IntThing.create(retval);
 
 	  case CLASSINFO:
-	    return new StringThing("<"+argv[1].getVal().thingclass()+">");
+	    return new Thing("<"+argv[1].getVal().thingclass()+">");
 
 	  case GC:
 	    System.gc();
@@ -303,26 +301,24 @@ class InterpCmds extends Operator {
 	    
 	  case GETPROP:
 	    String s = System.getProperty(argv[1].toString());
-	    if(s == null)
-		s = "";
-	    return new StringThing(s);
+	    return new Thing(s != null ? s : "");
 	    
 	  case HASPROP:
-	    return new IntThing(System.getProperty(argv[1].toString())!=null ? 1 : 0);
+	    return IntThing.create(System.getProperty(argv[1].toString())!=null ? 1 : 0);
 
 	  case CLOCKCMD:
 	    subcmd = argv[1].toString();
 	    {
 		long l = System.currentTimeMillis();
 		if(subcmd.equals("seconds"))
-		    return new LongThing(l/1000);
+		    return LongThing.create(l/1000);
 		if(subcmd.equals("time") || subcmd.equals("milli"))
-		    return new LongThing(l);
+		    return LongThing.create(l);
 		if(subcmd.equals("format")) {
 		    // to bad, j2me does not support DataFormat,
 		    if(argv.length == 3)
-			return new ListThing(
-			    (new Date(LongThing.get(argv[2]))).toString());
+			return new Thing(
+			    new ListThing((new Date(LongThing.get(argv[2]))).toString()));
 		    throw HeclException.createWrongNumArgsException(argv,2,"?milli?");
 		}
 		throw HeclException.createWrongNumArgsException(argv,1,"option ?time?");
@@ -388,10 +384,10 @@ class InterpCmds extends Operator {
 		    return new StringThing(sb);
 */
 	  case FREEMEM:
-	    return new LongThing(Runtime.getRuntime().freeMemory());
+	    return LongThing.create(Runtime.getRuntime().freeMemory());
 	    
 	  case TOTALMEM:
-	    return new LongThing(Runtime.getRuntime().totalMemory());
+	    return LongThing.create(Runtime.getRuntime().totalMemory());
 
 	  default:
 	    throw new HeclException("Unknown interp command '"

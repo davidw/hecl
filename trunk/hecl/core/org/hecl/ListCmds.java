@@ -40,7 +40,7 @@ class ListCmds extends Operator {
     public static final int SPLIT = 11;
 
 
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	int idx = 0;
 	int last = 0;
 	Vector list;
@@ -53,11 +53,11 @@ class ListCmds extends Operator {
 		for (int i = 1; i < argv.length; i++) {
 		    result.addElement(argv[i]);
 		}
-		return new ListThing(result);
+		return ListThing.create(result);
 
 	    case LLEN:
 		list = ListThing.get(argv[1]);
-		return new IntThing(list.size());
+		return IntThing.create(list.size());
 
 	    case LINDEX:
 	      {
@@ -73,17 +73,15 @@ class ListCmds extends Operator {
 			  res = (Thing)list.elementAt(idx);
 		      }
 		  }
-		  interp.setResult(res);
+		  return res;
 	      }
-	      break;
 
 	    case LINSERT:
 		list = ListThing.get(argv[1]);
 		list.insertElementAt(argv[3], getIndex(argv[2],list.size()));
 		newval = new ListThing(list);
 		argv[1].setCopyVal(newval);
-		interp.setResult(new Thing(newval));
-		break;
+		return new Thing(newval);
 
 	    case LSET:
 		list = ListThing.get(argv[1]);
@@ -95,23 +93,20 @@ class ListCmds extends Operator {
 		}
 		newval = new ListThing(list);
 		argv[1].setCopyVal(newval);
-		interp.setResult(new Thing(newval));
-		break;
+		return new Thing(newval);
 
 	    case LRANGE:
 		list = ListThing.get(argv[1]);
 		int ls = list.size();
 		int first = getIndex(argv[2],ls);
 		last = getIndex(argv[3],ls);
-
-		if (last <= first || last >= ls || first >= ls) {
-		    interp.setResult(Thing.EMPTYTHING);
-		}
-		Vector resultv = new Vector();
+		if (last < first || first > ls)
+		    return Thing.EMPTYTHING;
+		result = new Vector();
 		for (int i = first; i <= last; i++) {
-		    resultv.addElement(list.elementAt(i));
+		    result.addElement(list.elementAt(i));
 		}
-		return new ListThing(resultv);
+		return ListThing.create(result);
 
 	    case LAPPEND:
 		list = ListThing.get(argv[1]);
@@ -120,13 +115,12 @@ class ListCmds extends Operator {
 		}
 		newval = new ListThing(list);
 		argv[1].setCopyVal(newval);
-		interp.setResult(new Thing(newval));
-		break;
+		return new Thing(newval);
 
 	    case FILTER:
 	    case SEARCH:
 		list = ListThing.get(argv[1]);
-		Vector results = new Vector();
+		result = new Vector();
 		String varname = argv[2].toString();
 		int sz = list.size();
 		Thing val;
@@ -141,16 +135,14 @@ class ListCmds extends Operator {
 		    val.copy = true; /* Make sure that the original value
 				      * doesn't get fiddled with. */
 		    interp.setVar(varname, val);
-		    interp.eval(argv[3]);
-
-		    if (IntThing.get(interp.getResult()) != 0) {
-			results.addElement(val);
+		    if (IntThing.get(interp.eval(argv[3])) != 0) {
+			result.addElement(val);
 			if (brk == true) {
 			    break;
 			}
 		    }
 		}
-		return new ListThing(results);
+		return ListThing.create(result);
 
 	    case JOIN:
 		list = ListThing.get(argv[1]);
@@ -171,7 +163,7 @@ class ListCmds extends Operator {
 		    }
 		    strres.append(((Thing) e.nextElement()).toString());
 		}
-		return new StringThing(strres);
+		return new Thing(strres);
 
 	    case SPLIT:
 		result = new Vector();
@@ -191,14 +183,13 @@ class ListCmds extends Operator {
 		    idx = str.indexOf(splitstr, last);
 		}
 		result.addElement(new Thing(str.substring(last, str.length())));
-		interp.setResult(ListThing.create(result));
-		break;
+		return ListThing.create(result);
+
 	    default:
 		throw new HeclException("Unknown list command '"
 					+ argv[0].toString() + "' with code '"
 					+ cmd + "'.");
 	}
-	return null;
     }
 
     public static int getIndex(Thing t,int llen) throws HeclException {
