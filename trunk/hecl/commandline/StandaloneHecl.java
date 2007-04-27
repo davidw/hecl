@@ -16,10 +16,10 @@
 import org.hecl.Interp;
 import org.hecl.Thing;
 
-//import org.hecl.http.*;
+import org.hecl.load.LoadCmd;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
-import org.hecl.files.*;
+import org.hecl.files.HeclFile;
 
 /**
  * <code>StandaloneHecl</code> is an example of how to use Hecl to run
@@ -39,6 +39,7 @@ public class StandaloneHecl {
 	    //new HttpModule().loadModule(interp);
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
+	    LoadCmd.load(interp);
             interp.evalAsyncAndWait(new Thing(script));
 	    interp.terminate();
         } catch (Exception e) {
@@ -46,4 +47,3 @@ public class StandaloneHecl {
         }
     }
 }
-

@@ -14,21 +14,26 @@
  */
 
 import java.util.Vector;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import org.hecl.Compare;
+
 import org.hecl.Interp;
 import org.hecl.Thing;
 import org.hecl.ListThing;
 import org.hecl.HeclException;
 import org.hecl.HeclTask;
 
+import org.hecl.Command;
+import org.hecl.ObjectThing;
+import org.hecl.HeclException;
+import org.hecl.IntThing;
+import org.hecl.ClassCommand;
+import org.hecl.ClassCommandInfo;
+
 import org.hecl.files.FileCmds;
 import org.hecl.files.HeclFile;
-//import org.hecl.http.HttpModule;
+import org.hecl.load.LoadCmd;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
+
 
 /**
  * <code>Hecl</code> - this class implements the main Hecl command
@@ -38,8 +43,6 @@ import org.hecl.net.HttpCmd;
  * @version 1.0
  */
 public class Hecl {
-    public static boolean VERBOSE = false;
-
     /**
      * <code>main</code> is what actually runs things.
      *
@@ -58,10 +61,9 @@ public class Hecl {
             int i;
 	    /* Add the standard packages in. */
 	    FileCmds.load(interp);
-	    //new HttpModule().loadModule(interp);
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
-	    new org.hecl.load.HeclLoad().loadModule(interp);
+	    LoadCmd.load(interp);
 	    Vector argv = new Vector();
 
             for (i = 0; i < args.length; i++) {
@@ -69,79 +71,56 @@ public class Hecl {
 		argv.addElement(new Thing(args[i]));
             }
 	    interp.setVar("argv", ListThing.create(argv));
-	    if (args.length > 0) {
+	    extend(interp);
+	    if(args.length == 1) {
 		HeclFile.sourceFile(interp, args[0]);
 	    } else {
-		Hecl.commandLine(interp);
+		interp.readEvalPrint(System.in,System.out,System.err);
 	    }
-
         } catch (Exception e) {
-	    System.err.println("Java exception :" + e);
+	    System.err.println("Java exception: " + e);
             e.printStackTrace();
         } catch (Throwable t) {
-	    System.err.println("Java error :" + t);
+	    System.err.println("Java error: " + t);
 	    t.printStackTrace();
 	}
 	interp.terminate();
 	System.exit(0);
     }
 
-    static final String PROMPT = "hecl> ";
-    static final String PROMPT2 = "hecl+ ";
-
-    /**
-     * The <code>commandLine</code> method implements a
-     * Read/Eval/Print Loop.
-     *
-     * @param interp an <code>Interp</code> value
-     * @exception IOException if an error occurs
-     */
-    private static void commandLine (Interp interp) throws IOException {
-	BufferedReader buff = new
-	    BufferedReader(new InputStreamReader(System.in));
-	String line = null;
-	/* Normal prompt to use. */
-	/* Prompt to use when we need more input. */
-	String prompt = PROMPT;
-	String morebuffer = "";
-
-	while (true) {
-	    System.out.print(prompt);
-	    System.out.flush();
-	    line = buff.readLine();
-	    /* Exit on end of file. */
-	    if (line == null)
-		break;
-
-	    try {
-		Thing res = interp.evalAsyncAndWait(new Thing(morebuffer + line));
-		if(res != null
-		   && 0 != Compare.compareString(res, Thing.EMPTYTHING)) {
-		    System.out.println(interp.getResult());
-		}
+    /*
+    static class ObjectCmd implements Command {
+	ObjectCmd() {}
+	public Thing cmdCode(Interp ip,Thing[] argv) throws HeclException {
+	    System.err.println("ObjectCmd:");
+	    for(int i=0; i<argv.length; ++i) {
+		System.err.println("\targv["+i+"]="+argv[i].toString());
 	    }
-	    catch (HeclException he) {
-		if (he.code.equals("PARSE_ERROR")) {
-		    if(VERBOSE) {
-			System.err.println("PARSE ERROR: "+he.getMessage());
-			he.printStackTrace();
-		    }
-		    /* When we need more input, stash the current
-		     * input in morebuffer, and change the prompt. */
-		    prompt = PROMPT2;
-		    morebuffer = morebuffer + "\n" + line;
-		} else {
-		    System.out.println(he);
-		    morebuffer = "";
-		    prompt = PROMPT;
-		}
-	    }
-	    catch(Exception e) {
-		e.printStackTrace();
-	    }
+	    return ObjectThing.create(this);
 	}
-	interp.terminate();
-	System.exit(0);
+    }
+    
+    static class ClCmd implements ClassCommand {
+	static int cnt = 0;
+	public ClCmd() {}
+	
+	public Thing method(Interp ip,ClassCommandInfo context,
+			    Thing[] argv) throws HeclException {
+	    System.err.println("method, this="+argv[0].toString()
+			       +", name="+argv[1].toString());
+	    for(int i=2; i<argv.length; ++i) {
+		System.err.println("\targv["+i+"]="+argv[i].toString());
+	    }
+	    return IntThing.create(--cnt);
+	}
+    }
+    */
+
+    public static void extend(Interp ip) throws HeclException {
+	/*
+	ip.addCommand("jones",new ObjectCmd());
+	ip.addClassCmd(ObjectCmd.class,new ClCmd());
+	*/
     }
 }
 

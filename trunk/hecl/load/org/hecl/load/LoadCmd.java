@@ -37,8 +37,9 @@ import java.util.Vector;
  * @version 1.0
  */
 
-class LoadCmd implements Command {
-
+public class LoadCmd implements Command {
+    private LoadCmd() {}
+    
     /**
      * The <code>cmdCode</code> method implements the 'load' command.
      *
@@ -46,7 +47,7 @@ class LoadCmd implements Command {
      * @param argv a <code>Thing[]</code> value
      * @exception HeclException if an error occurs
      */
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
 	try {
 	    /* The the list of URI's where code might be located. */
 	    Vector urlv = ListThing.get(argv[2]);
@@ -71,5 +72,23 @@ class LoadCmd implements Command {
 	} catch (Exception e) {
 	    throw new HeclException(e.toString());
 	}
+	return null;
     }
+
+    public static void load(Interp interp) throws HeclException {
+	interp.addCommand("load", cmd);
+    }
+
+    /**
+     * The <code>unloadModule</code> method unloads the module.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static void unload(Interp interp) throws HeclException {
+        interp.removeCommand("load");
+    }
+    
+
+    private static LoadCmd cmd = new LoadCmd();
 }

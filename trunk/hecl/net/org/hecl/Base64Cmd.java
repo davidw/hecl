@@ -31,23 +31,21 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 
 public class Base64Cmd extends org.hecl.Operator {
-    public RealThing operate(int cmd, Interp interp, Thing[] argv)
+    public Thing operate(int cmd, Interp interp, Thing[] argv)
 	throws HeclException {
 
 	switch(cmd) {
 	  case ENCODE:
-	    return new StringThing(new String(Base64.encode(argv[1].toString().getBytes())));
+	    return new Thing(new String(Base64.encode(argv[1].toString().getBytes())));
 
 	  case DECODE:
-	    return new StringThing(new String(Base64.decode(argv[1].toString())));
+	    return new Thing(new String(Base64.decode(argv[1].toString())));
 	    
 	  default:
 	    throw new HeclException("Unknown base64 command '"
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 	}
-	//notreached
-	//return null;
     }
     
 

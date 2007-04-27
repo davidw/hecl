@@ -33,7 +33,7 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 
 public class HttpCmd extends org.hecl.Operator {
-    public RealThing operate(int cmd, Interp interp, Thing[] argv)
+    public Thing operate(int cmd, Interp interp, Thing[] argv)
 	throws HeclException {
 	Hashtable h = null;
 	boolean validate = false;
@@ -45,7 +45,7 @@ public class HttpCmd extends org.hecl.Operator {
 	    String[] keyvaluepairs = new String[argv.length-1];
 	    for(int i=1; i<argv.length; ++i)
 		keyvaluepairs[i-1] = argv[i].toString();
-	    return new StringThing(HttpRequest.urlencode(keyvaluepairs));
+	    return new Thing(HttpRequest.urlencode(keyvaluepairs));
 	    
 	  case GETURL:
 	    h = new Hashtable();
@@ -132,7 +132,7 @@ public class HttpCmd extends org.hecl.Operator {
 		    ht.put(key,new Thing(r.getResponseFieldValue(key)));
 		}
 		ht.put("data",new Thing(new StringThing(r.getBody())));
-		return new HashThing(ht);
+		return HashThing.create(ht);
 	    }
 	    catch (Exception e) {
 		throw new HeclException(e.getMessage());
@@ -140,26 +140,21 @@ public class HttpCmd extends org.hecl.Operator {
 
 	  case GETDATA:
 	    h = HashThing.get(argv[1]);
-	    interp.setResult((Thing)h.get("data"));
-	    break;
+	    return (Thing)h.get("data");
 	    
 	  case GETNCODE:
 	    h = HashThing.get(argv[1]);
-	    interp.setResult((Thing)h.get("ncode"));
-	    break;
+	    return (Thing)h.get("ncode");
 		
 	  case GETSTATUS:
 	    h = HashThing.get(argv[1]);
-	    interp.setResult((Thing)h.get("status"));
-	    break;
+	    return (Thing)h.get("status");
 		
 	  default:
 	    throw new HeclException("Unknown http command '"
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 	}
-	//notreached
-	return null;
     }
     
 
