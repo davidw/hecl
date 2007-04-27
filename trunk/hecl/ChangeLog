@@ -1,3 +1,8 @@
+2007-04-27  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java: Updated applet code to
+	use new interfaces.
+
 2007-04-27  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* midp20/*:

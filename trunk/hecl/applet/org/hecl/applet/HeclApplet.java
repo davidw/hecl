@@ -99,7 +99,7 @@ public class HeclApplet extends Applet implements ActionListener {
 	output.setText("");
 	try {
 	    interp = new Interp();
-	    interp.commands.put("puts", new PutsCommand());
+	    interp.addCommand("puts", new PutsCommand());
 	} catch (HeclException error) {
 	    output.setForeground(Color.red);
 	    output.setText("Error while initializing Hecl:\n"
@@ -118,7 +118,7 @@ public class HeclApplet extends Applet implements ActionListener {
     }
 
     class PutsCommand implements Command {
-        public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
+        public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
             if (argv.length != 2) {
                 throw HeclException.createWrongNumArgsException(argv, 1,
 								"string");
@@ -127,6 +127,7 @@ public class HeclApplet extends Applet implements ActionListener {
                 resultString += argv[1].toString() + "\n";
 		output.setText(resultString);
             }
+	    return null;
         }
     }
 
