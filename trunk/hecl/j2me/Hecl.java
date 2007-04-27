@@ -124,48 +124,48 @@ public class Hecl extends MIDlet {
 	    cmds.interp = interp;
 	    cmds.midlet = this;
 
-	    interp.commands.put("alert",
-				new GUICmdFacade(GUI.ALERTCMD, cmds));
-	    interp.commands.put("choicegroup",
-				new GUICmdFacade(GUI.CHOICEGROUPCMD, cmds));
-	    interp.commands.put("cmd",
-				new GUICmdFacade(GUI.CMDCMD, cmds));
-	    interp.commands.put("datefield",
-				new GUICmdFacade(GUI.DATEFIELDCMD, cmds));
-	    interp.commands.put("form",
-				new GUICmdFacade(GUI.FORMCMD, cmds));
-	    interp.commands.put("gauge",
-				new GUICmdFacade(GUI.GAUGECMD, cmds));
-	    interp.commands.put("listbox",
-				new GUICmdFacade(GUI.LISTBOXCMD, cmds));
-	    interp.commands.put("string",
-				new GUICmdFacade(GUI.STRINGCMD, cmds));
-	    interp.commands.put("stringitem",
-				new GUICmdFacade(GUI.STRINGITEMCMD, cmds));
-	    interp.commands.put("textbox",
-				new GUICmdFacade(GUI.TEXTBOXCMD, cmds));
-	    interp.commands.put("textfield",
-				new GUICmdFacade(GUI.TEXTFIELDCMD, cmds));
+	    interp.addCommand("alert",
+			      new GUICmdFacade(GUI.ALERTCMD, cmds));
+	    interp.addCommand("choicegroup",
+			      new GUICmdFacade(GUI.CHOICEGROUPCMD, cmds));
+	    interp.addCommand("cmd",
+			      new GUICmdFacade(GUI.CMDCMD, cmds));
+	    interp.addCommand("datefield",
+			      new GUICmdFacade(GUI.DATEFIELDCMD, cmds));
+	    interp.addCommand("form",
+			      new GUICmdFacade(GUI.FORMCMD, cmds));
+	    interp.addCommand("gauge",
+			      new GUICmdFacade(GUI.GAUGECMD, cmds));
+	    interp.addCommand("listbox",
+			      new GUICmdFacade(GUI.LISTBOXCMD, cmds));
+	    interp.addCommand("string",
+			      new GUICmdFacade(GUI.STRINGCMD, cmds));
+	    interp.addCommand("stringitem",
+			      new GUICmdFacade(GUI.STRINGITEMCMD, cmds));
+	    interp.addCommand("textbox",
+			      new GUICmdFacade(GUI.TEXTBOXCMD, cmds));
+	    interp.addCommand("textfield",
+			      new GUICmdFacade(GUI.TEXTFIELDCMD, cmds));
 
-	    interp.commands.put("getprop",
-				new GUICmdFacade(GUI.GETPROPCMD, cmds));
-	    interp.commands.put("setprop",
-				new GUICmdFacade(GUI.SETPROPCMD, cmds));
-	    interp.commands.put("getindex",
-				new GUICmdFacade(GUI.GETINDEXCMD, cmds));
-	    interp.commands.put("setindex",
-				new GUICmdFacade(GUI.SETINDEXCMD, cmds));
-	    interp.commands.put("setcurrent",
-				new GUICmdFacade(GUI.SETCURRENTCMD, cmds));
-	    interp.commands.put("noscreen",
-				new GUICmdFacade(GUI.NOSCREENCMD, cmds));
-	    interp.commands.put("screenappend",
-				new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
-	    interp.commands.put("exit",
-				new GUICmdFacade(GUI.EXITCMD, cmds));
+	    interp.addCommand("getprop",
+			      new GUICmdFacade(GUI.GETPROPCMD, cmds));
+	    interp.addCommand("setprop",
+			      new GUICmdFacade(GUI.SETPROPCMD, cmds));
+	    interp.addCommand("getindex",
+			      new GUICmdFacade(GUI.GETINDEXCMD, cmds));
+	    interp.addCommand("setindex",
+			      new GUICmdFacade(GUI.SETINDEXCMD, cmds));
+	    interp.addCommand("setcurrent",
+			      new GUICmdFacade(GUI.SETCURRENTCMD, cmds));
+	    interp.addCommand("noscreen",
+			      new GUICmdFacade(GUI.NOSCREENCMD, cmds));
+	    interp.addCommand("screenappend",
+			      new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
+	    interp.addCommand("exit",
+			      new GUICmdFacade(GUI.EXITCMD, cmds));
 //#ifdef sms
-	    interp.commands.put("sms",
-				new GUICmdFacade(GUI.SMSCMD, cmds));
+	    interp.addCommand("sms",
+			      new GUICmdFacade(GUI.SMSCMD, cmds));
 //#endif
 
 	    f.append("\nOK - executing");

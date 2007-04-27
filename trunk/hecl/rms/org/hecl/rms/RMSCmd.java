@@ -72,7 +72,7 @@ public class RMSCmd extends Operator {
 	}
     }
     
-    public RealThing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
+    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	RecordStore rs = null;
 	byte[] data = null;
 	String name = argv.length>1?argv[1].toString() : null;
@@ -96,7 +96,7 @@ public class RMSCmd extends Operator {
 		    for(int i=0; i<res.length; ++i)
 			v.addElement(IntThing.create(res[i]));
 		}
-		return new ListThing(v);
+		return ListThing.create(v);
 	    }
 
 	  case RMS_GET:
@@ -114,7 +114,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new StringThing(new String(data));
+	    return new Thing(new String(data));
 	    
 	  case RMS_SET:
 	    // rs_put name [recordid=1] data
@@ -137,7 +137,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new IntThing(data.length);
+	    return IntThing.create(data.length);
 	    
 	  case RMS_ADD:
 	    // add data
@@ -152,7 +152,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new IntThing(recordid);
+	    return IntThing.create(recordid);
 	    
 	  case RMS_SIZE:
 	  case RMS_SIZEAVAIL:
@@ -167,7 +167,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new IntThing(recordid);
+	    return IntThing.create(recordid);
 
 	  case RMS_DELETE:
 	    recordid = -1;
@@ -219,7 +219,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new IntThing(recordid);
+	    return IntThing.create(recordid);
 	    
 	  case RMS_HGET:
 	    // hget name key
@@ -237,8 +237,7 @@ public class RMSCmd extends Operator {
 		finally {
 		    closeRS(rs);
 		}
-		return new StringThing(recordid >= 0 && v[1] != null ?
-				       (String)v[1] : "");
+		return new Thing(recordid >= 0 && v[1] != null ? (String)v[1] : "");
 	    }
 	    
 	  case RMS_HEXISTS:
@@ -253,7 +252,7 @@ public class RMSCmd extends Operator {
 	    finally {
 		closeRS(rs);
 	    }
-	    return new IntThing(recordid >= 0 ? 1 : 0);
+	    return IntThing.create(recordid >= 0 ? 1 : 0);
 
 	  case RMS_HKEYS:
 	    ;
@@ -275,7 +274,7 @@ public class RMSCmd extends Operator {
 		int n = v.size();
 		for(int i=0; i<n; ++i)
 		    v.setElementAt(new Thing((String)v.elementAt(i)),i);
-		return new ListThing(v);
+		return ListThing.create(v);
 	    }
 
 	  case RMS_HDEL:

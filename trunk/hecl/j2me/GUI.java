@@ -158,7 +158,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 	return choices;
     }
 
-    public void dispatch(int cmd, Thing[] argv)
+    public Thing dispatch(int cmd, Thing[] argv)
 	throws HeclException {
 
 	properties = new Properties();
@@ -216,7 +216,6 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		    }
 		    a.setTimeout(tm);
 		}
-
 		res = ObjectThing.create(a);
 		break;
 
@@ -462,9 +461,8 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		break;
 //#endif
 	}
-	interp.setResult(res);
-
 	properties = null;
+	return res;
     }
 
     /**
@@ -475,28 +473,27 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
      * @return an <code>int</code> value
      */
     private int getWidgetType (Object widget) {
-	if (widget instanceof TextField) {
+	if (widget instanceof TextField)
 	    return TEXTFIELD;
-	} else if (widget instanceof Command) {
+	if (widget instanceof Command)
 	    return COMMAND;
-	} else if (widget instanceof ListBox) {
+	if (widget instanceof ListBox)
 	    /* Comes before FORM because it's more specific. */
 	    return LISTBOX;
-	} else if (widget instanceof Form) {
+	if (widget instanceof Form)
 	    return FORM;
-	} else if (widget instanceof TextBox) {
+	if (widget instanceof TextBox)
 	    return TEXTBOX;
-	} else if (widget instanceof StringItem) {
+	if (widget instanceof StringItem)
 	    return STRINGITEM;
-	} else if (widget instanceof ChoiceGroup) {
+	if (widget instanceof ChoiceGroup)
 	    return CHOICEGROUP;
-	} else if (widget instanceof Alert) {
+	if (widget instanceof Alert)
 	    return ALERT;
-	} else if (widget instanceof Gauge) {
+	if (widget instanceof Gauge)
 	    return GAUGE;
-	} else if (widget instanceof DateField) {
+	if (widget instanceof DateField)
 	    return DATEFIELD;
-	}
 	/* FIXME  */
 	return 0;
     }
@@ -509,23 +506,22 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
      * @return an <code>int</code> value
      */
     private int getCmdType(String type) {
-	if (type.equals("back")) {
+	if (type.equals("back"))
 	    return Command.BACK;
-	} else if (type.equals("cancel")) {
+	if (type.equals("cancel"))
 	    return Command.CANCEL;
-	} else if (type.equals("exit")) {
+	if (type.equals("exit"))
 	    return Command.EXIT;
-	} else if (type.equals("help")) {
+	if (type.equals("help"))
 	    return Command.HELP;
-	} else if (type.equals("item")) {
+	if (type.equals("item"))
 	    return Command.ITEM;
-	} else if (type.equals("ok")) {
+	if (type.equals("ok"))
 	    return Command.OK;
-	} else if (type.equals("screen")) {
+	if (type.equals("screen"))
 	    return Command.SCREEN;
-	} else if (type.equals("stop")) {
+	if (type.equals("stop"))
 	    return Command.STOP;
-	}
 	return -1;
     }
 

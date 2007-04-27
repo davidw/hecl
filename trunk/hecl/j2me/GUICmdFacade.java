@@ -37,7 +37,7 @@ class GUICmdFacade implements Command {
 	gui = g;
     }
 
-    public void cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	gui.dispatch(cmdtype, argv);
+    public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
+	return gui.dispatch(cmdtype, argv);
     }
 }

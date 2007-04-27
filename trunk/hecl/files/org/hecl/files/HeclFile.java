@@ -215,7 +215,7 @@ public class HeclFile implements org.hecl.HeclModule {
 	} catch (HeclException e) {
 	    throw e;
 	} catch (Exception e) {
-	    System.err.println("ERROR: we should never reach this line!" + e);
+	    throw new HeclException("Unexpected error: "+e);
 	}
     }
 
