@@ -1898,8 +1898,76 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-     <!-- strindex -->
-     <refentry id="strindex">
+     <refentry id="strbytelen">
+      <refnamediv>
+	<refname>strbytelen</refname>
+	<refpurpose>Return the length of the string, in bytes.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strbytelen</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strbytelen</command> returns the length of
+	  <option><replaceable>string</replaceable></option>, in
+	  bytes.  The number of characters and bytes may be different
+	  because of multi byte character encodings.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strcmp">
+      <refnamediv>
+	<refname>strcmp</refname>
+	<refpurpose>Compare two strings, return 0 if equal.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strcmp</command>
+	  <arg choice="req"><replaceable>stringA</replaceable></arg>
+	  <arg choice="req"><replaceable>stringB</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strcmp</command> takes two strings and compares
+	  them, returning 0 if they are equal, 1 if the first string
+	  is "greater than" the second string, or -1 if the first
+	  string is "less than" the second string.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strfind">
+      <refnamediv>
+	<refname>strfind</refname>
+	<refpurpose>Find one string in another.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strfind</command>
+	  <arg choice="req"><replaceable>string1</replaceable></arg>
+	  <arg choice="req"><replaceable>string2</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strfind</command> looks for the first occurence
+	  of <replaceable>string1</replaceable> in
+	  <replaceable>string2</replaceable>.  If it finds a match, it
+	  returns the index where the first letter of the match lies.
+	  If it is not found, it returns -1.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strindex">
       <refnamediv>
 	<refname>strindex</refname>
 	<refpurpose>Return the index'th character of string.</refpurpose>
