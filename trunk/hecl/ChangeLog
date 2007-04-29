@@ -1,5 +1,7 @@
 2007-04-29  David N. Welton  <davidw@dedasys.com>
 
+	* tests/after.hcl: Added a simple after test.
+
 	* core/org/hecl/ParseList.java: Ignore [ and \ in list parsing.
 
 2007-04-27  David N. Welton  <davidw@dedasys.com>

@@ -8,6 +8,7 @@ cd $destdir
 source harness.hcl
 
 testfiles {
+    after.hcl
     append.hcl
     break.hcl
     catch.hcl
