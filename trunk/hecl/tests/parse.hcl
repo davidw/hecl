@@ -99,3 +99,8 @@ test parse-16 {
 #test parse-15 {
 #     lindex "a\[ b" 0
 #} "a\["
+
+test parse-17 {
+    set a [list #foo bar]
+    set a
+} {#foo bar}
