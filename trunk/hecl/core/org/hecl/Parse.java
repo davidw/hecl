@@ -253,9 +253,6 @@ public class Parse {
                 return;
             }
             switch (ch) {
-                case '#' :
-                    parseComment(state);
-                    return;
                 case '\r' :
 		    return;
                 case '\n' :
@@ -288,6 +285,12 @@ public class Parse {
 			break;
 		    }
 		    continue;
+                case '#' :
+		    if (outList.size() == 0) {
+			parseComment(state);
+			return;
+		    }
+		    /* Fall through if it's not at the beginning of the line. */
                 default :
 		    appendToCurrent(ch);
                     parseWord(state);

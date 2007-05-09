@@ -1,5 +1,8 @@
 2007-05-09  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Parse.java: Fix to not parse # characters that are
+	not at the beginning of a line specially.
+
 	* tests/parse.hcl: Added test for incorrect handling of #
 	character.
 
