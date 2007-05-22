@@ -1,3 +1,11 @@
+2007-05-22  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/StringCmds.java: Changec comparison for instances
+	of ObjectThing, now eq/neq call Compare.same.
+
+	* core/org/hecl/Compare.java: New function same for comparison to
+	avoid problems when comparing ObjectThings on mobile devices.
+
 2007-05-09  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Parse.java: Fix to not parse # characters that are

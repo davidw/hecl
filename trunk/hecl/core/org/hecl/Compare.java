@@ -28,6 +28,35 @@ public class Compare {
     public static final int PROCCOMPARE = 3;
 
     /**
+     *
+     * <code>same</code> checks if two Things as the same. In case the
+     * parameters are <code>ObjectThing</code>s, they are the same only if
+     * they are identical, for all other <code>Thing</code>s this function
+     * calls <code>compareString</code> to check for sameness.
+     *
+     * <p>This subtle difference in comparison is necessary since
+     * <code>ObjectThing.toString()</code> may yield the same string
+     * representation even when the objects are different (happens i.e. on
+     * Nokia 6630 for instances of <code>javax.microeditoion.lcdui.Command</code>.
+     * 
+     * @param a a <code>Thing</code> value
+     * @param b a <code>Thing</code> value
+     * @return <code>boolean</code> indicating sameness.
+     */
+    static public boolean same(Thing t1,Thing t2) {
+        RealThing r1 = t1.getVal();
+        RealThing r2 = t2.getVal();
+        if(r1 == r2)
+            return true;
+	
+        if(r1 instanceof ObjectThing && r2 instanceof ObjectThing)
+            return ((ObjectThing)r1).get().equals(((ObjectThing)r2).get()) ?
+		true : false;
+        return Compare.compareString(t1,t2) == 0;
+    }
+
+
+    /**
      * <code>compareString</code> compares two Things as strings. This can't
      * fail, because all Things may be represented as strings.
      * 

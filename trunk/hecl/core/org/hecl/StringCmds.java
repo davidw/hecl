@@ -34,8 +34,8 @@ import org.hecl.StringThing;
 class StringCmds extends Operator {
     public static final int APPEND = 1;
 
-    public static final int STREQ = 4;
-    public static final int STRNEQ = 5;
+    public static final int EQ = 4;
+    public static final int NEQ = 5;
 
     public static final int STRBYTELEN = 7;
     public static final int STRCMP = 8;
@@ -74,14 +74,14 @@ class StringCmds extends Operator {
 		result.setCopyVal(newval);
 		return new Thing(newval);
 
-	    case STREQ:
-	    case STRNEQ:
-		/* 'eq' and 'ne' commands. */
-		int i = Compare.compareString(argv[1],argv[2]);
-		if(cmd == STREQ) {
-		    return new Thing(i != 0 ? IntThing.ZERO : IntThing.ONE);
-		}
-		return new Thing(i != 0 ? IntThing.ONE : IntThing.ZERO);
+	    case EQ:
+	      /* 'eq' */
+	      return new Thing(Compare.same(argv[1],argv[2]) ?
+			       IntThing.ONE : IntThing.ZERO);
+	    case NEQ:
+	      /* 'ne' */
+	      return new Thing(!Compare.same(argv[1],argv[2]) ?
+			       IntThing.ONE : IntThing.ZERO);
 
 	    case STRBYTELEN:
 		/* strbytelen "string" */
@@ -328,8 +328,8 @@ class StringCmds extends Operator {
 	defsplitstrings.addElement(new Thing("\r"));
 
         cmdtable.put("append", new StringCmds(APPEND,1,-1));
-        cmdtable.put("eq", new StringCmds(STREQ,2,2));
-	cmdtable.put("ne", new StringCmds(STRNEQ,2,2));
+        cmdtable.put("eq", new StringCmds(EQ,2,2));
+	cmdtable.put("ne", new StringCmds(NEQ,2,2));
 
 	cmdtable.put("strbytelen", new StringCmds(STRBYTELEN,1,1));
 	cmdtable.put("strcmp", new StringCmds(STRCMP,2,2));
