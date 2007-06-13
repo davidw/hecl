@@ -33,12 +33,13 @@ import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.awt.Color;
+import org.awt.Rectangle;
 import org.graphics.Drawable;
 
 import org.hecl.midp20.MidletCmd;
 
 public class HeclCanvas extends GameCanvas implements CommandListener {
-    // We treat the left/rihgt softkey on our own and provide two additional
+    // We treat the left/right softkey on our own and provide two additional
     // gamekeys to simplify the programming.
     public static final int GAME_LEFT_SK = -1;
     public static final int GAME_RIGHT_SK = -2;
@@ -119,13 +120,21 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     
     public void flushGraphics() {
 //#ifdef debug
+	Rectangle r = new Rectangle(mygraphics.getClipX(),
+				    mygraphics.getClipY(),
+				    mygraphics.getClipWidth(),
+				    mygraphics.getClipHeight());
 	System.err.println("HeclCanvas.flushgraphics()");
-	System.err.println("clip is: "+mygraphics.getClipX()
-			   +", "+mygraphics.getClipY()
-			   +", "+mygraphics.getClipWidth()
-			   +", "+mygraphics.getClipHeight());
+	System.err.println("clip is: "+r.x
+			   +", "+r.y
+			   +", "+r.width
+			   +", "+r.height);
+	mygraphics.setClip(0,0,240,309);
 //#endif
 	super.flushGraphics();
+//#ifdef debug
+	mygraphics.setClip(r.x,r.y,r.width,r.height);
+//#endif
     }
 
 
@@ -244,7 +253,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	}
     }
 
-    private void showCommands(Graphics g) {
+    protected void showCommands(Graphics g) {
 //#ifdef debug
 	System.err.println("showCommands, fullscreen="+isfullscreen+", isshown="+isShown());
 //#endif
@@ -301,9 +310,9 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    }
 	    g.setColor(oldcol);
 	    g.setFont(oldfont);
-//#ifdef debug
+	    //#ifdef debug
 	    System.err.println("flushing: 0, "+drawheight +", "+drawwidth+", "+CMDBARHEIGHT);
-//#endif
+	    //#endif
 	    flushGraphics(0,drawheight,drawwidth,CMDBARHEIGHT);
 	    g.setClip(oldcx,oldcy,oldcw,oldch);
 	} else {
@@ -313,12 +322,16 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 
 
     public void paint(Graphics g) {
-	//System.err.println("PAINT called");
+	//#ifdef notdef
+	System.err.println("HeclCanvas.paint called");
+	if(this.drawable != null)
+	    System.err.println("NEEDSFLUSH="+this.drawable.needsFlush());
+	//#endif
 	callEventHandler(CanvasEvent.E_PAINT,0,0,drawwidth,drawheight,0);
 	if(this.drawable != null && this.drawable.needsFlush()) {
+	    showCommands(mygraphics);
 	    flushGraphics();
 	}
-	showCommands(mygraphics);
 	super.paint(g);
     }
 
@@ -338,6 +351,21 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
     
 
+    protected boolean isCommandKey(int keycode) {
+	if(isfullscreen && cmds.size() > 0) {
+	    switch(getGameAction(keycode)) {
+	      case GAME_LEFT_SK:
+	      case GAME_RIGHT_SK:
+		return true;
+	      case FIRE:
+		return cmds.size() == 3;
+	      default:
+		break;
+	    }
+	}
+	return false;
+    }
+    
     public void keyPressed(int keycode) {
 	if(isfullscreen && cmds.size() > 0) {
 	    Command c = findCommand(keycode);
