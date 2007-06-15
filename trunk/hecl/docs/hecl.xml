@@ -814,6 +814,45 @@ org.hecl.StringThing
       </refsect1>
     </refentry>
 
+    <refentry id="clock">
+      <refnamediv>
+	<refname>clock</refname>
+	<refpurpose>Provides time utilities</refpurpose>
+      </refnamediv>
+
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>clock</command>
+	  <group>
+	    <arg choice="req">seconds</arg>
+	    <arg choice="req">time</arg>
+	    <arg choice="req">format <replaceable>format</replaceable></arg>
+	  </group>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>The <command>clock</command> command is used to return
+	  information on the current time.  With the
+	<option>seconds</option> option, the number of seconds since
+	  January 1st, 1970 are returned.  With the
+	<option>time</option> option, milliseconds since that date are
+	returned.
+	</para>
+	<para>With the <option>format</option> option, the
+	<command>clock</command> command takes a millisecond value and
+	returns a formatted date and time.  For example:
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<screen>
+hecl&gt; clock format [clock time]
+Fri Jun 15 13:22:20 CEST 2007
+	</screen>
+      </refsect1>
+
+    </refentry>
 
     <!-- continue -->
     <refentry id="continue">
@@ -2513,6 +2552,54 @@ eval [http http://www.hecl.org/somescript.hcl]
 	  </programlisting>
 	</refsect1>
       </refentry>
+
+    </section>
+
+    <section>
+      <title>Net</title>
+
+      <para>Networking commands</para>
+
+      <refentry id="base64_decode">
+	<refnamediv>
+	  <refname>base64::decode</refname>
+	  <refpurpose>Base 64 decode</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>base64::decode</command>
+	    <arg choice="req"><replaceable>encoded-data</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>base64::decode</command> command does a
+	    base64 decode of the string passed to it.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="base64_encode">
+	<refnamediv>
+	  <refname>base64::encode</refname>
+	  <refpurpose>Base 64 encode</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>base64::encode</command>
+	    <arg choice="req"><replaceable>data</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>base64::encode</command> command does a
+	    base64 encode of the string passed to it.
+	  </para>
+	</refsect1>
+      </refentry>
+
 
     </section>
 
