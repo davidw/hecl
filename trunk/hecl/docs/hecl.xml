@@ -35,6 +35,7 @@
       <year>2004</year>
       <year>2005</year>
       <year>2006</year>
+      <year>2007</year>
       <holder>
 	David N. Welton
       </holder>
@@ -897,6 +898,26 @@ puts $res
       </refsect1>
     </refentry>
 
+    <refentry id="double">
+      <refnamediv>
+	<refname>double</refname>
+	<refpurpose>Cast as a double</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>double</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>When given a number
+	  <option><replaceable>number</replaceable></option>, return
+	its value cast as a double.
+	</para>
+      </refsect1>
+    </refentry>
+
     <!-- eq -->
     <refentry id="eq">
       <refnamediv>
@@ -987,6 +1008,25 @@ puts $i
 	  the current process.  It causes the
 	  <option><replaceable>exitcode</replaceable></option> (an
 	  integer) to be returned by the process.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="false">
+      <refnamediv>
+	<refname>false</refname>
+	<refpurpose>Return false</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>false</command>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>false</command> command is the opposite of
+	  <command>true</command>, and always returns a false value.
 	</para>
       </refsect1>
     </refentry>
