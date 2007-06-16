@@ -2260,6 +2260,160 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
+    <refentry id="strrange">
+      <refnamediv>
+	<refname>strrange</refname>
+	<refpurpose>Return a substring from a string</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strrange</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="req"><replaceable>start</replaceable></arg>
+	  <arg choice="req"><replaceable>end</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title> 
+
+	<para>The
+	  <command>strrange</command> command returns a substring
+	  composed of the characters in
+	  <replaceable>string</replaceable> from positions
+	  <replaceable>start</replaceable> to
+	  <replaceable>end</replaceable>.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strrep">
+      <refnamediv>
+	<refname>strrep</refname>
+	<refpurpose>Repeat a string N times</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strrep</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="req"><replaceable>times</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+
+	<para>The <command>strrep</command> command returns
+	  <replaceable>times</replaceable> copies of
+	  <replaceable>string</replaceable>.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strtrim">
+      <refnamediv>
+	<refname>strtrim</refname>
+	<refpurpose>Remove whitespace or other characters from the
+	beginning/end of a string</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strtrim</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="opt"><replaceable>totrim</replaceable></arg>
+	  <command>strtriml</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="opt"><replaceable>totrim</replaceable></arg>
+	  <command>strtrimr</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="opt"><replaceable>totrim</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+
+	<para>The <command>strtrim</command> command "trims" any
+	leading or trailing whitespace from the string passed to it.
+	The <command>strtriml</command> and
+	<command>strtrimr</command> commands trim from, and only from,
+	the left and right sides of the string, respectively.  All of
+	the trim commands take an optional argument that specifies
+	what exactly to trim.
+	</para>
+      </refsect1>
+
+      <refsect1>
+	<title>Examples</title>
+	<screen>
+hecl> strtrim " foo "
+foo
+hecl> strtrim "hello world" "he"
+llo world
+hecl> strtriml "xxxyyyzzzxxx" xxx
+yyyzzzxxx
+hecl> strtrim "        alone          "
+alone
+	</screen>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strupper">
+      <refnamediv>
+	<refname>strupper</refname>
+	<refpurpose>Upper case a string</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strupper</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>strupper</command> command returns a
+	  upper-cased version of <replaceable>string</replaceable>.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="throw">
+      <refnamediv>
+	<refname>throw</refname>
+	<refpurpose>Generates an exception that can be caught with
+	  <command>catch</command></refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>throw</command>
+	  <arg choice="req"><replaceable>message</replaceable></arg>
+	  <arg choice="opt"><replaceable>errortype</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>throw</command> command generates an exception,
+	  that can be caught with the <command>catch
+	  command</command>.  <replaceable>message</replaceable> is a
+	  human readable error message, whereas
+	  <replaceable>errortype</replaceable> is a code that can be
+	  matched by code doing a <command>catch</command>.  It can be
+	  used as a way for Hecl programs to distinguish between
+	  different types of errors in a global catch section of code.
+	</para>
+      </refsect1>
+
+      <refsect1>
+	<title>Examples</title>
+	<screen>
+hecl> throw "oh no"
+{ERROR {oh no}} {throw 1}
+hecl> throw "oh no" USERERROR
+{USERERROR {oh no}} {throw 1}
+	</screen>
+      </refsect1>
+    </refentry>
+
     <!-- time -->
     <refentry id="time">
       <refnamediv>
