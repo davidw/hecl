@@ -915,6 +915,10 @@ puts $res
 	  <option><replaceable>number</replaceable></option>, return
 	its value cast as a double.
 	</para>
+	<important>
+	  This command does not appear in the MIDP1.0 version of Hecl,
+	  because it doesn't deal with floating point.
+	</important>
       </refsect1>
     </refentry>
 
@@ -1066,6 +1070,30 @@ puts [filter $lst x {= $x 4}]
       </refsect1>
     </refentry>
 
+    <refentry id="float">
+      <refnamediv>
+	<refname>float</refname>
+	<refpurpose>Cast as a float</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>float</command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>When given a number
+	  <option><replaceable>number</replaceable></option>, return
+	its value cast as a float.
+	</para>
+	<important>
+	  This command does not appear in the MIDP1.0 version of Hecl,
+	  because it doesn't deal with floating point.
+	</important>
+      </refsect1>
+    </refentry>
+
     <refentry id="for">
       <refnamediv>
 	<refname>for</refname>
@@ -1190,6 +1218,39 @@ puts $foo
       </refsect1>
     </refentry>
 
+    <refentry id="hasclass">
+      <refnamediv>
+	<refname>hasclass</refname>
+	<refpurpose>An interface to <methodname>Class.forName</methodname></refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>hasclass</command>
+	  <arg choice="req"><replaceable>classname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Reports whether a given class is present or not.
+	</para>
+	<important>
+	  Keep in mind that in J2ME, using an obfuscator, class names
+	  may not be what you think they are!  Only use this for
+	  system-defined classes.
+	</important>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<screen>
+hecl> hasclass org.hecl.net.HttpCmd
+1
+hecl> hasclass oogyboogy
+0
+	</screen>
+      </refsect1>
+    </refentry>
+
     <!-- hash, hget, hset -->
     <refentry id="hash">
       <refnamediv>
@@ -1207,6 +1268,16 @@ puts $foo
 	  <arg choice="req"><replaceable>hash</replaceable></arg>
 	  <arg choice="req"><replaceable>key</replaceable></arg>
 	  <arg choice="req"><replaceable>value</replaceable></arg>
+	  <command>hcontains</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <arg choice="req"><replaceable>key</replaceable></arg>
+	  <command>hclear</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <command>hkeys</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <command>hremove</command>
+	  <arg choice="req"><replaceable>hash</replaceable></arg>
+	  <arg choice="req"><replaceable>key</replaceable></arg>
 	</cmdsynopsis>
       </refsynopsisdiv>
       <refsect1>
@@ -1220,7 +1291,19 @@ puts $foo
 	  Both take a hash table as their first argument.
 	  <command>hget</command> also takes a key, and returns the
 	  corresponding value, or an error if no key by that name
-	  exists.
+	  exists.  To determine whether a given key exists, use the
+	  <command>hcontains</command> command, which returns true or
+	  false depending on whether the key exists in the hash table.
+	</para>
+	<para>
+	  The
+	  <command>hkeys</command> command returns the keys of the
+	  hash table, as a list.
+	</para>
+	<para>
+	  The <command>hclear</command> command clears an entire hash
+	  table, whereas <command>hremove</command> removes the value
+	  associated with a given key.
 	</para>
       </refsect1>
       <refsect1>
@@ -1804,6 +1887,31 @@ puts "Hello, world"
       </refsect1>
     </refentry>
 
+    <refentry id="rename">
+      <refnamediv>
+	<refname>rename</refname>
+	<refpurpose>Rename a command</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>rename</command>
+	  <arg choice="req"><replaceable>cmdname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>Renames a Hecl command.</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<screen>
+hecl> rename puts send_it_to_the_screen
+hecl> send_it_to_the_screen "hello world"
+hello world
+	</screen>
+      </refsect1>
+    </refentry>
+
     <!-- return -->
     <refentry id="return">
       <refnamediv>
@@ -2078,6 +2186,33 @@ d</screen>
       </refsect1>
     </refentry>
 
+    <refentry id="strlast">
+      <refnamediv>
+	<refname>strlast</refname>
+	<refpurpose>Get the last occurance of one string within
+	another string</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strlast</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	  <arg choice="req"><replaceable>string_to_search</replaceable></arg>
+	  <arg choice="opt"><replaceable>start_index</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+
+	<para>
+	  Search <replaceable>string_to_search</replaceable> for the
+	  last place that <replaceable>string</replaceable> occurs,
+	  and return the index.  If
+	  <replaceable>start_index</replaceable> is provided, start
+	  searching from that position.
+	</para>
+      </refsect1>
+    </refentry>
+
     <!-- strlen -->
     <refentry id="strlen">
       <refnamediv>
@@ -2104,6 +2239,24 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>26</screen>
+      </refsect1>
+    </refentry>
+
+    <refentry id="strlower">
+      <refnamediv>
+	<refname>strlower</refname>
+	<refpurpose>Lower case a string</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strlower</command>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>The <command>strlower</command> command returns a
+	  lower-cased version of <replaceable>string</replaceable>.</para>
       </refsect1>
     </refentry>
 
