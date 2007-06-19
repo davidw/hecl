@@ -1,3 +1,10 @@
+2007-06-19  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl: Added another 'rename' test.
+
+	* core/org/hecl/Interp.java: Make sure we remove the old command name
+	from the hash table when renaming.
+
 2007-05-22  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* core/org/hecl/StringCmds.java: Changec comparison for instances

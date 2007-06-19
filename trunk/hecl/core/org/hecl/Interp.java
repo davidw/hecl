@@ -630,6 +630,7 @@ public class Interp extends Thread/*implements Runnable*/ {
             throw new HeclException("Command " + oldname + " does not exist");
 	}
 	commands.put(newname, tmp);
+	commands.remove(oldname);
     }
 
     /**

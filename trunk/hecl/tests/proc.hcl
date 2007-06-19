@@ -37,6 +37,17 @@ test rename-1 {
     set r
 } {fredfred}
 
+test rename-2 {
+    proc rn2 {} {return barney}
+    set r [rn2]
+    rename rn2 rn2new
+    catch {
+	append $r [rn2]
+    } foo
+    append $r [rn2new]
+    list $r $foo
+} {barneybarney {{ERROR {Command 'rn2' does not exist} 2}}}
+
 proc varargproc {a b args} {
     return "$a $b $args"
 }
