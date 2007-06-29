@@ -483,6 +483,53 @@ puts [/ 100 5]
       </refsect1>
     </refentry>
 
+    <refentry id="fpmath">
+      <refnamediv>
+	<refname>abs acos acos asin asin atan atan cbrt ceil cos cosh
+cosh exp expm1 floor hypot log log10 log1p pow random round signum sin
+sinh sqrt tan tanh tanh</refname>
+	<refpurpose>Floating point math commands</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command><replaceable>command</replaceable></command>
+	  <arg choice="req"><replaceable>number</replaceable></arg>
+	  <arg choice="opt"><replaceable>number</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Floating point math commands.  The names are mostly self
+	  explanatory, corresponding to the methods found here: <ulink
+	  url="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html">http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html</ulink>
+	</para>
+	<note>
+	  Keep in mind that none of these commands are available in
+	  the MIDP1.0 version of Hecl, and that the following commands
+	  are available only in J2SE versions of Hecl:
+	</note>
+	<para>
+	  <command>acos</command> <command>atan</command>
+	  <command>ceil</command> <command>round</command>
+	  <command>exp</command> <command>floor</command>
+	  <command>random</command> <command>pow</command>
+	  <command>sin</command> <command>cos</command>
+	  <command>sqrt</command> <command>log</command>
+	  <command>tan</command> <command>asin</command>
+	</para>
+	<para>The following are only available in versions of Hecl
+	built with Java 1.5 and above.</para>
+	<para>
+	  <command>cbrt</command> <command>cosh</command>
+	  <command>expm1</command> <command>hypot</command>
+	  <command>log10</command> <command>log1p</command>
+	  <command>signum</command> <command>sinh</command>
+	  <command>tanh</command>
+	</para>
+      </refsect1>
+    </refentry>
+
     <!-- after -->
     <refentry id="after">
       <refnamediv>

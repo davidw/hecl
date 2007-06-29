@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>after</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="math.html" title="+ - * /"><link rel="next" href="and.html" title="and"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">after</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="math.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="after"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>after &#8212; Sleep / delayed script evaluation</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">after</code>   
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>after</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="fpmath.html" title="abs acos acos asin asin atan atan cbrt ceil cos cosh cosh exp expm1 floor hypot log log10 log1p pow random round signum sin sinh sqrt tan tanh tanh"><link rel="next" href="and.html" title="and"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">after</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="fpmath.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="after"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>after &#8212; Sleep / delayed script evaluation</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">after</code>   
 	      <em class="replaceable"><code>milliseconds</code></em>
 	       [<em class="replaceable"><code>script</code></em>]
 	      |   
@@ -11,7 +11,7 @@
 	      |   
 	      idle
 	      [<em class="replaceable"><code>script</code></em>]
-	     </p></div></div><div class="refsect1" lang="en"><a name="id2541820"></a><h2>Description</h2><p>
+	     </p></div></div><div class="refsect1" lang="en"><a name="id2542041"></a><h2>Description</h2><p>
 	  The <span><strong class="command">after</strong></span> command is used, in the simple
 	  case, to simply halt evaluation of the script for
 	  <code class="option"><em class="replaceable"><code>milliseconds</code></em></code>
@@ -23,7 +23,7 @@
 	  <span><strong class="command">cancel</strong></span> subcommands, which, respectively,
 	  return information about existing events, and allow the
 	  cancellation of events.
-	</p></div><div class="refsect1" lang="en"><a name="id2541862"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
+	</p></div><div class="refsect1" lang="en"><a name="id2542083"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
 	  Run <code class="option"><em class="replaceable"><code>script</code></em></code> after
 	  10 seconds, but do not pause execution of the main script:
 	</p><pre class="programlisting">after 10000 { puts "hello, later world"	}</pre><p>Cancel all timers:</p><pre class="programlisting">for {set i 1} {&lt; $i 11} {incr $i} {
@@ -58,4 +58,6 @@ Event timer#3 cancelled
 Event timer#2 cancelled
 Event timer#6 cancelled
 Event timer#8 cancelled
-	</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="math.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">+ - * / </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> and</td></tr></table></div></body></html>
+	</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="fpmath.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">abs acos acos asin asin atan atan cbrt ceil cos cosh
+cosh exp expm1 floor hypot log log10 log1p pow random round signum sin
+sinh sqrt tan tanh tanh </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> and</td></tr></table></div></body></html>
