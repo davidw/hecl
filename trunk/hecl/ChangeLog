@@ -1,3 +1,14 @@
+2007-07-01  David N. Welton  <davidw@dedasys.com>
+
+	* tests/circular.hcl: Added a new circular reference test
+	demonstrating a problem with attempting to print circular
+	references.
+
+2007-06-29  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added floating point math commands to
+	documentation.
+
 2007-06-19  David N. Welton  <davidw@dedasys.com>
 
 	* tests/proc.hcl: Added another 'rename' test.
