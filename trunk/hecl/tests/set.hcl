@@ -40,3 +40,10 @@ test unset-1 {
     unset a
     set a
 } {{ERROR {Variable a does not exist}} {set 4}}
+
+# This refers to the EMPTYTHING defined in Thing.java
+test emptything-1 {
+    set a [puts a]
+    append $a x
+    set b [puts b]
+} {}

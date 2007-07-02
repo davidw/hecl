@@ -1,3 +1,8 @@
+2007-07-02  David N. Welton  <davidw@dedasys.com>
+
+	* tests/set.hcl: Added test pointing out a current flaw with
+	Thing.java's EMPTYTHING.
+
 2007-07-01  David N. Welton  <davidw@dedasys.com>
 
 	* tests/circular.hcl: Added a new circular reference test
