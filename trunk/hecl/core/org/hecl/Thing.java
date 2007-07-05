@@ -25,8 +25,6 @@ package org.hecl;
  */
 
 public class Thing extends Object {
-    public static final Thing EMPTYTHING = new Thing("");
-
     private RealThing val;
 
     /* This flag is used by Stanza to indicate whether a Thing should
@@ -100,6 +98,10 @@ public class Thing extends Object {
     }
 
 
+    public static final Thing emptyThing() {
+	return new Thing((String)null);
+    }
+    
     /**
      * <code>isTrue</code> is a convenience function that lets us know if the
      * result of a calculation is true or false.

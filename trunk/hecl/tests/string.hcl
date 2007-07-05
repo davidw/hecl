@@ -122,6 +122,19 @@ test string-last-2 {
      strlast b abcdefgb 0
 } -1
 
+test emptystring-1 {
+    set a [puts a]
+    append $a x
+    set b [puts b]
+} {}
+
+test emptystring-2 {
+    set a [puts a]
+    append $a x
+    set b [puts b]
+    set a
+} {x}
+
 ### Local Variables:
 ### mode:tcl
 ### coding:utf-8

@@ -204,11 +204,13 @@ public class CodeThing implements RealThing {
  	//++level;
 	//System.err.println("starting CodeThing run" + level);
         //System.out.println("RUNNING: " + this.getStringRep() +"</RUNNING>");
-	Thing res = Thing.EMPTYTHING;
+	Thing res = null;
 	for (Enumeration e = stanzas.elements(); e.hasMoreElements();) {
 	    Stanza s = (Stanza) e.nextElement();
 	    res = s.run(interp);
 	}
+	if(res == null)
+	    res = Thing.emptyThing();
 	//System.err.println("ending CodeThing run" + level);
 	//--level;
 	return res;

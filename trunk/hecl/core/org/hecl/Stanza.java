@@ -210,7 +210,7 @@ class Stanza {
 	if (saveit) {
 	    command = tmpcommand;
 	}
-	return res != null ? res : Thing.EMPTYTHING;
+	return res != null ? res : Thing.emptyThing();
     }
 
     /**

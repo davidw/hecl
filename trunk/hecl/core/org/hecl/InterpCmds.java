@@ -142,7 +142,7 @@ class InterpCmds extends Operator {
 
 	  case RETURN:
 	    throw new HeclException("", HeclException.RETURN,
-				    argv.length > 1 ? argv[1] : Thing.EMPTYTHING);
+				    argv.length > 1 ? argv[1] : Thing.emptyThing());
 
 	  case CATCH:
 	    try {
@@ -155,7 +155,7 @@ class InterpCmds extends Operator {
 
 	    if (argv.length == 3) {
 		interp.setVar(argv[2].toString(),
-			      result!= null ? result : Thing.EMPTYTHING);
+			      result!= null ? result : Thing.emptyThing());
 	    }
 	    return new Thing(retval != 0 ? IntThing.ONE : IntThing.ZERO);
 
@@ -220,7 +220,7 @@ class InterpCmds extends Operator {
 		  case 2:
 		    ;			    // fool emacs indentation...
 		    {
-			HeclTask t = interp.addTimer(Thing.EMPTYTHING,milli);
+			HeclTask t = interp.addTimer(Thing.emptyThing(),milli);
 			while(! t.isDone()) {
 			    interp.doOneEvent(Interp.ALL_EVENTS);
 			}

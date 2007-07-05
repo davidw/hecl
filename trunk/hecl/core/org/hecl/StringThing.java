@@ -31,7 +31,7 @@ public class StringThing implements RealThing {
      *
      */
     public StringThing() {
-        val = new StringBuffer("");
+	this((String)null);
     }
 
     /**
@@ -41,7 +41,7 @@ public class StringThing implements RealThing {
      *            a <code>String</code> value
      */
     public StringThing(String s) {
-        val = new StringBuffer(s);
+        val = s != null ? new StringBuffer(s) : new StringBuffer();
     }
 
     /**

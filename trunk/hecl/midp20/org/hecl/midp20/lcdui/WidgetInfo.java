@@ -463,15 +463,15 @@ public class WidgetInfo {
     /*
      * Common Widget properties and default values.
      */
-    public static final WidgetProp codeprop = new WidgetProp(NCODE,Thing.EMPTYTHING); 
-    public static final WidgetProp textprop = new WidgetProp(NTEXT,Thing.EMPTYTHING); 
-    public static final WidgetProp labelprop = new WidgetProp(NLABEL,Thing.EMPTYTHING); 
-    public static final WidgetProp longlabelprop = new WidgetProp(NLONGLABEL,Thing.EMPTYTHING); 
-    public static final WidgetProp titleprop = new WidgetProp(NTITLE,Thing.EMPTYTHING); 
+    public static final WidgetProp codeprop = new WidgetProp(NCODE,Thing.emptyThing()); 
+    public static final WidgetProp textprop = new WidgetProp(NTEXT,Thing.emptyThing()); 
+    public static final WidgetProp labelprop = new WidgetProp(NLABEL,Thing.emptyThing()); 
+    public static final WidgetProp longlabelprop = new WidgetProp(NLONGLABEL,Thing.emptyThing()); 
+    public static final WidgetProp titleprop = new WidgetProp(NTITLE,Thing.emptyThing()); 
     public static final WidgetProp fitprop = new WidgetProp(NFIT,DEFAULTTHING);
     public static final WidgetProp selectprop = new WidgetProp(NSELECTMODE,
 							       new Thing("exclusive")); 
-    public static final WidgetProp tickerprop = new WidgetProp(NTICKER,Thing.EMPTYTHING);
+    public static final WidgetProp tickerprop = new WidgetProp(NTICKER,Thing.emptyThing());
     public static final WidgetProp prioprop = new WidgetProp(NPRIO,ONE);
     public static final WidgetProp appearanceprop = new WidgetProp(NAPPEARANCE,
 								   new Thing("plain"));
@@ -653,7 +653,7 @@ public class WidgetInfo {
 
 	/* ChoiceGroup defaults */
 	v = new Vector();
-	v.addElement(new WidgetProp(NLABEL,Thing.EMPTYTHING));
+	v.addElement(new WidgetProp(NLABEL,Thing.emptyThing()));
 	v.addElement(new WidgetProp(NTYPE,new Thing("exclusive"),true));
 	v.addElement(fitprop);
 	widgetprops.put(ChoiceGroup.class,v);

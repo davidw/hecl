@@ -58,7 +58,7 @@ public class SpacerCmd extends ItemCmd {
 	throws HeclException {
 	if(optname.equals(WidgetInfo.NLABEL))
 	    // no label
-	    return Thing.EMPTYTHING;
+	    return Thing.emptyThing();
 	return super.cget(ip,target,optname);
     }
 

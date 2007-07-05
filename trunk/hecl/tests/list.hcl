@@ -52,3 +52,16 @@ test list-9 {
     set foo {a b c d}
     lindex $foo -10
 } {a}
+
+test emptylist-1 {
+    set a [puts a]
+    lappend $a x
+    set b [puts b]
+} {}
+
+test emptylist-2 {
+    set a [puts a]
+    lappend $a x
+    set b [puts b]
+    set a
+} {x}

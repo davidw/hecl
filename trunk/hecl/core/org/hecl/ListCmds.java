@@ -101,7 +101,7 @@ class ListCmds extends Operator {
 		int first = getIndex(argv[2],ls);
 		last = getIndex(argv[3],ls);
 		if (last < first || first > ls)
-		    return Thing.EMPTYTHING;
+		    return Thing.emptyThing();
 		result = new Vector();
 		for (int i = first; i <= last; i++) {
 		    result.addElement(list.elementAt(i));
