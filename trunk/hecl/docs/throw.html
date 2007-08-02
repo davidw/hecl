@@ -1,5 +1,5 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>throw</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="strupper.html" title="strupper"><link rel="next" href="time.html" title="time"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">throw</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="strupper.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="time.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="throw"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>throw &#8212; Generates an exception that can be caught with
-	  <span><strong class="command">catch</strong></span></p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">throw</code>  <em class="replaceable"><code>message</code></em> [<em class="replaceable"><code>errortype</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id2547220"></a><h2>Description</h2><p>
+	  <span><strong class="command">catch</strong></span></p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">throw</code>  <em class="replaceable"><code>message</code></em> [<em class="replaceable"><code>errortype</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id2547240"></a><h2>Description</h2><p>
 	  The <span><strong class="command">throw</strong></span> command generates an exception,
 	  that can be caught with the <span><strong class="command">catch
 	  command</strong></span>.  <em class="replaceable"><code>message</code></em> is a
@@ -8,7 +8,7 @@
 	  matched by code doing a <span><strong class="command">catch</strong></span>.  It can be
 	  used as a way for Hecl programs to distinguish between
 	  different types of errors in a global catch section of code.
-	</p></div><div class="refsect1" lang="en"><a name="id2547260"></a><h2>Examples</h2><pre class="screen">
+	</p></div><div class="refsect1" lang="en"><a name="id2547280"></a><h2>Examples</h2><pre class="screen">
 hecl&gt; throw "oh no"
 {ERROR {oh no}} {throw 1}
 hecl&gt; throw "oh no" USERERROR
