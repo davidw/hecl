@@ -1,0 +1,184 @@
+<project name="core" basedir=".">
+  <!-- The core build tasks for Hecl -->
+
+  <!-- compile targets -->
+  <target name="initCompile" description="Initialize compilation">
+    <mkdir dir="${buildprefix}" />
+    <mkdir dir="${relprefix}" />
+    <mkdir dir="${j2me.build}" />
+    <mkdir dir="${j2me.pre}" />
+    <mkdir dir="${j2me.rel}" />
+    <mkdir dir="${j2se.build}" />
+    <mkdir dir="${j2se.pre}" />
+    <mkdir dir="${j2se.rel}" />
+  </target>
+
+  <target name="compileCore"
+    depends="initCompile"
+    description="Compile core Hecl functionality">
+    <mkdir dir="${j2se.pre}/core"/>
+    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}" debug="${hecldebug}" >
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileApplet"
+    depends="initCompile,compileCore"
+    description="Compile Hecl applet">
+
+    <javac srcdir="applet"
+      destdir="${j2se.build}"
+      debug="${hecldebug}"
+      >
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileFiles"
+    depends="initCompile,compileCore"
+    description="Compile Hecl files support">
+    <javac srcdir="files"
+      destdir="${j2se.build}"
+      debug="${hecldebug}"
+      >
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileLoad"
+    depends="initCompile,compileCore"
+    description="Compile Hecl load (classloader) support">
+    <mkdir dir="${j2se.build}/load"/>
+    <mkdir dir="${j2se.pre}"/>
+    <wtkpreprocess srcdir="load" destdir="${j2se.pre}/load"
+      symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/load"
+      destdir="${j2se.build}"
+      debug="${hecldebug}"
+      >
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileHttp"
+    description="Compile J2SE Hecl http support"
+    depends="initCompile,compileCore">
+    <mkdir dir="${j2se.build}"/>
+    <!--
+    <mkdir dir="${j2se.pre}/http"/>
+    <wtkpreprocess srcdir="http" destdir="${j2se.pre}/http"
+      symbols="${j2se.defines}"/>
+    <wtkpreprocess srcdir="http_standard" destdir="${j2se.pre}/http"
+      symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/http"
+      destdir="${j2se.build}"
+      debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+    -->
+    <mkdir dir="${j2se.pre}/net"/>
+    <wtkpreprocess srcdir="net" destdir="${j2se.pre}/net"
+      symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/net"
+      destdir="${j2se.build}"
+      debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="compileCommandline"
+    description="Compile Hecl command line support"
+    depends="initCompile,compileCore,compileFiles,compileHttp,compileLoad">
+    <javac srcdir="commandline"
+      destdir="${j2se.build}"
+      debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
+  <target name="packageJarHack">
+    <mkdir dir="${j2se.build}/jarhack" />
+    <javac srcdir="jarhack" destdir="${j2se.build}/jarhack">
+    </javac>
+    <jar destfile="jars/JarHack.jar" basedir="${j2se.build}/jarhack">
+      <manifest>
+	<attribute name="Main-Class" value="$jarhack/JarHack"></attribute>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- package targets -->
+
+  <!-- Build a jar containing the hecl core. -->
+  <target name="packageLib"
+    description="Create Jar for Hecl lib"
+    depends="compileCommandline,compileHttp"
+    >
+    <jar destfile="${j2se.hecl.lib.jar}"
+      basedir="${j2se.build}"
+      excludes="**jad,**jar,Hecl.class,StandaloneHecl.class,*html"
+      update="true">
+      <manifest>
+	<attribute name="Main-Class" value="notused"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- Build the command line package.  We first add the core stuff,
+  then add the Hecl command line target. -->
+  <target name="packageCommandline"
+    description="Create Jar for command line Hecl"
+    depends="compileCommandline,compileHttp,packageLib">
+
+    <jar destfile="${j2se.hecl.cmdline.jar}"
+      basedir="${j2se.build}"
+      excludes="**jad,**jar,StandaloneHecl.class,*html,**/applet/**"
+      update="true">
+      <manifest>
+	<attribute name="Main-Class" value="Hecl"/>
+      </manifest>
+    </jar>
+    <copy file="${j2se.hecl.cmdline.jar}" todir="${j2se.rel}"/>
+  </target>
+
+  <target name="packageStandalone"
+    description="Create Jar for standalone Hecl"
+    depends="compileCommandline,compileHttp,packageLib">
+    <jar destfile="${j2se.hecl.stand.jar}"
+      basedir="${j2se.build}"
+      excludes="**jad,**jar,Hecl.class,*html,**/applet/**"
+      update="true">
+      <manifest>
+	<attribute name="Main-Class" value="StandaloneHecl"/>
+      </manifest>
+    </jar>
+    <copy file="${j2se.hecl.stand.jar}" todir="${j2se.rel}"/>
+  </target>
+
+
+  <target name="packageJARs" description="Create Jar distributions of the sources"
+    depends="packageCommandline,packageStandalone">
+  </target>
+
+  <!-- !!! next target needs some work !!! -->
+  <!-- !!! really needed? !!! -->
+  <target name="packageApplet" description="Create HTML applet structure"
+    depends="packageJARs,compileApplet">
+
+    <jar destfile="${j2se.hecl.applet.jar}"
+      basedir="${j2se.build}" update="true"
+      excludes="**jad,**jar,*class,*html"/>
+
+    <copy file="HTML/applet.html" tofile="${j2se.build}/applet.html"/>
+    <copy file="HTML/applet.html" todir="${j2se.rel}"/>
+    <copy file="${j2se.hecl.applet.jar}" todir="${j2se.rel}"/>
+  </target>
+
+</project>

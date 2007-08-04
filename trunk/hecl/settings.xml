@@ -1,0 +1,186 @@
+<project name="settings" basedir=".">
+  <!-- Settings and properties for Hecl builds -->
+
+  <!-- *************************************************** -->
+  <!-- ****** CUSTOMIZABLE AREA STARTES HERE        ****** -->
+  <!-- *************************************************** -->
+  <!--
+  additional properties are read from "build.properties" file
+  which can be created as machine-dependant parameters.
+  -->
+
+  <!-- Activate antenna -->
+  <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-0.9.13.jar"/>
+  <!--
+  <taskdef resource="antenna.properties"/>
+  -->
+
+  <!-- Enable or disable debugging information in compiled files. -->
+  <!-- default: false -->
+  <property name="hecldebug" value="false" />
+
+  <!-- General WTk settings -->
+  <!-- make it fit for your local installation -->
+  <property name="my.wtk.home" value="/opt/WTK2.5.1"/>
+
+  <!-- ProGuard location -->
+  <property name="wtk.proguard.home" value="build-tools/"/>
+
+  <!-- Obfuscate or not? -->
+  <!-- default: true -->
+  <property name="obfuscate" value="true"/>
+
+  <property name="preverify" value="true"/>
+
+  <!-- Control usage of J2SE 1.5 features, default: true -->
+  <property name="j2se.use15" value="true"/>
+  <!--<property name="j2se.use15" value="false"/>-->
+  <!--<property name="j2se.use15" value="true"/>-->
+
+  <!-- *************************************************** -->
+  <!-- ****** NO NEED TO CUSTONIZE BELOW THIS POINT ****** -->
+
+  <!-- This allows us to fail gracefully if my.wtk.home isn't set to
+  something valid above. -->
+  <condition property="wtk.home" value="${my.wtk.home}" else="/">
+    <and>
+      <available file="${my.wtk.home}"/>
+    </and>
+  </condition>
+
+  <!-- Specifies the version of CLDC to use. 	2.0+ -->
+  <!-- default: 1.1 -->
+  <property name="wtk.cldc.version" value="1.1"/>
+
+  <!-- Specifies the version of MIDP to use. 	2.0+ -->
+  <!-- default: 2.0 for WTK 2.x, 1.0 otherwise -->
+  <property name="wtk.midp.version" value="2.0"/>
+
+  <!-- Enables or disables the Multimedia API (MMAPI). 	        2.0+ -->
+  <!-- default: false -->
+  <property name="wtk.mmapi.enabled" value="false"/>
+
+  <!--Enables or disables the Wireless Messaging API (WMA). 	2.0+ -->
+  <!-- default: false -->
+  <property name="wtk.wma.enabled" value="false"/>
+  <!--<property name="wtk.wma.enabled" value="1.1"/>-->
+
+  <!-- nables or disables the J2ME Web Services API (J2MEWS). 	2.1+ -->
+  <!-- default: false -->
+  <property name="wtk.j2mews.enabled" value="false"/>
+
+  <!-- Enables or disables the J2ME Bluetooth API (JSR-82). 	2.2+ -->
+  <!-- default: false -->
+  <property name="wtk.bluetooth.enabled" value="false"/>
+
+  <!-- Enables or disables the J2ME 3D API (JSR-184). 	        2.2+ -->
+  <!-- default: false -->
+  <property name="wtk.java3d.enabled" value="false"/>
+
+  <!-- Enables or disables the J2ME optional PDA packages (JSR-75). 	2.2+ -->
+  <!-- default: false -->
+  <property name="wtk.optionalpda.enabled" value="false"/>
+
+  <!--
+  Sets a totally custom BOOTCLASSPATH. Use this property
+  if the set of APIs you need is not covered by the above properties (for
+  example because you are using the system libraries provided another vendor
+  or you have some important additional libraries). 	1.0+ 
+  -->
+  <!-- default: varies -->
+  <!--<property name="wtk.midpapi" value=""/>-->
+
+
+  <!-- *************************************************** -->
+  <!-- General settings that may affect everything below   -->
+  <!-- *************************************************** -->
+  <property name="buildprefix" value="build"/>
+  <property name="relprefix" value="jars"/>
+
+  <condition property="sms" value="sms">
+    <or>
+      <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
+      <equals arg1="2.0" arg2="${wtk.wma.enabled}"/>
+    </or>
+  </condition>
+
+  <!-- J2SE ************************************** -->
+  <!-- properties for the build base directorries  -->
+  <condition property="javamail.complete">
+    <and>
+      <available classname="javax.activation.DataHandler"/>
+      <available classname="javax.mail.Transport"/>
+    </and>
+  </condition>
+
+  <condition property="j2se.define.java15" value="j2se.java15" else="no.j2se.java15">
+    <and>
+      <equals trim="true" casesensitive="false"
+        arg1="1.5" arg2="${ant.java.version}"/>
+      <istrue value="${j2se.use15}"/>
+    </and>
+  </condition>
+
+  <property name="j2se.defines"
+  value="ant:j2se,${j2se.define.java15}"/>
+
+  <property name="j2se.build" value="${buildprefix}/j2se/final"/>
+  <property name="j2se.pre" value="${buildprefix}/j2se/pre"/>
+  <property name="j2se.rel" value="${relprefix}/j2se"/>
+
+  <property name="j2se.coreclasspath" value="${j2se.build}"/>
+  <path id="j2se.coreclasspath">
+    <pathelement location="${j2se.build}"/>
+  </path>
+
+  <property name="j2se.hecl.cmdline.jar" value="${j2se.build}/Hecl.jar"/>
+  <property name="j2se.hecl.lib.jar" value="${j2se.build}/Hecllib.jar"/>
+  <property name="j2se.hecl.stand.jar" value="${j2se.build}/Heclstand.jar"/>
+  <property name="j2se.hecl.applet.jar" value="${j2se.build}/HeclApplet.jar"/>
+
+  <!-- J2ME ************************************** -->
+  <!-- build base dirs -->
+  <property name="j2me.defines" value="ant:j2me,${sms}"/>
+
+  <property name="j2me.build" value="${buildprefix}/j2me/final/${wtk.cldc.version}"/>
+  <property name="j2me.pre" value="${buildprefix}/j2me/pre/${wtk.cldc.version}"/>
+  <property name="j2me.rel" value="${relprefix}/${wtk.cldc.version}"/>
+
+  <property name="cldc" value="cldc${wtk.cldc.version}"/>
+
+  <property name="j2me.app" value="Hecl"/>
+  <property name="j2me.appversion" value="1.1"/>
+  <property name="j2me.entryclass" value="Hecl"/>
+  <property name="j2me.vendor" value="dedasys.com"/>
+
+  <property name="j2me.hecl.jad" value="${j2me.build}/${j2me.app}.jad"/>
+  <property name="j2me.hecl.jar" value="${j2me.build}/${j2me.app}.jar"/>
+  <property name="j2me.heclgui.jar" value="${j2me.build}/${j2me.app}gui.jar"/>
+  <property name="j2me.hecl.lib.jad" value="${j2me.build}/${j2me.app}lib.jad"/>
+  <property name="j2me.hecl.lib.jar" value="${j2me.build}/${j2me.app}lib.jar"/>
+
+  <property name="j2me.coreclasspath" value="${j2me.build}"/>
+  <path id="j2me.coreclasspath">
+    <pathelement location="${j2me.coreclasspath}"/>
+  </path>
+  <property name="j2me.awtclasspath" value="${j2me.build}"/>
+  <path id="j2me.awtclasspath">
+    <pathelement location="${j2me.awtclasspath}"/>
+  </path>
+  <property name="j2me.guiclasspath" value="${j2me.build}"/>
+  <path id="j2me.guiclasspath">
+    <pathelement location="${j2me.guiclasspath}"/>
+  </path>
+  <property name="j2me.httpclasspath" value="${j2me.build}"/>
+  <path id="j2me.httpclasspath">
+    <pathelement location="${j2me.httpclasspath}"/>
+  </path>
+  <property name="j2me.rmsclasspath" value="${j2me.build}"/>
+  <path id="j2me.rmsclasspath">
+    <pathelement location="${j2me.rmsclasspath}"/>
+  </path>
+  <!-- Additional classpath locations, specified in build.properties file -->
+  <path id="classpath">
+  </path>
+
+</project>

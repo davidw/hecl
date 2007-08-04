@@ -1,0 +1,90 @@
+<project name="misc" basedir=".">
+  <!-- Miscellaneous targets, including documentation. -->
+
+  <!-- Depends on commandline version, so that we can run javadocs on
+  the parsed version. -->
+  <target name="javadocs" depends="packageCommandline">
+    <javadoc packagenames="org.hecl,org.hecl.*,jarhack,heclbuilder"
+      destdir="docs/jdocs"
+      author="true"
+      version="true"
+      use="true">
+      <sourcepath>
+	<pathelement path="build/j2se/pre/core/"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="files"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="http"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="HeclBuilder"/>
+      </sourcepath>
+      <sourcepath>
+	<pathelement path="jarhack"/>
+      </sourcepath>
+    </javadoc>
+  </target>
+
+  <target name="docbookresolve">
+    <exec executable="xmllint" output="docs/hecl-processed.xml" error="docs/processing-errors.txt">
+      <arg value="--xinclude" />
+      <arg value="docs/hecl.xml" />
+    </exec>
+  </target>
+
+  <target name="docbook" depends="docbookresolve">
+    <exec executable="xsltproc">
+      <arg value="--nonet" />
+      <arg value="--stringparam" />
+      <arg value="html.stylesheet" />
+      <arg value="hecl.css" />
+      <arg value="--stringparam"/>
+      <arg value="generate.section.toc.level"/>
+      <arg value="5"/>
+      <!-- 5 is likely higher than we will need. -->
+      <arg value="-o"/>
+      <arg value="docs/" />
+      <arg value="docs/chunk.xsl" />
+      <arg value="docs/hecl-processed.xml" />
+    </exec>
+  </target>
+
+  <target name="docs" depends="javadocs,docbook">
+  </target>
+
+
+  <target name="HeclBuilder" depends="packageCommandline,
+    packageJarHack">
+    <mkdir dir="build/heclbuilder" />
+    <javac srcdir="HeclBuilder" destdir="build/heclbuilder">
+      <classpath refid="classpath" />
+      <classpath path="HeclBuilder/swing-layout-1.0.jar" />
+      <classpath path="${j2se.hecl.lib.jar}" />
+      <classpath path="jars/JarHack.jar" />
+    </javac>
+  </target>
+
+  <target name="HeclBuilderJar" depends="packageJarHack,HeclBuilder,midlet10,midlet11">
+    <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
+      <manifest>
+	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />
+      </manifest>
+
+      <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
+	includes="org/jdesktop/layout/*.class"/>
+      <zipfileset src="jars/JarHack.jar" includes="jarhack/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/files/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/fp/*.class"/>
+      <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/load/*.class"/>
+    </jar>
+
+    <jar destfile="jars/HeclBuilder.jar" basedir="."
+    includes="jars/1.0/Hecl.jar" update="true" />
+    <jar destfile="jars/HeclBuilder.jar" basedir="."
+    includes="jars/1.1/Hecl.jar" update="true" />
+
+  </target>
+</project>
