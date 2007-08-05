@@ -1,3 +1,17 @@
+2007-08-05  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/midp10: Moved j2me directory to midp10.
+
+	* j2me.xml: Reorganized j2me compilation code just a bit.  I'm not
+	100% certain that it's correct now, but we're heading in the right
+	direction, I think, and it does compile both midp10 and midp20.
+
+2007-08-04  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Broke the build file into smaller, hopefully more
+	manageable chunks.  Requires Ant 1.6, but that's been out for a
+	while, so it shouldn't be a problem.
+
 2007-08-02  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added warning about making sure the java bin
