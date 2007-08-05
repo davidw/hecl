@@ -1,4 +1,13 @@
+2007-08-06  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/script.hcl: Added example script from Wolfgang Kechel.
+
+	* midp20/Hecl.java: Added MIDP2.0 example from Wolfgang Kechel.
+
 2007-08-05  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Updated documentation to refer to midp10 instead
+	of j2me.
 
 	* j2me/midp10: Moved j2me directory to midp10.
 
