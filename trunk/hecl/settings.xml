@@ -142,9 +142,9 @@
   <!-- build base dirs -->
   <property name="j2me.defines" value="ant:j2me,${sms}"/>
 
-  <property name="j2me.build" value="${buildprefix}/j2me/final/${wtk.cldc.version}"/>
-  <property name="j2me.pre" value="${buildprefix}/j2me/pre/${wtk.cldc.version}"/>
-  <property name="j2me.rel" value="${relprefix}/${wtk.cldc.version}"/>
+  <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
+  <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
+  <property name="j2me.rel" value="${relprefix}/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
 
   <property name="cldc" value="cldc${wtk.cldc.version}"/>
 

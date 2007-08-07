@@ -1,3 +1,16 @@
+2007-08-07  David N. Welton  <davidw@dedasys.com>
+
+	* j2me.xml, settings.xml: Reworked compilation code for J2ME to
+	take into consideration the possibility of CLDC1.0 + MIDP2.0.
+	There are some problems in the Java code that prevent us from
+	actually implementing that at the moment though.
+
+	* midp20/: Moved actual GUI code to midp20gui.
+
+	* midp10/: Moved GUI code go midp10gui.
+
+	* midp20gui/org/awt/geom/Point2D.java: Removed ugly &nbsp; from comments.
+
 2007-08-06  David N. Welton  <davidw@dedasys.com>
 
 	* midp20/script.hcl: Added example script from Wolfgang Kechel.
