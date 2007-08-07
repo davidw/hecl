@@ -14,6 +14,7 @@ limitations under the License.
 */
 
 import javax.microedition.lcdui.*;
+import javax.microedition.midlet.MIDlet;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -38,7 +39,7 @@ import org.hecl.Thing;
 class GUI implements CommandListener, Runnable, ItemStateListener {
     public Display display;
     public Interp interp;
-    public Hecl midlet;
+    public MIDlet midlet;
 
     /* These are callbacks used to implement Commands. */
     private static Hashtable callbacks = new Hashtable();
@@ -447,7 +448,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		break;
 
 	    case EXITCMD:
-		midlet.exitApp();
+		midlet.notifyDestroyed();
 		break;
 
 //#ifdef sms

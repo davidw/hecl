@@ -39,7 +39,7 @@ public abstract class Point2D //implements Cloneable
 
 	/**
 	 * Constructs and initializes a <code>Point2D</code> with
-         * coordinates (0,&nbsp;0).
+         * coordinates (0, 0).
 	 */
 	public Float() {
 	}
@@ -47,7 +47,7 @@ public abstract class Point2D //implements Cloneable
 	/**
 	 * Constructs and initializes a <code>Point2D</code> with 
          * the specified coordinates.
-         * @param x,&nbsp;y the coordinates to which to set the newly
+         * @param x, y the coordinates to which to set the newly
          * constructed <code>Point2D</code>
 	 */
 	public Float(float x, float y) {
@@ -81,7 +81,7 @@ public abstract class Point2D //implements Cloneable
 	/**
 	 * Sets the location of this <code>Point2D</code> to the 
          * specified <code>double</code> coordinates.
-         * @param x,&nbsp;y the coordinates to which to set this
+         * @param x, y the coordinates to which to set this
          * <code>Point2D</code>
 	 */
 	public void setLocation(double x, double y) {
@@ -92,7 +92,7 @@ public abstract class Point2D //implements Cloneable
 	/**
 	 * Sets the location of this <code>Point2D</code> to the 
          * specified <code>float</code> coordinates.
-         * @param x,&nbsp;y the coordinates to which to set this
+         * @param x, y the coordinates to which to set this
          * <code>Point2D</code>
 	 */
 	public void setLocation(float x, float y) {
@@ -127,7 +127,7 @@ public abstract class Point2D //implements Cloneable
 
 	/**
 	 * Constructs and initializes a <code>Point2D</code> with
-         * coordinates (0,&nbsp;0).
+         * coordinates (0, 0).
 	 */
 	public Double() {
 	}
@@ -135,7 +135,7 @@ public abstract class Point2D //implements Cloneable
 	/**
 	 * Constructs and initializes a <code>Point2D</code> with the
          * specified coordinates.
-         * @param x,&nbsp;y the coordinates to which to set the newly
+         * @param x, y the coordinates to which to set the newly
          * constructed <code>Point2D</code>
 	 */
 	public Double(double x, double y) {
@@ -169,7 +169,7 @@ public abstract class Point2D //implements Cloneable
 	/**
 	 * Sets the location of this <code>Point2D</code> to the 
          * specified <code>double</code> coordinates.
-         * @param x,&nbsp;y the coordinates to which to set this
+         * @param x, y the coordinates to which to set this
          * <code>Point2D</code>
 	 */
 	public void setLocation(double x, double y) {
@@ -218,7 +218,7 @@ public abstract class Point2D //implements Cloneable
     /**
      * Sets the location of this <code>Point2D</code> to the 
      * specified <code>double</code> coordinates.
-     * @param x,&nbsp;y the coordinates of this <code>Point2D</code>
+     * @param x, y the coordinates of this <code>Point2D</code>
      */
     public abstract void setLocation(double x, double y);
 
@@ -234,8 +234,8 @@ public abstract class Point2D //implements Cloneable
 
     /**
      * Returns the square of the distance between two points.
-     * @param X1,&nbsp;Y1 the coordinates of the first point
-     * @param X2,&nbsp;Y2 the coordinates of the second point
+     * @param X1, Y1 the coordinates of the first point
+     * @param X2, Y2 the coordinates of the second point
      * @return the square of the distance between the two
      * sets of specified coordinates.
      */
@@ -248,8 +248,8 @@ public abstract class Point2D //implements Cloneable
 
     /**
      * Returns the distance between two points.
-     * @param X1,&nbsp;Y1 the coordinates of the first point
-     * @param X2,&nbsp;Y2 the coordinates of the second point
+     * @param X1, Y1 the coordinates of the first point
+     * @param X2, Y2 the coordinates of the second point
      * @return the distance between the two sets of specified
      * coordinates.
      */
@@ -263,7 +263,7 @@ public abstract class Point2D //implements Cloneable
     /**
      * Returns the square of the distance from this 
      * <code>Point2D</code> to a specified point.
-     * @param PX,&nbsp;PY the coordinates of the other point
+     * @param PX, PY the coordinates of the other point
      * @return the square of the distance between this
      * <code>Point2D</code> and the specified point.
      */
@@ -289,7 +289,7 @@ public abstract class Point2D //implements Cloneable
     /**
      * Returns the distance from this <code>Point2D</code> to 
      * a specified point.
-     * @param PX,&nbsp;PY the coordinates of the specified
+     * @param PX, PY the coordinates of the specified
      * <code>Point2D</code>
      * @return the distance between this <code>Point2D</code>
      * and a specified point.
