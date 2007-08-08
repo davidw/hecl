@@ -1,3 +1,10 @@
+2007-08-08  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/script.hcl: Minor tweaks.
+
+	* midp10/Hecl.java: Use read method from HeclUtil, as it's more
+	robust.  Display alert on error.
+
 2007-08-07  David N. Welton  <davidw@dedasys.com>
 
 	* j2me.xml, settings.xml: Reworked compilation code for J2ME to

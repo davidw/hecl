@@ -5,12 +5,14 @@ proc err {txt} {
     global errf
     setcurrent $errf
     string $txt
-};
+}
 
 # Run the main script.
 proc run {} {
     global main
-    if { catch {upeval [getprop $main text]} problem } {
+    if { catch {
+	upeval [getprop $main text]
+    } problem } {
 	err $problem
     }
 }
@@ -22,8 +24,7 @@ proc makebackbutton {backto} {
 
 # Helper for form eval
 proc formeval {textfield results} {
-    setprop $results text \
-	[eval [getprop $textfield text]]
+    setprop $results text [eval [getprop $textfield text]]
 }
 
 proc sendsms {textfield} {
@@ -134,7 +135,7 @@ proc viewsource {} {
 }
 
 # Initial script to run.
-set script {# 'Run' to continue...
+set script {# 'Run' command to continue...
 set lbox [listbox label "Hecl examples" code {
     string "Create form"
     string "Create listbox"
@@ -145,18 +146,18 @@ set lbox [listbox label "Hecl examples" code {
     cmd label {Exit} type exit code exit
 } type exclusive]
 setcurrent $lbox
-# 'Run' to continue...
+# 'Run' command to continue...
 }
 
 # Error report form
 set errf [form label Error code {
     cmd label Back type back code {setcurrent $main}
-}];
+}]
 
 # Initial textbox
 set main [textbox label Hecl code {
-    cmd label Run code run ;
-    cmd label "View errors" code {setcurrent $errf} ;
-} len 900 text $script];
+    cmd label Run code run
+    cmd label "View errors" code {setcurrent $errf}
+} len 900 text $script]
 
-setcurrent $main;
+setcurrent $main

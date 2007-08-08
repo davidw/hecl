@@ -1,4 +1,4 @@
-/* Copyright 2004-2006 David N. Welton
+/* Copyright 2004-2007 David N. Welton, DedaSys LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
+import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Form;
 import javax.microedition.midlet.MIDlet;
@@ -87,26 +88,31 @@ public class Hecl extends MIDlet {
 	    display.setCurrent(f);
 	    f.append("Loading Hecl, please wait ");
 	    /* Fetch the script. */
-	    int bufsize = 500;
-	    byte []b = new byte[bufsize];
 	    DataInputStream is = new DataInputStream(
 		this.getClass().getResourceAsStream("/script.hcl"));
+
+	    byte[] buf = new byte[512];
+	    int bytesread = 0;
+	    byte[] result = new byte[bytesread];
+	    int i = 0;
+	    int n = 0;
 	    try {
-		int read = 0;
-		while ((read = is.read(b, 0, bufsize)) == bufsize) {
-		    script.append(new String(b));
-		    f.append(".");
-		    b = null;
-		    b = new byte[bufsize];
+		while((n = is.read(buf, 0, buf.length)) > 0) {
+		    byte[] newres = new byte[n+bytesread];
+		    for(i = 0; i < bytesread; ++i) {
+			newres[i] = result[i];
+		    }
+		    for(i = 0; i < n; ++i, ++bytesread) {
+			newres[bytesread] = buf[i];
+		    }
+		    result = newres;
 		}
-		script.append(new String(b, 0, read));
 		is.close();
 	    } catch (IOException e) {
 		f.append("error reading init script: " + e.toString());
 		return;
 	    }
-	    is = null;
-	    b = null;
+	    script.append(new String(result));
 
 	    started = true;
 	    try {
@@ -187,6 +193,12 @@ public class Hecl extends MIDlet {
 	try {
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
+	    /* At least let the user know there was an error. */
+	    Alert a = new Alert("Hecl error",
+				e.toString(),
+				null,
+				null);
+	    display.setCurrent(a);
 	    /* e.printStackTrace(); */
 	    System.err.println("Error in runScript: " + e);
 	}
