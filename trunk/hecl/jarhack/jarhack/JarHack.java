@@ -1,4 +1,4 @@
-/* Copyright 2006 David N. Welton
+/* Copyright 2006-2007 David N. Welton, DedaSys LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -40,6 +40,9 @@ import java.util.jar.*;
  */
 public class JarHack {
 
+    private static String cldcversion = "";
+    private static String midpversion = "";
+
     /**
      * The <code>substHecl</code> method takes the filenames of two
      * .jar's - one as input, the second as output, in addition to the
@@ -67,6 +70,8 @@ public class JarHack {
 	    Object value = attrs.get(key);
 	    String keyname = key.toString();
 
+	    System.out.println("key: " + key + " value: " + value);
+
 	    /* These are the three cases that interest us in
 	     * particular, where we need to make changes. */
 	    if (keyname.equals("MIDlet-Name")) {
@@ -78,6 +83,10 @@ public class JarHack {
 		 * it can go away.  Or not - it works just fine. */
 		String properties[] = stringsplit(valuestr, ", ");
 		attrs.putValue(keyname, newname + ", " + properties[1] + ", " + properties[2]);
+	    } else if (keyname.equals("MicroEdition-Configuration")) {
+		cldcversion = value.toString();
+	    } else if (keyname.equals("MicroEdition-Profile")) {
+		midpversion = value.toString();
 	    } else if (keyname.equals("MIDlet-Jar-URL")) {
 		attrs.put(key, newname + ".jar");
 	    }
@@ -154,8 +163,8 @@ public class JarHack {
 		 "MIDlet-Name: " + appname + "\n" +
 		 "MIDlet-Vendor: dedasys.com" + "\n" +
 		 "MIDlet-Version: 1.1" + "\n" +
-		 "MicroEdition-Profile: MIDP-1.0" + "\n" +
-		 "MicroEdition-Configuration: CLDC-1.0");
+		 "MicroEdition-Profile: " + midpversion + "\n" +
+		 "MicroEdition-Configuration: " + cldcversion);
 	of.close();
     }
 

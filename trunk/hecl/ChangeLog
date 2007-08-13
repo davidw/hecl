@@ -1,5 +1,8 @@
 2007-08-13  David N. Welton  <davidw@dedasys.com>
 
+	* jarhack/jarhack/JarHack.java: Extract the CLDC and MIDP versions
+	in order to do the right thing when building new jars.
+
 	* core.xml: Fixed typo preventing jarhack build.
 
 2007-08-08  David N. Welton  <davidw@dedasys.com>
