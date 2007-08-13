@@ -110,6 +110,10 @@ public class HeclException extends Exception {
         return getStack().toString();
     }
 
+    public String getMessage() {
+	return this.toString();
+    }
+
     /**
      * The <code>getStack</code> method returns the exception as a Thing.
      *
