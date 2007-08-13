@@ -520,7 +520,6 @@ class MyHttpConn {
 			String qdata,QueryParam[] qparams)
 	throws IOException {
 	conn.setRequestMethod(rm);
-	System.err.println("requestMethod="+rm);
 	// Set the request fields.
 	Enumeration e = rfields.keys();
 	//System.err.println("--- REQUEST -------------------------------------");
