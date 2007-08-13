@@ -37,3 +37,10 @@ test upeval-3 {
 	set upeval3
     }
 } {100}
+
+test upeval-4 {
+    set foo 1
+    upeval { bleagh }
+    catch {set foo} err
+    set err
+} {}

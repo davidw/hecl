@@ -1,5 +1,12 @@
 2007-08-13  David N. Welton  <davidw@dedasys.com>
 
+	* tests/upeval.hcl: Add test that blows up without the fix, below,
+	in Interp.java.
+
+	* core/org/hecl/Interp.java: Catch any exceptions in code
+	evaluation and throw them only *after* any upper stack frames have
+	been restored.
+
 	* core/org/hecl/HeclTask.java: Use toString instead of getMessage
 	for bgerrors, in order to get a stack trace.
 

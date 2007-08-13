@@ -370,6 +370,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	int stacklen = stack.size();
 	int i = 0;
 	int end = 0;
+	HeclException save_exception = null;
 
 	if (level >= 0) {
 	    end = level;
@@ -381,11 +382,22 @@ public class Interp extends Thread/*implements Runnable*/ {
 	for (i = stacklen - 1; i > end; i--) {
 	    savedstack.addElement(stackDecr());
 	}
-	result = eval(in);
+	try {
+	    result = eval(in);
+	} catch (HeclException he) {
+	    /* If this is an upeval situation, we need to catch the
+	     * exception and then throw it *after* the old stack frame
+	     * has been restored.  */
+	    save_exception = he;
+	}
 	/* ... and then restore them after evaluating the code. */
 	for (i = savedstack.size() - 1; i >= 0; i--) {
 	    stackPush((Hashtable)savedstack.elementAt(i));
 	}
+	if (save_exception != null) {
+	    throw save_exception;
+	}
+
 	return result;
     }
 
