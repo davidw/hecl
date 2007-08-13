@@ -109,7 +109,7 @@
     </javac>
     <jar destfile="jars/JarHack.jar" basedir="${j2se.build}/jarhack">
       <manifest>
-	<attribute name="Main-Class" value="$jarhack/JarHack"></attribute>
+	<attribute name="Main-Class" value="jarhack/JarHack"></attribute>
       </manifest>
     </jar>
   </target>

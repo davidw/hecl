@@ -1,3 +1,7 @@
+2007-08-13  David N. Welton  <davidw@dedasys.com>
+
+	* core.xml: Fixed typo preventing jarhack build.
+
 2007-08-08  David N. Welton  <davidw@dedasys.com>
 
 	* midp10/script.hcl: Minor tweaks.
