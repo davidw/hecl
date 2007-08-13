@@ -70,8 +70,6 @@ public class JarHack {
 	    Object value = attrs.get(key);
 	    String keyname = key.toString();
 
-	    System.out.println("key: " + key + " value: " + value);
-
 	    /* These are the three cases that interest us in
 	     * particular, where we need to make changes. */
 	    if (keyname.equals("MIDlet-Name")) {
