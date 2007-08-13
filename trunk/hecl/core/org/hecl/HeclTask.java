@@ -38,7 +38,7 @@ public class HeclTask {
 		try {
 		    Vector v = new Vector();
 		    v.addElement(new Thing("bgerror"));
-		    v.addElement(new Thing(e.getMessage()));
+		    v.addElement(new Thing(e.toString()));
 		    ip.eval(ListThing.create(v),0);
 		}
 		catch(Exception e2) {

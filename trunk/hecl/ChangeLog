@@ -1,7 +1,7 @@
 2007-08-13  David N. Welton  <davidw@dedasys.com>
 
-	* core/org/hecl/HeclException.java: the getMessage() method now
-	returns the entire Hecl stack trace.
+	* core/org/hecl/HeclTask.java: Use toString instead of getMessage
+	for bgerrors, in order to get a stack trace.
 
 	* jarhack/jarhack/JarHack.java: Extract the CLDC and MIDP versions
 	in order to do the right thing when building new jars.
