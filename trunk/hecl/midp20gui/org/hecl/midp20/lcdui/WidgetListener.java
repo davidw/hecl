@@ -1,7 +1,8 @@
 /*
  * Copyright 2005-2007
  * Wolfgang S. Kechel, data2c GmbH (www.data2c.com)
- * 
+ * David N. Welton, DedaSys LLC
+ *
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +31,7 @@ import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.ItemCommandListener;
 import javax.microedition.lcdui.ItemStateListener;
 
+import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.ListThing;
 import org.hecl.ObjectThing;
@@ -54,44 +56,41 @@ ItemCommandListener, EventHandler {
     }
     
     public void handleEvent(CanvasEvent e) {
-	Vector v = new Vector();
-	v.addElement(this.fun);
-	v.addElement(ObjectThing.create(this.canvas));
-	v.addElement(ObjectThing.create(e));
-	eval(v);
+	eventEval(this.canvas, e);
     }
     
    public void itemStateChanged(Item item) {
-	//System.out.println("-->"+getClass().getName() +"::itemStateChanged(" + item + ")");
-	Vector v = new Vector();
-	v.addElement(this.fun);
-	v.addElement(ObjectThing.create(this.form));
-	v.addElement(ObjectThing.create(item));
-	eval(v);
+       eventEval(this.form, item);
     }
 
-    public void commandAction(Command c,Displayable d) {
-	//System.err.println("cmd="+c+", label="+c.getLabel());
-	Vector v = new Vector();
-	v.addElement(this.fun);
-	v.addElement(ObjectThing.create(c));
-	v.addElement(ObjectThing.create(d));
-	eval(v);
+    public void commandAction(Command c, Displayable d) {
+	eventEval(c, d);
     }
 
     public void commandAction(Command c,Item item) {
-	//System.out.println("-->ItemCmd::commandAction(" + c + ", " + item + ")");
-	Vector v = new Vector();
-	v.addElement(this.fun);
-	v.addElement(ObjectThing.create(c));
-	v.addElement(ObjectThing.create(item));
-	eval(v);
+	eventEval(c, item);
     }
 
-    void eval(Vector v) {
+    /**
+     * The <code>eventEval</code> method takes care of evaluating
+     * callbacks from various events.
+     *
+     * @param o1 an <code>Object</code> value
+     * @param o2 an <code>Object</code> value
+     */
+    private void eventEval(Object o1, Object o2) {
+	Vector v = null;
+	Thing code = null;
+ 	try {
+	    v = ListThing.get(this.fun.deepcopy());
+	} catch (HeclException he) {
+	    System.err.println("Error transforming " + this.fun + " into a list");
+	}
+	v.addElement(ObjectThing.create(o1));
+	v.addElement(ObjectThing.create(o2));
 	this.ip.evalAsync(ListThing.create(v));
     }
-    
+
     protected Interp ip;
     protected Thing fun;
     protected Form form = null;

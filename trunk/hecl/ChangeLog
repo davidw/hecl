@@ -1,5 +1,10 @@
 2007-08-13  David N. Welton  <davidw@dedasys.com>
 
+	* midp20gui/org/hecl/midp20/lcdui/WidgetListener.java: Extracted
+	code into a new method, eventEval.  Also, we treat the first
+	argument as a list, so that it becomes possible to pass a real
+	list to -commandaction.
+
 	* tests/upeval.hcl: Add test that blows up without the fix, below,
 	in Interp.java.
 
