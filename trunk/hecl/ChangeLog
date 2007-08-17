@@ -1,3 +1,9 @@
+2007-08-17  David N. Welton  <davidw@dedasys.com>
+
+	* media/org/hecl/media/MediaCmd.java, HeclMedia.java: Added
+	initial media support.  Still needs lots of work, and to be made
+	more robust.
+
 2007-08-13  David N. Welton  <davidw@dedasys.com>
 
 	* midp20gui/org/hecl/midp20/lcdui/WidgetListener.java: Extracted
