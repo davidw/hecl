@@ -1,5 +1,5 @@
 ######
-# A tiny application showing the usage if some MIDP2.0 ui elements
+# A tiny application showing the usage of some MIDP2.0 ui elements
 
 #################################################
 # Create some lcdui.commands
@@ -30,7 +30,7 @@ set ticker [lcdui.ticker -text "I am a Ticker!"];
 set defform [lcdui.form -title "Demo Form" -commandaction "backToMainMenu"];
 $defform configure -ticker $ticker;
 $defform append [lcdui.textfield -label "TextField" -text "TextField" -uneditable 1];
-$defform append [lcdui.textfield -label "Editable TextField" -text "ediatble text"];
+$defform append [lcdui.textfield -label "Editable TextField" -text "editable text"];
 $defform append [lcdui.imageitem -image $logo -anchor center];
 $defform append [lcdui.spacer -label spacer1 -minwidth 200 -minheight 2];
 $defform append [lcdui.stringitem -text "Stringitem"];
@@ -55,26 +55,27 @@ $mainmenu append "Call...";
 $mainmenu append "Send SMS...";
 $mainmenu append "TextBox...";
 $mainmenu append "Alert";
+$mainmenu append "Canvas";
 $mainmenu append "Information";
 
 set menu1 [lcdui.list -commandaction "menu1sel"];
 $menu1 addcommand $backcmd;
 $menu1 addcommand $selectcmd;
-$menu1 deleteall;   
+$menu1 deleteall;
 foreach x {1 2 3 4 5 6 7 8 9 10} {$menu1 append "E$x"};
 
 set infoform [lcdui.form -title Information -commandaction "backToMainMenu"];
 $infoform append [lcdui.textfield -label "Midlet Version" \
 		      -text [midlet.getappproperty "MIDlet-Version"] -uneditable 1];
 foreach {l p} {
-    "Java Profil" microedition.profiles
+    "Java Profile" microedition.profiles
     "Java Configuration" microedition.configuration
     "Java Locale" microedition.locale
     "Java Plattform" microedition.platform
     "Java Encoding" microedition.encoding
     "Java Version" java.fullversion
-    "MMAPI Snapshot möglich" supports.video.capture
-    "MMAPI Snapshot Formate" video.snapshot.encodings} {
+    "MMAPI Snapshot Capable?" supports.video.capture
+    "MMAPI Snapshot Format" video.snapshot.encodings} {
     if {= [catch {set p [system.getproperty $p]}] 0} {
 	if {> [strlen $p] 0} {
 	    $infoform append [lcdui.textfield -label $l -text $p -uneditable 1];
@@ -96,6 +97,53 @@ $infoform addcommand $backcmd;
 # a textbox
 set textbox [lcdui.textbox -text "Hello world" -commandaction backToMainMenu];
 $textbox addcommand $backcmd;
+
+
+proc canvasEvents {canvas event} {
+    global canvasX canvasY
+
+    # If it's not a key release, don't act.
+    if { != 6 [$event cget -reason] } {
+        return
+    }
+
+    set kc [$event cget -keyname]
+
+    if { eq $kc UP } {
+	set canvasY [+ $canvasY 10]
+    } elseif { eq $kc DOWN } {
+	set canvasY [+ $canvasY -10]
+    } elseif { eq $kc LEFT } {
+	set canvasX [+ $canvasX -10]
+    } elseif { eq $kc RIGHT } {
+	set canvasX [+ $canvasX 10]
+    }
+
+    DrawH [$canvas graphics] $canvasX $canvasY
+    $canvas repaint
+}
+
+# A canvas
+set canvasX 10
+set canvasY 10
+
+set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents];
+$canvas addcommand $backcmd;
+
+proc DrawH {graphics x y} {
+    global WIDTH
+    global HEIGHT
+    set y2 [+ $y 70]
+    set x2 [+ $x 70]
+    set halfy [+ $y 40]
+
+    $graphics color white
+    $graphics frect {0 0} [list $WIDTH $HEIGHT]
+    $graphics color black
+    $graphics frect [list $x $y] [list 10 80]
+    $graphics frect [list $x2 $y] [list 10 80]
+    $graphics frect [list $x $halfy] [list 80 10]
+}
 
 proc main {} {
     global mainmenu;
@@ -124,13 +172,25 @@ proc mainsel {cmd d} {
 	# Send SMS...
 	midlet.platformrequest "sms:+4369911259952";
     } elseif {= $idx 4} {
+	# Textbox
 	global textbox;
 	$textbox setcurrent;
     } elseif {= $idx 5} {
+	# Alert
 	[lcdui.alert -type confirmation -title Alert\
 	     -commandaction backToMainMenu \
 	     -text "This is the alert message!" -timeout forever] setcurrent;
     } elseif {= $idx 6} {
+	# Canvas
+	global canvas
+	$canvas setcurrent;
+	set g [$canvas graphics]
+	global canvasX canvasY WIDTH HEIGHT
+	set WIDTH [$canvas cget -width]
+	set HEIGHT [$canvas cget -height]
+	DrawH $g $canvasX $canvasY
+	$canvas repaint
+    } elseif {= $idx 7} {
 	global infoform;
 	$infoform setcurrent;
     }
