@@ -2,6 +2,7 @@
 
 	* docs/hecl.xml: Added http.* commands to the documentation,
 	replacing the http command.
+	Added record store commands.
 
 	* midp20/script.hcl: Added canvas example.
 

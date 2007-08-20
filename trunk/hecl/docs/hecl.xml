@@ -2930,7 +2930,6 @@ puts $foo
 	(although they may not be able to create TCP/IP sockets).  Hecl
 	provides basic http commands</para>
 
-      <!-- http -->
       <refentry id="http_geturl">
 	<refnamediv>
 	  <refname>http.geturl</refname>
@@ -3127,6 +3126,317 @@ eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
       </refentry>
 
 
+    </section>
+
+    <section>
+      <title>RecordStore</title>
+
+      <para>
+	Record Store is the name for persistent storage in J2ME.  Even
+	simple MIDP1.0 phones have this feature, and utilize it to
+	store data between invocations of the application.
+      </para>
+
+      <refentry id="rms_list">
+	<refnamediv>
+	  <refname>rms.list</refname>
+	  <refpurpose>
+	    List available record store names, or id's for a
+	    name.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.list</command>
+	    <arg choice="opt"><replaceable>rsname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.list</command> command, when called
+	    without arguments, returns a list of names of the
+	    available record stores that have already been created.
+	    When called with an <option><replaceable>record store
+	    name</replaceable></option> returns the list of id's that
+	    are currently in use for that record store.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+foreach name [rs.list] {
+    puts "Listing of id's for $name :"
+    puts [rs.list $name]
+}
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_size">
+	<refnamediv>
+	  <refname>rms.size</refname>
+	  <refpurpose>Returns the size occupied by the record store</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.size</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.size</command> command returns the size,
+	    in bytes, occupied by the recordstore specified.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_sizeavail">
+	<refnamediv>
+	  <refname>rms.sizeavail</refname>
+	  <refpurpose>Returns the amount of space available to grow
+	  for this record store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.sizeavail</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.sizeavail</command> command returns the
+	    size in bytes left to grow for the specified recordstore.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_set">
+	<refnamediv>
+	  <refname>rms.set</refname>
+	  <refpurpose>Sets the value of a record store</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.set</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="opt"><replaceable>recordid</replaceable></arg>
+	    <arg choice="req"><replaceable>data</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.set</command> command takes, as
+	    arguments, the name of the record store; optionally, the
+	    record id to set, and finally, the data to insert into the
+	    record store.  If the record id is not specified, the
+	    default value of 1 is used.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_get">
+	<refnamediv>
+	  <refname>rms.get</refname>
+	  <refpurpose>Fetch the value of the specified record store
+	  and record id</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.get</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="opt"><replaceable>recordid</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.get</command> command returns the value
+	    of the data stored in record store
+	    <option><replaceable>rsname</replaceable></option>.  The
+	    optional argument
+	    <option><replaceable>recordid</replaceable></option>
+	    specifies the record id, and defaults to 1.  An error is
+	    thrown if the record does not exist.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+rms.set highscore 1 [highscore]
+... application restarted ...
+set highscore [rms.get highscore 1]
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_add">
+	<refnamediv>
+	  <refname>rms.add</refname>
+	  <refpurpose>Adds data to the specified record store,
+	  returning the new record id.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.add</command>
+	    <arg choice="req"><replaceable>data</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.add</command> command adds
+	    <option><replaceable>data</replaceable></option> to the
+	    named record store, returning the record id with which it
+	    may be retrieved in the future.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_delete">
+	<refnamediv>
+	  <refname>rms.delete</refname>
+	  <refpurpose>Deletes either the record store, or a record id
+	  associated with a record store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.delete</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="opt"><replaceable>recordid</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.delete</command> command deletes either
+	    the entire record store, if a <option><replaceable>record
+	    id</replaceable></option> is not specified, or if one is,
+	    the record id in question.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_hset">
+	<refnamediv>
+	  <refname>rms.hset</refname>
+	  <refpurpose>Sets a key/value pair in the given record store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.hset</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="req"><replaceable>key</replaceable></arg>
+	    <arg choice="req"><replaceable>value</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.hset</command> command, given the name of
+	    a record store
+	    <option><replaceable>rsname</replaceable></option> treats
+	    it as a hash table, setting the value of
+	    <option><replaceable>key</replaceable></option> with
+	    <option><replaceable>data</replaceable></option>.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_hget">
+	<refnamediv>
+	  <refname>rms.hget</refname>
+	  <refpurpose>Gets the value of a given key in the specified
+	  record store</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.hget</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="req"><replaceable>key</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.hget</command> command returns the data
+	    associated with
+	    <option><replaceable>key</replaceable></option> in the
+	    named record store.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms_hexists">
+	<refnamediv>
+	  <refname>rms.hexists</refname>
+	  <refpurpose>Determine whether a given key exists in a record
+	  store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.hexists</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="req"><replaceable>key</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.hexists</command> command returns 1 if
+	    the given <option><replaceable>key</replaceable></option>
+	    exists in the named record store.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms.hkeys">
+	<refnamediv>
+	  <refname>rms.hkeys</refname>
+	  <refpurpose>Returns all keys associated with a given record store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.hkeys</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.hkeys</command> command returns a list of
+	    keys associated with the named record store.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="rms.hdel">
+	<refnamediv>
+	  <refname>rms.hdel</refname>
+	  <refpurpose>Deletes a key from the specified record store.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>rms.hdel</command>
+	    <arg choice="req"><replaceable>rsname</replaceable></arg>
+	    <arg choice="req"><replaceable>key</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>rms.hdel</command> command deletes
+	    <option><replaceable>key</replaceable></option> from
+	    record store
+	    <option><replaceable>rsname</replaceable></option>.
+	  </para>
+	</refsect1>
+      </refentry>
     </section>
 
   </section>
