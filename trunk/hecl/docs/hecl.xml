@@ -2925,40 +2925,159 @@ puts $foo
     <section>
       <title>HTTP</title>
 
-      <para>Even basic J2ME-enabled cell phones can access web pages
-      (although they may not be able to create TCP/IP sockets).  Hecl
-	provides a simple <command>http</command> command:</para>
+      <para>
+	Even basic J2ME-enabled cell phones can access web pages
+	(although they may not be able to create TCP/IP sockets).  Hecl
+	provides basic http commands</para>
 
       <!-- http -->
-      <refentry id="http">
+      <refentry id="http_geturl">
 	<refnamediv>
-	  <refname>http</refname>
+	  <refname>http.geturl</refname>
 	  <refpurpose>Fetch contents of a URL.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>http</command>
+	    <command>http.geturl</command>
 	    <arg choice="req"><replaceable>url</replaceable></arg>
-	    <arg choice="opt"><replaceable>POSTdata</replaceable></arg>
-	    <arg choice="opt"><replaceable>type</replaceable></arg>
+	    <arg choice="opt">-query <replaceable>POSTdata</replaceable></arg>
+	    <arg choice="opt">-headers <replaceable>list of headers</replaceable></arg>
+	    <arg choice="opt">-validate [1|0]</arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>http</command> command retrieves the data at
+	    The <command>http.geturl</command> command performs an
+	    HTTP request to the given
 	    <option><replaceable>url</replaceable></option> and
-	    returns it.
+	    returns information about the results.  This information
+	    is returned as a hash table that can be accessed with the
+	    various h* commands such as hget.  The list of keys
+	    returned includes the following, which are set by Hecl.
+	    Also created as keys are the various HTTP headers, such as
+	    connection, content-length, content-type, last-modified,
+	    and so on.
+	  </para>
+	  <simplelist>
+	    <member><constant>binary</constant>: 1 if the data
+	    returned is binary, otherwise 0.</member>
+
+	    <member><constant>charset</constant>: The charset used for
+	    the returned data.</member>
+
+	    <member><constant>data</constant>: The returned data.</member>
+
+	    <member><constant>ncode</constant>: The numeric code of
+	    the response, such as 404, 500, 301, and so on.</member>
+
+	    <member><constant>status</constant>: The request status -
+	    ok if the request was successfully processed.</member>
+	  </simplelist>
+	  <para>
+	    The <option>-query</option> option is used to send
+	    key/value pairs of variables.  In order to set random
+	    headers, the <option>-headers</option> argument is used.
+	    The <option>-validate</option> option exists to send a
+	    <constant>HEAD</constant> request.
 	  </para>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
 # Evaluate Hecl script located on a web site.
-eval [http http://www.hecl.org/somescript.hcl]
+eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 	  </programlisting>
 	</refsect1>
       </refentry>
+
+      <refentry id="http_formatQuery">
+	<refnamediv>
+	  <refname>http.formatQuery</refname>
+	  <refpurpose>URL Encode a request</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>http.formatQuery</command>
+	    <arg choice="opt"><replaceable>key</replaceable>
+	    <replaceable>val</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>The <command>http.formatQuery</command> command takes
+	  a series of key value pairs and urlencodes them.  Useful in
+	    order to pass data to the <option>-query</option> option
+	    of <command>http.geturl</command></para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="http_data">
+	<refnamediv>
+	  <refname>http.data</refname>
+	  <refpurpose>A shortcut to get the data from an http.geturl response.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>http.data</command>
+	    <arg choice="req"><replaceable>request</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>http.data</command> command is equivalent to
+	    an <command>hget</command> with <constant>data</constant>
+	    as the key.
+	  </para>
+	  <programlisting>http.data [http.geturl http://www.dedasys.com]</programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="http_ncode">
+	<refnamediv>
+	  <refname>http.ncode</refname>
+	  <refpurpose>A shortcut to get the numeric code from an http.geturl response.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>http.ncode</command>
+	    <arg choice="req"><replaceable>request</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>http.data</command> command is equivalent to
+	    an <command>hget</command> with <constant>ncode</constant>
+	    as the key.
+	  </para>
+	  <programlisting>http.ncode [http.geturl http://www.dedasys.com]</programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="http_status">
+	<refnamediv>
+	  <refname>http.status</refname>
+	  <refpurpose>A shortcut to get the status from an http.geturl response.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>http.status</command>
+	    <arg choice="req"><replaceable>request</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>http.status</command> command is equivalent to
+	    an <command>hget</command> with <constant>status</constant>
+	    as the key.
+	  </para>
+	  <programlisting>http.status [http.geturl http://www.dedasys.com]</programlisting>
+	</refsect1>
+      </refentry>
+
 
     </section>
 
