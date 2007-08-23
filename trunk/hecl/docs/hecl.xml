@@ -3395,7 +3395,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms.hkeys">
+      <refentry id="rms_hkeys">
 	<refnamediv>
 	  <refname>rms.hkeys</refname>
 	  <refpurpose>Returns all keys associated with a given record store.</refpurpose>
@@ -3415,7 +3415,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms.hdel">
+      <refentry id="rms_hdel">
 	<refnamediv>
 	  <refname>rms.hdel</refname>
 	  <refpurpose>Deletes a key from the specified record store.</refpurpose>
@@ -3658,13 +3658,13 @@ class HelloCmd implements Command {
       J2ME.
     </para>
 
-    <section id="j2mecommands">
-      <title>Hecl J2ME Commands</title>
+    <section id="midp10_commands">
+      <title>Hecl J2ME MIDP1.0 Commands</title>
 
       <note>
 	Hecl has different GUI commands for the MIDP1.0 (older phones)
-	and MIDP2.0 (newer, with more memory).  We are in the process
-	of documenting the MIDP2.0 commands.
+	and MIDP2.0 (newer).  We are in the process of documenting the
+	MIDP2.0 commands.
       </note>
 
       <para>
@@ -3674,7 +3674,7 @@ class HelloCmd implements Command {
 	these commands and widgets in use.
       </para>
 
-      <refentry id="alert">
+      <refentry id="midp10_alert">
 	<refnamediv>
 	  <refname>alert</refname>
 	  <refpurpose>Creates an alert</refpurpose>
@@ -3706,7 +3706,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="choicegroup">
+      <refentry id="midp10_choicegroup">
 	<refnamediv>
 	  <refname>choicegroup</refname>
 	  <refpurpose>Displays a choicegroup in the current form</refpurpose>
@@ -3733,7 +3733,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="cmd">
+      <refentry id="midp10_cmd">
 	<refnamediv>
 	  <refname>cmd</refname>
 	  <refpurpose>Adds a command to a form/listbox/textbox</refpurpose>
@@ -3767,7 +3767,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="datefield">
+      <refentry id="midp10_datefield">
 	<refnamediv>
 	  <refname>datefield</refname>
 	  <refpurpose>Displays an datefield in the current form</refpurpose>
@@ -3793,7 +3793,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="j2me_exit">
+      <refentry id="midp10_j2me_exit">
 	<refnamediv>
 	  <refname>exit</refname>
 	  <refpurpose>Exits the application</refpurpose>
@@ -3811,7 +3811,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="form">
+      <refentry id="midp10_form">
 	<refnamediv>
 	  <refname>form</refname>
 	  <refpurpose>Creates a form</refpurpose>
@@ -3834,7 +3834,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="gauge">
+      <refentry id="midp10_gauge">
 	<refnamediv>
 	  <refname>gauge</refname>
 	  <refpurpose>Displays an gauge in the current form</refpurpose>
@@ -3863,7 +3863,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="getindex">
+      <refentry id="midp10_getindex">
 	<refnamediv>
 	  <refname>getindex</refname>
 	  <refpurpose>Fetches a reference to the N'th element in a
@@ -3884,7 +3884,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="getprop">
+      <refentry id="midp10_getprop">
 	<refnamediv>
 	  <refname>getprop</refname>
 	  <refpurpose>Fetches the value of a given property from a widget</refpurpose>
@@ -3915,7 +3915,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="listbox">
+      <refentry id="midp10_listbox">
 	<refnamediv>
 	  <refname>listbox</refname>
 	  <refpurpose>Creates a listbox</refpurpose>
@@ -3949,7 +3949,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="noscreen">
+      <refentry id="midp10_noscreen">
 	<refnamediv>
 	  <refname>noscreen</refname>
 	  <refpurpose>Runs without a current screen widget</refpurpose>
@@ -3972,7 +3972,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="screenappend">
+      <refentry id="midp10_screenappend">
 	<refnamediv>
 	  <refname>screenappend</refname>
 	  <refpurpose>Appends an item to a form or listbox</refpurpose>
@@ -3996,7 +3996,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="setcurrent">
+      <refentry id="midp10_setcurrent">
 	<refnamediv>
 	  <refname>setcurrent</refname>
 	  <refpurpose>Displays an alert/form/listbox/textbox</refpurpose>
@@ -4021,7 +4021,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="setindex">
+      <refentry id="midp10_setindex">
 	<refnamediv>
 	  <refname>setindex</refname>
 
@@ -4049,7 +4049,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="setprop">
+      <refentry id="midp10_setprop">
 	<refnamediv>
 	  <refname>setprop</refname>
 	  <refpurpose>Sets a given property of a widget</refpurpose>
@@ -4071,7 +4071,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="string">
+      <refentry id="midp10_string">
 	<refnamediv>
 	  <refname>string</refname>
 	  <refpurpose>Adds a string to the current form.</refpurpose>
@@ -4092,7 +4092,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="stringitem">
+      <refentry id="midp10_stringitem">
 	<refnamediv>
 	  <refname>stringitem</refname>
 	  <refpurpose>Displays a stringitem in the current form</refpurpose>
@@ -4112,7 +4112,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="textbox">
+      <refentry id="midp10_textbox">
 	<refnamediv>
 	  <refname>textbox</refname>
 	  <refpurpose>Creates a textbox</refpurpose>
@@ -4147,7 +4147,7 @@ class HelloCmd implements Command {
 	</refsect1>
       </refentry>
 
-      <refentry id="textfield">
+      <refentry id="midp10_textfield">
 	<refnamediv>
 	  <refname>textfield</refname>
 	  <refpurpose>Displays a textfield in the current form</refpurpose>
@@ -4176,6 +4176,642 @@ class HelloCmd implements Command {
 	  <para>
 	    The lcdui <classname>TextField</classname> class.
 	  </para>
+	</refsect1>
+      </refentry>
+
+    </section>
+
+    <section id="midp20commands">
+      <title>Hecl J2ME MIDP2.0 Commands</title>
+
+      <para>
+	The MIDP 2.0 commands in Hecl are more complete and more
+	advanced than the 1.0 commands, and should be used if
+	possible.  This is a fairly complete list of which devices are
+	MIDP2.0 capable: <ulink
+	url="http://www.j2mepolish.org/devices/platform_MIDP_2.0.html"
+	/>
+      </para>
+
+      <para>
+	To fully understand these commands, a perusal of the
+	documentation here is likely a good idea: <ulink
+	url="http://java.sun.com/javame/reference/apis/jsr118/"></ulink>
+	In particular, look at the lcdui package.
+      </para>
+
+      <para>
+	This code was originally written and contributed to Hecl by
+	Wolfgang Kechel.  Thanks!
+      </para>
+
+      <refentry id="lcdui_alert">
+	<refnamediv>
+	  <refname>lcdui.alert</refname>
+	  <refpurpose>Pops up an alert</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.alert</command>
+	    <arg choice="opt">-title
+	    <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-type
+	      <group choice="req">
+		<arg choice="req">info</arg>
+		<arg choice="req">warning</arg>
+		<arg choice="req">error</arg>
+		<arg choice="req">alarm</arg>
+		<arg choice="req">confirmation</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-text
+	    <replaceable>text</replaceable></arg>
+	    <arg choice="opt">-timeout
+	      <group choice="req">
+		<arg choice="req"><replaceable>milliseconds</replaceable></arg>
+		<arg choice="req">forever</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-indicator
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.alert</command> command creates an
+	    alert to let the user know that something unusual has
+	    happened, or to ask for confirmation.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+[lcdui.alert -title "Reactor core meltdown" -text \
+    "You went and pressed the red button, didn't you!" -timeout forever] setcurrent
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_canvas">
+	<refnamediv>
+	  <refname>lcdui.canvas</refname>
+	  <refpurpose>Creates a canvas</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.canvas</command>
+	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-suppresskeys
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-fullscreen
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-autoflush
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">-cmdbg
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.canvas</command> command creates a
+	    canvas that can be used to draw arbitrary items, such as
+	    rectangles, text, circles, and respond to keyboard events.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_choicegroup">
+	<refnamediv>
+	  <refname>lcdui.choicegroup</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.choicegroup</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.choicegroup</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_command">
+	<refnamediv>
+	  <refname>lcdui.command</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.command</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.command</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_date">
+	<refnamediv>
+	  <refname>lcdui.date</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.date</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.date</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_dismiss_command">
+	<refnamediv>
+	  <refname>lcdui.dismiss_command</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.dismiss_command</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.dismiss_command</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_event">
+	<refnamediv>
+	  <refname>lcdui.event</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.event</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.event</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_font">
+	<refnamediv>
+	  <refname>lcdui.font</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.font</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.font</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_form">
+	<refnamediv>
+	  <refname>lcdui.form</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.form</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.form</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_gauge">
+	<refnamediv>
+	  <refname>lcdui.gauge</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.gauge</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.gauge</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_image">
+	<refnamediv>
+	  <refname>lcdui.image</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.image</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.image</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_imageitem">
+	<refnamediv>
+	  <refname>lcdui.imageitem</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.imageitem</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.imageitem</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_list">
+	<refnamediv>
+	  <refname>lcdui.list</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.list</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.list</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_select_command">
+	<refnamediv>
+	  <refname>lcdui.select_command</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.select_command</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.select_command</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_settings">
+	<refnamediv>
+	  <refname>lcdui.settings</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.settings</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.settings</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_spacer">
+	<refnamediv>
+	  <refname>lcdui.spacer</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.spacer</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.spacer</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_stringitem">
+	<refnamediv>
+	  <refname>lcdui.stringitem</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.stringitem</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.stringitem</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_textbox">
+	<refnamediv>
+	  <refname>lcdui.textbox</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.textbox</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.textbox</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_textfield">
+	<refnamediv>
+	  <refname>lcdui.textfield</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.textfield</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.textfield</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="lcdui_ticker">
+	<refnamediv>
+	  <refname>lcdui.ticker</refname>
+	  <refpurpose>xxx</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>lcdui.ticker</command>
+	    <arg choice="req"><replaceable></replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>lcdui.ticker</command> command 
+	    <option><replaceable>filename</replaceable></option>.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+xxx
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>yyy</screen>
 	</refsect1>
       </refentry>
 
