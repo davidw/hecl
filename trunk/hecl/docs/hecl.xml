@@ -2,9 +2,7 @@
 
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
   "http://www.oasis-open.org/committees/docbook/xml/4.1.2/docbookx.dtd"
-  [
-      <!ENTITY reverse.hcl SYSTEM "reverse.hcl" >
-]>
+  []>
 
 <!--
    Copyright 2004-2007 David N. Welton
@@ -4239,13 +4237,22 @@ class HelloCmd implements Command {
 	      </group>
 	    </arg>
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$alertcmd</replaceable></command>
+	    <arg choice="req">setcurrent</arg>
+	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
 	    The <command>lcdui.alert</command> command creates an
 	    alert to let the user know that something unusual has
-	    happened, or to ask for confirmation.
+	    happened, or to ask for confirmation.  The object returned
+	    from <command>lcdui.alert</command> is itself a command,
+	    that can be called with a subcommand
+	    <option>setcurrent</option> to make the alert the
+	    currently displayed item.
 	  </para>
 	</refsect1>
 	<refsect1>
@@ -4265,19 +4272,6 @@ class HelloCmd implements Command {
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.canvas</command>
-	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
-	    <arg choice="opt">-suppresskeys
-	      <group choice="req">
-		<arg choice="req">1</arg>
-		<arg choice="req">0</arg>
-	      </group>
-	    </arg>
-	    <arg choice="opt">-fullscreen
-	      <group choice="req">
-		<arg choice="req">1</arg>
-		<arg choice="req">0</arg>
-	      </group>
-	    </arg>
 	    <arg choice="opt">-autoflush
 	      <group choice="req">
 		<arg choice="req">1</arg>
@@ -4286,28 +4280,126 @@ class HelloCmd implements Command {
 	    </arg>
 
 	    <arg choice="opt">-cmdbg
+	      <replaceable>color</replaceable>
+	    </arg>
+
+	    <arg choice="opt">-cmdfg
+	      <replaceable>color</replaceable>
+	    </arg>
+
+	    <arg choice="opt">-eventhandler
+	      <replaceable>code</replaceable>
+	    </arg>
+
+	    <arg choice="opt">-fullscreen
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
+
+	    <arg choice="opt">-suppresskeys
 	      <group choice="req">
 		<arg choice="req">1</arg>
 		<arg choice="req">0</arg>
 	      </group>
 	    </arg>
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$canvascmd</replaceable></command>
+	    <arg choice="opt">flush
+	      <arg choice="opt"><replaceable>x y width height</replaceable></arg>
+	    </arg>
+	    <arg choice="opt">graphics</arg>
+	    <arg choice="opt">repaint</arg>
+	    <arg choice="opt">servicerepaints</arg>
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
+
 	  <para>
 	    The <command>lcdui.canvas</command> command creates a
 	    canvas that can be used to draw arbitrary items, such as
-	    rectangles, text, circles, and respond to keyboard events.
+	    rectangles, text, circles, and respond to keyboard
+	    events.
 	  </para>
+	  <para>
+	    The options describing the canvas are as follows:
+	  </para>
+	  <simplelist>
+	    <member><option>-autoflush</option>: Takes a boolean
+	    argument (1 or 0) indicating FIXME</member>
+	    <member>
+	      <option>-cmdbg</option>: Selects a background color for
+	      the command background.
+	    </member>
+	    <member>
+	      <option>-cmdfg</option>: Selects a background color for
+	      the command foreground.
+	    </member>
+	    <member>
+	      <option>-eventhandler</option>: The Hecl code to execute
+	      when an event is generated.
+	    </member>
+	    <member>
+	      <option>-fullscreen</option>: A boolean switch
+	      specifying whether to run in "full screen" mode.  "Full
+	      screen" mode means that commands, which would normally
+	      be accessible via certain keys on the cell phone, are
+	      not accessible, and that those keys generate regular
+	      events instead of calling commands.
+	    </member>
+	    <member>
+	      <option>-suppresskeys</option>: A boolean switch
+	      specifying whether to suppress key events or not.
+	      Suppressing these events, if the application does not
+	      need to keep track of them, may improve performance
+	      some.
+	    </member>
+	  </simplelist>
+	  <para>
+	    The <command>lcdui.canvas</command> command returns an
+	    object that is itself a command, and can be called with
+	    several subcommands:
+	  </para>
+	  <simplelist>
+	    <member>
+	      <command>flush</command>: With no argument, flushes
+	      (displays) the off-screen buffer to the visible
+	      display.  With arguments <option><replaceable>x y width
+	      height</replaceable></option>, flushes the specified
+	      section to the screen.
+	    </member>
+	    <member>
+	      <command>graphics</command>: Returns a graphics object
+	      that acts as a command to manipulate the Canvas'
+	      graphics buffer.
+	    </member>
+	    <member>
+	      <command>repaint</command>: Repaints the entire canvas.
+	    </member>
+	    <member>
+	      <command>servicerepaints</command>: Forces any repaints
+	      that haven't occured yet to be performed immediately.
+	    </member>
+	  </simplelist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
+set graphics [$canvas graphics]
+$graphics frect [list 10 10] [list 10 80]
+$graphics frect [list 80 10] [list 10 80]
+$graphics frect [list 10 50] [list 80 10]
 	  </programlisting>
 	  <para>Produces:</para>
-	  <screen>yyy</screen>
+	  <screen>FIXME</screen>
 	</refsect1>
       </refentry>
 
