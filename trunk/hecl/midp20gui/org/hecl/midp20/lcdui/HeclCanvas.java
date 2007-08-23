@@ -293,19 +293,19 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    Command c = buttons[0].getCommand();
 	    if(c != null) {
 		String l = c.getLabel();
-		g.drawString(l != null ? l : "Links",
+		g.drawString(l != null ? l : "Left",
 			     1,ypos,Graphics.TOP|Graphics.LEFT);
 	    }
 	    c = buttons[1].getCommand();
 	    if(c != null) {
 		String l = c.getLabel();
-		g.drawString(l != null ? l : "Rechts",
+		g.drawString(l != null ? l : "Right",
 			     drawwidth-1,ypos,Graphics.TOP|Graphics.RIGHT);
 	    }
 	    c = buttons[2].getCommand();
 	    if(c != null) {
 		String l = c.getLabel();
-		g.drawString(l != null ? l : "Mitte",
+		g.drawString(l != null ? l : "Center",
 			     drawwidth/2,ypos,Graphics.TOP|Graphics.HCENTER);
 	    }
 	    g.setColor(oldcol);
