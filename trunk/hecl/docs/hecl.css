@@ -1,6 +1,12 @@
 body {
     font-family: Verdana, Arial, sans-serif;
     font-size: 13px;
+    margin-left: 4em;
+    margin-right: 5em;
+}
+
+td {
+    font-size: 13px;
 }
 
 h2 {

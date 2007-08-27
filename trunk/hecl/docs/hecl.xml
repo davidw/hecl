@@ -2956,21 +2956,28 @@ puts $foo
 	    connection, content-length, content-type, last-modified,
 	    and so on.
 	  </para>
-	  <simplelist>
-	    <member><constant>binary</constant>: 1 if the data
-	    returned is binary, otherwise 0.</member>
+	  <itemizedlist>
+	    <listitem>
+	      <para><constant>binary</constant>: 1 if the data
+		returned is binary, otherwise 0.</para></listitem>
 
-	    <member><constant>charset</constant>: The charset used for
-	    the returned data.</member>
+	    <listitem>
+	      <para><constant>charset</constant>: The charset used for
+		the returned data.</para></listitem>
 
-	    <member><constant>data</constant>: The returned data.</member>
+	    <listitem>
+	      <para><constant>data</constant>: The returned data.</para></listitem>
 
-	    <member><constant>ncode</constant>: The numeric code of
-	    the response, such as 404, 500, 301, and so on.</member>
+	    <listitem>
+	      <para><constant>ncode</constant>: The numeric code of
+		the response, such as 404, 500, 301, and so on.</para></listitem>
 
-	    <member><constant>status</constant>: The request status -
-	    ok if the request was successfully processed.</member>
-	  </simplelist>
+	    <listitem>
+	      <para><constant>status</constant>: The request status -
+		ok if the request was successfully processed.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
 	  <para>
 	    The <option>-query</option> option is used to send
 	    key/value pairs of variables.  In order to set random
@@ -4331,63 +4338,86 @@ class HelloCmd implements Command {
 	  <para>
 	    The options describing the canvas are as follows:
 	  </para>
-	  <simplelist>
-	    <member><option>-autoflush</option>: Takes a boolean
-	    argument (1 or 0) indicating FIXME</member>
-	    <member>
-	      <option>-cmdbg</option>: Selects a background color for
-	      the command background.
-	    </member>
-	    <member>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-autoflush</option>: Takes a boolean
+		argument (1 or 0) indicating FIXME</para></listitem>
+	    <listitem>
+	      <para>
+		<option>-cmdbg</option>: Selects a background color for
+		the command background.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
 	      <option>-cmdfg</option>: Selects a background color for
 	      the command foreground.
-	    </member>
-	    <member>
-	      <option>-eventhandler</option>: The Hecl code to execute
-	      when an event is generated.
-	    </member>
-	    <member>
-	      <option>-fullscreen</option>: A boolean switch
-	      specifying whether to run in "full screen" mode.  "Full
-	      screen" mode means that commands, which would normally
-	      be accessible via certain keys on the cell phone, are
-	      not accessible, and that those keys generate regular
-	      events instead of calling commands.
-	    </member>
-	    <member>
-	      <option>-suppresskeys</option>: A boolean switch
-	      specifying whether to suppress key events or not.
-	      Suppressing these events, if the application does not
-	      need to keep track of them, may improve performance
-	      some.
-	    </member>
-	  </simplelist>
+	    </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-eventhandler</option>: The Hecl code to execute
+		when an event is generated.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-fullscreen</option>: A boolean switch
+		specifying whether to run in "full screen" mode.
+		"Full screen" mode means that commands, which would
+		normally be accessible via certain keys on the cell
+		phone, are not accessible, and that those keys
+		generate regular events instead of calling commands.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-suppresskeys</option>: A boolean switch
+		specifying whether to suppress key events or not.
+		Suppressing these events, if the application does not
+		need to keep track of them, may improve performance
+		some.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
 	  <para>
 	    The <command>lcdui.canvas</command> command returns an
 	    object that is itself a command, and can be called with
 	    several subcommands:
 	  </para>
-	  <simplelist>
-	    <member>
-	      <command>flush</command>: With no argument, flushes
-	      (displays) the off-screen buffer to the visible
-	      display.  With arguments <option><replaceable>x y width
-	      height</replaceable></option>, flushes the specified
-	      section to the screen.
-	    </member>
-	    <member>
-	      <command>graphics</command>: Returns a graphics object
-	      that acts as a command to manipulate the Canvas'
-	      graphics buffer.
-	    </member>
-	    <member>
-	      <command>repaint</command>: Repaints the entire canvas.
-	    </member>
-	    <member>
-	      <command>servicerepaints</command>: Forces any repaints
-	      that haven't occured yet to be performed immediately.
-	    </member>
-	  </simplelist>
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<command>flush</command>: With no argument, flushes
+		(displays) the off-screen buffer to the visible
+		display.  With arguments <option><replaceable>x y
+		width height</replaceable></option>, flushes the
+		specified section to the screen.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<command>graphics</command>: Returns a graphics object
+		that acts as a command to manipulate the Canvas'
+		graphics buffer.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<command>repaint</command>: Repaints the entire canvas.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<command>servicerepaints</command>: Forces any repaints
+		that haven't occured yet to be performed immediately.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
@@ -4406,25 +4436,221 @@ $graphics frect [list 10 50] [list 80 10]
       <refentry id="lcdui_choicegroup">
 	<refnamediv>
 	  <refname>lcdui.choicegroup</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a group of potential choices that can be
+	  added to a form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.choicegroup</command>
-	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	    <arg choice="opt">
+	      -label
+	      <replaceable>label</replaceable></arg>
+
+	    <arg choice="opt">
+	      -type
+
+	      <group choice="req">
+		<arg choice="req">exclusive</arg>
+		<arg choice="req">multiple</arg>
+		<arg choice="req">popup</arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">
+	      -fit
+	      <group choice="req">
+		<arg choice="req">default</arg>
+		<arg choice="req">on</arg>
+		<arg choice="req">off</arg>
+	      </group>
+	    </arg>
+
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command>$choicegroupcmd</command>
+
+	    <arg choice="opt">
+	      append <replaceable>text</replaceable> <arg
+		choice="opt"><replaceable>image</replaceable></arg>
+	    </arg>
+
+	    <arg choice="opt">delete
+	      <replaceable>itemnum</replaceable>
+	    </arg>
+
+	    <arg choice="opt">deleteall</arg>
+
+	    <arg choice="opt">
+	      insert <replaceable>position</replaceable>
+	      <replaceable>text</replaceable> <arg
+	      choice="opt"><replaceable>image</replaceable></arg>
+	    </arg>
+
+	    <arg choice="opt">itemcget
+	      <replaceable>itemnum</replaceable>
+	      <replaceable>-option</replaceable>
+	    </arg>
+
+	    <arg choice="opt">itemconfigure
+	      <replaceable>itemnum</replaceable>
+	      <replaceable>-option</replaceable>
+	      <replaceable>value</replaceable>
+	    </arg>
+
+	    <arg choice="opt">selection
+	      <group choice="req">
+		<arg choice="req">clear
+		  <arg choice="opt"><replaceable>index</replaceable></arg>
+		</arg>
+		<arg choice="req">index</arg>
+		<arg choice="req">get</arg>
+		<arg choice="req">set <option><replaceable>index</replaceable></option></arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">size</arg>
+
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.choicegroup</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.choicegroup</command> command creates a
+	    "ChoiceGroup" widget that can be added to a form.  A
+	    ChoiceGroup is a list of options that can be selected.
+	    ChoiceGroups come in three forms: radio buttons (the
+	    <option>exclusive</option> type), where only one at a time
+	    may be selected, check boxes (the
+	    <option>multiple</option> type), or as a popup.
+	    (check boxes).
 	  </para>
+	  <para>
+	    The options describing the choicegroup are as follows:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-lable</option>: Labels the choicegroup
+		with the supplied text.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-type</option>: Determines the type of the
+		chiocegroup, which can be one of
+		<option>multiple</option> (check boxes),
+		<option>exclusive</option> (radio buttons), or a
+		<option>popup</option>
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-fit</option>: Specifies the type of
+		word-wrapping desired.  <option>default</option> means
+		that the application has no preferences and that the
+		default can be used.  The <option>on</option> option
+		means that text wrapping should be performed to fit
+		long lines.  The <option>off</option> option means
+		that text wrapping should not be performed and that
+		long lines will be truncated, and there should be some
+		indication of this truncation such as an ellipsis.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	  <para>
+	    The <command>lcdui.choicegroup</command> command returns
+	    an object that is itself a command, and can be called with
+	    several subcommands:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><command>append</command>: Appends the given text
+		to the choicegroup as one of the possible selections.
+		Optionally, an image (as generated by
+		<command>lcdui.image</command> may also be specified.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>delete</command>: Deletes the item
+		specified by
+		<option><replaceable>itemnum</replaceable></option>
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<command>deleteall</command>:
+		Deletes all items in the given choicegroup.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>insert</command>: Inserts the given text,
+	      and optional image at
+	      <option><replaceable>position</replaceable></option>
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<command>itemcget</command>: Given an item and an
+		<option><replaceable>-option</replaceable></option>,
+		which can be one of <option>-font</option>,
+		<option>-text</option>, <option>-image</option>,
+		<option>-selected</option>, returns the requested
+		information, with <option>-selected</option> returning
+		1 if the item is selected, 0 if it isn't.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>itemconfigure</command>: Instead of
+	      returning information about the options listed above,
+	      sets the specified option for the given item.</para></listitem>
+
+	    <listitem>
+	      <para>
+		<command>selection</command>: Used with a
+		subcommand of its own, which can be one of:
+		<itemizedlist>
+		  <listitem>
+		    <para>
+		      <command>get</command>: Returns a list of integers
+		      indicating which elements are selected.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      <command>set</command>: Selects the specified item.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      <command>clear</command>: Clears the selection
+		      from the given item, or, if no
+		      <replaceable>itemnum</replaceable> is given,
+		      clears all selected items.
+		    </para>
+		  </listitem>
+		</itemizedlist>
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>size</command>: Returns the number of
+		elements in the choicegroup.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -4434,19 +4660,47 @@ xxx
       <refentry id="lcdui_command">
 	<refnamediv>
 	  <refname>lcdui.command</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a command that can be attached to a screen</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.command</command>
-	    <arg choice="req"><replaceable>filename</replaceable></arg>
+
+	    <arg choice="opt">
+	      -label
+	      <replaceable>label</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -longlabel
+	      <replaceable>label</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -priority
+	      <replaceable>priority</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -type
+	      <group choice="req">
+		<arg choice="req">back</arg>
+		<arg choice="req">cancel</arg>
+		<arg choice="req">exit</arg>
+		<arg choice="req">help</arg>
+		<arg choice="req">item</arg>
+		<arg choice="req">screen</arg>
+		<arg choice="req">stop</arg>
+	      </group>
+	    </arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.command</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.command</command> command creates a
+	    command that can be attached to a Screen or an Item.
 	  </para>
 	</refsect1>
 	<refsect1>

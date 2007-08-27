@@ -1,3 +1,11 @@
+2007-08-27  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.css: Fiddled with margins, corrected font size for
+	td's.
+
+	* docs/hecl.xml: Latest lcdui updates.  Switch from simplelist to
+	itemizedlist.
+
 2007-08-23  David N. Welton  <davidw@dedasys.com>
 
 	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: Changed German
