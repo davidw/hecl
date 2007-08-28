@@ -4259,7 +4259,9 @@ class HelloCmd implements Command {
 	    from <command>lcdui.alert</command> is itself a command,
 	    that can be called with a subcommand
 	    <option>setcurrent</option> to make the alert the
-	    currently displayed item.
+	    currently displayed item.  For an in-depth look at the
+	    Java code that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Alert.html">javax.microedition.lcdui.Alert</ulink>
 	  </para>
 	</refsect1>
 	<refsect1>
@@ -4332,8 +4334,10 @@ class HelloCmd implements Command {
 	  <para>
 	    The <command>lcdui.canvas</command> command creates a
 	    canvas that can be used to draw arbitrary items, such as
-	    rectangles, text, circles, and respond to keyboard
-	    events.
+	    rectangles, text, circles, and respond to keyboard events.
+	    For an in-depth look at the Java code that this command is
+	    based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/game/GameCanvas.html">javax.microedition.lcdui.game.GameCanvas</ulink>
 	  </para>
 	  <para>
 	    The options describing the canvas are as follows:
@@ -4525,6 +4529,9 @@ $graphics frect [list 10 50] [list 80 10]
 	    may be selected, check boxes (the
 	    <option>multiple</option> type), or as a popup.
 	    (check boxes).
+
+	    <ulink
+	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html">javax.microedition.lcdui.ChoiceGroup</ulink>
 	  </para>
 	  <para>
 	    The options describing the choicegroup are as follows:
@@ -4689,6 +4696,7 @@ FIXME
 		<arg choice="req">exit</arg>
 		<arg choice="req">help</arg>
 		<arg choice="req">item</arg>
+		<arg choice="req">ok</arg>
 		<arg choice="req">screen</arg>
 		<arg choice="req">stop</arg>
 	      </group>
@@ -4700,13 +4708,45 @@ FIXME
 	  <title>Description</title>
 	  <para>
 	    The <command>lcdui.command</command> command creates a
-	    command that can be attached to a Screen or an Item.
+	    command that can be attached to a Screen or an Item.  For
+	    an in-depth look at the Java code that this command is
+	    based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html">javax.microedition.lcdui.Command</ulink>
 	  </para>
+	  <para>
+	    The options describing the choicegroup are as follows:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-label</option>: A short label for the
+	      command, which should be as short as possible.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-longlabel</option>: A long, more
+	      descriptive label.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-priority</option>: A positive number
+	      indicating the order of appearance of commands, 1 being
+	      the highest priority.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-type</option>: Indicates the type of
+	      command.  The command types are documented <ulink
+	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary">here</ulink>
+              </para>
+	    </listitem>
+
+	  </itemizedlist>
+
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>

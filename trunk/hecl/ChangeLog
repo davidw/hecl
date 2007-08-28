@@ -1,3 +1,9 @@
+2007-08-28  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added some links back to the Java docs so that
+	people can find more detailed explanations.  Added a bit more to
+	the lcdui.command command.
+
 2007-08-27  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.css: Fiddled with margins, corrected font size for
