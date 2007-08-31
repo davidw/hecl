@@ -1,5 +1,11 @@
 2007-08-31  David N. Welton  <davidw@dedasys.com>
 
+	* midp20/script.hcl (menu1sel): Make the list demo actually do
+	something that can be seen on phones.
+
+	* midp20gui/org/hecl/midp20/lcdui/FontMap.java: Used else if
+	instead of simple if.
+
 	* docs/*.html: Set svn:mime-type to application/octet-stream in
 	order to not generate so much churn in SVN.
 

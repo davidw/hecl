@@ -10,7 +10,7 @@ set nocmd [lcdui.command -type screen -label "No" -longlabel "No" -priority 2];
 set okcmd [lcdui.command -label Ok -longlabel Ok -type ok -priority 1];
 set selectcmd [lcdui.command -label Select -longlabel Select -type item -priority 1];
 set smscmd [lcdui.command -label SMS -longlabel SMS -type ok];
-set yescmd [lcdui.command -type screen -label "Ja" -longlabel "Ja" -priority 1];
+set yescmd [lcdui.command -type screen -label "Yes" -longlabel "Yes" -priority 1];
 
 #################################################
 # lcdui elements
@@ -62,7 +62,7 @@ set menu1 [lcdui.list -commandaction "menu1sel"];
 $menu1 addcommand $backcmd;
 $menu1 addcommand $selectcmd;
 $menu1 deleteall;
-foreach x {1 2 3 4 5 6 7 8 9 10} {$menu1 append "E$x"};
+foreach x {1 2 3 4 5 6 7 8 9 10} {$menu1 append "Title \#$x"};
 
 set infoform [lcdui.form -title Information -commandaction "backToMainMenu"];
 $infoform append [lcdui.textfield -label "Midlet Version" \
@@ -129,6 +129,8 @@ set canvasY 10
 
 set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents];
 $canvas addcommand $backcmd;
+
+# Draw the H
 
 proc DrawH {graphics x y} {
     global WIDTH
@@ -201,7 +203,9 @@ proc menu1sel {cmd d} {
     if {eq $cmd $backcmd} {
 	$mainmenu setcurrent;
     } elseif {or [eq $cmd $selectcmd] [eq $cmd ${lcdui.select_command}]} {
-	puts "selected index=[$d selection get]";
+	$d configure -title "Title \#[ + 1 [$d selection get]]"
+
+	#puts "selected index=[$d selection get]";
     }
 }
 
