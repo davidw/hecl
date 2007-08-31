@@ -8,7 +8,12 @@
 	    ] [
 	      -fit
 	      default |  on |  off
-	    ]</p></div><div class="cmdsynopsis"><p><code class="command">$choicegroupcmd</code>  [
+	    ]</p></div><div class="cmdsynopsis"><p><code class="command">$choicegroupcmd</code>  [cget
+	      <em class="replaceable"><code>-optname</code></em>
+	    ] [cset
+	      <em class="replaceable"><code>-optname</code></em>
+	      <em class="replaceable"><code>optval</code></em>
+	    ] [
 	      append <em class="replaceable"><code>text</code></em>  [<em class="replaceable"><code>image</code></em>]
 	    ] [delete
 	      <em class="replaceable"><code>itemnum</code></em>
@@ -26,16 +31,16 @@
 	      clear
 		  [<em class="replaceable"><code>index</code></em>]
 		 |  index |  get |  set <code class="option"><em class="replaceable"><code>index</code></em></code>
-	    ] [size]</p></div></div><div class="refsect1" lang="en"><a name="id2552929"></a><h2>Description</h2><p>
+	    ] [size]</p></div></div><div class="refsect1" lang="en"><a name="id2553008"></a><h2>Description</h2><p>
 	    The <span><strong class="command">lcdui.choicegroup</strong></span> command creates a
 	    "ChoiceGroup" widget that can be added to a form.  A
 	    ChoiceGroup is a list of options that can be selected.
 	    ChoiceGroups come in three forms: radio buttons (the
 	    <code class="option">exclusive</code> type), where only one at a time
 	    may be selected, check boxes (the
-	    <code class="option">multiple</code> type), or as a popup.
-	    (check boxes).
-
+	    <code class="option">multiple</code> type), or as a popup.  (check
+	    boxes).  For an in-depth look at the Java code that this
+	    command is based on, see:
 	    <a href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html" target="_top">javax.microedition.lcdui.ChoiceGroup</a>
 	  </p><p>
 	    The options describing the choicegroup are as follows:
@@ -99,6 +104,6 @@
 		    </p></li></ul></div><p>
 	      </p></li><li><p><span><strong class="command">size</strong></span>: Returns the number of
 		elements in the choicegroup.
-	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2553234"></a><h2>Example</h2><pre class="programlisting">
+	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2553313"></a><h2>Example</h2><pre class="programlisting">
 FIXME
 	  </pre><p>Produces:</p><pre class="screen">yyy</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_canvas.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="j2me.html#midp20commands"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_command.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.canvas </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.command</td></tr></table></div></body></html>

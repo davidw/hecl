@@ -1,3 +1,10 @@
+2007-08-31  David N. Welton  <davidw@dedasys.com>
+
+	* docs/*.html: Set svn:mime-type to application/octet-stream in
+	order to not generate so much churn in SVN.
+
+	* docs/hecl.xml: Described $eventcmd.
+
 2007-08-28  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added some links back to the Java docs so that

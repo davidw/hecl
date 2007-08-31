@@ -1,6 +1,87 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.event</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="j2me.html#midp20commands" title="Hecl J2ME MIDP2.0 Commands"><link rel="prev" href="lcdui_dismiss_command.html" title="lcdui.dismiss_command"><link rel="next" href="lcdui_font.html" title="lcdui.font"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.event</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_dismiss_command.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl J2ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_font.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lcdui_event"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.event &#8212; xxx</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.event</code>  <em class="replaceable"><code></code></em></p></div></div><div class="refsect1" lang="en"><a name="id2553705"></a><h2>Description</h2><p>
-	    The <span><strong class="command">lcdui.event</strong></span> command 
-	    <code class="option"><em class="replaceable"><code>filename</code></em></code>.
-	  </p></div><div class="refsect1" lang="en"><a name="id2553726"></a><h2>Example</h2><pre class="programlisting">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>$eventcmd</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="j2me.html#midp20commands" title="Hecl J2ME MIDP2.0 Commands"><link rel="prev" href="lcdui_date.html" title="lcdui.date"><link rel="next" href="lcdui_font.html" title="lcdui.font"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><em class="replaceable"><code>$eventcmd</code></em></th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_date.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl J2ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_font.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lcdui_event"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p><em class="replaceable"><code>$eventcmd</code></em> &#8212; Command/object describing a Canvas event.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command"><em class="replaceable"><code>$eventcmd</code></em></code>  [cget
+	      <em class="replaceable"><code>-optname</code></em>
+	    ] [cset
+	      <em class="replaceable"><code>-optname</code></em>
+	      <em class="replaceable"><code>optval</code></em>
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2553870"></a><h2>Description</h2><p>
+	    The
+	    <span><strong class="command"><em class="replaceable"><code>$eventcmd</code></em></strong></span>
+	    command is used to access information about events
+	    received by a Canvas.  There is no Hecl command to create
+	    event commands - they are passed in as arguments to the
+	    <code class="option">-eventhandler</code> specified for an
+	    <span><strong class="command">lcdui.canvas</strong></span>.
+	  </p><p>There are a number of parameters that can be
+	  queried:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">-canvas</code>: Returns the canvas
+	      command associated with the event's canvas.</p></li><li><p><code class="option">-reason</code>: A number representing
+		one of the following reasons:
+              </p><pre class="programlisting">
+    public static final int E_NONE = 0;
+    public static final int E_PAINT = 1;
+    public static final int E_PPRESS = 2;
+    public static final int E_PRELEASE = 3;
+    public static final int E_PDRAG = 4;
+    public static final int E_KPRESS = 5;
+    public static final int E_KRELEASE = 6;
+    public static final int E_KREPEAT = 7;
+    public static final int E_HIDE = 8;
+    public static final int E_SHOW = 9;
+    public static final int E_RESIZE = 10;
+    public static final int E_UNKNOWN = -1;
+	      </pre><p>Which correspond to:</p><div class="itemizedlist"><ul type="circle"><li><p><code class="constant">E_PAINT</code>: Used when the
+		    Canvas' <code class="methodname">paint</code> method is
+		    called.</p></li><li><p><code class="constant">E_PRESS</code>: Used when the
+		    Canvas' <code class="methodname">pointerPressed</code>
+		    method is called.
+		  </p></li><li><p><code class="constant">E_PRELEASE</code>: Used when
+		    the Canvas'
+		    <code class="methodname">pointerReleased</code> method is
+		    called.
+		  </p></li><li><p><code class="constant">E_PDRAG</code>: Used when
+		    the Canvas'
+		    <code class="methodname">pointerDragged</code> method is
+		    called.
+		  </p></li><li><p><code class="constant">E_KPRESS</code>: Used when the
+		    Canvas' <code class="methodname">keyPressed</code> method
+		    is called.
+		  </p></li><li><p><code class="constant">E_KRELEASE</code>: Used when the
+		    Canvas' <code class="methodname">keyReleased</code> method
+		    is called.
+		  </p></li><li><p><code class="constant">E_KREPEAT</code>: Used when the
+		    Canvas' <code class="methodname">keyRepeated</code> method
+		    is called.
+		  </p></li><li><p><code class="constant">E_HIDE</code>: Used when the
+		    Canvas' <code class="methodname">hideNotify</code> method
+		    is called.
+		  </p></li><li><p><code class="constant">E_SHOW</code>: Used when the
+		    Canvas' <code class="methodname">showNotify</code> method
+		    is called.
+		  </p></li><li><p><code class="constant">E_RESIZE</code>: Used when the
+		    Canvas' <code class="methodname">sizeChanged</code>
+		    method is called.
+		  </p></li><li><p><code class="constant">E_UNKNOWN</code>: Used to
+		  signify an unknown event.
+		  </p></li></ul></div></li><li><p><code class="option">-x</code>: The x coordinate of the event.
+              </p></li><li><p><code class="option">-y</code>: The y coordinate of the event.
+              </p></li><li><p><code class="option">-width</code>: The width of the screen
+	      area covered by the event.
+              </p></li><li><p><code class="option">-height</code>: The height of the screen
+	      area covered by the event.
+              </p></li><li><p><code class="option">-keycode</code>: An integer referencing
+	      the key involved in the event.
+              </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+		Be aware that different phones may use different
+		numbers.
+	      </td></tr></table></div></li><li><p><code class="option">-keyname</code>: Returns a string giving
+		a cross platform name for the key pressed.  Names are
+		given here: <a href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#field_summary" target="_top">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#field_summary</a>, with the addition of "LEFT_SK" and "RIGHT_SK" for
+		the left and right soft keys These only occur when in
+		full screen mode and the soft key events go to the
+		program)
+              </p></li><li><p><code class="option">-gameaction</code>: Returns the integer
+	      code for the game action.  Described in further detail
+	      here:
+		<a href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#gameactions" target="_top">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#gameactions</a>
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2554186"></a><h2>Example</h2><pre class="programlisting">
 xxx
-	  </pre><p>Produces:</p><pre class="screen">yyy</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_dismiss_command.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="j2me.html#midp20commands"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_font.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.dismiss_command </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.font</td></tr></table></div></body></html>
+	  </pre><p>Produces:</p><pre class="screen">yyy</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_date.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="j2me.html#midp20commands"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_font.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.date </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.font</td></tr></table></div></body></html>

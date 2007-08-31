@@ -4248,6 +4248,13 @@ class HelloCmd implements Command {
 	  <cmdsynopsis>
 	    <command><replaceable>$alertcmd</replaceable></command>
 	    <arg choice="req">setcurrent</arg>
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+	    <arg choice="opt">cset
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
@@ -4319,6 +4326,15 @@ class HelloCmd implements Command {
 
 	  <cmdsynopsis>
 	    <command><replaceable>$canvascmd</replaceable></command>
+
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+	    <arg choice="opt">cset
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+
 	    <arg choice="opt">flush
 	      <arg choice="opt"><replaceable>x y width height</replaceable></arg>
 	    </arg>
@@ -4474,6 +4490,14 @@ $graphics frect [list 10 50] [list 80 10]
 	  <cmdsynopsis>
 	    <command>$choicegroupcmd</command>
 
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+	    <arg choice="opt">cset
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+
 	    <arg choice="opt">
 	      append <replaceable>text</replaceable> <arg
 		choice="opt"><replaceable>image</replaceable></arg>
@@ -4527,9 +4551,9 @@ $graphics frect [list 10 50] [list 80 10]
 	    ChoiceGroups come in three forms: radio buttons (the
 	    <option>exclusive</option> type), where only one at a time
 	    may be selected, check boxes (the
-	    <option>multiple</option> type), or as a popup.
-	    (check boxes).
-
+	    <option>multiple</option> type), or as a popup.  (check
+	    boxes).  For an in-depth look at the Java code that this
+	    command is based on, see:
 	    <ulink
 	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html">javax.microedition.lcdui.ChoiceGroup</ulink>
 	  </para>
@@ -4756,53 +4780,81 @@ FIXME
       <refentry id="lcdui_date">
 	<refnamediv>
 	  <refname>lcdui.date</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Date/Time widget for lcdui forms</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.date</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
-	  </cmdsynopsis>
-	</refsynopsisdiv>
-	<refsect1>
-	  <title>Description</title>
-	  <para>
-	    The <command>lcdui.date</command> command 
-	    <option><replaceable>filename</replaceable></option>.
-	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-xxx
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
-	</refsect1>
-      </refentry>
 
-      <refentry id="lcdui_dismiss_command">
-	<refnamediv>
-	  <refname>lcdui.dismiss_command</refname>
-	  <refpurpose>xxx</refpurpose>
-	</refnamediv>
-	<refsynopsisdiv>
-	  <cmdsynopsis>
-	    <command>lcdui.dismiss_command</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">
+	      -date
+	      <replaceable>date/time in seconds</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -label
+	      <replaceable>label</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -type
+	      <group choice="req">
+		<arg choice="req">date</arg>
+		<arg choice="req">date_time</arg>
+		<arg choice="req">time</arg>
+	      </group>
+	    </arg>
+
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$datecmd</replaceable></command>
+
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+	    <arg choice="opt">cset
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.dismiss_command</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.date</command> command creates a widget
+	    that can either display, or allow the user to enter a
+	    date, a time, or both.
 	  </para>
+	  <para>The <command>lcdui.command</command> takes these
+	  options:</para>
+	  <itemizedlist>
+          <listitem>
+	      <para><option>-label</option>: A label for the date widget.
+              </para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-type</option>: One of
+	      <option>date</option>, which only displays a date
+	      selection widget, <option>time</option>, which only
+	      displays a time selection widget, or
+	      <option>date_time</option>, which allows the user to
+	      select both a date and a time.
+              </para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-date</option>: The current time,
+	      expressed in milliseconds.
+              </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
+
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -4811,21 +4863,190 @@ xxx
 
       <refentry id="lcdui_event">
 	<refnamediv>
-	  <refname>lcdui.event</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refname><replaceable>$eventcmd</replaceable></refname>
+	  <refpurpose>Command/object describing a Canvas event.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>lcdui.event</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <command><replaceable>$eventcmd</replaceable></command>
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+	    <arg choice="opt">cset
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.event</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The
+	    <command><replaceable>$eventcmd</replaceable></command>
+	    command is used to access information about events
+	    received by a Canvas.  There is no Hecl command to create
+	    event commands - they are passed in as arguments to the
+	    <option>-eventhandler</option> specified for an
+	    <command>lcdui.canvas</command>.
 	  </para>
+	  <para>There are a number of parameters that can be
+	  queried:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-canvas</option>: Returns the canvas
+	      command associated with the event's canvas.</para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-reason</option>: A number representing
+		one of the following reasons:
+              </para>
+	      <programlisting>
+    public static final int E_NONE = 0;
+    public static final int E_PAINT = 1;
+    public static final int E_PPRESS = 2;
+    public static final int E_PRELEASE = 3;
+    public static final int E_PDRAG = 4;
+    public static final int E_KPRESS = 5;
+    public static final int E_KRELEASE = 6;
+    public static final int E_KREPEAT = 7;
+    public static final int E_HIDE = 8;
+    public static final int E_SHOW = 9;
+    public static final int E_RESIZE = 10;
+    public static final int E_UNKNOWN = -1;
+	      </programlisting>
+	      <para>Which correspond to:</para>
+	      <itemizedlist>
+		<listitem>
+		  <para><constant>E_PAINT</constant>: Used when the
+		    Canvas' <methodname>paint</methodname> method is
+		    called.</para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_PRESS</constant>: Used when the
+		    Canvas' <methodname>pointerPressed</methodname>
+		    method is called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_PRELEASE</constant>: Used when
+		    the Canvas'
+		    <methodname>pointerReleased</methodname> method is
+		    called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_PDRAG</constant>: Used when
+		    the Canvas'
+		    <methodname>pointerDragged</methodname> method is
+		    called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_KPRESS</constant>: Used when the
+		    Canvas' <methodname>keyPressed</methodname> method
+		    is called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_KRELEASE</constant>: Used when the
+		    Canvas' <methodname>keyReleased</methodname> method
+		    is called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_KREPEAT</constant>: Used when the
+		    Canvas' <methodname>keyRepeated</methodname> method
+		    is called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_HIDE</constant>: Used when the
+		    Canvas' <methodname>hideNotify</methodname> method
+		    is called.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><constant>E_SHOW</constant>: Used when the
+		    Canvas' <methodname>showNotify</methodname> method
+		    is called.
+		  </para>
+		</listitem>
+		<listitem>
+		  <para><constant>E_RESIZE</constant>: Used when the
+		    Canvas' <methodname>sizeChanged</methodname>
+		    method is called.
+		  </para>
+		</listitem>
+		<listitem>
+		  <para><constant>E_UNKNOWN</constant>: Used to
+		  signify an unknown event.
+		  </para>
+		</listitem>
+	      </itemizedlist>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-x</option>: The x coordinate of the event.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-y</option>: The y coordinate of the event.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-width</option>: The width of the screen
+	      area covered by the event.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-height</option>: The height of the screen
+	      area covered by the event.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-keycode</option>: An integer referencing
+	      the key involved in the event.
+              </para>
+	      <note>
+		Be aware that different phones may use different
+		numbers.
+	      </note>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-keyname</option>: Returns a string giving
+		a cross platform name for the key pressed.  Names are
+		given here: <ulink
+		url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#field_summary"
+		/>, with the addition of "LEFT_SK" and "RIGHT_SK" for
+		the left and right soft keys These only occur when in
+		full screen mode and the soft key events go to the
+		program)
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-gameaction</option>: Returns the integer
+	      code for the game action.  Described in further detail
+	      here:
+		<ulink
+		  url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#gameactions"></ulink>
+              </para>
+	    </listitem>
+
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
@@ -4992,34 +5213,6 @@ xxx
 	  <title>Description</title>
 	  <para>
 	    The <command>lcdui.list</command> command 
-	    <option><replaceable>filename</replaceable></option>.
-	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-xxx
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
-	</refsect1>
-      </refentry>
-
-      <refentry id="lcdui_select_command">
-	<refnamediv>
-	  <refname>lcdui.select_command</refname>
-	  <refpurpose>xxx</refpurpose>
-	</refnamediv>
-	<refsynopsisdiv>
-	  <cmdsynopsis>
-	    <command>lcdui.select_command</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
-	  </cmdsynopsis>
-	</refsynopsisdiv>
-	<refsect1>
-	  <title>Description</title>
-	  <para>
-	    The <command>lcdui.select_command</command> command 
 	    <option><replaceable>filename</replaceable></option>.
 	  </para>
 	</refsect1>
