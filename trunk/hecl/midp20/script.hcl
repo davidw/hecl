@@ -27,7 +27,7 @@ foreach x {c1 c2 c3} {
 }
 set ticker [lcdui.ticker -text "I am a Ticker!"];
 
-set defform [lcdui.form -title "Demo Form" -commandaction "backToMainMenu"];
+set defform [lcdui.form -title "Demo Form" -commandaction backToMainMenu];
 $defform configure -ticker $ticker;
 $defform append [lcdui.textfield -label "TextField" -text "TextField" -uneditable 1];
 $defform append [lcdui.textfield -label "Editable TextField" -text "editable text"];
@@ -38,6 +38,8 @@ $defform append [lcdui.spacer -label spacer2 -minwidth 200 -minheight 4];
 $defform append $datefield;
 $defform append $choicegroup;
 $defform append [lcdui.imageitem -image $logo];
+$defform append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
+		     -value 10 -maxvalue 10]
 $defform addcommand $backcmd;
 
 set deflist [lcdui.list];

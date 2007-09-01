@@ -1,5 +1,9 @@
 2007-09-01  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Added lcdui.gauge documentation.
+
+	* midp20/script.hcl: Added gauge to the form demo.
+
 	* docs/hecl.xml: Added documentation for the lcdui.font and
 	lcdui.form commands.  Various other fixes.
 

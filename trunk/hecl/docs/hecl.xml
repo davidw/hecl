@@ -5337,25 +5337,71 @@ FIXME
       <refentry id="lcdui_gauge">
 	<refnamediv>
 	  <refname>lcdui.gauge</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a gauge widget that can be attached to a
+	  form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.gauge</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+
+	    <arg choice="opt">-label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">-interactive
+	      <group choice="req">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-value <replaceable>value</replaceable></arg>
+	    <arg choice="opt">-maxvalue <replaceable>maxvalue</replaceable></arg>
+
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$gaugecmd</replaceable></command>
+
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+
+	    <arg choice="opt">configure
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.gauge</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.gauge</command> command creates a gauge element, and returns a
+	    command/object that can be used to manipulate it. For an in-depth look at the Java code
+	    that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Gauge.html">javax.microedition.lcdui.Gauge</ulink>
 	  </para>
+	  <para>The options for this command are as follows:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-value</option>: An integer giving the initial value of the gauge, or,
+	      one of these special values: "continuous-idle", "continuous-running",
+	      "incremental-idle", or "incremental-updating".  These values are utilized for
+	      non-interactive guages that can be used as progress meters.  These values are
+	      explained in further detail on the javadoc page linked above.
+              </para>
+
+	      <para><option>-maxvalue</option>: An integer giving the maximum value of the guage, or
+	      "indefinite" if there is no maximum value.
+              </para>
+
+	      <para><option>-interactive</option>: Either 1 or 0, depending on whether the gauge is
+	      interactive, or is for display purposes only.
+              </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
