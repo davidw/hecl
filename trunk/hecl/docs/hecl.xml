@@ -5411,25 +5411,121 @@ FIXME
       <refentry id="lcdui_image">
 	<refnamediv>
 	  <refname>lcdui.image</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates an image.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.image</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">
+	      -file <replaceable>filename</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -rms <replaceable>recordstore</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -resource <replaceable>resourcename</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -image <replaceable>image</replaceable>
+	    </arg>
+
+	    <arg choice="opt">
+	      -data <replaceable>data</replaceable>
+	    </arg>
+
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command>$imagecmd</command>
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+
+	    <arg choice="opt">configure
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+
+	    <arg choice="opt">thumbnail
+	      <arg choice="opt">thumbwidth
+		<arg choice="opt">thumbwidth</arg>
+	      </arg>
+	    </arg>
+
+	    <arg choice="opt">graphics</arg>
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.image</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.image</command> command creates an image, from some data, either by
+	    indicating a filename, record store, or a resource name.  It returns an object/command
+	    that can be utilized to manipulate the image.  Mutable images are those loaded from
+	    existing data, generally.  Immutable images are created as a "blank slate", with white
+	    pixels.  For an in-depth look at the Java code that this command is based on, see:
+	    <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Image.html">javax.microedition.lcdui.Image</ulink>
+
 	  </para>
+	  <para>
+	    The options available for the <command>lcdui.image</command> command are described
+	    below:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-file</option>: Load the image from the given file name.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-rms</option>: Load the image from the given record store.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-resource</option>: Load the image from the given resource.  By
+	      "resource", we mean a file included in the .jar.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-image</option>: Create a new image from an existing image.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-data</option>: Create a new image from binary data.
+              </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <para>
+	    The subcommands available to an <command><replaceable>$imagecmd</replaceable></command>
+	    are listed below:
+	  </para>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para><command>thumbnail</command>: Creates a thumbnail from the image.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>graphics</command>: Unless the image is immutable, creates and returns
+	      a new graphics object associated with the image.
+              </para>
+	    </listitem>
+	  </itemizedlist>
+
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5439,25 +5535,59 @@ xxx
       <refentry id="lcdui_imageitem">
 	<refnamediv>
 	  <refname>lcdui.imageitem</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>An item that can contain an image, in order to attach it to a form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.imageitem</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">-appearance
+	      <group choice="req">
+		<arg choice="req">plain</arg>
+		<arg choice="req">button</arg>
+		<arg choice="req">hyperlink</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-image <replaceable>image</replaceable></arg>
+	    <arg choice="opt">-label <replaceable>label</replaceable></arg>
+	    <arg choice="opt">-text <replaceable>text</replaceable></arg>
+	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$imageitemcmd</replaceable></command>
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+
+	    <arg choice="opt">configure
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.imageitem</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.imageitem</command> command creates an item holding an image, in
+	    order to be able to attach an image to a form.  It also returns a command/object that
+	    can be used to manipulate the ImageItem.  For an in-depth look at the Java code that
+	    this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ImageItem.html">javax.microedition.lcdui.ImageItem</ulink>
 	  </para>
+	  <para>The options unique to this command are as follows:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-appearance</option>: Specifies the appearance and behavior of the
+	      imageitem.  The meaning of the various values is explained in further detail here:
+	      <ulink
+	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Item.html#appearance">javax.microedition.lcdui.Item</ulink>.
+              </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5764,7 +5894,7 @@ xxx
 
     </section>
 
-    <section>
+    <section id="example_application">
       <title>Example application</title>
 
       <para>
@@ -5816,7 +5946,7 @@ xxx
 
     </section>
 
-    <section>
+    <section id="hacking_hecl_j2me">
       <title>Hacking Hecl's J2ME code</title>
 
       <para>

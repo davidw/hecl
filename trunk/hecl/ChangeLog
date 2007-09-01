@@ -1,3 +1,7 @@
+2007-09-02  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added lcdui.image, lcdui.imageitem documentation.
+
 2007-09-01  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added lcdui.gauge documentation.
