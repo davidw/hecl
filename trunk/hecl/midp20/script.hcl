@@ -51,6 +51,7 @@ $mainmenu addcommand $exitcmd;
 $mainmenu addcommand $selectcmd;
 $mainmenu append "List Demo";
 $mainmenu append "Form Demo";
+$mainmenu append "Font Demo";
 $mainmenu append "Call...";
 $mainmenu append "Send SMS...";
 $mainmenu append "TextBox...";
@@ -123,6 +124,34 @@ proc canvasEvents {canvas event} {
     $canvas repaint
 }
 
+proc changeFont {pickfont fonts txt fontstringitem cmd form} {
+    set f [lindex $fonts [$pickfont selection get]]
+    $fontstringitem configure -font $f
+    # This seems to be necessary, at least in the emulator, in order
+    # for the change to actually take effect.
+    $fontstringitem configure -text $txt
+}
+
+# Font demo
+
+proc createFontForm {} {
+    set txt "Hello World"
+    set fontform [lcdui.form -title "Font Demo"]
+    set fonts [sort [lcdui.font names]]
+    $fontform setcurrent
+    set pickfont [lcdui.choicegroup -label "Pick a font:" -type popup]
+    $fontform append $pickfont
+    foreach f $fonts {
+	$pickfont append $f
+    }
+    set fontstringitem [lcdui.stringitem -label "Sample text:" -text $txt]
+    $fontform append $fontstringitem
+    set switchfont [lcdui.command -label "Switch font" -longlabel "Switch font"]
+    $fontform addcommand $switchfont
+    $fontform configure -commandaction [list changeFont $pickfont $fonts \
+					    $txt $fontstringitem]
+}
+
 # A canvas
 set canvasX 10
 set canvasY 10
@@ -168,21 +197,23 @@ proc mainsel {cmd d} {
 	global defform;
 	$defform setcurrent;
     } elseif {= $idx 2} {
+	createFontForm
+    } elseif {= $idx 3} {
 	# Call...
 	midlet.platformrequest "tel:+4369911259952";
-    } elseif {= $idx 3} {
+    } elseif {= $idx 4} {
 	# Send SMS...
 	midlet.platformrequest "sms:+4369911259952";
-    } elseif {= $idx 4} {
+    } elseif {= $idx 5} {
 	# Textbox
 	global textbox;
 	$textbox setcurrent;
-    } elseif {= $idx 5} {
+    } elseif {= $idx 6} {
 	# Alert
 	[lcdui.alert -type confirmation -title Alert\
 	     -commandaction backToMainMenu \
 	     -text "This is the alert message!" -timeout forever] setcurrent;
-    } elseif {= $idx 6} {
+    } elseif {= $idx 7} {
 	# Canvas
 	global canvas
 	$canvas setcurrent;
@@ -192,7 +223,7 @@ proc mainsel {cmd d} {
 	set HEIGHT [$canvas cget -height]
 	DrawH $g $canvasX $canvasY
 	$canvas repaint
-    } elseif {= $idx 7} {
+    } elseif {= $idx 8} {
 	global infoform;
 	$infoform setcurrent;
     }
