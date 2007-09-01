@@ -124,12 +124,16 @@ proc canvasEvents {canvas event} {
     $canvas repaint
 }
 
-proc changeFont {pickfont fonts txt fontstringitem cmd form} {
+proc changeFont {fontsize switchfont pickfont fonts txt sizestringitem fontstringitem cmd form} {
     set f [lindex $fonts [$pickfont selection get]]
-    $fontstringitem configure -font $f
-    # This seems to be necessary, at least in the emulator, in order
-    # for the change to actually take effect.
-    $fontstringitem configure -text $txt
+    if { eq $cmd $switchfont } {
+	$fontstringitem configure -font $f
+	# This seems to be necessary, at least in the emulator, in order
+	# for the change to actually take effect.
+	$fontstringitem configure -text $txt
+    } elseif { eq $cmd $fontsize } {
+	$sizestringitem configure -text [lcdui.font $f stringwidth $txt]
+    }
 }
 
 # Font demo
@@ -145,11 +149,17 @@ proc createFontForm {} {
 	$pickfont append $f
     }
     set fontstringitem [lcdui.stringitem -label "Sample text:" -text $txt]
+    set sizestringitem [lcdui.stringitem -label "Size (pixels):" -text "This is filled in when you use the 'Font size' command"]
     $fontform append $fontstringitem
+    $fontform append $sizestringitem
+
     set switchfont [lcdui.command -label "Switch font" -longlabel "Switch font"]
+    set fontsize [lcdui.command -label "Font size" -longlabel "Font size (pixels)"]
     $fontform addcommand $switchfont
-    $fontform configure -commandaction [list changeFont $pickfont $fonts \
-					    $txt $fontstringitem]
+    $fontform addcommand $fontsize
+    $fontform configure -commandaction \
+	[list changeFont $fontsize $switchfont $pickfont \
+	     $fonts $txt $sizestringitem $fontstringitem]
 }
 
 # A canvas
