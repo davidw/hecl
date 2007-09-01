@@ -4218,8 +4218,10 @@ class HelloCmd implements Command {
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.alert</command>
-	    <arg choice="opt">-title
-	    <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-ticker <replaceable>tickerwidget</replaceable></arg>
+	    <arg choice="opt">-commandaction <replaceable>commandActionProc</replaceable></arg>
+
 	    <arg choice="opt">-type
 	      <group choice="req">
 		<arg choice="req">info</arg>
@@ -4251,7 +4253,7 @@ class HelloCmd implements Command {
 	    <arg choice="opt">cget
 	      <replaceable>-optname</replaceable>
 	    </arg>
-	    <arg choice="opt">cset
+	    <arg choice="opt">configure
 	      <replaceable>-optname</replaceable>
 	      <replaceable>optval</replaceable>
 	    </arg>
@@ -4330,7 +4332,7 @@ class HelloCmd implements Command {
 	    <arg choice="opt">cget
 	      <replaceable>-optname</replaceable>
 	    </arg>
-	    <arg choice="opt">cset
+	    <arg choice="opt">configure
 	      <replaceable>-optname</replaceable>
 	      <replaceable>optval</replaceable>
 	    </arg>
@@ -4493,7 +4495,7 @@ $graphics frect [list 10 50] [list 80 10]
 	    <arg choice="opt">cget
 	      <replaceable>-optname</replaceable>
 	    </arg>
-	    <arg choice="opt">cset
+	    <arg choice="opt">configure
 	      <replaceable>-optname</replaceable>
 	      <replaceable>optval</replaceable>
 	    </arg>
@@ -4813,7 +4815,7 @@ FIXME
 	    <arg choice="opt">cget
 	      <replaceable>-optname</replaceable>
 	    </arg>
-	    <arg choice="opt">cset
+	    <arg choice="opt">configure
 	      <replaceable>-optname</replaceable>
 	      <replaceable>optval</replaceable>
 	    </arg>
@@ -4825,9 +4827,12 @@ FIXME
 	  <para>
 	    The <command>lcdui.date</command> command creates a widget
 	    that can either display, or allow the user to enter a
-	    date, a time, or both.
+	    date, a time, or both.  For
+	    an in-depth look at the Java code that this command is
+	    based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/DateField.html">javax.microedition.lcdui.DateField</ulink>
 	  </para>
-	  <para>The <command>lcdui.command</command> takes these
+	  <para>The <command>lcdui.date</command> command takes these
 	  options:</para>
 	  <itemizedlist>
           <listitem>
@@ -4872,7 +4877,7 @@ FIXME
 	    <arg choice="opt">cget
 	      <replaceable>-optname</replaceable>
 	    </arg>
-	    <arg choice="opt">cset
+	    <arg choice="opt">configure
 	      <replaceable>-optname</replaceable>
 	      <replaceable>optval</replaceable>
 	    </arg>
@@ -5051,7 +5056,7 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5061,25 +5066,157 @@ xxx
       <refentry id="lcdui_font">
 	<refnamediv>
 	  <refname>lcdui.font</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Font information and manipulation command.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.font</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">names</arg>
+	    <group choice="opt">
+	      <replaceable>fontname</replaceable>
+	      <arg choice="req">cget</arg>
+	      <group choice="req">
+		<arg choice="req">-face</arg>
+		<arg choice="req">-size</arg>
+		<arg choice="req">-plain</arg>
+		<arg choice="req">-bold</arg>
+		<arg choice="req">-italic</arg>
+		<arg choice="req">-underlined</arg>
+		<arg choice="req">-height</arg>
+		<arg choice="req">-baselineposition</arg>
+	      </group>
+	    </group>
+	    <arg choice="opt">
+	      <replaceable>fontname</replaceable>
+	      charwidth
+	      <replaceable>string</replaceable>
+	      <arg
+		choice="opt">
+		<replaceable>offset</replaceable>
+		<arg choice="opt"><replaceable>length</replaceable>
+	      </arg>
+	      </arg>
+	    </arg>
+
+	    <arg choice="opt">
+	      <replaceable>fontname</replaceable>
+	      stringwidth
+	      <replaceable>string</replaceable>
+	      <arg
+		choice="opt"><replaceable>offset</replaceable>
+		<arg choice="opt"><replaceable>length</replaceable>
+		</arg>
+	      </arg>
+	    </arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.font</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.font</command> command is used to fetch
+	    information about fonts.  For an in-depth look at the Java
+	    code that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Font.html">javax.microedition.lcdui.Font</ulink>
 	  </para>
+	  <para>
+	    It accepts several subcommands:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><command>names</command>: Returns a list of all
+	      the available fonts.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><replaceable>fontname</replaceable>
+		<command>charwidth</command>
+		<option><replaceable>string</replaceable></option>:
+		Returns the width, in pixels, of the given characters.
+		Takes optional
+		<option><replaceable>offset</replaceable></option> and
+		<option><replaceable>length</replaceable></option>
+		parameters.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><replaceable>fontname</replaceable>
+		<command>stringwidth</command>
+		<option><replaceable>string</replaceable></option>:
+		Returns the width, in pixels, of the given string.
+		Takes optional
+		<option><replaceable>offset</replaceable></option> and
+		<option><replaceable>length</replaceable></option>
+		parameters.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><replaceable>fontname</replaceable>
+		<command>cget</command>
+		<option><replaceable>-option</replaceable></option>:
+		Used to fetch information about a font.  Allowed
+		options are as follows:
+              </para>
+	      <itemizedlist>
+		<listitem>
+		  <para><option>-face</option>: One of "system",
+		  "proportional", or "monospace".
+		  </para>
+		</listitem>
+		<listitem>
+		  <para><option>-size</option>: One of "small",
+		  "medium" or "large".
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-plain</option>: Returns a 1 if the
+		  font is "plain" - not bold, underlined or italic, or
+		  0 if it isn't.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-bold</option>: Returns 1 or 0 if the
+		  font is bold or not.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-italic</option>: Returns 1 or 0 if the
+		  font is italic or not.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-underlined</option>: Returns 1 or 0 if the
+		  font is underlined or not.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-height</option>: Returns the standard
+		  height of a line of text in this font, in pixels.
+		  </para>
+		</listitem>
+
+		<listitem>
+		  <para><option>-baselineposition</option>: Returns
+		  the distance in pixels from the top of the text to
+		  the text's baseline.
+		  </para>
+		</listitem>
+	      </itemizedlist>
+	    </listitem>
+
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5089,25 +5226,108 @@ xxx
       <refentry id="lcdui_form">
 	<refnamediv>
 	  <refname>lcdui.form</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a form that can contain various widgets</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.form</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-ticker <replaceable>tickerwidget</replaceable></arg>
+	    <arg choice="opt">-commandaction <replaceable>commandActionProc</replaceable></arg>
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$formcmd</replaceable></command>
+
+	    <arg choice="opt">cget
+	      <replaceable>-optname</replaceable>
+	    </arg>
+
+	    <arg choice="opt">configure
+	      <replaceable>-optname</replaceable>
+	      <replaceable>optval</replaceable>
+	    </arg>
+
+	    <arg choice="opt">size</arg>
+
+	    <arg choice="opt">append
+	      <group choice="req">
+		<arg
+		choice="req"><replaceable>string</replaceable></arg>
+		<arg
+		choice="req"><replaceable>image</replaceable></arg>
+		<arg
+		choice="req"><replaceable>widget</replaceable></arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">item
+	      <replaceable>itemnum</replaceable>
+	    </arg>
+
+	    <arg choice="opt">delete
+	      <replaceable>itemnum</replaceable>
+	    </arg>
+
+	    <arg choice="opt">deleteall
+	    </arg>
+
+	    <arg choice="opt">setcurrent
+	    </arg>
+
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.form</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.form</command> command creates a form,
+	    returning a command/object that can be used to further
+	    manipulate the created form.  For an in-depth look at the
+	    Java code that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html">javax.microedition.lcdui.Form</ulink>
 	  </para>
+	  <para>The subcommands accepted by the
+	    <command><replaceable>$formcmd</replaceable></command>
+	    that <command>lcdui.form</command> returns are as follows:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><command>cget</command>: Fetch configuration options.
+              </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>configure</command>: Set configuration options.
+              </para>
+	    </listitem>
+	    <listitem>
+	      <para><command>item</command>
+		<option><replaceable>itemnum</replaceable></option>:
+		Return the item identified by
+		<option><replaceable>itemnum</replaceable></option>.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>delete</command>
+		<option><replaceable>itemnum</replaceable></option>:
+		Delete the item identified by
+		<option><replaceable>itemnum</replaceable></option>.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><command>deleteall</command>: Delete all items
+	      associated with this form.
+              </para>
+	    </listitem>
+
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
