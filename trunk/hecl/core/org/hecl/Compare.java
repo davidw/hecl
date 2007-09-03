@@ -39,8 +39,8 @@ public class Compare {
      * representation even when the objects are different (happens i.e. on
      * Nokia 6630 for instances of <code>javax.microeditoion.lcdui.Command</code>.
      * 
-     * @param a a <code>Thing</code> value
-     * @param b a <code>Thing</code> value
+     * @param t1 a <code>Thing</code> value
+     * @param t2 a <code>Thing</code> value
      * @return <code>boolean</code> indicating sameness.
      */
     static public boolean same(Thing t1,Thing t2) {

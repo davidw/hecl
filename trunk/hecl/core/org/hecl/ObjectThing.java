@@ -72,11 +72,9 @@ public class ObjectThing implements RealThing {
     /**
      * <code>get</code> attempts to fetch an Object from the Thing.
      *
-     * @param thing
-     *            a <code>Thing</code> value
+     * @param thing a <code>Thing</code> value
      * @return an <code>Object</code> value
-     * @exception HeclException
-     *                if an error occurs
+     * @exception HeclException if an error occurs
      */
     public static Object get(Thing thing) throws HeclException {
         RealThing realthing = thing.getVal();

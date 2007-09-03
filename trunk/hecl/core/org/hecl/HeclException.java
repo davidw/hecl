@@ -30,6 +30,7 @@ public class HeclException extends Exception {
 
     Stack stack;
     Thing value = null;
+    Thing message = null;
 
     static final String BREAK = "BREAK";
 
@@ -58,30 +59,29 @@ public class HeclException extends Exception {
     /**
      * Creates a new <code>HeclException</code> instance.
      *
-     * @param s
-     *            a <code>String</code> value describing the error.
-     * @param exception_code
-     *            an <code>int</code> value
+     * @param s a <code>String</code> value describing the error.
+     * @param exception_code an <code>int</code> value
      */
     public HeclException(String s, String exception_code) {
 	this(s,exception_code,null);
     }
 
-    HeclException(String s, String exception_code,Thing value) {
+    HeclException(String s, String exception_code, Thing value) {
 	super(s);
+	this.message = new Thing(s);
 	this.value = value;
         this.code = exception_code;
-        pushException();
+        pushException(s);
     }
 
     /**
      * <code>pushException</code> adds to the exception stack.
      */
-    private void pushException() {
+    private void pushException(String s) {
         stack = new Stack();
         Vector lst = new Vector();
         lst.addElement(new Thing(code));
-        lst.addElement(new Thing(getMessage()));
+        lst.addElement(message);
         stack.push(new Thing(new ListThing(lst)));
     }
 
@@ -108,10 +108,6 @@ public class HeclException extends Exception {
 
     public String toString() {
         return getStack().toString();
-    }
-
-    public String getMessage() {
-	return this.toString();
     }
 
     /**

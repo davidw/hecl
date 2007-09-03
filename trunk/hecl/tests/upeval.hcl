@@ -40,7 +40,8 @@ test upeval-3 {
 
 test upeval-4 {
     set foo 1
-    upeval { bleagh }
-    catch {set foo} err
-    set err
-} {}
+    catch {
+	upeval { bleagh }
+    } err
+    list $foo $err
+} {1 {{ERROR {Command 'bleagh' does not exist} 1} {upeval 2}}}

@@ -126,8 +126,7 @@ public class Thing extends Object {
     }
 
     /**
-     * <code>toString</code> returns the String value of a Thing. FIXME this
-     * could probably be improved in terms of efficiency.
+     * <code>toString</code> returns the String value of a Thing.
      *
      * @return a <code>String</code> value
      */
