@@ -1,3 +1,12 @@
+2007-09-03  David N. Welton  <davidw@dedasys.com>
+
+	* tests/upeval.hcl: Fix test for error thrown in upeval, and
+	restoration of the previous stack.
+
+	* core/org/hecl/HeclException.java: Added a message field to save
+	the message in, and removed the getMessage method.  pushException
+	accepts a string to save in the message field.
+
 2007-09-02  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added lcdui.image, lcdui.imageitem documentation.
