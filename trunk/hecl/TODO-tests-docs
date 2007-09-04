@@ -1,7 +1,5 @@
 # This commands need to be documented and tested.
 
-after - documented, not tested.
-
 base64::encode / decode
 bgerror - documented, not tested.
 
