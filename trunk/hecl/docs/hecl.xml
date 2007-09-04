@@ -5597,25 +5597,52 @@ FIXME
       <refentry id="lcdui_list">
 	<refnamediv>
 	  <refname>lcdui.list</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a full-screen list</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.list</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="opt">-title <replaceable>title</replaceable></arg>
+	    <arg choice="opt">-type
+	      <group choice="req">
+		<arg choice="req">exclusive</arg>
+		<arg choice="req">multiple</arg>
+		<arg choice="req">implicit</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-selectcommand <replaceable>cmd</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.list</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.list</command> command creates a full-screen list and returns a
+	    command/object that can be used to manipulate it. For an in-depth look at the Java code
+	    that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/List.html">javax.microedition.lcdui.List</ulink>
 	  </para>
+	  <para>The options unique to this command are as follows:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-type</option>: One of <option>exclusive</option>,
+		<option>multiple</option> or <option>implicit</option>.  Exclusive and multiple
+		correspond, respectively, to radio buttons and checkboxes.  Implicit lists act like
+		a menu, dispatching to the list's <option>-commandaction</option> when a list item
+		is selected.
+              </para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-selectcommand</option>: Select the command which should be used for
+	      implicit list select actions.
+              </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
+
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5625,12 +5652,25 @@ xxx
       <refentry id="lcdui_settings">
 	<refnamediv>
 	  <refname>lcdui.settings</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Returns or sets information about the graphical environment.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.settings</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+
+	    <arg choice="opt">-color</arg>
+	    <arg choice="opt">-alphalevels</arg>
+	    <arg choice="opt">-alertimagewidth</arg>
+	    <arg choice="opt">-alertimageheight</arg>
+	    <arg choice="opt">-listimagewidth</arg>
+	    <arg choice="opt">-listimageheight</arg>
+
+	    <arg choice="opt">-choiceimagewidth</arg>
+	    <arg choice="opt">-choiceimageheight</arg>
+
+	    <arg choice="opt">-bg</arg>
+	    <arg choice="opt">-fg</arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
@@ -5653,53 +5693,79 @@ xxx
       <refentry id="lcdui_spacer">
 	<refnamediv>
 	  <refname>lcdui.spacer</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a spacer element in a form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.spacer</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="req">-minwidth <replaceable>minimum width</replaceable></arg>
+	    <arg choice="req">-minheight <replaceable>minimum height</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.spacer</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.spacer</command> command creates a spacer to separate form elements.
+	    Via the <option>-minwidth</option> and <option>-minheight</option> options, you can
+	    specify the minimum width and height.  For an in-depth look at the Java code that this
+	    command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Spacer.html">javax.microedition.lcdui.Spacer</ulink>
 	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-xxx
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
 	</refsect1>
       </refentry>
 
       <refentry id="lcdui_stringitem">
 	<refnamediv>
 	  <refname>lcdui.stringitem</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a string item that can be added to a form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.stringitem</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="req">-label <replaceable>label</replaceable></arg>
+	    <arg choice="req">-text <replaceable>text</replaceable></arg>
+	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$stringitemcmd</replaceable></command>
+	    <arg choice="opt">cget
+	      <group choice="req">
+		<arg choice="req">-appearance</arg>
+		<arg choice="req">-text</arg>
+		<arg choice="req">-font</arg>
+	      </group>
+	    </arg>
+
+	    <arg choice="opt">configure
+	      <group choice="req">
+		<arg choice="req">-appearance
+		  <group choice="req">
+		    <arg choice="req">plain</arg>
+		    <arg choice="req">button</arg>
+		    <arg choice="req">hyperlink</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-text <replaceable>text</replaceable></arg>
+		<arg choice="req">-font <replaceable>font</replaceable></arg>
+	      </group>
+	    </arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.stringitem</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.stringitem</command> command creates a string item (label + text)
+	    that can be attached to a form.  Normally, the label is bold, and the text is in the
+	    default font.  For an in-depth look at the Java code that this command is based on, see:
+	    <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/StringItem.html">javax.microedition.lcdui.StringItem</ulink>
 	  </para>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
