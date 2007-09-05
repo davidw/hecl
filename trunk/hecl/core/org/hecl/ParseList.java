@@ -52,6 +52,20 @@ public class ParseList extends Parse {
                 continue;
             }
             switch (ch) {
+		/*
+		    // new - used to ignore '[' and '\' in list parsing
+                case '[' :
+                    parseCommand(state);
+                    addCurrent();
+                    break;
+		case '\\':
+		    if (!parseEscape(state)) {
+			parseWord(state);
+			addCurrent();
+		    }
+		    break;
+		    // end new
+		 */
                 case '{' :
                     parseBlock(state);
                     addCurrent();

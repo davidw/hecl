@@ -627,7 +627,6 @@ public class WidgetInfo {
 
 	/* Form defaults */
 	v = new Vector();
-	v.addElement(new WidgetProp(NTITLE,new Thing("Form")));
 	widgetprops.put(Form.class,v);
 
 	/* List defaults */

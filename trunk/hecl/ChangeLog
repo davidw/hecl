@@ -1,3 +1,18 @@
+2007-09-05  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/SettingsCmd.java: Made command work
+	with a dirty trick to fake an instance.
+
+	* midp20/org/hecl/midp20/lcdui/ListCmd.java: Added support for
+	'selection index' to get selected index.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Added fix for
+	Nokia 6630 screen size bug.
+
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/WidgetInfo.java: Allow Form with no
+	title to support usage with j2me polish in fullscreen mode!
+
 2007-09-04  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: lcdui.list, settings, stringitem.

@@ -53,8 +53,7 @@ public class FormCmd extends ScreenCmd {
     public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
 	Properties p = WidgetInfo.defaultProps(Form.class);
 	p.setProps(argv,1);
-	Form w = new Form(p.getProp(WidgetInfo.NTITLE).toString());
-	p.delProp(WidgetInfo.NTITLE);
+	Form w = new Form(null);
 	return ObjectThing.create(setInstanceProperties(interp,w,p));
     }
 

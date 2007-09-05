@@ -148,12 +148,9 @@ public class ListCmd extends ScreenCmd {
 	    }
 	    String selcmd = argv[startat].toString();
 	    
-	    /*
-	    if(selcmd.equals("index")) {
-		ip.setResult(IntThing.create(l.getSelectedIndex()));
-		return;
-	    }
-	    */
+	    if(selcmd.equals("index"))
+		return IntThing.create(l.getSelectedIndex());
+
 	    if(selcmd.equals("get")) {
 		int m = l.size();
 		boolean[] b = new boolean[m];

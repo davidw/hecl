@@ -267,6 +267,8 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    int oldcw = g.getClipWidth();
 	    int oldch = g.getClipHeight();
 	    
+	    // Nokia 6630 fullscreen bug
+	    calcScreenWidth();      
 //#ifdef debug
 	    System.err.println("drawing rect: y="+drawheight+", h="+CMDBARHEIGHT);
 

@@ -26,6 +26,7 @@ import org.awt.Color;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.ObjectThing;
 import org.hecl.Thing;
 import org.hecl.misc.HeclUtils;
 
@@ -41,7 +42,12 @@ public class SettingsCmd extends OptionCmd {
     protected SettingsCmd() {}
     
     public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
-	return method(interp,null,argv);
+	// temporarily inject 'this' as the object..
+	Thing tmp = argv[0];
+	argv[0] = ObjectThing.create(this);
+	Thing res = method(interp,null,argv);
+	argv[0] = tmp;
+	return res;
     }
     
     public Thing cget(Interp ip,Object target,String optname) throws HeclException {
