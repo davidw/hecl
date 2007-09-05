@@ -60,6 +60,7 @@ $mainmenu append "TextBox...";
 $mainmenu append "Alert";
 $mainmenu append "Canvas";
 $mainmenu append "Information";
+$mainmenu append "Settings";
 
 set menu1 [lcdui.list -commandaction "menu1sel"];
 $menu1 addcommand $backcmd;
@@ -188,6 +189,34 @@ proc DrawH {graphics x y} {
     $graphics frect [list $x $halfy] [list 80 10]
 }
 
+# Settings
+
+proc settingsDemo {} {
+    global backcmd
+    set form [lcdui.form -title "Settings Demo" -commandaction menu1sel]
+    $form setcurrent
+    $form addcommand $backcmd
+
+    foreach s {"-color"
+	"-alphalevels"
+	"-alertimagewidth"
+	"-alertimageheight"
+	"-listimagewidth"
+	"-listimageheight"
+	"-choiceimagewidth"
+	"-choiceimageheight"
+	"-bg"
+	"-fg"
+	"-hilightbg"
+	"-hilightfg"
+	"-border"
+	"-hilightborder"
+	"-borderstyle"
+	"-hilightborderstyle"} {
+	$form append [lcdui.stringitem -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
+    }
+}
+
 proc main {} {
     global mainmenu;
     $mainmenu setcurrent;
@@ -238,6 +267,8 @@ proc mainsel {cmd d} {
     } elseif {= $idx 8} {
 	global infoform;
 	$infoform setcurrent;
+    } elseif {= $idx 9} {
+	settingsDemo
     }
 }
 
