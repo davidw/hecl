@@ -5775,25 +5775,134 @@ FIXME
       <refentry id="lcdui_textbox">
 	<refnamediv>
 	  <refname>lcdui.textbox</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a text box for editing larger blocks of text.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.textbox</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="req">-title <replaceable>title</replaceable></arg>
+	    <arg choice="req">-text <replaceable>text</replaceable></arg>
+	    <arg choice="req">-maxlen <replaceable>maxlen</replaceable></arg>
+	    <arg choice="req">-type
+	      <group choice="req">
+		<arg choice="req">any</arg>
+		<arg choice="req">emailaddr</arg>
+		<arg choice="req">numeric</arg>
+		<arg choice="req">phonenumber</arg>
+		<arg choice="req">decimal</arg>
+	      </group>
+	    </arg>
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$textboxcmd</replaceable></command>
+	    <arg choice="opt">cget
+	      <group choice="req">
+		<arg choice="req">-type</arg>
+		<arg choice="req">-text</arg>
+		<arg choice="req">-maxlen</arg>
+		<arg choice="req">-password</arg>
+		<arg choice="req">-uneditable</arg>
+		<arg choice="req">-sensitive</arg>
+		<arg choice="req">-non_predictive</arg>
+		<arg choice="req">-initial_caps_word</arg>
+		<arg choice="req">-caretposition</arg>
+	      </group>
+	    </arg>
+
+	    <arg chocie="opt">
+	      configure
+	      <group choice="req">
+		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
+		<arg choice="req">-text <replaceable>text</replaceable></arg>
+		<arg choice="req">-maxlen <replaceable>maxlen</replaceable></arg>
+		<arg choice="req">-password
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-uneditable
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-sensitive
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-non_predictive
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-initial_caps_word
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.textbox</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.textbox</command> command creates a full-screen text editing widget
+	    that can be used for editing longer, multi-line chunks of text.  For an in-depth look at
+	    the Java code that this command is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
 	  </para>
+	  <para>There are several options governing the functionality of this widget.  Note that
+	  more than one constraint may be selected at a time:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-password</option>: If 1, obscure the data as it is entered.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-uneditable</option>: If 1, the user is not allowed to edit the
+	      displayed text.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-sensitive</option>: If 1, "indicates that the text entered is
+	      sensitive data that the implementation must never store into a dictionary or table for
+	      use in predictive, auto-completing, or other accelerated input schemes."
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-non_predictive</option>: Don't use the local text-completion system if
+	      this option is set.
+              </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-initial_caps_word</option>: The initial letter of each word should be
+	      capitalized if this option is set.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-initial_caps_sentence</option>: The initial letter of each sentence
+		should be capitalized if this option is set.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5803,25 +5912,97 @@ xxx
       <refentry id="lcdui_textfield">
 	<refnamediv>
 	  <refname>lcdui.textfield</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a small text editing widget that can be attached to a
+	  form.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.textfield</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="req">-label <replaceable>label</replaceable></arg>
+	    <arg choice="req">-text <replaceable>text</replaceable></arg>
+	    <arg choice="req">-maxlen <replaceable>maxlen</replaceable></arg>
+	    <arg choice="req">-type
+	      <group choice="req">
+		<arg choice="req">any</arg>
+		<arg choice="req">emailaddr</arg>
+		<arg choice="req">numeric</arg>
+		<arg choice="req">phonenumber</arg>
+		<arg choice="req">decimal</arg>
+	      </group>
+	    </arg>
 	  </cmdsynopsis>
+
+	  <cmdsynopsis>
+	    <command><replaceable>$textfieldcmd</replaceable></command>
+	    <arg choice="opt">cget
+	      <group choice="req">
+		<arg choice="req">-type</arg>
+		<arg choice="req">-text</arg>
+		<arg choice="req">-maxlen</arg>
+		<arg choice="req">-password</arg>
+		<arg choice="req">-uneditable</arg>
+		<arg choice="req">-sensitive</arg>
+		<arg choice="req">-non_predictive</arg>
+		<arg choice="req">-initial_caps_word</arg>
+		<arg choice="req">-caretposition</arg>
+	      </group>
+	    </arg>
+
+	    <arg chocie="opt">
+	      configure
+	      <group choice="req">
+		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
+		<arg choice="req">-text <replaceable>text</replaceable></arg>
+		<arg choice="req">-maxlen <replaceable>maxlen</replaceable></arg>
+		<arg choice="req">-password
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-uneditable
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-sensitive
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-non_predictive
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+		<arg choice="req">-initial_caps_word
+		  <group choice="req">
+		    <arg choice="req">1</arg>
+		    <arg choice="req">0</arg>
+		  </group>
+		</arg>
+	      </group>
+	    </arg>
+	  </cmdsynopsis>
+
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.textfield</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.textfield</command> command creates a one-line text editing widget
+	    that can be attached to a form.  For an in-depth look at the Java code that this command
+	    is based on, see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
 	  </para>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
@@ -5831,25 +6012,27 @@ xxx
       <refentry id="lcdui_ticker">
 	<refnamediv>
 	  <refname>lcdui.ticker</refname>
-	  <refpurpose>xxx</refpurpose>
+	  <refpurpose>Creates a ticker that scrolls horizontally.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
 	    <command>lcdui.ticker</command>
-	    <arg choice="req"><replaceable></replaceable></arg>
+	    <arg choice="req">-text <replaceable>text</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.ticker</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.ticker</command> command creates a ticker that runs horizontally
+	    across the screen.  For an in-depth look at the Java code that this command is based on,
+	    see: <ulink
+	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
 	  </para>
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
+FIXME
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>yyy</screen>
