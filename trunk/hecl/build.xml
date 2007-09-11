@@ -3,34 +3,25 @@
     Hecl build file.
   </description>
 
-  <import file="settings.xml"/>
-
-  <property file="build.properties"/>
-
-  <import file="core.xml"/>
-  <import file="j2me.xml"/>
-  <import file="misc.xml"/>
-
   <!--
   To customize your Hecl build, please see the file settings.xml.
 
-  Everything is set up to build a midlet for MIDP2.0 and CLDC1.1 by
-  default.
+  To create a midlet for CLDC1.1/MIDP2.0, do:
 
-  To create a midlet for CLDC1.1, use
+  ant -propertyfile ./cldc11midp20.properties midlet
 
-  ant midlet11
+  To create a midlet for CLDC1.0/MIDP1.0, do:
 
-  or simply (with the default settings)
-
-  ant midlet
-
-  To create a midlet for CLDC1.0, use
-
-  ant midlet10
+  ant -propertyfile ./cldc10midp10.properties midlet
 
   -->
-  <!-- *************************************************** -->
+
+  <!-- These files contain most of the actual build targets -->
+  <import file="settings.xml"/>
+  <property file="build.properties"/>
+  <import file="core.xml"/>
+  <import file="j2me.xml"/>
+  <import file="misc.xml"/>
 
   <target name="echo">
     <echo message="Java version: ${ant.java.version}, defines:'${j2se.defines}'"/>

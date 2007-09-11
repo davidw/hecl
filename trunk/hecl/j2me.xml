@@ -1,136 +1,24 @@
 <project name="j2me" basedir=".">
   <!-- J2ME build targets -->
 
-  <target name="j2meLibs10" description="Compile the basics for cldc 1.0">
-    <antcall target="j2meLibs" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-      <param name="wtk.midp.version" value="1.0"/>
-    </antcall>
+<!-- j2melibs, midp10gui, midp20gui, midlet -->
 
-    <antcall target="j2meLibs" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-      <param name="wtk.midp.version" value="2.0"/>
-    </antcall>
-  </target>
-
-  <target name="j2meLibs11" description="Compile the basics for cldc 1.1">
-    <antcall target="j2meLibs" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.1"/>
-      <param name="wtk.midp.version" value="2.0"/>
-    </antcall>
-  </target>
-
-  <target name="main10" description="Compile main app for MIDP1.0">
-    <antcall target="midp10" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-      <param name="wtk.midp.version" value="1.0"/>
-    </antcall>
-  </target>
-
-  <target name="main20" description="Compile main app for MIDP2.0">
-<!--     <antcall target="midp20" inheritAll="false"> -->
-<!--       <param name="wtk.cldc.version" value="1.0"/> -->
-<!--       <param name="wtk.midp.version" value="2.0"/> -->
-<!--     </antcall> -->
-
-    <antcall target="midp20" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.1"/>
-      <param name="wtk.midp.version" value="2.0"/>
-    </antcall>
-  </target>
-
-
-  <target name="gui10" description="Compile guis for MIDP1.0">
-    <antcall target="midp10gui" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-      <param name="wtk.midp.version" value="1.0"/>
-    </antcall>
-  </target>
-
-  <target name="gui20" description="Compile guis for MIDP2.0">
-<!--     <antcall target="midp20gui" inheritAll="false"> -->
-<!--       <param name="wtk.cldc.version" value="1.0"/> -->
-<!--       <param name="wtk.midp.version" value="2.0"/> -->
-<!--     </antcall> -->
-
-    <antcall target="midp20gui" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.1"/>
-      <param name="wtk.midp.version" value="2.0"/>
-    </antcall>
-  </target>
-
-  <target name="midlets10" description="Compile Midlets for MIDP1.0" depends="j2meLibs10,gui10,main10">
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.0"/>
-      <param name="wtk.midp.version" value="1.0"/>
-    </antcall>
-  </target>
-
-  <target name="midlets20" description="Compile Midlets for MIDP2.0" depends="j2meLibs10,j2meLibs11,gui20,main20">
-<!--     <antcall target="midlet" inheritAll="false"> -->
-<!--       <param name="wtk.cldc.version" value="1.0"/> -->
-<!--       <param name="wtk.midp.version" value="2.0"/> -->
-<!--     </antcall> -->
-
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.cldc.version" value="1.1"/>
-      <param name="wtk.midp.version" value="2.0"/>
-    </antcall>
-  </target>
-
-  <target name="midp10"
-    description="Compile MIDP1.0 code"
-    depends="j2meLibs10">
-
-    <mkdir dir="${j2me.build}/stand"/>
-    <mkdir dir="${j2me.pre}/stand"/>
-
-    <wtkpreprocess srcdir="midp10" destdir="${j2me.pre}/stand"
-      symbols="ant:j2me,ant:${cldc},${j2me.defines}"/>
-
-    <wtkbuild srcdir="${j2me.pre}/stand" target="1.1" source="1.2"
-      destdir="${j2me.build}" debug="${hecldebug}">
-      <classpath refid="j2me.coreclasspath"/>
-      <classpath refid="j2me.httpclasspath"/>
-      <classpath refid="j2me.rmsclasspath"/>
-    </wtkbuild>
-  </target>
-
-  <target name="midp20"
+  <target name="midp"
     description="Compile MIDP2.0 code"
-    depends="j2meLibs10,j2meLibs11">
+    depends="j2meLibs,midpgui">
 
     <mkdir dir="${j2me.guiclasspath}"/>
-    <mkdir dir="${j2me.pre}/midp20"/>
+    <mkdir dir="${j2me.pre}/midp${wtk.midp.version}"/>
 
-    <copy file="midp20/hecl_logo.png" todir="${j2me.build}" overwrite="true"/>
+    <copy file="midp${midpstr}/hecl_logo.png" todir="${j2me.build}" overwrite="true"/>
 
-    <wtkpreprocess srcdir="midp20" destdir="${j2me.pre}/midp20"
-      symbols="ant:j2me,ant:cldc1.1"/>
-    <wtkbuild srcdir="${j2me.pre}/midp20" target="1.1" source="1.2"
+    <wtkpreprocess srcdir="midp${midpstr}" destdir="${j2me.pre}/midp${midpstr}"
+      symbols="ant:j2me,ant:cldc${wtk.cldc.vesion}"/>
+    <wtkbuild srcdir="${j2me.pre}/midp${midpstr}" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.guiclasspath}">
       <classpath refid="j2me.coreclasspath"/>
     </wtkbuild>
-  </target>
-
-  <target name="midlet10" description="Build MIDlet for CLDC-1.0">
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.midp.version" value="1.0"/>
-      <param name="wtk.cldc.version" value="1.0"/>
-    </antcall>
-
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.midp.version" value="2.0"/>
-      <param name="wtk.cldc.version" value="1.0"/>
-    </antcall>
-  </target>
-
-  <target name="midlet11" description="Build MIDlet for CLDC-1.1">
-    <antcall target="midlet" inheritAll="false">
-      <param name="wtk.midp.version" value="2.0"/>
-      <param name="wtk.cldc.version" value="1.1"/>
-    </antcall>
   </target>
 
   <target name="compileJ2MECore"
@@ -193,6 +81,26 @@
 
   <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
   </target>
+
+
+  <target name="midpgui"
+    description="Compile J2ME MIDP X.0 GUI">
+    <mkdir dir="${j2me.guiclasspath}"/>
+    <mkdir dir="${j2me.pre}/midp${midpstr}gui"/>
+    <wtkpreprocess srcdir="midp${midpstr}gui" destdir="${j2me.pre}/midp${midpstr}gui"
+      symbols="ant:j2me,ant:cldc${wtk.cldc.version}"/>
+    <wtkbuild srcdir="${j2me.pre}/midp${midpstr}gui" target="1.1" source="1.2"
+      cldc="false"
+      destdir="${j2me.guiclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+    </wtkbuild>
+    <jar destfile="${j2me.heclgui.jar}"
+      basedir="${j2me.build}"
+      excludes="stand/**,**jad,**jar,*html,*hcl,*.class"
+      update="true">
+    </jar>
+  </target>
+
 
   <target name="midp10gui"
     depends="compileJ2MECore"
@@ -270,7 +178,7 @@
     <copy file="${j2me.hecl.lib.jar}" todir="${j2me.rel}" overwrite="true"/>
   </target>
 
-  <target name="midlet">
+  <target name="midlet" depends="midp">
 
     <wtkjad
       name="${j2me.app}"
