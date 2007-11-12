@@ -1,3 +1,17 @@
+2007-11-12  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Integrated jline command line
+	processing tool.
+
+2007-09-11  David N. Welton  <davidw@dedasys.com>
+
+	* cldc11midp20.properties: Use this to build MIDP2.0 applications.
+
+	* cldc10midp10.properties: Use this to build MIDP1.0 applications.
+
+	* j2me.xml: Build system is now automated through the use of
+	.properties files.
+
 2007-09-09  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: First draft of the lcdui commands is done.

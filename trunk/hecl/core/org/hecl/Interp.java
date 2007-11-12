@@ -27,6 +27,10 @@ import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;
 
+//#ifdef j2se.java15
+import jline.ConsoleReader;
+//#endif
+
 /**
  * <code>Interp</code> is the Hecl interpreter, the class responsible for
  * knowing what variables and commands are available.
@@ -128,15 +132,33 @@ public class Interp extends Thread/*implements Runnable*/ {
     public void readEvalPrint(InputStream in, PrintStream out, PrintStream err) {
 	String prompt = PROMPT;
 	StringBuffer sb = new StringBuffer();
-	
+//#ifdef j2se.java15
+	ConsoleReader reader = null;
+	try {
+	    reader = new ConsoleReader();
+	} catch (IOException e) {
+	    System.err.println(e);
+	    return;
+	}
+//#else
 	InputStreamReader reader = new InputStreamReader(in);
+//#endif
 	while(true) {
 	    byte outbytes[] = null;
+
+//#ifdef j2se.java15
+	    String line = null;
+	    try {
+		line = reader.readLine(prompt);
+	    } catch (IOException e) {
+		err.println(e);
+		break;
+	    }
+//#else
 	    out.print(prompt);
 	    out.flush();
-
 	    String line = readLine(reader);
-		
+//#endif
 	    if(line == null)
 		break;
 	    if(sb.length() > 0)
