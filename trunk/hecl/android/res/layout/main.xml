@@ -4,10 +4,24 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<TextView  
+
+<TextView id="@+id/results"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="Hello World, Hecl"
     />
+
+<EditText id="@+id/script"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="+ 10 20"
+    />
+
+<Button id="@+id/execute"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Execute"
+    />
+
 </LinearLayout>
 

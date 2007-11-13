@@ -1,24 +1,23 @@
 <?xml version="1.0" ?>
-<project name="AndroidHecl" default="package">
+<project name="AndroidHecl" default="packageAndroid">
     <property name="sdk-folder" value="/home/davidw/downloads/android_sdk_linux_m3-rc20a" />
     <property name="android-tools" value="/home/davidw/downloads/android_sdk_linux_m3-rc20a/tools" />
 
     <!-- The intermediates directory -->
     <!-- Eclipse uses "bin" for its own output, so we do the same. -->
-    <property name="outdir" value="bin" />
+    <property name="outdir" value="android/bin" />
 
     <!-- No user servicable parts below. -->
 
     <!-- Input directories -->
-    <property name="resource-dir" value="res" />
-    <property name="asset-dir" value="assets" />
-    <property name="srcdir" value="src" />
+    <property name="resource-dir" value="android/res" />
+    <property name="asset-dir" value="android/assets" />
 
     <!-- Output directories -->
-    <property name="outdir-classes" value="${outdir}/classes" />
+
 
     <!-- Create R.java in the source directory -->
-    <property name="outdir-r" value="src" />
+    <property name="outdir-r" value="${android.pre}" />
 
     <!-- Intermediate files -->
     <property name="dex-file" value="classes.dex" />
@@ -38,8 +37,9 @@
 
     <!-- Create the output directories if they don't exist yet. -->
     <target name="dirs">
-        <mkdir dir="${outdir}" />
-        <mkdir dir="${outdir-classes}" />
+       <mkdir dir="${android.pre}/core"/>
+       <mkdir dir="${outdir}" />
+       <mkdir dir="${android.build}" />
     </target>
 
     <!-- Generate the R.java file for this project's resources. -->
@@ -49,9 +49,9 @@
             <arg value="compile" />
             <arg value="-m" />
             <arg value="-J" />
-            <arg value="${outdir-r}" />
+            <arg value="android/src" />
             <arg value="-M" />
-            <arg value="AndroidManifest.xml" />
+            <arg value="android/AndroidManifest.xml" />
             <arg value="-S" />
             <arg value="${resource-dir}" />
             <arg value="-I" />
@@ -62,36 +62,41 @@
     <!-- Generate java classes from .aidl files. -->
     <target name="aidl" depends="dirs">
         <apply executable="${aidl}" failonerror="true">
-            <fileset dir="${srcdir}">
+            <fileset dir="${android.build}">
                 <include name="**/*.aidl"/>
             </fileset>
         </apply>
     </target>
 
-  <target name="compileCore"
-    description="Compile core Hecl functionality">
-    <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
-    <javac srcdir="../core" destdir="${outdir-classes}">
-    </javac>
-  </target>
-
     <!-- Compile this project's .java files into .class files. -->
-    <target name="compile" depends="dirs, resource-src, aidl, compileCore">
-        <javac encoding="ascii" target="1.5" debug="true" extdirs=""
-                srcdir="."
-                destdir="${outdir-classes}"
+    <target name="compileAndroid" depends="dirs, resource-src, aidl">
+    <wtkpreprocess srcdir="core" destdir="${android.pre}/core" symbols="${android.defines}"/>
+       <javac encoding="ascii" target="1.5" debug="true" extdirs=""
+                srcdir="${android.pre}/core"
+                destdir="${android.build}"
                 bootclasspath="${android-jar}" />
     </target>
 
+  <target name="compileAndroidMain"
+    description="Compile Hecl command line support"
+    depends="compileAndroid">
+    <javac srcdir="android/src"
+      destdir="${android.build}">
+      <classpath refid="android.coreclasspath"/>
+      <classpath refid="classpath"/>
+      <bootclasspath path="${android-jar}"/>
+    </javac>
+  </target>
+
     <!-- Convert this project's .class files into .dex files. -->
-    <target name="dex" depends="compile">
+    <target name="dex" depends="compileAndroidMain">
         <exec executable="${dx}" failonerror="true">
             <arg value="-JXmx384M" />
             <arg value="--dex" />
             <arg value="--output=${intermediate-dex}" />
             <arg value="--locals=full" />
             <arg value="--positions=lines" />
-            <arg path="${outdir-classes}" />
+            <arg path="${android.build}" />
         </exec>
     </target>
 
@@ -122,7 +127,7 @@
             <arg value="-f" />
             <arg value="-c" />
             <arg value="-M" />
-            <arg value="AndroidManifest.xml" />
+            <arg value="android/AndroidManifest.xml" />
             <arg value="-S" />
             <arg value="${resource-dir}" />
             <!-- No assets directory -->
@@ -144,10 +149,10 @@
     </target>
 
     <!-- Put the project's .class files into the output package file. -->
-    <target name="package-java" depends="compile, package-res">
+    <target name="package-java" depends="compileAndroid, package-res">
         <echo>Packaging java...</echo>
         <jar destfile="${out-package}"
-                basedir="${outdir-classes}"
+                basedir="${android.build}"
                 update="true" />
     </target>
 
@@ -162,5 +167,5 @@
     </target>
 
     <!-- Create the package file for this project from the sources. -->
-    <target name="package" depends="package-dex" />
+    <target name="packageAndroid" depends="package-dex" />
 </project>
