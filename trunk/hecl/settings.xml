@@ -179,6 +179,17 @@
   <path id="j2me.rmsclasspath">
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
+
+  <!-- Android stuff -->
+
+  <property name="android.pre" value="${buildprefix}/android/pre/"/>
+  <property name="android.build" value="${buildprefix}/android/final"/>
+
+  <property name="android.coreclasspath" value="${android.build}"/>
+  <path id="android.coreclasspath">
+    <pathelement location="${android.coreclasspath}"/>
+  </path>
+
   <!-- Additional classpath locations, specified in build.properties file -->
   <path id="classpath">
   </path>
