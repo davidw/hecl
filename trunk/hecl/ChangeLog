@@ -1,3 +1,7 @@
+2007-11-14  David N. Welton  <davidw@dedasys.com>
+
+	* core.xml: Unjar jline in order to include it in the j2se Hecl jar.
+
 2007-11-12  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Integrated jline command line
