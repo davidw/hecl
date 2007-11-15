@@ -23,12 +23,17 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
 //#ifdef j2se.java15
 import jline.ConsoleReader;
+import jline.ArgumentCompletor;
+import jline.SimpleCompletor;
 //#endif
 
 /**
@@ -134,8 +139,18 @@ public class Interp extends Thread/*implements Runnable*/ {
 	StringBuffer sb = new StringBuffer();
 //#ifdef j2se.java15
 	ConsoleReader reader = null;
+        List completors = new LinkedList();
+
+	Vector<String> cmds = new Vector<String>();
+	for (Enumeration e = commands.keys(); e.hasMoreElements();) {
+	    cmds.add((String)e.nextElement());
+	}
+	completors.add(
+            new SimpleCompletor(cmds.toArray(new String[cmds.size()])));
+
 	try {
 	    reader = new ConsoleReader();
+	    reader.addCompletor(new ArgumentCompletor(completors));
 	} catch (IOException e) {
 	    System.err.println(e);
 	    return;
@@ -146,8 +161,8 @@ public class Interp extends Thread/*implements Runnable*/ {
 	while(true) {
 	    byte outbytes[] = null;
 
-//#ifdef j2se.java15
 	    String line = null;
+//#ifdef j2se.java15
 	    try {
 		line = reader.readLine(prompt);
 	    } catch (IOException e) {
@@ -157,7 +172,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 //#else
 	    out.print(prompt);
 	    out.flush();
-	    String line = readLine(reader);
+	    line = readLine(reader);
 //#endif
 	    if(line == null)
 		break;
@@ -167,7 +182,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    try {
 		if(sb.length() <= 0)
 		    continue;
-		
+
 		Thing res = evalAsyncAndWait(new Thing(sb.toString()));
 		if (res != null) {
 		    String s = res.toString();
@@ -255,7 +270,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     ClassCommandInfo findClassCmd(Class clazz) {
 	int l = ci.size();
 	ClassCommandInfo found = null;
-	// we loop over all class commands and try yo detect the most specific one.
+	// we loop over all class commands and try to detect the most specific one.
 	for(int i=0; i<l; ++i) {
 	    ClassCommandInfo info = (ClassCommandInfo)ci.elementAt(i);
 	    Class cl2 = info.forClass();

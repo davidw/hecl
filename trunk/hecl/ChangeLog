@@ -1,3 +1,10 @@
+2007-11-15  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Improved jline stuff to do command
+	line completion of commands present at run time.  Several fixes
+	possible: update as new commands are created, and do something
+	with variables as well.
+
 2007-11-14  David N. Welton  <davidw@dedasys.com>
 
 	* core.xml: Unjar jline in order to include it in the j2se Hecl jar.
