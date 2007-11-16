@@ -43,15 +43,15 @@ public class Hecl extends Activity
 
     /* Do something with error messages.  */
     private void errmsg(String msg) {
+	Log.v("hecl", msg);
 	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-	nm.notifyWithText(1,
-			  msg,
+	nm.notifyWithText(1, msg,
 			  NotificationManager.LENGTH_LONG, null);
-
 	showAlert("Hecl Error", msg, "dismiss", false);
     }
 
     private void logStacktrace(Exception e) {
+	Log.v("stacktrace", e.toString());
 	StackTraceElement elements[] = e.getStackTrace();
 	for (int i = 0; i < elements.length ; i ++) {
 	    Log.v("stacktrace", elements[i].toString());

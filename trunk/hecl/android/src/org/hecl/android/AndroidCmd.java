@@ -44,6 +44,7 @@ public class AndroidCmd extends Operator {
     public static final int RESLOOKUP = 2;
     public static final int ALERT = 3;
     public static final int FINDVIEW = 4;
+    public static final int LOG = 4;
 
     protected AndroidCmd(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode, minargs, maxargs);
@@ -85,6 +86,9 @@ public class AndroidCmd extends Operator {
 		} catch (Exception e) {
 		    throw new HeclException(e.toString());
 		}
+	    case LOG:
+		Log.v("hecl log", argv[1].toString());
+		return null;
 	    default:
 		throw new HeclException("Unknown android command '"
 					+ argv[0].toString() + "' with code '"
@@ -101,6 +105,7 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("reslookup", new AndroidCmd(RESLOOKUP,1,1));
 	    cmdtable.put("alert", new AndroidCmd(ALERT,1,1));
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
+	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
 	}
 	catch (Exception e) {
 	    e.printStackTrace();

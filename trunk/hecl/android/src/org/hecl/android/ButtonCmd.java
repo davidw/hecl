@@ -19,7 +19,6 @@ import android.app.Activity;
 
 import android.widget.Button;
 
-import org.hecl.ClassCommand;
 import org.hecl.ClassCommandInfo;
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -30,12 +29,17 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 
 
-public class ButtonCmd implements ClassCommand, org.hecl.Command {
+public class ButtonCmd extends ViewCmd {
     private static ButtonCmd cmd = new ButtonCmd();
     private static final String CMDNAME = "button";
     private static Activity activity = null;
+    private static Reflector buttonref = null;
 
     public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
+	if (buttonref == null) {
+	    buttonref = new Reflector("android.widget.Button");
+	}
+
 	Button button = null;
 	Properties p = new Properties();
 	p.setProps(argv, 1);
@@ -55,11 +59,7 @@ public class ButtonCmd implements ClassCommand, org.hecl.Command {
 	if(argv.length > 1) {
 	    String subcmd = argv[1].toString().toLowerCase();
 	    Object target = ObjectThing.get(argv[0]);
-
-
-
-	    return new Thing("");
-
+	    return buttonref.evaluate(target, subcmd, argv);
 	}
 	throw HeclException.createWrongNumArgsException(argv, 2, "Object method [arg...]");
     }
@@ -69,6 +69,7 @@ public class ButtonCmd implements ClassCommand, org.hecl.Command {
 	ip.addCommand(CMDNAME, cmd);
 	ip.addClassCmd(Button.class, cmd);
     }
+
     public static void unload(Interp ip) {
 	activity = null;
 	ip.removeCommand(CMDNAME);
