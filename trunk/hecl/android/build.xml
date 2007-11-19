@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <project name="AndroidHecl" default="packageAndroid">
-  <property name="sdk-folder" value="/home/davidw/downloads/android_sdk_linux_m3-rc20a" />
-  <property name="android-tools" value="/home/davidw/downloads/android_sdk_linux_m3-rc20a/tools" />
+  <property file="android/android.properties"/>
+
+  <property name="android-defines" value="" />
 
   <!-- The intermediates directory -->
   <!-- Eclipse uses "bin" for its own output, so we do the same. -->
@@ -70,7 +71,7 @@
 
   <!-- Compile this project's .java files into .class files. -->
   <target name="compileAndroid" depends="dirs, resource-src, aidl">
-    <wtkpreprocess srcdir="core" destdir="${android.pre}/core" symbols="${android.defines}"/>
+    <wtkpreprocess srcdir="core" destdir="${android.pre}/core"/>
     <javac encoding="ascii" target="1.5" debug="true" extdirs=""
       srcdir="${android.pre}/core"
       destdir="${android.build}"

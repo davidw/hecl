@@ -539,7 +539,7 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put("tanh",new MathCmds(TANH,1,1));
 	cmdtable.put("expm1",new MathCmds(EXPM1,1,1));
 	cmdtable.put("hypot", new MathCmds(HYPOT,2,2));
-//#endif j2se.java15
+//#endif
 
 //#endif
     }

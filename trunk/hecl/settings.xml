@@ -10,7 +10,7 @@
   -->
 
   <!-- Activate antenna -->
-  <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-0.9.13.jar"/>
+  <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-1.0.0.jar"/>
   <!--
   <taskdef resource="antenna.properties"/>
   -->
