@@ -1,5 +1,9 @@
 2007-11-19  David N. Welton  <davidw@dedasys.com>
 
+	* android/src/org/hecl/android/AndroidCmd.java: Added experimental
+	s, l, i, d commands for casting purposes.  These will be moved
+	elsewhere if they prove successful.
+
 	* settings.xml: Use the new Antenna preprocessor.
 
 	* core/org/hecl/MathCmds.java: New Antenna preprocessor can't

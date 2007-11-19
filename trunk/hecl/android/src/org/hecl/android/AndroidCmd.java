@@ -26,10 +26,12 @@ import android.view.View;
 
 import android.util.Log;
 
+import org.hecl.DoubleThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Operator;
 import org.hecl.RealThing;
@@ -46,6 +48,13 @@ public class AndroidCmd extends Operator {
     public static final int FINDVIEW = 4;
     public static final int LOG = 4;
 
+    /* These will eventually be moved elsewhere - the core most
+     * likely. */
+    public static final int TOINT = 100;
+    public static final int TOLONG = 101;
+    public static final int TODOUBLE = 102;
+    public static final int TOSTR = 103;
+
     protected AndroidCmd(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode, minargs, maxargs);
     }
@@ -57,19 +66,15 @@ public class AndroidCmd extends Operator {
     }
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
-	String str = null;
-	if(argv.length > 1) {
-	    str = argv[1].toString();
-	}
 	switch (cmd) {
 	    case ALERT:
-		makeAlert(str);
-		return new Thing(str);
+		makeAlert(argv[1].toString());
+		return new Thing(argv[1].toString());
 	    case EXIT:
 		activity.finish();
 		return null;
 	    case RESLOOKUP:
-		String pieces[] = str.split("\\.");
+		String pieces[] = argv[1].toString().split("\\.");
 		if (pieces.length != 3 || !pieces[0].equals("R")) {
 		    throw new HeclException("reslookup requires an argument like R.layout.main");
 		}
@@ -89,6 +94,16 @@ public class AndroidCmd extends Operator {
 	    case LOG:
 		Log.v("hecl log", argv[1].toString());
 		return null;
+
+	    case TOINT:
+		return IntThing.create(IntThing.get(argv[1]));
+	    case TOLONG:
+		return LongThing.create(LongThing.get(argv[1]));
+	    case TODOUBLE:
+		return DoubleThing.create(DoubleThing.get(argv[1]));
+	    case TOSTR:
+		return StringThing.create(StringThing.get(argv[1]));
+
 	    default:
 		throw new HeclException("Unknown android command '"
 					+ argv[0].toString() + "' with code '"
@@ -106,6 +121,11 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("alert", new AndroidCmd(ALERT,1,1));
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
 	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
+
+	    cmdtable.put("i", new AndroidCmd(TOINT, 1, 1));
+	    cmdtable.put("l", new AndroidCmd(TOLONG, 1, 1));
+	    cmdtable.put("d", new AndroidCmd(TODOUBLE, 1, 1));
+	    cmdtable.put("s", new AndroidCmd(TOSTR, 1, 1));
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
