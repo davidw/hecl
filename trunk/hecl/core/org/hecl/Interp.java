@@ -25,12 +25,12 @@ import java.io.PrintStream;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
 //#ifdef j2se.java15
+import java.util.LinkedList;
+import java.util.List;
 import jline.ConsoleReader;
 import jline.ArgumentCompletor;
 import jline.SimpleCompletor;

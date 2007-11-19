@@ -1,3 +1,7 @@
+2007-11-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/Interp.java: Corrected imports to work in j2me environment.
+
 2007-11-15  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Improved jline stuff to do command
