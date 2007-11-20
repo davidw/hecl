@@ -1,3 +1,13 @@
+2007-11-20  Wolfgang S. Kechel - Patzschke + Rasp Software GmbH  <wolfgang.kechel@prs.de>
+
+	* j2me.xml: Moved property definitions into targets, so it is no
+	longer necessary to use the property files.
+
+	* midp20gui/org/graphics/VFont.java: 
+	* midp20gui/org/graphics/Drawable.java: 
+	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	Modified defines to work with antenna-1.0.0.
+
 2007-11-19  David N. Welton  <davidw@dedasys.com>
 
 	* android/src/org/hecl/android/AndroidCmd.java: Added experimental
@@ -13,7 +23,11 @@
 	properties file.  Remove the android.defines in the symbols passed
 	to the android compile, for the moment.
 
+>>>>>>> .r447
 2007-11-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/MathCmds.java: Changed ifdef to work with new
+	wtk2.5 preprocessor which allow comparison.
 
 	* core/org/hecl/Interp.java: Corrected imports to work in j2me environment.
 

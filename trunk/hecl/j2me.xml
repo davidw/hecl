@@ -84,7 +84,7 @@
 
 
   <target name="midpgui"
-    description="Compile J2ME MIDP X.0 GUI">
+    description="Compile J2ME MIDP X.0 GUI - DO NOT CALL DIRECTLY FROM COMMANDLINE">
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp${midpstr}gui"/>
     <wtkpreprocess srcdir="midp${midpstr}gui" destdir="${j2me.pre}/midp${midpstr}gui"
@@ -105,6 +105,10 @@
   <target name="midp10gui"
     depends="compileJ2MECore"
     description="Compile J2ME MIDP1.0 GUI">
+    <property name="wtk.cldc.version" value="1.0"/>
+    <property name="cldcstr" value="10"/>
+    <property name="wtk.midp.version" value="1.0"/>
+    <property name="midpstr" value="10"/>
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp10gui"/>
     <wtkpreprocess srcdir="midp10gui" destdir="${j2me.pre}/midp10gui"
@@ -123,6 +127,10 @@
 
   <target name="midp20gui"
     description="Compile J2ME MIDP2.0 GUI">
+    <property name="wtk.cldc.version" value="1.1"/>
+    <property name="cldcstr" value="11"/>
+    <property name="wtk.midp.version" value="2.0"/>
+    <property name="midpstr" value="20"/>
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp20gui"/>
     <wtkpreprocess srcdir="midp20gui" destdir="${j2me.pre}/midp20gui"

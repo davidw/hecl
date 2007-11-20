@@ -528,8 +528,7 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put("ceil",new MathCmds(CEIL,1,1));
 	cmdtable.put("round",new MathCmds(ROUND,1,1));
 
-//#ifdef j2se.java15
-// we want ${ant.java.version} > "1.5"
+//#if ${ant.java.version} > 1.5
 	cmdtable.put("signum",new MathCmds(SIGNUM,1,1));
 	cmdtable.put("cbrt",new MathCmds(CBRT,1,1));
 	cmdtable.put("log10",new MathCmds(LOG10,1,1));
