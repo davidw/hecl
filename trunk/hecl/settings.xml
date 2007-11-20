@@ -12,6 +12,7 @@
   <!-- Activate antenna -->
   <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-1.0.0.jar"/>
   <!--
+  <taskdef resource="antenna.properties" classpath="build-tools/antenna-bin-0.9.13.jar"/>
   <taskdef resource="antenna.properties"/>
   -->
 
@@ -21,7 +22,7 @@
 
   <!-- General WTk settings -->
   <!-- make it fit for your local installation -->
-  <property name="my.wtk.home" value="/opt/WTK2.5.1"/>
+  <property name="my.wtk.home" value="/opt/WTK"/>
 
   <!-- ProGuard location -->
   <property name="wtk.proguard.home" value="build-tools/"/>
