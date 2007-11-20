@@ -119,7 +119,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
     
     public void flushGraphics() {
-//#ifdef debug
+//#ifdef DEBUG
 	Rectangle r = new Rectangle(mygraphics.getClipX(),
 				    mygraphics.getClipY(),
 				    mygraphics.getClipWidth(),
@@ -132,7 +132,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	mygraphics.setClip(0,0,240,309);
 //#endif
 	super.flushGraphics();
-//#ifdef debug
+//#ifdef DEBUG
 	mygraphics.setClip(r.x,r.y,r.width,r.height);
 //#endif
     }
@@ -254,7 +254,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
 
     protected void showCommands(Graphics g) {
-//#ifdef debug
+//#ifdef DEBUG
 	System.err.println("showCommands, fullscreen="+isfullscreen+", isshown="+isShown());
 //#endif
 	// Unfortunately, isShown does not work on some emulators, therefor we
@@ -269,7 +269,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    
 	    // Nokia 6630 fullscreen bug
 	    calcScreenWidth();      
-//#ifdef debug
+//#ifdef DEBUG
 	    System.err.println("drawing rect: y="+drawheight+", h="+CMDBARHEIGHT);
 
 	    System.err.println("size - w="+getWidth()+" h="+getHeight());
@@ -312,7 +312,7 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	    }
 	    g.setColor(oldcol);
 	    g.setFont(oldfont);
-	    //#ifdef debug
+	    //#ifdef DEBUG
 	    System.err.println("flushing: 0, "+drawheight +", "+drawwidth+", "+CMDBARHEIGHT);
 	    //#endif
 	    flushGraphics(0,drawheight,drawwidth,CMDBARHEIGHT);
@@ -426,14 +426,14 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     public
 //#else
     protected
-//#endif //polish.usePolishGui
+//#endif
 
 //#else
     protected
-//#endif // polish.blackberry
+//#endif
 	void sizeChanged(int w,int h) {
 
-//#ifdef debug
+//#ifdef DEBUG
 	System.err.println("size changed, w="+w+", h="+h);
 	System.err.println("size changed, w="+super.getWidth()+", h="+super.getHeight());
 //#endif

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005, 2006 data2c GmbH (www.data2c.com)
+ * Copyright (c) 2005, 2006 data2c GmbH (www.data2c.com)
  *
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
  */
@@ -329,12 +329,12 @@ public class Drawable {
 	r.height = g.getClipHeight();
 	r.x = fromX(g.getClipX());
 	r.y = fromY(g.getClipY() + (r.height > 0 ? r.height - 1 : 0));
-//#ifdef debug
+	//#ifdef DEBUG
 	System.err.println("Drawable.getclipbounds clip=" + r.x
 			   + ", " + r.y + " - " + g.getClipY()
 			   + ", " + r.width
 			   + ", " + r.height);
-//#endif
+	//#endif
 	return r;
     }
     
@@ -461,8 +461,8 @@ public class Drawable {
     }
     
     public void setClip(int x, int y, int width, int height) {
-//#ifdef debug
-	System.err.println("Drawable.setClip to: "+x+" - "+toX(x)
+//#ifdef DEBUG
+	SYSTEM.err.println("Drawable.setClip to: "+x+" - "+toX(x)
 			   +", "+y+" - "+toY(y+(height > 0 ? height-1:0))
 			   +", "+width
 			   +", "+height);

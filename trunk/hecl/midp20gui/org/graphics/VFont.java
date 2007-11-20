@@ -546,7 +546,7 @@ public class VFont {
 	}
 	makeDefaultGlyph();
     }
-//#endif // USEHERSHEY
+//#endif
 
 
     public int getFontBaseLine() {
