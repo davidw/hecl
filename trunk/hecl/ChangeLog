@@ -23,7 +23,6 @@
 	properties file.  Remove the android.defines in the symbols passed
 	to the android compile, for the moment.
 
->>>>>>> .r447
 2007-11-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
 
 	* core/org/hecl/MathCmds.java: Changed ifdef to work with new
