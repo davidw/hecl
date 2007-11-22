@@ -69,7 +69,6 @@ public class Hecl extends Activity
  	try {
 	    interp = new Interp();
 	    AndroidCmd.load(interp, this);
-
 	    String script = getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 	    interp.eval(new Thing(script));
 	} catch (Exception e) {

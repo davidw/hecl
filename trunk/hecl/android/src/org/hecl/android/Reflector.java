@@ -17,6 +17,7 @@ package org.hecl.android;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Hashtable;
 import java.util.Vector;
@@ -35,6 +36,7 @@ class Reflector {
     public Reflector(String classname) throws HeclException {
 	try {
 	    methodnames = new Hashtable();
+
 	    forclass = Class.forName(classname);
 	    /* We could also do getDeclaredMethods and do the
 	     * "subclassing" some other way.  */
@@ -67,7 +69,7 @@ class Reflector {
 	    args = HeclTypeMap.mapArgs(m, argv);
 	    Object retval = m.invoke(o, args);
 	    return HeclTypeMap.mapRetval(m, retval);
-	} catch (Exception e) {
+	} catch (InvocationTargetException e) {
 	    String msg = "Problem invoking " + o.getClass().getName() + " " + cmd + "/" + m.getName() + " with arguments: ";
 	    for (Thing t : argv) {
 		msg += t.toString() + " ";
@@ -76,19 +78,27 @@ class Reflector {
 	    for (Object eo : args) {
 		msg += eo.toString() + " ";
 	    }
+	    msg += " " + e.getTargetException().toString();
 	    throw new HeclException(msg);
+	} catch (Exception e) {
+	    throw new HeclException(e.toString());
 	}
     }
 
     private Method selectMethod(String cmd, Thing[] argv)
         throws HeclException {
+
 	Vector<Method> v = ((Vector)methodnames.get(cmd.toLowerCase()));
+
+	if (v == null) {
+	    throw new HeclException("Method " + cmd + " not found for class" + forclass.toString());
+	}
+
 	Method[] methods = v.toArray(new Method[v.size()]);
 	/* Match the signatures with the correct number first. */
 	StringBuffer msg = new StringBuffer("");
 	for (Method m : methods) {
 	    Class[] javaparams = m.getParameterTypes();
-//	    Log.v("selectMethod", "len 1 " + javaparams.length + " len 2 " + argv.
 	    if(javaparams.length != argv.length - 2) {
 		continue;
 	    }
@@ -112,16 +122,15 @@ class Reflector {
 		} else if (heclparmt.equals("object")) {
 		    match = true;
 		}
+		i ++;
 		if (match == false)
 		    break;
 	    }
-//	    Log.v("selectMethod", "" + javaparams + " " + argv);
-	    Log.v("selectMethod", msg.toString());
 	    if (match) {
 		return m;
 	    }
 	}
-	throw new HeclException("no method matched " + cmd);
+	throw new HeclException("no method matched " + cmd );
     }
 
 }

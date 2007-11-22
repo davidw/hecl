@@ -85,8 +85,6 @@ public class AndroidCmd extends Operator {
 		    Class c = Class.forName(classname);
 		    Field f = c.getField(pieces[2]);
 		    id = f.getInt(c);
-
-		    Log.v("hecl", "ID found by " + argv[0].toString() + " is " + id);
 		    return IntThing.create(id);
 		} catch (Exception e) {
 		    throw new HeclException(e.toString());
@@ -135,14 +133,19 @@ public class AndroidCmd extends Operator {
 
     public static void load(Interp ip, Activity a) throws HeclException {
 	activity = a;
-	Operator.load(ip,cmdtable);
-	ButtonCmd.load(ip, a);
+	Operator.load(ip, cmdtable);
+	ViewCmd.load(ip, a, "android.view.View", "view");
+	ViewCmd.load(ip, a, "android.widget.Button", "button");
+	ViewCmd.load(ip, a, "android.widget.AnalogClock", "analogclock");
+	ViewCmd.load(ip, a, "android.webkit.WebView", "webview");
+	ViewCmd.load(ip, a, "android.widget.DatePicker", "datepicker");
+	ViewCmd.load(ip, a, "android.widget.LinearLayout", "linearlayout");
 	ip.addCommand("activity", new ActivityCmd(a));
     }
 
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip, cmdtable);
-	ButtonCmd.unload(ip);
+	ViewCmd.unload(ip);
     }
 
 }

@@ -39,7 +39,6 @@ class HeclTypeMap {
 	    Thing inparam = argv[i + 2];
 	    Class outparam = outparams[i];
 	    String classname = outparam.getSimpleName();
-	    Log.v("typemap", classname);
 
 	    if (classname.equals("boolean") || classname.equals("int")) {
 		outobjs[i] = IntThing.get(inparam);

@@ -1,3 +1,19 @@
+2007-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use ViewCmd load method.
+
+	* android/src/org/hecl/android/Reflector.java: Be a bit more
+	  verbose in our error messages for the time being.  Check for
+	  null methodnames in selectMethod.
+
+	* android/src/org/hecl/android/ViewCmd.java: This is beginning to
+	  be able to handle any sort of generic View derived object,
+	  through the magic of reflection.  We can also instantiate new
+	  objects.
+
+	* res/layout/main.xml: Give the layout an ID so that it's
+	  accessible.
+
 2007-11-20  Wolfgang S. Kechel - Patzschke + Rasp Software GmbH  <wolfgang.kechel@prs.de>
 
 	* j2me.xml: Moved property definitions into targets, so it is no

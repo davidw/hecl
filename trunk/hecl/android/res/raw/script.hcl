@@ -1,8 +1,9 @@
 activity setview [reslookup R.layout.main]
 set button [button -id [reslookup R.id.execute]]
+set layout [linearlayout -id [reslookup R.id.mainlayout]]
 
-log "Hello, World!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-#$button settext "GO GO GO!"
-#$button settext "do it!"
-#$button settextcolor [i 65280]
+log "Hello, World!"
+$button settext "GO!"
 log [$button length]
+
+set b2 [button -text "ALRIGHT!" -layout_width 100 -layout_height 50 -layout $layout]
