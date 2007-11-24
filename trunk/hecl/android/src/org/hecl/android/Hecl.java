@@ -24,6 +24,8 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.os.Bundle;
 
+import android.util.Log;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -35,7 +37,7 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
-import android.util.Log;
+import org.hecl.net.HttpCmd;
 
 public class Hecl extends Activity
 {
@@ -50,7 +52,7 @@ public class Hecl extends Activity
 	showAlert("Hecl Error", msg, "dismiss", false);
     }
 
-    private void logStacktrace(Exception e) {
+    public static void logStacktrace(Exception e) {
 	Log.v("stacktrace", e.toString());
 	StackTraceElement elements[] = e.getStackTrace();
 	for (int i = 0; i < elements.length ; i ++) {
@@ -58,7 +60,7 @@ public class Hecl extends Activity
 	}
     }
 
-    /** Called with the activity is first created. */
+    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle heclApp)
     {
@@ -69,6 +71,7 @@ public class Hecl extends Activity
  	try {
 	    interp = new Interp();
 	    AndroidCmd.load(interp, this);
+	    HttpCmd.load(interp);
 	    String script = getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 	    interp.eval(new Thing(script));
 	} catch (Exception e) {
