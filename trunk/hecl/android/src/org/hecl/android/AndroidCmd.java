@@ -47,6 +47,7 @@ public class AndroidCmd extends Operator {
     public static final int ALERT = 3;
     public static final int FINDVIEW = 4;
     public static final int LOG = 4;
+    public static final int NULLCMD = 5;
 
     /* These will eventually be moved elsewhere - the core most
      * likely. */
@@ -93,6 +94,10 @@ public class AndroidCmd extends Operator {
 		Log.v("hecl log", argv[1].toString());
 		return null;
 
+	    case NULLCMD:
+		return ObjectThing.create(null);
+
+
 	    case TOINT:
 		return IntThing.create(IntThing.get(argv[1]));
 	    case TOLONG:
@@ -120,6 +125,8 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
 	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
 
+	    cmdtable.put("null", new AndroidCmd(NULLCMD,0,0));
+
 	    cmdtable.put("i", new AndroidCmd(TOINT, 1, 1));
 	    cmdtable.put("l", new AndroidCmd(TOLONG, 1, 1));
 	    cmdtable.put("d", new AndroidCmd(TODOUBLE, 1, 1));
@@ -127,7 +134,7 @@ public class AndroidCmd extends Operator {
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
-	    System.out.println("Can't create android commands.");
+	    Log.v("hecl", "Can't create android commands.");
 	}
     }
 
@@ -136,11 +143,20 @@ public class AndroidCmd extends Operator {
 	Operator.load(ip, cmdtable);
 	ViewCmd.load(ip, a, "android.view.View", "view");
 	ViewCmd.load(ip, a, "android.widget.Button", "button");
+	ViewCmd.load(ip, a, "android.widget.TextView", "textview");
+	ViewCmd.load(ip, a, "android.widget.RadioButton", "radiobutton");
 	ViewCmd.load(ip, a, "android.widget.AnalogClock", "analogclock");
 	ViewCmd.load(ip, a, "android.webkit.WebView", "webview");
+	ViewCmd.load(ip, a, "com.google.android.maps.MapView", "mapview");
 	ViewCmd.load(ip, a, "android.widget.DatePicker", "datepicker");
-	ViewCmd.load(ip, a, "android.widget.LinearLayout", "linearlayout");
+	ViewCmd.load(ip, a, "android.widget.RadioGroup", "radiogroup");
+	ViewCmd.load(ip, a, "android.widget.Spinner", "spinner");
 	ip.addCommand("activity", new ActivityCmd(a));
+
+	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
+
+	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
+	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
     }
 
     public static void unload(Interp ip) throws HeclException {

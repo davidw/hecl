@@ -34,16 +34,27 @@ import org.hecl.Thing;
 public class ActivityCmd implements org.hecl.Command {
     private static Activity activity;
     private final static String CMDNAME = "activity";
+    private static Reflector reflector = null;
 
     public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
 	String subcmd = argv[1].toString();
-	if (subcmd.equals("setview")) {
-	    activity.setContentView(IntThing.get(argv[2]));
+	if (subcmd.equals("getcontext")) {
+	    return ObjectThing.create(activity);
+	} else {
+	    return reflector.evaluate(activity, subcmd, argv);
 	}
-	return null;
     }
 
-    public ActivityCmd(Activity a) {
+    public ActivityCmd(Activity a)
+	throws HeclException {
 	activity = a;
+    }
+
+    static {
+	try {
+	    reflector = new Reflector("android.app.Activity");
+	} catch (HeclException he) {
+	    Log.v("hecl", "Problem with ActivityCmd.java init: " + he.toString());
+	}
     }
 }

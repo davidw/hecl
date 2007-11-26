@@ -30,23 +30,24 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 
 class HeclTypeMap {
-    public static Object[] mapArgs(Method m, Thing[] argv) 
+    public static Object[] mapArgs(Class[] outparams, Thing[] argv, int offset)
         throws HeclException {
-	Class[] outparams = m.getParameterTypes();
+
 	Object[] outobjs = new Object[outparams.length];
 	Class c = null;
 	for (int i = 0; i < outparams.length; i++) {
-	    Thing inparam = argv[i + 2];
+	    Thing inparam = argv[i + offset];
 	    Class outparam = outparams[i];
-	    String classname = outparam.getSimpleName();
+	    String javaclassname = outparam.getSimpleName();
 
-	    if (classname.equals("boolean") || classname.equals("int")) {
+	    if (javaclassname.equals("boolean") || javaclassname.equals("int")) {
 		outobjs[i] = IntThing.get(inparam);
-	    } else if (classname.equals("long")) {
+	    } else if (javaclassname.equals("long")) {
 		outobjs[i] = LongThing.get(inparam);
-	    } else if (classname.equals("CharSequence")) {
+	    } else if (javaclassname.equals("CharSequence") ||
+		       javaclassname.equals("String")) {
 		outobjs[i] = StringThing.get(inparam);
-	    } else if (classname.equals("int[]")) {
+	    } else if (javaclassname.equals("int[]")) {
 		Vector v = ListThing.get(inparam);
 		int[] ints = new int[v.size()];
 		for (int j = 0; j < v.size(); j++) {
@@ -68,6 +69,8 @@ class HeclTypeMap {
 	    return IntThing.create(((Integer)o).intValue());
 	} else if (rtype.equals("long")) {
 	    return LongThing.create(((Long)o).longValue());
+	} else if (rtype.equals("String") || rtype.equals("CharSequence")) {
+	    return new Thing((String)o);
 	} else if (rtype.equals("int[]")) {
 	    return new Thing("FIXME");
 	}

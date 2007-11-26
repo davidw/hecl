@@ -41,7 +41,9 @@ import org.hecl.net.HttpCmd;
 
 public class Hecl extends Activity
 {
-    Interp interp;
+    private Interp interp;
+    private Thing menuCreateCode;
+    private Thing menuItemSelected;
 
     /* Do something with error messages.  */
     private void errmsg(String msg) {
@@ -79,6 +81,23 @@ public class Hecl extends Activity
 	    errmsg("Hecl Error: " + e.toString());
 	}
     }
+
+/*     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+	menu.add(0, REVERT_ID, R.string.menu_revert).setShortcut(KeyEvent.KEYCODE_0, 0, KeyEvent.KEYCODE_R);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(Menu.Item item) {
+        // Handle all of the possible menu actions.
+        switch (item.getId()) {
+        return super.onOptionsItemSelected(item);
+    }  */
+
 
     private String getResourceAsString(Class cl,String resname,String encoding)
 	throws IOException {

@@ -80,7 +80,7 @@ public class ViewCmd implements ClassCommand, org.hecl.Command {
 	    } else {
 		/* Create a new instance. */
 		view = cons.newInstance(activity, null, null);
-		mp.evalProps(view, viewref);
+		mp.evalProps(activity, interp, view, viewref);
 		LayoutParams lp = mp.getLayoutParams();
 		if (lp != null) {
 		    ((View) view).setLayoutParams(lp);
@@ -89,10 +89,7 @@ public class ViewCmd implements ClassCommand, org.hecl.Command {
 /* 	} catch (InvocationTargetException te) {
 	    throw new HeclException("Constructor error: " + te.getTargetException().toString());  */
 	} catch (Exception e) {
-	    Log.v("stacktrace", "stacktrace: " + e.getMessage());
-	    for (StackTraceElement ste : e.getStackTrace()) {
-		Log.v("stacktrace", "stacktrace: " + ste);
-	    }
+	    Hecl.logStacktrace(e);
 	    throw new HeclException("Error " + e.toString());
 	}
 	return ObjectThing.create(view);

@@ -1,4 +1,37 @@
+2007-11-26  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Beginnings of a widget tour.
+
+	* android/src/org/hecl/android/HeclTypeMap.java: Make the methods
+	here just a bit more generic so they can be used both by
+	constructors and methods.
+
+	* android/src/org/hecl/android/JavaCmd.java: Added a command to
+	more "purely" integrate with Java in that it won't be aware of any
+	Android specific classes.  It also takes care of instantiating a
+	class, although the final API for this isn't yet clear in my head.
+
+	* android/src/org/hecl/android/Reflector.java: Added a system to
+	get public static final fields and turn them into potential
+	arguments for methods and constructors.  Also added a system to
+	instantiate classes given a list of Hecl variables passed as a
+	constructor to a JavaCmd.
+
+	* android/src/org/hecl/android/MethodProps.java: Hacky class that
+	will likely see significant changes in short order, especially the
+	special cases, which should go away in favor of better Java
+	integration.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added null
+	command.  Load up a few widgets as JavaCmds rather than ViewCmds.
+
+	* android/src/org/hecl/android/ActivityCmd.java: Added a subcmd to
+	get the activity object itself.  Still hacky code.
+
 2007-11-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Make the logStacktrace
+	method available, add in http command.
 
 	* android/build.xml: Add in HTTP.
 
