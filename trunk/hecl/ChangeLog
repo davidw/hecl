@@ -1,5 +1,9 @@
 2007-11-27  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/ListThing.java: Added a convenience method to
+	transform a ListThing into an array of Things, instead of a
+	Vector.
+
 	* core.xml: Added tests target.
 
 	* android/src/org/hecl/android/JavaCmd.java: Evaluate any

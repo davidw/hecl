@@ -29,6 +29,8 @@ import java.util.Enumeration;
 public class ListThing implements RealThing {
     protected Vector val = null;
 
+    private int depth = 0;
+
     /**
      * Creates a new, empty <code>ListThing</code> instance.
      *  
@@ -130,6 +132,25 @@ public class ListThing implements RealThing {
 	}
 
         return getlist.val;
+    }
+
+    /**
+     * <code>getArray</code> attempts to transform the given Thing
+     * into a List, and return it as an array of Things.
+     *
+     * @param thing a <code>Thing</code> value
+     * @return a <code>Thing[]</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static Thing[] getArray(Thing thing) throws HeclException {
+	Vector v = ListThing.get(thing);
+	Thing[] res = new Thing[v.size()];
+	int i = 0;
+	for (Enumeration e = v.elements(); e.hasMoreElements();) {
+	    res[i] = (Thing)e.nextElement();
+	    i ++;
+	}
+	return res;
     }
 
     /**
@@ -249,7 +270,15 @@ public class ListThing implements RealThing {
 	    return "";
 	    //return "{}";
 	}
-	
+
+/* 	if(depth > 1) {
+	    //throw new HeclException("Can't print circular references");
+	    return "CIRCULAR REF! BANG!";
+	} else {
+	    depth ++;
+	}  */
+
+
 	int i = 0;
 //#ifdef notdef
 	int[] flags = new int[sz];
