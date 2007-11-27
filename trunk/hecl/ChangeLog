@@ -1,5 +1,22 @@
 2007-11-27  David N. Welton  <davidw@dedasys.com>
 
+	* core.xml: Added tests target.
+
+	* android/src/org/hecl/android/JavaCmd.java: Evaluate any
+	additional props passed in.
+
+	* android/src/org/hecl/android/Reflector.java: Recognise Thing as
+	a Java parameter.
+
+	* android/src/org/hecl/android/HeclOnClickListener.java: New class
+	that is utilized for handling callbacks.
+
+	* android/src/org/hecl/android/MethodProps.java: Remove special
+	cases.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Switch over
+	completely to JavaCmd from ViewCmd.
+
 	* android/src/org/hecl/android/HeclTypeMap.java: Removed and all
 	functionality transferred to Reflector.java.
 

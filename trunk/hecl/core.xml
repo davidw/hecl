@@ -173,7 +173,6 @@
   </target>
 
   <!-- !!! next target needs some work !!! -->
-  <!-- !!! really needed? !!! -->
   <target name="packageApplet" description="Create HTML applet structure"
     depends="packageJARs,compileApplet">
 
@@ -184,6 +183,12 @@
     <copy file="HTML/applet.html" tofile="${j2se.build}/applet.html"/>
     <copy file="HTML/applet.html" todir="${j2se.rel}"/>
     <copy file="${j2se.hecl.applet.jar}" todir="${j2se.rel}"/>
+  </target>
+
+  <target name="tests" description="Run Tests" depends="packageCommandline">
+    <java fork="true" jar="jars/j2se/Hecl.jar">
+      <arg value="tests/suite.hcl"></arg>
+    </java>
   </target>
 
 </project>
