@@ -76,19 +76,27 @@ public class AndroidCmd extends Operator {
 		return null;
 	    case RESLOOKUP:
 		String pieces[] = argv[1].toString().split("\\.");
-		if (pieces.length != 3 || !pieces[0].equals("R")) {
-		    throw new HeclException("reslookup requires an argument like R.layout.main");
-		}
-		String classname = "org.hecl.android." + "R$" + pieces[1];
+		String classname = null;
 		Thing result = null;
+		String fieldname = null;
+		if (pieces.length != 3 || !pieces[0].equals("R")) {
+		    /* It's probably one of the built in ones. */
+		    classname = "android.R$";
+		    classname += pieces[2];
+		    fieldname = pieces[3];
+		} else {
+		    classname = "org.hecl.android." + "R$" + pieces[1];
+		    fieldname = pieces[2];
+		}
 		try {
 		    int id = 0;
 		    Class c = Class.forName(classname);
-		    Field f = c.getField(pieces[2]);
+		    Field f = c.getField(fieldname);
 		    id = f.getInt(c);
 		    return IntThing.create(id);
 		} catch (Exception e) {
-		    throw new HeclException(e.toString());
+		    throw new HeclException("Couldn't find a match for classname: " +
+					    classname + " : " + e.toString());
 		}
 	    case LOG:
 		Log.v("hecl log", argv[1].toString());
@@ -153,10 +161,11 @@ public class AndroidCmd extends Operator {
 	ViewCmd.load(ip, a, "android.widget.Spinner", "spinner");
 	ip.addCommand("activity", new ActivityCmd(a));
 
+	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
-
 	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
+	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
     }
 
     public static void unload(Interp ip) throws HeclException {

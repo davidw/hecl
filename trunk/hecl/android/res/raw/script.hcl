@@ -1,6 +1,5 @@
 proc SimpleWidgets {} {
     global context
-
     set swlayout [linearlayout [list $context]]
     $swlayout setorientation VERTICAL
     set tv [textview -text "This is a textview" -layout_width fill_parent \
@@ -31,9 +30,16 @@ proc main {} {
     textview -text {Select a widget} -layout_width fill_parent \
 	-layout_height wrap_content -layout $layout
 
-    set spinner [spinner  -layout_width fill_parent \
-		     -layout_height wrap_content -layout $layout -itemlist \
-		     [list "Simple Widgets" "Web View" "Spinner"]]
+
+    set ala [arrayadapter [list \
+			       $context \
+			       [reslookup android.R.layout.simple_spinner_item] \
+			       [list "Simple Widgets" "Web View" "Spinner"]]]
+    $ala setdropdownviewresource [reslookup android.R.layout.simple_spinner_dropdown_item]
+    set spinner [spinner [list $context]]
+    $spinner setadapter $ala
+    $spinner setlayoutparams $layoutparams
+    $layout addview $spinner
 
     set button [button -text "View demo" -layout_width fill_parent \
 		    -layout_height wrap_content -layout $layout \

@@ -137,6 +137,7 @@ public class MethodProps extends Properties {
 			v.add(ObjectThing.create(view));
 			interp.eval(ListThing.create(v));
 		    } catch (HeclException he) {
+			Hecl.logStacktrace(he);
 			Log.v("hecl onclick callback", he.toString());
 		    }
 		}

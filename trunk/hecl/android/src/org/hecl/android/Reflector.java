@@ -94,17 +94,34 @@ class Reflector {
     public Thing instantiate(Thing[] argv)
         throws HeclException {
 
-
-	Constructor c = selectConstructor(argv);
-	if (c == null) {
-	    throw new HeclException("Constructor not found for class: " + forclass.getName());
-	}
 	Object[] args = new Object[0];
+	Constructor selected = null;
 	try {
-	    args = HeclTypeMap.mapArgs(c.getParameterTypes(), argv, 0);
-	    return ObjectThing.create(c.newInstance(args));
+	    Constructor[] constructors = forclass.getConstructors();
+
+	    if (constructors == null) {
+		throw new HeclException(forclass.toString() + " has no constructors!");
+	    }
+
+	    for (Constructor c : constructors) {
+		Class[] javaparams = c.getParameterTypes();
+
+		if(javaparams.length != argv.length) {
+		    continue;
+		}
+
+		args = mapParams(javaparams, argv, 0);
+		if (args != null) {
+		    selected = c;
+		    break;
+		}
+	    }
+	    if (selected == null) {
+		throw new HeclException("Couldn't find a constructor for class:" + forclass.getName());
+	    }
+	    return ObjectThing.create(selected.newInstance(args));
 	} catch (InvocationTargetException e) {
-	    String msg = "Problem invoking " + forclass.getName() + " constructor " + c.getName() + " with arguments: ";
+	    String msg = "Problem invoking " + forclass.getName() + " constructor " + selected.getName() + " with arguments: ";
 	    for (Thing t : argv) {
 		msg += t.toString() + " ";
 	    }
@@ -121,19 +138,37 @@ class Reflector {
 
     public Thing evaluate(Object o, String cmd, Thing[] argv)
         throws HeclException {
-	Method m = selectMethod(cmd, argv);
 
-	if (m == null) {
-	    throw new HeclException("Method " + cmd + " not found for class: " + forclass.getName());
-	}
 	Object[] args = new Object[0];
+	Method selected = null;
 	try {
-	    args = HeclTypeMap.mapArgs(m.getParameterTypes(), argv, 2);
+	    Vector<Method> v = ((Vector)methodnames.get(cmd.toLowerCase()));
 
-	    Object retval = m.invoke(o, args);
-	    return HeclTypeMap.mapRetval(m, retval);
+	    if (v == null) {
+		throw new HeclException("Method " + cmd + " not found for class" + forclass.toString());
+	    }
+
+	    Method[] methods = v.toArray(new Method[v.size()]);
+	    /* Match the signatures with the correct number first. */
+	    for (Method m : methods) {
+		Class[] javaparams = m.getParameterTypes();
+		if(javaparams.length != argv.length - 2) {
+		    continue;
+		}
+
+		args = mapParams(javaparams, argv, 2);
+		if (args != null) {
+		    selected = m;
+		    break;
+		}
+	    }
+	    if (selected == null) {
+		throw new HeclException("No method matched " + cmd + " for class " + forclass.getName());
+	    }
+	    Object retval = selected.invoke(o, args);
+	    return mapRetval(selected, retval);
 	} catch (InvocationTargetException e) {
-	    String msg = "Problem invoking " + o.getClass().getName() + " " + cmd + "/" + m.getName() + " with arguments: ";
+	    String msg = "Problem invoking " + o.getClass().getName() + " " + cmd + "/" + selected.getName() + " with arguments: ";
 	    for (Thing t : argv) {
 		msg += t.toString() + " ";
 	    }
@@ -148,89 +183,97 @@ class Reflector {
 	}
     }
 
-    private Constructor selectConstructor(Thing[] argv)
+    protected Object[] mapParams(Class[] outparams, Thing[] argv, int offset)
 	throws HeclException {
 
-	Constructor[] constructors = forclass.getConstructors();
-
-	if (constructors == null) {
-	    throw new HeclException(forclass.toString() + " has no constructors!");
+	if(outparams.length != argv.length - offset) {
+	    /* No match */
+	    return null;
 	}
 
-	for (Constructor c : constructors) {
-	    Class[] javaparams = c.getParameterTypes();
-	    if(javaparams.length != argv.length) {
-		continue;
-	    }
-	    if (matchParams(javaparams, argv, 0)) {
-		return c;
-	    }
-	}
-	return null;
-    }
-
-    private Method selectMethod(String cmd, Thing[] argv)
-        throws HeclException {
-
-	Vector<Method> v = ((Vector)methodnames.get(cmd.toLowerCase()));
-
-	if (v == null) {
-	    throw new HeclException("Method " + cmd + " not found for class" + forclass.toString());
-	}
-
-	Method[] methods = v.toArray(new Method[v.size()]);
-	/* Match the signatures with the correct number first. */
-	for (Method m : methods) {
-	    Class[] javaparams = m.getParameterTypes();
-	    if(javaparams.length != argv.length - 2) {
-		continue;
-	    }
-
-	    if (matchParams(javaparams, argv, 2)) {
-		return m;
-	    }
-	}
-	throw new HeclException("no method matched " + cmd );
-    }
-
-    protected boolean matchParams(Class[] javaparams, Thing[] argv, int offset)
-        throws HeclException {
-
-	int i = 0;
-	boolean match = true;
-	for (Class c : javaparams) {
-	    match = false;
+	Object[] outobjs = new Object[outparams.length];
+	Class c = null;
+	for (int i = 0; i < outparams.length; i++) {
+	    Thing inparam = argv[i + offset];
+	    Class outparam = outparams[i];
+	    String javaclassname = outparam.getSimpleName();
 
 	    /* Tweak inparam according to the constant table we've
 	     * been passed. */
-	    if (constnames.containsKey(argv[i + offset].toString())) {
-		argv[i + offset] = (Thing)constnames.get(argv[i + offset].toString());
+	    String val = inparam.toString();
+	    if (constnames.containsKey(val)) {
+		inparam = (Thing)constnames.get(val);
 	    }
+	    String heclparmt = inparam.getVal().thingclass();
 
-	    String javaparmt = c.getSimpleName();
-	    String heclparmt = argv[i + offset].getVal().thingclass();
+/* 	    Log.v("mapParams", "javatype: " + outparam.getName() + " hecltype: " +
+		  heclparmt + " heclval: " + inparam.toString());  */
 
-	    if (javaparmt.equals("int") || javaparmt.equals("boolean")) {
+	    if (outparam == boolean.class || outparam == int.class) {
 		if (heclparmt.equals("int")) {
-		    match = true;
+		    outobjs[i] = IntThing.get(inparam);
+		} else {
+		    outobjs = null;
 		}
-	    } else if (javaparmt.equals("long")) {
+	    } else if (outparam == long.class) {
 		if (heclparmt.equals("long")) {
-		    match = true;
+		    outobjs[i] = LongThing.get(inparam);
+		} else {
+		    outobjs = null;
 		}
-	    } else if ((javaparmt.equals("CharSequence") ||
-			javaparmt.equals("String"))) {
+	    } else if (outparam == CharSequence.class ||
+		       outparam == String.class) {
 		if (heclparmt.equals("string")) {
-		    match = true;
+		    outobjs[i] = inparam.toString();
+		} else {
+		    outobjs = null;
 		}
+	    } else if (javaclassname.equals("int[]")) {
+		Vector v = ListThing.get(inparam);
+		int[] ints = new int[v.size()];
+		for (int j = 0; j < v.size(); j++) {
+		    ints[j] = IntThing.get((Thing)v.elementAt(j));
+		}
+		outobjs[i] = ints;
+	    } else if (javaclassname.equals("Object[]")) {
+		Thing[] things = ListThing.getArray(inparam);
+		Object[] objects = new Object[things.length];
+		int j = 0;
+		for (Thing t : things) {
+		    /* This is a bit of a hack.  If they're objects,
+		     * move them on through as objects, otherwise, as
+		     * strings. */
+		    if (t.getVal().thingclass().equals("object")) {
+			objects[j] = ObjectThing.get(t);
+		    } else {
+			objects[j] = t.toString();
+		    }
+		    j++;
+		}
+		outobjs[i] = objects;
 	    } else if (heclparmt.equals("object")) {
-		match = true;
+		outobjs[i] = ObjectThing.get(inparam);
+	    } else {
+		/* No match, return null. */
+		outobjs = null;
 	    }
-	    i ++;
-	    if (match == false)
-		break;
 	}
-	return match;
+	return outobjs;
     }
 
+    private  Thing mapRetval(Method m, Object o) {
+	String rtype = m.getReturnType().getSimpleName();
+	if (rtype.equals("void")) {
+	    return null;
+	} else if (rtype.equals("int")) {
+	    return IntThing.create(((Integer)o).intValue());
+	} else if (rtype.equals("long")) {
+	    return LongThing.create(((Long)o).longValue());
+	} else if (rtype.equals("String") || rtype.equals("CharSequence")) {
+	    return new Thing((String)o);
+	} else if (rtype.equals("int[]")) {
+	    return new Thing("FIXME");
+	}
+	return ObjectThing.create(o);
+    }
 }

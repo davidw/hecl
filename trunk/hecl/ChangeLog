@@ -1,3 +1,16 @@
+2007-11-27  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/HeclTypeMap.java: Removed and all
+	functionality transferred to Reflector.java.
+
+	* android/src/org/hecl/android/Reflector.java: Stop using the
+	HeclTypeMap thing in favor of some methods added to this class,
+	that also unify the method selection and parameter filling.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Hacked reslookup
+	command to accept android package layout stuff as well.  Utilize
+	JavaCmd for more things.
+
 2007-11-26  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Beginnings of a widget tour.
