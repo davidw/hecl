@@ -66,10 +66,21 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 
 	    /* These are for all the attributes like -text -height, etc... */
 	    MethodProps mp = new MethodProps();
-	    mp.setProps(argv, 2);
+	    mp.setProps(argv, 1);
+
+	    Thing[] targs;
+	    Thing cargs = mp.getProp("-new");
+	    String thingclass = cargs.getVal().thingclass();
+	    /* Be careful not to turn it into a list over and over again. */
+	    if (thingclass.equals("list") || thingclass.equals("string")) {
+		targs = ListThing.getArray(cargs);
+	    } else {
+		targs = new Thing[] { cargs };
+	    }
+	    mp.delProp("-new");
 
 	    /* Create a new instance. */
-	    Thing newthing = classreflector.instantiate(ListThing.getArray(argv[1]));
+	    Thing newthing = classreflector.instantiate(targs);
 
 	    mp.evalProps(interp, ObjectThing.get(newthing), classreflector);
 
