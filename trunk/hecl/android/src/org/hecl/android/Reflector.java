@@ -251,6 +251,10 @@ class Reflector {
 		    j++;
 		}
 		outobjs[i] = objects;
+	    } else if (outparam == Thing.class) {
+		/* We can use this to pass Things around directly, to
+		 * classes that support it. */
+		outobjs[i] = inparam;
 	    } else if (heclparmt.equals("object")) {
 		outobjs[i] = ObjectThing.get(inparam);
 	    } else {

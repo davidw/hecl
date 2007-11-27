@@ -15,35 +15,39 @@
 
 package org.hecl.android;
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 import android.util.Log;
 
+import android.view.View;
+import android.view.View.OnClickListener;
+
 import org.hecl.HeclException;
-import org.hecl.IntThing;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.ListThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
+import org.hecl.StringThing;
 import org.hecl.Thing;
 
-public class MethodProps extends Properties {
+public class HeclOnClickListener implements android.view.View.OnClickListener {
+    public static Interp interp;
 
-    public MethodProps() {
-	super();
+    public Thing script;
+
+    public HeclOnClickListener(Thing callback) {
+	script = callback;
     }
 
-    public void evalProps(Interp interp, Object target, Reflector ref)
-	throws HeclException {
-
-	Enumeration names = props.keys();
-	while(names.hasMoreElements()) {
-	    String name = (String)names.nextElement();
-	    String methodname = "set" + name.substring(1);
-	    /* First two need to be null to replace cmdname and subcmdname. */
-	    Thing[] argv = { null, null, getProp(name) };
-	    ref.evaluate(target, methodname, argv);
+    public void onClick(View view) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(view));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onclick callback", he.toString());
 	}
     }
 }

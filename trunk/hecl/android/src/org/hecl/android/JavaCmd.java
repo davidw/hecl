@@ -69,9 +69,11 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	    mp.setProps(argv, 2);
 
 	    /* Create a new instance. */
+	    Thing newthing = classreflector.instantiate(ListThing.getArray(argv[1]));
 
-	    return classreflector.instantiate(ListThing.getArray(argv[1]));
+	    mp.evalProps(interp, ObjectThing.get(newthing), classreflector);
 
+	    return newthing;
 /* 	} catch (InvocationTargetException te) {
 	throw new HeclException("Constructor error: " + te.getTargetException().toString());  */
 	} catch (Exception e) {

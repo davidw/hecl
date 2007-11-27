@@ -149,28 +149,30 @@ public class AndroidCmd extends Operator {
     public static void load(Interp ip, Activity a) throws HeclException {
 	activity = a;
 	Operator.load(ip, cmdtable);
-	ViewCmd.load(ip, a, "android.view.View", "view");
-	ViewCmd.load(ip, a, "android.widget.Button", "button");
-	ViewCmd.load(ip, a, "android.widget.TextView", "textview");
-	ViewCmd.load(ip, a, "android.widget.RadioButton", "radiobutton");
-	ViewCmd.load(ip, a, "android.widget.AnalogClock", "analogclock");
-	ViewCmd.load(ip, a, "android.webkit.WebView", "webview");
-	ViewCmd.load(ip, a, "com.google.android.maps.MapView", "mapview");
-	ViewCmd.load(ip, a, "android.widget.DatePicker", "datepicker");
-	ViewCmd.load(ip, a, "android.widget.RadioGroup", "radiogroup");
-	ViewCmd.load(ip, a, "android.widget.Spinner", "spinner");
 	ip.addCommand("activity", new ActivityCmd(a));
 
+	JavaCmd.load(ip, "android.view.View", "view");
+	JavaCmd.load(ip, "android.webkit.WebView", "webview");
+	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
+	JavaCmd.load(ip, "android.widget.Button", "button");
+	JavaCmd.load(ip, "android.widget.DatePicker", "datepicker");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
-	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
+	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
+	JavaCmd.load(ip, "android.widget.RadioButton", "radiobutton");
+	JavaCmd.load(ip, "android.widget.RadioGroup", "radiogroup");
 	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
+	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
+	JavaCmd.load(ip, "android.widget.TextView", "textview");
+	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
+	JavaCmd.load(ip, "org.hecl.android.HeclOnClickListener", "callback");
+	HeclOnClickListener.interp = ip;
     }
 
     public static void unload(Interp ip) throws HeclException {
 	Operator.unload(ip, cmdtable);
-	ViewCmd.unload(ip);
+	JavaCmd.unload(ip);
     }
 
 }
