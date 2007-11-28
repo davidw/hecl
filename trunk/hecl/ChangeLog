@@ -1,3 +1,8 @@
+2007-11-28  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/graphics/Drawable.java: Commented reference to
+	unavailable font.
+
 2007-11-27  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Utilize -new syntax for constructors.

@@ -61,7 +61,7 @@ public class Drawable {
 	setFont(Font.getFont(Font.FACE_PROPORTIONAL,Font.STYLE_PLAIN,Font.SIZE_SMALL));
 //#endif
 	try {
-	    currvf = loadVFont(defvfont,null);
+//	    currvf = loadVFont(defvfont,null);
 	}
 	catch(Exception e) {
 	}
