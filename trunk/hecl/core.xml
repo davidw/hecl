@@ -93,9 +93,22 @@
     </javac>
   </target>
 
+  <target name="compileJava" description="Compile Java integration"
+	  depends="initCompile,compileCore">
+    <mkdir dir="${j2se.pre}/java"/>
+    <wtkpreprocess srcdir="java" destdir="${j2se.pre}/java"
+      symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/java"
+      destdir="${j2se.build}"
+      debug="${hecldebug}">
+      <classpath refid="j2se.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
   <target name="compileCommandline"
     description="Compile Hecl command line support"
-    depends="initCompile,compileCore,compileFiles,compileHttp,compileLoad">
+    depends="initCompile,compileCore,compileFiles,compileHttp,compileLoad,compileJava">
     <javac srcdir="commandline"
       destdir="${j2se.build}"
       debug="${hecldebug}">

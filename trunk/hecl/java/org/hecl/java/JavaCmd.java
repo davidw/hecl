@@ -13,20 +13,12 @@
    limitations under the License.
 */
 
-package org.hecl.android;
+package org.hecl.java;
 
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.Enumeration;
 import java.util.Vector;
-
-import android.view.ViewGroup.LayoutParams;
-
-import android.util.AttributeSet;
-import android.util.Log;
-import android.util.XmlPullAttributes;
-
-import android.view.View;
 
 import org.hecl.ClassCommand;
 import org.hecl.ClassCommandInfo;
@@ -55,7 +47,7 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	try {
 	    thisclass = Class.forName(clsname);
 	} catch (Exception e) {
-	    Hecl.logStacktrace(e);
+	    //Hecl.logStacktrace(e);
 	    throw new HeclException("Error trying to create " + clsname + " : " + e.toString());
 	}
     }
@@ -88,7 +80,7 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 /* 	} catch (InvocationTargetException te) {
 	throw new HeclException("Constructor error: " + te.getTargetException().toString());  */
 	} catch (Exception e) {
-	    Hecl.logStacktrace(e);
+//	    Hecl.logStacktrace(e);
 	    throw new HeclException(argv[0].toString() + " " +
 				    argv[1].toString() + " error " + e.toString());
 	}
@@ -112,7 +104,7 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	return cmdname;
     }
 
-    public static void load(Interp ip, String cname, String cmd) 
+    public static void load(Interp ip, String cname, String cmd)
 	throws HeclException {
 
 	if (commands == null) {

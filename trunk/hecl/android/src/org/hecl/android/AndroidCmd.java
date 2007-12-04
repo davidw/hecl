@@ -38,6 +38,7 @@ import org.hecl.RealThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import org.hecl.java.JavaCmd;
 
 public class AndroidCmd extends Operator {
     static protected Activity activity = null;
@@ -157,14 +158,16 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
 	JavaCmd.load(ip, "android.widget.Button", "button");
 	JavaCmd.load(ip, "android.widget.DatePicker", "datepicker");
+	JavaCmd.load(ip, "android.widget.EditText", "edittext");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
 	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
 	JavaCmd.load(ip, "android.widget.RadioButton", "radiobutton");
 	JavaCmd.load(ip, "android.widget.RadioGroup", "radiogroup");
-	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
+	JavaCmd.load(ip, "android.widget.ScrollView", "scrollview");
 	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
 	JavaCmd.load(ip, "android.widget.TextView", "textview");
+	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
 	JavaCmd.load(ip, "org.hecl.android.HeclOnClickListener", "callback");
 	HeclOnClickListener.interp = ip;

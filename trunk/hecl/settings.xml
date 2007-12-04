@@ -22,7 +22,7 @@
 
   <!-- General WTk settings -->
   <!-- make it fit for your local installation -->
-  <property name="my.wtk.home" value="/opt/WTK"/>
+  <property name="my.wtk.home" value="/opt/WTK2.5.2"/>
 
   <!-- ProGuard location -->
   <property name="wtk.proguard.home" value="build-tools/"/>
@@ -114,16 +114,7 @@
     </and>
   </condition>
 
-  <condition property="j2se.define.java15" value="j2se.java15" else="no.j2se.java15">
-    <and>
-      <equals trim="true" casesensitive="false"
-        arg1="1.5" arg2="${ant.java.version}"/>
-      <istrue value="${j2se.use15}"/>
-    </and>
-  </condition>
-
-  <property name="j2se.defines"
-  value="ant:j2se,${j2se.define.java15}"/>
+  <property name="j2se.defines" value="ant:j2se,javaversion='${ant.java.version}'"/>
 
   <property name="j2se.build" value="${buildprefix}/j2se/final"/>
   <property name="j2se.pre" value="${buildprefix}/j2se/pre"/>

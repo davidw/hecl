@@ -1,5 +1,15 @@
 2007-12-04  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/JavaCmd.java,
+	java/org/hecl/java/MethodProps.java,java/org/hecl/java/Reflection.java:
+	Moved these here from the Android directory, so that they may also
+	be used (and tested) by command line Hecl.
+
+	* core.xml: Compile 'java' package for command line Hecl.
+
+	* settings.xml: Use 'javaversion' instead of 'j2se.java15' for
+	j2se.defines.
+
 	* j2me.xml: Removed 'symbols' from midp target, as they're not
 	needed, and cause compilation errors due to "new, improved"
 	preprocessor which doesn't accept the old syntax.

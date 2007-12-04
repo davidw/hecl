@@ -13,18 +13,14 @@
    limitations under the License.
 */
 
-package org.hecl.android;
+package org.hecl.java;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import android.util.Log;
-
 import org.hecl.HeclException;
 import org.hecl.IntThing;
 import org.hecl.Interp;
-import org.hecl.ListThing;
-import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
 

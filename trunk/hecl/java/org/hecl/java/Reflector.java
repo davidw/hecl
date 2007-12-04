@@ -13,7 +13,7 @@
    limitations under the License.
 */
 
-package org.hecl.android;
+package org.hecl.java;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -23,8 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.Hashtable;
 import java.util.Vector;
-
-import android.util.Log;
 
 import org.hecl.DoubleThing;
 import org.hecl.HeclException;
