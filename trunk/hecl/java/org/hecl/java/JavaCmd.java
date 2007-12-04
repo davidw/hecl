@@ -53,34 +53,43 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
     }
 
     public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	Object view = null;
 	try {
+	    String argv1 = argv[1].toString();
 
 	    /* These are for all the attributes like -text -height, etc... */
-	    MethodProps mp = new MethodProps();
-	    mp.setProps(argv, 1);
+	    if (argv1.equals("-new")) {
+		MethodProps mp = new MethodProps();
+		mp.setProps(argv, 1);
 
-	    Thing[] targs;
-	    Thing cargs = mp.getProp("-new");
-	    String thingclass = cargs.getVal().thingclass();
-	    /* Be careful not to turn it into a list over and over again. */
-	    if (thingclass.equals("list") || thingclass.equals("string")) {
-		targs = ListThing.getArray(cargs);
+		Thing[] targs;
+		Thing cargs = mp.getProp("-new");
+
+		/* Instantiate a new one.  */
+		String thingclass = cargs.getVal().thingclass();
+		/* Be careful not to turn it into a list over and over again. */
+		if (thingclass.equals("list") || thingclass.equals("string")) {
+		    targs = ListThing.getArray(cargs);
+		} else {
+		    targs = new Thing[] { cargs };
+		}
+		mp.delProp("-new");
+
+		/* Create a new instance. */
+		Thing newthing = classreflector.instantiate(targs);
+		mp.evalProps(interp, ObjectThing.get(newthing), classreflector);
+		return newthing;
+	    } else if (argv1.equals("-field")) {
+		/* Access a field. */
+		return classreflector.getField(argv[2].toString());
 	    } else {
-		targs = new Thing[] { cargs };
+		/* Try calling a static method. */
+		return classreflector.evaluate(null, argv1, argv);
 	    }
-	    mp.delProp("-new");
-
-	    /* Create a new instance. */
-	    Thing newthing = classreflector.instantiate(targs);
-
-	    mp.evalProps(interp, ObjectThing.get(newthing), classreflector);
-
-	    return newthing;
 /* 	} catch (InvocationTargetException te) {
 	throw new HeclException("Constructor error: " + te.getTargetException().toString());  */
 	} catch (Exception e) {
 //	    Hecl.logStacktrace(e);
+	    e.printStackTrace();
 	    throw new HeclException(argv[0].toString() + " " +
 				    argv[1].toString() + " error " + e.toString());
 	}

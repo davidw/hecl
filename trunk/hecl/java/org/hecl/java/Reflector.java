@@ -32,7 +32,7 @@ import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
-class Reflector {
+public class Reflector {
     private Class forclass;
     private Method[] methods;
     private Hashtable methodnames;
@@ -78,9 +78,7 @@ class Reflector {
 		    } else if (type == String.class) {
 			constnames.put(name, new Thing((String)f.get(forclass)));
 		    } else {
-			throw new HeclException("Type " + type.getName() +
-						", a field in " + forclass.getName() +
-						" was not handled in the Reflector instantiation");
+			constnames.put(name, ObjectThing.create(f.get(forclass)));
 		    }
 		}
 	    }
@@ -132,6 +130,16 @@ class Reflector {
 	} catch (Exception e) {
 	    throw new HeclException("Reflector.evaluate error :" + e.toString());
 	}
+    }
+
+    public Thing getField(String name)
+	throws HeclException {
+
+	Thing result =  (Thing)constnames.get(name);
+	if (result == null) {
+	    throw new HeclException("No field '" + name + "'");
+	}
+	return result;
     }
 
     public Thing evaluate(Object o, String cmd, Thing[] argv)
@@ -276,6 +284,9 @@ class Reflector {
 	    return null;
 	} else if (rtype == int.class) {
 	    return IntThing.create(((Integer)o).intValue());
+	} else if (rtype == boolean.class) {
+	    boolean val = ((Boolean)o).equals(Boolean.TRUE);
+	    return IntThing.create(val ? 1 : 0);
 	} else if (rtype == long.class) {
 	    return LongThing.create(((Long)o).longValue());
 	} else if (rtype == String.class || rtype == CharSequence.class) {

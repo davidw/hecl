@@ -1,4 +1,16 @@
+2007-12-05  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Added getField method.
+	Unknown constant types are created as Objects.  Boolean return
+	types are created as integers.
+
+	* java/org/hecl/java/JavaCmd.java: Added ways to deal with static
+	methods, and access fields.  -new must also be argv[1], where it's
+	used.
+
 2007-12-04  David N. Welton  <davidw@dedasys.com>
+
+	* android/build.xml: We need the Hecl java package here too.
 
 	* core/org/hecl/Thing.java: Conditionally provide hashCode and
 	equals methods, which are utilized by the JavaCmd code.

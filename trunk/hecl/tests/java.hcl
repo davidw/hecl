@@ -12,3 +12,21 @@ test java-2 {
     $hasht put foo "bar"
     $hasht get foo
 } {bar}
+
+test java-3 {
+    java java.util.Hashtable ht
+    set hasht [ht -new {}]
+    $hasht isempty
+} {1}
+
+test java-4 {
+    java java.lang.System sys
+    sys gc
+} {}
+
+test java-5 {
+    java java.lang.System sys
+    java java.io.PrintStream ps
+    set prints [sys -field err]
+    $prints println "damn!"
+} {}
