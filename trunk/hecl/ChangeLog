@@ -1,5 +1,12 @@
 2007-12-04  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Thing.java: Conditionally provide hashCode and
+	equals methods, which are utilized by the JavaCmd code.
+
+	* java/org/hecl/java/Reflector.java: Use .class instead of string
+	comparisons in mapRetval.  Special case for returned Thing
+	objects.
+
 	* tests/java.hcl: Test the java command and its application to the
 	Hashtable class.
 

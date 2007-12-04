@@ -204,9 +204,6 @@ class Reflector {
 	    }
 	    String heclparmt = inparam.getVal().thingclass();
 
-/* 	    Log.v("mapParams", "javatype: " + outparam.getName() + " hecltype: " +
-		  heclparmt + " heclval: " + inparam.toString());  */
-
 	    if (outparam == boolean.class || outparam == int.class) {
 		if (heclparmt.equals("int")) {
 		    outobjs[i] = IntThing.get(inparam);
@@ -254,7 +251,14 @@ class Reflector {
 		 * classes that support it. */
 		outobjs[i] = inparam;
 	    } else if (heclparmt.equals("object")) {
+		/* We are getting an ObjectThing from Hecl... */
 		outobjs[i] = ObjectThing.get(inparam);
+	    } else if (outparam == Object.class) {
+		/* We're not getting an ObjectThing from Hecl, but
+		 * Java can take any Object. Give it Things directly.
+		 * This is sort of a last resort as more specific is
+		 * better. */
+		outobjs[i] = inparam;
 	    } else {
 		/* No match, return null. */
 		outobjs = null;
@@ -264,17 +268,25 @@ class Reflector {
     }
 
     private  Thing mapRetval(Method m, Object o) {
-	String rtype = m.getReturnType().getSimpleName();
-	if (rtype.equals("void")) {
+	Class rtype = m.getReturnType();
+	String rtypename = rtype.getSimpleName();
+	if (o == null) {
 	    return null;
-	} else if (rtype.equals("int")) {
+	} else if (rtype == void.class) {
+	    return null;
+	} else if (rtype == int.class) {
 	    return IntThing.create(((Integer)o).intValue());
-	} else if (rtype.equals("long")) {
+	} else if (rtype == long.class) {
 	    return LongThing.create(((Long)o).longValue());
-	} else if (rtype.equals("String") || rtype.equals("CharSequence")) {
+	} else if (rtype == String.class || rtype == CharSequence.class) {
 	    return new Thing((String)o);
-	} else if (rtype.equals("int[]")) {
+	} else if (rtypename.equals("int[]")) {
 	    return new Thing("FIXME");
+	} else if (rtype == Object.class) {
+	    if (o.getClass() == Thing.class) {
+		/* If we've managed to stash a thing somewhere. */
+		return (Thing)o;
+	    }
 	}
 	return ObjectThing.create(o);
     }

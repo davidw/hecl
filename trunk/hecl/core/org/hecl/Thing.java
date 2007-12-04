@@ -134,6 +134,45 @@ public class Thing extends Object {
 	return val.getStringRep();
     }
 
+//#if javaversion >= 1.5
+    /**
+     * The <code>hashCode</code> method overrides the object hashCode
+     * method, using the hash of the string representation.
+     *
+     * @return an <code>int</code> value
+     */
+    public int hashCode() {
+	if (val.thingclass().equals("object")) {
+	    return ((ObjectThing)val).get().hashCode();
+	} else {
+	    return val.getStringRep().hashCode();
+	}
+    }
+
+    /**
+     * The <code>equals</code> method overrides the object equals
+     * method, using either the two objects, in the case of two
+     * ObjectThings, or the two string representations.
+     *
+     * @param obj an <code>Object</code> value
+     * @return a <code>boolean</code> value
+     */
+    public boolean equals(Object obj) {
+	Thing that = (Thing)obj;
+	if (val.thingclass().equals("object")) {
+	    if (that.val.thingclass().equals("object")) {
+		return ((ObjectThing)val).get().equals(((ObjectThing)that.val).get());
+	    }
+	    return false;
+	}
+	/* FIXME - This isn't actually used by much - so far, only by
+	 * the JavaCmd code.  However, we should probably investigate
+	 * other possibilities. */
+	return val.getStringRep().equals(that.toString());
+    }
+//#endif
+
+
     /**
      * <code>deepcopy</code> copies the thing, its value, and any elements the
      * value might contain.
