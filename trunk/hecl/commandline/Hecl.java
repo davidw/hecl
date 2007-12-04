@@ -1,4 +1,4 @@
-/* Copyright 2005-2006 Wojciech Kocjan, David N. Welton
+/* Copyright 2005-2007 Wojciech Kocjan, David N. Welton
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import org.hecl.load.LoadCmd;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
 
+import org.hecl.java.HeclJavaCmd;
 
 /**
  * <code>Hecl</code> - this class implements the main Hecl command
@@ -64,6 +65,7 @@ public class Hecl {
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
 	    LoadCmd.load(interp);
+	    HeclJavaCmd.load(interp);
 	    Vector argv = new Vector();
 
             for (i = 0; i < args.length; i++) {
