@@ -25,6 +25,7 @@ testfiles {
     incr.hcl
     index.hcl
     intro.hcl
+    java.hcl
     join.hcl
     list.hcl
     listlen.hcl

@@ -1,5 +1,14 @@
 2007-12-04  David N. Welton  <davidw@dedasys.com>
 
+	* tests/java.hcl: Test the java command and its application to the
+	Hashtable class.
+
+	* core/org/hecl/Properties.java: Make Hashtable protected instead
+	of private.
+
+	* core/org/hecl/MathCmds.java: Use #if javaversion >= 1.5 instead
+	of #ifdef j2se.java15.
+
 	* java/org/hecl/java/JavaCmd.java,
 	java/org/hecl/java/MethodProps.java,java/org/hecl/java/Reflection.java:
 	Moved these here from the Android directory, so that they may also
