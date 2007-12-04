@@ -69,8 +69,20 @@
     </apply>
   </target>
 
+  <target name="compileAndroidJava"
+    description="Compile Android Java integration support"
+    depends="compileAndroid">
+    <wtkpreprocess srcdir="java" destdir="${android.pre}/java"/>
+    <javac srcdir="${android.pre}/java"
+      destdir="${android.build}"
+      debug="${hecldebug}">
+      <classpath refid="android.coreclasspath"/>
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+
   <target name="compileAndroidHttp"
-    description="Compile J2SE Hecl http support"
+    description="Compile Android Hecl http support"
     depends="compileAndroid">
     <wtkpreprocess srcdir="net" destdir="${android.pre}/net"/>
     <javac srcdir="${android.pre}/net"
@@ -92,7 +104,7 @@
 
   <target name="compileAndroidMain"
     description="Compile Hecl command line support"
-    depends="compileAndroid,compileAndroidHttp">
+    depends="compileAndroid,compileAndroidHttp,compileAndroidJava">
 
     <javac srcdir="android/src"
       destdir="${android.build}">

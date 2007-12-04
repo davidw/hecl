@@ -31,6 +31,8 @@ import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import org.hecl.java.Reflector;
+
 public class ActivityCmd implements org.hecl.Command {
     private static Activity activity;
     private final static String CMDNAME = "activity";
