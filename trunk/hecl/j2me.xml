@@ -12,8 +12,7 @@
 
     <copy file="midp${midpstr}/hecl_logo.png" todir="${j2me.build}" overwrite="true"/>
 
-    <wtkpreprocess srcdir="midp${midpstr}" destdir="${j2me.pre}/midp${midpstr}"
-      symbols="ant:j2me,ant:cldc${wtk.cldc.vesion}"/>
+    <wtkpreprocess srcdir="midp${midpstr}" destdir="${j2me.pre}/midp${midpstr}"/>
     <wtkbuild srcdir="${j2me.pre}/midp${midpstr}" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.guiclasspath}">

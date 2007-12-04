@@ -1,3 +1,9 @@
+2007-12-04  David N. Welton  <davidw@dedasys.com>
+
+	* j2me.xml: Removed 'symbols' from midp target, as they're not
+	needed, and cause compilation errors due to "new, improved"
+	preprocessor which doesn't accept the old syntax.
+
 2007-11-28  David N. Welton  <davidw@dedasys.com>
 
 	* midp20gui/org/graphics/Drawable.java: Commented reference to
