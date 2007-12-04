@@ -180,7 +180,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return DoubleThing.create(Math.atan(a.doubleValue()));
 	  case EXP:
 	    return DoubleThing.create(Math.exp(a.doubleValue()));
-//#ifdef j2se.java15
+//#if javaversion >= 1.5
 	  case SIGNUM:
 	    return DoubleThing.create(Math.signum(a.doubleValue()));
 	  case CBRT:
@@ -303,7 +303,7 @@ public class MathCmds extends org.hecl.Operator {
 //#ifdef ant:j2se
 	  case POW:
 	    return DoubleThing.create(Math.pow(a.doubleValue(), b.doubleValue()));
-//#ifdef j2se.java15
+//#if javaversion >= 1.5
 	  case HYPOT:
 	    return DoubleThing.create(Math.hypot(a.doubleValue(), b.doubleValue()));
 //#endif

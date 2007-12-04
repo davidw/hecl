@@ -29,7 +29,7 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public class Properties {
-    private Hashtable props;
+    protected Hashtable props;
 
     /**
      * Creates a new <code>Properties</code> instance with no default
@@ -111,11 +111,11 @@ public class Properties {
     }
 
     /**
-     * <code>getProps</code> connverts the properties back into an array of
-     * <code>Thing</code>.
+     * <code>getProps</code> converts the properties back into an
+     * array of <code>Thing</code>s.
      *
-     * @return Ab array of <code>Thing</code>s, being property name and
-     * property value.
+     * @return an array of <code>Thing</code>s, being property name
+     * and property value.
      */
     public Thing[] getProps() {
 	int n = props.size();
