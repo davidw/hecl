@@ -1,3 +1,8 @@
+2007-12-07  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/examples/recordstore.hcl: New version by Nils-Arne
+	Dahlberg.
+
 2007-12-05  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Added getField method.
