@@ -11,7 +11,7 @@ proc saveit {} {
     global existing
     global rsn
     global tf
-    rms.put [getprop $rsn text] [getprop $tf text]
+    rms.set [getprop $rsn text] [getprop $tf text]
 
     set lst {}
 
