@@ -56,6 +56,7 @@ p {
 }
 
 div.nav {
+    width: 15em;
     float: left;
     background-color: #dddddd;
     margin: 2ex;
