@@ -26,6 +26,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 
+import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -35,6 +36,7 @@ import android.widget.TextView;
 
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
 import org.hecl.net.HttpCmd;
@@ -44,6 +46,12 @@ public class Hecl extends Activity
     private Interp interp;
     private Thing menuCreateCode;
     private Thing menuItemSelected;
+
+    public Thing menuvar;
+    public Thing menucode;
+
+    public Thing menucallbackvar;
+    public Thing menucallbackcode;
 
     /* Do something with error messages.  */
     private void errmsg(String msg) {
@@ -67,7 +75,6 @@ public class Hecl extends Activity
     public void onCreate(Bundle heclApp)
     {
 	Log.v("hecl", "Starting application");
-	int layoutid = 0;
         super.onCreate(heclApp);
 
  	try {
@@ -82,21 +89,33 @@ public class Hecl extends Activity
 	}
     }
 
-/*     @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-	menu.add(0, REVERT_ID, R.string.menu_revert).setShortcut(KeyEvent.KEYCODE_0, 0, KeyEvent.KEYCODE_R);
+	try {
+	    interp.setVar(menuvar, ObjectThing.create(menu));
+	    interp.eval(menucode);
+	} catch (HeclException he) {
+	    errmsg(he.toString());
+	}
+	Log.v("MENU", "ADDED MENU");
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(Menu.Item item) {
-        // Handle all of the possible menu actions.
-        switch (item.getId()) {
+
+	try {
+	    interp.setVar(menucallbackvar, ObjectThing.create(item));
+	    interp.eval(menucallbackcode);
+	} catch (HeclException he) {
+	    errmsg(he.toString());
+	}
+
         return super.onOptionsItemSelected(item);
-    }  */
+    }
 
 
     private String getResourceAsString(Class cl,String resname,String encoding)

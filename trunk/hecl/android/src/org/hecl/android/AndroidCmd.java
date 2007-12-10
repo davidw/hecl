@@ -41,7 +41,7 @@ import org.hecl.Thing;
 import org.hecl.java.JavaCmd;
 
 public class AndroidCmd extends Operator {
-    static protected Activity activity = null;
+    static protected Hecl hecl = null;
 
     public static final int EXIT = 1;
     public static final int RESLOOKUP = 2;
@@ -49,6 +49,8 @@ public class AndroidCmd extends Operator {
     public static final int FINDVIEW = 4;
     public static final int LOG = 4;
     public static final int NULLCMD = 5;
+    public static final int MENUSETUP = 6;
+    public static final int MENUCALLBACK = 7;
 
     /* These will eventually be moved elsewhere - the core most
      * likely. */
@@ -62,9 +64,9 @@ public class AndroidCmd extends Operator {
     }
 
     private void makeAlert(String msg) {
-	NotificationManager nm = (NotificationManager)activity.getSystemService(Activity.NOTIFICATION_SERVICE);
+	NotificationManager nm = (NotificationManager)hecl.getSystemService(Activity.NOTIFICATION_SERVICE);
 	nm.notifyWithText(1, msg, NotificationManager.LENGTH_LONG, null);
-	activity.showAlert("Hecl Alert", msg, "dismiss", false);
+	hecl.showAlert("Hecl Alert", msg, "dismiss", false);
     }
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -73,7 +75,7 @@ public class AndroidCmd extends Operator {
 		makeAlert(argv[1].toString());
 		return new Thing(argv[1].toString());
 	    case EXIT:
-		activity.finish();
+		hecl.finish();
 		return null;
 	    case RESLOOKUP:
 		String pieces[] = argv[1].toString().split("\\.");
@@ -106,6 +108,14 @@ public class AndroidCmd extends Operator {
 	    case NULLCMD:
 		return ObjectThing.create(null);
 
+	    case MENUSETUP:
+		hecl.menuvar = argv[1];
+		hecl.menucode = argv[2];
+		return null;
+	    case MENUCALLBACK:
+		hecl.menucallbackvar = argv[1];
+		hecl.menucallbackcode = argv[2];
+		return null;
 
 	    case TOINT:
 		return IntThing.create(IntThing.get(argv[1]));
@@ -135,6 +145,8 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
 
 	    cmdtable.put("null", new AndroidCmd(NULLCMD,0,0));
+	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
+	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
 
 	    cmdtable.put("i", new AndroidCmd(TOINT, 1, 1));
 	    cmdtable.put("l", new AndroidCmd(TOLONG, 1, 1));
@@ -147,11 +159,16 @@ public class AndroidCmd extends Operator {
 	}
     }
 
-    public static void load(Interp ip, Activity a) throws HeclException {
-	activity = a;
+    public static void load(Interp ip, Hecl a) throws HeclException {
+	hecl = a;
 	Operator.load(ip, cmdtable);
 	ip.addCommand("activity", new ActivityCmd(a));
 
+	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
+	JavaCmd.load(ip, "android.app.TimePickerDialog", "timedialog");
+
+	JavaCmd.load(ip, "android.view.Menu", "menu");
+	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");
 	JavaCmd.load(ip, "android.view.View", "view");
 	JavaCmd.load(ip, "android.webkit.WebView", "webview");
 	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
@@ -169,8 +186,8 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.TextView", "textview");
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
-	JavaCmd.load(ip, "org.hecl.android.HeclOnClickListener", "callback");
-	HeclOnClickListener.interp = ip;
+	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
+	HeclCallback.interp = ip;
     }
 
     public static void unload(Interp ip) throws HeclException {
