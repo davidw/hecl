@@ -1,3 +1,7 @@
+2007-12-10  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Fixed DTD to use recent version of DocBook.
+
 2007-12-07  David N. Welton  <davidw@dedasys.com>
 
 	* midp10/examples/recordstore.hcl: New version by Nils-Arne

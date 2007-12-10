@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-  "http://www.oasis-open.org/committees/docbook/xml/4.1.2/docbookx.dtd"
-  []>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"http://www.docbook.org/xml/4.2/docbookx.dtd" []>
 
 <!--
    Copyright 2004-2007 David N. Welton
@@ -26,7 +25,7 @@
   <articleinfo>
     <title>
       <ulink url="http://www.hecl.org/">
-	Hecl Programming Language
+	Hecl - The Mobile Scripting Language
       </ulink>
     </title>
     <copyright>
