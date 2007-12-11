@@ -1,5 +1,7 @@
 2007-12-11  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/script.hcl: Added a number of comments.
+
 	* android/res/raw/script.hcl: Select the demo you want with a
 	listview instead of a spinner.
 
