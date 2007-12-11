@@ -299,16 +299,6 @@ if { &lt; $temp 0 } {
     puts "Not freezing"
 }</programlisting>
 
-    <para>References:</para>
-
-    <programlisting>set a 1
-set b $a
-puts $b
-# Prints '1'
-set a 2
-puts $b
-# Prints '2'</programlisting>
-
     <para>"while" loop command:</para>
 
     <programlisting>set i 0

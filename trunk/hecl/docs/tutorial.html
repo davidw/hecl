@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.71.0"><link rel="start" href="index.html" title="Hecl Programming Language"><link rel="up" href="index.html" title="Hecl Programming Language"><link rel="prev" href="installation.html" title="Installation"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
       Like many people, I enjoy taking something and experimenting
       with it before going and reading the instructions!  With this in
       mind, I have written a brief tutorial that you can use to start
@@ -57,13 +57,7 @@ if { &lt; $temp 0 } {
     puts "It's freezing"
 } else {
     puts "Not freezing"
-}</pre><p>References:</p><pre class="programlisting">set a 1
-set b $a
-puts $b
-# Prints '1'
-set a 2
-puts $b
-# Prints '2'</pre><p>"while" loop command:</p><pre class="programlisting">set i 0
+}</pre><p>"while" loop command:</p><pre class="programlisting">set i 0
 while { &lt; $i 10 } {
     puts "i is now $i"
     incr $i
