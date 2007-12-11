@@ -1,4 +1,38 @@
+2007-12-11  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Select the demo you want with a
+	listview instead of a spinner.
+
+	* android/src/org/hecl/android/HeclCallback.java: Added callback
+	for OnItemSelectedListener, OnItemClickListener.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added AdapterView,
+	DigitalClock and ListView.
+
+	* android/res/raw/script.hcl: Added checkbox, progressdialog and
+	radiobutton dialogs.  Radio buttons do not, however, work, due to
+	a bug in the Android code!
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added
+	ProgressDialog and CheckBox.
+
+	* android/src/org/hecl/android/HeclCallback.java: Added callback
+	for android.widget.CompoundButton.OnCheckedChangeListener, used in
+	checkboxes.
+
 2007-12-10  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added a few more widgets.
+
+	* android/src/org/hecl/android/Hecl.java: Added some preliminary
+	code to deal with menus.
+
+	* android/src/org/hecl/android/HeclCallback.java: Made this a more
+	generic place to host callbacks.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use a 'Hecl'
+	object instead of an Activity, so we can get access to the goodies
+	within.  Added menusetup and menucallback commands.
 
 	* docs/hecl.xml: Fixed DTD to use recent version of DocBook.
 

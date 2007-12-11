@@ -24,6 +24,9 @@ proc SimpleWidgets {} {
 			   -text "This is editable text" \
 			   -layoutparams $layoutparams]
 
+    $swlayout addview [digitalclock -new $context \
+			   -layoutparams $layoutparams]
+
     activity setcontentview $scroll
 }
 
@@ -41,16 +44,18 @@ proc WebView {} {
     $layout addview $wv
     activity setcontentview $layout
     $wv loadurl http://www.hecl.org
+    $wv requestfocus
 }
 
-proc datecallback {args} {
-    log "datecallback"
+proc Callback {args} {
+    set args [lrange $args 1 -1]
+    alert "Callback called with arguments: $args"
 }
 
 proc DatePicker {} {
     global context
 
-    set callback [callback -new [list [list datecallback]]]
+    set callback [callback -new [list [list Callback]]]
     set dp [datedialog -new [list $context $callback [i 2007] [i 10] [i 10] [i 1]]]
     $dp show
 }
@@ -58,25 +63,160 @@ proc DatePicker {} {
 proc TimePicker {} {
     global context
 
-    set callback [callback -new [list [list datecallback]]]
-    set tp [timedialog -new [list $context $callback "It's 5 O'clock Somewhere" [i 5] [i 0] [i 1]]]
-    $dt show
+    set callback [callback -new [list [list Callback]]]
+    set tp [timedialog -new \
+		[list $context $callback \
+		     "It's 5 o'clock somewhere" [i 5] [i 0] [i 1]]]
+    $tp show
 }
 
+proc ProgressDialog {} {
+    global context
+    set pd [progressdialog show $context "Working..." \
+		"This is a progress \"bar\"" [i 0] [i 0]]
+    updateProgress $pd 0
+}
 
-proc SelectDemo {spinner button} {
-    set v [$spinner getselectedview]
-    set dest [$v gettext]
+proc updateProgress {pd progress} {
+    $pd setprogress [i $progress]
+    if { < $progress 10000 } {
+	after 1000 [list updateProgress $pd [+ 2000 $progress]]
+    } else {
+	$pd dismiss
+    }
+}
+
+proc RadioButtons {} {
+    global procname
+    set procname RadioButtons
+    global context
+
+    set layoutparams [radiogrouplayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    # Since this is added to the linearlayout, it has to have
+    # linearlayoutparams
+    set radiogroup \
+	[radiogroup -new $context \
+	     -layoutparams [linearlayoutparams -new {FILL_PARENT FILL_PARENT}]]
+
+    $radiogroup setorientation VERTICAL
+
+    $layout addview $radiogroup
+
+    # FIXME - broken - but it's Google's fault!
+    $radiogroup addview [radiobutton -new $context \
+			     -text "Android" -layoutparams $layoutparams]
+    $radiogroup addview [radiobutton -new $context \
+			     -text "JavaME" -layoutparams $layoutparams]
+    $radiogroup addview [radiobutton -new $context \
+			     -text "Flash Lite" -layoutparams $layoutparams]
+    activity setcontentview $layout
+}
+
+proc CheckBoxes {} {
+    global procname
+    set procname CheckBoxes
+    global context
+
+    set layoutparams [radiogrouplayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    $layout addview [textview -new $context -text "Pick any two:" \
+			 -layoutparams $layoutparams]
+
+    set cb1 [checkbox -new $context \
+		 -text "Fast" -layoutparams $layoutparams]
+    set cb2 [checkbox -new $context \
+		 -text "Cheap" -layoutparams $layoutparams]
+    set cb3 [checkbox -new $context \
+		 -text "Good" -layoutparams $layoutparams]
+
+    set callback [callback -new [list [list CheckBoxCallback $cb1 $cb2 $cb3]]]
+
+    foreach cb [list $cb1 $cb2 $cb3] {
+	$cb setoncheckedchangelistener $callback
+	$layout addview $cb
+    }
+
+    activity setcontentview $layout
+}
+
+# This is the callback for the CheckBox code.  It ensures that the
+# user can only select two out of the three options.
+proc CheckBoxCallback {cb1 cb2 cb3 checkbox ischecked} {
+    if { = 1 $ischecked } {
+	set total 0
+	foreach cb [list $cb1 $cb2 $cb3] {
+	    incr $total [$cb ischecked]
+	}
+	if { = $total 3 } {
+	    $checkbox setchecked [i 0]
+	}
+    }
+}
+
+proc Spinner {} {
+    global procname
+    set procname Spinner
+    global context
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    set lista [arrayadapter -new \
+		   [list $context \
+			[reslookup android.R.layout.simple_spinner_item] \
+			[list "Wheel" "Of" "Fortune!"]]]
+
+    $lista setdropdownviewresource \
+	[reslookup android.R.layout.simple_spinner_dropdown_item]
+
+    set spinner [spinner -new $context -layoutparams $layoutparams]
+    $spinner setadapter $lista
+    $layout addview $spinner
+    $spinner requestfocus
+
+    set selected [textview -new $context -text "Currently selected: Wheel" \
+		      -layoutparams $layoutparams]
+    $layout addview $selected
+
+    set callback [callback -new [list [list SpinnerCallback $selected]]]
+    $spinner setonitemselectedlistener $callback
+
+    activity setcontentview $layout
+}
+
+proc SpinnerCallback {textview parent view position id} {
+    set text [$view gettext]
+    $textview settext "Currently selected: $text"
+}
+
+proc SelectDemo {parent view position id} {
+    set dest [$view gettext]
     if { eq $dest "Simple Widgets" } {
 	SimpleWidgets
     } elseif {eq $dest "Web View"} {
 	WebView
     } elseif {eq $dest "Date Picker"} {
 	DatePicker
+    } elseif {eq $dest "Progress Dialog"} {
+	ProgressDialog
+    } elseif {eq $dest "Radio Buttons"} {
+	RadioButtons
+    } elseif {eq $dest "CheckBoxes"} {
+	CheckBoxes
+    } elseif {eq $dest "Spinner"} {
+	Spinner
     } elseif {eq $dest "Time Picker"} {
 	TimePicker
     }
-
 }
 
 proc viewCode {} {
@@ -109,24 +249,23 @@ proc main {} {
 
     $layout addview $tv
 
-    set ala [arrayadapter -new \
-		 [list $context \
-		      [reslookup android.R.layout.simple_spinner_item] \
-		      [list "Simple Widgets" "Web View" "Date Picker" "Time Picker" "Spinner"]]]
+    set lista [arrayadapter -new \
+		   [list $context \
+			[reslookup android.R.layout.simple_list_item_1] \
+			[list "Simple Widgets" "Web View" \
+			     "Date Picker" "Time Picker" \
+			     "Progress Dialog" "Spinner" \
+			     "Radio Buttons" "CheckBoxes"]]]
 
-    $ala setdropdownviewresource [reslookup android.R.layout.simple_spinner_dropdown_item]
+    set callback [callback -new [list [list SelectDemo]]]
 
-    set spinner [spinner -new $context]
-    $spinner setadapter $ala
-    $spinner setlayoutparams $layoutparams
-    $layout addview $spinner
+    set lview [listview -new $context -layoutparams $layoutparams \
+		   -onitemclicklistener $callback]
 
-    set button [button -new $context -text "View demo" \
-		    -layoutparams $layoutparams \
-		    -onclicklistener [callback -new [list [list SelectDemo $spinner]]]]
-    $layout addview $button
+    $lview setadapter $lista
+    $lview requestfocus
+    $layout addview $lview
 
-    $spinner requestfocus
     activity setcontentview $layout
 
     menusetup {m} {
@@ -147,5 +286,3 @@ proc main {} {
 set context [activity getcontext]
 
 main
-
-#newmain

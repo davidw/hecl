@@ -152,8 +152,7 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("l", new AndroidCmd(TOLONG, 1, 1));
 	    cmdtable.put("d", new AndroidCmd(TODOUBLE, 1, 1));
 	    cmdtable.put("s", new AndroidCmd(TOSTR, 1, 1));
-	}
-	catch (Exception e) {
+	} catch (Exception e) {
 	    e.printStackTrace();
 	    Log.v("hecl", "Can't create android commands.");
 	}
@@ -165,19 +164,25 @@ public class AndroidCmd extends Operator {
 	ip.addCommand("activity", new ActivityCmd(a));
 
 	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
+	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
 	JavaCmd.load(ip, "android.app.TimePickerDialog", "timedialog");
 
 	JavaCmd.load(ip, "android.view.Menu", "menu");
 	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");
 	JavaCmd.load(ip, "android.view.View", "view");
 	JavaCmd.load(ip, "android.webkit.WebView", "webview");
+	JavaCmd.load(ip, "android.widget.AdapterView", "adapterview");
 	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
 	JavaCmd.load(ip, "android.widget.Button", "button");
+	JavaCmd.load(ip, "android.widget.CheckBox", "checkbox");
 	JavaCmd.load(ip, "android.widget.DatePicker", "datepicker");
+	JavaCmd.load(ip, "android.widget.DigitalClock", "digitalclock");
 	JavaCmd.load(ip, "android.widget.EditText", "edittext");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
+	JavaCmd.load(ip, "android.widget.ListView", "listview");
+	JavaCmd.load(ip, "android.widget.RadioGroup$LayoutParams", "radiogrouplayoutparams");
 	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
 	JavaCmd.load(ip, "android.widget.RadioButton", "radiobutton");
 	JavaCmd.load(ip, "android.widget.RadioGroup", "radiogroup");
@@ -187,6 +192,7 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
+
 	HeclCallback.interp = ip;
     }
 

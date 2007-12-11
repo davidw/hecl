@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
@@ -29,15 +31,19 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
 public class HeclCallback implements android.view.View.OnClickListener,
+			  android.widget.AdapterView.OnItemClickListener,
+			  android.widget.AdapterView.OnItemSelectedListener,
 			  android.widget.DatePicker.OnDateSetListener,
 			  android.widget.TimePicker.OnTimeSetListener,
-			  android.widget.TimePicker.OnTimeChangedListener {
+			  android.widget.TimePicker.OnTimeChangedListener,
+			  android.widget.CompoundButton.OnCheckedChangeListener {
 
     public static Interp interp;
 
@@ -68,7 +74,7 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	    interp.eval(ListThing.create(vec));
 	} catch (HeclException he) {
 	    Hecl.logStacktrace(he);
-	    Log.v("hecl onclick callback", he.toString());
+	    Log.v("hecl dateset callback", he.toString());
 	}
     }
 
@@ -81,7 +87,7 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	    interp.eval(ListThing.create(vec));
 	} catch (HeclException he) {
 	    Hecl.logStacktrace(he);
-	    Log.v("hecl onclick callback", he.toString());
+	    Log.v("hecl timeset callback", he.toString());
 	}
     }
 
@@ -94,7 +100,59 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	    interp.eval(ListThing.create(vec));
 	} catch (HeclException he) {
 	    Hecl.logStacktrace(he);
-	    Log.v("hecl onclick callback", he.toString());
+	    Log.v("hecl timechanged callback", he.toString());
 	}
     }
+
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(buttonView));
+	    vec.add(IntThing.create(isChecked));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl oncheckedchanged callback", he.toString());
+	}
+    }
+
+    public void onItemClick(AdapterView parent, View v, int position, long id) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(parent));
+	    vec.add(ObjectThing.create(v));
+	    vec.add(IntThing.create(position));
+	    vec.add(LongThing.create(id));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onitemclick callback", he.toString());
+	}
+    }
+
+    public void onItemSelected(AdapterView parent, View v, int position, long id) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(parent));
+	    vec.add(ObjectThing.create(v));
+	    vec.add(IntThing.create(position));
+	    vec.add(LongThing.create(id));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onitemselected callback", he.toString());
+	}
+    }
+
+    public void onNothingSelected(AdapterView parent) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(parent));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onnothingselected callback", he.toString());
+	}
+    }
+
 }
