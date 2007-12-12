@@ -1,4 +1,12 @@
+2007-12-12  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Initial cut at integrating demo originally
+	written for free software magazine.
+
 2007-12-11  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Removed references in the short tutorial so as to
+	avoid confusing people.
 
 	* android/res/raw/script.hcl: Added a number of comments.
 

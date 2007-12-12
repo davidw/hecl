@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
-"http://www.docbook.org/xml/4.2/docbookx.dtd" []>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.docbook.org/xml/4.5/docbookx.dtd" []>
 
 <!--
    Copyright 2004-2007 David N. Welton
@@ -3643,7 +3643,7 @@ class HelloCmd implements Command {
 
 
   <section id="j2me">
-    <title>Hecl and J2ME</title>
+    <title>Hecl and Java ME</title>
 
     <para>
       Hecl is designed to be small enough to run on mobile devices
@@ -3651,6 +3651,472 @@ class HelloCmd implements Command {
       been necessary to limit ourselves to Java API's that work with
       J2ME.
     </para>
+
+
+    <section id="javame_tutorial">
+      <title>Hecl Java ME Tutorial</title>
+
+      <para>
+	This tutorial first appeared here:
+	<ulink url="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl">
+	  Create a simple application with Hecl - Introducing Hecl, a mobile phone scripting
+	  language </ulink>.  It is a tutorial style introduction writing Hecl code for mobile
+	  phones, by David Welton.
+      </para>
+
+      <para>
+	These days, almost everyone has a cell phone; cell phones keep getting faster, smarter, and
+	more capable, yet relatively few applications exist for them. The Hecl programming language
+	makes it easy to script applications for your cell phone - with just a few lines of code, you
+	can create applications that you can carry with you, everywhere.
+      </para>
+
+      <para>
+	I first fell in love with computers when my parents bought me a Commodore 64, a fairly nice
+	computer for the time. Thanks to Moore's law, and the relentless pace of development, the
+	average cell phone is now more powerful than that machine from just 20 some years ago. While
+	it's understandable that many people just want to make phone calls, think of all the
+	programs out there waiting to be written that take advantage of the fact that you almost
+	always have a cell phone with you. I think I'm just beginning to scratch the surface of
+	what's possible, especially as phones continue to get faster, and have better connections to
+	the internet.
+      </para>
+
+      <para>
+	I became interested in writing cell phone applications several years ago, after a rainy day
+	high in the Italian Dolomites near Cortina d'Ampezzo - my old phone ended up in a mud puddle
+	and died, leading me to purchase a new phone with J2ME (Java) capabilities. Writing
+	applications in Java was okay, but I thought to myself that it would be an interesting
+	experiment to try and create a scripting language that runs on top of the J2ME (now known as
+	Java Micro Edition or Java ME) environment.
+      </para>
+
+      <para>When I created Hecl, I did so with several goals in mind:</para>
+
+      <orderedlist>
+	<listitem>
+	  <para>
+	    Make it even easier and faster for experienced programmers to create cell phone applications.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    Make it possible for novice programmers to create cell phone applications without the
+	    burden of dealing with Java.
+	  </para>
+	</listitem>
+      </orderedlist>
+
+      <para>
+	Hecl has other benefits too - it's faster to develop applications, because you don't have to
+	recompile after each change. In the hands of a clever programmer, it's also possible to do
+	interesting things with Hecl because of its interpreted nature. You could start an
+	application on your phone, and download additional bits of code off the web.
+      </para>
+
+      <para>
+	The aim of this tutorial is to help you create cell phone applications, so let's get started
+	right away. You'll need a few things first:
+      </para>
+
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    Sun's Java. This is heading towards free software, but isn't quit there yet. If you run
+	    Ubuntu, like me, you can get Java with apt: <userinput>apt-get install
+	    sun-java5-jdk</userinput>, if you've added the "multiverse" repositories to your
+	    <filename>/etc/apt/sources.list</filename> file: <code>deb
+	    http://us.archive.ubuntu.com/ubuntu/ feisty multiverse</code>
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <ulink url="http://java.sun.com/products/sjwtoolkit/download-2_5_1.html">Sun's WTK
+	    toolkit</ulink>. While you don't need the tools to compile Hecl (unless you want to hack
+	    on it!), you do want the emulator, so that you don't have to load your app onto your
+	    phone each time you want to test it. It's not open source software (yet?), but it does
+	    run on Linux, Mac and Windows, and of course it is free.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Hecl itself. You can get it from the Sourceforge <ulink
+	      url="http://sourceforge.net/project/showfiles.php?group_id=122383">download
+	      page</ulink>.
+	    <note>
+	      <para>
+		Hecl is always improving, so you should also consider checking out Hecl directly
+		from subversion: <userinput>svn co
+		https://hecl.svn.sourceforge.net/svnroot/hecl/trunk/hecl hecl</userinput>
+	      </para>
+	    </note>
+	  </para>
+	</listitem>
+      </itemizedlist>
+
+      <para>
+	Sun's WTK requires installation - you can put it somewhere like <filename>/opt</filename>,
+	so it won't get mixed up with the rest of your system. The installation process is very
+	simple - just say yes to a few questions, and you're done. Hecl doesn't require
+	installation: everything you need is already there in the distribution.
+      </para>
+
+      <para>
+	To see if everything's working, you can try launching the emulator with the sample
+	application: <userinput>/opt/WTK2.5.1/bin/emulator -classpath
+	build/j2me/final/cldc1.1-midp2.0/Hecl.jar Hecl</userinput>
+      </para>
+
+      <para>That should bring up something like this:</para>
+
+      <screenshot>
+	<screeninfo>Figure 1: Hecl demo screen shot</screeninfo>
+	<graphic fileref="demo_screenshot.png"></graphic>
+      </screenshot>
+
+      <para>
+	This is Hecl's built in demo - its source code is located in
+	<filename>midp20/script.hcl</filename>, but before I get too far ahead of myself, let's go
+	back and create the classic "Hello World" application, just to get started and see how to
+	work with Hecl.
+      </para>
+
+      <note>
+	<para>
+	  Hecl actually comes in several flavors, with slightly different GUI commands - MIDP1.0
+	  (older phones), which has fewer commands and doesn't do as much, and MIDP2.0, for newer
+	  phones, which has a lot more features. This tutorial utilizes the MIDP2.0 commands,
+	  because that's what current phones are based on. The concepts described are very similar
+	  for the MIDP1.0 commands, but the commands are slightly different. Please contact us if
+	  you are interested in a MIDP1.0 version of this tutorial.
+	</para>
+      </note>
+
+      <para>
+	To write your first Hecl program, open a text editor, and type the following program into a
+	file - I'll call it <filename>hello.hcl</filename>:
+      </para>
+
+<programlisting>
+proc HelloEvents {cmd form} {
+    [lcdui.alert -text "Hellllllllooooo, world!" -timeout forever] setcurrent
+}
+
+set form [lcdui.form -title "Hello world" -commandaction HelloEvents]
+set cmd [lcdui.command -label "Hello" -longlabel "Hello Command" -type screen]
+
+$form setcurrent
+$form addcommand $cmd
+
+$form append [lcdui.stringitem -label "Hello" -text "World"]
+</programlisting>
+
+      <para>
+	Not bad - 8 lines of code, and most of it's pretty clear just from looking at it. I'll go
+	through it line by line, so you understand exactly what's happening.
+      </para>
+
+      <orderedlist>
+	<listitem>
+	  <para>
+	    The first bit of code, that starts with <code>proc HelloEvents</code>, defines a
+	    "procedure": in other words a function called <command>HelloEvents</command>. When this
+	    function is called, it creates an "alert" - think of it as a pop up message telling you
+	    something important. <option>-timeout forever</option> tells the message to stay on the
+	    screen until the user dismisses it.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    The second command defines a form, with the command <command>lcdui.form</command>, with
+	    the title of "Hello World", and connected to the <command>HelloEvents</command>
+	    proc. What this connection means is that when any commands associated with the form are
+	    activated by the user, this procedure is called to handle them. The code <code>set
+	    form</code> stores the form object in the variable <varname>form</varname>, so that it
+	    can be referenced later.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    The following line creates a command that can be activated by the user. It has the label
+	    "Hello", and is stored in the variable <varname>cmd</varname>. I use the
+	    <constant>screen</constant> type for the command, which is used for user defined
+	    commands. There are some other predefined types such as <constant>exit</constant> and
+	    <constant>back</constant>.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <code>$form setcurrent</code> references the previously created form, and tells Hecl to
+	    display it on the screen.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    The <command>addcommand</command> subcommand (you could also think of it as a "method",
+	    like in an object oriented language) attaches the command I created above to the
+	    form. This makes the command visible in the form.
+	  </para>
+	</listitem>
+
+
+	<listitem>
+	  <para>
+	    Finally, I display a string on the form with the <command>lcdui.stringitem</command>
+	    command. On most phones, the <option>-label</option> text is displayed in bold, and the
+	    <option>-text</option> text is displayed next to it.
+	  </para>
+	</listitem>
+
+      </orderedlist>
+
+      <para>
+	That's it! Now, to transform the code into a cell phone application, run a command:
+      </para>
+
+<programlisting>
+java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ Hello hello.hcl
+</programlisting>
+
+      <para>
+	This is all it takes - this command takes the existing <filename>Hecl.jar</filename> file,
+	and replaces the Hecl script within with our newly created <filename>hello.hcl</filename>
+	script, and creates the resulting <filename>Hello.jar</filename> in your home directory
+	(referenced as <filename>~/</filename> in the command above).
+      </para>
+
+      <para>
+	Now, we can run the code in the emulator to see the application (figure 2).
+      </para>
+
+      <screenshot>
+	<screeninfo>Figure 2: Hecl Hello World screenshot</screeninfo>
+	<graphic fileref="hello_screenshot1.png"></graphic>
+      </screenshot>
+
+      <para>
+	Highlighted, from the top, are the form's <option>-title</option>, the
+	<command>stringitem</command>, and in the lower right corner, the command labeled Hello.
+      </para>
+
+      <para>
+	If you press the "hello" button, the code in <command>HelloEvents</command> is executed, and
+	an "alert" is popped up onto the screen, and stays there until you hit the "Done"
+	button.
+      </para>
+
+      <para>
+	While creating an application is very easy, unfortunately, installing it on a phone is not;
+	there isn't much that Hecl can do to ease that process, which is different for each
+	phone. On Linux, for my Nokia telephone, I use the gammu program to transfer programs to my
+	phone, like so:
+      </para>
+
+      <para><userinput>gammu nothing --nokiaaddfile Application Hecl</userinput></para>
+
+      <para>
+	Another method that may work better across different phones is to use the phone's browser to
+	download and install the application, by placing the <filename>.jar</filename> and
+	<filename>.jad</filename> files on a publicly accessible web server, and accessing the
+	<filename>.jad</filename> file.
+	<note>
+	  <para>Note that this will likely cost money in connection charges!</para>
+	</note>
+      </para>
+
+      <para>
+	So far so good. Next, I'll create a small application that you can interact with to do
+	something useful. It's a simplified version of the shopping list that can be found <ulink
+	url="http://shoplist.dedasys.com">here</ulink>. The theory of operation behind this
+	application is simple: typing a shopping list into a mobile phone is pretty painful - it's
+	much better to do the data entry via a web page, and then fetch the list with the mobile
+	phone application.
+      </para>
+
+      <para>
+	For this tutorial, I've created a simple list on the ShopList web site, with the PIN number
+	<constant>346764</constant>, which can be viewed <ulink
+	href="http://shoplist.dedasys.com/list/show/346764">here</ulink>. Feel free to create your
+	own shopping lists - the site costs nothing to use. The cell phone application works like
+	so: by entering the PIN, it downloads the list of items and displays them on the phone
+	screen as a series of checkboxes. Have a look at the code to do this:
+      </para>
+
+<programlisting>
+# Process events associated with the shopping list screen.
+proc ShopListEvents {exitcmd backcmd cmd shoplist} {
+    if { eq $cmd $exitcmd } {
+	midlet.exit
+    } elseif { eq $cmd $backcmd } {
+	global shopform
+	$shopform setcurrent
+    }
+}
+
+# Create a new shopping list screen and fetch .
+proc MakeList {exitcmd backcmd pin} {
+    set url "http://shoplist.dedasys.com/list/fetch/${pin}"
+    # Fetch the data, and retrieve the data field from the results hash.
+    set data [hget [http.geturl $url] data]
+    if { eq $data "PIN NOT FOUND" } {
+	[lcdui.alert -type warning \
+	     -title "Pin Not Found" \
+	     -timeout forever\
+	     -text "The PIN $pin was not found on shoplist.dedasys.com"] setcurrent
+	return
+    }
+    set shoplist [lcdui.list -title "Shopping List" \
+		      -type multiple]
+    foreach e [split $data \n] {
+	$shoplist append $e
+    }
+    $shoplist addcommand $exitcmd
+    $shoplist addcommand $backcmd
+    $shoplist setcurrent
+    $shoplist configure -commandaction \
+	[list ShopListEvents $exitcmd $backcmd]
+}
+
+# Process events associated with the main form.
+proc ShopFormEvents {backcmd exitcmd pinfield
+		     fetchcmd cmd shopform} {
+    if { eq $cmd $exitcmd } {
+	midlet.exit
+    } elseif { eq $fetchcmd $cmd } {
+	MakeList $exitcmd $backcmd \
+	    [$pinfield cget -text]
+    }
+}
+
+# The action starts here...
+
+# Create a generic back command.
+set backcmd [lcdui.command \
+		 -label Back \
+		 -longlabel Back -type back -priority 1]
+# Create an exit command.
+set exitcmd [lcdui.command \
+		 -label Exit \
+		 -longlabel Exit -type exit -priority 2]
+
+# Create the form.
+set shopform [lcdui.form -title "Shopping List"]
+set pinfield [lcdui.textfield \
+		  -label "shoplist.dedasys.com PIN:" \
+	          -type numeric]
+set fetchcmd [lcdui.command -label "Fetch" \
+		  -longlabel "Fetch Shopping List" \
+		  -type screen -priority 1]
+
+$shopform append $pinfield
+$shopform addcommand $exitcmd
+$shopform addcommand $fetchcmd
+$shopform setcurrent
+
+$shopform configure -commandaction \
+    [list ShopFormEvents $backcmd $exitcmd $pinfield $fetchcmd]
+</programlisting>
+
+      <para>
+	This is certainly more complex than the first example, but the general pattern is the same -
+	screen widgets and items are created, displayed, and procs are called to deal with
+	commands.
+      </para>
+
+      <para>
+	As I mentioned previously, commands with specific, predefined tasks have their own types, as
+	I can see with the <command>back</command> and <command>exit</command> commands, which are respectively
+	of types "back" and "exit".
+      </para>
+
+      <para>
+	After the two commands are defined, I create a form and add a textfield to it. By specifying
+	<option>-type numeric</option> for the textfield, I indicate that it is only to accept
+	numbers - no letters or symbols.
+      </para>
+
+      <para>
+	After creating the Fetch command, I append the textfield to the form (or else it wouldn't be
+	visible), add the two commands to the form, and then, with <command>setcurrent</command>,
+	make the form visible. The last line of code configures the form to utilize the
+	<command>ShopFormEvents</command> proc to handle events. The list argument warrants further
+	explanation:
+      </para>
+
+      <para>
+	Hecl, like many programming languages, has a <command>global</command> command that could be
+	used in the various procs that utilize the <command>back</command> and
+	<command>exit</command> commands - you could simply say <code>global backcmd</code>, and
+	then the <varname>$backcmd</varname> variable would be available in that procedure. However,
+	using global variables all over the place gets kind of messy, so what I want to do is pass
+	in everything that the proc might need, and I do so by creating a list: <code>ShopFormEvents
+	$backcmd $exitcmd $pinfield $fetchcmd</code>. You can see that these corresponds to the
+	arguments that the proc takes: <code>proc ShopFormEvents {backcmd exitcmd pinfield fetchcmd
+	cmd shopform}</code>, except for the last two, which Hecl
+	<emphasis>automatically</emphasis> passes in. <varname>cmd</varname> is the command that was
+	actually called, and <varname>shopform</varname> is of course the form that the proc was
+	called with. By comparing <varname>$cmd</varname> with the various commands that are
+	available, it's possible to determine which command called the proc, and act accordingly.
+      </para>
+
+
+      <para>Now, let's build it and run it:</para>
+
+<programlisting>
+java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hcl
+/opt/WTK2.5.1/bin/emulator -classpath ShopList.jar Hecl
+</programlisting>
+
+      <screenshot>
+	<screeninfo>Figure 3: Initial shoplist form</screeninfo>
+	<graphic fileref="shoplist1.png"></graphic>
+      </screenshot>
+
+      <para>
+	At this point, you enter the PIN number (<constant>346764</constant>), and press the Fetch
+	button. This command executes the code in <command>MakeList</command>. The first thing it
+	does is attempt to fetch the data from the shoplist site, using the
+	<command>http.geturl</command> command. Since this command returns a hash table, in order to
+	get at the data returned, I use the <command>hget</command> command to access the "data"
+	element. If the PIN was not available on the server, an error message is returned, and the
+	user is returned to the first screen. Otherwise, a list of checkboxes is created with
+	<command>lcdui.list</command>, by specifying "multiple" as the type. Since the shopping list
+	is sent "over the wire" (so to speak...) as a list of lines, all I have to do to add it to
+	the display is split it by lines with the <command>split</command> command, and then iterate
+	over that list with <command>foreach</command>. The result looks like that displayed figure
+	4.
+      </para>
+
+      <screenshot>
+	<screeninfo>Figure 4: Shopping List</screeninfo>
+	<graphic fileref="shoplist2.png"></graphic>
+      </screenshot>
+
+      <para>
+	And there you have it, a network-based shopping list in less than 100 lines of code. Of
+	course, there is room for improvement. For instance, in the production version of this
+	shopping list application, RecordStore (in Hecl, the <command>rms.*</command> commands make
+	this functionality available) is utilized to save the list and its state between invocations
+	of the program, so that you can leave the application, run it again, and find the list as
+	you left it. Support for multiple lists might also be handy.
+      </para>
+
+      <para>
+	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
+	commands, and is a complete programming language that can do some interesting and dynamic
+	things. If you're curious, the best way to learn more is to keep reading the documentation,
+	and sign up for the <ulink url="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Hecl
+	mailing list</ulink> on SourceForge.
+      </para>
+
+    </section>
+
 
     <section id="midp10_commands">
       <title>Hecl J2ME MIDP1.0 Commands</title>
@@ -4176,7 +4642,7 @@ class HelloCmd implements Command {
     </section>
 
     <section id="midp20commands">
-      <title>Hecl J2ME MIDP2.0 Commands</title>
+      <title>Hecl Java ME MIDP2.0 Commands</title>
 
       <para>
 	The MIDP 2.0 commands in Hecl are more complete and more
@@ -6031,7 +6497,7 @@ FIXME
     </section>
 
     <section id="heclapps">
-      <title>Creating your own Hecl J2ME apps</title>
+      <title>Creating your own Hecl Java ME apps</title>
 
       <para>
 	Creating new hecl applications is relatively easy using the
