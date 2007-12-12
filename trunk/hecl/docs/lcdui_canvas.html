@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.canvas</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="j2me.html#midp20commands" title="Hecl J2ME MIDP2.0 Commands"><link rel="prev" href="lcdui_alert.html" title="lcdui.alert"><link rel="next" href="lcdui_choicegroup.html" title="lcdui.choicegroup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.canvas</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl J2ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lcdui_canvas"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.canvas &#8212; Creates a canvas</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.canvas</code>  [-autoflush
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.canvas</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="j2me.html#midp20commands" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_alert.html" title="lcdui.alert"><link rel="next" href="lcdui_choicegroup.html" title="lcdui.choicegroup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.canvas</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="lcdui_canvas"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.canvas &#8212; Creates a canvas</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.canvas</code>  [-autoflush
 	      1 |  0
 	    ] [-cmdbg
 	      <em class="replaceable"><code>color</code></em>
@@ -17,7 +17,7 @@
 	      <em class="replaceable"><code>optval</code></em>
 	    ] [flush
 	      [<em class="replaceable"><code>x y width height</code></em>]
-	    ] [graphics] [repaint] [servicerepaints]</p></div></div><div class="refsect1" lang="en"><a name="id2563414"></a><h2>Description</h2><p>
+	    ] [graphics] [repaint] [servicerepaints]</p></div></div><div class="refsect1" lang="en"><a name="id2569876"></a><h2>Description</h2><p>
 	    The <span><strong class="command">lcdui.canvas</strong></span> command creates a
 	    canvas that can be used to draw arbitrary items, such as
 	    rectangles, text, circles, and respond to keyboard events.
@@ -67,7 +67,7 @@
 	      </p></li><li><p>
 		<span><strong class="command">servicerepaints</strong></span>: Forces any repaints
 		that haven't occured yet to be performed immediately.
-	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2563595"></a><h2>Example</h2><pre class="programlisting">
+	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2570050"></a><h2>Example</h2><pre class="programlisting">
 set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
 set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]
