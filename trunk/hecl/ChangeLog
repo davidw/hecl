@@ -1,5 +1,13 @@
 2007-12-13  David N. Welton  <davidw@dedasys.com>
 
+	* android/README: Added a very basic getting started doc for
+	Android Hecl.
+
+	* android/AndroidManifest.xml: Added icon.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Corrected location
+	of internal jars.
+
 	* misc.xml: Add correct files to HeclBuilder.jar.  Make sure that
 	both midp10 and midp20 jars are built prior to packaging them.
 

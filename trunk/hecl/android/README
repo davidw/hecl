@@ -1,0 +1,40 @@
+			   Hecl on Android
+			   ===============
+
+This README is the documentation for Hecl on Android.  It's not much,
+but until things settle down and we begin to commit things to DocBook,
+it's better than nothing.
+
+Building Hecl
+-------------
+
+ant installPackage builds Hecl and sends it to the running Android
+emulator.
+
+Editing the script
+------------------
+
+The package that gets sent to the emulator resides in
+android/bin/Hecl.apk, and is basically a .zip file.  This means that
+it's possible to modify the Hecl script contained therein and
+repackage the .apk without recompiling anything:
+
+# Go to the android directory.
+cd android/
+# Replace the script.hcl file in Hecl.apk with our modifications.
+zip -r bin/Hecl.apk res/raw/script.hcl
+# Send it to the emulator.
+/opt/android_sdk_linux_m3-rc22a/tools/adb install bin/Hecl.apk
+
+With the Hecl script executed being res/raw/script.hcl.
+
+Android Hecl Commands
+---------------------
+
+Read script.hcl to get an idea of what's going on.  If you don't like
+some aspect of how it works, now's the time to say something!  In
+order to get something working, I created some reflection code for
+Hecl, so most of the commands are, in reality, closely related to the
+Java classes and methods documented here:
+
+http://code.google.com/android/reference/index.html
