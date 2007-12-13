@@ -1,4 +1,4 @@
-/* Copyright 2006 David N. Welton
+/* Copyright 2006-2007 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -29,8 +29,9 @@ import org.jdesktop.layout.LayoutStyle;
 
 /**
  * <code>HeclBuilderGui</code> -- a gui for the creation of J2ME Hecl
- * apps.  Utilizes an internal copy of j2me/Hecl.jar as a sort of
- * "template" that is combined with a user-supplied script.
+ * apps.  Utilizes an internal copy of the relevant (MIDP 1.0 or 2.0)
+ * Hecl.jar as a sort of "template" that is combined with a
+ * user-supplied script.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
@@ -230,9 +231,9 @@ public class HeclBuilderGui extends javax.swing.JFrame {
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {
 	String hecljar = null;
 	if (selectMidp10.isSelected()) {
-	    hecljar = "/jars/1.0/Hecl.jar";
+	    hecljar = "/jars/cldc1.0-midp1.0/Hecl.jar";
 	} else {
-	    hecljar = "/jars/1.1/Hecl.jar";
+	    hecljar = "/jars/cldc1.1-midp2.0/Hecl.jar";
 	}
         InputStream in = this.getClass().getResourceAsStream(hecljar);
         String scriptfile = scriptTextField.getText();

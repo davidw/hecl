@@ -54,7 +54,6 @@
   <target name="docs" depends="javadocs,docbook">
   </target>
 
-
   <target name="HeclBuilder" depends="packageCommandline,
     packageJarHack">
     <mkdir dir="build/heclbuilder" />
@@ -67,6 +66,22 @@
   </target>
 
   <target name="HeclBuilderJar" depends="packageJarHack,HeclBuilder">
+
+    <!-- This is kind of an ugly hack - it would be better to be able to depend on this somehow, but
+    we don't build this all that often. -->
+
+    <exec executable="ant" failonerror="true">
+      <arg value="-propertyfile" />
+      <arg value="cldc10midp10.properties" />
+      <arg value="midlet" />
+    </exec>
+
+    <exec executable="ant" failonerror="true">
+      <arg value="-propertyfile" />
+      <arg value="cldc11midp20.properties" />
+      <arg value="midlet" />
+    </exec>
+
     <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
 	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />
@@ -82,9 +97,9 @@
     </jar>
 
     <jar destfile="jars/HeclBuilder.jar" basedir="."
-    includes="jars/1.0/Hecl.jar" update="true" />
+      includes="jars/cldc1.0-midp1.0/Hecl.jar" update="true" />
     <jar destfile="jars/HeclBuilder.jar" basedir="."
-    includes="jars/1.1/Hecl.jar" update="true" />
+      includes="jars/cldc1.1-midp2.0/Hecl.jar" update="true" />
 
   </target>
 </project>

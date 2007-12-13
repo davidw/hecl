@@ -1,3 +1,8 @@
+2007-12-13  David N. Welton  <davidw@dedasys.com>
+
+	* misc.xml: Add correct files to HeclBuilder.jar.  Make sure that
+	both midp10 and midp20 jars are built prior to packaging them.
+
 2007-12-12  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Initial cut at integrating demo originally
