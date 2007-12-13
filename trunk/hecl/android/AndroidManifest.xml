@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.hecl.android">
-    <application>
+    <application android:icon="@drawable/hecl">
         <activity class=".Hecl" android:label="Hecl">
             <intent-filter>
                 <action android:value="android.intent.action.MAIN" />

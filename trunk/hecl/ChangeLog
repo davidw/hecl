@@ -1,5 +1,8 @@
 2007-12-13  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/script.hcl: Added a little bit of code to
+	execute Hecl code and display the results.
+
 	* android/README: Added a very basic getting started doc for
 	Android Hecl.
 

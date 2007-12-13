@@ -264,13 +264,53 @@ proc SpinnerCallback {textview parent view position id} {
     $textview settext "Currently selected: $text"
 }
 
+proc HeclEditor {} {
+    global context
+
+    set procname HeclEditor
+    global context
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    $layout addview [textview -new $context -text "Hecl evaluator: enter code below and hit 'eval' to evaluate" \
+			 -layoutparams $layoutparams]
+
+    set script {proc AddOne {num} {
+    return [+ $num 1]
+}
+AddOne 41}
+
+    set editor [edittext -new $context -text $script -layoutparams $layoutparams]
+    $layout addview $editor
+
+    set eval [button -new $context -text "Eval" -layoutparams $layoutparams]
+    $layout addview $eval
+
+    set results [textview -new $context -text "Results:" -layoutparams $layoutparams]
+    $layout addview $results
+
+    set callback [callback -new [list [list EditCallback $editor $results]]]
+    $eval setonclicklistener $callback
+    activity setcontentview $layout
+}
+
+proc EditCallback {editor results button} {
+    set res "Results: [eval [$editor gettext]]"
+    $results settext $res
+}
+
 # SelectDemo --
 #
 #	Select which demo to display.
 
 proc SelectDemo {parent view position id} {
     set dest [$view gettext]
-    if { eq $dest "Simple Widgets" } {
+    if { eq $dest "Hecl Editor" } {
+	HeclEditor
+    } elseif { eq $dest "Simple Widgets" } {
 	SimpleWidgets
     } elseif {eq $dest "Web View"} {
 	WebView
@@ -330,7 +370,7 @@ proc main {} {
     set lista [arrayadapter -new \
 		   [list $context \
 			[reslookup android.R.layout.simple_list_item_1] \
-			[list "Simple Widgets" "Web View" \
+			[list "Hecl Editor" "Simple Widgets" "Web View" \
 			     "Date Picker" "Time Picker" \
 			     "Progress Dialog" "Spinner" \
 			     "Radio Buttons" "CheckBoxes"]]]
