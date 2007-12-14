@@ -220,9 +220,12 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
     }
     
     public void setFullScreenMode(boolean b) {	
-
-	if(b == isfullscreen)
-	    return;
+	// Commented out due to problem with WTK2.5.2 that forces us to
+	// resitore fullscreen mode of canvas after performing setcurrent to a
+	// non-canvas displayable.
+	//
+	//if(b == isfullscreen)
+	//    return;
 
 	// ignore request for fullscreen canvas when disabled
 	if(b && !SettingsCmd.cvallowfullscreen)

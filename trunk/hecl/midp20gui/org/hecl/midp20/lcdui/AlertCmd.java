@@ -132,7 +132,21 @@ public class AlertCmd extends ScreenCmd {
 		    // to allow correct preprocessing
 		    Alert alert = (Alert)target;
 		    Display displ = MidletCmd.getDisplay();
-		    displ.setCurrent(alert,d);
+
+		    /*
+		     * There is a problem with the WTK2.5.2 emulator:
+		     * When switching from a fullscreen canvas to something else, the
+		     * fullscreen mode of the canvas gets lost. We extract the old
+		     * status and set it properly on display switch.
+		     */
+		    Displayable oldd = displ.getCurrent();
+		    if(oldd != null && oldd instanceof HeclCanvas) {
+			boolean flag = ((HeclCanvas)d).getFullScreenMode();
+			displ.setCurrent(alert,d);
+			((HeclCanvas)oldd).setFullScreenMode(flag);
+		    } else {
+			displ.setCurrent(alert,d);
+		    }
 		    // end j2mepolish break down
 		    return null;
 		}

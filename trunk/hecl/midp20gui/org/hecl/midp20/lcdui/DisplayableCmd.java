@@ -143,7 +143,21 @@ public abstract class DisplayableCmd extends OptionCmd {
 	    return null;
 	}
 	if(subcmd.equals(WidgetInfo.NSETCURRENT)) {
-	    Display.getDisplay(MidletCmd.midlet()).setCurrent(d);
+	    /*
+	     * There is a problem with the WTK2.5.2 emulator:
+	     * When switching from a fullscreen canvas to something else, the
+	     * fullscreen mode of the canvas gets lost. We extract the old
+	     * status and set it properly on display switch.
+	     */
+	    Display displ = MidletCmd.getDisplay();
+	    Displayable oldd = displ.getCurrent();
+	    if(oldd != null && oldd instanceof HeclCanvas) {
+		boolean flag = ((HeclCanvas)oldd).getFullScreenMode();
+		displ.setCurrent(d);
+		((HeclCanvas)oldd).setFullScreenMode(flag);
+	    } else {
+		displ.setCurrent(d);
+	    }
 	    return null;
 	}
 	return super.handlecmd(ip,target,subcmd,argv,startat);
