@@ -1,5 +1,9 @@
 2007-12-14  David N. Welton  <davidw@dedasys.com>
 
+	* tests/for.hcl: This is the only test case that failed after the
+	previous change, because {01} is turned into 1.  It's necessary to
+	represent the number as a string by wrapping it in quotes.
+
 	* core/org/hecl/Parse.java: *IMPORTANT* checked in some code that
 	tries to parse numbers as numbers *as* they are parsed.  This
 	means that Hecl will see 10 as a number immediately, and "10" as a
