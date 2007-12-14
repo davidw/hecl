@@ -224,7 +224,7 @@ public class Reflector {
 	    Object retval = selected.invoke(o, args);
 	    return mapRetval(selected, retval);
 	} catch (InvocationTargetException e) {
-	    String msg = "Problem invoking " + o.getClass().getName() + " " + cmd + "/" + selected.getName() + " with arguments: ";
+	    String msg = "Problem invoking " + forclass.getName() + " " + cmd + "/" + selected.getName() + " with arguments: ";
 	    for (Thing t : argv) {
 		msg += t.toString() + " ";
 	    }
