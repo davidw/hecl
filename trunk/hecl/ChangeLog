@@ -1,5 +1,17 @@
 2007-12-14  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Parse.java: *IMPORTANT* checked in some code that
+	tries to parse numbers as numbers *as* they are parsed.  This
+	means that Hecl will see 10 as a number immediately, and "10" as a
+	string.  It will still be possible for Hecl to use "10" as a
+	number via its weak typing, but this will make Java integration,
+	which relies on getting the correct Hecl type, easier.
+
+	* java/org/hecl/java/Reflector.java: Get the right class name for
+	errors even when we are doing a static call.
+
+	* tests/java.hcl: Test an error condition in the java integration.
+
 	* java/org/hecl/java/HeclJavaCmd.java: Added this file...oops!
 
 	* java/org/hecl/java/*.java: Added docstrings.

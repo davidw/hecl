@@ -37,6 +37,7 @@ public class Parse {
 
     /* Used to build up individual Things with. */
     protected StringThing outBuf;
+    protected boolean outBufNumeric = true;
     protected boolean outBufused = false;
     /* Used to build up words (that might be GroupThings). */
     protected Vector outGroup;
@@ -162,7 +163,22 @@ public class Parse {
 	/* If it's only got one element, don't make a groupthing out
 	 * of it. */
 	if (outGroup.size() == 1) {
-	    outList.addElement(new Thing((RealThing)outGroup.elementAt(0)));
+	    /* Optimization - if it's composed entirely of numbers,
+	     * make an IntThing out of it. */
+
+	    RealThing str = (RealThing)outGroup.elementAt(0);
+	    Thing newthing = null;
+ 	    if (outBufNumeric) {
+		String s = str.getStringRep();
+		try {
+		    newthing = new Thing(NumberThing.asNumber(new Thing(s)));
+		} catch (NumberFormatException e) {
+		}
+	    }
+	    if (newthing == null) {
+		newthing = new Thing(str);
+	    }
+	    outList.addElement(newthing);
 	} else if (outGroup.size() > 1) {
 	    Vector outv = new Vector();
 	    for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
@@ -188,8 +204,12 @@ public class Parse {
     protected void appendToCurrent(char ch) throws HeclException {
 	if (!outBufused) {
 	    outBuf = new StringThing();
+	    outBufNumeric = true;
 	    outBufused = true;
 	    outGroup.addElement(outBuf);
+	}
+	if (outBufNumeric && !Character.isDigit(ch) && ch != '.') {
+	    outBufNumeric = false;
 	}
 	outBuf.append(ch);
     }
@@ -481,6 +501,8 @@ public class Parse {
             }
             switch (ch) {
                 case '"' :
+		    /* If it's quoted, it must be text. */
+		    outBufNumeric = false;
                     return;
                 case '\\' :
 		    parseEscape(state);
@@ -519,7 +541,7 @@ public class Parse {
 		addDollar();
 		break;
 	      case ' ' :
-	      case '\t' :
+	      case '	' :
 		return;
 	      case '\n' :
 		state.lineno ++;
