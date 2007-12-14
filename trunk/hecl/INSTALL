@@ -17,15 +17,7 @@ How to compile and run simple Hecl programs.
    hecl> puts "hello world"
 hello world
 
-4) If you wish, you could also compile it to native code with GCJ:
-
-   gcj-3.4 -o hecl --main=Hecl jars/j2se/Hecl.jar
-
-   davidw@medford:~/workshop/hecl$ ./hecl
-   hecl> puts "hello world"
-hello world
-
-5) Testing.  If you wish to test that your installation passes the
+4) Testing.  If you wish to test that your installation passes the
    test suite:
 
    ./hecl tests/suite.hcl
@@ -38,7 +30,6 @@ hello world
 
    java -jar jars/j2se/Hecl.jar tests/suite.hcl
 
-6) J2ME Hecl.  Look at README in the j2me directory, in addition to
-   the documentation in the docs/ directory.
+5) Java ME versions - see docs/j2me.html#javame_tutorial
 
 $Id$
