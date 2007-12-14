@@ -1,3 +1,12 @@
+2007-12-14  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	* midp20gui/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	* midp20gui/org/hecl/midp20/lcdui/AlertCmd.java: 
+	Changed setcurrent to save old fullscreen state of cancas and
+	restore it after performing the switch. Workaround to fix problem
+	with WTK2.5.2 emulator.
+
 2007-12-13  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Added a little bit of code to
@@ -208,7 +217,7 @@
 	* res/layout/main.xml: Give the layout an ID so that it's
 	  accessible.
 
-2007-11-20  Wolfgang S. Kechel - Patzschke + Rasp Software GmbH  <wolfgang.kechel@prs.de>
+2007-11-20  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* j2me.xml: Moved property definitions into targets, so it is no
 	longer necessary to use the property files.
@@ -233,7 +242,7 @@
 	properties file.  Remove the android.defines in the symbols passed
 	to the android compile, for the moment.
 
-2007-11-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-11-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/MathCmds.java: Changed ifdef to work with new
 	wtk2.5 preprocessor which allow comparison.
@@ -457,7 +466,7 @@
 	* core/org/hecl/Interp.java: Make sure we remove the old command name
 	from the hash table when renaming.
 
-2007-05-22  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-05-22  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/StringCmds.java: Changec comparison for instances
 	of ObjectThing, now eq/neq call Compare.same.
@@ -484,7 +493,7 @@
 	* applet/org/hecl/applet/HeclApplet.java: Updated applet code to
 	use new interfaces.
 
-2007-04-27  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-04-27  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/*:
 	Major changes with massive ussage of ObjectThing and class command
@@ -567,7 +576,7 @@
 	result. Removed member variable result and all related
 	methods. Added read/eval/print loop.
 
-2007-04-20  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-04-20  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/MidletCmd.java: Now adheres to new
 	signature of operate. Fixed bug in playtone command - it did ont
@@ -592,7 +601,7 @@
 
 	* load/org/hecl/load/HeclLoad.java: Removed, no longer necessary.
 
-2007-04-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-04-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/ObjectThing.java: New method get to retrieve the
 	value, changed toString to support references to Java null.
@@ -608,7 +617,7 @@
   	initialization to the run method, where it is now a local
 	variable.
 
-2007-01-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2007-01-29  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* files/org/hecl/files/FileCmds.java: 
 	* rms/org/hecl/rms/RMSCmd.java: 
@@ -666,11 +675,11 @@
 
 	* core/org/hecl/ParseList.java: Lists should ignore [].
 
-2006-10-18  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-10-18  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/MidletCmd.java: Added manager commands.
 
-2006-10-12  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-10-12  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Fixed bug in
 	drawing of commands. Clipping region was not set correctly
@@ -691,7 +700,7 @@
 
 	* net/org/hecl/HttpRequest.java: Made debug output switchable.
 
-2006-10-11  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-10-11  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/lcdui/CanvasEvent.java: Minor
 	beautification, changed asString to StringBuffer directly.
@@ -711,7 +720,7 @@
 	* commandline/Hecl.java: Show more in the way of errors when there
 	are problems.
 
-2006-09-19  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/HeclTask.java: Evaluation of all HeclTasks now
 	starts at level 0 (global).
@@ -727,7 +736,7 @@
 	* tests/harness.hcl: Properly initialize global vars before
 	starting a test run.
 
-2006-09-17  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* tests/global.hcl (global-6-1): Added test.
 
@@ -746,7 +755,7 @@
 	* tests/global.hcl: Test for global problems by setting a variable
 	at three different stack levels - 0, and in two procs.
 
-2006-09-16  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-16  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/Proc.java: Only set varargs param when varargs are
 	present.
@@ -759,7 +768,7 @@
 	* core/org/hecl/Compare.java: 
 	* commandline/Hecl.java: Use proper function to access evaluation result.
 
-2006-09-15  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-15  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* build.xml: Corrected compileJ2MEHttp and defines for j2me compile.
 
@@ -811,7 +820,7 @@
 	* core/org/hecl/ControlCmds.java: Added Wolfgang's patch for
 	if/elseif.
 
-2006-09-13  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-13  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/ControlCmds.java: hack for if elseif...
 
@@ -830,12 +839,12 @@
 	* core/org/hecl/Thing.java: Don't cache a string representation.
 	We'll save optimization for later.
 
-2006-09-09  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-09  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/lcdui/ImageCmd.java: Fixed creation of
 	image from string via '-data'.
 
-2006-09-07  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-07  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/InterpCmds.java: New command 'hasclass <name>'
 	that gives access to Class.forName(..) at the script level.
@@ -843,7 +852,7 @@
 	'clock milli/time', 'clock seconds' and 'clock format <millisecs>'
 	with the latter allowing to get a printable format of the time.
 
-2006-09-05  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-05  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* build.xml: More fiddling with j2megui20 target.
 
@@ -863,7 +872,7 @@
 	* midp20/org/hecl/midp20/lcdui/FormGadget.java: Corrected bug in
 	conigure that causes errorneous treatment of arguments.
 
-2006-09-04  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-04  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/InterpCmds.java: Corrected argument count for
 	system.time.
@@ -873,7 +882,7 @@
 	mapping to Hecl code, new exceptions for widget commands, majo0r
 	enhancements for HeclCanvas.
 
-2006-09-01  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-09-01  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: Changed
 	method 'delete' into 'destroy' since forms need a delete command.
@@ -908,7 +917,7 @@
 	* core/org/hecl/Thing.java: New method setCopyVal (need a better
 	name, though), that won't set values if the copy flag bit is set.
 
-2006-08-31  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-31  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* net/org/hecl/HttpRequest.java: 
 	* net/org/hecl/HttpCmd.java: Simplified, emhanced waiting for result.
@@ -937,7 +946,7 @@
 	* core/org/hecl/Interp.java: Make sure that unSetvar knows how to
 	deal with global variables.
 
-2006-08-30  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-30  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/ListCmds.java: Added preliminary fix for global problem.
 
@@ -955,14 +964,14 @@
 	* core/org/hecl/Interp.java: New value wasn't properly being
 	labeled as a global variable.
 
-2006-08-29  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-29  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* build.xml: New (experimental) target j2megui20.
 
 	* core/org/hecl/InterpCmds.java: Added new commands system.gc,
 	system.getproperty, system.hasproperty.
 
-2006-08-28  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-28  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/Parse.java: Line counting in parseBlockOrCommand
 	corrected, now also counts escaled newlines since they are in a
@@ -992,7 +1001,7 @@
 	* core/org/hecl/ListThing.java: Reverted to old version for the
 	moment, to test a different approach.
 
-2006-08-26  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-26  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/Thing.java:
 	Member access change: val private, copy protected.
@@ -1013,7 +1022,7 @@
 	* core/org/hecl/NumberThing.java: 
 	Now use Thing{s,g}etVal();
 
-2006-08-25  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-08-25  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* net/org/hecl/HttpRequest.java: Beautification, debug output.
 
@@ -1126,7 +1135,7 @@
 	* files/org/hecl/files/HeclFile.java: Transform sourced files
 	using the system encoding after reading in 'raw' bytes.
 
-2006-05-30  Wolfgang S. Kechel - Patzschke + Rasp Software AG  <wolfgang.kechel@prs.de>
+2006-05-30  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* tests/string.hcl: Added some tests.
 
@@ -1353,12 +1362,12 @@
 	representation of the errorcode if it's not one of the build in
 	codes.
 
-2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@prs.de>
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/Parse.java: New isXDigit, extended set of
 	characters allows in variable names (:-.).
 
-2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@prs.de>
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/Parse.java: New isXDigit, extended set of
 	characters allows in variable names (:-.).
