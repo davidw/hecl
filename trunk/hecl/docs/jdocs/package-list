@@ -3,3 +3,8 @@ jarhack
 org.hecl
 org.hecl.files
 org.hecl.http
+org.hecl.java
+org.hecl.midp20
+org.hecl.midp20.lcdui
+org.hecl.misc
+org.hecl.rms

@@ -1,3 +1,8 @@
+2007-12-14  David N. Welton  <davidw@dedasys.com>
+
+	* misc.xml: Fixed up javadoc generation, created a 'build
+	everything' target that HeclBuilder uses as well.
+
 2007-12-14  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: 
