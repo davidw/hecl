@@ -77,7 +77,7 @@ proc DatePicker {} {
     global context
 
     set callback [callback -new [list [list Callback]]]
-    set dp [datedialog -new [list $context $callback [i 2007] [i 10] [i 10] [i 1]]]
+    set dp [datedialog -new [list $context $callback 2007 10 10 1]]
     $dp show
 }
 
@@ -91,7 +91,7 @@ proc TimePicker {} {
     set callback [callback -new [list [list Callback]]]
     set tp [timedialog -new \
 		[list $context $callback \
-		     "It's 5 o'clock somewhere" [i 5] [i 0] [i 1]]]
+		     "It's 5 o'clock somewhere" 5 0 1]]
     $tp show
 }
 
@@ -103,7 +103,7 @@ proc TimePicker {} {
 proc ProgressDialog {} {
     global context
     set pd [progressdialog show $context "Working..." \
-		"This is a progress \"bar\"" [i 0] [i 0]]
+		"This is a progress \"bar\"" 0 0]
     updateProgress $pd 0
 }
 
@@ -208,7 +208,7 @@ proc CheckBoxCallback {cb1 cb2 cb3 checkbox ischecked} {
 	}
 	# If they've checked the third of three, uncheck it.
 	if { = $total 3 } {
-	    $checkbox setchecked [i 0]
+	    $checkbox setchecked 0
 	}
     }
 }
@@ -389,8 +389,8 @@ proc main {} {
     # Used to set up a callback for when the menu is requested by the
     # user, and it's necessary to set it up.
     menusetup {m} {
-	$m add [i 0] [i 0] "View Source"
-	$m add [i 0] [i 1] "Main Screen"
+	$m add 0 0 "View Source"
+	$m add 0 1 "Main Screen"
     }
 
     # Sets up the actual callback code for when a menu item is
