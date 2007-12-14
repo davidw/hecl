@@ -32,12 +32,26 @@ import org.hecl.LongThing;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
+/**
+ * The <code>Reflector</code> class maps between Java types and Hecl
+ * types in order to make it possible to call Java methods from Hecl.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class Reflector {
     private Class forclass;
     private Method[] methods;
     private Hashtable methodnames;
     private Hashtable constnames;
 
+    /**
+     * Creates a new <code>Reflector</code> instance.
+     *
+     * @param classname a <code>String</code> value describing the
+     * full name (including package) of a Java class.
+     * @exception HeclException if an error occurs
+     */
     public Reflector(String classname) throws HeclException {
 	try {
 	    methodnames = new Hashtable();
@@ -87,6 +101,16 @@ public class Reflector {
 	}
     }
 
+    /**
+     * The <code>instantiate</code> method is called to create an
+     * instance of a class (new, in other words).
+     *
+     * @param argv a <code>Thing</code> value that is mapped onto Java
+     * parameters and passed to the appropriate constructor for the
+     * class.
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public Thing instantiate(Thing[] argv)
         throws HeclException {
 
@@ -132,6 +156,13 @@ public class Reflector {
 	}
     }
 
+    /**
+     * <code>getField</code> fetches a constant field value.
+     *
+     * @param name a <code>String</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public Thing getField(String name)
 	throws HeclException {
 
@@ -142,6 +173,18 @@ public class Reflector {
 	return result;
     }
 
+
+    /**
+     * The <code>evaluate</code> method takes a target object to
+     * operate on, a methodname, and some Hecl values, and attempts to
+     * find and call a Java method with the supplied values.
+     *
+     * @param o an <code>Object</code> value
+     * @param cmd a <code>String</code> value
+     * @param argv a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     public Thing evaluate(Object o, String cmd, Thing[] argv)
         throws HeclException {
 
@@ -156,8 +199,9 @@ public class Reflector {
 
 	    Method[] methods = v.toArray(new Method[v.size()]);
 	    /* Match the signatures with the correct number first. */
+	    Class[] javaparams = null;
 	    for (Method m : methods) {
-		Class[] javaparams = m.getParameterTypes();
+		javaparams = m.getParameterTypes();
 		if(javaparams.length != argv.length - 2) {
 		    continue;
 		}
@@ -169,7 +213,13 @@ public class Reflector {
 		}
 	    }
 	    if (selected == null) {
-		throw new HeclException("No method matched " + cmd + " for class " + forclass.getName());
+		String msg = "No method matched " + cmd + " for class " + forclass.getName() + " last javaparams tried: ";
+		if (javaparams != null) {
+		    for (Class c : javaparams) {
+			msg += c.getSimpleName() + " ";
+		    }
+		}
+		throw new HeclException(msg);
 	    }
 	    Object retval = selected.invoke(o, args);
 	    return mapRetval(selected, retval);
@@ -189,6 +239,18 @@ public class Reflector {
 	}
     }
 
+
+    /**
+     * The <code>mapParams</code> method is where the magic happens -
+     * it maps Hecl types/values onto Java types/values.
+     *
+     * @param outparams a <code>Class</code> value
+     * @param argv a <code>Thing</code> value
+     * @param offset an <code>int</code> value - where to start
+     * looking in argv.
+     * @return an <code>Object[]</code> value
+     * @exception HeclException if an error occurs
+     */
     protected Object[] mapParams(Class[] outparams, Thing[] argv, int offset)
 	throws HeclException {
 
@@ -212,7 +274,13 @@ public class Reflector {
 	    }
 	    String heclparmt = inparam.getVal().thingclass();
 
-	    if (outparam == boolean.class || outparam == int.class) {
+	    if (outparam == boolean.class || outparam == Boolean.class) {
+		if (heclparmt.equals("int")) {
+		    outobjs[i] = IntThing.get(inparam) != 0;
+		} else {
+		    outobjs = null;
+		}
+	    } else if(outparam == int.class || outparam == Integer.class) {
 		if (heclparmt.equals("int")) {
 		    outobjs[i] = IntThing.get(inparam);
 		} else {
@@ -275,7 +343,16 @@ public class Reflector {
 	return outobjs;
     }
 
-    private  Thing mapRetval(Method m, Object o) {
+    /**
+     * The <code>mapRetval</code> method is the "opposite" of the
+     * mapParams method - it maps a returned Java value onto a Hecl
+     * Thing, which it then returns.
+     *
+     * @param m a <code>Method</code> value
+     * @param o an <code>Object</code> value
+     * @return a <code>Thing</code> value
+     */
+    private Thing mapRetval(Method m, Object o) {
 	Class rtype = m.getReturnType();
 	String rtypename = rtype.getSimpleName();
 	if (o == null) {

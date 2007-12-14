@@ -24,6 +24,18 @@ import org.hecl.Interp;
 import org.hecl.Properties;
 import org.hecl.Thing;
 
+/**
+ * The <code>MethodProps</code> class is utilized during the
+ * instantiation of classes, where it's possible to do things like:
+ * foo -new $bar -text "blah" -color red, where the keys are
+ * transformed into methods like setText and setColor, and run with
+ * the provided values.  This is sort of hackey, but it works, given
+ * that setters with that naming convention are ubiquitous in the Java
+ * world.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class MethodProps extends Properties {
 
     public MethodProps() {

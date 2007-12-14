@@ -32,7 +32,15 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 import java.util.Map;
 
-
+/**
+ * The <code>JavaCmd</code> class is utilized to implement Hecl
+ * commands that can interact with Java classes.  The real work is
+ * done in the Reflector class, which maps between Hecl and Java
+ * types.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class JavaCmd implements ClassCommand, org.hecl.Command {
     private static Vector commands = null;
 

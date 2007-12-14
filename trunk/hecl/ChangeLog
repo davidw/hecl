@@ -1,5 +1,9 @@
 2007-12-14  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/HeclJavaCmd.java: Added this file...oops!
+
+	* java/org/hecl/java/*.java: Added docstrings.
+
 	* misc.xml: Fixed up javadoc generation, created a 'build
 	everything' target that HeclBuilder uses as well.
 
