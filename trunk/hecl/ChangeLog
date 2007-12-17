@@ -1,3 +1,7 @@
+2007-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/examples/recordstore.hcl: Updated again from Nils-Arne.
+
 2007-12-15  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: We no longer need all the casts,
