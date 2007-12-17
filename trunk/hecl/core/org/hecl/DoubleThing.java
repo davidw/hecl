@@ -20,7 +20,7 @@ package org.hecl;
  * a double value.
  */
 public
-//#ifdef cldc1.0
+//#if cldc == 10
 abstract
 //#endif
 class DoubleThing extends FractionalThing {
@@ -32,7 +32,7 @@ class DoubleThing extends FractionalThing {
      * Creates a new <code>DoubleThing</code> instance equal to 0.
      *
      */
-//#ifndef cldc1.0
+//#if javaversion >= 1.5 || cldc > 10
     public DoubleThing() {
 	set(0.0);
     }

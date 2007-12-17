@@ -36,12 +36,6 @@ import org.hecl.Thing;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordEnumeration;
 
-// A local toggle to enable midp2.0 features. We make midp2.0 defasult for now
-// and will use new antenna preprocessing features to detect the correct
-// environment once we have prepared th ebuild files.
-////#if midp >= 2.0
-//#define MIDP20
-////#endif
 
 /**
  * The <code>RMSCmd</code> class implements the record store related commands.
@@ -64,9 +58,9 @@ public class RMSCmd extends Operator {
     public static final int RMS_HEXISTS = 11;
     public static final int RMS_HKEYS = 12;
     public static final int RMS_HDEL = 13;
-    //#ifdef MIDP20
+//#if midp >= 20
     public static final int RMS_SETMODE = 14;
-    //#endif
+//#endif
 
     protected RMSCmd(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
@@ -112,11 +106,11 @@ public class RMSCmd extends Operator {
 	  case RMS_CREATE:
 	    ;
 	    {
-		//#ifndef MIDP20
+//#if midp < 20
 
 		// name already extracted
 
-		//#else
+//#else
 		// [options] name
 		name = null;
 		int authmode = RecordStore.AUTHMODE_PRIVATE;
@@ -145,7 +139,7 @@ public class RMSCmd extends Operator {
 		}
 		if(name == null)
 		    throw new HeclException("name required");
-		//#endif
+//#endif
 		try {
 		    rs = RecordStore.openRecordStore(name, true
 						     //#ifdef MIDP20
@@ -356,7 +350,7 @@ public class RMSCmd extends Operator {
 	    }
 	    break;
 
-	    //#ifdef MIDP20
+//#if midp >= 20
 	  case RMS_SETMODE:
 	    try {
 		int authmode = "any".equals(argv[2].toString()) ? 
@@ -371,7 +365,7 @@ public class RMSCmd extends Operator {
 		closeRS(rs);
 	    }
 	    break;
-	    //#endif
+//#endif
 
 	  default:
 	    throw new HeclException("Unknown rms command '"
@@ -523,8 +517,8 @@ public class RMSCmd extends Operator {
         cmdtable.put("rms.hexists", new RMSCmd(RMS_HEXISTS,2,2));
         cmdtable.put("rms.hkeys", new RMSCmd(RMS_HKEYS,1,1));
         cmdtable.put("rms.hdel", new RMSCmd(RMS_HDEL,2,2));
-	//#ifdef MIDP20
+//#if midp >= 20
         cmdtable.put("rms.setmode", new RMSCmd(RMS_SETMODE,3,3));
-	//#endif
+//#endif
     }
 }

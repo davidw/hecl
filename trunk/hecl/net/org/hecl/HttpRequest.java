@@ -30,7 +30,7 @@ import java.util.Hashtable;
 //#ifdef j2me
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
-//#ifndef cldc1.0
+//#if cldc > 10
 import javax.microedition.io.HttpsConnection;
 //#endif
 //#else
@@ -491,14 +491,14 @@ class MyHttpConn {
 	is = null;
 	os = null;
 	conn = null;
-//#ifndef cldc1.0
+//#if javaversion >= 1.5 || cldc > 10
 	secure = url.toLowerCase().startsWith("https");
 //#endif
 
 	if(HttpRequest.DEBUGURL)
 	    System.err.println("url="+url);
 //#ifdef j2me
-//#ifndef cldc1.0
+//#if cldc > 10
 	conn = secure ?
 	    (HttpsConnection)
 	    Connector.open(url/*,Connector.READ_WRITE, true*/) :

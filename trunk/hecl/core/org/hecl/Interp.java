@@ -28,7 +28,7 @@ import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;
 
-//#if javaversion >= 1.5
+//#if j2se
 import java.util.LinkedList;
 import java.util.List;
 import jline.ConsoleReader;
@@ -138,7 +138,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     public void readEvalPrint(InputStream in, PrintStream out, PrintStream err) {
 	String prompt = PROMPT;
 	StringBuffer sb = new StringBuffer();
-//#if javaversion >= 1.5
+//#if j2se
 	ConsoleReader reader = null;
         List completors = new LinkedList();
 
@@ -163,7 +163,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    byte outbytes[] = null;
 
 	    String line = null;
-//#if javaversion >= 1.5
+//#if j2se
 	    try {
 		line = reader.readLine(prompt);
 	    } catch (IOException e) {

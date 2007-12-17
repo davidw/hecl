@@ -1,5 +1,9 @@
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
+	* core/, net/: Let's try out cldc and midp as a symbols.
+
+	* net/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
+
 	* midp20gui/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
 
 	* core/org/hecl/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
