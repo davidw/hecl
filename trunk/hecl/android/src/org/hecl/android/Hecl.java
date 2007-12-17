@@ -74,7 +74,6 @@ public class Hecl extends Activity
     @Override
     public void onCreate(Bundle heclApp)
     {
-	Log.v("hecl", "Starting application");
         super.onCreate(heclApp);
 
  	try {
@@ -131,7 +130,7 @@ public class Hecl extends Activity
     private byte[] getResourceAsBytes(Class cl,String resname)
 	throws IOException {
 	DataInputStream is = new DataInputStream(getResourceAsStream(cl,resname));
-	byte[] buf = new byte[512];
+	byte[] buf = new byte[1024];
 	int bytesread = 0;
 	byte[] result = new byte[bytesread];
 	int i = 0;
@@ -146,7 +145,6 @@ public class Hecl extends Activity
 		newres[bytesread] = buf[i];
 	    }
 	    result = newres;
-	    System.gc();
 	}
 	is.close();
 	return result;

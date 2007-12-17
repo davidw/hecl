@@ -1,5 +1,9 @@
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
+	* android/src/org/hecl/android/Hecl.java: Read in 1k at a time.
+
+	* android/build.xml: Fixed up android for new symbols.
+
 	* settings.xml: Use midp, cldc, j2me, j2se and javaversion
 	  symbols.
 

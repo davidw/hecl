@@ -72,7 +72,9 @@
   <target name="compileAndroidJava"
     description="Compile Android Java integration support"
     depends="compileAndroid">
-    <wtkpreprocess srcdir="java" destdir="${android.pre}/java"/>
+    <wtkpreprocess srcdir="java"
+      symbols="${android.defines}"
+      destdir="${android.pre}/java"/>
     <javac srcdir="${android.pre}/java"
       destdir="${android.build}"
       debug="${hecldebug}">
@@ -84,7 +86,9 @@
   <target name="compileAndroidHttp"
     description="Compile Android Hecl http support"
     depends="compileAndroid">
-    <wtkpreprocess srcdir="net" destdir="${android.pre}/net"/>
+    <wtkpreprocess srcdir="net"
+      symbols="${android.defines}"
+      destdir="${android.pre}/net"/>
     <javac srcdir="${android.pre}/net"
       destdir="${android.build}"
       debug="${hecldebug}">
@@ -95,7 +99,9 @@
 
   <!-- Compile this project's .java files into .class files. -->
   <target name="compileAndroid" depends="dirs, resource-src, aidl">
-    <wtkpreprocess srcdir="core" destdir="${android.pre}/core"/>
+    <wtkpreprocess srcdir="core"
+      symbols="${android.defines}"
+      destdir="${android.pre}/core"/>
     <javac encoding="ascii" target="1.5" debug="true" extdirs=""
       srcdir="${android.pre}/core"
       destdir="${android.build}"
