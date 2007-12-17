@@ -65,8 +65,7 @@ class FontMap implements org.hecl.Command {
 		}
 		return ListThing.create(allfonts);
 	    }
-	}
-	if(numargs > 2) {
+	} else if(numargs > 2) {
 	    Font font = get(argv[1]);
 	    
 	    if(font == null)

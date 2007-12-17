@@ -23,7 +23,7 @@ import java.lang.StringBuffer;
 import java.util.Vector;
 import java.util.Stack;
 
-//#ifdef ant:j2se
+//#ifdef j2se
 //import java.awt.Color;
 //import java.awt.Dimension;
 //import java.awt.Font;

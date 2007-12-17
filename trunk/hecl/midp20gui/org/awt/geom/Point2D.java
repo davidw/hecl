@@ -6,7 +6,7 @@
  * J2ME version of java.awt.geom.Point2D.
  */
 
-//#ifndef ant:j2se
+//#ifndef j2se
 package org.awt.geom;
 
 /**
@@ -320,7 +320,7 @@ public abstract class Point2D //implements Cloneable
      * @exception  OutOfMemoryError            if there is not enough memory.
      * @see        java.lang.Cloneable
      */
-//#ifdef ant:j2se
+//#ifdef j2se
     public Object clone() {
 	try {
 	    return super.clone();

@@ -41,16 +41,15 @@ public abstract class OptionCmd implements ClassCommand, org.hecl.Command {
 	if(argv.length > 1) {
 	    String subcmd = argv[1].toString().toLowerCase();
 	    Object target = ObjectThing.get(argv[0]);
-	    
+
 	    //System.out.println("OptionCmd::method("+target+", subcmd="+subcmd);
-	    
+
 	    if(subcmd.equals(WidgetInfo.NCGET)) {
 		if(argv.length != 3) {
 		    throw HeclException.createWrongNumArgsException(argv, 2, "option");
 		}
 		return cget(ip,target,argv[2].toString());
-	    }
-	    if(subcmd.equals(WidgetInfo.NCONF)
+	    } else if(subcmd.equals(WidgetInfo.NCONF)
 	       || subcmd.equals(WidgetInfo.NCONFIGURE)) {
 		configure(ip,target,argv,2,argv.length-2);
 		return null;

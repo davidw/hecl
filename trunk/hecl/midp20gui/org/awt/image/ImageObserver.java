@@ -8,7 +8,7 @@
 
 package org.awt.image;
 
-//#ifndef ant:j2se
+//#ifndef j2se
 import javax.microedition.lcdui.Image;
 
 public interface ImageObserver {

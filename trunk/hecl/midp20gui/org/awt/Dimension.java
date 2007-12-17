@@ -5,7 +5,7 @@
  *
  * J2ME version of java.awt.Dimension. 
  */
-//#ifndef ant:j2se
+//#ifndef j2se
 package org.awt;
 
 import org.awt.geom.Dimension2D;

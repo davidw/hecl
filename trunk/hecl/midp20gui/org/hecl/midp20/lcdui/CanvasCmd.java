@@ -22,7 +22,7 @@ package org.hecl.midp20.lcdui;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
-//#ifdef ant:j2se
+//#ifdef j2se
 import java.awt.Color;
 //#else
 import org.awt.Color;

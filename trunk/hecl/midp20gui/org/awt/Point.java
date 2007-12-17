@@ -8,7 +8,7 @@
 
 package org.awt;
 
-//#ifndef ant:j2se
+//#ifndef j2se
 import org.awt.geom.Point2D;
 
 public class Point extends Point2D {

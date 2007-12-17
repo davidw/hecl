@@ -40,7 +40,7 @@ public class SettingsCmd extends OptionCmd {
     }
 
     protected SettingsCmd() {}
-    
+
     public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
 	// temporarily inject 'this' as the object..
 	Thing tmp = argv[0];
@@ -49,7 +49,7 @@ public class SettingsCmd extends OptionCmd {
 	argv[0] = tmp;
 	return res;
     }
-    
+
     public Thing cget(Interp ip,Object target,String optname) throws HeclException {
 	if(optname.equals("-color"))
 	    return IntThing.create(display.isColor());

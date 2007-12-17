@@ -6,7 +6,7 @@
 
 package org.graphics;
 
-//#ifdef ant:j2se
+//#ifdef j2se
 import java.awt.Graphics;
 import java.awt.Point;
 //#else
@@ -31,7 +31,7 @@ public class Draw {
     
 
     public static void translate(Graphics g,int x,int y) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	// Is this really not cumulative??????
 	g.translate(x,y);
 //#else
@@ -72,7 +72,7 @@ public class Draw {
 				      boolean evenoddrule) {
 	if(count < 3)
 	    return;
-//#ifndef ant:j2se
+//#ifndef j2se
 	if(count == 3) {
 	    g.fillTriangle(ptsIn[0].x,ptsIn[0].y,
 			   ptsIn[1].x,ptsIn[1].y,ptsIn[2].x,ptsIn[2].y);

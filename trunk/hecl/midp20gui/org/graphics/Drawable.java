@@ -9,7 +9,7 @@ package org.graphics;
 import java.io.IOException;
 
 import java.util.Hashtable;
-//#ifdef ant:j2se
+//#ifdef j2se
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -55,7 +55,7 @@ public class Drawable {
 	setDrawParams();
 	//Draw.translate(g,0,0);
 	currvf = null;
-//#ifdef ant:j2se
+//#ifdef j2se
 	setFont(new Font("SansSerif",Font.PLAIN,12));
 //#else
 	setFont(Font.getFont(Font.FACE_PROPORTIONAL,Font.STYLE_PLAIN,Font.SIZE_SMALL));
@@ -100,7 +100,7 @@ public class Drawable {
     
 
     public void copyArea(Point2D p,Dimension d,Point2D dst,int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	g.copyArea(toX(p),toY(p),d.width,d.height,toX(dst),toY(dst));
 //#else
 	g.copyArea(toX(p),toY(p),d.width,d.height,toX(dst),toY(dst),anchor);
@@ -121,7 +121,7 @@ public class Drawable {
 
 
     public void drawChar(char character, int x,int y, int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	// ignore anchor
 	char[] cbuf = new char[1];
 	cbuf[0] = character;
@@ -138,7 +138,7 @@ public class Drawable {
     
     
     public void drawChars(char[] data,int offset, int length, int x, int y, int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	// ignore anchor
 	g.drawChars(data,offset,length,toX(x),toY(y));
 //#else
@@ -153,7 +153,7 @@ public class Drawable {
     
     
     public void drawImage(Image img, int x, int y, ImageObserver observer) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	g.drawImage(img,toX(x),toY(y),observer);
 //#else
 	g.drawImage(img,toX(x),toY(y),Graphics.TOP|Graphics.LEFT);
@@ -168,7 +168,7 @@ public class Drawable {
     
     
     public void drawImage(Image img, int x, int y, int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	drawImage(img,x,y,null);
 //#else
 	g.drawImage(img,toX(x),toY(y),anchor);
@@ -249,7 +249,7 @@ public class Drawable {
     
 
     public void drawString(String str, int x, int y, int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	// ignore anchor
 	g.drawString(str,toX(x),toY(y));
 //#else
@@ -260,7 +260,7 @@ public class Drawable {
     
 
     public void drawString(String str, Point2D p, int anchor) {
-//#ifdef ant:j2se
+//#ifdef j2se
 	// ignore anchor
 	g.drawString(str,toX(p),toY(p));
 //#else
@@ -293,7 +293,7 @@ public class Drawable {
     }
     
 
-//#ifndef ant:j2se
+//#ifndef j2se
     public void drawRegion(Image src, int srcx,int srcy,int width,int height,
 			   int transform, int dstx,int dsty, int anchor) {
 	g.drawRegion(src,srcx,srcy,width,height,transform,toX(dstx),toY(dsty),anchor);
@@ -478,7 +478,7 @@ public class Drawable {
 
     public void setColor(Color c) {
 	fgcol = c;
-//#ifdef ant:j2se
+//#ifdef j2se
 	g.setColor(c);
 //#else
 	g.setColor(c.getRGB());
@@ -597,7 +597,7 @@ public class Drawable {
     }
     
     private void setDrawParams() {
-//#ifdef ant:j2se
+//#ifdef j2se
 	if(linestipple == LT_SOLID)
 	    ((Graphics2D)g).setStroke(new BasicStroke(linewidth));
 	else {

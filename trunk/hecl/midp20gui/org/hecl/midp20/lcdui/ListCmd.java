@@ -65,12 +65,12 @@ public class ListCmd extends ScreenCmd {
 	if(optname.equals(WidgetInfo.NFIT)) {
 	    return WidgetInfo.fromWrap(l.getFitPolicy());
 	}
-	//#ifdef notdef
+//#ifdef notdef
 	if(optname.equals(WidgetInfo.NTYPE))
 	    return WidgetInfo.fromChoiceType(l.getListtype());
 	if(optname.equals("-selectcommand"))
 	    return ObjectThing.create(l.getSelectCommand());
-	//#endif
+//#endif
 	return super.cget(ip,target,optname);
     }
 

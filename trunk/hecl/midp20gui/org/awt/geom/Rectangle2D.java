@@ -6,7 +6,7 @@
  * J2ME version of java.awt.geom.Rectangle2D.
  */
 
-//#ifndef ant:j2se
+//#ifndef j2se
 package org.awt.geom;
 
 /**
@@ -654,7 +654,7 @@ public abstract class Rectangle2D
      * <code>Rectangle2D</code>.
      * @return the bounding box of this <code>Rectangle2D</code>.
      */
-//#ifdef ant:j2se
+//#ifdef j2se
     public Rectangle2D getBounds2D() {
 	return (Rectangle2D) clone();
     }

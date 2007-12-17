@@ -5,7 +5,7 @@
  *
  * J2ME version of java.awt.Color. 
  */
-//#ifndef ant:j2se
+//#ifndef j2se
 
 package org.awt;
 

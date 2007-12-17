@@ -17,7 +17,7 @@ import java.util.Hashtable;
 /*
  * Set internal define to make module widely independant of build environment
  */
-//#ifndef ant:j2se
+//#ifndef j2se
 //#define ISMIDLET
 //#endif
 

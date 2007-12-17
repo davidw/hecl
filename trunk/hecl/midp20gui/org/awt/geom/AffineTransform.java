@@ -6,7 +6,7 @@
  * J2ME version of java.awt.geom.AffineTransform.
  */
 
-//#ifndef ant:j2se
+//#ifndef j2se
 package org.awt.geom;
 
 //#ifdef notdef

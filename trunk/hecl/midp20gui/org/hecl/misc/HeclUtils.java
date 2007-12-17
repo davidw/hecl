@@ -37,7 +37,7 @@ import org.hecl.IntThing;
 import org.hecl.ListThing;
 import org.hecl.Thing;
 
-//#ifdef ant:j2se
+//#ifdef j2se
 import java.awt.geom.Point2D;
 import java.awt.Point;
 import java.awt.Dimension;
