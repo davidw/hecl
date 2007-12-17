@@ -4,6 +4,11 @@
 
 2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
+	* rms/org/hecl/rms/RMSCmd.java: New rms.setmode, added ability to
+	support midp1.0 RMS once th ebuild files can handle this.
+
+2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
 	* j2me.xml: Turned off verbosity when preprocessing/compiling some
 	targets.
 
