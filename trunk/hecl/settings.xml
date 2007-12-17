@@ -116,7 +116,7 @@
     </and>
   </condition>
 
-  <property name="j2se.defines" value="ant:j2se,javaversion='${ant.java.version}'"/>
+  <property name="j2se.defines" value="j2se=1,javaversion=${ant.java.version}"/>
 
   <property name="j2se.build" value="${buildprefix}/j2se/final"/>
   <property name="j2se.pre" value="${buildprefix}/j2se/pre"/>
@@ -134,7 +134,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
-  <property name="j2me.defines" value="j2me=1,sms='${sms}',javaversion=1.2"/>
+  <property name="j2me.defines" value="j2me=1,sms='${sms}',cldc=${cldcstr},midp=${midpstr},javaversion=1.2"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>

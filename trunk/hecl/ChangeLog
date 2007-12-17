@@ -1,6 +1,9 @@
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
-	* core/, net/: Let's try out cldc and midp as a symbols.
+	* settings.xml: Use midp, cldc, j2me, j2se and javaversion
+	  symbols.
+
+	* core/, net/, rms/: Let's try out cldc and midp as a symbols.
 
 	* net/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
 
