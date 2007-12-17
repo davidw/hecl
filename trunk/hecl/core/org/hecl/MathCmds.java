@@ -25,7 +25,7 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public class MathCmds extends org.hecl.Operator {
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
     public static final Thing E = new Thing(new DoubleThing(Math.E));
     public static final Thing PI = new Thing(new DoubleThing(Math.PI));
 //#endif
@@ -98,14 +98,14 @@ public class MathCmds extends org.hecl.Operator {
     }
 
     public static int compare(NumberThing a,NumberThing b) {
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	if(a.isIntegral() && b.isIntegral()) {
 //#endif
 	    if(((IntegralThing)a).isLong() || ((IntegralThing)b).isLong()) {
 		return compare(a.longValue(),b.longValue());
 	    }
 	    return compare(a.intValue(),b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	}
 	return compare(a.doubleValue(),b.doubleValue());
 //#endif
@@ -118,7 +118,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return IntThing.create(a.intValue());
 	  case CASTLONG:
 	    return LongThing.create(a.longValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	  case CASTFLOAT:
 	  case CASTDOUBLE:
 	    return DoubleThing.create(a.doubleValue());
@@ -128,18 +128,18 @@ public class MathCmds extends org.hecl.Operator {
 	    return DoubleThing.create(Math.toRadians(a.doubleValue()));
 //#endif
 	  case ABS:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral()) {
 //#endif
 		IntegralThing i = (IntegralThing)a;
 		if(i.isLong())
 		    return LongThing.create(Math.abs(i.longValue()));
 		return IntThing.create(Math.abs(i.intValue()));
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(Math.abs(a.doubleValue()));
 //#endif
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	  case SIN:
 	    return DoubleThing.create(Math.sin(a.doubleValue()));
 	  case COS:
@@ -157,7 +157,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return binary(BINSUB,ip,a,IntThing.ONE);
 	  case NOT:
 	    return boolres(!(a.intValue() != 0));
-//#ifdef ant:j2se
+//#ifdef j2se
 	  case ROUND:
 	    if(a.isIntegral()) {
 		return new Thing(a.deepcopy());
@@ -209,7 +209,7 @@ public class MathCmds extends org.hecl.Operator {
 
 	switch(cmdcode) {
 	  case BINADD:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -217,12 +217,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()+b.longValue());
 		}
 		return IntThing.create(a.intValue()+b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()+b.doubleValue());
 //#endif
 	  case BINSUB:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -230,12 +230,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()-b.longValue());
 		}
 		return IntThing.create(a.intValue()-b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()-b.doubleValue());
 //#endif
 	  case BINMUL:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -243,12 +243,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()*b.longValue());
 		}
 		return IntThing.create(a.intValue()*b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()*b.doubleValue());
 //#endif
 	  case BINDIV:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -256,12 +256,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()/b.longValue());
 		}
 		return IntThing.create(a.intValue()/b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()/b.doubleValue());
 //#endif
 	  case MOD:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -269,12 +269,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()%b.longValue());
 		}
 		return IntThing.create(a.intValue()%b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()%b.doubleValue());
 //#endif
 	  case AND:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -282,12 +282,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue() & b.longValue());
 		}
 		return IntThing.create(a.intValue() & b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    throw new HeclException("Integral argument required.");
 //#endif
 	  case OR:
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -295,7 +295,7 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue() | b.longValue());
 		}
 		return IntThing.create(a.intValue() | b.intValue());
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	    }
 	    throw new HeclException("Integral argument required.");
 //#endif
@@ -368,7 +368,7 @@ public class MathCmds extends org.hecl.Operator {
 					  NumberThing.asNumber(argv[i])).getVal();
 	    }
 	    return new Thing(num);
-//#ifdef ant:j2se
+//#ifdef j2se
 	  case RANDOM:
 	    return DoubleThing.create(Math.random());
 //#endif
@@ -502,7 +502,7 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put(">=",new MathCmds(GE,2,2));
 
 	// stuff not available in cldc 1.0
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 	vars.put("pi",PI);
 	vars.put("e",E);
 	cmdtable.put("float",new MathCmds(CASTFLOAT,1,1));
@@ -512,7 +512,7 @@ public class MathCmds extends org.hecl.Operator {
 //#endif
 
 	// Stuff available only in j2se
-//#ifdef ant:j2se
+//#ifdef j2se
 	cmdtable.put("random",new MathCmds(RANDOM,0,0));
 	cmdtable.put("pow", new MathCmds(POW,2,2));
 	cmdtable.put("sqrt",new MathCmds(SQRT,1,1));

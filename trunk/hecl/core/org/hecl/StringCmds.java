@@ -109,7 +109,7 @@ class StringCmds extends Operator {
 	    case STRLAST:
 		// strlast what where ?startidx?
 		where = argv[2].toString();
-//#ifdef ant:j2se
+//#ifdef j2se
 		return IntThing.create(where.lastIndexOf(str,
 							 argv.length == 4 ?
 							 position(where, argv[3]) : where.length()-1));

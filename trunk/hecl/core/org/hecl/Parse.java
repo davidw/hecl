@@ -44,7 +44,7 @@ public class Parse {
 
     protected boolean parselist = false;
 
-//#ifdef ant:j2se
+//#ifdef j2se
     protected static final char eol[] =
 	System.getProperty("line.separator").toCharArray();
 //#else
@@ -592,7 +592,7 @@ public class Parse {
 	    break;
 	  case 'n':
 	    appendToCurrent(eol[0]);
-//#ifdef ant:j2se
+//#ifdef j2se
 	    if (eol.length > 1) {
 		appendToCurrent(eol[1]);
 	    }

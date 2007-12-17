@@ -103,7 +103,7 @@ public abstract class NumberThing implements RealThing {
      * @return a <code>long</code> value
      */
     public abstract long longValue();
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
 
     /**
      * <code>floatValue</code> returns the value as a float.  Not
@@ -139,7 +139,7 @@ public abstract class NumberThing implements RealThing {
 	    return new IntThing(s);
 	}
 	catch(NumberFormatException ne) {
-//#ifdef ant:cldc1.0
+//#ifdef cldc1.0
 	    return new LongThing(s);
 //#else
 	    try {

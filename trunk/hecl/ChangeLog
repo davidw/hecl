@@ -1,5 +1,7 @@
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
+
 	* core/org/hecl/Interp.java: *IMPORTANT* - make eval synchronized!
 
 2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>

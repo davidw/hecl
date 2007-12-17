@@ -20,7 +20,7 @@ package org.hecl;
  * a double value.
  */
 public
-//#ifdef ant:cldc1.0
+//#ifdef cldc1.0
 abstract
 //#endif
 class DoubleThing extends FractionalThing {
@@ -32,7 +32,7 @@ class DoubleThing extends FractionalThing {
      * Creates a new <code>DoubleThing</code> instance equal to 0.
      *
      */
-//#ifndef ant:cldc1.0
+//#ifndef cldc1.0
     public DoubleThing() {
 	set(0.0);
     }
