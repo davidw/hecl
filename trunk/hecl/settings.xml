@@ -98,6 +98,8 @@
   <property name="buildprefix" value="build"/>
   <property name="relprefix" value="jars"/>
 
+  <property name="sms" value="sms"/>
+
   <condition property="sms" value="sms">
     <or>
       <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
@@ -132,7 +134,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
-  <property name="j2me.defines" value="ant:j2me,${sms}"/>
+  <property name="j2me.defines" value="j2me=1,sms='${sms}',javaversion=1.2"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>

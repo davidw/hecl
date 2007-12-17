@@ -28,7 +28,7 @@
     <mkdir dir="${j2me.coreclasspath}" />
     <mkdir dir="${j2me.pre}/core"/>
     <wtkpreprocess srcdir="core"
-      symbols="ant:j2me,ant:${cldc}"
+      symbols="${j2me.defines}"
       destdir="${j2me.pre}/core"
       verbose="false" />
 
@@ -44,8 +44,10 @@
     depends="initCompile,compileJ2MECore">
     <mkdir dir="${j2me.rmsclasspath}"/>
     <mkdir dir="${j2me.pre}/rms"/>
-    <wtkpreprocess srcdir="rms" destdir="${j2me.pre}/rms"
-      symbols="ant:j2me,ant:${cldc}"/>
+    <wtkpreprocess srcdir="rms"
+      destdir="${j2me.pre}/rms"
+      symbols="${j2me.defines}"
+      />
     <wtkbuild srcdir="${j2me.pre}/rms"  target="1.1" source="1.2"
       destdir="${j2me.rmsclasspath}">
       <classpath refid="j2me.coreclasspath"/>
@@ -57,11 +59,13 @@
     description="Compile J2ME Hecl http support">
     <mkdir dir="${j2me.httpclasspath}"/>
     <!--<mkdir dir="${j2me.pre}/http"/>
-    <wtkpreprocess srcdir="http_micro" destdir="${j2me.pre}/http"
-      symbols="ant:j2me,ant:${cldc}">
+    <wtkpreprocess
+      srcdir="http_micro"
+      destdir="${j2me.pre}/http"
+      symbols="${j2me.defines}">
     </wtkpreprocess>
     <wtkpreprocess srcdir="http" destdir="${j2me.pre}/http"
-      symbols="ant:j2me,ant:${cldc}">
+      symbols="${j2me.defines}">
     </wtkpreprocess>
     <wtkbuild srcdir="${j2me.pre}/http" target="1.1" source="1.2"
       destdir="${j2me.httpclasspath}">
@@ -70,7 +74,7 @@
     -->
     <mkdir dir="${j2me.pre}/net"/>
     <wtkpreprocess srcdir="net" destdir="${j2me.pre}/net"
-      symbols="ant:j2me,ant:${cldc}">
+      symbols="${j2me.defines}">
     </wtkpreprocess>
     <wtkbuild srcdir="${j2me.pre}/net" target="1.1" source="1.2"
       destdir="${j2me.httpclasspath}">

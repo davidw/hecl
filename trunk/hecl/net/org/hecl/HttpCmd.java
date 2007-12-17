@@ -189,7 +189,7 @@ public class HttpCmd extends org.hecl.Operator {
     private static Hashtable cmdtable = new Hashtable();
 
     static {
-//#ifdef ant:j2me
+//#ifdef j2me
 	String conf = System.getProperty("microedition.configuration");
         String prof = System.getProperty("microedition.profiles");
 	int space = prof.indexOf(' ');

@@ -27,7 +27,7 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-//#ifdef ant:j2me
+//#ifdef j2me
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 //#ifndef ant:cldc1.0
@@ -46,7 +46,7 @@ public class HttpRequest extends Thread {
     static public final short TIMEOUT = 3;
     static public final short OK = 4;
     
-//#ifdef ant:j2me
+//#ifdef j2me
     public static final int HTTP_UNAUTHORIZED = HttpConnection.HTTP_UNAUTHORIZED;
     public static final int HTTP_FORBIDDEN = HttpConnection.HTTP_FORBIDDEN;
 //#else
@@ -91,7 +91,7 @@ public class HttpRequest extends Thread {
 	}
 	if(qdata != null || qparams != null) {
 	    requestMethod =
-//#ifdef ant:j2me
+//#ifdef j2me
 		HttpConnection.POST
 //#else
 		POST
@@ -100,7 +100,7 @@ public class HttpRequest extends Thread {
 	} else {
 	    if(validate)
 		requestMethod =
-//#ifdef ant:j2me
+//#ifdef j2me
 		    HttpConnection.HEAD
 //#else
 		    HEAD
@@ -436,7 +436,7 @@ public class HttpRequest extends Thread {
     private String qdata = null;
     private QueryParam[] qparams = null;
     private String requestMethod =
-//#ifdef ant:j2me
+//#ifdef j2me
     HttpConnection.GET
 //#else
     GET
@@ -497,7 +497,7 @@ class MyHttpConn {
 
 	if(HttpRequest.DEBUGURL)
 	    System.err.println("url="+url);
-//#ifdef ant:j2me 
+//#ifdef j2me 
 //#ifndef ant:cldc1.0
 	conn = secure ?
 	    (HttpsConnection)
@@ -529,7 +529,7 @@ class MyHttpConn {
 	    conn.setRequestProperty(key, (String)rfields.get(key));
 	}
 
-//#ifndef ant:j2me
+//#ifndef j2me
 	if (qdata != null || qparams != null) {
 	    conn.setDoOutput(true);
 	}
@@ -538,7 +538,7 @@ class MyHttpConn {
 //#endif
 	    
 	if (qdata != null || qparams != null) {
-//#ifdef ant:j2me
+//#ifdef j2me
 	    os = conn.openOutputStream();
 //#else
 	    os = conn.getOutputStream();
@@ -587,7 +587,7 @@ class MyHttpConn {
 	// In this case, getHeaderField(0) returns the status line,
 	// but getHeaderFieldKey(0) returns null.
 	// For now, it is not clear if this happens on midlets as well.
-//#ifndef ant:j2me
+//#ifndef j2me
 	if (conn.getHeaderFieldKey(0) == null) {
 	    ++idx;
 	}
@@ -595,7 +595,7 @@ class MyHttpConn {
 	//System.err.println("--- RESPONSE HEADER-----------------");
 	String key = "";
 	while (key != null) {
-//#ifdef ant:j2me
+//#ifdef j2me
 	    try {
 //#endif
 		key = conn.getHeaderFieldKey(idx++);
@@ -603,7 +603,7 @@ class MyHttpConn {
 		    tab.put(key.toLowerCase(), conn.getHeaderField(key));
 		    //System.err.println("key: " + key + ", value: " + conn.getHeaderField(key));
 		}
-//#ifdef ant:j2me
+//#ifdef j2me
 	    }
 	    catch (IOException shouldnothappen) {
 		shouldnothappen.printStackTrace();
@@ -618,7 +618,7 @@ class MyHttpConn {
 	int len = 0;
 	byte[] buf = new byte[0];
 	    
-//#ifdef ant:j2me
+//#ifdef j2me
 	is = conn.openInputStream();
 	len = (int)conn.getLength();
 //#else
@@ -667,22 +667,22 @@ class MyHttpConn {
 	    catch (IOException e) {}
 	}
 	if (conn != null) {
-//#ifdef ant:j2me
+//#ifdef j2me
 	    try {
 //#endif
-//#ifndef ant:j2me
+//#ifndef j2me
 		conn.disconnect();
 //#else
 		conn.close();
 //#endif
-//#ifdef ant:j2me
+//#ifdef j2me
 	    }
 	    catch (IOException e) {}
 //#endif
 	}
     }
 	
-//#ifdef ant:j2me
+//#ifdef j2me
     HttpConnection conn;
 //#else
     HttpURLConnection conn;
