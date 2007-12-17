@@ -361,7 +361,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * evaluation.
      * @exception HeclException if an error occurs.
      */
-    public Thing eval(Thing in) throws HeclException {
+    public synchronized Thing eval(Thing in) throws HeclException {
 	//System.err.println("-->eval: "+in.toString());
 	return CodeThing.get(this, in).run(this);
     }
@@ -562,8 +562,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    yield();			    // give other thread a chance
 	    synchronized(this) {
 		try {
-		    this.wait(maxblocktime);
-		}
+		    this.wait(maxblocktime);		}
 		catch (InterruptedException e) {
 		    // it doesn't matter
 		}
@@ -1152,7 +1151,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     static String readLine(InputStreamReader is) {
 	StringBuffer b = new StringBuffer();
 	int ch = -1;
-	
+
 	try {
 	    while ((ch = is.read()) != -1) {
 		if(ch == '\r')
@@ -1168,6 +1167,4 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    return b.toString();
 	return null;
     }
-
-   
 }

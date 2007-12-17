@@ -1,3 +1,7 @@
+2007-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: *IMPORTANT* - make eval synchronized!
+
 2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* j2me.xml: Turned off verbosity when preprocessing/compiling some
@@ -14,6 +18,12 @@
 	caches the lookup result for later reuse.
 
 2007-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpRequest.java: Use j2me symbol instead of
+	ant:j2me.
+
+	* j2me.xml: Use j2me.defines instead of ant:j2me,ant:${cldc} for
+	the symbols.
 
 	* midp10/examples/recordstore.hcl: Updated again from Nils-Arne.
 
