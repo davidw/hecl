@@ -36,6 +36,13 @@ import org.hecl.Thing;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordEnumeration;
 
+// A local toggle to enable midp2.0 features. We make midp2.0 defasult for now
+// and will use new antenna preprocessing features to detect the correct
+// environment once we have prepared th ebuild files.
+////#if midp >= 2.0
+//#define MIDP20
+////#endif
+
 /**
  * The <code>RMSCmd</code> class implements the record store related commands.
  *
@@ -57,6 +64,9 @@ public class RMSCmd extends Operator {
     public static final int RMS_HEXISTS = 11;
     public static final int RMS_HKEYS = 12;
     public static final int RMS_HDEL = 13;
+    //#ifdef MIDP20
+    public static final int RMS_SETMODE = 14;
+    //#endif
 
     protected RMSCmd(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
@@ -81,10 +91,9 @@ public class RMSCmd extends Operator {
 	
 	switch (cmd) {
 	  case RMS_LIST:
-	    ;				    // trick emacs indentation
+	    ;
 	    {
 		Vector v = new Vector();
-		
 		if(name == null) {
 		    String[] names = RecordStore.listRecordStores();
 		    if (names != null) {
@@ -99,47 +108,60 @@ public class RMSCmd extends Operator {
 		}
 		return ListThing.create(v);
 	    }
-
+		
 	  case RMS_CREATE:
-	    // [options] name
-	    name = null;
-	    int authmode = RecordStore.AUTHMODE_PRIVATE;
-	    boolean writeflag = false;
-	    boolean argend = false;
-	    
-	    for(int i=1; i<argv.length; ++i) {
-		String s = argv[1].toString();
-		if(!argend && s.equals("--")) {
-		    argend = true;
-		    continue;
+	    ;
+	    {
+		//#ifndef MIDP20
+
+		// name already extracted
+
+		//#else
+		// [options] name
+		name = null;
+		int authmode = RecordStore.AUTHMODE_PRIVATE;
+		boolean writeflag = false;
+		boolean argend = false;
+		
+		for(int i=1; i<argv.length; ++i) {
+		    String s = argv[1].toString();
+		    if(!argend && s.equals("--")) {
+			argend = true;
+			continue;
+		    }
+		    if(!argend && s.startsWith("-")) {
+			// option
+			if(s.equals("-any"))
+			    authmode = RecordStore.AUTHMODE_ANY;
+			if(s.equals("-private"))
+			    authmode = RecordStore.AUTHMODE_PRIVATE;
+			else if(s.equals("-writable"))
+			    writeflag = true;
+			else
+			    throw new HeclException("unknown option '"+s+"'");
+		    } else {
+			name = s;
+		    }
 		}
-		if(!argend && s.startsWith("-")) {
-		    // option
-		    if(s.equals("-any"))
-			authmode = RecordStore.AUTHMODE_ANY;
-		    if(s.equals("-private"))
-			authmode = RecordStore.AUTHMODE_PRIVATE;
-		    else if(s.equals("-writable"))
-			writeflag = true;
-		    else
-			throw new HeclException("unknown option '"+s+"'");
-		} else {
-		    name = s;
+		if(name == null)
+		    throw new HeclException("name required");
+		//#endif
+		try {
+		    rs = RecordStore.openRecordStore(name, true
+						     //#ifdef MIDP20
+						     , authmode, writeflag
+						     //#endif
+			);
 		}
+		catch(Exception e) {
+		    /* FIXME - we ought to do something a little bit more clever here. */
+		    throw new HeclException(e.toString());
+		}
+		finally {
+		    closeRS(rs);
+		}
+		return new Thing(name);
 	    }
-	    if(name == null)
-		throw new HeclException("name required");
-	    try {
-		rs = RecordStore.openRecordStore(name, true, authmode, writeflag);
-	    }
-	    catch(Exception e) {
-		/* FIXME - we ought to do something a little bit more clever here. */
-		throw new HeclException(e.toString());
-	    }
-	    finally {
-		closeRS(rs);
-	    }
-	    return new Thing(name);
 	    
 	  case RMS_GET:
 	    // rs_get name [recordid]
@@ -333,7 +355,24 @@ public class RMSCmd extends Operator {
 		closeRS(rs);
 	    }
 	    break;
-	    
+
+	    //#ifdef MIDP20
+	  case RMS_SETMODE:
+	    try {
+		int authmode = "any".equals(argv[2].toString()) ? 
+		    RecordStore.AUTHMODE_ANY : RecordStore.AUTHMODE_PRIVATE;
+		boolean writeflag = Thing.isTrue(argv[3]);
+		rs = RecordStore.openRecordStore(name, true);
+		rs.setMode(authmode,writeflag);
+	    } catch (Exception e) {
+		throw new HeclException(e.toString());
+	    }
+	    finally {
+		closeRS(rs);
+	    }
+	    break;
+	    //#endif
+
 	  default:
 	    throw new HeclException("Unknown rms command '"
 				    + argv[0].toString() + "' with code '"
@@ -484,5 +523,8 @@ public class RMSCmd extends Operator {
         cmdtable.put("rms.hexists", new RMSCmd(RMS_HEXISTS,2,2));
         cmdtable.put("rms.hkeys", new RMSCmd(RMS_HKEYS,1,1));
         cmdtable.put("rms.hdel", new RMSCmd(RMS_HDEL,2,2));
+	//#ifdef MIDP20
+        cmdtable.put("rms.setmode", new RMSCmd(RMS_SETMODE,3,3));
+	//#endif
     }
 }
