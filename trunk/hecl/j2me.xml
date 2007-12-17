@@ -30,10 +30,10 @@
     <wtkpreprocess srcdir="core"
       symbols="ant:j2me,ant:${cldc}"
       destdir="${j2me.pre}/core"
-      verbose="true" />
+      verbose="false" />
 
     <wtkbuild srcdir="${j2me.pre}/core" target="1.1" source="1.2"
-      verbose="true" debug="${hecldebug}"
+      verbose="false" debug="${hecldebug}"
       cldc="false"
       destdir="${j2me.coreclasspath}">
       <classpath refid="j2me.coreclasspath"/>
@@ -214,7 +214,7 @@
       cldc="false"
       preverify="${preverify}"
       obfuscate="${obfuscate}"
-      verbose="true">
+      verbose="false">
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
 

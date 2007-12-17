@@ -1,3 +1,18 @@
+2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* j2me.xml: Turned off verbosity when preprocessing/compiling some
+	targets.
+
+	* rms/org/hecl/rms/RMSCmd.java: Added new command rms.create andf
+	changed behavior of rms.set.
+
+	* core/org/hecl/Interp.java: Added simple caching for
+	classcommand and support for subtyped classcommands. For now the
+	cache is cleared whenever a classcommand is added/removed and
+	filled lazily when a method is called. The search now looks for
+	the most specific classcommand for the object in question and
+	caches the lookup result for later reuse.
+
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
 	* midp10/examples/recordstore.hcl: Updated again from Nils-Arne.

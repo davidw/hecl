@@ -45,17 +45,18 @@ import javax.microedition.rms.RecordEnumeration;
  */
 public class RMSCmd extends Operator {
     public static final int RMS_LIST = 1;
-    public static final int RMS_GET = 2;
-    public static final int RMS_SET = 3;
-    public static final int RMS_SIZE = 4;
-    public static final int RMS_SIZEAVAIL = 5;
-    public static final int RMS_DELETE = 6;
-    public static final int RMS_ADD = 7;
-    public static final int RMS_HSET = 8;
-    public static final int RMS_HGET = 9;
-    public static final int RMS_HEXISTS = 10;
-    public static final int RMS_HKEYS = 11;
-    public static final int RMS_HDEL = 12;
+    public static final int RMS_CREATE = 2;
+    public static final int RMS_GET = 3;
+    public static final int RMS_SET = 4;
+    public static final int RMS_SIZE = 5;
+    public static final int RMS_SIZEAVAIL = 6;
+    public static final int RMS_DELETE = 7;
+    public static final int RMS_ADD = 8;
+    public static final int RMS_HSET = 9;
+    public static final int RMS_HGET = 10;
+    public static final int RMS_HEXISTS = 11;
+    public static final int RMS_HKEYS = 12;
+    public static final int RMS_HDEL = 13;
 
     protected RMSCmd(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
@@ -99,6 +100,47 @@ public class RMSCmd extends Operator {
 		return ListThing.create(v);
 	    }
 
+	  case RMS_CREATE:
+	    // [options] name
+	    name = null;
+	    int authmode = RecordStore.AUTHMODE_PRIVATE;
+	    boolean writeflag = false;
+	    boolean argend = false;
+	    
+	    for(int i=1; i<argv.length; ++i) {
+		String s = argv[1].toString();
+		if(!argend && s.equals("--")) {
+		    argend = true;
+		    continue;
+		}
+		if(!argend && s.startsWith("-")) {
+		    // option
+		    if(s.equals("-any"))
+			authmode = RecordStore.AUTHMODE_ANY;
+		    if(s.equals("-private"))
+			authmode = RecordStore.AUTHMODE_PRIVATE;
+		    else if(s.equals("-writable"))
+			writeflag = true;
+		    else
+			throw new HeclException("unknown option '"+s+"'");
+		} else {
+		    name = s;
+		}
+	    }
+	    if(name == null)
+		throw new HeclException("name required");
+	    try {
+		rs = RecordStore.openRecordStore(name, true, authmode, writeflag);
+	    }
+	    catch(Exception e) {
+		/* FIXME - we ought to do something a little bit more clever here. */
+		throw new HeclException(e.toString());
+	    }
+	    finally {
+		closeRS(rs);
+	    }
+	    return new Thing(name);
+	    
 	  case RMS_GET:
 	    // rs_get name [recordid]
 	    if(argv.length>2) {
@@ -430,6 +472,7 @@ public class RMSCmd extends Operator {
 
     static {
         cmdtable.put("rms.list", new RMSCmd(RMS_LIST,0,1));
+        cmdtable.put("rms.create", new RMSCmd(RMS_CREATE,1,0));
         cmdtable.put("rms.get", new RMSCmd(RMS_GET,1,2));
         cmdtable.put("rms.set", new RMSCmd(RMS_SET,2,3));
         cmdtable.put("rms.size", new RMSCmd(RMS_SIZE,1,1));

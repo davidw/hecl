@@ -110,6 +110,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     protected boolean running = true;
     protected long maxblocktime = 0;	    // block time in milliseconds
     protected Vector ci = new Vector();
+    protected Hashtable classcmdcache = new Hashtable();
     
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
@@ -232,9 +233,12 @@ public class Interp extends Thread/*implements Runnable*/ {
      * an existing command is removed.
      */
     public void addClassCmd(Class clazz,ClassCommand cmd) {
-	int l = ci.size();
+	// clear cache first, even when deleting a cmd
+	this.classcmdcache.clear();
+	
+	int l = this.ci.size();
 	for(int i=0; i<l; ++i) {
-	    ClassCommandInfo info = (ClassCommandInfo)ci.elementAt(i);
+	    ClassCommandInfo info = (ClassCommandInfo)this.ci.elementAt(i);
 	    if(info.forClass() == clazz) {
 		//identical, replace
 		if(cmd == null) {
@@ -246,7 +250,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    }
 	}
 	if(cmd != null)
-	    ci.addElement(new ClassCommandInfo(clazz,cmd));
+	    this.ci.addElement(new ClassCommandInfo(clazz,cmd));
     }
 
     /**
@@ -268,25 +272,35 @@ public class Interp extends Thread/*implements Runnable*/ {
      * or <code>null</null> if no command was found.
      */
     ClassCommandInfo findClassCmd(Class clazz) {
-	int l = ci.size();
-	ClassCommandInfo found = null;
-	// we loop over all class commands and try to detect the most specific one.
-	for(int i=0; i<l; ++i) {
-	    ClassCommandInfo info = (ClassCommandInfo)ci.elementAt(i);
-	    Class cl2 = info.forClass();
-	    if(cl2.isAssignableFrom(clazz)) {
-		//System.err.println("clazz="+clazz+" assignable to cl="+cl2);
-		if(found == null)
-		    found = info;
-		else {
-		    // check if this is more specialized than the one we
-		    // already have.
-		    if(found.forClass().isAssignableFrom(cl2)) {
-			//System.err.println("superclass="+found.forClass()+" for cl="+cl2);
+	ClassCommandInfo found = (ClassCommandInfo)this.classcmdcache.get(clazz);
+
+	if(found == null) {
+	    // No entry in cache, so we loop over all class commands and try
+	    // to detect the most specific one.
+
+	    int l = this.ci.size();
+	    for(int i=0; i<l; ++i) {
+		ClassCommandInfo info = (ClassCommandInfo)this.ci.elementAt(i);
+		Class cl2 = info.forClass();
+		if(cl2.isAssignableFrom(clazz)) {
+		    //System.err.println("clazz="+clazz+" assignable to cl="+cl2);
+		    if(found == null)
 			found = info;
+		    else {
+			// check if this is more specialized than the one we
+			// already have.
+			if(found.forClass().isAssignableFrom(cl2)) {
+			    //System.err.println("superclass="+found.forClass()+" for cl="+cl2);
+			    found = info;
+			}
+			// else keep existing one
 		    }
 		}
 	    }
+	    // Add what we found to the cache, so we do not need to look it up
+	    // next time.
+	    if(found != null)
+		this.classcmdcache.put(clazz,found);
 	}
 	return found;
     }
