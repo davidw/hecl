@@ -1,3 +1,7 @@
+2007-12-18  Wolfgang S. Kechel - Patzschke + Rasp Software GmbH  <wolfgang.kechel@prs.de>
+
+	* core/org/hecl/MathCmds.java: Enhanced round, now present even on cdlc1.1
+
 2007-12-18  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Added return type mappings

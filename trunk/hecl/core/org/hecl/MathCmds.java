@@ -150,6 +150,22 @@ public class MathCmds extends org.hecl.Operator {
 	    return DoubleThing.create(Math.floor(a.doubleValue()));
 	  case CEIL:
 	    return DoubleThing.create(Math.ceil(a.doubleValue()));
+	  case ROUND:
+	    if(a.isIntegral()) {
+		return new Thing(a.deepcopy());
+	    } else {
+		long l = (long)
+		//#ifdef j2se
+		    Math.round(a.doubleValue())
+		//#else
+		    Math.floor(.5+a.doubleValue())
+		//#endif
+		    ;
+		if(l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
+		    return IntThing.create((int)l);
+		}
+		return LongThing.create(l);
+	    }
 //#endif
 	  case INCR:
 	    return binary(BINADD,ip,a,IntThing.ONE);
@@ -158,16 +174,6 @@ public class MathCmds extends org.hecl.Operator {
 	  case NOT:
 	    return boolres(!(a.intValue() != 0));
 //#ifdef j2se
-	  case ROUND:
-	    if(a.isIntegral()) {
-		return new Thing(a.deepcopy());
-	    } else {
-		long l = Math.round(a.doubleValue());
-		if(l >= Integer.MIN_VALUE && l <= Integer.MAX_VALUE) {
-		    return IntThing.create((int)l);
-		}
-		return LongThing.create(Math.round(a.doubleValue()));
-	    }
 	  case SQRT:
 	    return DoubleThing.create(Math.sqrt(a.doubleValue()));
 	  case LOG:
