@@ -368,8 +368,20 @@ public class Reflector {
 	    return LongThing.create(((Long)o).longValue());
 	} else if (rtype == String.class || rtype == CharSequence.class) {
 	    return new Thing((String)o);
+	} else if (rtypename.equals("String[]")) {
+	    Vector v = new Vector();
+	    String[] retval = (String [])o;
+	    for (String s : retval) {
+		v.add(new Thing(s));
+	    }
+	    return ListThing.create(v);
 	} else if (rtypename.equals("int[]")) {
-	    return new Thing("FIXME");
+	    Vector v = new Vector();
+	    int[] retval = (int [])o;
+	    for (int i : retval) {
+		v.add(IntThing.create(i));
+	    }
+	    return ListThing.create(v);
 	} else if (rtype == Object.class) {
 	    if (o.getClass() == Thing.class) {
 		/* If we've managed to stash a thing somewhere. */

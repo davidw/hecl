@@ -1,5 +1,8 @@
 2007-12-18  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/Reflector.java: Added return type mappings
+	for String[] and int[].
+
 	* settings.xml: Added android defines.
 
 	* core/, net/, rms/, settings.xml: One more time: let's use
