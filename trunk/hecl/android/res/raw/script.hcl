@@ -230,16 +230,10 @@ proc Spinner {} {
 
     # For the moment, spinners and listviews require this rather ugly
     # arrayadapter stuff.  We're working on something better.
-    set lista [arrayadapter -new \
-		   [list $context \
-			[reslookup android.R.layout.simple_spinner_item] \
-			[list "Wheel" "Of" "Fortune!"]]]
 
-    $lista setdropdownviewresource \
-	[reslookup android.R.layout.simple_spinner_dropdown_item]
 
-    set spinner [spinner -new $context -layoutparams $layoutparams]
-    $spinner setadapter $lista
+    set spinner [basicspinner $context [list "Wheel" "Of" "Fortune!"] \
+		     -layoutparams $layoutparams]
     $layout addview $spinner
     # requestfocus is necessary or you won't be able to access the
     # spinner if it's redisplayed.  I think this is an Android bug.
@@ -264,6 +258,10 @@ proc SpinnerCallback {textview parent view position id} {
     $textview settext "Currently selected: $text"
 }
 
+# HeclEditor --
+#
+#	Edit and run simple Hecl scripts.
+
 proc HeclEditor {} {
     global context
 
@@ -278,6 +276,7 @@ proc HeclEditor {} {
     $layout addview [textview -new $context -text "Hecl evaluator: enter code below and hit 'eval' to evaluate" \
 			 -layoutparams $layoutparams]
 
+    # The default script:
     set script {proc AddOne {num} {
     return [+ $num 1]
 }
@@ -297,9 +296,41 @@ AddOne 41}
     activity setcontentview $layout
 }
 
+# EditCallback --
+#
+#	Run the script and display the results.
+
 proc EditCallback {editor results button} {
     set res "Results: [eval [$editor gettext]]"
     $results settext $res
+}
+
+# Contacts --
+#
+#	Display the phone's contact list.
+
+proc Contacts {} {
+    global context
+
+    set procname Contacts
+    global context
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    set cursor [query content://contacts/people/]
+
+    while { $cursor next } {
+	set name [$cursor getstring 6]
+	set number [$cursor getstring 5]
+	$layout addview [textview -new $context \
+			     -layoutparams $layoutparams \
+			     -text "Who: $name Number: $number"]
+    }
+
+    activity setcontentview $layout
 }
 
 # SelectDemo --
@@ -310,6 +341,8 @@ proc SelectDemo {parent view position id} {
     set dest [$view gettext]
     if { eq $dest "Hecl Editor" } {
 	HeclEditor
+    } elseif { eq $dest "Contacts" } {
+	Contacts
     } elseif { eq $dest "Simple Widgets" } {
 	SimpleWidgets
     } elseif {eq $dest "Web View"} {
@@ -370,7 +403,7 @@ proc main {} {
     set lista [arrayadapter -new \
 		   [list $context \
 			[reslookup android.R.layout.simple_list_item_1] \
-			[list "Hecl Editor" "Simple Widgets" "Web View" \
+			[list "Hecl Editor" "Contacts" "Simple Widgets" "Web View" \
 			     "Date Picker" "Time Picker" \
 			     "Progress Dialog" "Spinner" \
 			     "Radio Buttons" "CheckBoxes"]]]

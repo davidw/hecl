@@ -4,6 +4,21 @@
 
 2007-12-18  David N. Welton  <davidw@dedasys.com>
 
+	* android/src/org/hecl/android/Hecl.java: Tweaked the resource
+	readers to use what Android provides, which are ints, not strings.
+
+	* android/AndroidManifest.xml: Let Hecl read contacts.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added query
+	command, cursor command.
+
+	* android/res/raw/script.hcl: Added simple contact list.
+
+	* android/res/raw/lib.hcl: Helper/library script for Android.
+	Since Android makes heavy use of the Java compatibility bridge,
+	this file is useful to add a nice layer of "Heclness" on top of
+	some of the commands.
+
 	* java/org/hecl/java/Reflector.java: Added return type mappings
 	for String[] and int[].
 

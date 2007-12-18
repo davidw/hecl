@@ -22,6 +22,10 @@ import java.util.Hashtable;
 import android.app.Activity;
 import android.app.NotificationManager;
 
+import android.database.Cursor;
+
+import android.net.ContentURI;
+
 import android.view.View;
 
 import android.util.Log;
@@ -51,6 +55,9 @@ public class AndroidCmd extends Operator {
     public static final int NULLCMD = 5;
     public static final int MENUSETUP = 6;
     public static final int MENUCALLBACK = 7;
+
+
+    public static final int PROVIDERQUERY = 8;
 
     /* These will eventually be moved elsewhere - the core most
      * likely. */
@@ -105,6 +112,17 @@ public class AndroidCmd extends Operator {
 		Log.v("hecl log", argv[1].toString());
 		return null;
 
+
+	    case PROVIDERQUERY:
+		Cursor cur = null;
+		try {
+		    ContentURI curi = new ContentURI(argv[1].toString());
+		    cur = hecl.managedQuery(curi, null, null, null);
+		} catch (Exception e) {
+		    throw new HeclException(argv[0].toString() + " error: " + e.toString());
+		}
+		return ObjectThing.create(cur);
+
 	    case NULLCMD:
 		return ObjectThing.create(null);
 
@@ -144,6 +162,8 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
 	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
 
+	    cmdtable.put("query", new AndroidCmd(PROVIDERQUERY,1,1));
+
 	    cmdtable.put("null", new AndroidCmd(NULLCMD,0,0));
 	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
 	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
@@ -166,6 +186,8 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
 	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
 	JavaCmd.load(ip, "android.app.TimePickerDialog", "timedialog");
+
+	JavaCmd.load(ip, "android.database.Cursor", "cursor");
 
 	JavaCmd.load(ip, "android.view.Menu", "menu");
 	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");

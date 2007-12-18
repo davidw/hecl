@@ -77,10 +77,13 @@ public class Hecl extends Activity
         super.onCreate(heclApp);
 
  	try {
+	    String script;
 	    interp = new Interp();
 	    AndroidCmd.load(interp, this);
 	    HttpCmd.load(interp);
-	    String script = getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
+	    script = getResourceAsString(this.getClass(), R.raw.lib, "UTF-8");
+	    interp.eval(new Thing(script));
+	    script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
 	    interp.eval(new Thing(script));
 	} catch (Exception e) {
 	    logStacktrace(e);
@@ -98,7 +101,6 @@ public class Hecl extends Activity
 	} catch (HeclException he) {
 	    errmsg(he.toString());
 	}
-	Log.v("MENU", "ADDED MENU");
 
         return true;
     }
@@ -117,19 +119,19 @@ public class Hecl extends Activity
     }
 
 
-    private String getResourceAsString(Class cl,String resname,String encoding)
+    private String getResourceAsString(Class cl, int resid, String encoding)
 	throws IOException {
-	byte[] buf = getResourceAsBytes(cl,resname);
+	byte[] buf = getResourceAsBytes(cl, resid);
 	if(encoding != null) {
-	    return new String(buf,encoding);
+	    return new String(buf, encoding);
 	}
 	return new String(buf);
     }
 
 
-    private byte[] getResourceAsBytes(Class cl,String resname)
+    private byte[] getResourceAsBytes(Class cl, int resid)
 	throws IOException {
-	DataInputStream is = new DataInputStream(getResourceAsStream(cl,resname));
+	DataInputStream is = new DataInputStream(getResourceAsStream(cl, resid));
 	byte[] buf = new byte[1024];
 	int bytesread = 0;
 	byte[] result = new byte[bytesread];
@@ -150,8 +152,8 @@ public class Hecl extends Activity
 	return result;
     }
 
-    public InputStream getResourceAsStream(Class cl,String resname) {
-	return getResources().openRawResource(R.raw.script);
+    public InputStream getResourceAsStream(Class cl, int resid) {
+	return getResources().openRawResource(resid);
     }
 
 }

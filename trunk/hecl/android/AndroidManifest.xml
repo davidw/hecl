@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.hecl.android">
+
+    <uses-permission id="android.permission.READ_CONTACTS" />
+
     <application android:icon="@drawable/hecl">
         <activity class=".Hecl" android:label="Hecl">
             <intent-filter>
