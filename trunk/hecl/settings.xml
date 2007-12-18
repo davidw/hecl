@@ -184,6 +184,8 @@
     <pathelement location="${android.coreclasspath}"/>
   </path>
 
+  <property name="android.defines" value="javaversion=${ant.java.version}"/>
+
   <!-- Additional classpath locations, specified in build.properties file -->
   <path id="classpath">
   </path>
