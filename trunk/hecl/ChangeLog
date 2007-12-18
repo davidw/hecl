@@ -2,6 +2,10 @@
 
 	* settings.xml: Added android defines.
 
+	* core/, net/, rms/, settings.xml: One more time: let's use
+	wtk.cldc.version instead of cldcstr, which means that we compare
+	numbers like 1.0 instead of 10.
+
 2007-12-17  David N. Welton  <davidw@dedasys.com>
 
 	* android/src/org/hecl/android/Hecl.java: Read in 1k at a time.

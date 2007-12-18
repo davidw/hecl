@@ -58,7 +58,7 @@ public class RMSCmd extends Operator {
     public static final int RMS_HEXISTS = 11;
     public static final int RMS_HKEYS = 12;
     public static final int RMS_HDEL = 13;
-//#if midp >= 20
+//#if midp >= 2.0
     public static final int RMS_SETMODE = 14;
 //#endif
 
@@ -106,7 +106,7 @@ public class RMSCmd extends Operator {
 	  case RMS_CREATE:
 	    ;
 	    {
-//#if midp < 20
+//#if midp < 2.0
 
 		// name already extracted
 
@@ -350,7 +350,7 @@ public class RMSCmd extends Operator {
 	    }
 	    break;
 
-//#if midp >= 20
+//#if midp >= 2.0
 	  case RMS_SETMODE:
 	    try {
 		int authmode = "any".equals(argv[2].toString()) ? 
@@ -517,7 +517,7 @@ public class RMSCmd extends Operator {
         cmdtable.put("rms.hexists", new RMSCmd(RMS_HEXISTS,2,2));
         cmdtable.put("rms.hkeys", new RMSCmd(RMS_HKEYS,1,1));
         cmdtable.put("rms.hdel", new RMSCmd(RMS_HDEL,2,2));
-//#if midp >= 20
+//#if midp >= 2.0
         cmdtable.put("rms.setmode", new RMSCmd(RMS_SETMODE,3,3));
 //#endif
     }

@@ -25,7 +25,7 @@ import java.util.Hashtable;
  * @version 1.0
  */
 public class MathCmds extends org.hecl.Operator {
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
     public static final Thing E = new Thing(new DoubleThing(Math.E));
     public static final Thing PI = new Thing(new DoubleThing(Math.PI));
 //#endif
@@ -98,14 +98,14 @@ public class MathCmds extends org.hecl.Operator {
     }
 
     public static int compare(NumberThing a,NumberThing b) {
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	if(a.isIntegral() && b.isIntegral()) {
 //#endif
 	    if(((IntegralThing)a).isLong() || ((IntegralThing)b).isLong()) {
 		return compare(a.longValue(),b.longValue());
 	    }
 	    return compare(a.intValue(),b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	}
 	return compare(a.doubleValue(),b.doubleValue());
 //#endif
@@ -118,7 +118,7 @@ public class MathCmds extends org.hecl.Operator {
 	    return IntThing.create(a.intValue());
 	  case CASTLONG:
 	    return LongThing.create(a.longValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	  case CASTFLOAT:
 	  case CASTDOUBLE:
 	    return DoubleThing.create(a.doubleValue());
@@ -128,18 +128,18 @@ public class MathCmds extends org.hecl.Operator {
 	    return DoubleThing.create(Math.toRadians(a.doubleValue()));
 //#endif
 	  case ABS:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral()) {
 //#endif
 		IntegralThing i = (IntegralThing)a;
 		if(i.isLong())
 		    return LongThing.create(Math.abs(i.longValue()));
 		return IntThing.create(Math.abs(i.intValue()));
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(Math.abs(a.doubleValue()));
 //#endif
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	  case SIN:
 	    return DoubleThing.create(Math.sin(a.doubleValue()));
 	  case COS:
@@ -209,7 +209,7 @@ public class MathCmds extends org.hecl.Operator {
 
 	switch(cmdcode) {
 	  case BINADD:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -217,12 +217,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()+b.longValue());
 		}
 		return IntThing.create(a.intValue()+b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()+b.doubleValue());
 //#endif
 	  case BINSUB:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -230,12 +230,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()-b.longValue());
 		}
 		return IntThing.create(a.intValue()-b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()-b.doubleValue());
 //#endif
 	  case BINMUL:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -243,12 +243,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()*b.longValue());
 		}
 		return IntThing.create(a.intValue()*b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()*b.doubleValue());
 //#endif
 	  case BINDIV:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -256,12 +256,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()/b.longValue());
 		}
 		return IntThing.create(a.intValue()/b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()/b.doubleValue());
 //#endif
 	  case MOD:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -269,12 +269,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue()%b.longValue());
 		}
 		return IntThing.create(a.intValue()%b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    return DoubleThing.create(a.doubleValue()%b.doubleValue());
 //#endif
 	  case AND:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -282,12 +282,12 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue() & b.longValue());
 		}
 		return IntThing.create(a.intValue() & b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    throw new HeclException("Integral argument required.");
 //#endif
 	  case OR:
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
 //#endif
 		if(((IntegralThing)a).isLong()
@@ -295,7 +295,7 @@ public class MathCmds extends org.hecl.Operator {
 		    return LongThing.create(a.longValue() | b.longValue());
 		}
 		return IntThing.create(a.intValue() | b.intValue());
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	    }
 	    throw new HeclException("Integral argument required.");
 //#endif
@@ -502,7 +502,7 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put(">=",new MathCmds(GE,2,2));
 
 	// stuff not available in cldc 1.0
-//#if javaversion >= 1.5 || cldc > 10
+//#if javaversion >= 1.5 || cldc > 1.0
 	vars.put("pi",PI);
 	vars.put("e",E);
 	cmdtable.put("float",new MathCmds(CASTFLOAT,1,1));
