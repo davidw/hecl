@@ -1,4 +1,4 @@
-2007-12-18  Wolfgang S. Kechel - Patzschke + Rasp Software GmbH  <wolfgang.kechel@prs.de>
+2007-12-18  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
 
 	* core/org/hecl/MathCmds.java: Enhanced round, now present even on cdlc1.1
 
