@@ -6,6 +6,11 @@
 #	This procedure is called to put some simple widgets up on the
 #	screen.
 
+proc heclcmd {subcmd target} {
+    set hecl [activity]
+    $hecl $subcmd $target
+}
+
 proc SimpleWidgets {} {
     global context
     global procname
@@ -34,7 +39,7 @@ proc SimpleWidgets {} {
     $swlayout addview [digitalclock -new $context \
 			   -layoutparams $layoutparams]
 
-    activity setcontentview $scroll
+    heclcmd setcontentview $scroll
 }
 
 # WebView --
@@ -53,7 +58,7 @@ proc WebView {} {
 
     set wv [webview -new $context -layoutparams $layoutparams]
     $layout addview $wv
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
     # Fetch the Hecl web page, which, unfortunately, isn't all that
     # beautiful ...
     $wv loadurl http://www.hecl.org
@@ -154,7 +159,7 @@ proc RadioButtons {} {
 			     -text "JavaME" -layoutparams $layoutparams]
     $radiogroup addview [radiobutton -new $context \
 			     -text "Flash Lite" -layoutparams $layoutparams]
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # CheckBoxes --
@@ -190,7 +195,7 @@ proc CheckBoxes {} {
 	$layout addview $cb
     }
 
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # CheckBoxCallback --
@@ -246,7 +251,7 @@ proc Spinner {} {
     set callback [callback -new [list [list SpinnerCallback $selected]]]
     $spinner setonitemselectedlistener $callback
 
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # SpinnerCallback --
@@ -293,7 +298,7 @@ AddOne 41}
 
     set callback [callback -new [list [list EditCallback $editor $results]]]
     $eval setonclicklistener $callback
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # EditCallback --
@@ -330,7 +335,7 @@ proc Contacts {} {
 			     -text "Who: $name Number: $number"]
     }
 
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # SelectDemo --
@@ -368,8 +373,8 @@ proc SelectDemo {parent view position id} {
 
 proc viewCode {} {
     global procname
+    global context
 
-    set context [activity getcontext]
     set layout [linearlayout -new $context]
     $layout setorientation VERTICAL
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -380,7 +385,7 @@ proc viewCode {} {
 			 -layoutparams $layoutparams]
 
     set procname viewCode
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 }
 
 # main --
@@ -417,7 +422,7 @@ proc main {} {
     $lview requestfocus
     $layout addview $lview
 
-    activity setcontentview $layout
+    heclcmd setcontentview $layout
 
     # Used to set up a callback for when the menu is requested by the
     # user, and it's necessary to set it up.
@@ -439,7 +444,7 @@ proc main {} {
 }
 
 # This is used everywhere, so making it a global is no big deal.
-set context [activity getcontext]
+set context [activity]
 
 # Start things running.
 main

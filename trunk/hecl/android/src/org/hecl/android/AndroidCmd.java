@@ -47,6 +47,7 @@ import org.hecl.java.JavaCmd;
 public class AndroidCmd extends Operator {
     static protected Hecl hecl = null;
 
+    public static final int ACTIVITY = 0;
     public static final int EXIT = 1;
     public static final int RESLOOKUP = 2;
     public static final int ALERT = 3;
@@ -78,6 +79,9 @@ public class AndroidCmd extends Operator {
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch (cmd) {
+	    case ACTIVITY:
+		return ObjectThing.create(hecl);
+
 	    case ALERT:
 		makeAlert(argv[1].toString());
 		return new Thing(argv[1].toString());
@@ -156,6 +160,8 @@ public class AndroidCmd extends Operator {
 
     static {
 	try {
+	    cmdtable.put("activity", new AndroidCmd(ACTIVITY,0,0));
+
 	    cmdtable.put("exit", new AndroidCmd(EXIT,0,0));
 	    cmdtable.put("reslookup", new AndroidCmd(RESLOOKUP,1,1));
 	    cmdtable.put("alert", new AndroidCmd(ALERT,1,1));
@@ -181,7 +187,6 @@ public class AndroidCmd extends Operator {
     public static void load(Interp ip, Hecl a) throws HeclException {
 	hecl = a;
 	Operator.load(ip, cmdtable);
-	ip.addCommand("activity", new ActivityCmd(a));
 
 	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
 	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
@@ -214,6 +219,7 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
+	JavaCmd.load(ip, "org.hecl.android.Hecl", "hecl");
 
 	HeclCallback.interp = ip;
     }
