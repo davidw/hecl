@@ -2,6 +2,7 @@
     package="org.hecl.android">
 
     <uses-permission id="android.permission.READ_CONTACTS" />
+    <uses-permission id="android.permission.GET_TASKS" />
 
     <application android:icon="@drawable/hecl">
         <activity class=".Hecl" android:label="Hecl">
@@ -11,4 +12,4 @@
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+</manifest>

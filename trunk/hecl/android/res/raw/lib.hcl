@@ -17,6 +17,10 @@ proc expand {toexpand lst} {
     return $res
 }
 
+# basicspinner --
+#
+#	Create a simple spinner using default pieces.
+
 proc basicspinner {context lst args} {
     set aa [arrayadapter -new \
 		[list $context \
@@ -29,4 +33,21 @@ proc basicspinner {context lst args} {
     set spinner [eval $cmd]
     $spinner setadapter $aa
     return $spinner
+}
+
+# basiclist --
+#
+#	Create a simple listview using default pieces.
+
+proc basiclist {context lst args} {
+    set aa [arrayadapter -new \
+		[list $context \
+		     [reslookup android.R.layout.simple_list_item_1] \
+		     $lst]]
+
+    set cmd [expand 3 [list listview -new $context $args]]
+    set lview [eval $cmd]
+
+    $lview setadapter $aa
+    return $lview
 }

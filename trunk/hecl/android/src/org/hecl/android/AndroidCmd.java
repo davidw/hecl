@@ -42,6 +42,7 @@ import org.hecl.RealThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import org.hecl.java.HeclJavaCmd;
 import org.hecl.java.JavaCmd;
 
 public class AndroidCmd extends Operator {
@@ -187,6 +188,9 @@ public class AndroidCmd extends Operator {
     public static void load(Interp ip, Hecl a) throws HeclException {
 	hecl = a;
 	Operator.load(ip, cmdtable);
+	HeclJavaCmd.load(ip);
+
+	JavaCmd.load(ip, "android.app.Activity", "androidactivity");
 
 	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
 	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
@@ -197,7 +201,9 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.view.Menu", "menu");
 	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");
 	JavaCmd.load(ip, "android.view.View", "view");
+
 	JavaCmd.load(ip, "android.webkit.WebView", "webview");
+
 	JavaCmd.load(ip, "android.widget.AdapterView", "adapterview");
 	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
@@ -217,7 +223,9 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
 	JavaCmd.load(ip, "android.widget.TextView", "textview");
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
+
 	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
+
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
 	JavaCmd.load(ip, "org.hecl.android.Hecl", "hecl");
 

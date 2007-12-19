@@ -338,6 +338,52 @@ proc Contacts {} {
     heclcmd setcontentview $layout
 }
 
+proc TaskList {} {
+    global context
+
+    set procname Contacts
+    global context
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+
+    # Create ourselves some commands to access Android internals.
+    java android.app.ActivityManagerNative activitymanagernative
+    java android.app.IActivityManager iactivitymanager
+    java {android.app.IActivityManager$TaskInfo} taskinfo
+    java android.content.ComponentName componentname
+
+    java java.util.List javalist
+    set am [activitymanagernative getdefault]
+    set tasks [$am gettasks 10 0 [null]]
+    set len [$tasks size]
+    set tasklist [list]
+    for {set i 0} {< $i $len} {incr $i} {
+	set taskinfo [$tasks get $i]
+	set baseactivity [$taskinfo -field baseactivity]
+	set class [$baseactivity getclass]
+	lappend $tasklist "Task: [$baseactivity getpackagename]"
+    }
+
+    $layout addview [textview -new $context -layoutparams $layoutparams \
+			 -text "Currently running tasks"]
+
+    set lview [basiclist $context $tasklist -layoutparams $layoutparams]
+    $layout addview $lview
+    $lview requestfocus
+
+    set callback [callback -new [list [list SelectTask]]]
+    $lview setonitemclicklistener $callback
+
+    heclcmd setcontentview $layout
+}
+
+proc SelectTask {parent view position id} {
+    [activitymanagernative getdefault] movetasktofront $position
+}
+
 # SelectDemo --
 #
 #	Select which demo to display.
@@ -364,6 +410,8 @@ proc SelectDemo {parent view position id} {
 	Spinner
     } elseif {eq $dest "Time Picker"} {
 	TimePicker
+    } elseif {eq $dest "Task List"} {
+	TaskList
     }
 }
 
@@ -405,22 +453,17 @@ proc main {} {
 
     $layout addview $tv
 
-    set lista [arrayadapter -new \
-		   [list $context \
-			[reslookup android.R.layout.simple_list_item_1] \
-			[list "Hecl Editor" "Contacts" "Simple Widgets" "Web View" \
-			     "Date Picker" "Time Picker" \
-			     "Progress Dialog" "Spinner" \
-			     "Radio Buttons" "CheckBoxes"]]]
+    set lview [basiclist $context [list "Hecl Editor" "Contacts" "Simple Widgets" "Web View" \
+				    "Date Picker" "Time Picker" \
+				    "Progress Dialog" "Spinner" \
+				    "Radio Buttons" "CheckBoxes" "Task List"] \
+	       -layoutparams $layoutparams]
 
-    set callback [callback -new [list [list SelectDemo]]]
-
-    set lview [listview -new $context -layoutparams $layoutparams \
-		   -onitemclicklistener $callback]
-
-    $lview setadapter $lista
     $lview requestfocus
     $layout addview $lview
+
+    set callback [callback -new [list [list SelectDemo]]]
+    $lview setonitemclicklistener $callback
 
     heclcmd setcontentview $layout
 
