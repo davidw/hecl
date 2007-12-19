@@ -88,7 +88,7 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 		return newthing;
 	    } else if (argv1.equals("-field")) {
 		/* Access a field. */
-		return classreflector.getField(argv[2].toString());
+		return classreflector.getConstField(argv[2].toString());
 	    } else {
 		/* Try calling a static method. */
 		return classreflector.evaluate(null, argv1, argv);
@@ -106,9 +106,15 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
     public Thing method(Interp interp, ClassCommandInfo context, Thing[] argv)
 	throws HeclException {
 	if(argv.length > 1) {
-	    String subcmd = argv[1].toString().toLowerCase();
 	    Object target = ObjectThing.get(argv[0]);
-	    return classreflector.evaluate(target, subcmd, argv);
+	    String subcmd = argv[1].toString().toLowerCase();
+	    if (subcmd.equals("-field")) {
+		/* Look for the field.  */
+		return classreflector.getField(target, argv[2].toString());
+	    } else {
+		/* Invoke the method.  */
+		return classreflector.evaluate(target, subcmd, argv);
+	    }
 	}
 	throw HeclException.createWrongNumArgsException(argv, 2, "Object method [arg...]");
     }

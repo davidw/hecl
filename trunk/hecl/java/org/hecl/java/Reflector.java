@@ -44,6 +44,7 @@ public class Reflector {
     private Method[] methods;
     private Hashtable methodnames;
     private Hashtable constnames;
+    private Hashtable fieldnames;
 
     /**
      * Creates a new <code>Reflector</code> instance.
@@ -56,6 +57,7 @@ public class Reflector {
 	try {
 	    methodnames = new Hashtable();
 	    constnames = new Hashtable();
+	    fieldnames = new Hashtable();
 
 	    forclass = Class.forName(classname);
 	    /* We could also do getDeclaredMethods and do the
@@ -76,8 +78,9 @@ public class Reflector {
  	    for (Field f : forclass.getFields()) {
 		int mod = f.getModifiers();
 		StringBuffer msg = new StringBuffer("");
+		String name = f.getName();
+		fieldnames.put(name.toLowerCase(), f);
 		if (Modifier.isPublic(mod) && Modifier.isFinal(mod) && Modifier.isStatic(mod)) {
-		    String name = f.getName();
 		    Class type = f.getType();
 		    if (type == boolean.class) {
 			constnames.put(name, IntThing.create(f.getBoolean(forclass)));
@@ -157,13 +160,54 @@ public class Reflector {
     }
 
     /**
-     * <code>getField</code> fetches a constant field value.
+     * The <code>getField</code> method returns the value of an
+     * instance's field.
+     *
+     * @param target an <code>Object</code> value
+     * @param name a <code>String</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public Thing getField(Object target, String name)
+	throws HeclException {
+	Thing retval = null;
+	Field f = (Field)fieldnames.get(name.toLowerCase());
+	if (f == null) {
+	    throw new HeclException("No field matches " + name + " for class " + forclass.getName() + " " + fieldnames.toString());
+	}
+
+	try {
+	    Class type = f.getType();
+	    if (type == boolean.class) {
+		retval = IntThing.create(f.getBoolean(target));
+	    } else if (type == double.class) {
+		retval = DoubleThing.create(f.getDouble(target));
+	    } else if (type == float.class) {
+		retval = DoubleThing.create(f.getFloat(target));
+	    } else if (type == int.class) {
+		retval = IntThing.create(f.getInt(target));
+	    } else if (type == long.class) {
+		retval = LongThing.create(f.getLong(target));
+	    } else if (type == String.class) {
+		retval = new Thing((String)f.get(target));
+	    } else {
+		retval = ObjectThing.create(f.get(target));
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    throw new HeclException("Problem fetching field " + name + " : " + e.toString());
+	}
+	return retval;
+    }
+
+    /**
+     * <code>getConstField</code> fetches a constant field value.
      *
      * @param name a <code>String</code> value
      * @return a <code>Thing</code> value
      * @exception HeclException if an error occurs
      */
-    public Thing getField(String name)
+    public Thing getConstField(String name)
 	throws HeclException {
 
 	Thing result =  (Thing)constnames.get(name);

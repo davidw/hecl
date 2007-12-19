@@ -1,3 +1,12 @@
+2007-12-19  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Add getField method that can
+	be used with instance object fields.
+
+	* java/org/hecl/java/JavaCmd.java: Add a -field "subcommand".  I
+	don't think that's even a valid name for a method in Java, so it
+	ought to be ok.  It returns the value of a field.
+
 2007-12-18  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Use the new activity command.
