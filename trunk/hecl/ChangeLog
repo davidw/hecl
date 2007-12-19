@@ -1,5 +1,19 @@
 2007-12-19  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/lib.hcl: Added basiclist code here to make
+	things cleaner and easier.
+
+	* android/res/raw/script.hcl: Add task selector, inspired by dims'
+	work here:
+	http://davanum.wordpress.com/2007/12/18/android-task-manager-primitive-prototype/
+
+	* android/src/org/hecl/android/AndroidCmd.java: Load HeclJavaCmd
+	so we can create new Hecl Java commands on the fly - this is a
+	better way of dealing with infrequently used classes like those in
+	the task demo.
+
+	* android/AndroidManifest.xml: Let Android look at tasks.
+
 	* java/org/hecl/java/Reflector.java: Add getField method that can
 	be used with instance object fields.
 
