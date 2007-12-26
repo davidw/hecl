@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.InvocationTargetException;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -433,5 +434,35 @@ public class Reflector {
 	    }
 	}
 	return ObjectThing.create(o);
+    }
+
+    /**
+     * The <code>methods</code> method returns a Hecl list of method
+     * signatures in the form methodName type type type.
+     *
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public Thing methods()
+	throws HeclException {
+	Vector retval = new Vector();
+
+	for (Enumeration e = methodnames.keys(); e.hasMoreElements();) {
+	    Vector signature = new Vector();
+	    String key = (String)e.nextElement();
+	    signature.add(new Thing(key));
+	    Vector<Method> v = (Vector)methodnames.get(key);
+	    Method[] methods = v.toArray(new Method[v.size()]);
+	    Class[] javaparams = null;
+	    for (Method m : methods) {
+		javaparams = m.getParameterTypes();
+		for (Class c : javaparams) {
+		    signature.add(new Thing(c.getSimpleName()));
+		}
+	    }
+	    retval.add(ListThing.create(signature));
+	}
+	return ListThing.create(retval);
+
     }
 }

@@ -89,6 +89,8 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	    } else if (argv1.equals("-field")) {
 		/* Access a field. */
 		return classreflector.getConstField(argv[2].toString());
+	    } else if (argv1.equals("-methods")) {
+		return classreflector.methods();
 	    } else {
 		/* Try calling a static method. */
 		return classreflector.evaluate(null, argv1, argv);

@@ -1,3 +1,12 @@
+2007-12-26  David N. Welton  <davidw@dedasys.com>
+
+	* tests/java.hcl: Added some more tests: for -methods and for an
+	error condition.
+
+	* java/org/hecl/java/JavaCmd.java: Added -methods flag.
+
+	* java/org/hecl/java/Reflector.java: Added methods method.
+
 2007-12-19  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/lib.hcl: Added basiclist code here to make
