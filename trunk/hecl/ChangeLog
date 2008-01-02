@@ -1,3 +1,9 @@
+2008-01-02  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Added fancier commandline completion
+	system that completes first on the available command names, and
+	subsequently on available variable names.
+
 2007-12-26  David N. Welton  <davidw@dedasys.com>
 
 	* tests/java.hcl: Added some more tests: for -methods and for an

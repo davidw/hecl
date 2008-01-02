@@ -1,4 +1,4 @@
-/* Copyright 2004-2006 David N. Welton
+/* Copyright 2004-2007 David N. Welton, DedaSys LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -31,8 +31,9 @@ import java.util.Vector;
 //#if j2se
 import java.util.LinkedList;
 import java.util.List;
-import jline.ConsoleReader;
 import jline.ArgumentCompletor;
+import jline.ConsoleReader;
+import jline.NullCompletor;
 import jline.SimpleCompletor;
 //#endif
 
@@ -125,6 +126,23 @@ public class Interp extends Thread/*implements Runnable*/ {
 	start();
     }
 
+//#ifdef j2se
+    protected String[] hashKeysToArray(Hashtable h) {
+	return hashKeysToArray(h, "");
+    }
+
+    protected String[] hashKeysToArray(Hashtable h, String prefix) {
+	Vector<String> cmds = new Vector<String>();
+	for (Enumeration e = h.keys(); e.hasMoreElements();) {
+	    cmds.add(prefix + (String)e.nextElement());
+	}
+	String[] scmds = new String[cmds.size()];
+	cmds.copyInto(scmds);
+	return scmds;
+    }
+//#endif
+
+
     /**
      * The <code>commandLine</code> method implements a
      * Read/Eval/Print Loop.
@@ -139,23 +157,11 @@ public class Interp extends Thread/*implements Runnable*/ {
 	String prompt = PROMPT;
 	StringBuffer sb = new StringBuffer();
 //#if j2se
+        List completors = null;
 	ConsoleReader reader = null;
-        List completors = new LinkedList();
+	int oldsz = 0;
+	int newsz = 0;
 
-	Vector<String> cmds = new Vector<String>();
-	for (Enumeration e = commands.keys(); e.hasMoreElements();) {
-	    cmds.add((String)e.nextElement());
-	}
-	completors.add(
-            new SimpleCompletor(cmds.toArray(new String[cmds.size()])));
-
-	try {
-	    reader = new ConsoleReader();
-	    reader.addCompletor(new ArgumentCompletor(completors));
-	} catch (IOException e) {
-	    System.err.println(e);
-	    return;
-	}
 //#else
 	InputStreamReader reader = new InputStreamReader(in);
 //#endif
@@ -164,12 +170,38 @@ public class Interp extends Thread/*implements Runnable*/ {
 
 	    String line = null;
 //#if j2se
+
+	    Hashtable vars = getVarhash(-1);
+	    newsz = commands.size() + vars.size();
+	    if (newsz > oldsz) {
+		System.err.println("commands grew");
+
+		completors = new LinkedList();
+		completors.add(
+		    new SimpleCompletor(hashKeysToArray(commands)));
+		completors.add(
+		    new SimpleCompletor(hashKeysToArray(vars, "$")));
+
+		completors.add(new NullCompletor());
+
+		try {
+		    reader = new ConsoleReader();
+		    reader.addCompletor(new ArgumentCompletor(completors));
+		} catch (IOException e) {
+		    System.err.println(e);
+		    return;
+		}
+
+		oldsz = newsz;
+	    }
+
 	    try {
 		line = reader.readLine(prompt);
 	    } catch (IOException e) {
 		err.println(e);
 		break;
 	    }
+
 //#else
 	    out.print(prompt);
 	    out.flush();
