@@ -1,3 +1,10 @@
+2008-01-05  David N. Welton  <davidw@dedasys.com>
+
+	* tests/suite.hcl: Added http.hcl.
+
+	* tests/http.hcl: Test http command.  Ideally this wouldn't run if
+	we're not connected to the internet.
+
 2008-01-02  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Added fancier commandline completion

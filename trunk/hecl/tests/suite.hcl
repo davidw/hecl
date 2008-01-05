@@ -21,6 +21,7 @@ testfiles {
     foreach.hcl
     global.hcl
     hash.hcl
+    http.hcl
     if.hcl
     incr.hcl
     index.hcl
