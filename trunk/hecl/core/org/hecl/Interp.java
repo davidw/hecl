@@ -173,9 +173,12 @@ public class Interp extends Thread/*implements Runnable*/ {
 
 	    Hashtable vars = getVarhash(-1);
 	    newsz = commands.size() + vars.size();
-	    if (newsz > oldsz) {
-		System.err.println("commands grew");
 
+	    /* If the number of commands or variables has increased,
+	     * reindex them in the command line completor.  Currently,
+	     * it uses commands for the first completion, and variable
+	     * names (with leading $) for subsequent completions. */
+	    if (newsz > oldsz) {
 		completors = new LinkedList();
 		completors.add(
 		    new SimpleCompletor(hashKeysToArray(commands)));
