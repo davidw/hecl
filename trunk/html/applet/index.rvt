@@ -65,7 +65,7 @@ while {< $i 10} {
 
 	  <td>
 	    <applet id="heclet" name="heclApplet" code="org.hecl.applet.HeclApplet"
-		archive="HeclApplet.jar" width="350" height="300">
+		archive="/jars/j2se/HeclApplet.jar" width="350" height="300">
 	    </applet>
 	  </td>
 	</tr>
