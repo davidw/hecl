@@ -1,0 +1,2727 @@
+2007-12-26  David N. Welton  <davidw@dedasys.com>
+
+	* tests/java.hcl: Added some more tests: for -methods and for an
+	error condition.
+
+	* java/org/hecl/java/JavaCmd.java: Added -methods flag.
+
+	* java/org/hecl/java/Reflector.java: Added methods method.
+
+2007-12-19  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/lib.hcl: Added basiclist code here to make
+	things cleaner and easier.
+
+	* android/res/raw/script.hcl: Add task selector, inspired by dims'
+	work here:
+	http://davanum.wordpress.com/2007/12/18/android-task-manager-primitive-prototype/
+
+	* android/src/org/hecl/android/AndroidCmd.java: Load HeclJavaCmd
+	so we can create new Hecl Java commands on the fly - this is a
+	better way of dealing with infrequently used classes like those in
+	the task demo.
+
+	* android/AndroidManifest.xml: Let Android look at tasks.
+
+	* java/org/hecl/java/Reflector.java: Add getField method that can
+	be used with instance object fields.
+
+	* java/org/hecl/java/JavaCmd.java: Add a -field "subcommand".  I
+	don't think that's even a valid name for a method in Java, so it
+	ought to be ok.  It returns the value of a field.
+
+2007-12-18  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Use the new activity command.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added activity
+	command here, which returns a Hecl object, which is also added as
+	a JavaCmd, so we don't have to have a specialized command for it.
+
+	* android/src/org/hecl/android/ActivityCmd.java: Removed activity
+	command in favor of some hackery in AndroidCmd.
+
+2007-12-18  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/MathCmds.java: Enhanced round, now present even on cdlc1.1
+
+2007-12-18  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Tweaked the resource
+	readers to use what Android provides, which are ints, not strings.
+
+	* android/AndroidManifest.xml: Let Hecl read contacts.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added query
+	command, cursor command.
+
+	* android/res/raw/script.hcl: Added simple contact list.
+
+	* android/res/raw/lib.hcl: Helper/library script for Android.
+	Since Android makes heavy use of the Java compatibility bridge,
+	this file is useful to add a nice layer of "Heclness" on top of
+	some of the commands.
+
+	* java/org/hecl/java/Reflector.java: Added return type mappings
+	for String[] and int[].
+
+	* settings.xml: Added android defines.
+
+	* core/, net/, rms/, settings.xml: One more time: let's use
+	wtk.cldc.version instead of cldcstr, which means that we compare
+	numbers like 1.0 instead of 10.
+
+2007-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Read in 1k at a time.
+
+	* android/build.xml: Fixed up android for new symbols.
+
+	* settings.xml: Use midp, cldc, j2me, j2se and javaversion
+	  symbols.
+
+	* core/, net/, rms/: Let's try out cldc and midp as a symbols.
+
+	* net/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
+
+	* midp20gui/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
+
+	* core/org/hecl/*.java: Use "cldc1.0" instead of ant:cldc1.0 as a symbol.
+
+	* core/org/hecl/Interp.java: *IMPORTANT* - make eval synchronized!
+
+2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* rms/org/hecl/rms/RMSCmd.java: New rms.setmode, added ability to
+	support midp1.0 RMS once th ebuild files can handle this.
+
+2007-12-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* j2me.xml: Turned off verbosity when preprocessing/compiling some
+	targets.
+
+	* rms/org/hecl/rms/RMSCmd.java: Added new command rms.create andf
+	changed behavior of rms.set.
+
+	* core/org/hecl/Interp.java: Added simple caching for
+	classcommand and support for subtyped classcommands. For now the
+	cache is cleared whenever a classcommand is added/removed and
+	filled lazily when a method is called. The search now looks for
+	the most specific classcommand for the object in question and
+	caches the lookup result for later reuse.
+
+2007-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpRequest.java: Use j2me symbol instead of
+	ant:j2me.
+
+	* j2me.xml: Use j2me.defines instead of ant:j2me,ant:${cldc} for
+	the symbols.
+
+	* midp10/examples/recordstore.hcl: Updated again from Nils-Arne.
+
+2007-12-15  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: We no longer need all the casts,
+	because Hecl now figures out numbers automatically, thanks to the
+	Parse.java changes.
+
+2007-12-14  David N. Welton  <davidw@dedasys.com>
+
+	* tests/for.hcl: This is the only test case that failed after the
+	previous change, because {01} is turned into 1.  It's necessary to
+	represent the number as a string by wrapping it in quotes.
+
+	* core/org/hecl/Parse.java: *IMPORTANT* checked in some code that
+	tries to parse numbers as numbers *as* they are parsed.  This
+	means that Hecl will see 10 as a number immediately, and "10" as a
+	string.  It will still be possible for Hecl to use "10" as a
+	number via its weak typing, but this will make Java integration,
+	which relies on getting the correct Hecl type, easier.
+
+	* java/org/hecl/java/Reflector.java: Get the right class name for
+	errors even when we are doing a static call.
+
+	* tests/java.hcl: Test an error condition in the java integration.
+
+	* java/org/hecl/java/HeclJavaCmd.java: Added this file...oops!
+
+	* java/org/hecl/java/*.java: Added docstrings.
+
+	* misc.xml: Fixed up javadoc generation, created a 'build
+	everything' target that HeclBuilder uses as well.
+
+2007-12-14  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	* midp20gui/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	* midp20gui/org/hecl/midp20/lcdui/AlertCmd.java: 
+	Changed setcurrent to save old fullscreen state of cancas and
+	restore it after performing the switch. Workaround to fix problem
+	with WTK2.5.2 emulator.
+
+2007-12-13  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added a little bit of code to
+	execute Hecl code and display the results.
+
+	* android/README: Added a very basic getting started doc for
+	Android Hecl.
+
+	* android/AndroidManifest.xml: Added icon.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Corrected location
+	of internal jars.
+
+	* misc.xml: Add correct files to HeclBuilder.jar.  Make sure that
+	both midp10 and midp20 jars are built prior to packaging them.
+
+2007-12-12  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Initial cut at integrating demo originally
+	written for free software magazine.
+
+2007-12-11  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Removed references in the short tutorial so as to
+	avoid confusing people.
+
+	* android/res/raw/script.hcl: Added a number of comments.
+
+	* android/res/raw/script.hcl: Select the demo you want with a
+	listview instead of a spinner.
+
+	* android/src/org/hecl/android/HeclCallback.java: Added callback
+	for OnItemSelectedListener, OnItemClickListener.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added AdapterView,
+	DigitalClock and ListView.
+
+	* android/res/raw/script.hcl: Added checkbox, progressdialog and
+	radiobutton dialogs.  Radio buttons do not, however, work, due to
+	a bug in the Android code!
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added
+	ProgressDialog and CheckBox.
+
+	* android/src/org/hecl/android/HeclCallback.java: Added callback
+	for android.widget.CompoundButton.OnCheckedChangeListener, used in
+	checkboxes.
+
+2007-12-10  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added a few more widgets.
+
+	* android/src/org/hecl/android/Hecl.java: Added some preliminary
+	code to deal with menus.
+
+	* android/src/org/hecl/android/HeclCallback.java: Made this a more
+	generic place to host callbacks.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use a 'Hecl'
+	object instead of an Activity, so we can get access to the goodies
+	within.  Added menusetup and menucallback commands.
+
+	* docs/hecl.xml: Fixed DTD to use recent version of DocBook.
+
+2007-12-07  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/examples/recordstore.hcl: New version by Nils-Arne
+	Dahlberg.
+
+2007-12-05  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Added getField method.
+	Unknown constant types are created as Objects.  Boolean return
+	types are created as integers.
+
+	* java/org/hecl/java/JavaCmd.java: Added ways to deal with static
+	methods, and access fields.  -new must also be argv[1], where it's
+	used.
+
+2007-12-04  David N. Welton  <davidw@dedasys.com>
+
+	* android/build.xml: We need the Hecl java package here too.
+
+	* core/org/hecl/Thing.java: Conditionally provide hashCode and
+	equals methods, which are utilized by the JavaCmd code.
+
+	* java/org/hecl/java/Reflector.java: Use .class instead of string
+	comparisons in mapRetval.  Special case for returned Thing
+	objects.
+
+	* tests/java.hcl: Test the java command and its application to the
+	Hashtable class.
+
+	* core/org/hecl/Properties.java: Make Hashtable protected instead
+	of private.
+
+	* core/org/hecl/MathCmds.java: Use #if javaversion >= 1.5 instead
+	of #ifdef j2se.java15.
+
+	* java/org/hecl/java/JavaCmd.java,
+	java/org/hecl/java/MethodProps.java,java/org/hecl/java/Reflection.java:
+	Moved these here from the Android directory, so that they may also
+	be used (and tested) by command line Hecl.
+
+	* core.xml: Compile 'java' package for command line Hecl.
+
+	* settings.xml: Use 'javaversion' instead of 'j2se.java15' for
+	j2se.defines.
+
+	* j2me.xml: Removed 'symbols' from midp target, as they're not
+	needed, and cause compilation errors due to "new, improved"
+	preprocessor which doesn't accept the old syntax.
+
+2007-11-28  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/graphics/Drawable.java: Commented reference to
+	unavailable font.
+
+2007-11-27  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Utilize -new syntax for constructors.
+
+	* android/src/org/hecl/android/JavaCmd.java: Use -new [list x y z]
+	syntax to pass arguments to constructor, for the time being.
+
+	* core/org/hecl/ListThing.java: Added a convenience method to
+	transform a ListThing into an array of Things, instead of a
+	Vector.
+
+	* core.xml: Added tests target.
+
+	* android/src/org/hecl/android/JavaCmd.java: Evaluate any
+	additional props passed in.
+
+	* android/src/org/hecl/android/Reflector.java: Recognise Thing as
+	a Java parameter.
+
+	* android/src/org/hecl/android/HeclOnClickListener.java: New class
+	that is utilized for handling callbacks.
+
+	* android/src/org/hecl/android/MethodProps.java: Remove special
+	cases.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Switch over
+	completely to JavaCmd from ViewCmd.
+
+	* android/src/org/hecl/android/HeclTypeMap.java: Removed and all
+	functionality transferred to Reflector.java.
+
+	* android/src/org/hecl/android/Reflector.java: Stop using the
+	HeclTypeMap thing in favor of some methods added to this class,
+	that also unify the method selection and parameter filling.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Hacked reslookup
+	command to accept android package layout stuff as well.  Utilize
+	JavaCmd for more things.
+
+2007-11-26  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Beginnings of a widget tour.
+
+	* android/src/org/hecl/android/HeclTypeMap.java: Make the methods
+	here just a bit more generic so they can be used both by
+	constructors and methods.
+
+	* android/src/org/hecl/android/JavaCmd.java: Added a command to
+	more "purely" integrate with Java in that it won't be aware of any
+	Android specific classes.  It also takes care of instantiating a
+	class, although the final API for this isn't yet clear in my head.
+
+	* android/src/org/hecl/android/Reflector.java: Added a system to
+	get public static final fields and turn them into potential
+	arguments for methods and constructors.  Also added a system to
+	instantiate classes given a list of Hecl variables passed as a
+	constructor to a JavaCmd.
+
+	* android/src/org/hecl/android/MethodProps.java: Hacky class that
+	will likely see significant changes in short order, especially the
+	special cases, which should go away in favor of better Java
+	integration.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added null
+	command.  Load up a few widgets as JavaCmds rather than ViewCmds.
+
+	* android/src/org/hecl/android/ActivityCmd.java: Added a subcmd to
+	get the activity object itself.  Still hacky code.
+
+2007-11-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Make the logStacktrace
+	method available, add in http command.
+
+	* android/build.xml: Add in HTTP.
+
+2007-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use ViewCmd load method.
+
+	* android/src/org/hecl/android/Reflector.java: Be a bit more
+	  verbose in our error messages for the time being.  Check for
+	  null methodnames in selectMethod.
+
+	* android/src/org/hecl/android/ViewCmd.java: This is beginning to
+	  be able to handle any sort of generic View derived object,
+	  through the magic of reflection.  We can also instantiate new
+	  objects.
+
+	* res/layout/main.xml: Give the layout an ID so that it's
+	  accessible.
+
+2007-11-20  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* j2me.xml: Moved property definitions into targets, so it is no
+	longer necessary to use the property files.
+
+	* midp20gui/org/graphics/VFont.java: 
+	* midp20gui/org/graphics/Drawable.java: 
+	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	Modified defines to work with antenna-1.0.0.
+
+2007-11-19  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added experimental
+	s, l, i, d commands for casting purposes.  These will be moved
+	elsewhere if they prove successful.
+
+	* settings.xml: Use the new Antenna preprocessor.
+
+	* core/org/hecl/MathCmds.java: New Antenna preprocessor can't
+	handle text after "endif" - removed.
+
+	* android/build.xml: Grab the android tools' location from a
+	properties file.  Remove the android.defines in the symbols passed
+	to the android compile, for the moment.
+
+2007-11-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/MathCmds.java: Changed ifdef to work with new
+	wtk2.5 preprocessor which allow comparison.
+
+	* core/org/hecl/Interp.java: Corrected imports to work in j2me environment.
+
+2007-11-15  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Improved jline stuff to do command
+	line completion of commands present at run time.  Several fixes
+	possible: update as new commands are created, and do something
+	with variables as well.
+
+2007-11-14  David N. Welton  <davidw@dedasys.com>
+
+	* core.xml: Unjar jline in order to include it in the j2se Hecl jar.
+
+2007-11-12  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Integrated jline command line
+	processing tool.
+
+2007-09-11  David N. Welton  <davidw@dedasys.com>
+
+	* cldc11midp20.properties: Use this to build MIDP2.0 applications.
+
+	* cldc10midp10.properties: Use this to build MIDP1.0 applications.
+
+	* j2me.xml: Build system is now automated through the use of
+	.properties files.
+
+2007-09-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: First draft of the lcdui commands is done.
+
+2007-09-05  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/script.hcl (settingsDemo): Added settings demo.
+
+2007-09-05  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/SettingsCmd.java: Made command work
+	with a dirty trick to fake an instance.
+
+	* midp20/org/hecl/midp20/lcdui/ListCmd.java: Added support for
+	'selection index' to get selected index.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Added fix for
+	Nokia 6630 screen size bug.
+
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/WidgetInfo.java: Allow Form with no
+	title to support usage with j2me polish in fullscreen mode!
+
+2007-09-04  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: lcdui.list, settings, stringitem.
+
+2007-09-03  David N. Welton  <davidw@dedasys.com>
+
+	* tests/upeval.hcl: Fix test for error thrown in upeval, and
+	restoration of the previous stack.
+
+	* core/org/hecl/HeclException.java: Added a message field to save
+	the message in, and removed the getMessage method.  pushException
+	accepts a string to save in the message field.
+
+2007-09-02  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added lcdui.image, lcdui.imageitem documentation.
+
+2007-09-01  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added lcdui.gauge documentation.
+
+	* midp20/script.hcl: Added gauge to the form demo.
+
+	* docs/hecl.xml: Added documentation for the lcdui.font and
+	lcdui.form commands.  Various other fixes.
+
+	* midp20/script.hcl: Added font demo.
+
+2007-08-31  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/script.hcl (menu1sel): Make the list demo actually do
+	something that can be seen on phones.
+
+	* midp20gui/org/hecl/midp20/lcdui/FontMap.java: Used else if
+	instead of simple if.
+
+	* docs/*.html: Set svn:mime-type to application/octet-stream in
+	order to not generate so much churn in SVN.
+
+	* docs/hecl.xml: Described $eventcmd.
+
+2007-08-28  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added some links back to the Java docs so that
+	people can find more detailed explanations.  Added a bit more to
+	the lcdui.command command.
+
+2007-08-27  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.css: Fiddled with margins, corrected font size for
+	td's.
+
+	* docs/hecl.xml: Latest lcdui updates.  Switch from simplelist to
+	itemizedlist.
+
+2007-08-23  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/HeclCanvas.java: Changed German
+	text to English.
+
+	* docs/hecl.xml: Started work on lcdui.* commands.
+
+2007-08-20  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added http.* commands to the documentation,
+	replacing the http command.
+	Added record store commands.
+
+	* midp20/script.hcl: Added canvas example.
+
+2007-08-17  David N. Welton  <davidw@dedasys.com>
+
+	* media/org/hecl/media/MediaCmd.java, HeclMedia.java: Added
+	initial media support.  Still needs lots of work, and to be made
+	more robust.
+
+2007-08-13  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/WidgetListener.java: Extracted
+	code into a new method, eventEval.  Also, we treat the first
+	argument as a list, so that it becomes possible to pass a real
+	list to -commandaction.
+
+	* tests/upeval.hcl: Add test that blows up without the fix, below,
+	in Interp.java.
+
+	* core/org/hecl/Interp.java: Catch any exceptions in code
+	evaluation and throw them only *after* any upper stack frames have
+	been restored.
+
+	* core/org/hecl/HeclTask.java: Use toString instead of getMessage
+	for bgerrors, in order to get a stack trace.
+
+	* jarhack/jarhack/JarHack.java: Extract the CLDC and MIDP versions
+	in order to do the right thing when building new jars.
+
+	* core.xml: Fixed typo preventing jarhack build.
+
+2007-08-08  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/script.hcl: Minor tweaks.
+
+	* midp10/Hecl.java: Use read method from HeclUtil, as it's more
+	robust.  Display alert on error.
+
+2007-08-07  David N. Welton  <davidw@dedasys.com>
+
+	* j2me.xml, settings.xml: Reworked compilation code for J2ME to
+	take into consideration the possibility of CLDC1.0 + MIDP2.0.
+	There are some problems in the Java code that prevent us from
+	actually implementing that at the moment though.
+
+	* midp20/: Moved actual GUI code to midp20gui.
+
+	* midp10/: Moved GUI code go midp10gui.
+
+	* midp20gui/org/awt/geom/Point2D.java: Removed ugly &nbsp; from comments.
+
+2007-08-06  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/script.hcl: Added example script from Wolfgang Kechel.
+
+	* midp20/Hecl.java: Added MIDP2.0 example from Wolfgang Kechel.
+
+2007-08-05  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Updated documentation to refer to midp10 instead
+	of j2me.
+
+	* j2me/midp10: Moved j2me directory to midp10.
+
+	* j2me.xml: Reorganized j2me compilation code just a bit.  I'm not
+	100% certain that it's correct now, but we're heading in the right
+	direction, I think, and it does compile both midp10 and midp20.
+
+2007-08-04  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Broke the build file into smaller, hopefully more
+	manageable chunks.  Requires Ant 1.6, but that's been out for a
+	while, so it shouldn't be a problem.
+
+2007-08-02  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added warning about making sure the java bin
+	directory is in the system path.
+
+2007-07-02  David N. Welton  <davidw@dedasys.com>
+
+	* tests/set.hcl: Added test pointing out a current flaw with
+	Thing.java's EMPTYTHING.
+
+2007-07-01  David N. Welton  <davidw@dedasys.com>
+
+	* tests/circular.hcl: Added a new circular reference test
+	demonstrating a problem with attempting to print circular
+	references.
+
+2007-06-29  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added floating point math commands to
+	documentation.
+
+2007-06-19  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl: Added another 'rename' test.
+
+	* core/org/hecl/Interp.java: Make sure we remove the old command name
+	from the hash table when renaming.
+
+2007-05-22  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/StringCmds.java: Changec comparison for instances
+	of ObjectThing, now eq/neq call Compare.same.
+
+	* core/org/hecl/Compare.java: New function same for comparison to
+	avoid problems when comparing ObjectThings on mobile devices.
+
+2007-05-09  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Fix to not parse # characters that are
+	not at the beginning of a line specially.
+
+	* tests/parse.hcl: Added test for incorrect handling of #
+	character.
+
+2007-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* tests/after.hcl: Added a simple after test.
+
+	* core/org/hecl/ParseList.java: Ignore [ and \ in list parsing.
+
+2007-04-27  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java: Updated applet code to
+	use new interfaces.
+
+2007-04-27  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/*:
+	Major changes with massive ussage of ObjectThing and class command
+	support from modified core. Removed many unused class formerly
+	necessary to keep a mapping between GUI elements and strings,
+	changed many methods. Many user visible changes on scripting
+	level, nameley: callback treatment, item handling, creation.
+	As a result, the code is much cleaner, simplier, smaller and
+	runtime behavior has been improved concerning memory requirements
+	and performance!
+
+	* j2me/Hecl.java: 
+	Simplified command creation.
+	
+	* j2me/GUICmdFacade.java:
+	* j2me/GUI.java: 
+	Adapted for new evaluation, cmdCode now returns Thing.
+
+	* load/org/hecl/load/HeclLoad:
+	Removed, no longer necessary.
+
+	* load/org/hecl/load/LoadCmd.java:
+	Adapted for new evaluation, cmdCode now returns Thing. Changed
+	loading of command to avoid class HeclLoad.
+	
+	* commandline/StandaloneHecl.java:
+	Fixed imports.
+	
+	* commandline/Hecl.java:
+	Moved read/eval/print to core.
+
+	* net/org/hecl/HttpCmd.java:
+	* net/org/hecl/Base64Cmd.java:
+	* core/org/hecl/MathCmds.java: 
+	* files/org/hecl/files/FileCmds.java:
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* core/org/hecl/MathCmds.java: 
+	* core/org/hecl/Proc.java: 
+	* core/org/hecl/SortCmd.java: 
+	* core/org/hecl/StringCmds.java: 
+	* core/org/hecl/ListCmds.java: 
+	* core/org/hecl/Compare.java: 
+	* core/org/hecl/ControlCmds.java: 
+	* core/org/hecl/Operator.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/PutsCmd.java: 
+	* core/org/hecl/Ensemble.java: 
+	* core/org/hecl/HashCmds.java: 
+	Adapted for new evaluation, cmdCode now returns Thing.
+
+        * files/org/hecl/files/HeclFile.java:
+	Now throws Hecl Exception on error instead of printing out.
+	
+	* core/org/hecl/ObjectThing.java: 
+	Added proper handling of null.
+
+	* core/org/hecl/Command.java: 
+	Adapted for new evaluation.
+
+	* core/org/hecl/HeclException.java: Modifications allow passing
+	return value for exceptions via constructor, used in break/continue/return.
+
+	* core/org/hecl/HeclTask.java: Beautfication.
+
+	* core/org/hecl/StringThing.java: New memethod create that treats
+	null properly.
+
+	* core/org/hecl/ListCmds.java: 
+	Fixed bug in lrange.
+	
+	* core/org/hecl/ClassCommandInfo.java: 
+	* core/org/hecl/ClassCommand.java: New classes to support
+	ObjectThing commands.
+
+	* core/org/hecl/Interp.java: Changed evaluation process to return
+	result. Removed member variable result and all related
+	methods. Added read/eval/print loop.
+
+2007-04-20  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Now adheres to new
+	signature of operate. Fixed bug in playtone command - it did ont
+	use the proper arguments.
+
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* j2me/GUICmdFacade.java: 
+	* j2me/GUI.java: Now adheres to new cmdCode signature.
+
+	* j2me/Hecl.java: Now uses Interp.addCommand to add commands.
+
+	* tests/catch.hcl: Changed to expect correct error message.
+
+	* commandline/StandaloneHecl.java: Reduced imports, added load command.
+
+	* commandline/Hecl.java: Simplified, moved readEvalPrint into
+	Interp class, reduced changed imports, added simple extensions
+	mechanism for quick tests.
+
+	* load/org/hecl/load/LoadCmd.java: Simplified, module HeclLoad no
+	longer needed.
+
+	* load/org/hecl/load/HeclLoad.java: Removed, no longer necessary.
+
+2007-04-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/ObjectThing.java: New method get to retrieve the
+	value, changed toString to support references to Java null.
+
+	* commandline/StandaloneHecl.java: 
+	Reduced import statements.
+
+2007-04-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Stanza.java: Removed premade new argv arrays.
+
+	* core/org/hecl/Stanza.java: Moved newargv creation and
+  	initialization to the run method, where it is now a local
+	variable.
+
+2007-01-29  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* files/org/hecl/files/FileCmds.java: 
+	* rms/org/hecl/rms/RMSCmd.java: 
+	* midp20/org/hecl/midp20/MidletCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/ListCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: 
+	* core/org/hecl/StringCmds.java: 
+	* core/org/hecl/Operator.java: 
+	* core/org/hecl/MathCmds.java: 
+	* core/org/hecl/ListCmds.java: 
+	* core/org/hecl/Interp.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/HashCmds.java: 
+	* core/org/hecl/ControlCmds.java: 
+	* net/org/hecl/HttpRequest.java: 
+	* net/org/hecl/HttpCmd.java: 
+	* net/org/hecl/Base64Cmd.java:
+	Corrected usage of command table. Former versions treated static
+	variable of base class incorrect.
+	
+	* midp20/org/hecl/midp20/lcdui/SettingsCmd.java: 
+	Proper handling of command table (see above), added skleft/skright to allow
+	configuration of left and right soft key code.
+
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	Minor changes for use with j2mepolish.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: 
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java: 
+	New attributes drawwidth/drawheight, no longer ovberwrites methods
+	getWidth/getHeight of base class, ifdefs for blackberry usage.
+	All this done to allow usage with j2mepolish.
+	
+	* midp20/org/hecl/midp20/lcdui/AlertCmd.java: 
+	Minor changes to allow usage with j2mepolish.
+
+	* midp20/org/awt/Point.java: 
+	Use import for org.awt.geom.Point2D.
+
+2006-11-12  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-16): Check unbalanced "quotes" behavior.
+
+	* core/org/hecl/ParseList.java: Check for unbalanced "quotes" in
+	lists, and throw an error if they occur.  Don't parse \backslashes
+	in list text, as they should already have been parsed or not by
+	Hecl.
+
+2006-11-11  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-14): Fixed test for list parsing.
+	(parse-15): Test to make sure that quoted square braces aren't
+	unquoted inside braces, when treated as a list.
+
+	* core/org/hecl/ParseList.java: Lists should ignore [].
+
+2006-10-18  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Added manager commands.
+
+2006-10-12  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Fixed bug in
+	drawing of commands. Clipping region was not set correctly
+	before. The problem was visible on phones with a display with a height
+	<= width.
+
+	* rms/org/hecl/rms/RMSInputStream.java: Added feature to detect
+	the number of bytes stored in this RS (getSize).
+
+	* net/org/hecl/QParam.java:
+	* net/org/hecl/RMSQParam.java:
+	* net/org/hecl/ByteQParam.java:
+	* net/org/hecl/StringQParam.java:
+	* net/org/hecl/BinQParam.java: Removed, they are not used by Hecl anyway.
+	
+	* net/org/hecl/QueryParam.java: New file with interface for http
+	query parameters.
+
+	* net/org/hecl/HttpRequest.java: Made debug output switchable.
+
+2006-10-11  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/CanvasEvent.java: Minor
+	beautification, changed asString to StringBuffer directly.
+
+	* midp20/org/hecl/midp20/MidletCmd.java: Now add GUI commands directly.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: CanvasEvent only
+	created when eventhandler installed.
+
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java:
+	* net/org/hecl/HttpCmd.java (http): Disabled debug printout.
+
+	* net/org/hecl/QParam.java: printon now works with empty name and data.
+
+2006-09-26  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/Hecl.java: Show more in the way of errors when there
+	are problems.
+
+2006-09-19  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/HeclTask.java: Evaluation of all HeclTasks now
+	starts at level 0 (global).
+
+	* core/org/hecl/InterpCmds.java: Uses new implementation for
+	global command.
+
+	* core/org/hecl/Interp.java: Changed treatment of global variables
+	during variable lookup for set/unset/get of variable value.
+	USER VISIBLE CHANGE: this might affect script code that uses not
+	properly initialized global variables!
+
+	* tests/harness.hcl: Properly initialize global vars before
+	starting a test run.
+
+2006-09-17  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* tests/global.hcl (global-6-1): Added test.
+
+	* core/org/hecl/Interp.java: Made result a private member. Cosmetics.
+
+	* core/org/hecl/InterpCmds.java: Now correctly uses the proper
+	async indicator prefixes from Interp.
+
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/Stanza.java: Cosmetics.
+
+2006-09-16  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added after and bgerror commands.
+
+	* tests/global.hcl: Test for global problems by setting a variable
+	at three different stack levels - 0, and in two procs.
+
+2006-09-16  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/Proc.java: Only set varargs param when varargs are
+	present.
+
+	* tests/foreach.hcl: Corrected test foreach-6.
+
+	* core/org/hecl/Thing.java: Beautification of deepcopy, no
+	functional changes.
+
+	* core/org/hecl/Compare.java: 
+	* commandline/Hecl.java: Use proper function to access evaluation result.
+
+2006-09-15  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* build.xml: Corrected compileJ2MEHttp and defines for j2me compile.
+
+	* j2me/Hecl.java: Uses new RMS class names.
+
+	* core/org/hecl/Interp.java: New clock command.
+
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: Now properly unsets
+	global variables.
+
+	* net/org/hecl/HttpCmd.java: 
+	* net/org/hecl/StringQParam.java: 
+	* net/org/hecl/QParam.java: Corrected copyright.
+
+	* midp20/org/hecl/midp20/lcdui/WidgetInfo.java: Added function to
+	retrieve command labels.
+
+	* midp20/org/hecl/midp20/lcdui/HeclCanvas.java: Added support for
+	more than 3 commands via a menu implemented using a list.
+
+	* rms/org/hecl/rms/RMSInputStream.java: 
+	* rms/org/hecl/rms/RMSOututStream.java: 
+	* rms/org/hecl/rms/RMSCmd.java: New functionality, renamed files.
+
+	* core/org/hecl/ControlCmds.java: Enhanced treatment of
+	if/then/else/elseif to throw error on invalid sequences.
+
+	* tests/if.hcl: Added more tests.
+
+	* tests/harness.hcl (testfiles): Clear failure list when starting
+	new test.
+
+	* core/org/hecl/StringThing.java: Simplified deepcopy().
+
+	* midp20/org/graphics/Drawable.java: Added/disabled debug printout,
+	corrected clipping.
+
+	* midp20/org/hecl/misc/HeclUtils.java: removed function classExists.
+
+2006-09-14  David N. Welton  <davidw@dedasys.com>
+
+	* TODO-tests-docs: A list of commands to be documented and tested,
+	where possible.
+
+	* TODO: Removed - it wasn't being used.
+
+	* tests/if.hcl: Added two more if tests.
+
+	* core/org/hecl/ControlCmds.java: Added Wolfgang's patch for
+	if/elseif.
+
+2006-09-13  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/ControlCmds.java: hack for if elseif...
+
+	* core/org/hecl/Interp.java: Added unSetVar with level. Reduced
+	sleep time when waiting for events.
+
+2006-09-13  David N. Welton  <davidw@dedasys.com>
+
+	* tests/if.hcl: New if/elseif test that demonstrates a bug
+	Wolfgang found.
+
+2006-09-12  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Eliminate reference code in setVar.
+
+	* core/org/hecl/Thing.java: Don't cache a string representation.
+	We'll save optimization for later.
+
+2006-09-09  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/ImageCmd.java: Fixed creation of
+	image from string via '-data'.
+
+2006-09-07  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/InterpCmds.java: New command 'hasclass <name>'
+	that gives access to Class.forName(..) at the script level.
+	Rename 'system.time' into 'clock' with options, now supports
+	'clock milli/time', 'clock seconds' and 'clock format <millisecs>'
+	with the latter allowing to get a printable format of the time.
+
+2006-09-05  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* build.xml: More fiddling with j2megui20 target.
+
+	* net/org/hecl/HttpRequest.java: Enhancements in treatment of encoding.
+
+	* net/org/hecl/Base64.java: Provide encoding into StringBuffer.
+
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/ListThing.java: Speedup for conversion into StringBuffer.
+
+	* midp20/org/hecl/midp20/lcdui/CmdDataMap.java: Changed separator
+	to '#'.
+
+	* midp20/org/hecl/midp20/lcdui/ImageGadget.java: Added support for
+	imageitem elements in form.
+
+	* midp20/org/hecl/midp20/lcdui/FormGadget.java: Corrected bug in
+	conigure that causes errorneous treatment of arguments.
+
+2006-09-04  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/InterpCmds.java: Corrected argument count for
+	system.time.
+
+	* midp20/org/hecl/midp20/lcdui/*.java: 
+	Major overhaul: new command treatment, new callback handling and
+	mapping to Hecl code, new exceptions for widget commands, majo0r
+	enhancements for HeclCanvas.
+
+2006-09-01  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: Changed
+	method 'delete' into 'destroy' since forms need a delete command.
+
+	* midp20/org/hecl/midp20/lcdui/AlertCmd.java: Added support for indicator.
+
+	* midp20/org/hecl/midp20/lcdui/GUICmds.java: 
+	Simplified, removed unused stuff.
+
+	* midp20/org/hecl/midp20/lcdui/CanvasCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/ChoiceGadget.java: 
+	* midp20/org/hecl/midp20/lcdui/DisplayableCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/FormCmd.java: 
+	* midp20/org/hecl/midp20/lcdui/FormGadget.java: 
+	Removed debug printouts.
+
+	* core/org/hecl/InterpCmds.java: 
+	New commands: system.time, runtime.freememory, runtime.totalmemory.
+
+2006-08-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmds.java: linsert uses setCopyVal, lset uses
+	setCopyVal, lappend uses setCopyVal.  Put a new result in the
+	interpreter's result.
+
+	* core/org/hecl/StringCmds.java: append uses setCopyVal.  Put a
+	new result in the interpreter's result.
+
+	* core/org/hecl/MathCmds.java: incr uses setCopyVal.  Put a new
+	result in the interpreter's result.
+
+	* core/org/hecl/Thing.java: New method setCopyVal (need a better
+	name, though), that won't set values if the copy flag bit is set.
+
+2006-08-31  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* net/org/hecl/HttpRequest.java: 
+	* net/org/hecl/HttpCmd.java: Simplified, emhanced waiting for result.
+
+	* core/org/hecl/ListThing.java: Minor changes, added some (still
+	unused) code on the way to get list->string working for all cases.
+
+	* core/org/hecl/InterpCmds.java: Removed debug printouts.
+
+	* core/org/hecl/Interp.java: Enhanced doOneEvent to allow
+	notifications from external pure Java code (like
+	HttpRequest). Derived from thread to simplify wait/notify
+	handling.
+
+	* net/org/hecl/HttpRequest.java: Added notify object to
+	constructor. When != null, this object will be notified when the
+	request is done.
+
+	* net/org/hecl/HttpCmd.java: Made geturl compliant with new event
+	model and assure that Hecl events are processed during the wait
+	for the result from the server.
+	Rename all commands to http.???
+
+2006-08-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Make sure that unSetvar knows how to
+	deal with global variables.
+
+2006-08-30  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/ListCmds.java: Added preliminary fix for global problem.
+
+	* commandline/Hecl.java: Added verbosity for read-eval-print loop.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Major overhaul. Fixed
+	odd behavior, rudimentary support for access to external record
+	stores, support for record store as hashtable with key (string)
+	and value (string).
+
+	* j2me/Hecl.java: Enabled record store commands by default.
+
+2006-08-30  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: New value wasn't properly being
+	labeled as a global variable.
+
+2006-08-29  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* build.xml: New (experimental) target j2megui20.
+
+	* core/org/hecl/InterpCmds.java: Added new commands system.gc,
+	system.getproperty, system.hasproperty.
+
+2006-08-28  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/Parse.java: Line counting in parseBlockOrCommand
+	corrected, now also counts escaled newlines since they are in a
+	new line on the source file!
+
+	* tests/parse.hcl: Added parse-14/parse-15, latter disabled since
+	both should work fine in the future.
+
+2006-08-28  David N. Welton  <davidw@dedasys.com>
+
+	* tests/foreach.hcl: Added another test to make sure that foreach
+	loop variables really are getting new values assigned that can
+	then be copied.
+
+	* core/org/hecl/Interp.java: Fixed a problem with value copying on
+	set.
+
+	* core/org/hecl/Parse.java: Make parseBlockOrCommand keep track of
+	backslashes.  NOTE that this is not enough... [] commands also
+	need to be aware of { [ }, for instance, in their arguments when
+	doing parseBlockOrCommand.
+
+	* core/org/hecl/ParseList.java: Ignore special characters in
+	parseWord, because to even get here, they had to have been parsed
+	at least once by something else.
+
+	* core/org/hecl/ListThing.java: Reverted to old version for the
+	moment, to test a different approach.
+
+2006-08-26  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/Thing.java:
+	Member access change: val private, copy protected.
+
+	* core/org/hecl/CodeThing.java: 
+	* core/org/hecl/DoubleThing.java: 
+	* core/org/hecl/GroupThing.java:
+	* core/org/hecl/HashThing.java: 
+	* core/org/hecl/InterpCmds.java: 
+	* core/org/hecl/IntThing.java: 
+	* core/org/hecl/ListThing.java: 
+	* core/org/hecl/LongThing.java: 
+	* core/org/hecl/ObjectThing.java: 
+	* core/org/hecl/PrintThing.java: 
+	* core/org/hecl/Stanza.java: 
+	* core/org/hecl/StringThing.java: 
+	* core/org/hecl/SubstThing.java: 
+	* core/org/hecl/NumberThing.java: 
+	Now use Thing{s,g}etVal();
+
+2006-08-25  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* net/org/hecl/HttpRequest.java: Beautification, debug output.
+
+	* core/org/hecl/ListCmds.java: Unified index treatment, allowed
+	start/end and multiple indices for nested lists.
+
+	* commandline/StandaloneHecl.java: 
+	* commandline/Hecl.java: Properly uses Interp.terminate().
+
+	* core/org/hecl/Interp.java: Renamed abort->terminate.
+
+2006-08-22  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/FileCmds.java: This class needs to be
+	public in order to be visible to Hecl.java.
+
+	* net/org/hecl/HttpRequest.java (http): Filter out 'https' stuff
+	from MIDP1.0 version.
+
+2006-08-20  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/Hecl.java: Re-added file commands, ensure that Hecl
+	exits after evaluating a hecl file.
+
+2006-08-17  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
+
+	* new http code
+
+	* async evaluation in Hecl interpreter (including idle, timer,
+	async, wait/notify).
+
+2006-07-08  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: UPCMD is now simpler becaus it
+	hands everything off to Interp.eval.
+
+	* core/org/hecl/Interp.java: Added a new eval method that takes a
+	stack level to evaluate the code at.  Used by upeval.
+
+	* tests/upeval.hcl: Test upeval ?level? script.
+
+	* tests/global.hcl: The global-3 test works now thanks to an
+	updated upeval command.
+
+	* docs/hecl.xml: Updated upeval documentation.
+
+	* docs/jdocs: Updated javadocs.
+
+	* core/org/hecl/InterpCmds.java (global): Changed global command
+	to set a flag indicating that the Thing is to be shared at the
+	global level.
+
+	* core/org/hecl/Proc.java: If we exit due to en exception, be sure
+	to pop the stack.
+
+2006-06-24  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUI.java: Add getprop/setprop for command widgets and the
+	code property.
+
+2006-06-14  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Use a boolean to keep track of whether
+	something has been stashed in the current outBuf, so that we don't
+	end up having to deal with empty outBuf's tacked on to the current
+	outGroup.  Also, parseLine doesn't need to take an String
+	argument.
+
+	* tests/parse.hcl: There is a regression with variables like
+	${foo} adding an extra space aftering being parsed...
+
+2006-06-12  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/Hecl.java: Include the http module in the command
+	line version of Hecl.
+
+2006-06-11  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/HeclFile.java: Oops.  Forgot to pass
+	through HeclExceptions.
+
+2006-06-10  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added 'throw' command.
+
+	* tests/throw.hcl: Added tests for throw command.
+
+	* docs/hecl.xml: Added docs for http, rearranged j2me docs.
+
+2006-06-06  David N. Welton  <davidw@dedasys.com>
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Get the 1.0/2.0
+	order right.
+
+	* build.xml: HeclBuilderJar depends on having a JarHack jar
+	available.
+
+	* jarhack/jarhack/JarHack.java: Make sure version and vendor match
+	up.
+
+2006-06-03  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: String trim commands now take a
+	list of strings to trim from left, right, or both sides.  strtrim
+	by default uses the String.trim method in Java.
+
+	* tests/string.hcl: Make sure that string tests pass according to
+	new trim commands.
+
+	* files/org/hecl/files/HeclFile.java: Transform sourced files
+	using the system encoding after reading in 'raw' bytes.
+
+2006-05-30  Wolfgang S. Kechel <wolfgang.kechel@data2c.com>
+
+	* tests/string.hcl: Added some tests.
+
+	* core/org/hecl/StringCmds.java: Added trim/trimr/triml, corrected
+	bugs in strlast.
+
+	* core/org/hecl/Parse.java: Accepts '\r'(CR) --> 0x0d in string
+
+2006-05-29  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Moved strindex and strlen to the proper place in
+	terms of alphabetical ordering.
+
+	* docs/sindex.html: Removed.
+
+	* docs/slen.html: Removed - string commands have new names.
+
+2006-05-23  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Try out the string commands with
+	'str___' style names as a compromise between short and succint and
+	descriptive.  Moved slen and sindex to strlen and strindex.
+
+2006-05-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmds.java: When accepting negative numbers as
+	list indexes, make sure that we don't walk off the end of an
+	index.
+
+	* core/org/hecl/ListCmds.java: Make sure to set the value of the
+	Thing that contains the list.
+
+2006-05-20  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: 2 + 2 equals 4, not 2.  Thanks to Alexandre
+	Ferrieux for catching this buglet.
+	(args): Documented args argument to procs.
+
+	* core/org/hecl/Proc.java: 'args' is the preferred choice of
+	discriminating Hecl hackers everywhere.
+
+2006-05-19  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Added latest version from
+	Wolfgang.
+
+	* j2me/examples/recordstore.hcl: Added size and sizeavail commands
+	to the example.
+
+	* j2me/examples/: Removed & in favor of $.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Added rs_size and
+	rs_sizeavail commands.
+
+2006-05-18  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/SMS.java: Apparently, if we hive the SMS stuff off into a
+	class unto itself, it will load ok.
+
+2006-05-14  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/HeclFile.java: Make sure that filetolist
+	works on Windows.
+
+	* core/org/hecl/Parse.java: Make \n parse as "end of line", which
+	is added to the output, no matter what platform we are on.
+
+	* core/org/hecl/ParseList.java: Check for \r in list parsing.
+
+	* j2me/script.hcl: Added an sms example.
+
+	* j2me/GUI.java: Add sms command (wma).  Eventually, since this is
+	optional, it should probably be in a class like Optional for
+	various commands that may or may not be present.
+
+	* build.xml: Use j2me.defines property for potential symbols for
+	j2me builds.
+
+2006-05-09  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl (varargproc): Tests for varargs.
+
+	* core/org/hecl/Proc.java: First cut at varargs functionality.
+
+2006-04-30  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Use $ instead of &.
+
+	* docs/reverse.hcl: Use $ instead of &.
+
+	* core/org/hecl/GroupThing.java: Added 'create' method to easily
+	create GroupThings from Vectors of Things.
+
+	* core/org/hecl/CodeThing.java: doGroupSubst no longer takes care
+	of collapsing GroupThings containing only one Thing - this is now
+	done by the parser.
+
+	* core/org/hecl/Thing.java: Removed appendToGroup methods which
+	never really belonged here in any case.
+
+	* core/org/hecl/Parse.java: Big overhaul of the parser.  Still not
+	convinced that it's as good as it can be, but it's significantly
+	faster, and doesn't require strange methods in Thing.
+
+2006-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/Hecl.java: Speed up loading of scripts by processing N
+	bytes at a time.
+
+	* j2me/script.hcl: Use $ instead of &.
+
+2006-04-28  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Thing.java: Eliminated getStringRep in favor of
+	toString.  toString now does cacheing.  This is not ideal in all
+	situations - for example, when we know that the result is going to
+	be passed to a setVal which will invalidate the cache in any case.
+
+	* tests/: Updated tests to reflect the line number information.
+
+	* core/org/hecl/ParseState.java: Keep track of the line number
+	relative to the current chunk of code being parsed.
+
+	* core/org/hecl/Parse.java: Keep track of line numbers by looking
+	at \n and \r during parsing.  I think this probably needs better
+	testing/examination on windows.
+
+	* core/org/hecl/CodeThing.java: Add stanza lineno when adding
+	stanzas.
+
+	* core/org/hecl/Stanza.java: Added a lineno variable to keep track
+	of line numbers.  Catch HeclExceptions generated by the argument
+	subsititution code, and insert the line number.
+
+	* core/org/hecl/Compare.java: Use -1 as a line number for the
+	stanza to add.
+
+2006-04-26  David N. Welton  <davidw@dedasys.com>
+
+	* tests/suite.hcl: Change tests to reflect that $ vars are now
+	references, and copying must be done explicitly with 'copy'.
+
+	* core/org/hecl/SubstThing.java: No longer have to keep track of
+	whether we are a reference or not.
+
+	* core/org/hecl/Parse.java: Use $ instead of & for references.
+	Copying is now performed explicitly with the copy command.
+
+2006-04-19  David N. Welton  <davidw@dedasys.com>
+
+	* docs/jdocs: Added some jdocs to version control that weren't
+	present.
+
+	* docs/hecl.xml: Minor updates to the docs.
+
+	* build.xml: By default, cldc1.0 goes with midp1.0, cldc1.1 goes
+	with midp2.0.
+
+2006-04-18  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: New example script that,
+	hopefully, is a bit more pleasant and logical.
+
+	* j2me/GUI.java: Datefields now use LongThings.
+
+	* core/org/hecl/Stanza.java: StringThings print out surrounded by
+	{} if necessary, according to toListString rules.
+
+	* core/org/hecl/ListThing.java: Made toListString a public, static
+	method, so as to not waste space, and allow it to be used by
+	others.
+
+	* j2me/GUI.java: Added getprop/setprop for widget callbacks.
+
+2006-04-17  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/CodeThing.java: Fixed up printing of CodeThings
+	and GroupThings.
+
+	* core/org/hecl/Stanza.java: Fixed up printing of CodeThings and
+	GroupThings.
+
+	* build.xml: Build JarHack.jar in jars/, don't delete jars/
+	directory on ant clean, so as to preserve files.
+
+	* build.xml: Copy .jad as well as .jar to the jars/ directory.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Build HeclBuilder
+	with both .jars.  Added code to enable the selection of which MIDP
+	jar (maybe it would be best to say CLDC?) to use when building the
+	target application.
+
+2006-04-15  David N. Welton  <davidw@dedasys.com>
+
+	* javadocs fixups.  Now we generate them from the preprocessed
+	version of Hecl, so as to avoid making a mess.
+
+	* commandline/Hecl.java: On exception code PARSE_ERROR, assume
+	that the {} or [] are not balanced, and wait till the command is
+	complete.
+
+	* core/org/hecl/HeclException.java: Use strings for errors.
+
+	* General cleanup, killed trailing whitespace, added javadoc.
+	There should be no functional changes!
+
+	* build.xml: Preserve needs to specify methods explicitly:
+	<preserve class="Hecl { &lt;methods&gt;; }" />
+
+2006-04-09  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/HashThing.java: Reverted HashThing changes.
+	Changed hash table size calculations to save memory.
+
+	* core/org/hecl/ListThing.java: Restored older 'destructive'
+	version for the time being.
+
+2006-04-05  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: If parsing ends in the middle of a
+	block or command, throw an exception.
+
+	* core/org/hecl/HeclException.java: Print the numerical
+	representation of the errorcode if it's not one of the build in
+	codes.
+
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/Parse.java: New isXDigit, extended set of
+	characters allows in variable names (:-.).
+
+2006-04-03  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/Parse.java: New isXDigit, extended set of
+	characters allows in variable names (:-.).
+
+2006-04-01  David N. Welton  <davidw@dedasys.com>
+
+	* INSTALL: Updated.
+
+	* build.xml: Added proguard.jar to repository, and a line in
+	build.xml specifying where proguard is located.  There may be a
+	better way to do this.  Added a property to control obfuscation.
+	Sometimes it's useful to turn this off so as to have a look at the
+	resulting .jar produced.
+
+2006-03-31  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added a bit of logic in the build system to fail
+	gracefully if the WTK isn't present, and all the user is trying to
+	do is run packageCommandline (j2se).
+
+2006-03-31  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com.de>
+
+	* build.xml: Put final result underneath the 'jars' subdirectory.
+	Added some more comments, highlighted customizable settings.
+
+	* core/org/hecl/MathCmds.java: Disabled java1.5 function by
+	default, see build.xml about how to enable them.
+
+2006-03-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/MathCmds.java: Commented out 1.5-only commands
+	until I can find a way to make Antenna do it for me.
+
+2006-03-30  Wolfgang S. Kechel   <wolfgang.kechel@data2c.com>
+
+	* tests/hash.hcl: Modified hashtable test to check behavior of
+	join with hashtable as argument. The former test check the printed
+	representation.
+
+	* build.xml: Modified build process, added more properties,
+	simplified jar file generation. j2me versions robust now, applet
+	target should be checked by somebody else.
+	Bumped midlet version number to 1.1.
+
+	* core/org/hecl/Interp.java: setResult(boolean) now uses
+	well-known static IntThings to create the result.
+
+	* core/org/hecl/HashCmds.java (http): Added new commands
+	hkeys, hclear, hremove. Simplified code.
+
+	* core/org/hecl/Ensemble.java: Added newline at end of file to
+	avoid complaints of scn/diff.
+
+	* core/org/hecl/InterpCmds.java:
+	* core/org/hecl/IntegralThing.java:
+	* core/org/hecl/ControlCmds.java:
+	* core/org/hecl/ListCmds.java:
+	* core/org/hecl/NumberThing.java:
+	* core/org/hecl/StringCmds.java: Beautification.
+
+	* core/org/hecl/HashThing.java: Experimental new representation as
+	string. Properly working converion to list, passes tests.
+
+	* core/org/hecl/ListThing.java: Experimental new implementation of get.
+
+	* core/org/hecl/MathCmds.java: Enhancements, get rid of some
+	unnecessary classes.
+
+	* core/org/hecl/ControlCmds.java (http): Made constructor protected.
+
+2006-03-27  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Get the Applet build process working again.
+
+	* applet/org/hecl/applet/HeclApplet.java: Cut down Applet so that
+	it just displays the script's results.  Input is handled via a
+	form + Javascript.
+
+	* HTML/applet.html: Updated applet HTML so that we only use the
+	applet itself for the script evaluation.
+
+2006-03-26  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: In the final/ directory, http and rms shouldn't go
+	into separate subdirectories, or else they are included as
+	http/org/hecl/http/ in the .jar, which breaks things. I also
+	turned off obfuscation, and turned on preverification (which now
+	works, with the files in the proper location).
+
+2006-03-25  David N. Welton  <davidw@dedasys.com>
+
+	* build-tools/antenna-bin-0.9.13.jar: Added a copy of antenna to
+	make building Hecl work out of the box.
+
+	* core/org/hecl/MathCmds.java: Commented out some 1.5 specific
+	commands.  Perhaps it's possible to use Antenna to deal with
+	them...
+
+	* *: Big code dump from Wolfgang.  Salient points include: use of
+	Antenna for compilation.  Extended numeric system that is
+	conditionally compiled instead of being present in different
+	classes.  Operator class is used as an abstract superclass in
+	order to provide functionality to check argument numbers.
+
+2006-03-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added 'classof' introspection
+	command, suggested by Wolfgang Kechel.
+
+2006-03-13  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Moved 'ne' and 'eq' here, from
+	MathCmds.java.
+
+2006-03-06  David N. Welton  <davidw@dedasys.com>
+
+	* jarhack/jarhack/JarHack.java: Improved command line
+	functionality - replaced String.split call with our own function
+	so as to be compatible with older versions of GCJ that I still
+	need to use.
+
+2006-03-04  David N. Welton  <davidw@dedasys.com>
+
+	* float/org/hecl/fp/FloatCmds.java: Brought the floating point
+	commands up to date with a Facade command interface.
+
+	* j2me/GUI.java: Use Facade style commands.  Renamed GUICmds to
+	GUI.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmds.java: Redid RecordStore
+	using Facade commands.
+
+	* files/org/hecl/files/HeclFile.java: Reworked the files subsystem
+	to use the new Facade style command groups.  Space savings isn't
+	really important here, because it's likely to be used on J2SE
+	systems, but I went ahead and did it anyway.
+
+2006-03-03  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Use new Facade style command groups
+	where appropriate.
+
+	* ControlCmdFacade.java, InterpCmdFacade.java, MathCmdFacade.java,
+	HashCmdFacade.java, ListCmdFacade.java, StringCmdFacade.java: Add
+	new 'facade' style commands.
+
+	* ControlCmds.java, InterpCmds.java, MathCmds.java, HashCmds.java,
+	ListCmds.java, StringCmds.java: Added new command collections.
+
+2006-03-01  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Delete preverified directory during J2ME clean.
+
+2006-02-16  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Hacky 'touch' makes sure that j2se files are always
+	compiled for j2se version of Hecl.
+
+	* core/org/hecl/Stanza.java: Removed some extraneous code when
+	catching exceptions.
+
+2006-02-04  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Added auxdata Hashtable to attach
+	random data to an Interp.
+
+2006-02-02  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: added setResult methods for boolean,
+	int, and String types - changed various files accordingly.
+
+	* core/org/hecl/Interp.java: Removed some unneeded variables,
+	thanks to Wolfgang for catching this.
+
+	* core/org/hecl/CodeThing.java: addStanza now adds a stanza with a
+	null command so as not to prematurely assign a command.  This was
+	causing problems in highly dynamic code.
+
+2006-02-01  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ProcCmd.java: Added "rename" command.
+
+	* core/org/hecl/Interp.java: Added method to rename commands.
+
+2006-01-31  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added unset snippet in the docs.
+
+	* tests/set.hcl: Added unset test.
+
+	* core/org/hecl/SetCmd.java: Added "unset" command.
+
+	* core/org/hecl/Interp.java: Added unSetVar method.
+
+2006-01-21  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java, commandline/Hecl.java,
+	commandline/StandaloneHecl.java, core/org/hecl/CatchCmd.java,
+	core/org/hecl/CodeThing.java, core/org/hecl/EvalCmd.java,
+	core/org/hecl/FilterCmd.java, core/org/hecl/ForCmd.java,
+	core/org/hecl/ForeachCmd.java, core/org/hecl/IfCmd.java,
+	core/org/hecl/Interp.java, core/org/hecl/Proc.java,
+	core/org/hecl/TimeCmd.java, core/org/hecl/UpCmd.java,
+	core/org/hecl/WhileCmd.java, files/org/hecl/files/HeclFile.java,
+	j2me/GUICmds.java: Use interp.eval instead of Eval.eval.
+
+2006-01-15  David N. Welton  <davidw@dedasys.com>
+
+	* tests/math.hcl: Added tests for the subtraction code in
+	BasicMathCmd.
+
+	* BasicMathCmd.java: (both versions) - added code from Wolfgang to
+	make the - command work with just one argument.
+
+2006-01-12  David N. Welton  <davidw@dedasys.com>
+
+	* float/org/hecl/BasicMathCmd.java: Throw the exceptions, adjusted
+	numbers of required arguments.
+
+	* core/org/hecl/ProcCmd.java: Throw an exception for the wrong
+	number of arguments.
+
+	* core/org/hecl/BasicMathCmd.java:
+	HeclException.createWrongNumArgsException needs to be thrown.
+
+2006-01-11  David N. Welton  <davidw@dedasys.com>
+
+	* tests/proc.hcl: Test to make sure the fix to Stanza.java below
+	works.
+
+	* core/org/hecl/Stanza.java: Fixed bug caught by Wolfgang Kechel.
+	If a stanza's argv[0] is something that gets substituted, it
+	shouldn't be saved, so we don't.
+
+2006-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Properties.java: Added two functions, delProp and
+	getProps for Wolfgang Kechel's new Hecl J2ME UI.
+
+2006-01-08  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: ChoiceGroups and Listboxes now operate with a
+	list of indices for elements that are on or off.  For instance,
+	setprop &choicegroup {1 5} turns on elements 1 and 5 (if the
+	ChoiceGroup is not exclusive).
+
+	* float/org/hecl/BasicMathCmd.java: Added multiple arguments to
+	math commands.
+
+2006-01-07  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/BasicMathCmd.java: Added Wolfgang Kechel's changes
+	to allow more than two arguments to all math commands.
+
+2006-01-06  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added lcdui commands.
+
+	* j2me/examples/form.hcl: Added form example, with dynamically
+	created elements.
+
+2006-01-05  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/examples/textbox.hcl: Added textbox example
+
+	* j2me/examples/recordstore.hcl: Added recordstore example script.
+
+	* j2me/examples/listbox.hcl: Added listbox example script.
+
+	* j2me/examples/choicegroup.hcl: Added choicegroup example script.
+
+	* j2me/examples/gauge.hcl: Added gauge example script.
+
+	* j2me/examples/datefield.hcl: Added datefield example script.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Use user's home
+	directory as initial directory for output location.
+
+	* build.xml: Make sure to clean up everything with 'ant clean'.
+
+	* docs/hecl.css: Centered the screenshots.
+
+	* docs/hecl.xml: Discuss use of HeclBuilder.
+
+	* HeclBuilder.jar: mini-IDE that can be used to create Hecl J2ME
+	applications.
+
+	* build.xml: support for building HeclBuilder.
+
+2006-01-04  David N. Welton  <davidw@dedasys.com>
+
+	* HeclBuilder/heclbuilder/HeclEditor.java: Rudimentary file
+	viewer/editor.  You should really just use something with a decent
+	Tcl editing mode for the time being.
+
+	* HeclBuilder/heclbuilder/HeclBuilderGui.java: Added mini-IDE to
+	be used for the creation of J2ME apps.
+
+2006-01-03  David N. Welton  <davidw@dedasys.com>
+
+	* jarhack/jarhack/JarHack.java: This code takes a .jar file and
+	transforms it into a new .jar file with a modified MANIFEST.MF
+	file, in order to be able to put multiple Hecl applications on a
+	phone without recompiling them.
+
+	* build.xml: Added instructions to build JarHack.
+
+2005-12-26  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Added some code from Wolfgang
+	S. Kechel <wolfgang.kechel@data2c.com> that improves the parser,
+	allowing it to handle more punctuation.
+
+2005-11-30  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added the necessary build instructions for record
+	stores.
+
+	* j2me/Hecl.java: Added recordstore module.
+
+	* rms/org/hecl/rms/HeclRecordStoreCmd.java: Implemented three very
+	simply recordstore commands: rs_list, which lists all the
+	recordstores available, rs_get, which fetches a names recordstore
+	as a Thing, and rs_put, which puts a Thing into a named
+	RecordStore.
+
+	* rms/org/hecl/rms/RMSModule.java: Module for RecordStore.
+
+2005-11-28  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added a few things to build http_micro cleanly into
+	the j2me version.
+
+2005-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Thanks to a suggestion by Kevin Kenny, we
+	simply divide by 1000 to get a number we can use when we get a
+	"datefield"'s date, and then multiply by 1000 when we set.  We
+	lose out on some granularity, but frankly I think we can live with
+	it.  The alternative might be to implement the Double stuff in the
+	core, with the understanding that it uses longs by default and
+	real doubles only in the j2se version.  That sounds confusing and
+	is likely to be confusing.
+
+2005-11-13  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added a getTextType method in order to be
+	able to do 'type numeric' for textboxes and texfields.
+
+2005-11-07  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/Hecl.java: Build the http module in.
+
+	* j2me/GUICmds.java: Now implements ItemStateListener so that we
+	can listen for changes to form items.  Added 'datefield' command.
+	Run Commands in new threads.  I think this should eventually be
+	moved to one extra thread with a queue, but this'll do for now.
+
+	* core/org/hecl/Properties.java: Added existsProp method to
+	determine if a property exists or not.
+
+2005-11-05  David N. Welton  <davidw@dedasys.com>
+
+	* Various little fixes to eliminate compile time warnings.
+
+	* build.xml: Add preverify step so that we can compile with older
+	javac's.
+
+2005-11-02  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added 'alert' command. Added 'changegroup'
+	command.
+	(get/setindex): Make these commands work on Choice's instead of
+	Lists or ChoiceGroups in particular.
+	(listbox): This command now accepts a 'list' argument like
+	choicegroup.  This ends up making code more compact and immediate.
+	Added 'gauge' command.
+
+2005-10-21  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: Squeezed 'script' into 900 characters, the max
+	size for TextBox's on my Nokia phone.
+
+	* j2me/GUICmds.java: Catch errors generated when putting too much
+	text into TextBoxes.
+
+	* j2me/Hecl.java: Added "splash" screen.
+
+	* j2me/GUICmds.java: Major changes: Use a Properties class instead
+	of our own hashtable for properties.  Add 'List' widgets - you can
+	get the list of selected elements via the selected property.
+	Added setindex and getindex commands to fetch or change the item
+	or string (where possible) at a given index in a form or list.
+	Added 'noscreen' command which evaluates some code without a
+	screen present.  This is necessary for the getindex and setindex
+	commands, because most other commands use the currently set
+	screen.
+
+	* core/org/hecl/CodeThing.java: Change lists into codethings
+	without an intermediate string step.
+
+2005-10-20  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/FilterCmd.java: Make sure to copy elements so as
+	to not modify them.
+
+	* core/org/hecl/ForeachCmd.java: Make sure to copy elements so as
+	not to modify them.
+
+2005-10-19  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/HashThing.java: If a HashThing is slated for
+	copying, its elements should be as well.
+
+	* core/org/hecl/ListThing.java: If a ListThing is slated for
+	copying, its elements should be as well.
+
+	* core/org/hecl/ParseList.java: Add escape ("\\") parsing to
+	ParseList.java.
+
+	* core/org/hecl/Stanza.java: Copy on write for GroupThings as
+	well.
+
+2005-10-18  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/EqualsCmd.java: Use IntThing.compare here too.
+
+	* core/org/hecl/IntThing.java: With an eye to deprecating
+	Compare.java, moved compareInt to compare in IntThing.
+
+	* float/org/hecl/EqualsCmd.java: Created version of this file that
+	is FP enabled.
+
+	* commandline/StandaloneHecl.java: Use the FP stuff in the
+	Standalone jar.
+
+	* build.xml: Fixed a few things for the Standalone build.
+
+2005-10-17  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Compare.java: Added a compareProc method that
+	takes an interp and a proc, and runs the proc with the two values
+	to perform the comparison.
+
+	* core/org/hecl/CodeThing.java: Changed addStanza just a bit.
+
+	* core/org/hecl/SortCmd.java: Added int, string and proc based
+	sort options.  Check for infinite loops before recursing.
+
+	* core/org/hecl/Parse.java: Let variable names contain numbers as
+	long as it's not the first character.
+
+	* j2me/GUICmds.java: Added a few more get/set prop option
+	implementations.  Don't try and modify the widget if it doesn't
+	exist!
+
+2005-10-15  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Make jdocs for all the packages.
+
+	* float/org/hecl/IntThing.java: This version of IntThing knows
+	about doubles, so that it can transform DoubleThings into
+	IntThings without going through the string representation.
+
+	* float/org/hecl/FloatCmd.java: Initial commit of commands that
+	make use of floating point numbers, for now, "round".
+
+	* float/org/hecl/BasicMathCmd.java: Double enabled version of
+	basic math commands.
+
+	* float/org/hecl/DoubleThing.java: DoubleThing type to handle
+	large and/or floating point numbers.  This resides in its own
+	directory so that it's possible to include it separately.
+
+2005-10-13  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java: Fixed up the applet
+	some... monospace font, execute the hecl code itself in a thread,
+	and a few other details.
+
+2005-10-12  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added and, not and or to the docs.
+
+	* j2me/GUICmds.java: Added J2ME-specific 'exit' command.
+
+	* docs/hecl.xml: Added some tutorial-like information on creating
+	Hecl J2ME applications.
+
+	* core/org/hecl/GlobalCmd.java: If the variable already exists and
+	it needs copying, do so, so as not to run into problems when
+	someone else sets it and the local and global versions get out of
+	sync.
+
+	* core/org/hecl/SubstThing.java: We check to see if the Thing in
+	question is slated for copying, and do so if it is.
+
+	* core/org/hecl/ExitCmd.java: Added "exit" command.
+
+	* build.xml: Added updatejad.hcl file to update the .jad file with
+	the correct file size.
+
+	* core/org/hecl/Interp.java, Stanza.java, Thing.java: Implemented
+	a sort of copy on write for Things, so that we don't change
+	"literals" (for example: set foo ""; append &foo "bar"; ), but
+	references still work.
+
+2005-10-11  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/GUICmds.java: Added default text for stringitems.
+
+	* core/org/hecl/LogicCmd.java: Added some basic logic commands,
+	'and', 'not' and 'or'.
+
+	* docs/hecl.xml: Added some new commands to the documentation.
+
+	* core/org/hecl/Thing.java: Make getStringRep do the same thing as
+	toString.  I think it may be possible to simply get rid of
+	getStringRep in favor of the more java-ish toString.
+
+2005-10-10  David N. Welton  <davidw@dedasys.com>
+
+	* files/org/hecl/files/HeclFile.java: Make the default file be "".
+
+2005-10-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Updated docs regarding Hecl/Java integration.
+
+	* build.xml: Fixed up J2ME build system.
+
+	* j2me/Makefile: Removed.
+
+2005-10-08  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl: New tests to check escape parsing.
+
+	* core/org/hecl/Parse.java: Parser fix: make sure that a \ that is
+	on its own (after a whitespace) still quotes the character after
+	it.  Added an escape parser so that it is possible to add unicode
+	sequences, newlines, and tabs.
+
+	* modules/org/hecl/modules/HeclModule.java: Perhaps we could
+	simply put this file elsewhere, because it seems a waste of
+	resources to just leave it empty here, all by its lonesome.
+
+	* http/org/hecl/http/HttpModule.java: Implement HeclModule.
+
+	* files/org/hecl/files/HeclFile.java: Added writeFile method to
+	dump entire file at once.
+
+	* core/org/hecl/Compare.java: When comparing the string
+	representation of two things, we don't want to use
+	StringThing.get(), because that transforms the object in question
+	into an actual string!
+
+	* commandline/Hecl.java: Module initialization can't be static
+	methods anymore.
+
+2005-10-07  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added modules, load classpaths.  A variety of
+	subsystems, such as compileFiles, now depend on modules, and this
+	is hopefully reflected throughout the build system.  Added a
+	'jfreechart' bit that's only really of use to me right now.
+	packageCommandline no longer includes http_standard by default,
+	since it's now possible to load the code dynamically!
+
+	* files/org/hecl/files/ReadCmd.java: Added a 'readall' command
+	that slurps in an entire file.
+
+	* files/org/hecl/files/WriteCmd.java: Added a 'write' command.
+
+	* load/org/hecl/load/HeclLoad.java: The module portion of the load
+	system.
+
+	* load/org/hecl/load/LoadCmd.java: Implement the 'load' command.
+	For the moment, we use java.net.URLClassLoader to do the dirty
+	work, as this keeps Hecl smaller and lets us use existing code.
+
+2005-10-06  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/script.hcl: Broke script out into a separate file.
+
+	* j2me/Hecl.java: Use external resource file so that we can just
+	use jar to create new Hecl apps!
+
+2005-10-05  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Compare.java: Do non-destructive comparisons.
+
+2005-10-03  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Get rid of the pjava stuff.  We can add it back in
+	later if there are any modules that are specific to that platform.
+
+2005-10-02  David N. Welton  <davidw@dedasys.com>
+
+	* Updated j2me readme, added in some jdocs files that were
+	missing.
+
+	* j2me/GUICmds.java: New, updated commands that all use a list of
+	properties to govern their behavior: form, textbox, stringitem,
+	string, cmd, textfield, plus getprop, setprop and setcurrent.
+
+	* j2me/Hecl.java: Massive reworking based on new gui commands.
+	Hecl demo is now written in Hecl!
+
+2005-09-23  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl (parse-7): Add test for parsing change.
+
+	* core/org/hecl/Parse.java: the ';' character is ok immediately
+	after a right brace, too.
+
+2005-09-18  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/Hecl.java: Much more sophisticated demo with gui elements.
+
+	* j2me/GUICmds.java: Initial GUI commands.
+
+	* core/org/hecl/: Removed Module and Resource related files.
+
+	* pjava: Removed files here as the related functionality is now in
+	the files/ directory.
+
+	* core/org/hecl/IntrospectCmd.java: Removed 'modules' subcommand -
+	this will have to go elsewhere.
+
+	* core/org/hecl/Interp.java: Ripped out the module and resource
+	code.  The modules code can be readded in in the modules/
+	directory and the compiled in as desired, but it's better as
+	something external to the core for those who know exactly what
+	they want to compile in and prefer to keep things reduced to the
+	bare minimum.
+
+	* http_micro/org/hecl/http/HttpRequest.java: This is where the
+	j2me http request code resides.  It's compiled together with the
+	http/ code to produce the http library for j2me.
+
+	* files/org/hecl/files/HeclFile.java: Added a collection of file
+	commands - 'cd', 'filetolist', 'listtofile' and 'source'.
+
+	* build.xml: Added 'files' package, and split the http into
+	standard and j2me builds.
+
+	* tests/path.hcl: Added some tests for path commands.
+
+	* docs/hecl.xml: Added lrange command documentation.
+
+2005-09-17  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListCmd.java: Added lrange command.
+
+2005-08-24  David N. Welton  <davidw@dedasys.com>
+
+	* tests/deepcopy.hcl: Added tests to determine whether deep
+	copying is working or not.
+
+	* core/org/hecl/Stanza.java: Added deepcopy method.
+
+	* core/org/hecl/CodeThing.java: Added real deepcopy method.
+
+2005-08-16  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added '=', '!=' and 'ne' documentation.
+
+	* core/org/hecl/EqualsCmd.java: Added != and ne commands from
+	David Baker <david.baker@akain.com>.
+
+2005-08-13  David N. Welton  <davidw@dedasys.com>
+
+	* tests/global.hcl (twoglobals): Test for 'global' with multiple
+	variable names.
+
+	* core/org/hecl/GlobalCmd.java: The 'global' command now accepts
+	multiple variable names.
+
+	* tests/math.hcl: Test for '+' that accepts multiple arguments.
+
+	* core/org/hecl/BasicMathCmd.java: Now it's possible to add more
+	than one number: set six [+ 1 2 3].
+
+2005-08-07  David N. Welton  <davidw@dedasys.com>
+
+	* docs/jdocs/: Updated javadocs.
+
+	* build.xml: Added 'docs' build target.  Ant syntax is very, very
+	verbose.
+
+	* tests/sort.hcl: Add test for empty list.
+
+	* core/org/hecl/SortCmd.java: Test for 0 length lists.
+
+2005-06-11  David N. Welton  <davidw@dedasys.com>
+
+	* commandline/Hecl.java: Throw away empty strings, don't report
+	them back to the user.
+
+	* core/org/hecl/Compare.java: Make this class public.
+
+2005-06-07  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Stanza.java: Cancel out interp.result each time
+	through.
+
+	* tests/return.hcl (emptyreturn): Test for return values that
+	'stick around' longer than they are welcome to.
+
+2005-05-26  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ClassThing.java: Removed, for now.
+
+	* commandline/Hecl.java: Print interp.result for each command when
+	in interactive mode.
+
+2005-05-24  David N. Welton  <davidw@dedasys.com>
+
+	* tests/sort.hcl: Sorting numbers always does an integer sort now.
+
+	* http/org/hecl/http/HeclModule.java: Use Interp.commands
+	directly.
+
+	* core/org/hecl/Thing.java: Removed compare method in favore of
+	Compare class.  toString method no longer throws HeclException.
+
+	* core/org/hecl/Stanza.java: Automatically fall through in case
+	statement for small space savings.
+
+	* core/org/hecl/RealThing.java: getStringRep doesn't throw a
+	HeclException.
+
+	* core/org/hecl/ProcCmd.java: Reworked for small space savings,
+	and to utilize Interp.commands directly.
+
+	* core/org/hecl/Parse.java: Reworked things a bit to save some
+	space.
+
+	* core/org/hecl/ListThing.java: Removed IntThing shortcut.
+	Removed various HeclExceptions from functions to transform lists
+	to strings.
+
+	* core/org/hecl/IntrospectCmd.java: Use Interp.commands.put
+	directly instead of accessor functions.
+
+	* core/org/hecl/Interp.java: Use commands.put directly instead of
+	accessor functions.  Cut that extra bit of fat out.
+
+	* core/org/hecl/HeclException.java: Rejig things to save a few
+	bytes.
+
+	* core/org/hecl/HashThing.java: Don't throw exceptions from
+	getStringRep.
+
+	* core/org/hecl/GroupThing.java: Don't throw exceptions from
+	getStringRep.
+
+	* core/org/hecl/Compare.java: Lose some of the HeclExceptions.
+
+	* applet/org/hecl/applet/HeclApplet.java: Work with commands hash
+	table directly.
+
+2005-05-20  David N. Welton  <davidw@dedasys.com>
+
+	* tests/return.hcl (emptyreturn): Test for empty returns.
+
+	* core/org/hecl/ReturnCmd.java: Allow empty returns.
+
+	* core/org/hecl/Parse.java: Moved ParseState class to its own file
+	for space savings.
+
+	* core/org/hecl/CodeThing.java: Moved Stanza class to its own file
+	for space savings.
+
+	* docs/hecl.xml: Added short section on installation.
+
+	* build.xml: Added Main-Class entry to Jar file so that it can be
+	run from the command line.
+
+2005-03-23  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Make sure that {} blocks cannot be
+	followed by extra characters.
+
+2005-03-22  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Added method to return list of
+	modules present.
+
+	* core/org/hecl/IntrospectCmd.java: Added a modules introspection
+	command.
+
+	* pjava/org/hecl/pjava/HeclModule.java: dos2unix line endings.
+
+	* core/org/hecl/Thing.java: Check for nesting depth in deepcopy,
+	so that circular list references don't bite us...
+
+	* core/org/hecl/Interp.java: MODULE_CLASS_PACKAGE now uses the
+	right name.
+
+	* build.xml: Added compile instructions for "pjava".
+
+2005-03-17  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Fixed 'search' description.
+
+2005-03-15  David N. Welton  <davidw@dedasys.com>
+
+	* build.xml: Added compileCommandline and packageCommandline
+	targets.  This last one creates a Hecl.jar that can be run with a
+	normal Java system.
+
+	* commandline/Hecl.java: Added a command line interpreter.  Some
+	features like determining whether a command is complete or not
+	would still be handy.
+
+2005-03-11  Wojciech Kocjan <wojciech@kocjan.org>
+
+	* Large rework of the code and build process.
+
+2005-03-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Change URL to hecl.org
+
+2005-03-08  David N. Welton  <davidw@dedasys.com>
+
+	* tests/parse.hcl: Added case that should generate an error.
+	Thanks to Wojciech for catching this one.
+
+2005-03-04  David N. Welton  <davidw@dedasys.com>
+
+	* tests/foreach.hcl: Test 0 length lists.
+
+	* com/dedasys/hecl/ForeachCmd.java: Return immediately on 0 length
+	lists.
+
+	* Makefile (sahecl): Depend on StandaloneHecl.java
+	($(srcdir)%.o): Use -Wall.
+
+	* StandaloneHecl.java: Fixed script.
+
+	* com/dedasys/hecl/Thing.java: Add code to check for nesting depth
+	so that circular references don't crash things.
+
+2005-03-03  David N. Welton  <davidw@dedasys.com>
+
+	* tests/circular.hcl: Added test for circular references.
+
+2005-02-03  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Oops - true->append for true command name.
+
+	* docs/jdocs/index.html: Added javadocs generated with gjdoc.
+
+	* docs/hecl.xml: Added sections on interfacing Java and Hecl.
+
+	* docs/hecl.css: Changed CSS for link look.
+
+2005-01-28  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/HashThing.java (HashThing): Added docstrings.
+	deepcopy now makes a deepcopy of individual elements.
+
+	* com/dedasys/hecl/GroupThing.java (GroupThing): Added docstrings.
+	deepcopy now makes a deepcopy of individual elements.
+
+	* com/dedasys/hecl/Compare.java (Compare): Added docstrings.
+
+	* com/dedasys/hecl/CodeThing.java (CodeThing): Added docstrings.
+
+	* Makefile: A bit of hacking to make the compile nicer.
+
+2005-01-27  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Removed ref and copy.
+
+	* tests/suite.hcl: Removed ref.hcl.
+
+	* com/dedasys/hecl/Thing.java: Moved PrintThing out into its own
+	class.
+
+	* com/dedasys/hecl/Parse.java: Don't use copy and ref commands -
+	use the SubstThing type instead.
+
+	* com/dedasys/hecl/Interp.java: Use cacheing of variables.  Idea
+	by Salvatore Sanfilippo.  Removed copy and ref commands.
+
+	* com/dedasys/hecl/GroupThing.java: deepcopy now returns the right
+	type.
+
+	* com/dedasys/hecl/CodeThing.java: Added doSubstSubst method.
+	Pre-allocate several arrays of Things for use in Stanza.run.
+	Would be nice to be cleverer about this.
+
+	* Makefile: Removed RefCmd and CopyCmd, moved PrintThing to SE
+	files to compile.
+
+2005-01-26  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added basic math commands.
+
+2005-01-22  David N. Welton  <davidw@dedasys.com>
+
+	* Hecl.java: Added call to initialize 'standard' commands.
+
+2005-01-21  David N. Welton  <davidw@dedasys.com>
+
+	* docs/chunk.xsl: Added for chunked (multiple file) output.
+
+	* docs/nochunk.xsl: Added for non-chunked (single file) output.
+
+	* docs/hecl.xml: Add id's to sections and commands in order to
+	make nice HTML file names.
+
+	* docs/hecl.css: Added CSS file.
+
+	* docs/hecl.html: Added generated HTML file.
+
+	* docs/hecl.xml: Added remaining commands.
+
+	* com/dedasys/hecl/TimeCmd.java: Tweaked time command to take a
+	number of iterations to perform.
+
+2005-01-20  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ReturnCmd.java: Throw RETURN exception.
+
+	* tests/return.hcl (returntest): Make return test a bit more
+	rigorous.
+
+	* com/dedasys/hecl/Proc.java: Catch RETURN exceptions in order to
+	make return command function properly.
+
+2005-01-16  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xsl: Initial xslt stylesheet.
+
+	* docs/hecl.xml: Added initial DocBook documentation.
+
+	* tests/search.hcl: Added "search" tests.
+
+	* com/dedasys/hecl/FilterCmd.java: Instead of providing optional
+	"break" to filter in order to provide searches where the first one
+	matches, we just have a separate search command.  This is simpler
+	and more direct.
+
+	* tests/foreach.hcl: Test continue in foreach.
+
+2005-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ForeachCmd.java: Added break/continue capacity
+	to foreach.
+
+2005-01-05  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/WhileCmd.java: Use static eval method.
+
+	* com/dedasys/hecl/UpCmd.java: Use static eval method.
+
+	* com/dedasys/hecl/TrueCmd.java: Use IntThing.
+
+	* com/dedasys/hecl/TimeCmd.java: Use static eval method, IntThing.
+
+	* com/dedasys/hecl/Thing.java: Delegate responsibility to other
+	classes, offloading functionality.
+
+	* com/dedasys/hecl/StringCmd.java: Use IntThing.
+
+	* com/dedasys/hecl/SourceHereCmd.java: Use static eval method.
+
+	* com/dedasys/hecl/SourceCmd.java: Use static eval method.
+
+	* com/dedasys/hecl/SortCmd.java: Use ListThing.
+
+	* com/dedasys/hecl/Proc.java: Use ListThing, static eval method.
+
+	* com/dedasys/hecl/Parse.java: Tweaked addCommand function.
+
+	* com/dedasys/hecl/ListCmd.java: Use ListThing.
+
+	* com/dedasys/hecl/JoinSplitCmd.java: Use ListThing.
+
+	* com/dedasys/hecl/IntrospectCmd.java: Use ListThing.
+
+	* com/dedasys/hecl/Interp.java: Added 'eq' command for string
+	equality.
+
+	* com/dedasys/hecl/IncrCmd.java: Use IntThings.
+
+	* com/dedasys/hecl/IfCmd.java: Use static eval method, static
+	isTrue method.
+
+	* com/dedasys/hecl/HeclException.java: Use ListThing.
+
+	* com/dedasys/hecl/HashCmd.java: Use HashThing.
+
+	* com/dedasys/hecl/ForeachCmd.java: Use ListThing, static eval
+	method.
+
+	* com/dedasys/hecl/ForCmd.java: Use static eval function, new
+	Thing API.
+
+2005-01-04  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/FilterCmd.java: Use static eval function,
+	ListThing.
+
+	* com/dedasys/hecl/EvalCmd.java: Use static eval method.
+
+	* com/dedasys/hecl/Eval.java: Use static eval method, simplify
+	code further.
+
+	* com/dedasys/hecl/EqualsCmd.java: Use IntThing.
+
+	* com/dedasys/hecl/CopyCmd.java: Use deepcopy instead of copy.
+
+	* com/dedasys/hecl/CodeThing.java: Major reworking, including
+	fixing up substitution code, and the consolidation of GroupThings
+	in the special case that they only contain one thing.  This
+	resulted in a major speedup.
+
+	* com/dedasys/hecl/CatchCmd.java: Use Eval.eval as static method,
+	IntThing.
+
+	* com/dedasys/hecl/BasicMathCmd.java: Use IntThing.
+
+	* com/dedasys/hecl/AppendCmd.java: Use StringThing.
+
+	* com/dedasys/hecl/StringThing.java: Added class for strings.
+
+	* com/dedasys/hecl/RealThing.java: Interface for various Hecl
+	types.
+
+	* com/dedasys/hecl/ListThing.java: Added class for lists.
+
+	* com/dedasys/hecl/HashThing.java: Added class for hash things.
+
+	* com/dedasys/hecl/GroupThing.java: Added class for groups of
+	things - meaning one word that contains several Things, like
+	foo${bar}baz.
+
+	* com/dedasys/hecl/IntThing.java: Added class for integer things.
+
+	* com/dedasys/hecl/Compare.java: Added class for comparing things.
+
+2004-12-17  David N. Welton  <davidw@dedasys.com>
+
+	* tests/filter.hcl: Added filter command tests.
+
+	* com/dedasys/hecl/FilterCmd.java: Added filter command.
+
+2004-12-05  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/CodeThing.java: Added more doc strings.
+
+	* tests/parse.hcl: New test file for odd parse tests.  Added test
+	to check for command names in variables, which currently doesn't
+	work.
+
+	* com/dedasys/hecl/Parse.java: Got rid of appendCurrent, as I do
+	not think it is really necessary.
+
+	* com/dedasys/hecl/Thing.java: Fixed up some of the documentation
+	strings.
+
+2004-11-22  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Parse.java: Added ; as command terminator.
+
+2004-11-20  David N. Welton  <davidw@dedasys.com>
+
+	* j2me/ : Added various other bits and pieces of the Hecl.jar
+	example for j2me devices, namely Hecl.jar, Hecl.jad, and a small
+	README.
+
+	* j2me/FormAppendCmd.java: Added this command, which is just used
+	by the MIDHecl example.
+
+	* j2me/MIDHecl.java: Added midlet example.
+
+2004-11-18  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Interp.java: Added stackPush method in order to
+	be able to implement upeval, but it's a temporary solution.  We
+	need to be able to pick specific levels to upeval at.
+
+	* com/dedasys/hecl/UpCmd.java: Added java to implement upeval
+	command.
+
+2004-11-14  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Thing.java: Get String out of StringBuffer,
+	because j2me can't append stringbuffers to stringbuffers.
+
+	* com/dedasys/hecl/ParseList.java: Use direct character comparison
+	(ch == ' ', etc...)  instead of isWhitespace to determine if the
+	character is white space or not.  Need this for J2ME.
+
+	* Makefile (hecl.jar): Added two inner class .class files
+	manually, as the filenames do not correspond to any .java files.
+
+	* com/dedasys/hecl/Load.java: Made 'Load' into an interface - use
+	'abstract' to make j2me happy.
+
+	* com/dedasys/hecl/Command.java: Added 'abstract' to interface -
+	apparently j2me stuff needs it.  Weird.
+
+	* com/dedasys/hecl/Thing.java: Use addElement instead of add.
+
+	* com/dedasys/hecl/Parse.java: Use addElement instead of add.
+
+	* com/dedasys/hecl/IntrospectCmd.java: Use addElement instead of add.
+
+2004-11-13  David N. Welton  <davidw@dedasys.com>
+
+	* Makefile: Significant cleanup that makes things much smoother.
+
+2004-11-09  David N. Welton  <davidw@dedasys.com>
+
+	* Added license text to files.
+
+	* com/dedasys/hecl/Interp.java: It is now necessary to pass an
+	instance of a Load derived object to the Interp being created, so
+	that it has at least one way of loading external resources.
+
+	* A few more documentation comments.
+
+2004-11-05  David N. Welton  <davidw@dedasys.com>
+
+	* tests/catch.hcl: We no longer require bad commands to report
+	their name.
+
+	* com/dedasys/hecl/Thing.java: Added CODE, GROUP and SUBST types.
+	I'm not entirely happy with CODE and SUBST, because things
+	external to 'Thing' need to know about them.  We may rejig this
+	soon.
+
+	* com/dedasys/hecl/Parse.java: New method to parse a string into a
+	CodeThing object.  Use GROUP type objects for aggregations of
+	text/code.
+
+	* com/dedasys/hecl/Eval.java: Most of the eval logic is now in
+	CodeThing.  Eval just takes care of doing the parse, if it's
+	needed.
+
+	* RLHecl.java: Added Readline lib support.  We need to make this
+	use Editline, I guess, because I don't want to GPL Hecl.
+
+	* com/dedasys/hecl/CodeThing.java: Added CodeThing class to take
+	care of 'code' type objects.
+
+2004-10-30  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ForCmd.java: Added "for" command code.
+
+	* tests/for.hcl: Added "for" test.
+
+2004-10-28  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/ListCmd.java: lindex now uses negative elements
+	to start from the end of the list.  Added lset and linsert
+	commands.
+
+	* com/dedasys/hecl/JoinSplitCmd.java: Break join and split out
+	into their own file.
+
+	* tests/append.hcl: append now uses references instead of the
+	variable name.
+
+	* com/dedasys/hecl/Thing.java: Removed appendString methods in
+	favor of a method that returns a stringbuffer that may be operated
+	on directly.
+
+	* com/dedasys/hecl/ParseList.java: Use toStringBuffer and the
+	resulting stringbuffer to append to the Thing that is the result
+	of parsing.
+
+	* com/dedasys/hecl/Parse.java: Use toStringBuffer and the
+	resulting stringbuffer to append to the Thing that is the result
+	of parsing.
+
+	* com/dedasys/hecl/IncrCmd.java: Use setInt API of Thing.
+
+	* com/dedasys/hecl/AppendCmd.java: Use the toStringBuffer API of
+	Thing.
+
+2004-10-25  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/Proc.java: procs now give errors with the wrong
+	number of arguments.
+
+2004-10-24  David N. Welton  <davidw@dedasys.com>
+
+	* com/dedasys/hecl/CatchCmd.java: No longer catch Exception's.
+	Eval should catch them and pass them on as HeclExceptions.
+
+2004-09-17  David N. Welton  <davidw@dedasys.com>
+
+	* HeclThing.java: Added toListString method in order to print
+	sublists separately.
+
+2004-09-15  David N. Welton  <davidw@dedasys.com>
+
+	* Hecl.java: Started changelog.
+
