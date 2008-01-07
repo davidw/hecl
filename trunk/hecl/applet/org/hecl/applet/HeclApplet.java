@@ -1,4 +1,4 @@
-/* Copyright 2005-2006 Wojciech Kocjan, David N. Welton
+/* Copyright 2005-2008 Wojciech Kocjan, David N. Welton
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import org.hecl.Interp;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import org.hecl.java.HeclJavaCmd;
 
 /**
  * <code>HeclApplet</code> implements an applet that lets you try out
@@ -99,8 +100,10 @@ public class HeclApplet extends Applet implements ActionListener {
 	output.setText("");
 	try {
 	    interp = new Interp();
+	    HeclJavaCmd.load(interp);
 	    interp.addCommand("puts", new PutsCommand());
 	} catch (HeclException error) {
+	    error.printStackTrace();
 	    output.setForeground(Color.red);
 	    output.setText("Error while initializing Hecl:\n"
 			   + error.getMessage());
@@ -156,6 +159,7 @@ public class HeclApplet extends Applet implements ActionListener {
 		interp.eval(code);
                 t1 = new Date().getTime();
             } catch (HeclException error) {
+		error.printStackTrace();
                 output.setForeground(Color.red);
                 output.setText("Error while running script:\n"
 			       + error.getMessage());
