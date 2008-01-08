@@ -1,3 +1,14 @@
+2008-01-08  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/HeclTask.java: Print stack trace even for 'normal'
+	exceptions.
+
+	* midp20gui/org/hecl/midp20/lcdui/ChoiceGroupCmd.java: Make sure
+	that the user doesn't try and create the ChoiceGroup as implicit.
+
+	* core/org/hecl/Properties.java: Make sure that properties are
+	even-numbered.
+
 2008-01-07  David N. Welton  <davidw@dedasys.com>
 
 	* applet/org/hecl/applet/HeclApplet.java: Add in Hecl java

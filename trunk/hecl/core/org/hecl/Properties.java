@@ -55,12 +55,20 @@ public class Properties {
 
     /**
      * The <code>setProps</code> method sets properties with their
-     * values from the command line argv.
+     * values from the command line argv.  The number of Things
+     * handled must be even.
      *
      * @param argv a <code>Thing[]</code> value
      * @param offset an <code>int</code> value
+     * @exception HeclException if an error occurs
      */
-    public void setProps(Thing []argv, int offset) {
+    public void setProps(Thing[] argv, int offset)
+	throws HeclException {
+
+	if ((argv.length - offset) % 2 != 0) {
+	    throw new HeclException("Properties must be name-value pairs");
+	}
+
 	for(int i = offset; i < argv.length; i +=2) {
 	    setProp(argv[i].toString(), argv[i+1]);
 	}

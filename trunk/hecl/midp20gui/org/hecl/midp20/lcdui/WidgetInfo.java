@@ -653,7 +653,7 @@ public class WidgetInfo {
 	/* ChoiceGroup defaults */
 	v = new Vector();
 	v.addElement(new WidgetProp(NLABEL,Thing.emptyThing()));
-	v.addElement(new WidgetProp(NTYPE,new Thing("exclusive"),true));
+	v.addElement(new WidgetProp(NTYPE,new Thing("exclusive"), true));
 	v.addElement(fitprop);
 	widgetprops.put(ChoiceGroup.class,v);
 

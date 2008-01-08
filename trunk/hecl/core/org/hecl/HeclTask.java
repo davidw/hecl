@@ -31,17 +31,16 @@ public class HeclTask {
 	try {
 	    //System.err.println("exec="+tscript.toString());
 	    this.result = ip.eval(tscript,0);
-	}
-	catch(Exception e) {
+	} catch(Exception e) {
 	    this.error = e;
 	    if(this.showbgerror) {
 		try {
+		    e.printStackTrace();
 		    Vector v = new Vector();
 		    v.addElement(new Thing("bgerror"));
 		    v.addElement(new Thing(e.toString()));
 		    ip.eval(ListThing.create(v),0);
-		}
-		catch(Exception e2) {
+		} catch(Exception e2) {
 		    System.err.println("Hecl severe bg error: "+e.getMessage());
 		    e2.printStackTrace();
 		}

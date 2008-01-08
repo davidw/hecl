@@ -51,6 +51,11 @@ public class ChoiceGroupCmd extends ItemCmd {
     public Thing cmdCode(Interp interp,Thing[] argv) throws HeclException {
 	Properties p = WidgetInfo.defaultProps(ChoiceGroup.class);
 	p.setProps(argv,1);
+
+	if (p.getProp(WidgetInfo.NTYPE).toString().equals("implicit")) {
+	    throw new HeclException("ChoiceGroup can't be 'implicit'");
+	}
+
 	ChoiceGroup cg = new ChoiceGroup(p.getProp(WidgetInfo.NLABEL).toString(),
 					 WidgetInfo.toChoiceType(p.getProp(WidgetInfo.NTYPE)));
 	p.delProp(WidgetInfo.NLABEL);
