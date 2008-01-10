@@ -1,5 +1,7 @@
 2008-01-10  David N. Welton  <davidw@dedasys.com>
 
+	* settings.xml: Set an android flag in the build symbols.
+
 	* tests/circular.hcl: Comment out test that crashes the test suite
 	for the time being.
 
