@@ -156,7 +156,7 @@ public class Reflector {
 	    msg += " " + e.getTargetException().toString();
 	    throw new HeclException(msg);
 	} catch (Exception e) {
-	    throw new HeclException("Reflector.evaluate error :" + e.toString());
+	    throw new HeclException("Reflector instantiate error :" + e.toString());
 	}
     }
 
@@ -280,7 +280,7 @@ public class Reflector {
 	    msg += " " + e.getTargetException().toString();
 	    throw new HeclException(msg);
 	} catch (Exception e) {
-	    throw new HeclException("Reflector.evaluate error :" + e.toString());
+	    throw new HeclException("Reflector evaluate error :" + e.toString());
 	}
     }
 
