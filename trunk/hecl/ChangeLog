@@ -1,5 +1,25 @@
 2008-01-10  David N. Welton  <davidw@dedasys.com>
 
+	* tests/circular.hcl: Comment out test that crashes the test suite
+	for the time being.
+
+	* android/res/raw/lib.hcl: Added newActivity proc to create new
+	SubHecl activities.
+
+	* android/res/raw/script.hcl: Added some things to deal with the
+	Script provider, and create new activities.
+
+	* android/src/org/hecl/android/Hecl.java: Made interp static so
+	that other things bundled with Hecl can access it, such as
+	SubHecl.  Make sure to set the correct hecl instance in AndroidCmd
+	on resume.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added intent
+	command.  Changed 'log' command to androidlog so as to not
+	conflict with the math operation log.
+
+	* android/AndroidManifest.xml: Added ScriptProvider.
+
 	* net/org/hecl/HttpCmd.java: We no longer need to pass the Interp
 	to HttpRequest.
 
