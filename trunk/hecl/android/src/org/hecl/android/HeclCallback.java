@@ -37,6 +37,13 @@ import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+/**
+ * The <code>HeclCallback</code> class is utilized as a way to create
+ * callbacks for various GUI things that require them.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class HeclCallback implements android.view.View.OnClickListener,
 			  android.widget.AdapterView.OnItemClickListener,
 			  android.widget.AdapterView.OnItemSelectedListener,

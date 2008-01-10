@@ -1,4 +1,4 @@
-/* Copyright 2007 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2007-2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import java.util.Hashtable;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+
+import android.content.Intent;
 
 import android.database.Cursor;
 
@@ -45,8 +47,15 @@ import org.hecl.Thing;
 import org.hecl.java.HeclJavaCmd;
 import org.hecl.java.JavaCmd;
 
+/**
+ * The <code>AndroidCmd</code> class is where all the Android specific
+ * commands go.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class AndroidCmd extends Operator {
-    static protected Hecl hecl = null;
+    protected static Hecl hecl = null;
 
     public static final int ACTIVITY = 0;
     public static final int EXIT = 1;
@@ -57,7 +66,6 @@ public class AndroidCmd extends Operator {
     public static final int NULLCMD = 5;
     public static final int MENUSETUP = 6;
     public static final int MENUCALLBACK = 7;
-
 
     public static final int PROVIDERQUERY = 8;
 
@@ -76,6 +84,16 @@ public class AndroidCmd extends Operator {
 	NotificationManager nm = (NotificationManager)hecl.getSystemService(Activity.NOTIFICATION_SERVICE);
 	nm.notifyWithText(1, msg, NotificationManager.LENGTH_LONG, null);
 	hecl.showAlert("Hecl Alert", msg, "dismiss", false);
+    }
+
+    /**
+     * The <code>setCurrentHecl</code> method makes AndroidCmd contain
+     * the correct Hecl class to point at.  This is used for SubHecls.
+     *
+     * @param h a <code>Hecl</code> value
+     */
+    public static void setCurrentHecl(Hecl h) {
+	hecl = h;
     }
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -124,6 +142,7 @@ public class AndroidCmd extends Operator {
 		    ContentURI curi = new ContentURI(argv[1].toString());
 		    cur = hecl.managedQuery(curi, null, null, null);
 		} catch (Exception e) {
+		    Hecl.logStacktrace(e);
 		    throw new HeclException(argv[0].toString() + " error: " + e.toString());
 		}
 		return ObjectThing.create(cur);
@@ -167,11 +186,12 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("reslookup", new AndroidCmd(RESLOOKUP,1,1));
 	    cmdtable.put("alert", new AndroidCmd(ALERT,1,1));
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
-	    cmdtable.put("log", new AndroidCmd(LOG,1,1));
+	    cmdtable.put("androidlog", new AndroidCmd(LOG,1,1));
 
 	    cmdtable.put("query", new AndroidCmd(PROVIDERQUERY,1,1));
 
 	    cmdtable.put("null", new AndroidCmd(NULLCMD,0,0));
+
 	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
 	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
 
@@ -196,6 +216,8 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
 	JavaCmd.load(ip, "android.app.TimePickerDialog", "timedialog");
 
+	JavaCmd.load(ip, "android.content.Intent", "intent");
+
 	JavaCmd.load(ip, "android.database.Cursor", "cursor");
 
 	JavaCmd.load(ip, "android.view.Menu", "menu");
@@ -205,8 +227,10 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.webkit.WebView", "webview");
 
 	JavaCmd.load(ip, "android.widget.AdapterView", "adapterview");
+
 	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
+	JavaCmd.load(ip, "android.widget.AutoCompleteTextView", "autocompletetext");
 	JavaCmd.load(ip, "android.widget.Button", "button");
 	JavaCmd.load(ip, "android.widget.CheckBox", "checkbox");
 	JavaCmd.load(ip, "android.widget.DatePicker", "datepicker");
@@ -228,6 +252,7 @@ public class AndroidCmd extends Operator {
 
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
 	JavaCmd.load(ip, "org.hecl.android.Hecl", "hecl");
+	JavaCmd.load(ip, "org.hecl.android.SubHecl", "subhecl");
 
 	HeclCallback.interp = ip;
     }

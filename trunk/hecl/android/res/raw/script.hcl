@@ -233,10 +233,6 @@ proc Spinner {} {
     set layout [linearlayout -new $context]
     $layout setorientation VERTICAL
 
-    # For the moment, spinners and listviews require this rather ugly
-    # arrayadapter stuff.  We're working on something better.
-
-
     set spinner [basicspinner $context [list "Wheel" "Of" "Fortune!"] \
 		     -layoutparams $layoutparams]
     $layout addview $spinner
@@ -287,7 +283,13 @@ proc HeclEditor {} {
 }
 AddOne 41}
 
-    set editor [edittext -new $context -text $script -layoutparams $layoutparams]
+    set aa [arrayadapter -new \
+		[list $context \
+		     [reslookup android.R.layout.simple_list_item_1] \
+		     [intro commands]]]
+
+    set editor [autocompletetext -new $context -text $script -layoutparams $layoutparams]
+    $editor setadapter $aa
     $layout addview $editor
 
     set eval [button -new $context -text "Eval" -layoutparams $layoutparams]
@@ -338,10 +340,14 @@ proc Contacts {} {
     heclcmd setcontentview $layout
 }
 
+# TaskList --
+#
+#	Display a list of taks, and let the user switch between them.
+
 proc TaskList {} {
     global context
 
-    set procname Contacts
+    set procname TaskList
     global context
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -355,15 +361,14 @@ proc TaskList {} {
     java {android.app.IActivityManager$TaskInfo} taskinfo
     java android.content.ComponentName componentname
 
+    # Utilized to contain the result of gettasks
     java java.util.List javalist
     set am [activitymanagernative getdefault]
     set tasks [$am gettasks 10 0 [null]]
     set len [$tasks size]
     set tasklist [list]
     for {set i 0} {< $i $len} {incr $i} {
-	set taskinfo [$tasks get $i]
-	set baseactivity [$taskinfo -field baseactivity]
-	set class [$baseactivity getclass]
+	set baseactivity [[$tasks get $i] -field baseactivity]
 	lappend $tasklist "Task: [$baseactivity getpackagename]"
     }
 
@@ -384,6 +389,81 @@ proc SelectTask {parent view position id} {
     [activitymanagernative getdefault] movetasktofront $position
 }
 
+
+# SelectScripts --
+#
+#	Display the phone's contact list.
+
+proc SelectScripts {} {
+    global context
+
+    set procname SelectScripts
+    global context
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context -layoutparams $layoutparams]
+    $layout setorientation VERTICAL
+
+    set cursor [query content://org.hecl.android.Scripts/scripts]
+
+    $layout addview [textview -new $context \
+			 -layoutparams $layoutparams \
+			 -text "Available scripts:"]
+
+    set scriptlist [list]
+    while { $cursor next } {
+	lappend $scriptlist [$cursor getstring 1]
+    }
+
+    set lview [basiclist $context $scriptlist -layoutparams $layoutparams]
+    $layout addview $lview
+    $lview requestfocus
+
+#     java {android.app.ApplicationContext$ApplicationContentResolver} appcontresolv
+#     java android.content.ContentResolver contentresolver
+#     java android.net.ContentURI contenturi
+
+#     set curi [contenturi -new content://org.hecl.android.Scripts/scripts]
+#     set cr [[activity] getcontentresolver]
+
+#     set uri [$cr insert $curi [null]]
+
+#     set cursor [query "$uri"]
+
+#     $cursor first
+#     $cursor updatestring 1 "foobalah"
+#     $cursor updatestring 2 "puts dammit"
+
+#     $layout addview [textview -new $context \
+# 			 -layoutparams $layoutparams \
+# 			 -text "Column names: [$cursor getcolumnnames]"]
+
+#     $cursor commitupdates
+
+    heclcmd setcontentview $layout
+}
+
+proc Activity {} {
+    global context
+
+    set script {
+	set context [activity]
+	set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+	set layout [linearlayout -new $context -layoutparams $layoutparams]
+	$layout setorientation VERTICAL
+	$layout addview [textview -new $context \
+			     -layoutparams $layoutparams \
+			     -text "Hello World"]
+
+	$context setcontentview $layout
+	$context settitle "My new SubHecl!"
+    }
+
+    newActivity $context $script
+}
+
 # SelectDemo --
 #
 #	Select which demo to display.
@@ -392,6 +472,10 @@ proc SelectDemo {parent view position id} {
     set dest [$view gettext]
     if { eq $dest "Hecl Editor" } {
 	HeclEditor
+    } elseif {eq $dest "New Activity"} {
+	Activity
+    } elseif {eq $dest "Hecl Scripts"} {
+	SelectScripts
     } elseif { eq $dest "Contacts" } {
 	Contacts
     } elseif { eq $dest "Simple Widgets" } {
@@ -453,11 +537,11 @@ proc main {} {
 
     $layout addview $tv
 
-    set lview [basiclist $context [list "Hecl Editor" "Contacts" "Simple Widgets" "Web View" \
-				    "Date Picker" "Time Picker" \
-				    "Progress Dialog" "Spinner" \
-				    "Radio Buttons" "CheckBoxes" "Task List"] \
-	       -layoutparams $layoutparams]
+    set lview [basiclist $context [list "Hecl Editor" "New Activity" "Hecl Scripts" "Contacts" \
+				       "Simple Widgets" "Web View" "Date Picker" \
+				       "Time Picker" "Progress Dialog" "Spinner" \
+				       "Radio Buttons" "CheckBoxes" "Task List"] \
+		   -layoutparams $layoutparams]
 
     $lview requestfocus
     $layout addview $lview

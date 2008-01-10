@@ -1,4 +1,4 @@
-/* Copyright 2007 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2007-2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
+
 import android.os.Bundle;
 
 import android.util.Log;
@@ -41,20 +42,50 @@ import org.hecl.Thing;
 
 import org.hecl.net.HttpCmd;
 
+/**
+ * The <code>Hecl</code> class is the main entry point into Hecl
+ * applications on Android.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class Hecl extends Activity
 {
-    private Interp interp;
+    /**
+     * The <code>interp</code> variable is static in order to be
+     * available to SubHecl activities.
+     *
+     */
+    protected static Interp interp;
     private Thing menuCreateCode;
     private Thing menuItemSelected;
 
-    public Thing menuvar;
-    public Thing menucode;
 
-    public Thing menucallbackvar;
-    public Thing menucallbackcode;
+    /* Public for the time being.  These are accessed from
+     * AndroidCmd. */
+    public Thing menuvar = null;
+    public Thing menucode = null;
 
-    /* Do something with error messages.  */
-    private void errmsg(String msg) {
+    public Thing menucallbackvar = null;
+    public Thing menucallbackcode = null;
+
+    private static Thing mailBox = null;
+
+    public void setMailBox(Thing m) {
+	mailBox = m;
+    }
+
+    public Thing getMailBox() {
+	return mailBox;
+    }
+
+    /**
+     * The <code>errmsg</code> method displays and logs an error
+     * message.
+     *
+     * @param msg a <code>String</code> value
+     */
+    protected void errmsg(String msg) {
 	Log.v("hecl", msg);
 	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 	nm.notifyWithText(1, msg,
@@ -62,6 +93,7 @@ public class Hecl extends Activity
 	showAlert("Hecl Error", msg, "dismiss", false);
     }
 
+    /* Dump a stack trace to the log. */
     public static void logStacktrace(Exception e) {
 	Log.v("stacktrace", e.toString());
 	StackTraceElement elements[] = e.getStackTrace();
@@ -76,24 +108,65 @@ public class Hecl extends Activity
     {
         super.onCreate(heclApp);
 
- 	try {
-	    String script;
-	    interp = new Interp();
-	    AndroidCmd.load(interp, this);
-	    HttpCmd.load(interp);
-	    script = getResourceAsString(this.getClass(), R.raw.lib, "UTF-8");
-	    interp.eval(new Thing(script));
-	    script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
-	    interp.eval(new Thing(script));
-	} catch (Exception e) {
-	    logStacktrace(e);
-	    errmsg("Hecl Error: " + e.toString());
+	/* We don't want SubHecl to do this. */
+	if (this.getClass() == Hecl.class) {
+	    try {
+		String script;
+		interp = new Interp();
+		loadLibs(interp);
+		script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
+		interp.eval(new Thing(script));
+		HeclService.interp = interp;
+	    } catch (Exception e) {
+		logStacktrace(e);
+		errmsg("Hecl Error: " + e.toString());
+	    }
 	}
     }
 
+
+    /**
+     * The <code>loadLibs</code> method loads some classes, commands,
+     * and the lib.hcl file.
+     *
+     * @param interp an <code>Interp</code> value
+     * @exception Exception if an error occurs
+     */
+    protected void loadLibs(Interp interp) throws Exception {
+	AndroidCmd.load(interp, this);
+	HttpCmd.load(interp);
+	String script = getResourceAsString(this.getClass(), R.raw.lib, "UTF-8");
+	interp.eval(new Thing(script));
+    }
+
+    /**
+     * <code>onResume</code> is called both the first time the
+     * activity is run, as well as when the activity is reawakened.
+     *
+     */
+    @Override
+    protected void onResume() {
+	super.onResume();
+
+	/* Make sure everything's pointing at the right place. */
+	AndroidCmd.setCurrentHecl(this);
+     }
+
+    /**
+     * The <code>onCreateOptionsMenu</code> method is called when the
+     * user hits the phones 'menu' key.  It utilizes variables set by
+     * the menusetup command defined in AndroidCmd.
+     *
+     * @param menu a <code>Menu</code> value
+     * @return a <code>boolean</code> value
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+
+	if (menuvar == null || menucode == null) {
+	    return false;
+	}
 
 	try {
 	    interp.setVar(menuvar, ObjectThing.create(menu));
@@ -105,8 +178,20 @@ public class Hecl extends Activity
         return true;
     }
 
+    /**
+     * <code>onOptionsItemSelected</code> is called when the user
+     * selects a menu item.  The callbacks are set up via the
+     * menucallback command, defined in AndroidCmd.
+     *
+     * @param item a <code>Menu.Item</code> value
+     * @return a <code>boolean</code> value
+     */
     @Override
     public boolean onOptionsItemSelected(Menu.Item item) {
+
+	if (menucallbackvar == null || menucallbackcode == null) {
+	    return false;
+	}
 
 	try {
 	    interp.setVar(menucallbackvar, ObjectThing.create(item));
@@ -119,6 +204,17 @@ public class Hecl extends Activity
     }
 
 
+    /**
+     * The <code>getResourceAsString</code> method returns a String,
+     * given a Class, a resource id, and an encoding.  This is
+     * utilized to fetch Hecl files stored inside the .apk.
+     *
+     * @param cl a <code>Class</code> value
+     * @param resid an <code>int</code> value
+     * @param encoding a <code>String</code> value
+     * @return a <code>String</code> value
+     * @exception IOException if an error occurs
+     */
     private String getResourceAsString(Class cl, int resid, String encoding)
 	throws IOException {
 	byte[] buf = getResourceAsBytes(cl, resid);
@@ -152,7 +248,7 @@ public class Hecl extends Activity
 	return result;
     }
 
-    public InputStream getResourceAsStream(Class cl, int resid) {
+    private InputStream getResourceAsStream(Class cl, int resid) {
 	return getResources().openRawResource(resid);
     }
 

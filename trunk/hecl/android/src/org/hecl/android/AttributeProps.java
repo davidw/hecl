@@ -52,7 +52,9 @@ public class AttributeProps extends Properties implements AttributeSet {
 	Log.v("values", "are " + values);
     }
 
-    public void setProps(Thing []argv, int offset) {
+    public void setProps(Thing []argv, int offset) 
+	throws HeclException {
+
 	super.setProps(argv, offset);
 	update();
     }

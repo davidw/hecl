@@ -51,3 +51,16 @@ proc basiclist {context lst args} {
     $lview setadapter $aa
     return $lview
 }
+
+# newActivity --
+#
+#	Create a new activity from the old $context, and execute $code
+#	in it.
+
+proc newActivity {context code} {
+    set h [subhecl -new [list]]
+    set intent [intent -new [list]]
+    $intent setclass $context [$h getclass]
+    $h setmailbox $code
+    $context startActivity $intent
+}

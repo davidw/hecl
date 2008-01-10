@@ -102,7 +102,10 @@
     <wtkpreprocess srcdir="core"
       symbols="${android.defines}"
       destdir="${android.pre}/core"/>
-    <javac encoding="ascii" target="1.5" debug="true" extdirs=""
+    <javac encoding="ascii"
+      target="1.5"
+      debug="${hecldebug}"
+      extdirs=""
       srcdir="${android.pre}/core"
       destdir="${android.build}"
       bootclasspath="${android-jar}" />
@@ -113,6 +116,7 @@
     depends="compileAndroid,compileAndroidHttp,compileAndroidJava">
 
     <javac srcdir="android/src"
+      debug="${hecldebug}"
       destdir="${android.build}">
       <classpath refid="android.coreclasspath"/>
       <classpath refid="classpath"/>
