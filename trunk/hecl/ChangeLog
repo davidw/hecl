@@ -1,3 +1,14 @@
+2008-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpCmd.java: We no longer need to pass the Interp
+	to HttpRequest.
+
+	* net/org/hecl/HttpRequest.java: *For the moment*, don't do the
+	synchronized notify of the Interp object, as this conflicts with
+	the synchronized version of Interp's eval method.  As a
+	consequence, we also eliminate references to the object to
+	synchronize on.
+
 2008-01-08  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/HeclTask.java: Print stack trace even for 'normal'

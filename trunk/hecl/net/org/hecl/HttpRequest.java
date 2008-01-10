@@ -65,22 +65,19 @@ public class HttpRequest extends Thread {
     
 
     public HttpRequest(String url, QueryParam[] params,
-		       boolean validate, Hashtable headerfields,
-		       Object requestnotify) {
+		       boolean validate, Hashtable headerfields) {
 	qparams = params;
-	setup(url,validate,headerfields,requestnotify);
+	setup(url,validate,headerfields);
     }
     
 
     public HttpRequest(String url, String queryData,
-		       boolean validate, Hashtable headerfields,
-		       Object requestnotify) {
+		       boolean validate, Hashtable headerfields) {
 	qdata = queryData;
-	setup(url,validate,headerfields,requestnotify);
+	setup(url,validate,headerfields);
     }
 
-    private void setup(String url, boolean validate, Hashtable headerfields,
-		       Object requestnotify) {
+    private void setup(String url, boolean validate, Hashtable headerfields) {
 	urlstr = url;
 	if(headerfields != null) {
 	    Enumeration e = headerfields.keys();
@@ -107,7 +104,6 @@ public class HttpRequest extends Thread {
 //#endif
 		    ;
 	}
-	notifywhendone = requestnotify;
     }
     
     // Add a header field with key and value when sending a request
@@ -170,6 +166,7 @@ public class HttpRequest extends Thread {
 	    System.err.println("HttpRequest.preparation error");
 	    return;
 	}
+
 
 	try {
 	    if(DEBUGRC)
@@ -270,11 +267,6 @@ public class HttpRequest extends Thread {
 	    System.err.println(getBody());
 	if(co != null) {
 	    co.close();
-	}
-	if(notifywhendone != null) {
-	    synchronized(notifywhendone) {
-		notifywhendone.notify();
-	    }
 	}
 	// no longer needed
 	inData = null;
@@ -444,7 +436,6 @@ public class HttpRequest extends Thread {
     ;
     private int rc = -1;
     private short status = SETUP;
-    private Object notifywhendone = null;
     Exception error = null;
     private Hashtable requestFields = new Hashtable();
     private Hashtable responseFields = new Hashtable();

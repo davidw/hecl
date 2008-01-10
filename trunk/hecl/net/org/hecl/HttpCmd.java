@@ -82,10 +82,10 @@ public class HttpCmd extends org.hecl.Operator {
 		}
 	    }
 	    HttpRequest r = new HttpRequest(argv[1].toString(), qdata,
-					    validate, h, interp);
+					    validate, h);
 	    r.start();
 
-	    try {
+ 	    try {
 		Thread.sleep(1L);
 	    } catch(Exception e) {}
 
