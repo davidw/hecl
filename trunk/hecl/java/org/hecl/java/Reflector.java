@@ -43,38 +43,23 @@ import org.hecl.Thing;
 public class Reflector {
     private Class forclass;
     private Method[] methods;
-    private Hashtable methodnames;
+    private Hashtable methodnames = null;
     private Hashtable constnames;
     private Hashtable fieldnames;
 
     /**
      * Creates a new <code>Reflector</code> instance.
      *
-     * @param classname a <code>String</code> value describing the
-     * full name (including package) of a Java class.
+     * @param classname a <code>String</code> value describing the full name
+     * (including package) of a Java class.
      * @exception HeclException if an error occurs
      */
     public Reflector(String classname) throws HeclException {
 	try {
-	    methodnames = new Hashtable();
+	    forclass = Class.forName(classname);
+	    methods = forclass.getMethods();
 	    constnames = new Hashtable();
 	    fieldnames = new Hashtable();
-
-	    forclass = Class.forName(classname);
-	    /* We could also do getDeclaredMethods and do the
-	     * "subclassing" some other way.  */
-	    methods = forclass.getMethods();
-	    for (Method m : methods) {
-		Vector<Method> v = null;
-		String name = m.getName().toLowerCase();
-		if (methodnames.containsKey(name)) {
-		    v = (Vector)methodnames.get(name);
-		} else {
-		    v = new Vector<Method>();
-		}
-		v.add(m);
-		methodnames.put(name, v);
-	    }
 
  	    for (Field f : forclass.getFields()) {
 		int mod = f.getModifiers();
@@ -102,6 +87,30 @@ public class Reflector {
 	    }
 	} catch (Exception e) {
 	    throw new HeclException(e.toString());
+	}
+    }
+
+    /**
+     * The <code>fillMethods</code> method is called in a "lazy" way
+     * to fill in the method hash table.  This makes startup time a
+     * lot faster - these are only filled in the first time they're
+     * needed.
+     *
+     */
+    private void fillMethods() {
+	methodnames = new Hashtable();
+	/* We could also do getDeclaredMethods and do the
+	 * "subclassing" some other way.  */
+	for (Method m : methods) {
+	    Vector<Method> v = null;
+	    String name = m.getName().toLowerCase();
+	    if (methodnames.containsKey(name)) {
+		v = (Vector)methodnames.get(name);
+	    } else {
+		v = new Vector<Method>();
+	    }
+	    v.add(m);
+	    methodnames.put(name, v);
 	}
     }
 
@@ -235,6 +244,11 @@ public class Reflector {
 
 	Object[] args = new Object[0];
 	Method selected = null;
+
+	if (methodnames == null) {
+	    fillMethods();
+	}
+
 	try {
 	    Vector<Method> v = ((Vector)methodnames.get(cmd.toLowerCase()));
 
@@ -446,6 +460,10 @@ public class Reflector {
     public Thing methods()
 	throws HeclException {
 	Vector retval = new Vector();
+
+	if (methodnames == null) {
+	    fillMethods();
+	}
 
 	for (Enumeration e = methodnames.keys(); e.hasMoreElements();) {
 	    Vector signature = new Vector();

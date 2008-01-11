@@ -1,5 +1,8 @@
 2008-01-11  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/Reflector.java: Don't load methodnames until
+	it's actually necessary.  This also speeds the load time.
+
 	* android/android.properties: Added properties file so that people
 	will have something to modify.
 
