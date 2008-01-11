@@ -1,5 +1,8 @@
 2008-01-11  David N. Welton  <davidw@dedasys.com>
 
+	* android/android.properties: Added properties file so that people
+	will have something to modify.
+
 	* android/res/raw/script.hcl: Added java integration commands as
 	needed.  This speeds the loading time, because the Hecl/Java
 	integrations are only done when they're needed.
