@@ -20,16 +20,19 @@ hello world
 4) Testing.  If you wish to test that your installation passes the
    test suite:
 
-   ./hecl tests/suite.hcl
+   java -jar jars/j2se/Hecl.jar tests/suite.hcl
 
    and, to get some performance numbers:
 
-   ./hecl tests/performance.hcl
-
-   or, using standard Java:
-
-   java -jar jars/j2se/Hecl.jar tests/suite.hcl
+   java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
 5) Java ME versions - see docs/j2me.html#javame_tutorial
+
+6) Android - to compile and install the Android example, do:
+
+   ant installPackage
+
+   You will need to set up android/android.properties to point the
+   right place, though.
 
 $Id$
