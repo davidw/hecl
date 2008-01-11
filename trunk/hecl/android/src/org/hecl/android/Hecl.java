@@ -69,14 +69,37 @@ public class Hecl extends Activity
     public Thing menucallbackvar = null;
     public Thing menucallbackcode = null;
 
+    /**
+     *  <code>mailBox</code> is used as a place to stash scripts being
+     *  passed to SubHecls.
+     *
+     */
     private static Thing mailBox = null;
 
-    public void setMailBox(Thing m) {
-	mailBox = m;
-    }
+    /**
+     * The <code>onCreate</code> is the application's entry point.
+     * Everything starts here.
+     *
+     * @param heclApp a <code>Bundle</code> value
+     */
+    @Override
+    public void onCreate(Bundle heclApp)
+    {
+        super.onCreate(heclApp);
 
-    public Thing getMailBox() {
-	return mailBox;
+	/* We don't want SubHecl to do this. */
+	if (this.getClass() == Hecl.class) {
+	    try {
+		String script;
+		interp = new Interp();
+		loadLibs(interp);
+		script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
+		interp.eval(new Thing(script));
+	    } catch (Exception e) {
+		logStacktrace(e);
+		errmsg("Hecl Error: " + e.toString());
+	    }
+	}
     }
 
     /**
@@ -93,34 +116,25 @@ public class Hecl extends Activity
 	showAlert("Hecl Error", msg, "dismiss", false);
     }
 
-    /* Dump a stack trace to the log. */
+    public void setMailBox(Thing m) {
+	mailBox = m;
+    }
+
+    public Thing getMailBox() {
+	return mailBox;
+    }
+
+    /**
+     * The <code>logStacktrace</code> method dumps an Exception's
+     * stack trace to the Android log.
+     *
+     * @param e an <code>Exception</code> value
+     */
     public static void logStacktrace(Exception e) {
 	Log.v("stacktrace", e.toString());
 	StackTraceElement elements[] = e.getStackTrace();
 	for (int i = 0; i < elements.length ; i ++) {
 	    Log.v("stacktrace", elements[i].toString());
-	}
-    }
-
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle heclApp)
-    {
-        super.onCreate(heclApp);
-
-	/* We don't want SubHecl to do this. */
-	if (this.getClass() == Hecl.class) {
-	    try {
-		String script;
-		interp = new Interp();
-		loadLibs(interp);
-		script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
-		interp.eval(new Thing(script));
-		HeclService.interp = interp;
-	    } catch (Exception e) {
-		logStacktrace(e);
-		errmsg("Hecl Error: " + e.toString());
-	    }
 	}
     }
 
@@ -250,6 +264,17 @@ public class Hecl extends Activity
 
     private InputStream getResourceAsStream(Class cl, int resid) {
 	return getResources().openRawResource(resid);
+    }
+
+    private static long elapsed = 0;
+    public static void logTime() {
+	long now = System.currentTimeMillis();
+	if (elapsed == 0) {
+	    Log.v("elapsed", "0");
+	} else {
+	    Log.v("elapsed", "" + (now - elapsed));
+	}
+	elapsed = now;
     }
 
 }

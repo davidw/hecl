@@ -1,3 +1,13 @@
+2008-01-11  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added java integration commands as
+	needed.  This speeds the loading time, because the Hecl/Java
+	integrations are only done when they're needed.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed a number
+	of commands, which can be loaded on an as-needed basis in order to
+	speed up loading time.
+
 2008-01-10  David N. Welton  <davidw@dedasys.com>
 
 	* settings.xml: Set an android flag in the build symbols.

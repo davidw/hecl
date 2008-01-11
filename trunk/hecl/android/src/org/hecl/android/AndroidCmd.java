@@ -212,10 +212,6 @@ public class AndroidCmd extends Operator {
 
 	JavaCmd.load(ip, "android.app.Activity", "androidactivity");
 
-	JavaCmd.load(ip, "android.app.DatePickerDialog", "datedialog");
-	JavaCmd.load(ip, "android.app.ProgressDialog", "progressdialog");
-	JavaCmd.load(ip, "android.app.TimePickerDialog", "timedialog");
-
 	JavaCmd.load(ip, "android.content.Intent", "intent");
 
 	JavaCmd.load(ip, "android.database.Cursor", "cursor");
@@ -224,17 +220,11 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");
 	JavaCmd.load(ip, "android.view.View", "view");
 
-	JavaCmd.load(ip, "android.webkit.WebView", "webview");
-
 	JavaCmd.load(ip, "android.widget.AdapterView", "adapterview");
 
-	JavaCmd.load(ip, "android.widget.AnalogClock", "analogclock");
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
-	JavaCmd.load(ip, "android.widget.AutoCompleteTextView", "autocompletetext");
 	JavaCmd.load(ip, "android.widget.Button", "button");
 	JavaCmd.load(ip, "android.widget.CheckBox", "checkbox");
-	JavaCmd.load(ip, "android.widget.DatePicker", "datepicker");
-	JavaCmd.load(ip, "android.widget.DigitalClock", "digitalclock");
 	JavaCmd.load(ip, "android.widget.EditText", "edittext");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
@@ -247,8 +237,6 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
 	JavaCmd.load(ip, "android.widget.TextView", "textview");
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
-
-	JavaCmd.load(ip, "com.google.android.maps.MapView", "mapview");
 
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
 	JavaCmd.load(ip, "org.hecl.android.Hecl", "hecl");

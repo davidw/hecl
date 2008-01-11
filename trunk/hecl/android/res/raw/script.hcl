@@ -24,6 +24,7 @@ proc SimpleWidgets {} {
     $swlayout setorientation VERTICAL
 
     $scroll addview $swlayout
+    heclcmd setcontentview $scroll
 
     $swlayout addview [textview -new $context \
 			   -text "This is a textview" \
@@ -36,10 +37,17 @@ proc SimpleWidgets {} {
 			   -text "This is editable text" \
 			   -layoutparams $layoutparams]
 
+    java "android.widget.DigitalClock" "digitalclock"
+
     $swlayout addview [digitalclock -new $context \
 			   -layoutparams $layoutparams]
 
-    heclcmd setcontentview $scroll
+    java android.widget.ImageButton imagebutton
+
+    set ib [imagebutton -new $context -layoutparams $layoutparams]
+    $swlayout addview $ib
+    $ib setImageResource [reslookup "R.drawable.buttonhecl"]
+
 }
 
 # WebView --
@@ -55,6 +63,8 @@ proc WebView {} {
 
     set layout [linearlayout -new $context -layoutparams $layoutparams]
     $layout setorientation VERTICAL
+
+    java "android.webkit.WebView" webview
 
     set wv [webview -new $context -layoutparams $layoutparams]
     $layout addview $wv
@@ -81,6 +91,8 @@ proc Callback {args} {
 proc DatePicker {} {
     global context
 
+    java "android.app.DatePickerDialog" datedialog
+
     set callback [callback -new [list [list Callback]]]
     set dp [datedialog -new [list $context $callback 2007 10 10 1]]
     $dp show
@@ -92,6 +104,8 @@ proc DatePicker {} {
 
 proc TimePicker {} {
     global context
+
+    java "android.app.TimePickerDialog" timedialog
 
     set callback [callback -new [list [list Callback]]]
     set tp [timedialog -new \
@@ -107,6 +121,9 @@ proc TimePicker {} {
 
 proc ProgressDialog {} {
     global context
+
+    java "android.app.ProgressDialog" progressdialog
+
     set pd [progressdialog show $context "Working..." \
 		"This is a progress \"bar\"" 0 0]
     updateProgress $pd 0
@@ -274,7 +291,8 @@ proc HeclEditor {} {
     set layout [linearlayout -new $context]
     $layout setorientation VERTICAL
 
-    $layout addview [textview -new $context -text "Hecl evaluator: enter code below and hit 'eval' to evaluate" \
+    $layout addview [textview -new $context \
+			 -text "Hecl evaluator: enter code below and hit 'eval' to evaluate" \
 			 -layoutparams $layoutparams]
 
     # The default script:
@@ -283,13 +301,7 @@ proc HeclEditor {} {
 }
 AddOne 41}
 
-    set aa [arrayadapter -new \
-		[list $context \
-		     [reslookup android.R.layout.simple_list_item_1] \
-		     [intro commands]]]
-
-    set editor [autocompletetext -new $context -text $script -layoutparams $layoutparams]
-    $editor setadapter $aa
+    set editor [edittext -new $context -text $script -layoutparams $layoutparams]
     $layout addview $editor
 
     set eval [button -new $context -text "Eval" -layoutparams $layoutparams]
@@ -420,29 +432,13 @@ proc SelectScripts {} {
     $layout addview $lview
     $lview requestfocus
 
-#     java {android.app.ApplicationContext$ApplicationContentResolver} appcontresolv
-#     java android.content.ContentResolver contentresolver
-#     java android.net.ContentURI contenturi
-
-#     set curi [contenturi -new content://org.hecl.android.Scripts/scripts]
-#     set cr [[activity] getcontentresolver]
-
-#     set uri [$cr insert $curi [null]]
-
-#     set cursor [query "$uri"]
-
-#     $cursor first
-#     $cursor updatestring 1 "foobalah"
-#     $cursor updatestring 2 "puts dammit"
-
-#     $layout addview [textview -new $context \
-# 			 -layoutparams $layoutparams \
-# 			 -text "Column names: [$cursor getcolumnnames]"]
-
-#     $cursor commitupdates
-
     heclcmd setcontentview $layout
 }
+
+# Activity --
+#
+#	Create a new Activity that is independent of this one.
+#	newActivity is defined in lib.tcl
 
 proc Activity {} {
     global context
@@ -537,10 +533,10 @@ proc main {} {
 
     $layout addview $tv
 
-    set lview [basiclist $context [list "Hecl Editor" "New Activity" "Hecl Scripts" "Contacts" \
-				       "Simple Widgets" "Web View" "Date Picker" \
+    set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
-				       "Radio Buttons" "CheckBoxes" "Task List"] \
+				       "Radio Buttons" "CheckBoxes" "Contacts" "Task List" \
+				       "Hecl Editor" "New Activity" "Hecl Scripts" ] \
 		   -layoutparams $layoutparams]
 
     $lview requestfocus
