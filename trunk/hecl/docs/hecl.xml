@@ -4,7 +4,7 @@
 "http://www.docbook.org/xml/4.5/docbookx.dtd" []>
 
 <!--
-   Copyright 2004-2007 David N. Welton
+   Copyright 2004-2008 David N. Welton
 
    Licensed under the Apache License, Version 2.0 (the "License"); you
    may not use this file except in compliance with the License.  You
@@ -138,26 +138,49 @@
   </section>
 
   <section id="installation">
-    <title>Installation</title>
+    <title>Installation / Tools &amp; Editors</title>
     <para>
-      Hecl is easy to compile and install as a standard J2SE
-      application.  This is only necessary if you'd like to work on
-      Hecl.  If all you want to do is use it, or install it on your
-      mobile phone, these steps aren't necessary - the standard
-      distribution contains everything you need.
+      Hecl is easy to compile and install as a standard J2SE application.
+
+      <note>
+	This is only necessary if you'd like to work on Hecl's source code.  If all you want to do
+	is use it, or install it on your mobile phone, these steps aren't necessary - the standard
+	distribution contains everything you need.
+      </note>
     </para>
     <para>
       <note>
-	On Microsoft Windows, you must add your java bin directory to
-	the system path, otherwise you will get strange, seemingly
-	unrelated errors!
+	<para>
+	  On Microsoft Windows, you must add your java <filename>bin</filename> directory to the
+	  system path, otherwise you will get strange, seemingly unrelated errors!
+	</para>
       </note>
     </para>
     <procedure>
       <step>
-	Hecl uses the <link url="http://ant.apache.org/">Apache
-	Ant</link> build system, so you need to install that to
-	compile Hecl.
+	<title>Dependencies:</title>
+
+	<para>You will need to install these software packages if you want to rebuild Hecl.</para>
+
+	<simplelist>
+
+	  <member>
+	    Obviously, you need a Java SDK - we suggest something recent like 1.5 or 1.6, as that's
+	    what most of the Hecl developers have.
+	  </member>
+
+	  <member>
+	    Depending on what you want to utilize Hecl for, you'll want one or both of the <ulink
+	      url="http://java.sun.com/javame/downloads/index.jsp">Sun Java Wireless Toolkit</ulink>
+	      or <ulink url="http://code.google.com/android/download.html">Android SDK</ulink>.
+	  </member>
+
+	  <member>
+	    Hecl uses the <link url="http://ant.apache.org/">Apache Ant</link> build system, so you
+	    need to install that as well to compile Hecl.
+	  </member>
+	</simplelist>
+
       </step>
       <step>
 	To compile the standard, J2SE version of Hecl, do this:
@@ -178,25 +201,15 @@ hello world
 </screen>
       </step>
       <step>
-	If you wish, you can compile Hecl to native code with GCJ:
+	If you want to check your installation of Hecl, you can run the test suite to make sure
+	everything checks out:
 	<screen>
-gcj -o hecl --main=Hecl jars/j2se/Hecl.jar
-davidw@medford:~/workshop/hecl$ ./hecl
-hecl> puts "hello world"
-hello world
+java -jar jars/j2se/Hecl.jar tests/suite.hcl
 	</screen>
-      </step>
-      <step>
-	If you want to check your installation of Hecl, you can run
-	the test suite to make sure everything checks out:
+	An (incomplete) performance test is also supplied so that you can compare numbers if you're
+	curious, or want to hack on Hecl to improve its speed:
 	<screen>
-java -classpath jars/j2se/Hecl.jar Hecl tests/suite.hcl
-	</screen>
-	An (incomplete) performance test is also supplied so that you
-	can compare numbers if you're curious, or want to hack on Hecl
-	to improve its speed:
-	<screen>
-java -classpath jars/j2se/Hecl.jar Hecl tests/performance.hcl
+java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	</screen>
       </step>
     </procedure>
@@ -206,6 +219,73 @@ java -classpath jars/j2se/Hecl.jar Hecl tests/performance.hcl
       See <xref linkend="j2me"/> for more information on installation
       and use with J2ME.
     </para>
+
+    <section>
+      <title>Tools &amp; Editors</title>
+      <para>
+	Even if you're not interested in recompiling Hecl to hack on the source code, to write Hecl
+	scripts, you need some kind of editor for programming.  Hecl is close enough in syntax to
+	the Tcl programming language that editors that support Tcl work well with Hecl.
+      </para>
+
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <emphasis role="strong">Emacs</emphasis>' Tcl mode is easy to use: <userinput>M-x
+	    tcl-mode</userinput>, or if you want to associate <filename>.hcl</filename> scripts with
+	    tcl-mode, add this to your <filename>.emacs</filename> file:
+	  </para>
+	  <programlisting>
+(setq auto-mode-alist
+      (cons '("\\.hcl$" . tcl-mode)
+	    auto-mode-alist))
+	  </programlisting>
+	</listitem>
+
+	<listitem>
+	  <para><emphasis role="strong">Eclipse</emphasis> is popular for working on Java projects.
+	  It also has a Tcl mode that can be utilized for Hecl scripts like so:
+	  </para>
+	  <task>
+	    <title>Editing Hecl scripts with Eclipse</title>
+	    <procedure>
+	      <step>
+		<para>
+		  Install the DLTK from the following URL: <ulink
+		    url="http://download.eclipse.org/technology/dltk/updates"></ulink>, from with Eclipse.
+		</para>
+	      </step>
+
+	      <step>
+		<para>
+		  After downloading you must just associate the *.hcl files to Tcl Source Editor.
+		</para>
+		
+		<para>
+		  <menuchoice>
+		    <guimenu>Windows</guimenu>
+		    <guisubmenu>Preferences</guisubmenu>
+		    <guisubmenu>General</guisubmenu>
+		    <guisubmenu>Editors</guisubmenu>
+		    <guimenuitem>File Associations</guimenuitem>
+		  </menuchoice>
+		</para>
+	      </step>
+
+	      <step>
+		<para>
+		  Than make a new file type by adding the <filename>*.hcl</filename> file type, and
+		  select the Tcl Source Editor.
+		</para>
+	      </step>
+
+	    </procedure>
+	  </task>
+	</listitem>
+
+      </itemizedlist>
+
+    </section>
 
   </section>
 
@@ -6651,25 +6731,62 @@ FIXME
     </section>
 
     <section id="hacking_hecl_j2me">
-      <title>Hacking Hecl's J2ME code</title>
+      <title>Hacking Hecl's Java ME code</title>
 
       <para>
-	Should you need to "look under the hood" (and you are
-	encouraged to do so!), everything you need is in the
-	<filename>midp10/</filename> directory.  The
-	<filename>GUICmds.java</filename> file contains most of the
-	functionality that maps J2ME functionality to Hecl and back.
-	The <filename>Hecl.java</filename> file contains the code that
-	starts up Hecl on the cell phone.
+	Since Java ME comes in several flavors that Hecl can be compiled for, it's necessary to
+	understand what Hecl does, and how it does it.
       </para>
 
       <para>
-	If you want to recompile the standard Hecl.jar and .jad,
-	simply use the <command>ant midlet10</command> command (or
-	<command>ant midlet11</command> if you want the CLDC1.1
-	version of Hecl) to create the .jar and .jad files for you,
-	including your version of script.hcl.
+	JavaME has two layers that are of interest to us, "CLDC" and "MIDP".  CLDC is available in
+	1.0 and 1.1 configurations, whereas MIDP comes in 1.0 and 2.0 configurations.  The most
+	common configurations are CLDC 1.0 and MIDP 1.0, CLDC 1.0 and MIDP 2.0, and CLDC 1.1 with
+	MIDP 2.0.  Here are the Wikipedia entries describing <ulink
+	url="http://en.wikipedia.org/wiki/Connected_Limited_Device_Configuration">CLDC</ulink> and
+	<ulink url="http://en.wikipedia.org/wiki/MIDP">MIDP</ulink>.
       </para>
+
+      <para>
+	Hecl tries to match code to system resources: in other words, the code in the
+	<filename>midp10/</filename> and <filename>midp10gui</filename> (MIDP 1.0) directories is
+	smaller, simpler, and has fewer features than the code in <filename>midp20</filename> and
+	<filename>midp20gui</filename> (MIDP 2.0), reflecting the fact that many 1.0 devices only
+	allow very small jar files ("midlets").
+      </para>
+
+      <para>
+	For MIDP 1.0, the <filename>midp10gui</filename> directory contains the
+	<filename>GUICmds.java</filename>, which has most of the functionality that maps J2ME
+	functionality to Hecl and back.  The <filename>midp10/Hecl.java</filename> file contains the
+	code that starts up Hecl on the cell phone.  For MIDP 2.0, the
+	<filename>midp20gui</filename> directory contains the GUI commands, and
+	<filename>midp20/Hecl.java</filename> is where the application is launched from on the
+	phone.
+      </para>
+
+      <para>
+	In order to be able to deal with all these different versions, Hecl is more or less forced
+	to utilize a Java preprocessor, which explains all the ifdef's in the code.  The various
+	symbols are defined in the <filename>settings.xml</filename> file.
+      </para>
+
+      <para>
+	To compile different combinations of things, Hecl makes a couple of property files
+	available that are used like so:
+      </para>
+      <screen>
+ ant -propertyfile ./cldc10midp10.properties midlet
+      </screen>
+      <para>
+	Which compiles the CLDC 1.0 / MIDP 1.0 version of Hecl and places the jar in the
+      <filename>jars/cldc1.0-midp1.0/</filename> directory, or:
+      </para>
+      <screen>
+ ant -propertyfile ./cldc11midp20.properties midlet
+      </screen>
+      <para>Which compiles the CLDC 1.1 / MIDP 2.0 version, and places the jar in the
+      <filename>jars/cldc1.1-midp2.0/</filename> directory.</para>
     </section>
   </section>
 </article>

@@ -1,5 +1,10 @@
 2008-01-15  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Reworked the installation/tools portion of the
+	document, including a quick set of instructions of how to make
+	Eclipse work with Hecl scripts, by Martin Mainusch.  Also redid
+	some of the section on hacking the Hecl Java ME code.
+
 	* jars/: Rearranged the Java ME jars.
 
 2008-01-11  David N. Welton  <davidw@dedasys.com>
