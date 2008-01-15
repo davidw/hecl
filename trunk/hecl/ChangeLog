@@ -1,3 +1,7 @@
+2008-01-15  David N. Welton  <davidw@dedasys.com>
+
+	* jars/: Rearranged the Java ME jars.
+
 2008-01-11  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Don't load methodnames until
