@@ -11,7 +11,7 @@
 	      |   
 	      idle
 	      [<em class="replaceable"><code>script</code></em>]
-	     </p></div></div><div class="refsect1" lang="en"><a name="id2520162"></a><h2>Description</h2><p>
+	     </p></div></div><div class="refsect1" lang="en"><a name="id2520360"></a><h2>Description</h2><p>
 	  The <span><strong class="command">after</strong></span> command is used, in the simple
 	  case, to simply halt evaluation of the script for
 	  <code class="option"><em class="replaceable"><code>milliseconds</code></em></code>
@@ -23,7 +23,7 @@
 	  <span><strong class="command">cancel</strong></span> subcommands, which, respectively,
 	  return information about existing events, and allow the
 	  cancellation of events.
-	</p></div><div class="refsect1" lang="en"><a name="id2520204"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
+	</p></div><div class="refsect1" lang="en"><a name="id2520402"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
 	  Run <code class="option"><em class="replaceable"><code>script</code></em></code> after
 	  10 seconds, but do not pause execution of the main script:
 	</p><pre class="programlisting">after 10000 { puts "hello, later world"	}</pre><p>Cancel all timers:</p><pre class="programlisting">for {set i 1} {&lt; $i 11} {incr $i} {
