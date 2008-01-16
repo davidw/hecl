@@ -2,8 +2,9 @@
 
 	* docs/hecl.xml: Reworked the installation/tools portion of the
 	document, including a quick set of instructions of how to make
-	Eclipse work with Hecl scripts, by Martin Mainusch.  Also redid
-	some of the section on hacking the Hecl Java ME code.
+	Eclipse work with Hecl scripts, by Martin Mainusch
+	<DONUS@gmx.net>.  Also redid some of the section on hacking the
+	Hecl Java ME code.
 
 	* jars/: Rearranged the Java ME jars.
 
