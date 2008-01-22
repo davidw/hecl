@@ -14,7 +14,7 @@ set times [hash {}]
 
 # Actual test files go here.
 foreach f [sort {
-    loops.hcl
+    loops.hcl sort-performance.hcl
 }] {
     source $f
 }

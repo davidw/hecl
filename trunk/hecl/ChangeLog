@@ -1,3 +1,10 @@
+2008-01-22  David N. Welton  <davidw@dedasys.com>
+
+	* tests/performance.hcl: Run the bubble sort performance test too.
+
+	* tests/sort-performance.hcl: Added bubblesort performance test.
+	Thanks to Celso Pinto <hecl@7syntax.com>.
+
 2008-01-15  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Reworked the installation/tools portion of the
