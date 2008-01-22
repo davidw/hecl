@@ -11,9 +11,32 @@ proc heclcmd {subcmd target} {
     $hecl $subcmd $target
 }
 
-proc SimpleWidgets {} {
-    global context
-    global procname
+# Hash table containing a mapping from titles like 'Web View' to proc
+# names like WebView
+set titles_names {}
+
+# CreateActivity --
+#
+#	CreateActivity and RunActivity
+
+proc CreateActivity {name title code} {
+    global titles_names
+    hset $titles_names $title $name
+
+    set setup [list {[activity]} settitle $title]
+    append $setup "\n"
+    append $setup $code
+
+    proc $name {} $setup
+}
+
+# SimpleWidgets --
+#
+#	A demo of some basic widgets: textview, button, edittext and
+#	digitalclock and imagebutton.
+
+CreateActivity SimpleWidgets "Simple Widgets" {
+    set context [activity]
     set procname SimpleWidgets
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -47,16 +70,14 @@ proc SimpleWidgets {} {
     set ib [imagebutton -new $context -layoutparams $layoutparams]
     $swlayout addview $ib
     $ib setImageResource [reslookup "R.drawable.buttonhecl"]
-
 }
 
 # WebView --
 #
 #	Demonstrate the WebView widget.
 
-proc WebView {} {
-    global context
-    global procname
+CreateActivity WebView "Web View" {
+    set context [activity]
     set procname WebView
 
     set layoutparams [linearlayoutparams -new {WRAP_CONTENT WRAP_CONTENT}]
@@ -149,10 +170,9 @@ proc updateProgress {pd progress} {
 #	Put some radio buttons up on the screen.  These don't work
 #	correctly due to a bug in Android.
 
-proc RadioButtons {} {
-    global procname
+CreateActivity RadioButtons "Radio Buttons" {
     set procname RadioButtons
-    global context
+    set context [activity]
 
     set layoutparams [radiogrouplayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -185,10 +205,9 @@ proc RadioButtons {} {
 #	CheckBoxCallback proc, make sure that only two of the three
 #	are selected.
 
-proc CheckBoxes {} {
-    global procname
+CreateActivity CheckBoxes "CheckBoxes" {
     set procname CheckBoxes
-    global context
+    set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -240,10 +259,9 @@ proc CheckBoxCallback {cb1 cb2 cb3 checkbox ischecked} {
 #	Displays a spinner, and links it to a textview via a callback,
 #	SpinnerCallback.
 
-proc Spinner {} {
-    global procname
+CreateActivity Spinner "Spinner" {
     set procname Spinner
-    global context
+    set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -280,11 +298,9 @@ proc SpinnerCallback {textview parent view position id} {
 #
 #	Edit and run simple Hecl scripts.
 
-proc HeclEditor {} {
-    global context
-
+CreateActivity HeclEditor "Hecl Editor" {
     set procname HeclEditor
-    global context
+    set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -328,11 +344,9 @@ proc EditCallback {editor results button} {
 #
 #	Display the phone's contact list.
 
-proc Contacts {} {
-    global context
-
+CreateActivity Contacts "Contacts" {
+    set context [activity]
     set procname Contacts
-    global context
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -356,11 +370,9 @@ proc Contacts {} {
 #
 #	Display a list of taks, and let the user switch between them.
 
-proc TaskList {} {
-    global context
-
+CreateActivity TaskList "Task List" {
     set procname TaskList
-    global context
+    set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -404,13 +416,11 @@ proc SelectTask {parent view position id} {
 
 # SelectScripts --
 #
-#	Display the phone's contact list.
+#	Display the available Hecl scripts in permanent storage.
 
-proc SelectScripts {} {
-    global context
-
+CreateActivity SelectScripts "Hecl Scripts" {
     set procname SelectScripts
-    global context
+    set  context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -460,38 +470,31 @@ proc Activity {} {
     newActivity $context $script
 }
 
+
 # SelectDemo --
 #
 #	Select which demo to display.
 
 proc SelectDemo {parent view position id} {
     set dest [$view gettext]
-    if { eq $dest "Hecl Editor" } {
-	HeclEditor
-    } elseif {eq $dest "New Activity"} {
-	Activity
-    } elseif {eq $dest "Hecl Scripts"} {
-	SelectScripts
-    } elseif { eq $dest "Contacts" } {
-	Contacts
-    } elseif { eq $dest "Simple Widgets" } {
-	SimpleWidgets
-    } elseif {eq $dest "Web View"} {
-	WebView
-    } elseif {eq $dest "Date Picker"} {
-	DatePicker
-    } elseif {eq $dest "Progress Dialog"} {
-	ProgressDialog
-    } elseif {eq $dest "Radio Buttons"} {
-	RadioButtons
-    } elseif {eq $dest "CheckBoxes"} {
-	CheckBoxes
-    } elseif {eq $dest "Spinner"} {
-	Spinner
-    } elseif {eq $dest "Time Picker"} {
-	TimePicker
-    } elseif {eq $dest "Task List"} {
-	TaskList
+
+    global titles_names
+    set procname [hget $titles_names $dest]
+    if { eq $procname "" } {
+	# If the procname doesn't appear in the lookup table, it's one
+	# of the following, and doesn't require its own activity.
+	if {eq $dest "New Activity"} {
+	    Activity
+	} elseif {eq $dest "Date Picker"} {
+	    DatePicker
+	} elseif {eq $dest "Progress Dialog"} {
+	    ProgressDialog
+	} elseif {eq $dest "Time Picker"} {
+	    TimePicker
+	}
+    } else {
+	global context
+	newActivity $context $procname
     }
 }
 

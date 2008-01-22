@@ -1,5 +1,7 @@
 2008-01-22  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/script.hcl: Use sub-activities for new screens.
+
 	* tests/performance.hcl: Run the bubble sort performance test too.
 
 	* tests/sort-performance.hcl: Added bubblesort performance test.
