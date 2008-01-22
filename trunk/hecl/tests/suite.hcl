@@ -43,6 +43,7 @@ testfiles {
     source.hcl
     split.hcl
     string.hcl
+    threads.hcl
     throw.hcl
     upeval.hcl
     while.hcl

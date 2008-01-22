@@ -1,5 +1,8 @@
 2008-01-22  David N. Welton  <davidw@dedasys.com>
 
+	* tests/threads.hcl: Added a test to poke and prod the
+	synchronization of the Interp.eval method.
+
 	* android/res/raw/script.hcl: Use sub-activities for new screens.
 
 	* tests/performance.hcl: Run the bubble sort performance test too.
