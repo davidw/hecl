@@ -188,21 +188,7 @@ public class Reflector {
 
 	try {
 	    Class type = f.getType();
-	    if (type == boolean.class) {
-		retval = IntThing.create(f.getBoolean(target));
-	    } else if (type == double.class) {
-		retval = DoubleThing.create(f.getDouble(target));
-	    } else if (type == float.class) {
-		retval = DoubleThing.create(f.getFloat(target));
-	    } else if (type == int.class) {
-		retval = IntThing.create(f.getInt(target));
-	    } else if (type == long.class) {
-		retval = LongThing.create(f.getLong(target));
-	    } else if (type == String.class) {
-		retval = new Thing((String)f.get(target));
-	    } else {
-		retval = ObjectThing.create(f.get(target));
-	    }
+	    retval = javaTypeToHeclType(type, f.get(target));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    throw new HeclException("Problem fetching field " + name + " : " + e.toString());
@@ -413,7 +399,20 @@ public class Reflector {
      */
     private Thing mapRetval(Method m, Object o) {
 	Class rtype = m.getReturnType();
+	return javaTypeToHeclType(rtype, o);
+    }
+
+    /**
+     * The <code>javaTypeToHeclType</code> method takes a Java type,
+     * and a Java Object, and returns a Thing.
+     *
+     * @param rtype a <code>Class</code> value
+     * @param o an <code>Object</code> value
+     * @return a <code>Thing</code> value
+     */
+    public Thing javaTypeToHeclType(Class rtype, Object o) {
 	String rtypename = rtype.getSimpleName();
+
 	if (o == null) {
 	    return null;
 	} else if (rtype == void.class) {
