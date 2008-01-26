@@ -1,3 +1,14 @@
+2008-01-26  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Extracted hecl to java
+	method, which is used in multiple places.
+
+	* tests/java.hcl: Added some tests to make sure that
+	getting/setting fields works, and throws an error when it doesn't.
+
+	* java/org/hecl/java/JavaCmd.java: -field, with two arguments, now
+	can set the field as well.
+
 2008-01-25  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Centralized the

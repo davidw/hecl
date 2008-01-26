@@ -111,8 +111,14 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	    Object target = ObjectThing.get(argv[0]);
 	    String subcmd = argv[1].toString().toLowerCase();
 	    if (subcmd.equals("-field")) {
-		/* Look for the field.  */
-		return classreflector.getField(target, argv[2].toString());
+		if (argv.length == 3) {
+		    return classreflector.getField(target, argv[2].toString());
+		} else if (argv.length == 4) {
+		    classreflector.setField(target, argv[2].toString(), argv[3]);
+		    return argv[3];
+		} else {
+		    throw HeclException.createWrongNumArgsException(argv, 2, "fieldname ?fieldvalue?");
+		}
 	    } else {
 		/* Invoke the method.  */
 		return classreflector.evaluate(target, subcmd, argv);

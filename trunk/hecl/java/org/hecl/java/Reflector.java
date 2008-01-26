@@ -1,4 +1,4 @@
-/* Copyright 2007 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2007-2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -197,6 +197,35 @@ public class Reflector {
     }
 
     /**
+     * The <code>setField</code> method takes an object, a field name,
+     * and a new Thing value, and sets the object's field to the value
+     * of Thing.
+     *
+     * @param target an <code>Object</code> value
+     * @param name a <code>String</code> value
+     * @param newvalue a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public void setField(Object target, String name, Thing newvalue)
+	throws HeclException {
+
+	Field f = (Field)fieldnames.get(name.toLowerCase());
+	if (f == null) {
+	    throw new HeclException("No field matches " + name + " for class " + forclass.getName() +
+				    " " + fieldnames.toString());
+	}
+
+	try {
+	    Class type = f.getType();
+	    f.set(target, heclTypeToJavaType(type, newvalue));
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    throw new HeclException("Problem fetching field " + name + " : " + e.toString());
+	}
+    }
+
+
+    /**
      * <code>getConstField</code> fetches a constant field value.
      *
      * @param name a <code>String</code> value
@@ -286,8 +315,8 @@ public class Reflector {
 
 
     /**
-     * The <code>mapParams</code> method is where the magic happens -
-     * it maps Hecl types/values onto Java types/values.
+     * The <code>mapParams</code> method is where a series of Hecl
+     * types/values are mapped onto Java types/values.
      *
      * @param outparams a <code>Class</code> value
      * @param argv a <code>Thing</code> value
@@ -319,70 +348,12 @@ public class Reflector {
 	    }
 	    String heclparmt = inparam.getVal().thingclass();
 
-	    if (outparam == boolean.class || outparam == Boolean.class) {
-		if (heclparmt.equals("int")) {
-		    outobjs[i] = IntThing.get(inparam) != 0;
-		} else {
-		    outobjs = null;
-		}
-	    } else if(outparam == int.class || outparam == Integer.class) {
-		if (heclparmt.equals("int")) {
-		    outobjs[i] = IntThing.get(inparam);
-		} else {
-		    outobjs = null;
-		}
-	    } else if (outparam == long.class) {
-		if (heclparmt.equals("long")) {
-		    outobjs[i] = LongThing.get(inparam);
-		} else {
-		    outobjs = null;
-		}
-	    } else if (outparam == CharSequence.class ||
-		       outparam == String.class) {
-		if (heclparmt.equals("string")) {
-		    outobjs[i] = inparam.toString();
-		} else {
-		    outobjs = null;
-		}
-	    } else if (javaclassname.equals("int[]")) {
-		Vector v = ListThing.get(inparam);
-		int[] ints = new int[v.size()];
-		for (int j = 0; j < v.size(); j++) {
-		    ints[j] = IntThing.get((Thing)v.elementAt(j));
-		}
-		outobjs[i] = ints;
-	    } else if (javaclassname.equals("Object[]")) {
-		Thing[] things = ListThing.getArray(inparam);
-		Object[] objects = new Object[things.length];
-		int j = 0;
-		for (Thing t : things) {
-		    /* This is a bit of a hack.  If they're objects,
-		     * move them on through as objects, otherwise, as
-		     * strings. */
-		    if (t.getVal().thingclass().equals("object")) {
-			objects[j] = ObjectThing.get(t);
-		    } else {
-			objects[j] = t.toString();
-		    }
-		    j++;
-		}
-		outobjs[i] = objects;
-	    } else if (outparam == Thing.class) {
-		/* We can use this to pass Things around directly, to
-		 * classes that support it. */
-		outobjs[i] = inparam;
-	    } else if (heclparmt.equals("object")) {
-		/* We are getting an ObjectThing from Hecl... */
-		outobjs[i] = ObjectThing.get(inparam);
-	    } else if (outparam == Object.class) {
-		/* We're not getting an ObjectThing from Hecl, but
-		 * Java can take any Object. Give it Things directly.
-		 * This is sort of a last resort as more specific is
-		 * better. */
-		outobjs[i] = inparam;
-	    } else {
-		/* No match, return null. */
+	    Object result = null;
+	    result = heclTypeToJavaType(outparam, inparam);
+	    if (result == null) {
 		outobjs = null;
+	    } else {
+		outobjs[i] = result;
 	    }
 	}
 	return outobjs;
@@ -401,6 +372,94 @@ public class Reflector {
 	Class rtype = m.getReturnType();
 	return javaTypeToHeclType(rtype, o);
     }
+
+    /**
+     * The <code>heclTypeToJavaType</code> method takes a Class and a
+     * Hecl Thing, turns the Thing into an Object based on the Class
+     * type, and returns the Object.
+     *
+     * @param rtype a <code>Class</code> value
+     * @param heclparm a <code>Thing</code> value
+     * @return an <code>Object</code> value
+     * @exception HeclException if an error occurs
+     */
+    public Object heclTypeToJavaType(Class rtype, Thing heclparm)
+	throws HeclException {
+
+	Object retval = null;
+	String heclparmt = heclparm.getVal().thingclass();
+	String javaclassname = rtype.getSimpleName();
+
+	if (rtype == boolean.class || rtype == Boolean.class) {
+	    if (heclparmt.equals("int")) {
+		retval = IntThing.get(heclparm) != 0;
+	    } else {
+		retval = null;
+	    }
+	} else if(rtype == int.class || rtype == Integer.class) {
+	    if (heclparmt.equals("int")) {
+		retval = IntThing.get(heclparm);
+	    } else {
+		retval = null;
+	    }
+	} else if (rtype == long.class) {
+	    if (heclparmt.equals("long")) {
+		retval = LongThing.get(heclparm);
+	    } else {
+		retval = null;
+	    }
+	} else if (rtype == CharSequence.class ||
+		   rtype == String.class) {
+	    if (heclparmt.equals("string")) {
+		retval = heclparm.toString();
+	    } else {
+		retval = null;
+	    }
+	} else if (javaclassname.equals("int[]")) {
+	    /* This is a hack - we need to look and see if it's an
+	     * array, and then recursively deal with the various ints
+	     * in the array.  */
+	    Vector v = ListThing.get(heclparm);
+	    int[] ints = new int[v.size()];
+	    for (int j = 0; j < v.size(); j++) {
+		ints[j] = IntThing.get((Thing)v.elementAt(j));
+	    }
+	    retval = ints;
+	} else if (javaclassname.equals("Object[]")) {
+	    Thing[] things = ListThing.getArray(heclparm);
+	    Object[] objects = new Object[things.length];
+	    int j = 0;
+	    for (Thing t : things) {
+		/* This is a bit of a hack.  If they're objects, move
+		 * them on through as objects, otherwise, as
+		 * strings. */
+		if (t.getVal().thingclass().equals("object")) {
+		    objects[j] = ObjectThing.get(t);
+		} else {
+		    objects[j] = t.toString();
+		}
+		j++;
+	    }
+	    retval = objects;
+	} else if (rtype == Thing.class) {
+	    /* We can use this to pass Things around directly, to
+	     * classes that support it. */
+	    retval = heclparm;
+	} else if (heclparmt.equals("object")) {
+	    /* We are getting an ObjectThing from Hecl... */
+	    retval = ObjectThing.get(heclparm);
+	} else if (rtype == Object.class) {
+	    /* We're not getting an ObjectThing from Hecl, but Java
+	     * can take any Object. Give it Things directly.  This is
+	     * sort of a last resort as more specific is better. */
+	    retval = heclparm;
+	} else {
+	    /* No match, return null. */
+	    retval = null;
+	}
+	return retval;
+    }
+
 
     /**
      * The <code>javaTypeToHeclType</code> method takes a Java type,
