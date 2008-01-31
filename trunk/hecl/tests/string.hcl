@@ -42,6 +42,8 @@ test string-len-1 {
      strlen abc
 } 3
 
+# These two seem to have troubles if the LANG environmental variable
+# isn't set, on Linux, in an rxvt.
 test string-len-2 {
      strlen €
 } 1
@@ -134,6 +136,25 @@ test emptystring-2 {
     set b [puts b]
     set a
 } {x}
+
+test strreplace-1 {
+    set r {}
+    append $r [strreplace {foo x} foobar]
+    append $r "\n"
+    append $r [strreplace {oo 1111} foobar]
+    append $r "\n"
+    append $r [strreplace {b aaa} foobar]
+    append $r "\n"
+    append $r [strreplace {r ""} foobar]
+    set r
+} {xbar
+f1111bar
+fooaaaar
+fooba}
+
+test strreplace-2 {
+    strreplace {xxx yyy} foobar
+} {foobar}
 
 ### Local Variables:
 ### mode:tcl

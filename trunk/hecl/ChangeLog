@@ -1,3 +1,9 @@
+2008-01-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Added strreplace command.
+
+	* tests/string.hcl: Added strreplace command tests.
+
 2008-01-26  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Extracted hecl to java

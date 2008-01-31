@@ -54,6 +54,8 @@ class StringCmds extends Operator {
     public static final int STRTRIML = 18;
     public static final int STRTRIMR = 19;
 
+    public static final int STRREPLACE = 20;
+
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String str = argv[1].toString();
@@ -223,6 +225,23 @@ class StringCmds extends Operator {
 		return new Thing(resstr);
 	    }
 
+	    case STRREPLACE: {
+		// strreplace {from to} stringwithfromtoreplace
+		String resstr = null;
+		Vector v = ListThing.get(argv[1]);
+		String original = argv[2].toString();
+		String from = ((Thing)v.elementAt(0)).toString();
+		int start = original.indexOf(from);
+		if (start < 0) {
+		    resstr = original;
+		} else {
+		    resstr = original.substring(0, start) +
+			((Thing)v.elementAt(1)).toString() +
+			original.substring(start + from.length(), original.length());
+		}
+		return new Thing(resstr);
+	    }
+
 	    default:
 		throw new HeclException("Unknown string command '"
 					+ argv[1].toString() + "' with code '"
@@ -344,5 +363,6 @@ class StringCmds extends Operator {
 	cmdtable.put("strtrim", new StringCmds(STRTRIM,1,2));
 	cmdtable.put("strtriml", new StringCmds(STRTRIML,1,2));
 	cmdtable.put("strtrimr", new StringCmds(STRTRIMR,1,2));
+	cmdtable.put("strreplace", new StringCmds(STRREPLACE,2,2));
     }
 }
