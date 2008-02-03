@@ -41,6 +41,7 @@ import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
 import org.hecl.net.HttpCmd;
+import org.hecl.net.Base64Cmd;
 
 /**
  * The <code>Hecl</code> class is the main entry point into Hecl
@@ -146,9 +147,10 @@ public class Hecl extends Activity
      * @param interp an <code>Interp</code> value
      * @exception Exception if an error occurs
      */
-    protected void loadLibs(Interp interp) throws Exception {
+    public void loadLibs(Interp interp) throws Exception {
 	AndroidCmd.load(interp, this);
 	HttpCmd.load(interp);
+	Base64Cmd.load(interp);
 	String script = getResourceAsString(this.getClass(), R.raw.lib, "UTF-8");
 	interp.eval(new Thing(script));
     }

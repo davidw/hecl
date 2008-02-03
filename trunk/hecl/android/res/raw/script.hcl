@@ -445,6 +445,83 @@ CreateActivity SelectScripts "Hecl Scripts" {
     heclcmd setcontentview $layout
 }
 
+# HeclServer --
+#
+#	Create a Hecl command-line server.  Listen for connections and
+#	execute commands.
+
+CreateActivity HeclServer "Hecl Server" {
+    set procname HeclServer
+    set context [activity]
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context -layoutparams $layoutparams]
+    $layout setorientation VERTICAL
+
+    set port 7405
+
+    $layout addview [textview -new $context \
+			 -layoutparams $layoutparams \
+			 -text "Running Hecl server on port ${port}.  You can telnet to this port to interact with Hecl"]
+
+    set recvcode [textview -new $context -layoutparams $layoutparams]
+    $layout addview $recvcode
+
+    heclcmd setcontentview $layout
+
+    # We currently run it in its own interpreter/thread, which has
+    # some consequences: we can't do GUI stuff, or interact with the
+    # rest of the running program in a meaningful way.
+    java org.hecl.Interp interp
+    set newi [interp -new [list]]
+    [activity] loadlibs $newi
+    $newi evalAsync {
+	set port 7405
+	java java.io.InputStream inputstream
+	java java.io.OutputStream outputstream
+	java java.io.InputStreamReader inputstreamreader
+	java java.io.OutputStreamWriter outputstreamwriter
+	java java.io.BufferedReader bufferedreader
+	java java.net.ServerSocket serversock
+	java java.net.Socket socket
+	set serverSock [serversock -new [list $port]]
+
+	set sock [$serverSock accept]
+
+	set is [$sock getinputstream]
+	set isr [inputstreamreader -new [list $is]]
+	set br [bufferedreader -new [list $isr]]
+	set os [$sock getoutputstream]
+	set osw [outputstreamwriter -new [list $os]]
+	global osw
+
+	proc put {str} {
+	    global osw
+	    $osw write [s ${str}]
+	    $osw flush
+	}
+
+	proc puts {str} {
+	    put "${str}\n"
+	}
+
+	androidlog "So far, So good"
+	while { true } {
+	    if { = 1 [catch {
+		put "> "
+		set res [eval [$br readline]]
+		puts "$res"
+	    } err] } {
+		androidlog "err is $err"
+		puts "ERROR: $err"
+	    }
+	}
+    }
+#    $newi run
+}
+
+
 # Activity --
 #
 #	Create a new Activity that is independent of this one.
@@ -539,7 +616,7 @@ proc main {} {
     set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
 				       "Radio Buttons" "CheckBoxes" "Contacts" "Task List" \
-				       "Hecl Editor" "New Activity" "Hecl Scripts" ] \
+				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server"] \
 		   -layoutparams $layoutparams]
 
     $lview requestfocus

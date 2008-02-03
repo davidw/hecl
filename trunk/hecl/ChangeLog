@@ -1,3 +1,11 @@
+2008-02-03  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added a simple Hecl server that can
+	be accessed from outside via telnet.
+
+	* android/src/org/hecl/android/Hecl.java: Load base64 stuff by
+	default.
+
 2008-01-31  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/StringCmds.java: Added strreplace command.
