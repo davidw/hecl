@@ -1,5 +1,11 @@
 2008-02-03  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/Reflector.java: Added constructors method to
+	return a list of types that can be passed to create a new object
+	of this type.
+
+	* java/org/hecl/java/JavaCmd.java: Added -constructors subcommand.
+
 	* android/res/raw/script.hcl: Added a simple Hecl server that can
 	be accessed from outside via telnet.
 

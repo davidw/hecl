@@ -91,6 +91,8 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 		return classreflector.getConstField(argv[2].toString());
 	    } else if (argv1.equals("-methods")) {
 		return classreflector.methods();
+	    } else if (argv1.equals("-constructors")) {
+		return classreflector.constructors();
 	    } else {
 		/* Try calling a static method. */
 		return classreflector.evaluate(null, argv1, argv);

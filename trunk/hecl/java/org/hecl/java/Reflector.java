@@ -23,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 
 import org.hecl.DoubleThing;
@@ -485,6 +486,14 @@ public class Reflector {
 	    return LongThing.create(((Long)o).longValue());
 	} else if (rtype == String.class || rtype == CharSequence.class) {
 	    return new Thing((String)o);
+	} else if (rtype == List.class) {
+	    List lo = (List)o;
+	    Vector v = new Vector();
+	    for (int j = 0; j < lo.size(); j++) {
+		Object elem = lo.get(j);
+		v.add(javaTypeToHeclType(elem.getClass(), elem));
+	    }
+	    return ListThing.create(v);
 	} else if (rtypename.equals("String[]")) {
 	    Vector v = new Vector();
 	    String[] retval = (String [])o;
@@ -541,4 +550,25 @@ public class Reflector {
 	return ListThing.create(retval);
 
     }
+
+    /**
+     * The <code>constructors</code> method returns a Hecl list of
+     * types that would work as constructors for this object type.
+     *
+     * @return a <code>Thing</code> value
+     */
+    public Thing constructors() {
+	Vector retval = new Vector();
+	Constructor[] constructors = forclass.getConstructors();
+	for (Constructor c : constructors) {
+	    Vector paramnames = new Vector();
+	    Class[] params = c.getParameterTypes();
+	    for (Class p : params) {
+		paramnames.add(new Thing(p.getSimpleName()));
+	    }
+	    retval.add(ListThing.create(paramnames));
+	}
+	return ListThing.create(retval);
+    }
+
 }
