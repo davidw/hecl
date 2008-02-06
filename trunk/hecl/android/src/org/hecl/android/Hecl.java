@@ -24,7 +24,7 @@ import android.app.AlertDialog;
 import android.app.NotificationManager;
 
 import android.os.Bundle;
-
+import android.os.Handler;
 import android.util.Log;
 
 import android.view.Menu;
@@ -60,6 +60,8 @@ public class Hecl extends Activity
     protected static Interp interp;
     private Thing menuCreateCode;
     private Thing menuItemSelected;
+
+    protected HeclHandler heclHandler;
 
 
     /* Public for the time being.  These are accessed from
@@ -101,6 +103,8 @@ public class Hecl extends Activity
 		errmsg("Hecl Error: " + e.toString());
 	    }
 	}
+
+	heclHandler = new HeclHandler(interp);
     }
 
     /**
@@ -277,6 +281,16 @@ public class Hecl extends Activity
 	    Log.v("elapsed", "" + (now - elapsed));
 	}
 	elapsed = now;
+    }
+
+
+    /**
+     * The <code>getHandler</code> method returns the local handler.
+     *
+     * @return a <code>HeclHandler</code> value
+     */
+    public HeclHandler getHandler() {
+	return heclHandler;
     }
 
 }

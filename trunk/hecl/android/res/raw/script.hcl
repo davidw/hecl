@@ -1,16 +1,6 @@
 ## script.hcl - this is a series of Hecl/Android examples
 ## demonstrating various parts of the API.
 
-# SimpleWidgets --
-#
-#	This procedure is called to put some simple widgets up on the
-#	screen.
-
-proc heclcmd {subcmd target} {
-    set hecl [activity]
-    $hecl $subcmd $target
-}
-
 # Hash table containing a mapping from titles like 'Web View' to proc
 # names like WebView
 set titles_names {}
@@ -47,7 +37,7 @@ CreateActivity SimpleWidgets "Simple Widgets" {
     $swlayout setorientation VERTICAL
 
     $scroll addview $swlayout
-    heclcmd setcontentview $scroll
+    [activity] setcontentview $scroll
 
     $swlayout addview [textview -new $context \
 			   -text "This is a textview" \
@@ -89,7 +79,7 @@ CreateActivity WebView "Web View" {
 
     set wv [webview -new $context -layoutparams $layoutparams]
     $layout addview $wv
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
     # Fetch the Hecl web page, which, unfortunately, isn't all that
     # beautiful ...
     $wv loadurl http://www.hecl.org
@@ -196,7 +186,7 @@ CreateActivity RadioButtons "Radio Buttons" {
 			     -text "JavaME" -layoutparams $layoutparams]
     $radiogroup addview [radiobutton -new $context \
 			     -text "Flash Lite" -layoutparams $layoutparams]
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # CheckBoxes --
@@ -231,7 +221,7 @@ CreateActivity CheckBoxes "CheckBoxes" {
 	$layout addview $cb
     }
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # CheckBoxCallback --
@@ -282,7 +272,7 @@ CreateActivity Spinner "Spinner" {
     set callback [callback -new [list [list SpinnerCallback $selected]]]
     $spinner setonitemselectedlistener $callback
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # SpinnerCallback --
@@ -328,7 +318,7 @@ AddOne 41}
 
     set callback [callback -new [list [list EditCallback $editor $results]]]
     $eval setonclicklistener $callback
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # EditCallback --
@@ -363,7 +353,7 @@ CreateActivity Contacts "Contacts" {
 			     -text "Who: $name Number: $number"]
     }
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # TaskList --
@@ -406,7 +396,7 @@ CreateActivity TaskList "Task List" {
     set callback [callback -new [list [list SelectTask]]]
     $lview setonitemclicklistener $callback
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 proc SelectTask {parent view position id} {
@@ -429,9 +419,7 @@ CreateActivity SelectScripts "Hecl Scripts" {
 
     set cursor [query content://org.hecl.android.Scripts/scripts]
 
-    $layout addview [textview -new $context \
-			 -layoutparams $layoutparams \
-			 -text "Available scripts:"]
+    $layout addview [textview -new $context -layoutparams $layoutparams -text "Available scripts:"]
 
     set scriptlist [list]
     while { $cursor next } {
@@ -442,7 +430,7 @@ CreateActivity SelectScripts "Hecl Scripts" {
     $layout addview $lview
     $lview requestfocus
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # HeclServer --
@@ -463,21 +451,28 @@ CreateActivity HeclServer "Hecl Server" {
 
     $layout addview [textview -new $context \
 			 -layoutparams $layoutparams \
-			 -text "Running Hecl server on port ${port}.  You can telnet to this port to interact with Hecl"]
+			 -text "Running Hecl server on port ${port}.  You can telnet to this port to interact with Hecl after running this command: adb forward tcp:7405 tcp:7405\nSince the interpreter that you are accessing is a sub-interpreter, to run commands in the main interpreter, which has access to the Android GUI thread, you have to pass them with the maineval command, like this: maineval { ... code ... }"]
 
     set recvcode [textview -new $context -layoutparams $layoutparams]
     $layout addview $recvcode
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 
-    # We currently run it in its own interpreter/thread, which has
-    # some consequences: we can't do GUI stuff, or interact with the
-    # rest of the running program in a meaningful way.
+    # We currently run the server in its own interpreter/thread, which
+    # has some consequences: we can't do GUI stuff, or interact with
+    # the rest of the running program in a meaningful way.  We use a
+    # handler to do that via the maineval proc.
     java org.hecl.Interp interp
     set newi [interp -new [list]]
     [activity] loadlibs $newi
+
+    java org.hecl.android.HeclHandler heclhandler
+    set hh [[activity] getHandler]
+
+    $newi setVar "handler" $hh
+    $newi setVar "port" $port
+
     $newi evalAsync {
-	set port 7405
 	java java.io.InputStream inputstream
 	java java.io.OutputStream outputstream
 	java java.io.InputStreamReader inputstreamreader
@@ -485,10 +480,15 @@ CreateActivity HeclServer "Hecl Server" {
 	java java.io.BufferedReader bufferedreader
 	java java.net.ServerSocket serversock
 	java java.net.Socket socket
+
+	java org.hecl.android.HeclHandler heclhandler
+
+	# Create a server socket.
 	set serverSock [serversock -new [list $port]]
 
 	set sock [$serverSock accept]
 
+	# Create some line-oriented IO streams.
 	set is [$sock getinputstream]
 	set isr [inputstreamreader -new [list $is]]
 	set br [bufferedreader -new [list $isr]]
@@ -496,6 +496,7 @@ CreateActivity HeclServer "Hecl Server" {
 	set osw [outputstreamwriter -new [list $os]]
 	global osw
 
+	# Print something back to the socket.
 	proc put {str} {
 	    global osw
 	    $osw write [s ${str}]
@@ -506,19 +507,31 @@ CreateActivity HeclServer "Hecl Server" {
 	    put "${str}\n"
 	}
 
-	androidlog "So far, So good"
+	# Evaluate a command in the main interpreter - note that we
+	# don't get the results back.
+	proc maineval {code} {
+	    global handler
+	    set msg [message -new [list]]
+	    $msg -field obj $code
+	    $handler sendmessage $msg
+	}
+
+	java android.os.Message message
+	java java.util.HashMap hashmap
+
+	# Main server loop.
+	androidlog "Server operational on port $port"
 	while { true } {
 	    if { = 1 [catch {
 		put "> "
-		set res [eval [$br readline]]
-		puts "$res"
+		puts [eval [$br readline]]
 	    } err] } {
-		androidlog "err is $err"
-		puts "ERROR: $err"
+		set errstr "HeclServer error: $err"
+		androidlog $errstr
+		puts $errstr
 	    }
 	}
     }
-#    $newi run
 }
 
 
@@ -593,7 +606,7 @@ proc viewCode {} {
 			 -layoutparams $layoutparams]
 
     set procname viewCode
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 }
 
 # main --
@@ -625,7 +638,7 @@ proc main {} {
     set callback [callback -new [list [list SelectDemo]]]
     $lview setonitemclicklistener $callback
 
-    heclcmd setcontentview $layout
+    [activity] setcontentview $layout
 
     # Used to set up a callback for when the menu is requested by the
     # user, and it's necessary to set it up.
