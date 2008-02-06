@@ -1,3 +1,10 @@
+2008-02-06  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added interactive server.
+
+	* android/src/org/hecl/android/HeclHandler.java: added initial
+	Handler to handle messages passed around between threads.
+
 2008-02-03  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Added constructors method to
