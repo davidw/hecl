@@ -46,6 +46,7 @@ import org.hecl.Thing;
 
 import org.hecl.java.HeclJavaCmd;
 import org.hecl.java.JavaCmd;
+import org.hecl.java.NullCmd;
 
 /**
  * The <code>AndroidCmd</code> class is where all the Android specific
@@ -62,8 +63,7 @@ public class AndroidCmd extends Operator {
     public static final int RESLOOKUP = 2;
     public static final int ALERT = 3;
     public static final int FINDVIEW = 4;
-    public static final int LOG = 4;
-    public static final int NULLCMD = 5;
+    public static final int LOG = 5;
     public static final int MENUSETUP = 6;
     public static final int MENUCALLBACK = 7;
 
@@ -147,9 +147,6 @@ public class AndroidCmd extends Operator {
 		}
 		return ObjectThing.create(cur);
 
-	    case NULLCMD:
-		return ObjectThing.create(null);
-
 	    case MENUSETUP:
 		hecl.menuvar = argv[1];
 		hecl.menucode = argv[2];
@@ -190,8 +187,6 @@ public class AndroidCmd extends Operator {
 
 	    cmdtable.put("query", new AndroidCmd(PROVIDERQUERY,1,1));
 
-	    cmdtable.put("null", new AndroidCmd(NULLCMD,0,0));
-
 	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
 	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
 
@@ -209,6 +204,7 @@ public class AndroidCmd extends Operator {
 	hecl = a;
 	Operator.load(ip, cmdtable);
 	HeclJavaCmd.load(ip);
+	NullCmd.load(ip);
 
 	JavaCmd.load(ip, "android.app.Activity", "androidactivity");
 

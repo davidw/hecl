@@ -3,6 +3,7 @@
 
     <uses-permission id="android.permission.READ_CONTACTS" />
     <uses-permission id="android.permission.GET_TASKS" />
+    <uses-permission id="com.google.android.xmppService.permission.XMPP_SERVICE" />
 
     <application android:icon="@drawable/hecl">
 

@@ -1,3 +1,10 @@
+2008-02-08  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Move the [null]
+	command from here into the java/ package.
+
+	* android/AndroidManifest.xml: Give Hecl XMPP permissions.
+
 2008-02-06  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Added interactive server.
