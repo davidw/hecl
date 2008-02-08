@@ -1,5 +1,7 @@
 2008-02-08  David N. Welton  <davidw@dedasys.com>
 
+	* commandline/Hecl.java: Add in [null] command.
+
 	* android/src/org/hecl/android/AndroidCmd.java: Move the [null]
 	command from here into the java/ package.
 

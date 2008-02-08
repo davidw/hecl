@@ -35,6 +35,7 @@ import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
 
 import org.hecl.java.HeclJavaCmd;
+import org.hecl.java.NullCmd;
 
 /**
  * <code>Hecl</code> - this class implements the main Hecl command
@@ -66,6 +67,7 @@ public class Hecl {
 	    HttpCmd.load(interp);
 	    LoadCmd.load(interp);
 	    HeclJavaCmd.load(interp);
+	    NullCmd.load(interp);
 	    Vector argv = new Vector();
 
             for (i = 0; i < args.length; i++) {
