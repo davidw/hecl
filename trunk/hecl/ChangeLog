@@ -1,5 +1,13 @@
 2008-02-08  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/Reflector.java: Changed the way we pass
+	things around in heclTypeToJavaType and mapParams: since we could
+	legitimately be returning 'null', we utilize a one-element array
+	to stash a return value in.  This fixes a problem we had with
+	accepting null values.
+
+	* java/org/hecl/java/NullCmd.java: Added separate null command here.
+
 	* commandline/Hecl.java: Add in [null] command.
 
 	* android/src/org/hecl/android/AndroidCmd.java: Move the [null]

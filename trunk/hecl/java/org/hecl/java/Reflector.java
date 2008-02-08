@@ -48,6 +48,8 @@ public class Reflector {
     private Hashtable constnames;
     private Hashtable fieldnames;
 
+    private static Object[] return_value = new Object[1];
+
     /**
      * Creates a new <code>Reflector</code> instance.
      *
@@ -144,8 +146,8 @@ public class Reflector {
 		    continue;
 		}
 
-		args = mapParams(javaparams, argv, 0);
-		if (args != null) {
+		if (mapParams(return_value, javaparams, argv, 0)) {
+		    args = (Object[])return_value[0];
 		    selected = c;
 		    break;
 		}
@@ -166,6 +168,7 @@ public class Reflector {
 	    msg += " " + e.getTargetException().toString();
 	    throw new HeclException(msg);
 	} catch (Exception e) {
+	    e.printStackTrace();
 	    throw new HeclException("Reflector instantiate error :" + e.toString());
 	}
     }
@@ -218,10 +221,14 @@ public class Reflector {
 
 	try {
 	    Class type = f.getType();
-	    f.set(target, heclTypeToJavaType(type, newvalue));
+	    if (!heclTypeToJavaType(return_value, type, newvalue)) {
+		throw new HeclException("no match found for " + type);
+	    }
+	    f.set(target, return_value[0]);
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    throw new HeclException("Problem fetching field " + name + " : " + e.toString());
+	    throw new HeclException("Problem setting field " + name + " to " +
+				    newvalue.toString() + " : " + e.toString());
 	}
     }
 
@@ -281,14 +288,15 @@ public class Reflector {
 		    continue;
 		}
 
-		args = mapParams(javaparams, argv, 2);
-		if (args != null) {
+		if (mapParams(return_value, javaparams, argv, 2)) {
+		    args = (Object[])return_value[0];
 		    selected = m;
 		    break;
 		}
 	    }
 	    if (selected == null) {
-		String msg = "No method matched " + cmd + " for class " + forclass.getName() + " last javaparams tried: ";
+		String msg = "No method matched " + cmd + " for class " + forclass.getName() +
+		    " last javaparams tried: ";
 		if (javaparams != null) {
 		    for (Class c : javaparams) {
 			msg += c.getSimpleName() + " ";
@@ -299,7 +307,8 @@ public class Reflector {
 	    Object retval = selected.invoke(o, args);
 	    return mapRetval(selected, retval);
 	} catch (InvocationTargetException e) {
-	    String msg = "Problem invoking " + forclass.getName() + " " + cmd + "/" + selected.getName() + " with arguments: ";
+	    String msg = "Problem invoking " + forclass.getName() + " " + cmd + "/" +
+		selected.getName() + " with arguments: ";
 	    for (Thing t : argv) {
 		msg += t.toString() + " ";
 	    }
@@ -319,6 +328,7 @@ public class Reflector {
      * The <code>mapParams</code> method is where a series of Hecl
      * types/values are mapped onto Java types/values.
      *
+     * @param retval an <code>Object</code> value
      * @param outparams a <code>Class</code> value
      * @param argv a <code>Thing</code> value
      * @param offset an <code>int</code> value - where to start
@@ -326,13 +336,14 @@ public class Reflector {
      * @return an <code>Object[]</code> value
      * @exception HeclException if an error occurs
      */
-    protected Object[] mapParams(Class[] outparams, Thing[] argv, int offset)
+    protected boolean mapParams(Object[] retval, Class[] outparams, Thing[] argv, int offset)
 	throws HeclException {
 
 	if(outparams.length != argv.length - offset) {
-	    /* No match */
-	    return null;
+	    return false;
 	}
+
+	boolean matched = true;
 
 	Object[] outobjs = new Object[outparams.length];
 	Class c = null;
@@ -342,22 +353,23 @@ public class Reflector {
 	    String javaclassname = outparam.getSimpleName();
 
 	    /* Tweak inparam according to the constant table we've
-	     * been passed. */
+	     * been passed - if someone passes us a CONSTANT_NAME
+	     * that's in our table, we use its value. */
 	    String val = inparam.toString();
 	    if (constnames.containsKey(val)) {
 		inparam = (Thing)constnames.get(val);
 	    }
 	    String heclparmt = inparam.getVal().thingclass();
 
-	    Object result = null;
-	    result = heclTypeToJavaType(outparam, inparam);
-	    if (result == null) {
-		outobjs = null;
+	    if (heclTypeToJavaType(return_value, outparam, inparam)) {
+		outobjs[i] = return_value[0];
+		matched = true;
 	    } else {
-		outobjs[i] = result;
+		matched = false;
 	    }
 	}
-	return outobjs;
+	retval[0] = outobjs;
+	return matched;
     }
 
     /**
@@ -379,42 +391,40 @@ public class Reflector {
      * Hecl Thing, turns the Thing into an Object based on the Class
      * type, and returns the Object.
      *
+     * @param retval an <code>Object</code> value
      * @param rtype a <code>Class</code> value
      * @param heclparm a <code>Thing</code> value
      * @return an <code>Object</code> value
      * @exception HeclException if an error occurs
      */
-    public Object heclTypeToJavaType(Class rtype, Thing heclparm)
+    public boolean heclTypeToJavaType(Object[] retval, Class rtype, Thing heclparm)
 	throws HeclException {
 
-	Object retval = null;
+	boolean foundmatch = false;
+
 	String heclparmt = heclparm.getVal().thingclass();
 	String javaclassname = rtype.getSimpleName();
 
 	if (rtype == boolean.class || rtype == Boolean.class) {
 	    if (heclparmt.equals("int")) {
-		retval = IntThing.get(heclparm) != 0;
-	    } else {
-		retval = null;
+		retval[0] = IntThing.get(heclparm) != 0;
+		foundmatch = true;
 	    }
 	} else if(rtype == int.class || rtype == Integer.class) {
 	    if (heclparmt.equals("int")) {
-		retval = IntThing.get(heclparm);
-	    } else {
-		retval = null;
+		retval[0] = IntThing.get(heclparm);
+		foundmatch = true;
 	    }
 	} else if (rtype == long.class) {
 	    if (heclparmt.equals("long")) {
-		retval = LongThing.get(heclparm);
-	    } else {
-		retval = null;
+		retval[0] = LongThing.get(heclparm);
+		foundmatch = true;
 	    }
 	} else if (rtype == CharSequence.class ||
 		   rtype == String.class) {
 	    if (heclparmt.equals("string")) {
-		retval = heclparm.toString();
-	    } else {
-		retval = null;
+		retval[0] = heclparm.toString();
+		foundmatch = true;
 	    }
 	} else if (javaclassname.equals("int[]")) {
 	    /* This is a hack - we need to look and see if it's an
@@ -425,7 +435,8 @@ public class Reflector {
 	    for (int j = 0; j < v.size(); j++) {
 		ints[j] = IntThing.get((Thing)v.elementAt(j));
 	    }
-	    retval = ints;
+	    retval[0] = ints;
+	    foundmatch = true;
 	} else if (javaclassname.equals("Object[]")) {
 	    Thing[] things = ListThing.getArray(heclparm);
 	    Object[] objects = new Object[things.length];
@@ -441,24 +452,26 @@ public class Reflector {
 		}
 		j++;
 	    }
-	    retval = objects;
+	    retval[0] = objects;
+	    foundmatch = true;
 	} else if (rtype == Thing.class) {
 	    /* We can use this to pass Things around directly, to
 	     * classes that support it. */
-	    retval = heclparm;
+	    retval[0] = heclparm;
+	    foundmatch = true;
 	} else if (heclparmt.equals("object")) {
 	    /* We are getting an ObjectThing from Hecl... */
-	    retval = ObjectThing.get(heclparm);
+	    retval[0] = ObjectThing.get(heclparm);
+	    foundmatch = true;
 	} else if (rtype == Object.class) {
 	    /* We're not getting an ObjectThing from Hecl, but Java
 	     * can take any Object. Give it Things directly.  This is
 	     * sort of a last resort as more specific is better. */
-	    retval = heclparm;
-	} else {
-	    /* No match, return null. */
-	    retval = null;
+	    retval[0] = heclparm;
+	    foundmatch = true;
 	}
-	return retval;
+	/* No match. */
+	return foundmatch;
     }
 
 
@@ -570,5 +583,4 @@ public class Reflector {
 	}
 	return ListThing.create(retval);
     }
-
 }
