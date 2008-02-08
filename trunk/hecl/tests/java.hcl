@@ -65,3 +65,10 @@ test java-9 {
     } err
     set err
 } {{ERROR {wrong # args: should be "java.awt.Rectangle[x=0,y=0,width=0,height=0] -field fieldname ?fieldvalue?"} 2} {java.awt.Rectangle[x=0,y=0,width=0,height=0] 1}}
+
+test java-10 {
+    java java.lang.String str
+
+    set s [str -new [list "foobar"]]
+    puts [$s equals [null]]
+} {0}

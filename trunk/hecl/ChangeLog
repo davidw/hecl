@@ -1,5 +1,7 @@
 2008-02-08  David N. Welton  <davidw@dedasys.com>
 
+	* tests/java.hcl: Added test for null parameter.
+
 	* java/org/hecl/java/Reflector.java: Changed the way we pass
 	things around in heclTypeToJavaType and mapParams: since we could
 	legitimately be returning 'null', we utilize a one-element array
