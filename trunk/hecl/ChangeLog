@@ -1,3 +1,23 @@
+2008-02-18  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Besides the update to M5, added a
+	GTalk component.
+
+	* android/src/org/hecl/android/Hecl.java: Updated to M5 - use
+	Toast's instead of Notifications.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Updated to M5 -
+	removed the 'query' command - it's now possible to do the same
+	thing entirely in Hecl.
+
+	* android/src/org/hecl/android/ScriptProvider.java: Initial
+	reworking to update to M5.
+
+	* android/AndroidManifest.xml: Updated to M5.
+
+	* java/org/hecl/java/Reflector.java: Check first for null Hecl
+	objects, as these can match any Java object.
+
 2008-02-08  David N. Welton  <davidw@dedasys.com>
 
 	* tests/java.hcl: Added test for null parameter.
