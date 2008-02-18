@@ -70,5 +70,5 @@ test java-10 {
     java java.lang.String str
 
     set s [str -new [list "foobar"]]
-    puts [$s equals [null]]
+    $s equals [null]
 } {0}
