@@ -405,7 +405,11 @@ public class Reflector {
 	String heclparmt = heclparm.getVal().thingclass();
 	String javaclassname = rtype.getSimpleName();
 
-	if (rtype == boolean.class || rtype == Boolean.class) {
+	/* null is always going to match. */
+	if (heclparmt.equals("object") && ObjectThing.get(heclparm) == null) {
+	    foundmatch = true;
+	    retval[0] = null;
+	} else if (rtype == boolean.class || rtype == Boolean.class) {
 	    if (heclparmt.equals("int")) {
 		retval[0] = IntThing.get(heclparm) != 0;
 		foundmatch = true;

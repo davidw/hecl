@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout id="@+id/mainlayout" xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/mainlayout" xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
 
-<TextView id="@+id/results"
+<TextView android:id="@+id/results"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="Hello World, Hecl"
     />
 
-<EditText id="@+id/script"
+<EditText android:id="@+id/script"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="+ 10 20"
     />
 
-<Button id="@+id/execute"
+<Button android:id="@+id/execute"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Execute"

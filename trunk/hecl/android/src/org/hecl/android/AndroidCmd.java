@@ -16,22 +16,14 @@
 package org.hecl.android;
 
 import java.lang.reflect.Field;
-
 import java.util.Hashtable;
-
 import android.app.Activity;
 import android.app.NotificationManager;
-
 import android.content.Intent;
-
 import android.database.Cursor;
-
-import android.net.ContentURI;
-
 import android.view.View;
-
+import android.widget.Toast;
 import android.util.Log;
-
 import org.hecl.DoubleThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -43,7 +35,6 @@ import org.hecl.Operator;
 import org.hecl.RealThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
-
 import org.hecl.java.HeclJavaCmd;
 import org.hecl.java.JavaCmd;
 import org.hecl.java.NullCmd;
@@ -67,8 +58,6 @@ public class AndroidCmd extends Operator {
     public static final int MENUSETUP = 6;
     public static final int MENUCALLBACK = 7;
 
-    public static final int PROVIDERQUERY = 8;
-
     /* These will eventually be moved elsewhere - the core most
      * likely. */
     public static final int TOINT = 100;
@@ -81,9 +70,7 @@ public class AndroidCmd extends Operator {
     }
 
     private void makeAlert(String msg) {
-	NotificationManager nm = (NotificationManager)hecl.getSystemService(Activity.NOTIFICATION_SERVICE);
-	nm.notifyWithText(1, msg, NotificationManager.LENGTH_LONG, null);
-	hecl.showAlert("Hecl Alert", msg, "dismiss", false);
+	Toast.makeText(hecl, msg, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -135,18 +122,6 @@ public class AndroidCmd extends Operator {
 		Log.v("hecl log", argv[1].toString());
 		return null;
 
-
-	    case PROVIDERQUERY:
-		Cursor cur = null;
-		try {
-		    ContentURI curi = new ContentURI(argv[1].toString());
-		    cur = hecl.managedQuery(curi, null, null, null);
-		} catch (Exception e) {
-		    Hecl.logStacktrace(e);
-		    throw new HeclException(argv[0].toString() + " error: " + e.toString());
-		}
-		return ObjectThing.create(cur);
-
 	    case MENUSETUP:
 		hecl.menuvar = argv[1];
 		hecl.menucode = argv[2];
@@ -184,8 +159,6 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("alert", new AndroidCmd(ALERT,1,1));
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
 	    cmdtable.put("androidlog", new AndroidCmd(LOG,1,1));
-
-	    cmdtable.put("query", new AndroidCmd(PROVIDERQUERY,1,1));
 
 	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
 	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));

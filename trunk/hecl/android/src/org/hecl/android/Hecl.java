@@ -18,23 +18,18 @@ package org.hecl.android;
 import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.IOException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.ObjectThing;
@@ -115,10 +110,7 @@ public class Hecl extends Activity
      */
     protected void errmsg(String msg) {
 	Log.v("hecl", msg);
-	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-	nm.notifyWithText(1, msg,
-			  NotificationManager.LENGTH_LONG, null);
-	showAlert("Hecl Error", msg, "dismiss", false);
+	Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     public void setMailBox(Thing m) {

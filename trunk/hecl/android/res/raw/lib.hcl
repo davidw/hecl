@@ -64,3 +64,12 @@ proc newActivity {context code} {
     $h setmailbox $code
     $context startActivity $intent
 }
+
+# contentQuery --
+#
+#	Run a query and return a cursor object.
+
+proc contentQuery {uri} {
+    java android.net.Uri uri
+    return [[activity] managedQuery [uri parse $uri] [null] [null] [null]]
+}

@@ -343,11 +343,11 @@ CreateActivity Contacts "Contacts" {
     set layout [linearlayout -new $context]
     $layout setorientation VERTICAL
 
-    set cursor [query content://contacts/people/]
+    set cursor [contentQuery content://contacts/people/]
 
     while { $cursor next } {
-	set name [$cursor getstring 6]
-	set number [$cursor getstring 5]
+	set name [$cursor getstring [$cursor getcolumnindex name]]
+	set number [$cursor getstring [$cursor getcolumnindex number]]
 	$layout addview [textview -new $context \
 			     -layoutparams $layoutparams \
 			     -text "Who: $name Number: $number"]
@@ -372,20 +372,20 @@ CreateActivity TaskList "Task List" {
     # Create ourselves some commands to access Android internals.
     java android.app.ActivityManagerNative activitymanagernative
     java android.app.IActivityManager iactivitymanager
-    java {android.app.IActivityManager$TaskInfo} taskinfo
     java android.content.ComponentName componentname
-
+    java {android.app.ActivityManager$RunningTaskInfo} runningtaskinfo
     # Utilized to contain the result of gettasks
-    java java.util.List javalist
+
     set am [activitymanagernative getdefault]
     set tasks [$am gettasks 10 0 [null]]
-    set len [$tasks size]
-    set tasklist [list]
-    for {set i 0} {< $i $len} {incr $i} {
-	set baseactivity [[$tasks get $i] -field baseactivity]
+    set tasklist {}
+    set taskIdList {}
+    foreach task $tasks {
+	set baseactivity [$task -field baseactivity]
 	lappend $tasklist "Task: [$baseactivity getpackagename]"
+	lappend $taskIdList [$task -field id]
     }
-
+    androidlog "IDs: $taskIdList"
     $layout addview [textview -new $context -layoutparams $layoutparams \
 			 -text "Currently running tasks"]
 
@@ -393,14 +393,14 @@ CreateActivity TaskList "Task List" {
     $layout addview $lview
     $lview requestfocus
 
-    set callback [callback -new [list [list SelectTask]]]
+    set callback [callback -new [list [list SelectTask $taskIdList]]]
     $lview setonitemclicklistener $callback
 
     [activity] setcontentview $layout
 }
 
-proc SelectTask {parent view position id} {
-    [activitymanagernative getdefault] movetasktofront $position
+proc SelectTask {taskIdList parent view position id} {
+    [activitymanagernative getdefault] movetasktofront [lindex $taskIdList $position]
 }
 
 
@@ -417,7 +417,7 @@ CreateActivity SelectScripts "Hecl Scripts" {
     set layout [linearlayout -new $context -layoutparams $layoutparams]
     $layout setorientation VERTICAL
 
-    set cursor [query content://org.hecl.android.Scripts/scripts]
+    set cursor [contentQuery content://org.hecl.android.Scripts/scripts]
 
     $layout addview [textview -new $context -layoutparams $layoutparams -text "Available scripts:"]
 
@@ -534,6 +534,77 @@ CreateActivity HeclServer "Hecl Server" {
     }
 }
 
+CreateActivity SendGTalk "Send GTalk Message" {
+    set procname SendGTalk
+    set context [activity]
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set layout [linearlayout -new $context -layoutparams $layoutparams]
+    $layout setorientation VERTICAL
+
+    $layout addview [textview -new $context \
+			 -layoutparams $layoutparams \
+			 -text "Sending GTalk message to davidnwelton:"]
+
+    set msgtext [edittext -new $context -layoutparams $layoutparams]
+    set sendbutton [button -new $context -layoutparams $layoutparams -text "Send"]
+
+    set callback [callback -new [list [list SendMessage $context $msgtext]]]
+    $sendbutton setonclicklistener $callback
+    java org.hecl.Interp interp
+    java org.hecl.android.HeclServiceConnection hserviceconnection
+    java android.content.Intent intent
+
+    java com.google.android.gtalkservice.IGTalkService gtalkservice;
+    java com.google.android.gtalkservice.IGTalkSession gtalksession;
+    java {com.google.android.gtalkservice.IGTalkService$Stub} gtalkstub
+    java {com.google.android.gtalkservice.GTalkServiceConstants} gtalkconstants
+    java com.google.android.gtalkservice.IChatSession chatsession
+
+    $layout addview $msgtext
+    $layout addview $sendbutton
+    $context setcontentview $layout
+}
+
+# SendMessage --
+#
+#	Send GTalk message.  This currently doesn't deal with the
+#	response
+
+proc SendMessage {context msgtext sendbutton} {
+
+    set conn [hserviceconnection -new [list [thisinterp]]]
+
+    proc onserviceconnected {classname service} {
+	set gtalkservice [gtalkstub asInterface $service]
+	global GtalkSession
+	set GtalkSession [[$gtalkservice getDefaultSession] createChatSession "en2it@bot.talk.google.com"]
+    }
+
+    $conn -field onserviceconnected onserviceconnected
+    set i [intent -new [list]]
+    set i [$i setcomponent [gtalkconstants -field GTALK_SERVICE_COMPONENT]]
+
+    $context bindservice $i $conn 0
+
+    global message_txt
+    set message_txt [$msgtext gettext]
+
+    after 1000 {
+	set err ""
+	catch {
+	    global message_txt
+	    global GtalkSession
+	    # FIXME davidnwelton@gmail.com
+	    $GtalkSession sendTextMessage "Another Android User says: $message_txt"
+	} err
+	if { strlen $err } {
+	    androidlog "SendMessage error: $err"
+	}
+    }
+}
+
 
 # Activity --
 #
@@ -629,7 +700,7 @@ proc main {} {
     set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
 				       "Radio Buttons" "CheckBoxes" "Contacts" "Task List" \
-				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server"] \
+				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server" "Send GTalk Message"] \
 		   -layoutparams $layoutparams]
 
     $lview requestfocus
