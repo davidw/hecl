@@ -1,5 +1,14 @@
 2008-02-20  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/lib.hcl: Added 'gui' command (need a better
+	name), to post code back to the main thread.
+
+	* android/src/org/hecl/android/Hecl.java: Added stubs for onStop
+	and onDestroy.  I suppose we could do callbacks here.
+
+	* android/AndroidManifest.xml: Added ACCESS_LOCATION and
+	ACCESS_GPS permissions.
+
 	* docs/hecl.xml: Corrected path for Hecl jar.  Updated to WTK 2.5.2.
 
 2008-02-18  David N. Welton  <davidw@dedasys.com>

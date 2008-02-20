@@ -462,11 +462,9 @@ CreateActivity HeclServer "Hecl Server" {
     # has some consequences: we can't do GUI stuff, or interact with
     # the rest of the running program in a meaningful way.  We use a
     # handler to do that via the maineval proc.
-    java org.hecl.Interp interp
     set newi [interp -new [list]]
     [activity] loadlibs $newi
 
-    java org.hecl.android.HeclHandler heclhandler
     set hh [[activity] getHandler]
 
     $newi setVar "handler" $hh
@@ -517,7 +515,6 @@ CreateActivity HeclServer "Hecl Server" {
 	}
 
 	java android.os.Message message
-	java java.util.HashMap hashmap
 
 	# Main server loop.
 	androidlog "Server operational on port $port"
@@ -604,7 +601,6 @@ proc SendMessage {context msgtext sendbutton} {
 	}
     }
 }
-
 
 # Activity --
 #
@@ -700,7 +696,8 @@ proc main {} {
     set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
 				       "Radio Buttons" "CheckBoxes" "Contacts" "Task List" \
-				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server" "Send GTalk Message"] \
+				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server" \
+				       "Send GTalk Message"] \
 		   -layoutparams $layoutparams]
 
     $lview requestfocus

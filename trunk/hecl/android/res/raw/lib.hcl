@@ -73,3 +73,25 @@ proc contentQuery {uri} {
     java android.net.Uri uri
     return [[activity] managedQuery [uri parse $uri] [null] [null] [null]]
 }
+
+java org.hecl.Interp interp
+java org.hecl.android.HeclHandler heclhandler
+java android.os.Message message
+
+# gui --
+#
+#	Posts a script to the main, GUI thread.  Use this if you need
+#	to run gui events in 'after' events.
+
+proc gui {code} {
+    set hh [[activity] getHandler]
+    set msg [message -new [list]]
+    $msg -field obj $code
+    set err ""
+    catch {
+	$hh sendmessage $msg
+    } err
+    if { strlen $err } {
+	androidlog "GUI sendmessage error: $err"
+    }
+}

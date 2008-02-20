@@ -98,7 +98,6 @@ public class Hecl extends Activity
 		errmsg("Hecl Error: " + e.toString());
 	    }
 	}
-
 	heclHandler = new HeclHandler(interp);
     }
 
@@ -163,6 +162,24 @@ public class Hecl extends Activity
 	/* Make sure everything's pointing at the right place. */
 	AndroidCmd.setCurrentHecl(this);
      }
+
+    @Override
+    protected void onPause() {
+	super.onPause();
+	Log.v("hecl", "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+	super.onStop();
+	Log.v("hecl", "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+	super.onDestroy();
+	Log.v("hecl", "onDestroy");
+    }
 
     /**
      * The <code>onCreateOptionsMenu</code> method is called when the
