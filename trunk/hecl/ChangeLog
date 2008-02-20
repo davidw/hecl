@@ -1,3 +1,7 @@
+2008-02-20  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Corrected path for Hecl jar.  Updated to WTK 2.5.2.
+
 2008-02-18  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Besides the update to M5, added a

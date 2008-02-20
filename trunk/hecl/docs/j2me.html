@@ -70,8 +70,8 @@
 	installation: everything you need is already there in the distribution.
       </p><p>
 	To see if everything's working, you can try launching the emulator with the sample
-	application: <strong class="userinput"><code>/opt/WTK2.5.1/bin/emulator -classpath
-	build/j2me/final/cldc1.1-midp2.0/Hecl.jar Hecl</code></strong>
+	application: <strong class="userinput"><code>/opt/WTK2.5.2/bin/emulator -classpath
+	jars/cldc1.1-midp2.0/Hecl.jar Hecl</code></strong>
       </p><p>That should bring up something like this:</p><div class="screenshot"><div><img src="demo_screenshot.png"></div></div><p>
 	This is Hecl's built in demo - its source code is located in
 	<code class="filename">midp20/script.hcl</code>, but before I get too far ahead of myself, let's go
@@ -280,7 +280,7 @@ $shopform configure -commandaction \
 	available, it's possible to determine which command called the proc, and act accordingly.
       </p><p>Now, let's build it and run it:</p><pre class="programlisting">
 java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hcl
-/opt/WTK2.5.1/bin/emulator -classpath ShopList.jar Hecl
+/opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </pre><div class="screenshot"><div><img src="shoplist1.png"></div></div><p>
 	At this point, you enter the PIN number (<code class="constant">346764</code>), and press the Fetch
 	button. This command executes the code in <span><strong class="command">MakeList</strong></span>. The first thing it

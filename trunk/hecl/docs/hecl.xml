@@ -3845,8 +3845,8 @@ class HelloCmd implements Command {
 
       <para>
 	To see if everything's working, you can try launching the emulator with the sample
-	application: <userinput>/opt/WTK2.5.1/bin/emulator -classpath
-	build/j2me/final/cldc1.1-midp2.0/Hecl.jar Hecl</userinput>
+	application: <userinput>/opt/WTK2.5.2/bin/emulator -classpath
+	jars/cldc1.1-midp2.0/Hecl.jar Hecl</userinput>
       </para>
 
       <para>That should bring up something like this:</para>
@@ -4150,7 +4150,7 @@ $shopform configure -commandaction \
 
 <programlisting>
 java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hcl
-/opt/WTK2.5.1/bin/emulator -classpath ShopList.jar Hecl
+/opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </programlisting>
 
       <screenshot>
