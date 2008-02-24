@@ -16,17 +16,13 @@
 package org.hecl.android;
 
 import java.util.Vector;
-
 import android.util.Log;
-
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -161,5 +157,4 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	    Log.v("hecl onnothingselected callback", he.toString());
 	}
     }
-
 }

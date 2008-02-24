@@ -1,3 +1,11 @@
+2008-02-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/HeclChatListener.java: Listener for
+	gtalk chat sessions.
+
+	* android/src/org/hecl/android/HeclServiceConnection.java:
+	Listener for service connections.
+
 2008-02-20  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/lib.hcl: Added 'gui' command (need a better
