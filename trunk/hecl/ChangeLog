@@ -1,3 +1,8 @@
+2008-02-28  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/HeclServiceConnection.java: Removed
+	extra copies of cmdline.
+
 2008-02-24  David N. Welton  <davidw@dedasys.com>
 
 	* android/src/org/hecl/android/HeclChatListener.java: Listener for

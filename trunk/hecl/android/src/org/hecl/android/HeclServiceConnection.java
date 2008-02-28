@@ -41,7 +41,6 @@ public class HeclServiceConnection implements ServiceConnection {
     public void onServiceConnected(ComponentName name, IBinder service) {
 	try {
 	    Vector cmdline = ListThing.get(onserviceconnected.deepcopy());
-	    cmdline.addElement(onserviceconnected);
 	    cmdline.addElement(ObjectThing.create(name));
 	    cmdline.addElement(ObjectThing.create(service));
 	    interp.eval(ListThing.create(cmdline));
@@ -53,7 +52,6 @@ public class HeclServiceConnection implements ServiceConnection {
     public void onServiceDisconnected(ComponentName name) {
 	try {
 	    Vector cmdline = ListThing.get(onservicedisconnected.deepcopy());
-	    cmdline.addElement(onservicedisconnected);
 	    cmdline.addElement(ObjectThing.create(name));
 	    interp.eval(ListThing.create(cmdline));
 	} catch (Exception e) {
