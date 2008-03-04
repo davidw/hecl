@@ -1,5 +1,8 @@
 2008-03-04  David N. Welton  <davidw@dedasys.com>
 
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added a few more comments, command line options.
+
 	* android/build.xml: Make a jar and then create the dex files from
 	that.
 

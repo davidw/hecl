@@ -1,4 +1,4 @@
-/* Copyright 2007-2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -17,74 +17,115 @@ package org.hecl.androidbuilder;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.InputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.io.IOException;
-import java.util.zip.ZipFile;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
 
 class AndroidBuilder {
 
-    /* FIXME - these two must come from somewhere else.  */
+    public static void main(String[] args) throws IOException, ParseException {
+	String androiddir = null;
 
-    private static String aapt = "/opt/android-sdk_m5-rc14_linux-x86/tools/aapt";
-    private static String dx = "/opt/android-sdk_m5-rc14_linux-x86/tools/dx";
-    private static String androidjar = "/opt/android-sdk_m5-rc14_linux-x86/android.jar";
+	Options opts = new Options();
 
-    /* FIXME - get these from elsewhere.  */
-    private static String appname = "Hackle";
-    private static String appclass = "Wackle";
-    private static String packagename = "foo.bar.baz";
+	/* Define some command line options. */
+	opts.addOption("android", true, "android SDK location");
+	opts.addOption("class", true, "New class name");
+	opts.addOption("package", true, "New package name, like bee.bop.foo.bar");
+	opts.addOption("label", true, "Label");
 
-    private static String xmltemplate =
-	"<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" \n" +
-	"package=\"" + packagename + "\">\n" +
-	"<application>\n" +
-        "<activity android:name=\"" + appclass + "\" android:label=\"" + appname + "\">\n" +
-	"<intent-filter>\n" +
-	"<action android:name=\"android.intent.action.MAIN\" />\n" +
-	"<category android:name=\"android.intent.category.LAUNCHER\" />\n" +
-	"</intent-filter>\n" +
-        "</activity>\n" +
-        "<activity android:name=\"" + "Sub" + appclass +"\" android:label=\"SubHecl\">\n" +
-	"<intent-filter>\n" +
-	"<action android:name=\"android.intent.action.MAIN\" />\n" +
-	"</intent-filter>\n" +
-        "</activity>\n" +
-	"</application>\n" +
-	"</manifest>\n";
+	CommandLineParser parser = new PosixParser();
+	CommandLine cmd = parser.parse(opts, args);
 
-    private static String mainClassTemplate =
-	"package " + packagename + ";\n" +
-	"import org.hecl.android.Hecl;\n" +
-	"import org.hecl.HeclException;\n" +
-	"import org.hecl.Interp;\n" +
-	"import org.hecl.java.JavaCmd;\n" +
-	"public class " + appclass + " extends Hecl {\n" +
-	"protected void createCommands(Interp i) throws HeclException {\n" +
- 	"JavaCmd.load(interp, \"" + packagename + "." + appclass + "\", \"hecl\");\n" +
- 	"JavaCmd.load(interp, \"" + packagename + ".Sub" + appclass + "\", \"subhecl\");\n" +
-	"}\n" +
-	"}\n";
+	/* Get the android directory, or fail if it's not given. */
+	if(cmd.hasOption("android")) {
+	    androiddir = cmd.getOptionValue("android");
+	} else {
+	    usage(opts);
+	}
+	String aapt = androiddir + "/tools/aapt";
+	String dx = androiddir + "/tools/dx";
+	String androidjar = androiddir + "/android.jar";
 
-    private static String subClassTemplate =
-	"package " + packagename + ";\n" +
-	"import org.hecl.android.SubHecl;\n" +
-	"public class Sub" + appclass + " extends SubHecl {}\n";
+	/* Get the application's class name.  */
+	String appclass = "Hackle";
+ 	if(cmd.hasOption("class")) {
+	    appclass = cmd.getOptionValue("class");
+	}
 
+	/* Get the application's label. */
+	String appname = "Hecl Hackle";
+ 	if(cmd.hasOption("label")) {
+	    appname = cmd.getOptionValue("label");
+	}
 
-    public static void main(String[] args) throws IOException {
+	/* Get the fake package name. */
+	String packagename = "bee.bop.doo.wah";
+ 	if(cmd.hasOption("package")) {
+	    packagename = cmd.getOptionValue("package");
+	}
+
+	/* Calculate some other stuff based on the informatin we have. */
 	String tmpdir = System.getProperty("java.io.tmpdir");
-	String dirname = tmpdir + "/" + appname + "-" + System.currentTimeMillis();
+	String dirname = tmpdir + "/" + appclass + "-" + System.currentTimeMillis();
 	String manifest = dirname + "/" + "AndroidManifest.xml";
 	String tmppackage = dirname + "/" + "Temp.apk";
 	String hecljar = dirname + "/" + "Hecl.jar";
 	String heclapk = dirname + "/" + "Hecl.apk";
+
+
+	/* The AndroidManifest.xml template. */
+	String xmltemplate =
+	    "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" \n" +
+	    "package=\"" + packagename + "\">\n" +
+	    "<application>\n" +
+	    "<activity android:name=\"" + appclass + "\" android:label=\"" + appname + "\">\n" +
+	    "<intent-filter>\n" +
+	    "<action android:name=\"android.intent.action.MAIN\" />\n" +
+	    "<category android:name=\"android.intent.category.LAUNCHER\" />\n" +
+	    "</intent-filter>\n" +
+	    "</activity>\n" +
+	    "<activity android:name=\"" + "Sub" + appclass +"\" android:label=\"SubHecl\">\n" +
+	    "<intent-filter>\n" +
+	    "<action android:name=\"android.intent.action.MAIN\" />\n" +
+	    "</intent-filter>\n" +
+	    "</activity>\n" +
+	    "</application>\n" +
+	    "</manifest>\n";
+
+	/* Template for the main .java file. */
+	String mainClassTemplate =
+	    "package " + packagename + ";\n" +
+	    "import org.hecl.android.Hecl;\n" +
+	    "import org.hecl.HeclException;\n" +
+	    "import org.hecl.Interp;\n" +
+	    "import org.hecl.java.JavaCmd;\n" +
+	    "public class " + appclass + " extends Hecl {\n" +
+	    "protected void createCommands(Interp i) throws HeclException {\n" +
+	    "JavaCmd.load(interp, \"" + packagename + "." + appclass + "\", \"hecl\");\n" +
+	    "JavaCmd.load(interp, \"" + packagename + ".Sub" + appclass + "\", \"subhecl\");\n" +
+	    "}\n" +
+	    "}\n";
+
+	/* Template for the sub file. */
+	String subClassTemplate =
+	    "package " + packagename + ";\n" +
+	    "import org.hecl.android.SubHecl;\n" +
+	    "public class Sub" + appclass + " extends SubHecl {}\n";
+
 
 	/* First we write out the AndroidManifest.xml file.  */
 	(new File(dirname)).mkdir();
@@ -131,38 +172,48 @@ class AndroidBuilder {
 	}
 	(new File(packagedir)).mkdirs();
 
-	System.err.println("jpd: " + jarpackagedir);
-
 	String mainJava = packagedir + "/" + appclass + ".java";
 	String subJava = packagedir + "/Sub" + appclass + ".java";
 	String mainClass = jarpackagedir + appclass + ".class";
 	String subClass = jarpackagedir + "Sub" + appclass + ".class";
 
+	/* Output a new 'main' class. */
 	fos = new FileOutputStream(mainJava);
 	fos.write(mainClassTemplate.getBytes());
 	fos.close();
 
+	/* Output a new 'sub' class. */
 	fos = new FileOutputStream(subJava);
 	fos.write(subClassTemplate.getBytes());
 	fos.close();
 
+	/* Compile the new classes. */
 	runProcess("javac", mainJava, subJava, "-cp", hecljar + ":" + androidjar);
+	/* Stash them in the .jar. */
 	runProcess("jar", "uf", hecljar, "-C", dirname, mainClass);
 	runProcess("jar", "uf", hecljar, "-C", dirname, subClass);
 
+	/* Run the dx program to turn them into Android dex stuff. */
 	String dexfile = dirname + "/" + "classes.dex";
 	runProcess(dx, "-JXmx384M", "--dex", "--output=" + dexfile,
 		   "--locals=full",  "--positions=lines", hecljar);
 
+	/* Replace the apk's AndroidManifest.xml and classes.dex */
 	runProcess("zip", "-j", "-r", heclapk, manifest);
 	runProcess("zip", "-j", "-r", heclapk, dexfile);
 
+	/* Finally, rename the whole business. */
 	(new File(heclapk)).renameTo(new File(dirname + "/" + appclass + ".apk"));
-
-	/* ... and put the new, updated Android.xml file in it. */
-
     }
 
+    /**
+     * The <code>copyFileStream</code> method copies one file stream
+     * into another.
+     *
+     * @param is an <code>InputStream</code> value
+     * @param os an <code>OutputStream</code> value
+     * @exception IOException if an error occurs
+     */
     private static void copyFileStream(InputStream is, OutputStream os)
 	throws IOException {
 
@@ -174,8 +225,20 @@ class AndroidBuilder {
 	is.close();
     }
 
+    /**
+     * The <code>runProcess</code> method runs an external program,
+     * prints its output and waits for it to exit.
+     *
+     * @exception IOException if an error occurs
+     */
     private static void runProcess(String ... args)
 	throws IOException {
+
+	String cmdline = "";
+	for (String c : args) {
+	    cmdline += c + " ";
+	}
+	System.err.println(cmdline);
 
 	ProcessBuilder pb = new ProcessBuilder(args);
 	Process process = pb.start();
@@ -190,8 +253,12 @@ class AndroidBuilder {
 	    error.append(line);
 	}
 
-	System.out.println(args[0] + " output = " + output);
-	System.out.println(args[0] + " error = " + error);
+	if (output.length() > 0) {
+	    System.out.println(output);
+	}
+	if (error.length() > 0) {
+	    System.out.println("error: '" + error + "'");
+	}
 	try {
 	    process.waitFor();
 	} catch (InterruptedException e) {
@@ -202,4 +269,11 @@ class AndroidBuilder {
 	    errStreamReader.close();
 	}
     }
+
+    private static void usage(Options opts) {
+	HelpFormatter formatter = new HelpFormatter();
+	formatter.printHelp("AndroidBuilder", opts);
+	System.exit(1);
+    }
+
 }
