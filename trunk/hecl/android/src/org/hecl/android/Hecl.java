@@ -15,28 +15,28 @@
 
 package org.hecl.android;
 
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.io.IOException;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
-
-import org.hecl.net.HttpCmd;
+import org.hecl.java.JavaCmd;
 import org.hecl.net.Base64Cmd;
+import org.hecl.net.HttpCmd;
 
 /**
  * The <code>Hecl</code> class is the main entry point into Hecl
@@ -80,17 +80,23 @@ public class Hecl extends Activity
      *
      * @param heclApp a <code>Bundle</code> value
      */
+
+    protected static boolean createNewInterp = true;
+
     @Override
     public void onCreate(Bundle heclApp)
     {
         super.onCreate(heclApp);
 
 	/* We don't want SubHecl to do this. */
-	if (this.getClass() == Hecl.class) {
+	if (createNewInterp) {
 	    try {
+		createNewInterp = false;
+		Log.v("HECL onCreate", "Starting new interp");
 		String script;
 		interp = new Interp();
 		loadLibs(interp);
+		createCommands(interp);
 		script = getResourceAsString(this.getClass(), R.raw.script, "UTF-8");
 		interp.eval(new Thing(script));
 	    } catch (Exception e) {
@@ -99,6 +105,11 @@ public class Hecl extends Activity
 	    }
 	}
 	heclHandler = new HeclHandler(interp);
+    }
+
+    protected void createCommands(Interp i) throws HeclException {
+ 	JavaCmd.load(interp, "org.hecl.android.Hecl", "hecl");
+ 	JavaCmd.load(interp, "org.hecl.android.SubHecl", "subhecl");
     }
 
     /**

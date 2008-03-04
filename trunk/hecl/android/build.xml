@@ -124,15 +124,20 @@
     </javac>
   </target>
 
+  <target name="hecl-android-jar" depends="compileAndroidMain">
+    <jar destfile="android/Hecl.jar" basedir="${android.build}">
+    </jar>
+  </target>
+
   <!-- Convert this project's .class files into .dex files. -->
-  <target name="dex" depends="compileAndroidMain">
+  <target name="dex" depends="hecl-android-jar">
     <exec executable="${dx}" failonerror="true">
       <arg value="-JXmx384M" />
       <arg value="--dex" />
       <arg value="--output=${intermediate-dex}" />
       <arg value="--locals=full" />
       <arg value="--positions=lines" />
-      <arg path="${android.build}" />
+      <arg path="android/Hecl.jar" />
     </exec>
   </target>
 

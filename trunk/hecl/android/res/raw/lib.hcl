@@ -1,3 +1,9 @@
+# Load some extra goodies here.
+
+java org.hecl.Interp interp
+java org.hecl.android.HeclHandler heclhandler
+java android.os.Message message
+
 # Library of helper procedures.
 
 proc expand {toexpand lst} {
@@ -74,9 +80,6 @@ proc contentQuery {uri} {
     return [[activity] managedQuery [uri parse $uri] [null] [null] [null]]
 }
 
-java org.hecl.Interp interp
-java org.hecl.android.HeclHandler heclhandler
-java android.os.Message message
 
 # gui --
 #

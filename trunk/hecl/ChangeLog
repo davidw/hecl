@@ -1,5 +1,17 @@
 2008-03-04  David N. Welton  <davidw@dedasys.com>
 
+	* android/build.xml: Make a jar and then create the dex files from
+	that.
+
+	* android/src/org/hecl/android/Hecl.java: Use a boolean to protect
+	the interp creation code that should only be run once, instead of
+	ugly class based code.  Added a createCommands method that gets
+	overridden by facade classes created by AndroidBuilder.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Moved hecl and
+	subhecl command creation to Hecl.java itself, so that they can be
+	subclassed by made up classes created by AndroidBuilder.
+
 	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
 	Beginnings of a tool to be utilized for creating Hecl Android
 	applications.

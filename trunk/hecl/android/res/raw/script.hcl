@@ -547,36 +547,42 @@ CreateActivity SendGTalk "Send GTalk Message" {
     set msgtext [edittext -new $context -layoutparams $layoutparams]
     set sendbutton [button -new $context -layoutparams $layoutparams -text "Send"]
 
-    set callback [callback -new [list [list SendMessage $context $msgtext]]]
+    set callback [callback -new [list [list SendMessage $msgtext]]]
     $sendbutton setonclicklistener $callback
+
+    set answers [textview -new $context -layoutparams $layoutparams -text ""]
+
     java org.hecl.Interp interp
     java org.hecl.android.HeclServiceConnection hserviceconnection
     java android.content.Intent intent
 
-    java com.google.android.gtalkservice.IGTalkService gtalkservice;
-    java com.google.android.gtalkservice.IGTalkSession gtalksession;
+    java com.google.android.gtalkservice.IGTalkService gtalkservice
+    java com.google.android.gtalkservice.IGTalkSession gtalksession
     java {com.google.android.gtalkservice.IGTalkService$Stub} gtalkstub
     java {com.google.android.gtalkservice.GTalkServiceConstants} gtalkconstants
     java com.google.android.gtalkservice.IChatSession chatsession
 
     $layout addview $msgtext
     $layout addview $sendbutton
+    $layout addview $answers
     $context setcontentview $layout
-}
-
-# SendMessage --
-#
-#	Send GTalk message.  This currently doesn't deal with the
-#	response
-
-proc SendMessage {context msgtext sendbutton} {
 
     set conn [hserviceconnection -new [list [thisinterp]]]
+
+    proc RecvMessage {args} [code {
+	set answers $a
+	set oldtext [$answers gettext]
+	gui [list $answers settext "${oldtext}\n[lindex $args 1]"]
+    } [list a $answers]]
 
     proc onserviceconnected {classname service} {
 	set gtalkservice [gtalkstub asInterface $service]
 	global GtalkSession
+	# FIXME davidnwelton@gmail.com
 	set GtalkSession [[$gtalkservice getDefaultSession] createChatSession "en2it@bot.talk.google.com"]
+	set hcb [heclchatlistener -new [list [thisinterp]]]
+	$hcb -field newMessageReceived [list RecvMessage]
+	$GtalkSession addRemoteChatListener $hcb
     }
 
     $conn -field onserviceconnected onserviceconnected
@@ -584,22 +590,19 @@ proc SendMessage {context msgtext sendbutton} {
     set i [$i setcomponent [gtalkconstants -field GTALK_SERVICE_COMPONENT]]
 
     $context bindservice $i $conn 0
+}
 
-    global message_txt
+# SendMessage --
+#
+#	Send GTalk message.  This currently doesn't deal with the
+#	response
+
+java org.hecl.android.HeclChatListener heclchatlistener;
+
+proc SendMessage {msgtext sendbutton} {
     set message_txt [$msgtext gettext]
-
-    after 1000 {
-	set err ""
-	catch {
-	    global message_txt
-	    global GtalkSession
-	    # FIXME davidnwelton@gmail.com
-	    $GtalkSession sendTextMessage "Another Android User says: $message_txt"
-	} err
-	if { strlen $err } {
-	    androidlog "SendMessage error: $err"
-	}
-    }
+    global GtalkSession
+    $GtalkSession sendTextMessage "Android Hecl User says: $message_txt"
 }
 
 # Activity --

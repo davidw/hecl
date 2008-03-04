@@ -208,8 +208,6 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
-	JavaCmd.load(ip, "org.hecl.android.Hecl", "hecl");
-	JavaCmd.load(ip, "org.hecl.android.SubHecl", "subhecl");
 
 	HeclCallback.interp = ip;
     }
