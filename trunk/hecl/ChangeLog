@@ -1,3 +1,9 @@
+2008-03-04  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Beginnings of a tool to be utilized for creating Hecl Android
+	applications.
+
 2008-02-28  David N. Welton  <davidw@dedasys.com>
 
 	* android/src/org/hecl/android/HeclServiceConnection.java: Removed
