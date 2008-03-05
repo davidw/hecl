@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -46,6 +47,7 @@ class AndroidBuilder {
 	opts.addOption("class", true, "New class name");
 	opts.addOption("package", true, "New package name, like bee.bop.foo.bar");
 	opts.addOption("label", true, "Label");
+	opts.addOption("permissions", true, "Android Permissions");
 
 	CommandLineParser parser = new PosixParser();
 	CommandLine cmd = parser.parse(opts, args);
@@ -78,6 +80,14 @@ class AndroidBuilder {
 	    packagename = cmd.getOptionValue("package");
 	}
 
+	String perms = "";
+ 	if(cmd.hasOption("permissions")) {
+	    for(String p : cmd.getOptionValue("permissions").split(",")) {
+		perms += "<uses-permission android:name=\"android.permission." + p + "\" />\n";
+	    }
+	}
+
+
 	/* Calculate some other stuff based on the informatin we have. */
 	String tmpdir = System.getProperty("java.io.tmpdir");
 	String dirname = tmpdir + "/" + appclass + "-" + System.currentTimeMillis();
@@ -85,13 +95,16 @@ class AndroidBuilder {
 	String tmppackage = dirname + "/" + "Temp.apk";
 	String hecljar = dirname + "/" + "Hecl.jar";
 	String heclapk = dirname + "/" + "Hecl.apk";
-
+	String resdir = dirname + "/" + "res/";
+	String icondir = resdir + "/" + "drawable/";
+	String iconfile = icondir + "aicon.png";
 
 	/* The AndroidManifest.xml template. */
 	String xmltemplate =
 	    "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" \n" +
 	    "package=\"" + packagename + "\">\n" +
-	    "<application>\n" +
+	    perms +
+	    "<application android:icon=\"@drawable/aicon\">\n" +
 	    "<activity android:name=\"" + appclass + "\" android:label=\"" + appname + "\">\n" +
 	    "<intent-filter>\n" +
 	    "<action android:name=\"android.intent.action.MAIN\" />\n" +
@@ -142,15 +155,25 @@ class AndroidBuilder {
             }
 	}
 
+	InputStream is = null;
+	FileOutputStream fos = null;
+
+	/* Make a directory for the icon. */
+	(new File(icondir)).mkdirs();
+
+	copyFileStream(AndroidBuilder.class.getResourceAsStream("/android/res/drawable/aicon.png"),
+		       new FileOutputStream(iconfile));
+
 	/* Now, we run aapt to generate a new, compressed .xml file... */
-	runProcess(aapt, "package", "-f", "-c", "-M", manifest, "-I", androidjar, tmppackage);
+	runProcess(aapt, "package", "-f", "-c", "-M", manifest,
+		   "-S", resdir, "-I", androidjar, tmppackage);
 
 	/* Then we extract it, overwriting AndroidManifest.xml*/
 	ZipFile zipfile = new ZipFile(tmppackage);
 	ZipEntry newmanifest = zipfile.getEntry("AndroidManifest.xml");
 	System.out.println("newmanifest is " + newmanifest);
-	InputStream is = zipfile.getInputStream(newmanifest);
-	FileOutputStream fos = new FileOutputStream(manifest);
+	is = zipfile.getInputStream(newmanifest);
+	fos = new FileOutputStream(manifest);
 	copyFileStream(is, fos);
 
 	/* Now, we copy in Hecl.jar  ...  */
@@ -202,8 +225,11 @@ class AndroidBuilder {
 	runProcess("zip", "-j", "-r", heclapk, manifest);
 	runProcess("zip", "-j", "-r", heclapk, dexfile);
 
-	/* Finally, rename the whole business. */
-	(new File(heclapk)).renameTo(new File(dirname + "/" + appclass + ".apk"));
+	/* Finally, rename the whole business back to the calling directory. */
+	(new File(heclapk)).renameTo(new File(System.getProperty("user.dir") + "/" + appclass + ".apk"));
+
+	/* FIXME - we should probably destroy the temporary directory,
+	 * but it's very useful for debugging purposes.  */
     }
 
     /**
