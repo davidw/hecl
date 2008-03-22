@@ -30,8 +30,10 @@ import android.widget.Toast;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Vector;
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.ListThing;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
 import org.hecl.java.JavaCmd;
@@ -67,12 +69,25 @@ public class Hecl extends Activity
     public Thing menucallbackvar = null;
     public Thing menucallbackcode = null;
 
+    public Thing onPauseCallBack = null;
+    public Thing onDestroyCallBack = null;
+
     /**
      *  <code>mailBox</code> is used as a place to stash scripts being
      *  passed to SubHecls.
      *
      */
     private static Thing mailBox = null;
+
+
+    /**
+     * <code>refCount</code> is a reference count for the interpreter
+     * itself.  We want it to go away when the main Hecl instance is
+     * destroyed, but not for SubHecl instances.
+     *
+     */
+    protected static int refCount = 0;
+
 
     /**
      * The <code>onCreate</code> is the application's entry point.
@@ -81,18 +96,13 @@ public class Hecl extends Activity
      * @param heclApp a <code>Bundle</code> value
      */
 
-    protected static boolean createNewInterp = true;
-
     @Override
     public void onCreate(Bundle heclApp)
     {
         super.onCreate(heclApp);
-
-	/* We don't want SubHecl to do this. */
-	if (createNewInterp) {
+	if (refCount == 0) {
 	    try {
-		createNewInterp = false;
-		Log.v("HECL onCreate", "Starting new interp");
+		Log.v("hecl", "Starting new interp");
 		String script;
 		interp = new Interp();
 		loadLibs(interp);
@@ -105,6 +115,7 @@ public class Hecl extends Activity
 	    }
 	}
 	heclHandler = new HeclHandler(interp);
+	refCount ++;
     }
 
     protected void createCommands(Interp i) throws HeclException {
@@ -172,11 +183,23 @@ public class Hecl extends Activity
 
 	/* Make sure everything's pointing at the right place. */
 	AndroidCmd.setCurrentHecl(this);
+	Log.v("hecl", "onResume");
      }
 
     @Override
     protected void onPause() {
 	super.onPause();
+
+	if (onPauseCallBack != null) {
+	    try {
+		Vector vec = ListThing.get(onPauseCallBack.deepcopy());
+		interp.eval(ListThing.create(vec));
+	    } catch (HeclException he) {
+		Hecl.logStacktrace(he);
+		Log.v("hecl onPause callback", he.toString());
+	    }
+	}
+
 	Log.v("hecl", "onPause");
     }
 
@@ -189,6 +212,21 @@ public class Hecl extends Activity
     @Override
     protected void onDestroy() {
 	super.onDestroy();
+
+	refCount --;
+	if (refCount == 0) {
+	    if (onDestroyCallBack != null) {
+		try {
+		    Vector vec = ListThing.get(onDestroyCallBack.deepcopy());
+		    interp.eval(ListThing.create(vec));
+		} catch (HeclException he) {
+		    Hecl.logStacktrace(he);
+		    Log.v("hecl onDestroy callback", he.toString());
+		}
+	    }
+
+	    interp = null;
+	}
 	Log.v("hecl", "onDestroy");
     }
 

@@ -15,19 +15,24 @@
 
 package org.hecl.android;
 
-import java.lang.reflect.Field;
-import java.util.Hashtable;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-import android.util.Log;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import org.hecl.DoubleThing;
 import org.hecl.HeclException;
-import org.hecl.Interp;
 import org.hecl.IntThing;
+import org.hecl.Interp;
 import org.hecl.ListThing;
 import org.hecl.LongThing;
 import org.hecl.ObjectThing;
@@ -57,6 +62,8 @@ public class AndroidCmd extends Operator {
     public static final int LOG = 5;
     public static final int MENUSETUP = 6;
     public static final int MENUCALLBACK = 7;
+
+    public static final int RESOURCEBYTES = 8;
 
     /* These will eventually be moved elsewhere - the core most
      * likely. */
@@ -131,6 +138,25 @@ public class AndroidCmd extends Operator {
 		hecl.menucallbackcode = argv[2];
 		return null;
 
+	    case RESOURCEBYTES:
+		try {
+		String filename = hecl.getPackageManager().getApplicationInfo(
+		    hecl.getPackageName(), 0).sourceDir;
+		ZipFile apk = new ZipFile(filename);
+		InputStream is = apk.getInputStream(apk.getEntry(argv[1].toString()));
+		byte[] buf = new byte[1024];
+		int n = 0;
+		int read = 0;
+		String res = "";
+		while ((n = is.read(buf)) > 0) {
+		    res += new String(buf, "iso8859-1");
+		    read += n;
+		}
+		return new Thing(res.substring(0, read));
+		} catch (Exception e) {
+		    throw new HeclException(argv[0].toString() + " exception: " + e.toString());
+		}
+
 	    case TOINT:
 		return IntThing.create(IntThing.get(argv[1]));
 	    case TOLONG:
@@ -162,6 +188,7 @@ public class AndroidCmd extends Operator {
 
 	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
 	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
+	    cmdtable.put("resourcebytes", new AndroidCmd(RESOURCEBYTES,1,1));
 
 	    cmdtable.put("i", new AndroidCmd(TOINT, 1, 1));
 	    cmdtable.put("l", new AndroidCmd(TOLONG, 1, 1));

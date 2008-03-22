@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_GPS" />
 
-    <application android:icon="@drawable/hecl">
+    <application android:icon="@org.hecl.android:drawable/aicon">
 
         <provider android:name="org.hecl.android.ScriptProvider"
                 android:authorities="org.hecl.android.Scripts" />
