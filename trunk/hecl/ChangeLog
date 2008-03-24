@@ -1,3 +1,30 @@
+2008-03-24  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Parse.java: Set literal bit for all things created
+	in the parser.
+
+	* core/org/hecl/Interp.java: addTimer isn't synchronized any more
+	- we synchronize on the timers object instead.  setVar: if the
+	value is literal, make a deepcopy of it.
+
+	* core/org/hecl/Stanza.java: Don't automatically set copy flag -
+	it's not needed.
+
+	* core/org/hecl/SubstThing.java: Added code to handle literal
+	Things.
+
+	* core/org/hecl/PrintThing.java: Print out the literal flag in
+	addition to the copy flag.
+
+	* core/org/hecl/Thing.java: Added 'literal' flag, which is used
+	exclusively for Things that come from the parser.
+
+2008-03-08  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Added refcount scheme
+	for creating new interpreters so as to avoid doing this in SubHecl
+	instances.
+
 2008-03-05  David N. Welton  <davidw@dedasys.com>
 
 	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:

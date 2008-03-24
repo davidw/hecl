@@ -37,6 +37,7 @@ import jline.NullCompletor;
 import jline.SimpleCompletor;
 //#endif
 
+
 /**
  * <code>Interp</code> is the Hecl interpreter, the class responsible for
  * knowing what variables and commands are available.
@@ -521,7 +522,8 @@ public class Interp extends Thread/*implements Runnable*/ {
 	return v;
     }
     
-    public synchronized HeclTask addTimer(Thing timerThing,int millisecs) {
+    public HeclTask addTimer(Thing timerThing,int millisecs) {
+	synchronized (timers) {
 	int n = timers.size();
 	long ts = System.currentTimeMillis()+millisecs;
 	HeclTask t = new HeclTask(timerThing, ts,TIMERPREFIX);
@@ -534,6 +536,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	}
 	//System.err.println("Adding timer, time="+ts);
 	return addTask(timers,t,i);
+	}
     }
     
 
@@ -563,6 +566,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	// may be processing events that don't do anything inside of Hecl.
 	int count = 0;
 	while(true) {
+
 	    // First check for async events...
 	    HeclTask t = nextTask(asyncs,-1);
 	    if(t != null) {
@@ -658,12 +662,12 @@ public class Interp extends Thread/*implements Runnable*/ {
     }
 
     public void run() {
-	//	System.err.println("interp running...");
+//	System.err.println("interp running...");
 	long now = System.currentTimeMillis();
 	while(running) {
 	    doOneEvent(ALL_EVENTS);
 	}
-	//	System.err.println("interp stopped!");
+//	System.err.println("interp stopped!");
     }
 
 
@@ -897,19 +901,31 @@ public class Interp extends Thread/*implements Runnable*/ {
 	}
 	lookup.put(varname, value);
 //#else
+
+	if (value.isLiteral()) {
+	    try {
+		Thing copy = value.deepcopy();
+		value = copy;
+	    } catch (HeclException he) {
+		/* This isn't going to happen - we're dealing with a
+		 * literal from the parser. */
+		System.err.println("Interp.java: This can never happen!");
+	    }
+	}
+
 	// first take care of GLOBALREFTHING used to flag ref to global var
 	if(value == GLOBALREFTHING) {
 	    // do not clutter global table with GLOBALREFTHING
 	    Hashtable globalhash = getVarhash(0);
 	    if(lookup != globalhash) {
 		//System.err.println(" not on global level");
-		lookup.put(varname,value);
+		lookup.put(varname, value);
 //#ifdef emptyglobals
 		if(null == globalhash.get(varname)) {
 		    // Insert a new empty thing at top level for the sake of
 		    // modifying commands.
 		    //System.err.println(" inserting empty global value");
-		    globalhash.put(varname,new Thing(""));
+		    globalhash.put(varname, new Thing(""));
 		}
 //#endif
 	    } else {
@@ -926,7 +942,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 		lookup = getVarhash(0);
 	    }
 	}
-	lookup.put(varname,value);
+	lookup.put(varname, value);
 //#endif
     }
 
@@ -1130,13 +1146,15 @@ public class Interp extends Thread/*implements Runnable*/ {
      *
      * @return A <code>String</code> being the name of the inserted task.
      */
-    private synchronized HeclTask addTask(Vector v,HeclTask task,int pos) {
+    private HeclTask addTask(Vector v,HeclTask task,int pos) {
+	synchronized (v) {
 	if(pos < 0)
 	    v.addElement(task);
 	else
 	    v.insertElementAt(task,pos);
-	notify();
+//	notify();
 	return task;
+	}
     }
     
 

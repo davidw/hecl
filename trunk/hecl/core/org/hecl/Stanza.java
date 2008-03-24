@@ -158,7 +158,6 @@ class Stanza {
 		    newargv[i] = CodeThing.doCodeSubst(interp, argv[i]);
 		} else {
 		    newargv[i] = argv[i];
-		    newargv[i].copy = true;
 		}
 	    }
 	} catch (HeclException he) {
@@ -243,5 +242,9 @@ class Stanza {
 	    }
 	}
 	return out.toString();
+    }
+
+    public Thing[] getArgv() {
+	return argv;
     }
 }

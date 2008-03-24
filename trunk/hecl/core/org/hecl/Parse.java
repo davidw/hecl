@@ -172,25 +172,27 @@ public class Parse {
 		String s = str.getStringRep();
 		try {
 		    newthing = new Thing(NumberThing.asNumber(new Thing(s)));
+		    newthing.literal = true;
 		} catch (NumberFormatException e) {
 		}
 	    }
 	    if (newthing == null) {
 		newthing = new Thing(str);
+		newthing.literal = true;
 	    }
 	    outList.addElement(newthing);
 	} else if (outGroup.size() > 1) {
 	    Vector outv = new Vector();
 	    for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
 		RealThing rt = (RealThing)e.nextElement();
-		outv.addElement(new Thing(rt));
+		outv.addElement(new Thing(rt).setLiteral());
 	    }
 
-	    outList.addElement(GroupThing.create(outv));
+	    outList.addElement(GroupThing.create(outv).setLiteral());
 	} else {
 	    /* If nothing has been added (for example {}), then make
 	     * it an empty element. */
-	    outList.addElement(new Thing(""));
+	    outList.addElement(new Thing("").setLiteral());
 	}
 	newCurrent();
     }
@@ -363,7 +365,6 @@ public class Parse {
      * separate them from any surrounding text.
      *
      * @param state a <code>ParseState</code> value
-     * @param docopy a <code>boolean</code> value
      * @exception HeclException if an error occurs
      */
     private void parseDollar(ParseState state)

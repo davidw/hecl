@@ -31,6 +31,13 @@ public class Thing extends Object {
      * be copied if something tries to write to it.  */
     protected boolean copy = false;
 
+    /**
+     * <code>literal</code> is used to indicate Things which come
+     * directly from the parser and thus should not be changed.
+     *
+     */
+    protected boolean literal = false;
+
     /* Refers to a global variable? */
     public boolean global = false;
 
@@ -39,6 +46,7 @@ public class Thing extends Object {
 
     /* Depth that things like lists are allowed to nest. */
     static final int NESTDEPTH = 10;
+
 
     /**
      * Creates a new <code>Thing</code> instance from a string.
@@ -72,11 +80,9 @@ public class Thing extends Object {
     }
 
     /**
-     * <code>setVal</code> sets the internal representation of the Thing, and
-     * cancels the string representation.
+     * <code>setVal</code> sets the internal representation of the Thing.
      *
-     * @param realthing
-     *            a <code>RealThing</code> value
+     * @param realthing a <code>RealThing</code> value
      */
     public void setVal(RealThing realthing) {
         val = realthing;
@@ -172,6 +178,21 @@ public class Thing extends Object {
     }
 //#endif
 
+
+    /**
+     * The <code>setLiteral</code> method sets the thing in question
+     * to be a literal Thing, and returns it.
+     *
+     * @return a <code>Thing</code> value
+     */
+    public Thing setLiteral() {
+	literal = true;
+	return this;
+    }
+
+    public boolean isLiteral() {
+	return literal;
+    }
 
     /**
      * <code>deepcopy</code> copies the thing, its value, and any elements the
