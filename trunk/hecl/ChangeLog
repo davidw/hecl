@@ -1,5 +1,8 @@
 2008-03-24  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Thing.java: setCopyVal won't copy into literals,
+	either.
+
 	* core/org/hecl/Parse.java: Set literal bit for all things created
 	in the parser.
 

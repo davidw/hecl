@@ -89,7 +89,7 @@ public class Thing extends Object {
     }
 
     public void setCopyVal(RealThing realthing) {
-	if (!copy) {
+	if (!copy && !literal) {
 	    setVal(realthing);
 	}
     }
