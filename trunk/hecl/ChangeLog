@@ -1,5 +1,9 @@
 2008-03-24  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/SubstThing.java: Removed code utilizing the
+	literal flag, as this is entirely covered in Interp's setVar
+	method.
+
 	* core/org/hecl/Thing.java: setCopyVal won't copy into literals,
 	either.
 
