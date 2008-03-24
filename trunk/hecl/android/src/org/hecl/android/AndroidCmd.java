@@ -60,8 +60,6 @@ public class AndroidCmd extends Operator {
     public static final int ALERT = 3;
     public static final int FINDVIEW = 4;
     public static final int LOG = 5;
-    public static final int MENUSETUP = 6;
-    public static final int MENUCALLBACK = 7;
 
     public static final int RESOURCEBYTES = 8;
 
@@ -129,15 +127,6 @@ public class AndroidCmd extends Operator {
 		Log.v("hecl log", argv[1].toString());
 		return null;
 
-	    case MENUSETUP:
-		hecl.menuvar = argv[1];
-		hecl.menucode = argv[2];
-		return null;
-	    case MENUCALLBACK:
-		hecl.menucallbackvar = argv[1];
-		hecl.menucallbackcode = argv[2];
-		return null;
-
 	    case RESOURCEBYTES:
 		try {
 		String filename = hecl.getPackageManager().getApplicationInfo(
@@ -186,8 +175,6 @@ public class AndroidCmd extends Operator {
 	    cmdtable.put("findview", new AndroidCmd(FINDVIEW,1,1));
 	    cmdtable.put("androidlog", new AndroidCmd(LOG,1,1));
 
-	    cmdtable.put("menusetup", new AndroidCmd(MENUSETUP,2,2));
-	    cmdtable.put("menucallback", new AndroidCmd(MENUCALLBACK,2,2));
 	    cmdtable.put("resourcebytes", new AndroidCmd(RESOURCEBYTES,1,1));
 
 	    cmdtable.put("i", new AndroidCmd(TOINT, 1, 1));

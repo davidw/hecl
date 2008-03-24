@@ -55,19 +55,12 @@ public class Hecl extends Activity
      *
      */
     protected static Interp interp;
-    private Thing menuCreateCode;
-    private Thing menuItemSelected;
 
     protected HeclHandler heclHandler;
 
 
-    /* Public for the time being.  These are accessed from
-     * AndroidCmd. */
-    public Thing menuvar = null;
-    public Thing menucode = null;
-
-    public Thing menucallbackvar = null;
-    public Thing menucallbackcode = null;
+    public Thing onCreateOptionsMenuCallBack = null;
+    public Thing onOptionsItemSelectedCallBack = null;
 
     public Thing onPauseCallBack = null;
     public Thing onDestroyCallBack = null;
@@ -240,20 +233,19 @@ public class Hecl extends Activity
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
 
-	if (menuvar == null || menucode == null) {
-	    return false;
+	if (onCreateOptionsMenuCallBack != null) {
+	    try {
+		Vector vec = ListThing.get(onCreateOptionsMenuCallBack.deepcopy());
+		vec.add(ObjectThing.create(menu));
+		interp.eval(ListThing.create(vec));
+	    } catch (HeclException he) {
+		Hecl.logStacktrace(he);
+		Log.v("hecl onCreateOptionsMenu callback", he.toString());
+	    }
 	}
 
-	try {
-	    interp.setVar(menuvar, ObjectThing.create(menu));
-	    interp.eval(menucode);
-	} catch (HeclException he) {
-	    errmsg(he.toString());
-	}
-
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**
@@ -267,15 +259,15 @@ public class Hecl extends Activity
     @Override
     public boolean onOptionsItemSelected(Menu.Item item) {
 
-	if (menucallbackvar == null || menucallbackcode == null) {
-	    return false;
-	}
-
-	try {
-	    interp.setVar(menucallbackvar, ObjectThing.create(item));
-	    interp.eval(menucallbackcode);
-	} catch (HeclException he) {
-	    errmsg(he.toString());
+	if (onOptionsItemSelectedCallBack != null) {
+	    try {
+		Vector vec = ListThing.get(onOptionsItemSelectedCallBack.deepcopy());
+		vec.add(ObjectThing.create(item));
+		interp.eval(ListThing.create(vec));
+	    } catch (HeclException he) {
+		Hecl.logStacktrace(he);
+		Log.v("hecl onOptionsItemSelected callback", he.toString());
+	    }
 	}
 
         return super.onOptionsItemSelected(item);

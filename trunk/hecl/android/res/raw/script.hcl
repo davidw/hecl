@@ -15,6 +15,9 @@ proc CreateActivity {name title code} {
 
     set setup [list {[activity]} settitle $title]
     append $setup "\n"
+    append $setup "MenuSetup\n"
+    append $setup "global procname\n"
+    append $setup "set procname $name\n"
     append $setup $code
 
     proc $name {} $setup
@@ -27,7 +30,6 @@ proc CreateActivity {name title code} {
 
 CreateActivity SimpleWidgets "Simple Widgets" {
     set context [activity]
-    set procname SimpleWidgets
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -387,7 +389,7 @@ CreateActivity TaskList "Task List" {
     }
     androidlog "IDs: $taskIdList"
     $layout addview [textview -new $context -layoutparams $layoutparams \
-			 -text "Currently running tasks"]
+			 -text "Currently running tasks.  Click to switch:"]
 
     set lview [basiclist $context $tasklist -layoutparams $layoutparams]
     $layout addview $lview
@@ -666,9 +668,14 @@ proc viewCode {} {
     global procname
     global context
 
-    set layout [linearlayout -new $context]
-    $layout setorientation VERTICAL
+    androidlog "proc name: $procname"
+
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+    set scroll [scrollview -new $context -layoutparams $layoutparams]
+    set layout [linearlayout -new $context -layoutparams $layoutparams]
+    $layout setorientation VERTICAL
+
+    $scroll addview $layout
 
     set text [intro proccode $procname]
     $layout addview [edittext -new $context \
@@ -676,7 +683,7 @@ proc viewCode {} {
 			 -layoutparams $layoutparams]
 
     set procname viewCode
-    [activity] setcontentview $layout
+    [activity] setcontentview $scroll
 }
 
 # main --
@@ -711,23 +718,32 @@ proc main {} {
 
     [activity] setcontentview $layout
 
+    MenuSetup
+}
+
+# MenuSetup --
+#
+#	Set up the menus so that it's possible to see the source code
+#	for the current widget demo/proc.
+
+proc MenuSetup {} {
     # Used to set up a callback for when the menu is requested by the
     # user, and it's necessary to set it up.
-    menusetup {m} {
-	$m add 0 0 "View Source"
-	$m add 0 1 "Main Screen"
+
+    proc MenuCallBack {menu} {
+	$menu add 0 0 "View Source"
     }
+
+    [activity] -field onCreateOptionsMenuCallBack MenuCallBack
 
     # Sets up the actual callback code for when a menu item is
     # selected.
-    menucallback {mi} {
-	set id [$mi getid]
-	if { = $id 1 } {
-	    main
-	} elseif { = $id 0 } {
-	    viewCode
-	}
+
+    proc OptionsSelected {menuitem} {
+	viewCode
     }
+
+    [activity] -field onOptionsItemSelectedCallBack OptionsSelected
 }
 
 # This is used everywhere, so making it a global is no big deal.
