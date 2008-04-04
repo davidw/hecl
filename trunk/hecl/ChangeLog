@@ -1,4 +1,21 @@
+2008-04-04  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added a "thisinterp" command for
+	the J2SE version, which returns an ObjectThing with the current
+	interprter in it.  Also fixed the after command to return a handle
+	to the event.
+
 2008-03-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed menusetup
+	and menucallback commands in favor of public fields of the Hecl
+	class.
+
+	* android/src/org/hecl/android/Hecl.java: Removed menu junk in
+	favor of two callbacks for menus.
+
+	* android/res/raw/script.hcl: Added MenuSetup proc with new menu
+	view source command.
 
 	* core/org/hecl/SubstThing.java: Removed code utilizing the
 	literal flag, as this is entirely covered in Interp's setVar

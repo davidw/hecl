@@ -56,10 +56,14 @@ class InterpCmds extends Operator {
     protected static final int FREEMEM = 23;
     protected static final int TOTALMEM = 24;
 
+
     public static final int HASCLASS = 70;//Class.forName()
 
     public static final int CLASSINFO = 80; // hecl internal!!!
 
+//#if android || j2se
+    public static final int GETINTERP = 100;
+//#endif
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	Thing result = null;
@@ -215,8 +219,7 @@ class InterpCmds extends Operator {
 	    if(milli >= 0) {
 		switch(argv.length) {
 		  case 3:
-		    interp.addTimer(argv[2],milli);
-		    break;
+		      return new Thing((interp.addTimer(argv[2],milli)).getName());
 		  case 2:
 		    ;			    // fool emacs indentation...
 		    {
@@ -294,6 +297,11 @@ class InterpCmds extends Operator {
 
 	  case CLASSINFO:
 	    return new Thing("<"+argv[1].getVal().thingclass()+">");
+
+//#if android || j2se
+	    case GETINTERP:
+		return ObjectThing.create(interp);
+//#endif
 
 	  case GC:
 	    System.gc();
@@ -446,5 +454,10 @@ class InterpCmds extends Operator {
         cmdtable.put("hasclass", new InterpCmds(HASCLASS, 1, 1));
 
         cmdtable.put("classof", new InterpCmds(CLASSINFO, 1, 1));
+
+//#if android || j2se
+        cmdtable.put("thisinterp", new InterpCmds(GETINTERP, 0, 0));
+//#endif
+
     }
 }
