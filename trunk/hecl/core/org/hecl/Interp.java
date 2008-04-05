@@ -521,24 +521,24 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    v.addElement(timers.elementAt(i));
 	return v;
     }
-    
-    public HeclTask addTimer(Thing timerThing,int millisecs) {
+
+    public HeclTask addTimer(Thing timerThing, int millisecs) {
 	synchronized (timers) {
-	int n = timers.size();
-	long ts = System.currentTimeMillis()+millisecs;
-	HeclTask t = new HeclTask(timerThing, ts,TIMERPREFIX);
-	
-	int i;
-	for(i=0; i<n; ++i) {
-	    HeclTask other = (HeclTask)timers.elementAt(i);
-	    if(other.getGeneration() > ts)
-		break;
-	}
-	//System.err.println("Adding timer, time="+ts);
-	return addTask(timers,t,i);
+	    int n = timers.size();
+	    long ts = System.currentTimeMillis()+millisecs;
+	    HeclTask t = new HeclTask(timerThing, ts, TIMERPREFIX);
+
+	    int i;
+	    for(i=0; i<n; ++i) {
+		HeclTask other = (HeclTask)timers.elementAt(i);
+		if(other.getGeneration() > ts)
+		    break;
+	    }
+	    //System.err.println("Adding timer, time="+ts);
+	    return addTask(timers,t,i);
 	}
     }
-    
+
 
     public void cancelTimer(String name) {
 	cancelTask(timers,name);
@@ -558,6 +558,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     
     
     public boolean doOneEvent(int flags) {
+
 	if((flags & ALL_EVENTS) == 0)
 	    flags = ALL_EVENTS;
 
@@ -572,7 +573,7 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    if(t != null) {
 		return executeTask(t);
 	    }
-	    
+
 	    long now = System.currentTimeMillis();
 
 	    if((flags & TIMER_EVENTS) != 0) {
@@ -583,11 +584,14 @@ public class Interp extends Thread/*implements Runnable*/ {
 	    }
 
 	    // Determine maxblocktime
-	    maxblocktime = (flags & DONT_WAIT) != 0 ? 0 : 1000;
-	    synchronized(this) {
-		if(timers.size() > 0) {
-		    t = (HeclTask)timers.elementAt(0);
-		    maxblocktime = t.getGeneration() - now;
+	    if ((flags & DONT_WAIT) != 0) {
+		maxblocktime = 1000;
+	    } else {
+		synchronized(this) {
+		    if(timers.size() > 0) {
+			t = (HeclTask)timers.elementAt(0);
+			maxblocktime = t.getGeneration() - now;
+		    }
 		}
 	    }
 	    // this may reduce maxblocktime!
@@ -597,12 +601,12 @@ public class Interp extends Thread/*implements Runnable*/ {
 
 	    if(count > 0 || maxblocktime <= 0)
 		break;
-	    //System.err.println("interp wait for "+maxblocktime);
+
 	    yield();			    // give other thread a chance
 	    synchronized(this) {
 		try {
-		    this.wait(maxblocktime);		}
-		catch (InterruptedException e) {
+		    this.wait(maxblocktime);
+		} catch (InterruptedException e) {
 		    // it doesn't matter
 		}
 	    }
