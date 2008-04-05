@@ -585,8 +585,9 @@ public class Interp extends Thread/*implements Runnable*/ {
 
 	    // Determine maxblocktime
 	    if ((flags & DONT_WAIT) != 0) {
-		maxblocktime = 1000;
+		maxblocktime = 0;
 	    } else {
+		maxblocktime = 1000;
 		synchronized(this) {
 		    if(timers.size() > 0) {
 			t = (HeclTask)timers.elementAt(0);
