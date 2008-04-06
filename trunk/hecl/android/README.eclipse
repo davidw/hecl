@@ -1,0 +1,30 @@
+Martin Mainusch explains how to edit Hecl/Android in Eclipse:
+
+First, in case you haven't done it already, you have to install the
+Android Eclipse plugin:
+
+http://code.google.com/android/intro/installing.html#installingplugin
+
+To use Eclipse with Hecl/Android, I create a new android project and
+just copy everything from hecl/android/ folder, meaning /src, /res and
+Androidmanifest.xml into the newly created project. 
+
+Then, you have to set the path to /hecl/jars/j2se.jar:
+
+Select the new project in the package view in eclipse > right click >
+select properties > select Java Build Path > and select the tab
+"Libraries".
+
+Here you should see the Hecl.jar from /hecl/jars/j2se.jar. Open the
+tree view and select source attachment > and than "Edit" -button on
+the right site of the view.
+
+Now you have to select "workspace" and than navigate to the hecl/core
+folder.
+
+Please keep in mind that hecl has be build with <property
+name="hecldebug" value="true" /> (located in the settings.xml file)
+for debugging to work.
+
+After that, I can set a breakpoint in Hecl.java file where ever I wish
+and than start the debug section.
