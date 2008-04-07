@@ -414,7 +414,7 @@ public class Reflector {
 		retval[0] = IntThing.get(heclparm) != 0;
 		foundmatch = true;
 	    }
-	} else if(rtype == int.class || rtype == Integer.class) {
+	} else if (rtype == int.class || rtype == Integer.class) {
 	    if (heclparmt.equals("int")) {
 		retval[0] = IntThing.get(heclparm);
 		foundmatch = true;
@@ -424,11 +424,30 @@ public class Reflector {
 		retval[0] = LongThing.get(heclparm);
 		foundmatch = true;
 	    }
+	} else if (rtype == float.class || rtype == Float.class) {
+	    if (heclparmt.equals("double")) {
+		retval[0] = (float)DoubleThing.get(heclparm);
+		foundmatch = true;
+	    }
+	} else if (rtype == double.class || rtype == Double.class) {
+	    if (heclparmt.equals("double")) {
+		retval[0] = DoubleThing.get(heclparm);
+		foundmatch = true;
+	    }
 	} else if (rtype == CharSequence.class ||
 		   rtype == String.class) {
 	    if (heclparmt.equals("string")) {
 		retval[0] = heclparm.toString();
 		foundmatch = true;
+	    }
+	} else if (javaclassname.equals("byte[]")) {
+	    if (heclparmt.equals("string")) {
+		try {
+		    retval[0] = heclparm.toString().getBytes("ISO8859_1");
+		    foundmatch = true;
+		} catch (java.io.UnsupportedEncodingException e) {
+		    throw new HeclException(e.toString());
+		}
 	    }
 	} else if (javaclassname.equals("int[]")) {
 	    /* This is a hack - we need to look and see if it's an
@@ -525,6 +544,15 @@ public class Reflector {
 		v.add(IntThing.create(i));
 	    }
 	    return ListThing.create(v);
+	} else if (rtypename.equals("byte[]")) {
+	    /* Let's use this encoding for now...  */
+	    String s = null;
+	    try {
+		s = new String((byte[])o, "ISO8859_1");
+	    } catch (java.io.UnsupportedEncodingException e) {
+		/* FIXME - this should never happen. */
+	    }
+	    return new Thing(s);
 	} else if (rtype == Object.class) {
 	    if (o.getClass() == Thing.class) {
 		/* If we've managed to stash a thing somewhere. */

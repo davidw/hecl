@@ -1,3 +1,10 @@
+2008-04-08  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Added more conversions:
+	floats and doubles get transformed into the right java types now.
+	Also, byte[] gets turned into a StringThing, and vice versa when
+	going from StringThing to a byte[] signature.
+
 2008-04-06  David N. Welton  <davidw@dedasys.com>
 
 	* android/README.eclipse: Added some helpful information from
