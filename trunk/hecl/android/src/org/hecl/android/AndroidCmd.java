@@ -207,19 +207,14 @@ public class AndroidCmd extends Operator {
 
 	JavaCmd.load(ip, "android.widget.ArrayAdapter", "arrayadapter");
 	JavaCmd.load(ip, "android.widget.Button", "button");
-	JavaCmd.load(ip, "android.widget.CheckBox", "checkbox");
 	JavaCmd.load(ip, "android.widget.EditText", "edittext");
 	JavaCmd.load(ip, "android.widget.LinearLayout", "linearlayout");
 	JavaCmd.load(ip, "android.widget.LinearLayout$LayoutParams", "linearlayoutparams");
 	JavaCmd.load(ip, "android.widget.ListView", "listview");
-	JavaCmd.load(ip, "android.widget.RadioGroup$LayoutParams", "radiogrouplayoutparams");
 	JavaCmd.load(ip, "android.widget.ProgressBar", "progressbar");
-	JavaCmd.load(ip, "android.widget.RadioButton", "radiobutton");
-	JavaCmd.load(ip, "android.widget.RadioGroup", "radiogroup");
 	JavaCmd.load(ip, "android.widget.ScrollView", "scrollview");
 	JavaCmd.load(ip, "android.widget.Spinner", "spinner");
 	JavaCmd.load(ip, "android.widget.TextView", "textview");
-	JavaCmd.load(ip, "android.widget.TimePicker", "timepicker");
 
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
 

@@ -1,5 +1,19 @@
 2008-04-08  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/script.hcl: Added checkboxes and radiobuttons to
+	the simple widgets and removed them from the main demo list.
+	Make the script evaluator do an alert as well as returning a
+	value.  Fixed gtalk system to send messages to me.  Removed
+	subactivity... not really important.
+
+	* commandline/Hecl.java: Fixed onDestroy callback so that it can
+	be used by SubHecl.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed some java
+	commandsin favor of loading them on an as-needed bases at runtime:
+	checkbox, radiogrouplayoutparams, radiobutton, radiogroup,
+	timepicker.
+
 	* java/org/hecl/java/Reflector.java: Added more conversions:
 	floats and doubles get transformed into the right java types now.
 	Also, byte[] gets turned into a StringThing, and vice versa when

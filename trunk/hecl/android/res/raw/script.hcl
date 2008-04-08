@@ -29,6 +29,8 @@ proc CreateActivity {name title code} {
 #	digitalclock and imagebutton.
 
 CreateActivity SimpleWidgets "Simple Widgets" {
+    set textsize 30.0
+
     set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -41,10 +43,6 @@ CreateActivity SimpleWidgets "Simple Widgets" {
     $scroll addview $swlayout
     [activity] setcontentview $scroll
 
-    $swlayout addview [textview -new $context \
-			   -text "This is a textview" \
-			   -layoutparams $layoutparams]
-
     $swlayout addview [button -new $context -text "This is a button" \
 			   -layoutparams $layoutparams]
 
@@ -52,16 +50,67 @@ CreateActivity SimpleWidgets "Simple Widgets" {
 			   -text "This is editable text" \
 			   -layoutparams $layoutparams]
 
-    java "android.widget.DigitalClock" "digitalclock"
+    $swlayout addview [textview -new $context \
+			   -text "Digital clock:" \
+			   -layoutparams $layoutparams -textsize $textsize]
+
+    java android.widget.DigitalClock digitalclock
 
     $swlayout addview [digitalclock -new $context \
-			   -layoutparams $layoutparams]
+			   -layoutparams $layoutparams -textsize $textsize]
 
     java android.widget.ImageButton imagebutton
 
     set ib [imagebutton -new $context -layoutparams $layoutparams]
     $swlayout addview $ib
     $ib setImageResource [reslookup "R.drawable.buttonhecl"]
+
+
+    # Since this is added to the linearlayout, it has to have
+    # linearlayoutparams
+
+    java {android.widget.RadioGroup$LayoutParams} radiogrouplayoutparams
+    java android.widget.RadioButton radiobutton
+    java android.widget.RadioGroup radiogroup
+
+    set radiolayoutparams [radiogrouplayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+    set radiogroup \
+	[radiogroup -new $context \
+	     -layoutparams [linearlayoutparams -new {FILL_PARENT FILL_PARENT}]]
+
+    $radiogroup setorientation VERTICAL
+
+    $swlayout addview [textview -new $context \
+			   -text "Radio buttons:" \
+			   -layoutparams $layoutparams -textsize $textsize]
+
+    $swlayout addview $radiogroup
+
+    $radiogroup addview [radiobutton -new $context \
+			     -text "Android" -layoutparams $radiolayoutparams]
+    $radiogroup addview [radiobutton -new $context \
+			     -text "JavaME" -layoutparams $radiolayoutparams]
+    $radiogroup addview [radiobutton -new $context \
+			     -text "Flash Lite" -layoutparams $radiolayoutparams]
+
+    $swlayout addview [textview -new $context \
+			   -text "Check boxes - pick any two:" \
+			   -layoutparams $layoutparams -textsize $textsize]
+
+    java android.widget.CheckBox checkbox
+    set cb1 [checkbox -new $context \
+		 -text "Fast" -layoutparams $layoutparams]
+    set cb2 [checkbox -new $context \
+		 -text "Cheap" -layoutparams $layoutparams]
+    set cb3 [checkbox -new $context \
+		 -text "Good" -layoutparams $layoutparams]
+
+    set callback [callback -new [list [list CheckBoxCallback $cb1 $cb2 $cb3]]]
+
+    foreach cb [list $cb1 $cb2 $cb3] {
+	$cb setoncheckedchangelistener $callback
+	$swlayout addview $cb
+    }
 }
 
 # WebView --
@@ -104,7 +153,7 @@ proc Callback {args} {
 proc DatePicker {} {
     global context
 
-    java "android.app.DatePickerDialog" datedialog
+    java android.app.DatePickerDialog datedialog
 
     set callback [callback -new [list [list Callback]]]
     set dp [datedialog -new [list $context $callback 2007 10 10 1]]
@@ -118,7 +167,7 @@ proc DatePicker {} {
 proc TimePicker {} {
     global context
 
-    java "android.app.TimePickerDialog" timedialog
+    java android.app.TimePickerDialog timedialog
 
     set callback [callback -new [list [list Callback]]]
     set tp [timedialog -new \
@@ -135,7 +184,7 @@ proc TimePicker {} {
 proc ProgressDialog {} {
     global context
 
-    java "android.app.ProgressDialog" progressdialog
+    java android.app.ProgressDialog progressdialog
 
     set pd [progressdialog show $context "Working..." \
 		"This is a progress \"bar\"" 0 0]
@@ -150,80 +199,11 @@ proc ProgressDialog {} {
 
 proc updateProgress {pd progress} {
     $pd setprogress [i $progress]
-    if { < $progress 10000 } {
+    if { < $progress 5000 } {
 	after 1000 [list updateProgress $pd [+ 2000 $progress]]
     } else {
 	$pd dismiss
     }
-}
-
-# RadioButtons --
-#
-#	Put some radio buttons up on the screen.  These don't work
-#	correctly due to a bug in Android.
-
-CreateActivity RadioButtons "Radio Buttons" {
-    set procname RadioButtons
-    set context [activity]
-
-    set layoutparams [radiogrouplayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-
-    set layout [linearlayout -new $context]
-    $layout setorientation VERTICAL
-
-    # Since this is added to the linearlayout, it has to have
-    # linearlayoutparams
-    set radiogroup \
-	[radiogroup -new $context \
-	     -layoutparams [linearlayoutparams -new {FILL_PARENT FILL_PARENT}]]
-
-    $radiogroup setorientation VERTICAL
-
-    $layout addview $radiogroup
-
-    # FIXME - broken - but it's Google's fault!
-    $radiogroup addview [radiobutton -new $context \
-			     -text "Android" -layoutparams $layoutparams]
-    $radiogroup addview [radiobutton -new $context \
-			     -text "JavaME" -layoutparams $layoutparams]
-    $radiogroup addview [radiobutton -new $context \
-			     -text "Flash Lite" -layoutparams $layoutparams]
-    [activity] setcontentview $layout
-}
-
-# CheckBoxes --
-#
-#	Put some checkboxes up on the screen, and, through the
-#	CheckBoxCallback proc, make sure that only two of the three
-#	are selected.
-
-CreateActivity CheckBoxes "CheckBoxes" {
-    set procname CheckBoxes
-    set context [activity]
-
-    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-
-    set layout [linearlayout -new $context]
-    $layout setorientation VERTICAL
-
-    $layout addview [textview -new $context -text "Pick any two:" \
-			 -layoutparams $layoutparams]
-
-    set cb1 [checkbox -new $context \
-		 -text "Fast" -layoutparams $layoutparams]
-    set cb2 [checkbox -new $context \
-		 -text "Cheap" -layoutparams $layoutparams]
-    set cb3 [checkbox -new $context \
-		 -text "Good" -layoutparams $layoutparams]
-
-    set callback [callback -new [list [list CheckBoxCallback $cb1 $cb2 $cb3]]]
-
-    foreach cb [list $cb1 $cb2 $cb3] {
-	$cb setoncheckedchangelistener $callback
-	$layout addview $cb
-    }
-
-    [activity] setcontentview $layout
 }
 
 # CheckBoxCallback --
@@ -307,7 +287,10 @@ CreateActivity HeclEditor "Hecl Editor" {
     set script {proc AddOne {num} {
     return [+ $num 1]
 }
-AddOne 41}
+set res [AddOne 41]
+alert "Result: $res"
+set res
+}
 
     set editor [edittext -new $context -text $script -layoutparams $layoutparams]
     $layout addview $editor
@@ -345,6 +328,10 @@ CreateActivity Contacts "Contacts" {
     set layout [linearlayout -new $context]
     $layout setorientation VERTICAL
 
+    $layout addview [textview -new $context \
+			 -layoutparams $layoutparams \
+			 -text "Contacts:" -textsize 32.0]
+
     set cursor [contentQuery content://contacts/people/]
 
     while { $cursor next } {
@@ -363,7 +350,6 @@ CreateActivity Contacts "Contacts" {
 #	Display a list of taks, and let the user switch between them.
 
 CreateActivity TaskList "Task List" {
-    set procname TaskList
     set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -411,7 +397,6 @@ proc SelectTask {taskIdList parent view position id} {
 #	Display the available Hecl scripts in permanent storage.
 
 CreateActivity SelectScripts "Hecl Scripts" {
-    set procname SelectScripts
     set  context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -421,7 +406,7 @@ CreateActivity SelectScripts "Hecl Scripts" {
 
     set cursor [contentQuery content://org.hecl.android.Scripts/scripts]
 
-    $layout addview [textview -new $context -layoutparams $layoutparams -text "Available scripts:"]
+    $layout addview [textview -new $context -layoutparams $layoutparams -text "Available scripts:" -textsize 30.0]
 
     set scriptlist [list]
     while { $cursor next } {
@@ -441,7 +426,6 @@ CreateActivity SelectScripts "Hecl Scripts" {
 #	execute commands.
 
 CreateActivity HeclServer "Hecl Server" {
-    set procname HeclServer
     set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -534,7 +518,6 @@ CreateActivity HeclServer "Hecl Server" {
 }
 
 CreateActivity SendGTalk "Send GTalk Message" {
-    set procname SendGTalk
     set context [activity]
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -544,7 +527,7 @@ CreateActivity SendGTalk "Send GTalk Message" {
 
     $layout addview [textview -new $context \
 			 -layoutparams $layoutparams \
-			 -text "Sending GTalk message to davidnwelton:"]
+			 -text "Sending GTalk message to David Welton, Hecl creator:"]
 
     set msgtext [edittext -new $context -layoutparams $layoutparams]
     set sendbutton [button -new $context -layoutparams $layoutparams -text "Send"]
@@ -580,8 +563,7 @@ CreateActivity SendGTalk "Send GTalk Message" {
     proc onserviceconnected {classname service} {
 	set gtalkservice [gtalkstub asInterface $service]
 	global GtalkSession
-	# FIXME davidnwelton@gmail.com
-	set GtalkSession [[$gtalkservice getDefaultSession] createChatSession "en2it@bot.talk.google.com"]
+	set GtalkSession [[$gtalkservice getDefaultSession] createChatSession "davidnwelton@gmail.com"]
 	set hcb [heclchatlistener -new [list [thisinterp]]]
 	$hcb -field newMessageReceived [list RecvMessage]
 	$GtalkSession addRemoteChatListener $hcb
@@ -607,31 +589,6 @@ proc SendMessage {msgtext sendbutton} {
     $GtalkSession sendTextMessage "Android Hecl User says: $message_txt"
 }
 
-# Activity --
-#
-#	Create a new Activity that is independent of this one.
-#	newActivity is defined in lib.tcl
-
-proc Activity {} {
-    global context
-
-    set script {
-	set context [activity]
-	set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-
-	set layout [linearlayout -new $context -layoutparams $layoutparams]
-	$layout setorientation VERTICAL
-	$layout addview [textview -new $context \
-			     -layoutparams $layoutparams \
-			     -text "Hello World"]
-
-	$context setcontentview $layout
-	$context settitle "My new SubHecl!"
-    }
-
-    newActivity $context $script
-}
-
 
 # SelectDemo --
 #
@@ -645,9 +602,7 @@ proc SelectDemo {parent view position id} {
     if { eq $procname "" } {
 	# If the procname doesn't appear in the lookup table, it's one
 	# of the following, and doesn't require its own activity.
-	if {eq $dest "New Activity"} {
-	    Activity
-	} elseif {eq $dest "Date Picker"} {
+	if {eq $dest "Date Picker"} {
 	    DatePicker
 	} elseif {eq $dest "Progress Dialog"} {
 	    ProgressDialog
@@ -699,14 +654,14 @@ proc main {} {
     $layout setorientation VERTICAL
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
-    set tv [textview -new $context -text {Welcome to Hecl on Android.  This is a short tour of all the widgets that currently function.} -layoutparams $layoutparams]
+    set tv [textview -new $context -text {Welcome to Hecl on Android. This is a short tour of some of the functionality that can be scripted in Hecl.} -layoutparams $layoutparams]
 
     $layout addview $tv
 
     set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
-				       "Radio Buttons" "CheckBoxes" "Contacts" "Task List" \
-				       "Hecl Editor" "New Activity" "Hecl Scripts" "Hecl Server" \
+				       "Hecl Editor" "Hecl Scripts" "Hecl Server" \
+				       "Contacts" "Task List" \
 				       "Send GTalk Message"] \
 		   -layoutparams $layoutparams]
 

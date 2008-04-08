@@ -206,18 +206,20 @@ public class Hecl extends Activity
     protected void onDestroy() {
 	super.onDestroy();
 
+	if (onDestroyCallBack != null) {
+	    try {
+		Vector vec = ListThing.get(onDestroyCallBack.deepcopy());
+		interp.eval(ListThing.create(vec));
+	    } catch (HeclException he) {
+		Hecl.logStacktrace(he);
+		Log.v("hecl onDestroy callback", he.toString());
+	    }
+	}
+
 	refCount --;
 	if (refCount == 0) {
-	    if (onDestroyCallBack != null) {
-		try {
-		    Vector vec = ListThing.get(onDestroyCallBack.deepcopy());
-		    interp.eval(ListThing.create(vec));
-		} catch (HeclException he) {
-		    Hecl.logStacktrace(he);
-		    Log.v("hecl onDestroy callback", he.toString());
-		}
-	    }
-
+	    Log.v("hecl", "destroying interpreter");
+	    interp.terminate();
 	    interp = null;
 	}
 	Log.v("hecl", "onDestroy");
