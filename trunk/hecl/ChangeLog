@@ -1,3 +1,14 @@
+2008-04-10  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added some extra, hacky flags.  -intentfilter lets you pass in the
+	name of an .xml file that will be added to the AndroidManifest.xml
+	as the intent-receiver.  Also added an -extraclass flag that lets
+	you pass the name of a .class file that you can add to the final
+	result to be compiled.  I use this to generate an intent receiver
+	for another application I'm working on.  This is all sort of
+	hacky...
+
 2008-04-08  David N. Welton  <davidw@dedasys.com>
 
 	* android/res/raw/script.hcl: Added checkboxes and radiobuttons to

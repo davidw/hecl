@@ -48,6 +48,8 @@ class AndroidBuilder {
 	opts.addOption("package", true, "New package name, like bee.bop.foo.bar");
 	opts.addOption("label", true, "Label");
 	opts.addOption("permissions", true, "Android Permissions");
+	opts.addOption("intentfilter", true, "Intent Filter File");
+	opts.addOption("extraclass", true, "Extra class");
 
 	CommandLineParser parser = new PosixParser();
 	CommandLine cmd = parser.parse(opts, args);
@@ -87,6 +89,18 @@ class AndroidBuilder {
 	    }
 	}
 
+	boolean hasextraClass = false;
+	String extraClass = "";
+ 	if(cmd.hasOption("extraclass")) {
+	    hasextraClass = true;
+	    extraClass = cmd.getOptionValue("extraclass");
+	}
+
+
+	String intentfilterFile = "";
+ 	if(cmd.hasOption("package")) {
+	    intentfilterFile = cmd.getOptionValue("intentfilter");
+	}
 
 	/* Calculate some other stuff based on the informatin we have. */
 	String tmpdir = System.getProperty("java.io.tmpdir");
@@ -99,23 +113,45 @@ class AndroidBuilder {
 	String icondir = resdir + "/" + "drawable/";
 	String iconfile = icondir + "aicon.png";
 
+
+	String intentreceiver = "";
+	/* If we have an intent filter .xml file, read it and add its
+	 * contents. */
+	if (!intentfilterFile.equals("")) {
+	    StringBuffer sb = new StringBuffer("");
+	    FileInputStream fis = new FileInputStream(intentfilterFile);
+	    int c = 0;
+	    while ((c = fis.read()) != -1) {
+		sb.append((char)c);
+	    }
+	    fis.close();
+	    intentreceiver =sb.toString();
+	}
+
 	/* The AndroidManifest.xml template. */
 	String xmltemplate =
 	    "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" \n" +
 	    "package=\"" + packagename + "\">\n" +
 	    perms +
 	    "<application android:icon=\"@drawable/aicon\">\n" +
+	    /* Main activity */
 	    "<activity android:name=\"" + appclass + "\" android:label=\"" + appname + "\">\n" +
 	    "<intent-filter>\n" +
 	    "<action android:name=\"android.intent.action.MAIN\" />\n" +
 	    "<category android:name=\"android.intent.category.LAUNCHER\" />\n" +
 	    "</intent-filter>\n" +
 	    "</activity>\n" +
+	    /* SubHecl */
 	    "<activity android:name=\"" + "Sub" + appclass +"\" android:label=\"SubHecl\">\n" +
 	    "<intent-filter>\n" +
 	    "<action android:name=\"android.intent.action.MAIN\" />\n" +
 	    "</intent-filter>\n" +
 	    "</activity>\n" +
+
+	    /* Intent Receiver. */
+
+	    intentreceiver +
+
 	    "</application>\n" +
 	    "</manifest>\n";
 
@@ -200,6 +236,7 @@ class AndroidBuilder {
 	String mainClass = jarpackagedir + appclass + ".class";
 	String subClass = jarpackagedir + "Sub" + appclass + ".class";
 
+
 	/* Output a new 'main' class. */
 	fos = new FileOutputStream(mainJava);
 	fos.write(mainClassTemplate.getBytes());
@@ -212,9 +249,22 @@ class AndroidBuilder {
 
 	/* Compile the new classes. */
 	runProcess("javac", mainJava, subJava, "-cp", hecljar + ":" + androidjar);
+
 	/* Stash them in the .jar. */
 	runProcess("jar", "uf", hecljar, "-C", dirname, mainClass);
 	runProcess("jar", "uf", hecljar, "-C", dirname, subClass);
+
+	/* If there is an extra class, move it into the .jar */
+	if (hasextraClass) {
+	    File ec = new File(extraClass);
+	    is = new FileInputStream(ec);
+	    String outfile = dirname + "/" + jarpackagedir + ec.getName();
+	    System.out.println("Moving " + extraClass + " to " + outfile);
+	    fos = new FileOutputStream(outfile);
+	    copyFileStream(is, fos);
+	    runProcess("jar", "uf", hecljar, "-C", dirname, jarpackagedir + ec.getName());
+	}
+
 
 	/* Run the dx program to turn them into Android dex stuff. */
 	String dexfile = dirname + "/" + "classes.dex";
