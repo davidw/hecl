@@ -1,3 +1,12 @@
+2008-04-11  David N. Welton  <davidw@dedasys.com>
+
+	* tests/intro.hcl: Added a couple of tests to better run intro
+	proccode through its paces.
+
+	* core/org/hecl/Stanza.java: Changed the rules for turning a
+	Stanza back into a string to better take into account lists,
+	strings with spaces and stanzas beginning with a [command].
+
 2008-04-10  David N. Welton  <davidw@dedasys.com>
 
 	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:

@@ -218,27 +218,20 @@ class Stanza {
      * @return a <code>String</code> value
      */
     public String toString() {
-	StringBuffer out = new StringBuffer(argv[0].toString());
-	for (int i = 1; i < argv.length; i++) {
-	    out.append(' ');
+	StringBuffer out = new StringBuffer("");
+	for (int i = 0; i < argv.length; i++) {
+	    if (i != 0) {
+		out.append(' ');
+	    }
 	    RealThing rt = argv[i].getVal();
-	    if (rt instanceof CodeThing) {
+
+	    if (rt instanceof CodeThing && ((CodeThing)rt).marksubst) {
 		String avs = argv[i].toString();
-		if (((CodeThing)rt).marksubst) {
-		    //out.append("[" + avs + "]");
-		    out.append('[').append(avs).append(']');
-		} else {
-		    //out.append("{" + avs + "}");
-		    out.append('{').append(avs).append('}');
-		}
+		out.append('[').append(avs).append(']');
 	    } else if (rt instanceof GroupThing) {
-		//out.append("\"" + argv[i].toString() + "\"");
 		out.append('\"').append(argv[i].toString()).append('\"');
-	    } else if (rt instanceof StringThing) {
-		//out.append(ListThing.toListString(argv[i]));
-		ListThing.appendListItem(out,argv[i]);
 	    } else {
-		out.append(argv[i].toString());
+		ListThing.appendListItem(out,argv[i]);
 	    }
 	}
 	return out.toString();
