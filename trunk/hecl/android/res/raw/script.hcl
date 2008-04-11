@@ -13,7 +13,8 @@ proc CreateActivity {name title code} {
     global titles_names
     hset $titles_names $title $name
 
-    set setup [list {[activity]} settitle $title]
+    set setup "\[activity\] settitle"
+    append $setup " $title \n"
     append $setup "\n"
     append $setup "MenuSetup\n"
     append $setup "global procname\n"
@@ -22,6 +23,37 @@ proc CreateActivity {name title code} {
 
     proc $name {} $setup
 }
+
+CreateActivity Introduction "Introduction" {
+    set textsize 20.0
+    set context [activity]
+
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set scroll [scrollview -new $context -layoutparams $layoutparams]
+
+    set layout [linearlayout -new $context -layoutparams $layoutparams]
+    $layout setorientation VERTICAL
+
+    $scroll addview $layout
+    [activity] setcontentview $scroll
+
+    $layout addview [textview -new $context \
+			   -text "Hello, and welcome to Hecl on Android.  This application gives you a brief overview of some of the things the Hecl scripting language is capable of on Android.  And of course, the entire application is written in Hecl!\n\nYou can even view and edit the source code by using the 'view source' menu button." \
+			   -layoutparams $layoutparams -textsize $textsize]
+    #after 1 PlayIntro
+}
+
+proc PlayIntro {} {
+    catch {
+	java android.media.MediaPlayer mediaplayer
+	set mp [mediaplayer create [activity] [reslookup R.raw.zintro]]
+	$mp prepareAsync
+	$mp start
+    } err
+    androidlog "Error: $err"
+}
+
 
 # SimpleWidgets --
 #
@@ -623,22 +655,35 @@ proc viewCode {} {
     global procname
     global context
 
-    androidlog "proc name: $procname"
-
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-    set scroll [scrollview -new $context -layoutparams $layoutparams]
     set layout [linearlayout -new $context -layoutparams $layoutparams]
     $layout setorientation VERTICAL
 
-    $scroll addview $layout
+    set saverun [button -new $context -text "Save and Run" \
+			 -layoutparams $layoutparams]
+    $layout addview $saverun
+
+    set scroll [scrollview -new $context -layoutparams $layoutparams]
 
     set text [intro proccode $procname]
-    $layout addview [edittext -new $context \
+    set editor [edittext -new $context \
 			 -text [s $text] \
 			 -layoutparams $layoutparams]
+    $scroll addview $editor
 
+    $layout addview $scroll
+
+    [activity] setcontentview $layout
+
+    set callback [callback -new [list [list SaveCode $editor $context $procname]]]
+    $saverun setonclicklistener $callback
     set procname viewCode
-    [activity] setcontentview $scroll
+}
+
+proc SaveCode {editor context procname button} {
+    set txt [$editor gettext]
+    proc $procname {} $txt
+    newActivity $context $procname
 }
 
 # main --
@@ -658,7 +703,7 @@ proc main {} {
 
     $layout addview $tv
 
-    set lview [basiclist $context [list "Simple Widgets" "Web View" "Date Picker" \
+    set lview [basiclist $context [list "Introduction" "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
 				       "Hecl Editor" "Hecl Scripts" "Hecl Server" \
 				       "Contacts" "Task List" \

@@ -1,5 +1,8 @@
 2008-04-11  David N. Welton  <davidw@dedasys.com>
 
+	* android/res/raw/script.hcl: Added the ability to edit screens,
+	save and then run them.
+
 	* tests/intro.hcl: Added a couple of tests to better run intro
 	proccode through its paces.
 
