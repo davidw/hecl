@@ -1,28 +1,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.hecl.android">
+  package="org.hecl.android">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_GPS" />
+  <uses-permission android:name="android.permission.READ_CONTACTS" />
+  <uses-permission android:name="android.permission.GET_TASKS" />
+  <uses-permission android:name="android.permission.ACCESS_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_GPS" />
 
-    <application android:icon="@org.hecl.android:drawable/aicon">
+  <application android:icon="@org.hecl.android:drawable/aicon">
 
-        <provider android:name="org.hecl.android.ScriptProvider"
-                android:authorities="org.hecl.android.Scripts" />
+    <provider android:name="org.hecl.android.ScriptProvider"
+      android:authorities="org.hecl.android.Scripts" />
 
-        <activity android:name="org.hecl.android.Hecl" android:label="Hecl">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <activity android:name="org.hecl.android.Hecl" android:label="Hecl">
+      <intent-filter>
+	<action android:name="android.intent.action.MAIN" />
+	<category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
 
-        <activity android:name="org.hecl.android.SubHecl" android:label="SubHecl">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
+    <activity android:name="org.hecl.android.SubHecl" android:label="SubHecl">
+      <intent-filter>
+	<action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
 
-    </application>
+  </application>
 </manifest>

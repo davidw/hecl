@@ -5,6 +5,74 @@
 # names like WebView
 set titles_names {}
 
+
+
+# main --
+#
+#	The initial, main screen.
+
+proc main {} {
+    global context
+    global procname
+
+    set procname main
+    set layout [linearlayout -new $context]
+    $layout setorientation VERTICAL
+    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+    set tv [textview -new $context -text {Welcome to Hecl on Android. This is a short tour of some of the functionality that can be scripted in Hecl.} -layoutparams $layoutparams]
+
+    $layout addview $tv
+
+    set lview [basiclist $context [list "Introduction" "Simple Widgets" "Web View" "Date Picker" \
+				       "Time Picker" "Progress Dialog" "Spinner" \
+				       "Hecl Editor" "Hecl Server" \
+				       "Contacts" "Task List" \
+				       "Send GTalk Message"] \
+		   -layoutparams $layoutparams]
+
+    $lview requestfocus
+    $layout addview $lview
+
+    set callback [callback -new [list [list SelectDemo]]]
+    $lview setonitemclicklistener $callback
+
+    [activity] setcontentview $layout
+
+    MenuSetup
+}
+
+# MenuSetup --
+#
+#	Set up the menus so that it's possible to see the source code
+#	for the current widget demo/proc.
+
+proc MenuSetup {} {
+    # Used to set up a callback for when the menu is requested by the
+    # user, and it's necessary to set it up.
+
+    proc MenuCallBack {menu} {
+	$menu add 0 0 "View Source"
+    }
+
+    [activity] -field onCreateOptionsMenuCallBack MenuCallBack
+
+    # Sets up the actual callback code for when a menu item is
+    # selected.
+
+    proc OptionsSelected {menuitem} {
+	viewCode
+    }
+
+    [activity] -field onOptionsItemSelectedCallBack OptionsSelected
+}
+
+# This is used everywhere, so making it a global is no big deal.
+set context [activity]
+
+# Start things running.
+main
+
 # CreateActivity --
 #
 #	CreateActivity and RunActivity
@@ -14,7 +82,7 @@ proc CreateActivity {name title code} {
     hset $titles_names $title $name
 
     set setup "\[activity\] settitle"
-    append $setup " $title \n"
+    append $setup " \"$title\" \n"
     append $setup "\n"
     append $setup "MenuSetup\n"
     append $setup "global procname\n"
@@ -41,7 +109,7 @@ CreateActivity Introduction "Introduction" {
     $layout addview [textview -new $context \
 			   -text "Hello, and welcome to Hecl on Android.  This application gives you a brief overview of some of the things the Hecl scripting language is capable of on Android.  And of course, the entire application is written in Hecl!\n\nYou can even view and edit the source code by using the 'view source' menu button." \
 			   -layoutparams $layoutparams -textsize $textsize]
-    #after 1 PlayIntro
+    after 1 PlayIntro
 }
 
 proc PlayIntro {} {
@@ -155,14 +223,10 @@ CreateActivity WebView "Web View" {
 
     set layoutparams [linearlayoutparams -new {WRAP_CONTENT WRAP_CONTENT}]
 
-    set layout [linearlayout -new $context -layoutparams $layoutparams]
-    $layout setorientation VERTICAL
-
     java "android.webkit.WebView" webview
 
     set wv [webview -new $context -layoutparams $layoutparams]
-    $layout addview $wv
-    [activity] setcontentview $layout
+    [activity] setcontentview $wv
     # Fetch the Hecl web page, which, unfortunately, isn't all that
     # beautiful ...
     $wv loadurl http://www.hecl.org
@@ -219,7 +283,7 @@ proc ProgressDialog {} {
     java android.app.ProgressDialog progressdialog
 
     set pd [progressdialog show $context "Working..." \
-		"This is a progress \"bar\"" 0 0]
+		"This is a progress dialog - it lasts 5 seconds" 0 0]
     updateProgress $pd 0
 }
 
@@ -353,7 +417,6 @@ proc EditCallback {editor results button} {
 
 CreateActivity Contacts "Contacts" {
     set context [activity]
-    set procname Contacts
 
     set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -366,12 +429,19 @@ CreateActivity Contacts "Contacts" {
 
     set cursor [contentQuery content://contacts/people/]
 
+    set i 0
     while { $cursor next } {
 	set name [$cursor getstring [$cursor getcolumnindex name]]
 	set number [$cursor getstring [$cursor getcolumnindex number]]
 	$layout addview [textview -new $context \
 			     -layoutparams $layoutparams \
 			     -text "Who: $name Number: $number"]
+	incr $i
+    }
+    if { = $i 0 } {
+	$layout addview [textview -new $context \
+			     -layoutparams $layoutparams \
+			     -text "No contacts"]
     }
 
     [activity] setcontentview $layout
@@ -680,74 +750,12 @@ proc viewCode {} {
     set procname viewCode
 }
 
+# SaveCode --
+#
+#	Save the code and run it.
+
 proc SaveCode {editor context procname button} {
     set txt [$editor gettext]
     proc $procname {} $txt
     newActivity $context $procname
 }
-
-# main --
-#
-#	The initial, main screen.
-
-proc main {} {
-    global context
-    global procname
-
-    set procname main
-    set layout [linearlayout -new $context]
-    $layout setorientation VERTICAL
-    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-
-    set tv [textview -new $context -text {Welcome to Hecl on Android. This is a short tour of some of the functionality that can be scripted in Hecl.} -layoutparams $layoutparams]
-
-    $layout addview $tv
-
-    set lview [basiclist $context [list "Introduction" "Simple Widgets" "Web View" "Date Picker" \
-				       "Time Picker" "Progress Dialog" "Spinner" \
-				       "Hecl Editor" "Hecl Scripts" "Hecl Server" \
-				       "Contacts" "Task List" \
-				       "Send GTalk Message"] \
-		   -layoutparams $layoutparams]
-
-    $lview requestfocus
-    $layout addview $lview
-
-    set callback [callback -new [list [list SelectDemo]]]
-    $lview setonitemclicklistener $callback
-
-    [activity] setcontentview $layout
-
-    MenuSetup
-}
-
-# MenuSetup --
-#
-#	Set up the menus so that it's possible to see the source code
-#	for the current widget demo/proc.
-
-proc MenuSetup {} {
-    # Used to set up a callback for when the menu is requested by the
-    # user, and it's necessary to set it up.
-
-    proc MenuCallBack {menu} {
-	$menu add 0 0 "View Source"
-    }
-
-    [activity] -field onCreateOptionsMenuCallBack MenuCallBack
-
-    # Sets up the actual callback code for when a menu item is
-    # selected.
-
-    proc OptionsSelected {menuitem} {
-	viewCode
-    }
-
-    [activity] -field onOptionsItemSelectedCallBack OptionsSelected
-}
-
-# This is used everywhere, so making it a global is no big deal.
-set context [activity]
-
-# Start things running.
-main
