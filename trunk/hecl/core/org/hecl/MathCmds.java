@@ -146,6 +146,8 @@ public class MathCmds extends org.hecl.Operator {
 	    return DoubleThing.create(Math.cos(a.doubleValue()));
 	  case TAN:
 	    return DoubleThing.create(Math.tan(a.doubleValue()));
+	  case SQRT:
+	    return DoubleThing.create(Math.sqrt(a.doubleValue()));
 	  case FLOOR:
 	    return DoubleThing.create(Math.floor(a.doubleValue()));
 	  case CEIL:
@@ -174,8 +176,6 @@ public class MathCmds extends org.hecl.Operator {
 	  case NOT:
 	    return boolres(!(a.intValue() != 0));
 //#ifdef j2se
-	  case SQRT:
-	    return DoubleThing.create(Math.sqrt(a.doubleValue()));
 	  case LOG:
 	    return DoubleThing.create(Math.log(a.doubleValue()));
 	  case ASIN:
@@ -511,6 +511,12 @@ public class MathCmds extends org.hecl.Operator {
 //#if javaversion >= 1.5 || cldc > 1.0
 	vars.put("pi",PI);
 	vars.put("e",E);
+	cmdtable.put("sqrt",new MathCmds(SQRT,1,1));
+	cmdtable.put("sin",new MathCmds(SIN,1,1));
+	cmdtable.put("cos",new MathCmds(COS,1,1));
+	cmdtable.put("tan",new MathCmds(TAN,1,1));
+	cmdtable.put("floor",new MathCmds(FLOOR,1,1));
+	cmdtable.put("ceil",new MathCmds(CEIL,1,1));
 	cmdtable.put("float",new MathCmds(CASTFLOAT,1,1));
 	cmdtable.put("double",new MathCmds(CASTDOUBLE,1,1));
 	cmdtable.put("toDegrees",new MathCmds(TODEGREES,1,1));
@@ -521,17 +527,11 @@ public class MathCmds extends org.hecl.Operator {
 //#if javaversion >= 1.5
 	cmdtable.put("random",new MathCmds(RANDOM,0,0));
 	cmdtable.put("pow", new MathCmds(POW,2,2));
-	cmdtable.put("sqrt",new MathCmds(SQRT,1,1));
 	cmdtable.put("log",new MathCmds(LOG,1,1));
-	cmdtable.put("sin",new MathCmds(SIN,1,1));
-	cmdtable.put("cos",new MathCmds(COS,1,1));
-	cmdtable.put("tan",new MathCmds(TAN,1,1));
 	cmdtable.put("asin",new MathCmds(ASIN,1,1));
 	cmdtable.put("acos",new MathCmds(ACOS,1,1));
 	cmdtable.put("atan",new MathCmds(ATAN,1,1));
 	cmdtable.put("exp",new MathCmds(EXP,1,1));
-	cmdtable.put("floor",new MathCmds(FLOOR,1,1));
-	cmdtable.put("ceil",new MathCmds(CEIL,1,1));
 	cmdtable.put("round",new MathCmds(ROUND,1,1));
 
 //#if javaversion > 1.5
