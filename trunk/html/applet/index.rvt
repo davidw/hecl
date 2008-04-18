@@ -4,27 +4,7 @@
   <head>
     <title>Hecl interpreter in an applet</title>
     <link rel="stylesheet" href="../style.css">
-    <script>
-<!--
-
-function HW () {
-    applet = document.getElementById("microemulator");
-    s = document.sf2.script2.value;
-    applet.callMethod("runScript", s);
-}
-
-function reloadEmulator() {
-    applet = document.getElementById("microemulator");
-    applet.restartApp();
-}
-
-function runHecl() {
-    s = document.sf1.script1.value;
-    applet = document.getElementById("heclet");
-    applet.runScript(s);
-}
-// -->
-    </script>
+    <script src="/applet.js" type="text/javascript"></script>
   </head>
   <body id="applets">
 
@@ -103,8 +83,7 @@ setcurrent $main;
 	  </td>
 
 	  <td>
-	    <applet id="microemulator" code="com.barteo.emulator.applet.Main"
-	      width="170" height="445" archive="me-applet.jar,../jars/1.0/Hecl.jar">
+	    <applet id="microemulator" code="org.microemu.applet.Main" width="228" height="514" archive="microemu-javase-applet.jar,Hecl.jar">
 	      <param name="midlet" value="Hecl">
 	    </applet>
 	  </td>

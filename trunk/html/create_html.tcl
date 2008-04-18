@@ -1,3 +1,5 @@
+#!/usr/bin/tclsh
+
 source tclrivet.tcl
 
 foreach fl [glob *.rvt] {
