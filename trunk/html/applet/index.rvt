@@ -14,92 +14,121 @@
       <span>The Mobile Scripting Language</span>
     </div>
 
-<? include navbar.html ?>
+    <? include navbar.html ?>
 
     <div style="width: 80%; float: right;">
 
-    <table class="applet">
-      <tbody>
-	<tr>
-	  <th colspan="2">
-	    Try out Hecl in a cell phone emulator
-	  </th>
-	</tr>
+      <table class="applet">
+	<tbody>
+	  <tr>
+	    <th colspan="2">
+	      Hecl cell phone emulator: MIDP2.0 version
+	    </th>
+	  </tr>
 
-	<tr>
-	  <td>Write the script:</td>
-	  <td>Emulator:</td>
-	</tr>
+	  <tr>
+	    <td>Write the script:</td>
+	    <td>Emulator:</td>
+	  </tr>
 
-	<tr>
-	  <td valign="top">
-	    <form name="sf2">
-		<textarea name="script2" cols="80" style="height: 460px;">set main [textbox label Hecl code {
-} len 200 text "A sample textbox"];
+	  <tr>
+	    <td align="center">
+	      <form name="">
+		<textarea id="midp20script" cols="80" style="height: 472px;">set defform [lcdui.form -title "Demo Form"]
+$defform setcurrent</textarea><br/>
+	      </form>
 
+	      <input type="button" onclick="reloadEmulator('microemulator20')"
+		value="Reload Emulator">
+	      <input type="button" onclick="sendToEmulator('midp20script', 'microemulator20')"
+		value="Run Script">
+	    </td>
+
+	    <td>
+	      <applet id="microemulator20" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,Hecl2.jar">
+		<param name="midlet" value="Hecl">
+	      </applet>
+	    </td>
+	  </tr>
+
+	</tbody>
+      </table>
+
+
+      <table class="applet">
+	<tbody>
+	  <tr>
+	    <th colspan="2">
+	      Hecl cell phone emulator: MIDP1.0 version
+	    </th>
+	  </tr>
+
+	  <tr>
+	    <td>Write the script:</td>
+	    <td>Emulator:</td>
+	  </tr>
+
+	  <tr>
+	    <td align="center">
+	      <form name="">
+		<textarea id="midp10script" cols="80" style="height: 472px;">set main [textbox label Hecl code { } len 200 text "A sample textbox"];
 setcurrent $main;
-</textarea><br/>
-	    </form>
+		</textarea><br/>
+	      </form>
+	      <input type="button" onclick="reloadEmulator('microemulator20')"
+		value="Reload Emulator">
+	      <input type="button" onclick="sendToEmulator('midp10script', 'microemulator10')" value="Run Script">
+	    </td>
 
-	  </td>
+	    <td>
+	      <applet id="microemulator10" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,Hecl.jar">
+		<param name="midlet" value="Hecl">
+	      </applet>
+	    </td>
+	  </tr>
 
-	  <td>
-	    <applet id="microemulator" code="org.microemu.applet.Main" width="228" height="514" archive="microemu-javase-applet.jar,Hecl.jar">
-	      <param name="midlet" value="Hecl">
-	    </applet>
-	  </td>
-	</tr>
+	</tbody>
+      </table>
 
-	<tr>
-	  <td align="center">
-	    <input type="button" onclick="reloadEmulator()"
-	      value="Reload Emulator">
-	    <input type="button" onclick="HW()" value="Run Script">
-	  </td>
-	</tr>
+      <table class="applet">
+	<tbody>
+	  <tr>
+	    <th colspan="2">
+	      Hecl Applet
+	    </th>
+	  </tr>
 
-      </tbody>
-    </table>
+	  <tr>
+	    <td>Write the script:</td>
+	    <td>Script output:</td>
+	  </tr>
 
-    <table class="applet">
-      <tbody>
-	<tr>
-	  <th colspan="2">
-	    Try out Hecl
-	  </th>
-	</tr>
+	  <tr>
+	    <td>
+	      <form name="sf1" action="">
+		<p>
+		  <textarea name="script1" style="width: 350px; height: 300px;%">set i 0
+		    while {< $i 10} {
+		    puts "i is $i"
+		    incr $i
+		    }</textarea><br/>
+		</p>
+	      </form>
+	    </td>
 
-	<tr>
-	  <td>Write the script:</td>
-	  <td>Script output:</td>
-	</tr>
-
-	<tr>
-	  <td>
-	    <form name="sf1" action="">
-	      <p>
-		<textarea name="script1" style="width: 350px; height: 300px;%">set i 0
-while {< $i 10} {
-    puts "i is $i"
-    incr $i
-}</textarea><br/>
-	      </p>
-	    </form>
-	  </td>
-
-	  <td>
-	    <applet id="heclet" name="heclApplet" code="org.hecl.applet.HeclApplet"
+	    <td>
+	      <applet id="heclet" name="heclApplet" code="org.hecl.applet.HeclApplet"
 		archive="/jars/j2se/HeclApplet.jar" width="350" height="300">
-	    </applet>
-	  </td>
-	</tr>
-	<tr>
-	  <td style="text-align: center;" colspan="2">
-	    <input onclick="runHecl()" type="button" value="Run Script">
-	  </td>
-	</tr>
-      </tbody>
-    </table>
+	      </applet>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="text-align: center;" colspan="2">
+	      <input onclick="runHecl()" type="button" value="Run Script">
+	    </td>
+	  </tr>
+	</tbody>
+      </table>
 
     </div>
 

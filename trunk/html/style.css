@@ -77,8 +77,8 @@ div.nav ul {
 
 #home #home-nav, #docs #docs-nav, #examples #examples-nav, #applets
 #applets-nav, #phones #phones-nav {
-background-color: #bbb;
-padding: 3px;
+    background-color: #bbb;
+    padding: 3px;
 }
 
 table.applet {
@@ -109,7 +109,7 @@ ul.phonelist > li > ul > li {
 }
 
 #phones p, #phones h3 {
-margin-left: 15%;
+    margin-left: 15%;
 }
 
 textarea {

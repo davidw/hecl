@@ -1,11 +1,11 @@
-function HW () {
-    applet = document.getElementById("microemulator");
-    s = document.sf2.script2.value;
-    applet.callMethod("runScript", s);
+function sendToEmulator (scriptid, emulatorid) {
+    applet = document.getElementById(emulatorid);
+    script = document.getElementById(scriptid).value;
+    applet.callMethod("runScript", script);
 }
 
-function reloadEmulator() {
-    applet = document.getElementById("microemulator");
+function reloadEmulator(id) {
+    applet = document.getElementById(id);
     applet.restartApp();
 }
 
