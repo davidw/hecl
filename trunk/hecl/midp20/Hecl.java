@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import javax.microedition.midlet.MIDlet;
+import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
@@ -30,6 +31,8 @@ import org.hecl.rms.RMSCmd;
  * @version 1.0
  */
 public class Hecl extends MIDlet {
+    protected Interp interp = null;
+
     public void destroyApp(boolean b) {
 	notifyDestroyed();
     }
@@ -38,23 +41,22 @@ public class Hecl extends MIDlet {
     }
 
     public void startApp() {
-	System.err.println("-->startApp()");
 	Display display = Display.getDisplay(this);
 	try {
-	    ip = new Interp();
+	    interp = new Interp();
 	    Vector v = new Vector();
 	    for(int i = 0; i<args.length; ++i) {
 		v.addElement(new Thing(args[i]));
 	    }
-	    ip.setVar("argv",ListThing.create(v));
+	    interp.setVar("argv", ListThing.create(v));
 
 	    // load extensions into interpreter...
-	    RMSCmd.load(ip);
-	    HttpCmd.load(ip);
-	    MidletCmd.load(ip,this);
+	    RMSCmd.load(interp);
+	    HttpCmd.load(interp);
+	    MidletCmd.load(interp,this);
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
-	    ip.evalIdle(new Thing(scriptcontent));
+	    interp.evalIdle(new Thing(scriptcontent));
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
@@ -62,7 +64,27 @@ public class Hecl extends MIDlet {
 	}
     }
 
-    protected Interp ip = null;
+    /**
+     * The <code>runScript</code> method exists so that external
+     * applications (emulators, primarily) can call into Hecl and run
+     * scripts.
+     *
+     * @param s a <code>String</code> value
+     */
+    public void runScript(String s) {
+	try {
+	    interp.eval(new Thing(s));
+	} catch (Exception e) {
+	    /* At least let the user know there was an error. */
+	    Alert a = new Alert("Hecl error", e.toString(),
+				null, null);
+	    Display display = Display.getDisplay(this);
+	    display.setCurrent(a);
+	    /* e.printStackTrace(); */
+	    System.err.println("Error in runScript: " + e);
+	}
+    }
+
     protected String[] args = {};
     protected boolean started = false;
 }
