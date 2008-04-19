@@ -17,6 +17,50 @@
 <? include navbar.html ?>
 
     <div style="width: 80%; float: right;">
+
+    <table class="applet">
+      <tbody>
+	<tr>
+	  <th colspan="2">
+	    Try out Hecl in a cell phone emulator
+	  </th>
+	</tr>
+
+	<tr>
+	  <td>Write the script:</td>
+	  <td>Emulator:</td>
+	</tr>
+
+	<tr>
+	  <td valign="top">
+	    <form name="sf2">
+		<textarea name="script2" cols="80" style="height: 460px;">set main [textbox label Hecl code {
+} len 200 text "A sample textbox"];
+
+setcurrent $main;
+</textarea><br/>
+	    </form>
+
+	  </td>
+
+	  <td>
+	    <applet id="microemulator" code="org.microemu.applet.Main" width="228" height="514" archive="microemu-javase-applet.jar,Hecl.jar">
+	      <param name="midlet" value="Hecl">
+	    </applet>
+	  </td>
+	</tr>
+
+	<tr>
+	  <td align="center">
+	    <input type="button" onclick="reloadEmulator()"
+	      value="Reload Emulator">
+	    <input type="button" onclick="HW()" value="Run Script">
+	  </td>
+	</tr>
+
+      </tbody>
+    </table>
+
     <table class="applet">
       <tbody>
 	<tr>
@@ -57,48 +101,6 @@ while {< $i 10} {
       </tbody>
     </table>
 
-    <table class="applet">
-      <tbody>
-	<tr>
-	  <th colspan="2">
-	    Try out Hecl in a cell phone emulator
-	  </th>
-	</tr>
-
-	<tr>
-	  <td>Write the script:</td>
-	  <td>Emulator:</td>
-	</tr>
-
-	<tr>
-	  <td>
-	    <form name="sf2">
-		<textarea name="script2" cols="80" style="height: 450px;">set main [textbox label Hecl code {
-} len 200 text "A sample textbox"];
-
-setcurrent $main;
-</textarea><br/>
-	    </form>
-
-	  </td>
-
-	  <td>
-	    <applet id="microemulator" code="org.microemu.applet.Main" width="228" height="514" archive="microemu-javase-applet.jar,Hecl.jar">
-	      <param name="midlet" value="Hecl">
-	    </applet>
-	  </td>
-	</tr>
-
-	<tr>
-	  <td align="center">
-	    <input type="button" onclick="reloadEmulator()"
-	      value="Reload Emulator">
-	    <input type="button" onclick="HW()" value="Run Script">
-	  </td>
-	</tr>
-
-      </tbody>
-    </table>
     </div>
 
     <br style="clear:both;" />

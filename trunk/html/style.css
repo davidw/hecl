@@ -111,3 +111,8 @@ ul.phonelist > li > ul > li {
 #phones p, #phones h3 {
 margin-left: 15%;
 }
+
+textarea {
+    border: 1px solid black;
+    padding: 3px;
+}
