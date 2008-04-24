@@ -1,5 +1,7 @@
 2008-04-24  David N. Welton  <davidw@dedasys.com>
 
+	* cldc11midp20.properties (kxml): kxml is disabled by default.
+
 	* misc.xml: packageAndroidBuilder target, used to build an android
 	application builder.
 
