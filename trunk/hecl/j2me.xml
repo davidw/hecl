@@ -5,14 +5,18 @@
 
   <target name="midp"
     description="Compile MIDP2.0 code"
-    depends="j2meLibs,midpgui">
+    depends="j2meLibs,midpgui,extras">
 
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp${wtk.midp.version}"/>
 
     <copy file="midp${midpstr}/hecl_logo.png" todir="${j2me.build}" overwrite="true"/>
 
-    <wtkpreprocess srcdir="midp${midpstr}" destdir="${j2me.pre}/midp${midpstr}"/>
+    <wtkpreprocess
+      srcdir="midp${midpstr}"
+      symbols="${j2me.defines}"
+      destdir="${j2me.pre}/midp${midpstr}"/>
+
     <wtkbuild srcdir="${j2me.pre}/midp${midpstr}" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.guiclasspath}">
@@ -51,6 +55,21 @@
     <wtkbuild srcdir="${j2me.pre}/rms"  target="1.1" source="1.2"
       destdir="${j2me.rmsclasspath}">
       <classpath refid="j2me.coreclasspath"/>
+    </wtkbuild>
+  </target>
+
+  <target name="compileJ2MEkxml" description="Compile Hecl KXml-Extension"
+    depends="initCompile,compileJ2MECore">
+    <mkdir dir="${j2me.kxmlclasspath}"/>
+    <mkdir dir="${j2me.pre}/kxml"/>
+    <wtkpreprocess srcdir="kxml"
+      destdir="${j2me.pre}/kxml"
+      symbols="${j2me.defines}"
+      />
+    <wtkbuild srcdir="${j2me.pre}/kxml"  target="1.1" source="1.2"
+      destdir="${j2me.kxmlclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${kxml.lib}"/>
     </wtkbuild>
   </target>
 
@@ -187,6 +206,15 @@
     </wtkpackage>
     <copy file="${j2me.hecl.lib.jar}" todir="${j2me.rel}" overwrite="true"/>
     <copy file="${j2me.hecl.lib.jar}" todir="${j2me.rel}" overwrite="true"/>
+  </target>
+
+
+  <target name="extra-kxml" if="buildkxml" description="Build kxml stuff if the user has decided to">
+    <unjar src="jars/kxml2-2.3.0.jar" dest="${j2me.build}" />
+    <antcall target="compileJ2MEkxml"/>
+  </target>
+
+  <target name="extras" depends="extra-kxml" description="Use this to link in extra packages">
   </target>
 
   <target name="midlet" depends="midp">

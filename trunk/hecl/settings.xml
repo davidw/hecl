@@ -134,7 +134,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
-  <property name="j2me.defines" value="j2me=1,sms='${sms}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2"/>
+  <property name="j2me.defines" value="j2me=1,sms='${sms}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
@@ -173,6 +173,17 @@
   <path id="j2me.rmsclasspath">
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
+
+  <!-- KXML properties -->
+  <property name="kxml.lib" value="jars/kxml2-2.3.0.jar" />
+  <property name="j2me.kxmlclasspath" value="${j2me.build}"/>
+  <path id="j2me.kxmlclasspath">
+    <pathelement location="${j2me.kxmlclasspath}"/>
+  </path>
+
+  <condition property="buildkxml" value="buildkxml">
+    <equals arg1="1" arg2="${kxml}"/>
+  </condition>
 
   <!-- Android stuff -->
 
