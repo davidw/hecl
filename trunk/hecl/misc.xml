@@ -102,6 +102,28 @@
     </exec>
   </target>
 
+  <target name="packageAndroidBuilder" depends="installPackage">
+    <mkdir dir="${j2se.build}/androidbuilder" />
+    <javac srcdir="androidbuilder" destdir="${j2se.build}/androidbuilder" debug="true">
+      <classpath path="jars/commons-cli-1.1.jar" />
+    </javac>
+    <jar destfile="jars/AndroidBuilder.jar" basedir="${j2se.build}/androidbuilder">
+      <manifest>
+	<attribute name="Main-Class" value="org.hecl.androidbuilder/AndroidBuilder"></attribute>
+      </manifest>
+
+      <zipfileset src="jars/commons-cli-1.1.jar" includes="org/apache/commons/cli/*.class"/>
+
+    </jar>
+    <jar destfile="jars/AndroidBuilder.jar" basedir="."
+      includes="android/Hecl.jar" update="true" />
+    <jar destfile="jars/AndroidBuilder.jar" basedir="."
+      includes="android/bin/Hecl.apk" update="true" />
+
+    <jar destfile="jars/AndroidBuilder.jar" basedir="."
+      includes="android/res/drawable/aicon.png" update="true" />
+  </target>
+
   <target name="HeclBuilderJar" depends="buildEverything,packageJarHack,HeclBuilder">
 
     <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">

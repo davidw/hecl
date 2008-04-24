@@ -1,5 +1,8 @@
 2008-04-24  David N. Welton  <davidw@dedasys.com>
 
+	* misc.xml: packageAndroidBuilder target, used to build an android
+	application builder.
+
 	* j2me.xml: Added kxml build target, as well as an 'extras' target
 	that can be used to conditionally hook in extra packages.
 
