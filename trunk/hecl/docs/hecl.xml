@@ -3513,6 +3513,234 @@ set highscore [rms.get highscore 1]
       </refentry>
     </section>
 
+    <section id="kxml">
+        <title>K-XML</title>
+        <para>
+	  The K-XML extension provides the kXML 2 parser functionality for hecl. kXML 2 implements
+	  the XmlPull API. Please find general information about XmlPull parsers including the
+	  interface documentation at <ulink url="xmlpull.org">xmlpull.org</ulink>.
+      </para>
+      <note>
+	<para>
+	  Kxml is not compiled into the default build, so you have to change the
+	  <property>kxml</property> property from 0 to 1 in the
+	  <filename>cldc11midp20.properties</filename> file and recompile Hecl.
+	</para>
+      </note>
+        <refentry id="kxml.create">
+            <refnamediv>
+                <refname>kxml.create</refname>
+                <refpurpose>Returns the kxml parser object.</refpurpose>
+            </refnamediv>
+            <refsynopsisdiv>
+                <cmdsynopsis>
+                    <command>kxml.create</command>
+                </cmdsynopsis>
+            </refsynopsisdiv>
+            <refsect1>
+                <title>Description</title>
+                <para>
+                The <command>kxml.create </command>creates a kxml parser object.</para>
+                <programlisting>
+set xmlParser [kxml.create]
+                </programlisting>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.input">
+            <refnamediv>
+                <refname>kxml.input</refname>
+                <refpurpose>Sets a input stream the kxml-parser is going to process.</refpurpose>
+            </refnamediv>
+            <refsynopsisdiv>
+                <cmdsynopsis>
+                    <command>kxml.input</command>
+                    <arg choice="req">
+                    <replaceable>xmlParser</replaceable></arg>
+                    
+                    <arg choice="req">
+                    <replaceable>xmlStream</replaceable></arg>
+                </cmdsynopsis>
+                
+            </refsynopsisdiv>
+            <refsect1>
+                <title>Description</title>
+                <para>Set the xml input stream to the given xmlParser.</para>
+                <programlisting>
+set httpStream [http.geturl "http://www.google.com/ig/api?weather=$city,$country"]
+set xmlStream [hget $httpStream data]
+kxml.input $xmlParser $xmlStream
+                </programlisting>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.nexttag">
+            <refnamediv>
+                <refname>kxml.nexttag</refname>
+                <refpurpose>Call <command>kxml.next</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.</refpurpose>
+            </refnamediv>
+            <refsynopsisdiv>
+                <cmdsynopsis>
+                    <command>kxml.nexttag</command>
+                    <arg choice="req">
+                    <replaceable>xmlParser</replaceable></arg>
+                </cmdsynopsis>
+            </refsynopsisdiv>
+            
+            <refsect1>
+                <title>Description</title>
+                <para>Call <command>kxml.nexttag</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.It will skip whitespace TEXT before actual tag if any.</para>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.next">
+            <refnamediv>
+                <refname>kxml.next</refname>
+                <refpurpose>Get next parsing event.</refpurpose>
+            </refnamediv>
+            <refsynopsisdiv>
+                <cmdsynopsis>
+                    <command>kxml.next</command>
+                    <arg choice="req">
+                    <replaceable>xmlParser</replaceable></arg>
+                </cmdsynopsis>
+            </refsynopsisdiv>
+            
+            <refsect1>
+                <title>Description</title>
+                <para>The <command> kxml.next </command> advance the parser to the next event. The int value returned from next determines the current parser state and is identical to the value returned from following calls to <command>kxml.event</command>.
+                </para>
+                <para>The following event types are seen by <command>kxml.next</command> .</para>
+                <itemizedlist>
+                    <listitem>
+                        <para><constant>START_DOCUMENT</constant> <constant>0</constant> :Initially, the parser is in the START_DOCUMENT  state.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>START_TAG</constant> <constant>2</constant>: An XML start tag was read.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>TEXT</constant> <constant>4</constant>: Text content was read; the text content can be retreived using the <command>kxml.gettext</command> method.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>END_TAG</constant> <constant>3</constant>: An end tag was read.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para><constant>END_DOCUMENT</constant> <constant>1</constant>: No more events are available.
+                        </para>
+                    </listitem>
+                </itemizedlist>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.requirestart">
+            <refnamediv>
+                <refname>kxml.requirestart</refname>
+                <refpurpose>Test if the current event is START_TAG type and do match the given name.</refpurpose>
+            </refnamediv>
+            <refsect1>
+                <title>Description</title>
+                <para>Test if the current event is START_TAG type do match the given name and any namesapce. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.</para>
+                <refsynopsisdiv>
+                    <cmdsynopsis>
+                        <command>kxml.requirestart</command>
+                        <arg choice="req">
+                        <replaceable>xmlParser</replaceable></arg>
+                        <arg choice="req">
+                        <replaceable>name</replaceable></arg>
+                    </cmdsynopsis>
+                </refsynopsisdiv>
+                <programlisting>
+#-- assert the current event is a START_TAG event "forecast_conditions"
+kxml.requirestart $xmlParser "forecast_conditions"
+                </programlisting>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.requireend">
+            <refnamediv>
+                <refname>kxml.requireend</refname>
+                <refpurpose>Test if the current event is END_TAG type and do match the given name.</refpurpose>
+            </refnamediv>
+            <refsect1>
+                <title>Description</title>
+                <para>Test if the current event is END_TAG type and do match the given name and any namespace. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.</para>
+                <refsynopsisdiv>
+                    <cmdsynopsis>
+                    <command>kxml.requireend</command>
+                    <arg choice="req">
+                    <replaceable>xmlParser</replaceable></arg>
+                    <arg choice="req">
+                    <replaceable>name</replaceable></arg>
+                    </cmdsynopsis>
+                </refsynopsisdiv>
+                <programlisting>
+#-- assert we have reach the END_TAG event of "forecast_conditions"
+kxml.requireend $xmlParser "forecast_conditions"
+                </programlisting>   
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.attrcount">
+            <refnamediv>
+                <refname>kxml.attrcount</refname>
+                <refpurpose>Returns the number of attributes of the current start tag.</refpurpose>
+            </refnamediv>
+            <refsect1>
+                <title>Description</title>
+                <para>Returns the number of attributes of the current start tag, or -1 if the current event type is not START_TAG. </para>
+                <refsynopsisdiv>
+                    <cmdsynopsis>
+                    <command>kxml.attrcount</command>
+                    <arg choice="req">
+                    <replaceable>xmlParser</replaceable></arg>
+                    </cmdsynopsis>
+                </refsynopsisdiv>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.attrvalue">
+            <refnamediv>
+                <refname>kxml.attrvalue</refname>
+                <refpurpose>Returns the given attributes value.</refpurpose>
+            </refnamediv>
+            <refsect1>
+                <title>Description</title>
+                <para>Returns the given attributes value.</para>
+                <refsynopsisdiv>
+                    <cmdsynopsis>
+                        <command>kxml.attrvalue</command>
+                        <arg choice="req">
+                        <replaceable>xmlParser</replaceable></arg>
+                        <arg choice="req">
+                        <replaceable>index</replaceable></arg>
+                    </cmdsynopsis>
+                </refsynopsisdiv>
+            </refsect1>
+        </refentry>
+        <refentry id="kxml.getname">
+            <refnamediv>
+                <refname>kxml.getname</refname>
+                <refpurpose> For START_TAG or END_TAG events, the name of the current element is returned.</refpurpose>
+            </refnamediv>
+            <refsect1>
+                <title>Description</title>
+                <para>For START_TAG or END_TAG events, the name of the current element is returned.</para>
+                <refsynopsisdiv>
+                    <cmdsynopsis>
+                        <command>kxml.getname</command>
+                        <arg choice="req">
+                        <replaceable>xmlParser</replaceable></arg>
+                    </cmdsynopsis>
+                </refsynopsisdiv>
+                <programlisting>
+#-- loop over the stream as long as we reach the END_TAG event of "current_conditions"
+while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
+    set name [kxml.getname $xmlParser]
+    puts $name
+    kxml.nexttag $xmlParser
+}
+            </programlisting>
+            </refsect1>
+        </refentry>
+    </section>
+
   </section>
 
 

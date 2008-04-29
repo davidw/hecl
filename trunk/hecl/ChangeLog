@@ -1,3 +1,8 @@
+2008-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Docbook from Martin Mainusch <donus@gmx.net>
+	describing the kxml extension.
+
 2008-04-24  David N. Welton  <davidw@dedasys.com>
 
 	* midp20/Hecl.java: Conditionally add kxml support.
