@@ -62,9 +62,9 @@
   <property name="wtk.mmapi.enabled" value="false"/>
 
   <!--Enables or disables the Wireless Messaging API (WMA). 	2.0+ -->
-  <!-- default: false -->
-  <property name="wtk.wma.enabled" value="false"/>
-  <!--<property name="wtk.wma.enabled" value="1.1"/>-->
+  <!-- default: true -->
+  <property name="wtk.wma.enabled" value="true"/>
+  <property name="wtk.wma.version" value="1.1"/>
 
   <!-- nables or disables the J2ME Web Services API (J2MEWS). 	2.1+ -->
   <!-- default: false -->
@@ -98,15 +98,6 @@
   <property name="buildprefix" value="build"/>
   <property name="relprefix" value="jars"/>
 
-  <property name="sms" value="sms"/>
-
-  <condition property="sms" value="sms">
-    <or>
-      <equals arg1="1.1" arg2="${wtk.wma.enabled}"/>
-      <equals arg1="2.0" arg2="${wtk.wma.enabled}"/>
-    </or>
-  </condition>
-
   <!-- J2SE ************************************** -->
   <!-- properties for the build base directorries  -->
   <condition property="javamail.complete">
@@ -134,7 +125,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
-  <property name="j2me.defines" value="j2me=1,sms='${sms}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml}"/>
+  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>

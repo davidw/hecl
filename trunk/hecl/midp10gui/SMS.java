@@ -1,3 +1,5 @@
+//#condition sms == "true"
+
 /* Copyright 2006 David N. Welton
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-//#ifdef sms
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
-//#endif
 
 import org.hecl.HeclException;
 
@@ -28,9 +28,7 @@ import org.hecl.HeclException;
  * @version 1.0
  */
 public class SMS {
-
     public static void send (String num, String msgtxt) throws HeclException {
- //#ifdef sms
 	try {
 	    MessageConnection mc = (MessageConnection) Connector.open(num);
 	    TextMessage msg = (TextMessage)
@@ -41,8 +39,5 @@ public class SMS {
 	} catch (Exception e) {
 	    throw new HeclException(e.toString());
 	}
-//#else
-	throw new HeclException("sms support not enabled!");
-//#endif
     }
 }

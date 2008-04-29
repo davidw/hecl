@@ -169,7 +169,7 @@ public class Hecl extends MIDlet {
 			      new GUICmdFacade(GUI.SCREENAPPENDCMD, cmds));
 	    interp.addCommand("exit",
 			      new GUICmdFacade(GUI.EXITCMD, cmds));
-//#ifdef sms
+//#if sms == "true"
 	    interp.addCommand("sms",
 			      new GUICmdFacade(GUI.SMSCMD, cmds));
 //#endif
@@ -194,10 +194,8 @@ public class Hecl extends MIDlet {
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
 	    /* At least let the user know there was an error. */
-	    Alert a = new Alert("Hecl error",
-				e.toString(),
-				null,
-				null);
+	    Alert a = new Alert("Hecl error", e.toString(),
+				null, null);
 	    display.setCurrent(a);
 	    /* e.printStackTrace(); */
 	    System.err.println("Error in runScript: " + e);

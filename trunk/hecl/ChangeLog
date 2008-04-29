@@ -1,5 +1,12 @@
 2008-04-29  David N. Welton  <davidw@dedasys.com>
 
+	* settings.xml: Default wtk.wma.enabled to true. Cleaned up some cruft.
+
+	* midp10/Hecl.java, midp10gui/GUI.java: Reworked conditional
+	compilation for 'sms' define.
+
+	* midp10gui/SMS.java: Moved here from midp10/.
+
 	* docs/hecl.xml: Docbook from Martin Mainusch <donus@gmx.net>
 	describing the kxml extension.
 

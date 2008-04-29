@@ -54,7 +54,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 
     private static Screen screen;
 
-//#ifdef sms
+//#if sms == "true"
     private static boolean smsloaded = false;
     private static boolean smspresent = false;
 //#endif
@@ -81,7 +81,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
     public static final int SCREENAPPENDCMD = 17;
     public static final int EXITCMD = 18;
 
-//#ifdef sms
+//#if sms == "true"
     public static final int SMSCMD = 20;
 //#endif
 
@@ -451,7 +451,7 @@ class GUI implements CommandListener, Runnable, ItemStateListener {
 		midlet.notifyDestroyed();
 		break;
 
-//#ifdef sms
+//#if sms == "true"
 	    case SMSCMD:
 		try {
 		    Class.forName("javax.wireless.messaging.MessageConnection");
