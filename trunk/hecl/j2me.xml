@@ -110,7 +110,7 @@
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp${midpstr}gui"/>
     <wtkpreprocess srcdir="midp${midpstr}gui" destdir="${j2me.pre}/midp${midpstr}gui"
-      symbols="ant:j2me,ant:cldc${wtk.cldc.version}"/>
+      symbols="${j2me.defines}" />
     <wtkbuild srcdir="${j2me.pre}/midp${midpstr}gui" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.guiclasspath}">
