@@ -1,3 +1,14 @@
+2008-05-06  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListThing.java: Same change as in HashThing: don't
+	return literal Things.
+
+	* core/org/hecl/HashThing.java: If value is a literal, don't
+	return it: make a copy.  Bug caught by Thorsten Schemm
+	<lists@pader-sync.com>.
+
+	* tests/hash.hcl: Added tests for change to HashThing.
+
 2008-04-29  David N. Welton  <davidw@dedasys.com>
 
 	* settings.xml: Default wtk.wma.enabled to true. Cleaned up some cruft.

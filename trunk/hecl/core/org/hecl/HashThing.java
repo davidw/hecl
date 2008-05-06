@@ -100,15 +100,14 @@ public class HashThing implements RealThing {
      */
     private static void setHashFromAny(Thing thing) throws HeclException {
         RealThing realthing = thing.getVal();
-        Vector list = null;
-        HashThing newthing = null;
 
         if (realthing instanceof HashThing) {
             /* Nothing to be done. */
             return;
         }
 
-        list = ListThing.get(thing);
+        HashThing newthing = null;
+        Vector list = ListThing.get(thing);
 
         newthing = new HashThing(list);
         thing.setVal(newthing);
@@ -136,7 +135,15 @@ public class HashThing implements RealThing {
 		te.copy = true;
 	    }
 	}
-        return gethash.val;
+
+	/* Return a copy if it's a literal (i.e., it comes from the
+	 * parser).  I would prefer to do this sort of operation in
+	 * one place, as it's also used in ListThing. */
+ 	if (thing.isLiteral()) {
+	    return ((HashThing)gethash.deepcopy()).val;
+	} else {
+	    return gethash.val;
+	}
     }
 
     /**

@@ -26,3 +26,14 @@ test hash-5 {
     hset [copy $foo] x y
     sort [join $foo]
 } {a b c d}
+
+test hash-6 {
+    set count 0
+    set myhash [hash {a 1}]
+    while { < $count 4 } {
+	incr $count
+	hset $myhash $count $count
+	set myhash [hash { }]
+    }
+    set myhash
+} {}
