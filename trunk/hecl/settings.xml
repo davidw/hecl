@@ -125,6 +125,7 @@
 
   <!-- J2ME ************************************** -->
   <!-- build base dirs -->
+  <property name="kxml" value="false"/>
   <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>

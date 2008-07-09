@@ -1,3 +1,8 @@
+2008-07-10  David N. Welton  <davidw@dedasys.com>
+
+	* settings.xml: Make sure we set kxml to false so builds work
+	correctly.
+
 2008-07-09  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Make canvas example work as standalone program.
