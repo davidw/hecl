@@ -1,3 +1,7 @@
+2008-07-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Make canvas example work as standalone program.
+
 2008-05-06  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/ListThing.java: Same change as in HashThing: don't

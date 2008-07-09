@@ -5212,6 +5212,7 @@ set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]
 $graphics frect [list 80 10] [list 10 80]
 $graphics frect [list 10 50] [list 80 10]
+$canvas setcurrent
 	  </programlisting>
 	  <para>Produces:</para>
 	  <screen>FIXME</screen>
