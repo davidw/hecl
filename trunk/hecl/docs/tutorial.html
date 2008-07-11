@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
       Like many people, I enjoy taking something and experimenting
       with it before going and reading the instructions!  With this in
       mind, I have written a brief tutorial that you can use to start
@@ -8,7 +8,7 @@
       "Hello, World".  Behold:
     </p><pre class="programlisting">puts "Hello, World"</pre><p>
       Hecl is based on the notion of commands, which take any number
-      of arguments.  The <span><strong class="command">puts</strong></span> command takes one
+      of arguments.  The <span class="command"><strong>puts</strong></span> command takes one
       argument, a string, and prints it out.
     </p><p>
       Like all programming languages, Hecl provides variables that may
@@ -21,7 +21,7 @@ puts "Hecl, from 1 to 10: $rating"</pre><p>
       Something else we notice in the above examples is that we use
       double quotes "" to group a series of things.  In Hecl, commands
       and their arguments are separated by spaces.  Since
-      <span><strong class="command">puts</strong></span> only takes one argument, a string, we
+      <span class="command"><strong>puts</strong></span> only takes one argument, a string, we
       use the quotes to group several words together in order to pass
       them as one string to the command.  Many languages require
       quotes to delineate a string, but in Hecl that is not necessary
@@ -39,17 +39,17 @@ puts "Hecl, from 1 to 10: $rating"</pre><p>
     </p><pre class="programlisting">set rating 10
 puts "Rating:"
 puts [set rating]</pre><p>
-      In this case, we pass the results of the <span><strong class="command">set</strong></span>
-      command to the <span><strong class="command">puts</strong></span> command.  In reality, <strong class="userinput"><code>set
+      In this case, we pass the results of the <span class="command"><strong>set</strong></span>
+      command to the <span class="command"><strong>puts</strong></span> command.  In reality, <strong class="userinput"><code>set
 	rating</code></strong> is just a long way of writing
       <code class="option">$rating</code> but it's a good example.
     </p><p>
       Like everything else in Hecl, we perform math operations as
       commands:
     </p><pre class="programlisting">puts "2 + 2 = [+ 2 2]"</pre><p>
-      In the example, the <span><strong class="command">+</strong></span> takes two arguments,
+      In the example, the <span class="command"><strong>+</strong></span> takes two arguments,
       adds them together and return the result, which is then printed
-      out by the <span><strong class="command">puts </strong></span> command.
+      out by the <span class="command"><strong>puts </strong></span> command.
     </p><p>
       In order to choose between one or more 
     </p><pre class="programlisting">set temp 10

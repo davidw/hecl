@@ -1,11 +1,11 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Java ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="midp10_alert.html" title="alert"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Java ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="midp10_alert.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and Java ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#javame_tutorial">Hecl Java ME Tutorial</a></span></dt><dt><span class="section"><a href="j2me.html#midp10_commands">Hecl J2ME MIDP1.0 Commands</a></span></dt><dt><span class="section"><a href="j2me.html#midp20commands">Hecl Java ME MIDP2.0 Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl Java ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#example_application">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#hacking_hecl_j2me">Hacking Hecl's Java ME code</a></span></dt></dl></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Java ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="midp10_alert.html" title="alert"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Java ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="midp10_alert.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and Java ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#javame_tutorial">Hecl Java ME Tutorial</a></span></dt><dt><span class="section"><a href="j2me.html#midp10_commands">Hecl J2ME MIDP1.0 Commands</a></span></dt><dt><span class="section"><a href="j2me.html#midp20commands">Hecl Java ME MIDP2.0 Commands</a></span></dt><dt><span class="section"><a href="j2me.html#heclapps">Creating your own Hecl Java ME apps</a></span></dt><dt><span class="section"><a href="j2me.html#example_application">Example application</a></span></dt><dt><span class="section"><a href="j2me.html#hacking_hecl_j2me">Hacking Hecl's Java ME code</a></span></dt></dl></div><p>
       Hecl is designed to be small enough to run on mobile devices
       such as cell phones.  This means that for the Hecl core, has
       been necessary to limit ourselves to Java API's that work with
       J2ME.
     </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="javame_tutorial"></a>Hecl Java ME Tutorial</h3></div></div></div><p>
 	This tutorial first appeared here:
-	<a href="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl" target="_top">
+	<a class="ulink" href="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl" target="_top">
 	  Create a simple application with Hecl - Introducing Hecl, a mobile phone scripting
 	  language </a>.  It is a tutorial style introduction writing Hecl code for mobile
 	  phones, by David Welton.
@@ -50,13 +50,13 @@
 	    <code class="filename">/etc/apt/sources.list</code> file: <code class="code">deb
 	    http://us.archive.ubuntu.com/ubuntu/ feisty multiverse</code>
 	  </p></li><li><p>
-	    <a href="http://java.sun.com/products/sjwtoolkit/download-2_5_1.html" target="_top">Sun's WTK
+	    <a class="ulink" href="http://java.sun.com/products/sjwtoolkit/download-2_5_1.html" target="_top">Sun's WTK
 	    toolkit</a>. While you don't need the tools to compile Hecl (unless you want to hack
 	    on it!), you do want the emulator, so that you don't have to load your app onto your
 	    phone each time you want to test it. It's not open source software (yet?), but it does
 	    run on Linux, Mac and Windows, and of course it is free.
 	  </p></li><li><p>
-	    Hecl itself. You can get it from the Sourceforge <a href="http://sourceforge.net/project/showfiles.php?group_id=122383" target="_top">download
+	    Hecl itself. You can get it from the Sourceforge <a class="ulink" href="http://sourceforge.net/project/showfiles.php?group_id=122383" target="_top">download
 	      page</a>.
 	    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
 		Hecl is always improving, so you should also consider checking out Hecl directly
@@ -104,13 +104,13 @@ $form append [lcdui.stringitem -label "Hello" -text "World"]
 	through it line by line, so you understand exactly what's happening.
       </p><div class="orderedlist"><ol type="1"><li><p>
 	    The first bit of code, that starts with <code class="code">proc HelloEvents</code>, defines a
-	    "procedure": in other words a function called <span><strong class="command">HelloEvents</strong></span>. When this
+	    "procedure": in other words a function called <span class="command"><strong>HelloEvents</strong></span>. When this
 	    function is called, it creates an "alert" - think of it as a pop up message telling you
 	    something important. <code class="option">-timeout forever</code> tells the message to stay on the
 	    screen until the user dismisses it.
 	  </p></li><li><p>
-	    The second command defines a form, with the command <span><strong class="command">lcdui.form</strong></span>, with
-	    the title of "Hello World", and connected to the <span><strong class="command">HelloEvents</strong></span>
+	    The second command defines a form, with the command <span class="command"><strong>lcdui.form</strong></span>, with
+	    the title of "Hello World", and connected to the <span class="command"><strong>HelloEvents</strong></span>
 	    proc. What this connection means is that when any commands associated with the form are
 	    activated by the user, this procedure is called to handle them. The code <code class="code">set
 	    form</code> stores the form object in the variable <code class="varname">form</code>, so that it
@@ -125,11 +125,11 @@ $form append [lcdui.stringitem -label "Hello" -text "World"]
 	    <code class="code">$form setcurrent</code> references the previously created form, and tells Hecl to
 	    display it on the screen.
 	  </p></li><li><p>
-	    The <span><strong class="command">addcommand</strong></span> subcommand (you could also think of it as a "method",
+	    The <span class="command"><strong>addcommand</strong></span> subcommand (you could also think of it as a "method",
 	    like in an object oriented language) attaches the command I created above to the
 	    form. This makes the command visible in the form.
 	  </p></li><li><p>
-	    Finally, I display a string on the form with the <span><strong class="command">lcdui.stringitem</strong></span>
+	    Finally, I display a string on the form with the <span class="command"><strong>lcdui.stringitem</strong></span>
 	    command. On most phones, the <code class="option">-label</code> text is displayed in bold, and the
 	    <code class="option">-text</code> text is displayed next to it.
 	  </p></li></ol></div><p>
@@ -145,9 +145,9 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ Hello hello.hcl
 	Now, we can run the code in the emulator to see the application (figure 2).
       </p><div class="screenshot"><div><img src="hello_screenshot1.png"></div></div><p>
 	Highlighted, from the top, are the form's <code class="option">-title</code>, the
-	<span><strong class="command">stringitem</strong></span>, and in the lower right corner, the command labeled Hello.
+	<span class="command"><strong>stringitem</strong></span>, and in the lower right corner, the command labeled Hello.
       </p><p>
-	If you press the "hello" button, the code in <span><strong class="command">HelloEvents</strong></span> is executed, and
+	If you press the "hello" button, the code in <span class="command"><strong>HelloEvents</strong></span> is executed, and
 	an "alert" is popped up onto the screen, and stays there until you hit the "Done"
 	button.
       </p><p>
@@ -163,13 +163,13 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ Hello hello.hcl
 	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Note that this will likely cost money in connection charges!</p></td></tr></table></div><p>
       </p><p>
 	So far so good. Next, I'll create a small application that you can interact with to do
-	something useful. It's a simplified version of the shopping list that can be found <a href="http://shoplist.dedasys.com" target="_top">here</a>. The theory of operation behind this
+	something useful. It's a simplified version of the shopping list that can be found <a class="ulink" href="http://shoplist.dedasys.com" target="_top">here</a>. The theory of operation behind this
 	application is simple: typing a shopping list into a mobile phone is pretty painful - it's
 	much better to do the data entry via a web page, and then fetch the list with the mobile
 	phone application.
       </p><p>
 	For this tutorial, I've created a simple list on the ShopList web site, with the PIN number
-	<code class="constant">346764</code>, which can be viewed <a href="" target="_top">here</a>. Feel free to create your
+	<code class="constant">346764</code>, which can be viewed <a class="ulink" href="" target="_top">here</a>. Feel free to create your
 	own shopping lists - the site costs nothing to use. The cell phone application works like
 	so: by entering the PIN, it downloads the list of items and displays them on the phone
 	screen as a series of checkboxes. Have a look at the code to do this:
@@ -252,7 +252,7 @@ $shopform configure -commandaction \
 	commands.
       </p><p>
 	As I mentioned previously, commands with specific, predefined tasks have their own types, as
-	I can see with the <span><strong class="command">back</strong></span> and <span><strong class="command">exit</strong></span> commands, which are respectively
+	I can see with the <span class="command"><strong>back</strong></span> and <span class="command"><strong>exit</strong></span> commands, which are respectively
 	of types "back" and "exit".
       </p><p>
 	After the two commands are defined, I create a form and add a textfield to it. By specifying
@@ -260,14 +260,14 @@ $shopform configure -commandaction \
 	numbers - no letters or symbols.
       </p><p>
 	After creating the Fetch command, I append the textfield to the form (or else it wouldn't be
-	visible), add the two commands to the form, and then, with <span><strong class="command">setcurrent</strong></span>,
+	visible), add the two commands to the form, and then, with <span class="command"><strong>setcurrent</strong></span>,
 	make the form visible. The last line of code configures the form to utilize the
-	<span><strong class="command">ShopFormEvents</strong></span> proc to handle events. The list argument warrants further
+	<span class="command"><strong>ShopFormEvents</strong></span> proc to handle events. The list argument warrants further
 	explanation:
       </p><p>
-	Hecl, like many programming languages, has a <span><strong class="command">global</strong></span> command that could be
-	used in the various procs that utilize the <span><strong class="command">back</strong></span> and
-	<span><strong class="command">exit</strong></span> commands - you could simply say <code class="code">global backcmd</code>, and
+	Hecl, like many programming languages, has a <span class="command"><strong>global</strong></span> command that could be
+	used in the various procs that utilize the <span class="command"><strong>back</strong></span> and
+	<span class="command"><strong>exit</strong></span> commands - you could simply say <code class="code">global backcmd</code>, and
 	then the <code class="varname">$backcmd</code> variable would be available in that procedure. However,
 	using global variables all over the place gets kind of messy, so what I want to do is pass
 	in everything that the proc might need, and I do so by creating a list: <code class="code">ShopFormEvents
@@ -283,21 +283,21 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hc
 /opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </pre><div class="screenshot"><div><img src="shoplist1.png"></div></div><p>
 	At this point, you enter the PIN number (<code class="constant">346764</code>), and press the Fetch
-	button. This command executes the code in <span><strong class="command">MakeList</strong></span>. The first thing it
+	button. This command executes the code in <span class="command"><strong>MakeList</strong></span>. The first thing it
 	does is attempt to fetch the data from the shoplist site, using the
-	<span><strong class="command">http.geturl</strong></span> command. Since this command returns a hash table, in order to
-	get at the data returned, I use the <span><strong class="command">hget</strong></span> command to access the "data"
+	<span class="command"><strong>http.geturl</strong></span> command. Since this command returns a hash table, in order to
+	get at the data returned, I use the <span class="command"><strong>hget</strong></span> command to access the "data"
 	element. If the PIN was not available on the server, an error message is returned, and the
 	user is returned to the first screen. Otherwise, a list of checkboxes is created with
-	<span><strong class="command">lcdui.list</strong></span>, by specifying "multiple" as the type. Since the shopping list
+	<span class="command"><strong>lcdui.list</strong></span>, by specifying "multiple" as the type. Since the shopping list
 	is sent "over the wire" (so to speak...) as a list of lines, all I have to do to add it to
-	the display is split it by lines with the <span><strong class="command">split</strong></span> command, and then iterate
-	over that list with <span><strong class="command">foreach</strong></span>. The result looks like that displayed figure
+	the display is split it by lines with the <span class="command"><strong>split</strong></span> command, and then iterate
+	over that list with <span class="command"><strong>foreach</strong></span>. The result looks like that displayed figure
 	4.
       </p><div class="screenshot"><div><img src="shoplist2.png"></div></div><p>
 	And there you have it, a network-based shopping list in less than 100 lines of code. Of
 	course, there is room for improvement. For instance, in the production version of this
-	shopping list application, RecordStore (in Hecl, the <span><strong class="command">rms.*</strong></span> commands make
+	shopping list application, RecordStore (in Hecl, the <span class="command"><strong>rms.*</strong></span> commands make
 	this functionality available) is utilized to save the list and its state between invocations
 	of the program, so that you can leave the application, run it again, and find the list as
 	you left it. Support for multiple lists might also be handy.
@@ -305,7 +305,7 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hc
 	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
 	commands, and is a complete programming language that can do some interesting and dynamic
 	things. If you're curious, the best way to learn more is to keep reading the documentation,
-	and sign up for the <a href="http://lists.sourceforge.net/lists/listinfo/hecl-devel" target="_top">Hecl
+	and sign up for the <a class="ulink" href="http://lists.sourceforge.net/lists/listinfo/hecl-devel" target="_top">Hecl
 	mailing list</a> on SourceForge.
       </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="midp10_commands"></a>Hecl J2ME MIDP1.0 Commands</h3></div></div></div><div class="toc"><dl><dt><span class="refentrytitle"><a href="midp10_alert.html">alert</a></span><span class="refpurpose"> &#8212; Creates an alert</span></dt><dt><span class="refentrytitle"><a href="midp10_choicegroup.html">choicegroup</a></span><span class="refpurpose"> &#8212; Displays a choicegroup in the current form</span></dt><dt><span class="refentrytitle"><a href="midp10_cmd.html">cmd</a></span><span class="refpurpose"> &#8212; Adds a command to a form/listbox/textbox</span></dt><dt><span class="refentrytitle"><a href="midp10_datefield.html">datefield</a></span><span class="refpurpose"> &#8212; Displays an datefield in the current form</span></dt><dt><span class="refentrytitle"><a href="midp10_j2me_exit.html">exit</a></span><span class="refpurpose"> &#8212; Exits the application</span></dt><dt><span class="refentrytitle"><a href="midp10_form.html">form</a></span><span class="refpurpose"> &#8212; Creates a form</span></dt><dt><span class="refentrytitle"><a href="midp10_gauge.html">gauge</a></span><span class="refpurpose"> &#8212; Displays an gauge in the current form</span></dt><dt><span class="refentrytitle"><a href="midp10_getindex.html">getindex</a></span><span class="refpurpose"> &#8212; Fetches a reference to the N'th element in a
 	  given form/listbox</span></dt><dt><span class="refentrytitle"><a href="midp10_getprop.html">getprop</a></span><span class="refpurpose"> &#8212; Fetches the value of a given property from a widget</span></dt><dt><span class="refentrytitle"><a href="midp10_listbox.html">listbox</a></span><span class="refpurpose"> &#8212; Creates a listbox</span></dt><dt><span class="refentrytitle"><a href="midp10_noscreen.html">noscreen</a></span><span class="refpurpose"> &#8212; Runs without a current screen widget</span></dt><dt><span class="refentrytitle"><a href="midp10_screenappend.html">screenappend</a></span><span class="refpurpose"> &#8212; Appends an item to a form or listbox</span></dt><dt><span class="refentrytitle"><a href="midp10_setcurrent.html">setcurrent</a></span><span class="refpurpose"> &#8212; Displays an alert/form/listbox/textbox</span></dt><dt><span class="refentrytitle"><a href="midp10_setindex.html">setindex</a></span><span class="refpurpose"> &#8212; 
@@ -327,10 +327,10 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hc
 	The MIDP 2.0 commands in Hecl are more complete and more
 	advanced than the 1.0 commands, and should be used if
 	possible.  This is a fairly complete list of which devices are
-	MIDP2.0 capable: <a href="http://www.j2mepolish.org/devices/platform_MIDP_2.0.html" target="_top">http://www.j2mepolish.org/devices/platform_MIDP_2.0.html</a>
+	MIDP2.0 capable: <a class="ulink" href="http://www.j2mepolish.org/devices/platform_MIDP_2.0.html" target="_top">http://www.j2mepolish.org/devices/platform_MIDP_2.0.html</a>
       </p><p>
 	To fully understand these commands, a perusal of the
-	documentation here is likely a good idea: <a href="http://java.sun.com/javame/reference/apis/jsr118/" target="_top">http://java.sun.com/javame/reference/apis/jsr118/</a>
+	documentation here is likely a good idea: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/" target="_top">http://java.sun.com/javame/reference/apis/jsr118/</a>
 	In particular, look at the lcdui package.
       </p><p>
 	This code was originally written and contributed to Hecl by
@@ -369,7 +369,7 @@ java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hc
 	    If you have some sort of J2ME SDK that includes an
 	    emulator, now would be a good time to try out your
 	    application before running it on your phone.  You can get
-	    that is free (if not open source) from Sun here: <a href="http://java.sun.com/products/sjwtoolkit/" target="_top">http://java.sun.com/products/sjwtoolkit/</a>
+	    that is free (if not open source) from Sun here: <a class="ulink" href="http://java.sun.com/products/sjwtoolkit/" target="_top">http://java.sun.com/products/sjwtoolkit/</a>
 	    .  I run it like this:
 	  </p><pre class="screen">~/Desktop/WTK2.2/bin/emulator -classpath MyApp.jar Hecl</pre><p>
 	    Note that <code class="option">Hecl</code> above will not change,
@@ -407,14 +407,14 @@ setcurrent $mainform
 </pre><p>
 	This program is pretty simple.  It displays a form, which
 	contains a textfield and a stringitem, and two commands,
-	<span><strong class="command">Reverse</strong></span> and <span><strong class="command">Exit</strong></span>.  When
-	you select <span><strong class="command">Reverse</strong></span>, the text contained in
+	<span class="command"><strong>Reverse</strong></span> and <span class="command"><strong>Exit</strong></span>.  When
+	you select <span class="command"><strong>Reverse</strong></span>, the text contained in
 	the textfield is reversed, and displayed in the stringitem.
 	Exit does what you might expect.
       </p><p>
 	The code is fairly self-explanatory, with a few key points
-	worth noting.  Within the <span><strong class="command">reverse</strong></span> proc,
-	<span><strong class="command">getprop</strong></span> and <span><strong class="command">setprop</strong></span> are
+	worth noting.  Within the <span class="command"><strong>reverse</strong></span> proc,
+	<span class="command"><strong>getprop</strong></span> and <span class="command"><strong>setprop</strong></span> are
 	used to fetch and set properties of the textfield and
 	stringitem.  All the GUI elements have fairly similar
 	arguments, for instance <code class="option">label</code> for the label,
@@ -436,8 +436,8 @@ setcurrent $mainform
 	JavaME has two layers that are of interest to us, "CLDC" and "MIDP".  CLDC is available in
 	1.0 and 1.1 configurations, whereas MIDP comes in 1.0 and 2.0 configurations.  The most
 	common configurations are CLDC 1.0 and MIDP 1.0, CLDC 1.0 and MIDP 2.0, and CLDC 1.1 with
-	MIDP 2.0.  Here are the Wikipedia entries describing <a href="http://en.wikipedia.org/wiki/Connected_Limited_Device_Configuration" target="_top">CLDC</a> and
-	<a href="http://en.wikipedia.org/wiki/MIDP" target="_top">MIDP</a>.
+	MIDP 2.0.  Here are the Wikipedia entries describing <a class="ulink" href="http://en.wikipedia.org/wiki/Connected_Limited_Device_Configuration" target="_top">CLDC</a> and
+	<a class="ulink" href="http://en.wikipedia.org/wiki/MIDP" target="_top">MIDP</a>.
       </p><p>
 	Hecl tries to match code to system resources: in other words, the code in the
 	<code class="filename">midp10/</code> and <code class="filename">midp10gui</code> (MIDP 1.0) directories is

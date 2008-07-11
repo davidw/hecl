@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>after</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="fpmath.html" title="abs acos acos asin asin atan atan cbrt ceil cos cosh cosh exp expm1 floor hypot log log10 log1p pow random round signum sin sinh sqrt tan tanh tanh"><link rel="next" href="and.html" title="and"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">after</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="fpmath.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="after"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>after &#8212; Sleep / delayed script evaluation</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">after</code>   
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>after</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="fpmath.html" title="abs acos acos asin asin atan atan cbrt ceil cos cosh cosh exp expm1 floor hypot log log10 log1p pow random round signum sin sinh sqrt tan tanh tanh"><link rel="next" href="and.html" title="and"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">after</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="fpmath.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="and.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="after"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>after &#8212; Sleep / delayed script evaluation</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">after</code>   
 	      <em class="replaceable"><code>milliseconds</code></em>
 	       [<em class="replaceable"><code>script</code></em>]
 	      |   
@@ -11,19 +11,19 @@
 	      |   
 	      idle
 	      [<em class="replaceable"><code>script</code></em>]
-	     </p></div></div><div class="refsect1" lang="en"><a name="id2520360"></a><h2>Description</h2><p>
-	  The <span><strong class="command">after</strong></span> command is used, in the simple
+	     </p></div></div><div class="refsect1" lang="en"><a name="id2548330"></a><h2>Description</h2><p>
+	  The <span class="command"><strong>after</strong></span> command is used, in the simple
 	  case, to simply halt evaluation of the script for
 	  <code class="option"><em class="replaceable"><code>milliseconds</code></em></code>
 	  milliseconds, or execute a script after that number of
 	  milliseconds.
 	</p><p>
 	  The after command can also be used to manage timer events in
-	  Hecl via the <span><strong class="command">info</strong></span> and
-	  <span><strong class="command">cancel</strong></span> subcommands, which, respectively,
+	  Hecl via the <span class="command"><strong>info</strong></span> and
+	  <span class="command"><strong>cancel</strong></span> subcommands, which, respectively,
 	  return information about existing events, and allow the
 	  cancellation of events.
-	</p></div><div class="refsect1" lang="en"><a name="id2520402"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
+	</p></div><div class="refsect1" lang="en"><a name="id2561410"></a><h2>Example</h2><p>Pause for 1 second:</p><pre class="programlisting">after 1000</pre><p>
 	  Run <code class="option"><em class="replaceable"><code>script</code></em></code> after
 	  10 seconds, but do not pause execution of the main script:
 	</p><pre class="programlisting">after 10000 { puts "hello, later world"	}</pre><p>Cancel all timers:</p><pre class="programlisting">for {set i 1} {&lt; $i 11} {incr $i} {
