@@ -6940,7 +6940,7 @@ FIXME
 	    .  I run it like this:
 	  </para>
 
-	  <screen>~/Desktop/WTK2.2/bin/emulator -classpath MyApp.jar Hecl</screen>
+	  <screen>/opt/WTK2.5.2/bin/emulator -classpath MyApp.jar Hecl</screen>
 
 	  <para>
 	    Note that <option>Hecl</option> above will not change,
