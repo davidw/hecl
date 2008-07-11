@@ -3747,16 +3747,15 @@ while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
   <section id="heclandjava">
     <title>Interfacing Hecl and Java</title>
 
+    <para>
+      Hecl is not a replacement for Java, and is indeed meant to work hand in hand with Java.  We
+      attempt to make it as easy as possible to call Java from Hecl, via the creation of new Hecl
+      commands that can call Java code, in addition to calling Hecl from Java, which is a matter of
+      a few lines of code.
+      </para>
+
     <section>
       <title>Calling Hecl code from Java</title>
-      <para>
-	Hecl is not a replacement for Java, and is indeed meant to
-	work hand in hand with Java.  We attempt to make it as easy as
-	possible to call Java from Hecl, via the creation of new Hecl
-	commands that can call Java code, in addition to calling Hecl
-	from Java, which is a matter of a few lines of code.  For
-	example, to evaluate a Hecl file from Java:
-      </para>
 
       <programlisting>
 import org.hecl.files.HeclFile;
@@ -3798,50 +3797,54 @@ import org.hecl.HeclException;
       </para>
     </section>
 
-    <section>
+    <section id="creating_new_hecl_commands">
       <title>Creating new Hecl commands</title>
 
       <para>
-	Creating new Hecl commands is relatively simple.  The first
-	step is to create a new class for your command in a file, say
-	<filename>HelloCmd.java</filename>.  The code would look
-	something like this:
+	Creating new Hecl commands is relatively simple.  The first step is to create a new class
+	for your command in a file, say <filename>HelloCmd.java</filename>, which, for simplicity's
+	sake, you could put in <filename>core/org/hecl/</filename>.  The code would look something
+	like this:
       </para>
 
       <programlisting>
 import org.hecl.Command;
 import org.hecl.HeclException;
 import org.hecl.Interp;
-      </programlisting>
+import org.hecl.Thing;
 
-      <para>...</para>
-
-      <programlisting>
 class HelloCmd implements Command {
 
-    public void cmdCode(Interp interp, Thing[] argv)
+    public Thing cmdCode(Interp interp, Thing[] argv)
 	throws HeclException {
 
 	System.out.println("Hello world");
+	return null;
     }
 }
       </programlisting>
 
       <para>
-	The command takes an interpreter and an array of
-	<classname>Thing</classname>s as arguments, where the first
-	<classname>Thing</classname> is the name of the command
-	itself, and the others are the arguments to it.
+	The command takes an interpreter and an array of <classname>Thing</classname>s as arguments,
+	where the first <classname>Thing</classname> is the name of the command itself, and the
+	others are the arguments to it.
       </para>
 
       <para>
-	The "glue" that connects the name of your Hecl command with
-	the Java code is also relatively simple:
+	The "glue" that connects the name of your Hecl command with the Java code is also relatively
+	simple:
       </para>
 
       <programlisting>
-	interp.commands.put("hello", new HelloCmd());
+	interp.addCommand("hello", new HelloCmd());
       </programlisting>
+
+      <para>
+	The above code would be included somewhere in <filename>commandline/Hecl.java</filename>,
+	<filename>midp20/Hecl.java</filename> or elsewhere, depending on what platform you're
+	working on; or <filename>core/org/hecl/Interp.java</filename> if you want to include it as
+	part of the Hecl core.
+      </para>
 
       <para>
 	Easy, no?  There are a few other useful methods that you
@@ -3934,7 +3937,57 @@ class HelloCmd implements Command {
 
       </itemizedlist>
 
+      <para>There are similar methods for strings, floats (where applicable), hashes and lists.</para>
+
     </section>
+
+    <section id="building_hecl">
+      <title>Building Hecl: Ant Targets</title>
+
+      <para>
+	Since Hecl can be built for many different platforms, with many different capabilities, it
+	requires a fairly complex build system, based on <ulink
+	url="http://ant.apache.org/">Ant</ulink>, <ulink
+	url="http://antenna.sourceforge.net/">Antenna</ulink>, and for Java ME, <ulink
+	url="http://proguard.sourceforge.net/">Proguard.</ulink>.  However, it's not necessary to
+	understand the intricacies of this system unless you're doing more advanced hacking: in that
+	case, you should ask on the mailing list if you need help.
+      </para>
+
+      <para>The most important build targets are the following:</para>
+
+      <simplelist>
+	<member><command>ant build</command>: Build everything.  This is a time-consuming process,
+	but is the best way to make sure you have built everything with the latest code.
+	</member>
+
+	<member><command>ant packageCommandline</command>: Builds the
+	<filename>jars/j2se/Hecl.jar</filename> file for the j2se/command line version of Hecl.
+	</member>
+
+	<member>
+	  <command>ant -propertyfile ./cldc11midp20.properties midlet</command>: Builds the MIDP 2.0
+	  version of Hecl.
+	</member>
+
+	<member>
+	  <command>ant -propertyfile ./cldc10midp10.properties midlet</command>: Builds the MIDP 1.0
+	  version of Hecl.
+	</member>
+
+	<member>
+	  <command>ant installAndroidPackage</command>: Builds the Android version of Hecl and
+	  installs it on the Android emulator, which must be running for the final step to work.
+	</member>
+
+	<member>
+	  <command>ant docs</command>: Creates both the DocBook documentation and runs Javadoc.
+	</member>
+
+      </simplelist>
+
+    </section>
+
 
     <section>
       <title>JavaDocs</title>
