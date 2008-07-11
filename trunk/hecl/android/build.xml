@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <project name="AndroidHecl" default="packageAndroid">
+
   <property file="android/android.properties"/>
 
   <property name="android-defines" value="" />
@@ -212,7 +213,7 @@
 
 
   <!-- Install package on the emulator -->
-  <target name="installPackage" depends="package-dex">
+  <target name="installAndroidPackage" depends="package-dex">
     <echo>Sending package to emulator</echo>
     <exec executable="${adb}" failonerror="true">
       <arg value="install" />

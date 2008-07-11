@@ -1,5 +1,7 @@
 2008-07-11  David N. Welton  <davidw@dedasys.com>
 
+	* android/build.xml: Clarify android package install target's name.
+
 	* j2me.xml: Moved the buildAllJavaME target here from the misc.xml
 	file.  It was previously known as 'buildEverything'.
 
