@@ -1,3 +1,15 @@
+2008-07-11  David N. Welton  <davidw@dedasys.com>
+
+	* j2me.xml: Moved the buildAllJavaME target here from the misc.xml
+	file.  It was previously known as 'buildEverything'.
+
+	* misc.xml: packageAndroidBuilder depends on packageAndroid
+	instead of the actual install step.
+
+	* build.xml: Attempt to include *everything* as dependencies for
+	the 'build' target, including all platforms, docs, and the various
+	support jars.
+
 2008-07-10  David N. Welton  <davidw@dedasys.com>
 
 	* settings.xml: Make sure we set kxml to false so builds work

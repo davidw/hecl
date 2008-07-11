@@ -14,6 +14,10 @@
 
   ant -propertyfile ./cldc10midp10.properties midlet
 
+  Or to simply rebuild everything, including docs and jars for all platforms:
+
+  ant build
+
   -->
 
   <!-- These files contain most of the actual build targets -->
@@ -30,34 +34,30 @@
     <echo message="WTK Home: ${wtk.home}"/>
   </target>
 
-  <target name="showenv">
-    <exec executable="/usr/bin/env">
-    </exec>
-  </target>
-
-  <!-- virtual targets -->
-  <target name="build" description="Complete build"     depends="compile,package"/>
+  <!-- This does *everything* -->
+  <target name="build" description="Complete build" depends="compile,package,buildAllJavaME,docs"/>
 
   <target name="compile" description="Compile everything"
-    depends="packageCommandline,packageStandalone,compileApplet"/>
+    depends="packageCommandline,packageStandalone,compileApplet,buildAllJavaME"/>
 
   <target name="package" description="Package things into JARs"
-    depends="packageJARs,packageApplet,HeclBuilderJar"/>
+    depends="packageJARs,packageApplet,HeclBuilderJar,packageAndroid"/>
 
   <!-- clean targets -->
   <target name="clean" description="Clean the build"
     depends="cleanBuild">
-    <delete file="Hecl.jar"/>
-    <delete file="JarHack.jar"/>
-    <delete file="HeclBuilder.jar"/>
-    <delete file="StandaloneHecl.jar"/>
-  </target>
+    <delete file="jars/AndroidBuilder.jar"/>
+    <delete file="jars/HeclBuilder.jar"/>
+    <delete file="jars/JarHack.jar"/>
+    <delete>
+      <fileset dir="jars/j2se/" includes="*.jar"/>
+    </delete>
 
-<!-- Don't do this... we keep these
-  <target name="cleanOut" description="Clean out directory">
-    <delete dir="${relprefix}"/>
+    <delete>
+      <fileset dir="jars/" includes="cldc*-midp*/*.jar"/>
+      <fileset dir="jars/" includes="cldc*-midp*/*.jad"/>
+    </delete>
   </target>
--->
 
   <target name="cleanBuild" description="Clean build files">
     <delete dir="${buildprefix}"/>

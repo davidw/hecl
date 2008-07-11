@@ -3,7 +3,7 @@
 
   <!-- Depends on commandline version, so that we can run javadocs on
   the parsed version. -->
-  <target name="javadocs" depends="buildEverything">
+  <target name="javadocs" depends="buildAllJavaME">
 
     <javadoc packagenames="org.hecl,org.hecl.*,jarhack,heclbuilder"
       destdir="docs/jdocs"
@@ -85,7 +85,7 @@
     </javac>
   </target>
 
-  <target name="buildEverything" depends="packageCommandline">
+  <target name="buildAllJavaME" depends="packageCommandline">
     <!-- This is kind of an ugly hack - it would be better to be able to depend on this somehow, but
     we don't build this all that often. -->
 
@@ -102,7 +102,7 @@
     </exec>
   </target>
 
-  <target name="packageAndroidBuilder" depends="installPackage">
+  <target name="packageAndroidBuilder" depends="packageAndroid">
     <mkdir dir="${j2se.build}/androidbuilder" />
     <javac srcdir="androidbuilder" destdir="${j2se.build}/androidbuilder" debug="true">
       <classpath path="jars/commons-cli-1.1.jar" />
@@ -124,7 +124,7 @@
       includes="android/res/drawable/aicon.png" update="true" />
   </target>
 
-  <target name="HeclBuilderJar" depends="buildEverything,packageJarHack,HeclBuilder">
+  <target name="HeclBuilderJar" depends="buildAllJavaME,packageJarHack,HeclBuilder">
 
     <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
