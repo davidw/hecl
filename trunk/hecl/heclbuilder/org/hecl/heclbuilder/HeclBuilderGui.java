@@ -13,9 +13,9 @@
    limitations under the License.
 */
 
-package heclbuilder;
+package org.hecl.heclbuilder;
 
-import jarhack.JarHack;
+import org.hecl.jarhack.JarHack;
 
 import java.io.File;
 import java.io.FileInputStream;

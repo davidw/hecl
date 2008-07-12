@@ -5,13 +5,13 @@
   the parsed version. -->
   <target name="javadocs" depends="buildAllJavaME">
 
-    <javadoc packagenames="org.hecl,org.hecl.*,heclbuilder"
+    <javadoc packagenames="org.hecl,org.hecl.*"
       destdir="docs/jdocs"
       author="true"
       version="true"
       use="true">
       <classpath path="jars/jline-0.9.92.jar"></classpath>
-      <classpath path="HeclBuilder/swing-layout-1.0.jar"></classpath>
+      <classpath path="heclbuilder/swing-layout-1.0.jar"></classpath>
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${wtk.home}/lib/midpapi20.jar"/>
 
@@ -25,7 +25,7 @@
 	<pathelement path="http"/>
       </sourcepath>
       <sourcepath>
-	<pathelement path="HeclBuilder"/>
+	<pathelement path="heclbuilder"/>
       </sourcepath>
       <sourcepath>
 	<pathelement path="jarhack"/>
@@ -77,7 +77,7 @@
   <target name="HeclBuilder" depends="packageCommandline,
     packageJarHack">
     <mkdir dir="build/heclbuilder" />
-    <javac srcdir="HeclBuilder" destdir="build/heclbuilder">
+    <javac srcdir="heclbuilder" destdir="build/heclbuilder">
       <classpath refid="classpath" />
       <classpath path="HeclBuilder/swing-layout-1.0.jar" />
       <classpath path="${j2se.hecl.lib.jar}" />
@@ -111,7 +111,7 @@
 
     <jar destfile="jars/HeclBuilder.jar" basedir="build/heclbuilder">
       <manifest>
-	<attribute name="Main-Class" value="heclbuilder/HeclBuilderGui" />
+	<attribute name="Main-Class" value="org.hecl.heclbuilder/HeclBuilderGui" />
       </manifest>
 
       <zipfileset src="HeclBuilder/swing-layout-1.0.jar"

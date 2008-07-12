@@ -1,5 +1,8 @@
 2008-07-12  David N. Welton  <davidw@dedasys.com>
 
+	* heclbuilder/org/hecl/heclbuilder/HeclBuilderGui.java: Moved to
+	org.hecl.heclbuilder namespace.
+
 	* core.xml: Build JarHack with commons cli in order to be able to
 	use real command line options.
 

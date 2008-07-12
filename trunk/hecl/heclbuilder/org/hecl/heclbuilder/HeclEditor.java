@@ -13,7 +13,7 @@
  limitations under the License.
  */
 
-package heclbuilder;
+package org.hecl.heclbuilder;
 
 import java.io.File;
 
