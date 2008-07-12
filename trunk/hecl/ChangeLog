@@ -1,5 +1,11 @@
 2008-07-12  David N. Welton  <davidw@dedasys.com>
 
+	* core.xml: Build JarHack with commons cli in order to be able to
+	use real command line options.
+
+	* jarhack/org/hecl/jarhack/JarHack.java: Moved JarHack into an
+	org.hecl.jarhack namespace
+
 	* docs/hecl.xml: Tweaks to correct Hecl Commands information.
 	Added information about build targets.
 

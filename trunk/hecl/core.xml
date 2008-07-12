@@ -121,10 +121,12 @@
   <target name="packageJarHack">
     <mkdir dir="${j2se.build}/jarhack" />
     <javac srcdir="jarhack" destdir="${j2se.build}/jarhack">
+      <classpath path="jars/commons-cli-1.1.jar" />
     </javac>
     <jar destfile="jars/JarHack.jar" basedir="${j2se.build}/jarhack">
+      <zipfileset src="jars/commons-cli-1.1.jar" includes="org/apache/commons/cli/*.class"/>
       <manifest>
-	<attribute name="Main-Class" value="jarhack/JarHack"></attribute>
+	<attribute name="Main-Class" value="org/hecl/jarhack/JarHack"></attribute>
       </manifest>
     </jar>
   </target>
