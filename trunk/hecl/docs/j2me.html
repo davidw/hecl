@@ -135,7 +135,7 @@ $form append [lcdui.stringitem -label "Hello" -text "World"]
 	  </p></li></ol></div><p>
 	That's it! Now, to transform the code into a cell phone application, run a command:
       </p><pre class="programlisting">
-java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ Hello hello.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name Hello -script hello.hcl
 </pre><p>
 	This is all it takes - this command takes the existing <code class="filename">Hecl.jar</code> file,
 	and replaces the Hecl script within with our newly created <code class="filename">hello.hcl</code>
@@ -279,7 +279,7 @@ $shopform configure -commandaction \
 	called with. By comparing <code class="varname">$cmd</code> with the various commands that are
 	available, it's possible to determine which command called the proc, and act accordingly.
       </p><p>Now, let's build it and run it:</p><pre class="programlisting">
-java -jar jars/JarHack.jar jars/cldc1.1-midp2.0/Hecl.jar ~/ ShopList shoplist.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name ShopList -script shoplist.hcl
 /opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </pre><div class="screenshot"><div><img src="shoplist1.png"></div></div><p>
 	At this point, you enter the PIN number (<code class="constant">346764</code>), and press the Fetch

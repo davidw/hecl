@@ -1,5 +1,7 @@
 2008-07-12  David N. Welton  <davidw@dedasys.com>
 
+	* docs/hecl.xml: Fixed JarHack paths to use new command line stuff.
+
 	* misc.xml: Fix HeclBuilder paths.
 
 	* heclbuilder/org/hecl/heclbuilder/HeclBuilderGui.java: Moved to
