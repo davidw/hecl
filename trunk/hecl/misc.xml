@@ -79,7 +79,7 @@
     <mkdir dir="build/heclbuilder" />
     <javac srcdir="heclbuilder" destdir="build/heclbuilder">
       <classpath refid="classpath" />
-      <classpath path="HeclBuilder/swing-layout-1.0.jar" />
+      <classpath path="heclbuilder/swing-layout-1.0.jar" />
       <classpath path="${j2se.hecl.lib.jar}" />
       <classpath path="jars/JarHack.jar" />
     </javac>
@@ -114,7 +114,7 @@
 	<attribute name="Main-Class" value="org.hecl.heclbuilder/HeclBuilderGui" />
       </manifest>
 
-      <zipfileset src="HeclBuilder/swing-layout-1.0.jar"
+      <zipfileset src="heclbuilder/swing-layout-1.0.jar"
 	includes="org/jdesktop/layout/*.class"/>
       <zipfileset src="jars/JarHack.jar" includes="org/hecl/jarhack/*.class"/>
       <zipfileset src="${j2se.hecl.lib.jar}" includes="org/hecl/*.class"/>
