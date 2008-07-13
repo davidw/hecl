@@ -220,7 +220,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
       and use with J2ME.
     </para>
 
-    <section>
+    <section id="tools_and_editors">
       <title>Tools &amp; Editors</title>
       <para>
 	Even if you're not interested in recompiling Hecl to hack on the source code, to write Hecl
@@ -2989,7 +2989,7 @@ puts $foo
       </refentry>
     </section>
 
-    <section>
+    <section id="http_commands">
       <title>HTTP</title>
 
       <para>
@@ -3154,7 +3154,7 @@ eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 
     </section>
 
-    <section>
+    <section id="networking_commands">
       <title>Net</title>
 
       <para>Networking commands</para>
@@ -3202,7 +3202,7 @@ eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 
     </section>
 
-    <section>
+    <section id="recordstore_commands">
       <title>RecordStore</title>
 
       <para>
@@ -3989,7 +3989,7 @@ class HelloCmd implements Command {
     </section>
 
 
-    <section>
+    <section id="hecl_javadocs">
       <title>JavaDocs</title>
 
       <para>
@@ -4279,7 +4279,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	phone, like so:
       </para>
 
-      <para><userinput>gammu nothing --nokiaaddfile Application Hecl</userinput></para>
+      <programlisting>gammu nothing --nokiaaddfile Application Hecl</programlisting>
 
       <para>
 	Another method that may work better across different phones is to use the phone's browser to
@@ -4476,6 +4476,57 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	mailing list</ulink> on SourceForge.
       </para>
 
+    </section>
+
+    <section id="javame_quick_start">
+      <title>Quick start to developing Java ME apps</title>
+
+      <para>
+	Creating new Hecl applications is quick and easy:
+      </para>
+
+      <procedure>
+	<step>
+	  <para>
+	    Create a Hecl script.  For starters, you could use the <filename>hello.hcl</filename>
+	    script from the tutorial.
+	  </para>
+	</step>
+
+	<step>
+	  <para>
+	    Use <command>JarHack</command> to create a new jar and accompanying
+	    jad file:
+	  </para>
+	  <programlisting>java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir /tmp -name Hello -script hello.hcl</programlisting>
+	  <para>
+	    This creates <filename>Hello.jar</filename> and <filename>Hello.jad</filename> in the
+	    <filename>/tmp</filename> directory, using the <filename>hello.hcl</filename> script.
+	    It utilizes the MIDP 2.0 version of Hecl in <filename>jars/cldc1.1-midp2.0/Hecl.jar</filename>
+	  </para>
+	</step>
+
+	<step>
+	  <para>To run this code in the emulator:</para>
+	  <programlisting>/opt/WTK2.5.2/bin/emulator -classpath /tmp/Hello.jar Hecl</programlisting>
+	</step>
+
+	<step performance="optional">
+	  <para>
+	    Once you've iterated through a few versions of the script, and are satisfied, you're
+	    ready to move it to your phone.  Unfortunately, we can't do that for you, as there is no
+	    standard method - each phone manufacturer provides their own way.  On Linux, I use the
+	    following command:
+	  </para>
+	  <programlisting>gammu nothing --nokiaaddfile Application Hecl</programlisting>
+
+	  <para>
+	    Another way to accomplish this is to put the jar and jad files on a web site and
+	    download them with your phone's browser.
+	  </para>
+	</step>
+
+      </procedure>
     </section>
 
 
@@ -6858,160 +6909,6 @@ FIXME
 
     </section>
 
-    <section id="heclapps">
-      <title>Creating your own Hecl Java ME apps</title>
-
-      <para>
-	Creating new hecl applications is relatively easy using the
-	<application>HeclBuilder</application> application.
-      </para>
-
-      <procedure>
-	<step>
-
-	  <para>
-	    Launch it like so:
-	  </para>
-
-	  <screen>java -jar jars/HeclBuilder.jar</screen>
-
-	  <para>
-	    It should look something like this:
-	  </para>
-
-	  <screenshot>
-	    <mediaobject>
-	      <imageobject>
-		<imagedata fileref="heclbuilder-screen.png" format="PNG"/>
-	      </imageobject>
-	      <caption>
-		HeclBuilder in action
-	      </caption>
-	    </mediaobject>
-	  </screenshot>
-
-	</step>
-
-	<step>
-	  <para>
-	    First, you must select a script to use for your Hecl
-	    application.  We recommend that you create this yourself
-	    using your favorite editor (if it has a Tcl mode, that
-	    will make things even easier).  The provided editor is not
-	    yet really worthy of the name!
-	  </para>
-	</step>
-
-	<step>
-	  <para>
-	    The next field (<guilabel>MIDlet name</guilabel>) is the
-	    name of your Hecl application.  This will be used both as
-	    the name visible on the cell phone, as well as the name of
-	    the .jar file.
-	  </para>
-	</step>
-
-	<step>
-	  <para>
-	    Select a directory where the resulting .jar and .jad files
-	    will be placed.
-	  </para>
-	</step>
-
-	<step>
-	  <para>
-	    At this point, all you have to do is press the "Go"
-	    button, and the .jar and .jad files will be created for
-	    you.  All that's left is to move them on to the cell
-	    phone, but we can't do that for you, as there is no
-	    standard method - each phone manufacturer provides their
-	    own way.  On Linux, I use the following command:
-	  </para>
-	  <screen>gammu nothing --nokiaaddfile Application Hecl</screen>
-	</step>
-
-	<step performance="optional">
-	  <para>
-	    If you have some sort of J2ME SDK that includes an
-	    emulator, now would be a good time to try out your
-	    application before running it on your phone.  You can get
-	    that is free (if not open source) from Sun here: <ulink
-	    url="http://java.sun.com/products/sjwtoolkit/">http://java.sun.com/products/sjwtoolkit/</ulink>
-	    .  I run it like this:
-	  </para>
-
-	  <screen>/opt/WTK2.5.2/bin/emulator -classpath MyApp.jar Hecl</screen>
-
-	  <para>
-	    Note that <option>Hecl</option> above will not change,
-	    because that is always the main class, even if the
-	    application itself has a different name.
-	  </para>
-
-	</step>
-      </procedure>
-
-      <para>
-	This leads to a very quick development cycle - if you leave
-	HeclBuilder open, all you have to do to update your .jar and
-	.jad files after you have edited your Hecl script, is to click
-	the <guibutton>Create .jar/.jad files</guibutton> button!
-      </para>
-
-    </section>
-
-    <section id="example_application">
-      <title>Example application</title>
-
-      <para>
-	For example, let's create a simple form with a text entry
-	widget and a command that acts on it:
-      </para>
-
-      <programlisting><xi:include href="reverse.hcl" parse="text"
-	  xmlns:xi="http://www.w3.org/2001/XInclude"/></programlisting>
-
-      <para>
-	This program is pretty simple.  It displays a form, which
-	contains a textfield and a stringitem, and two commands,
-	<command>Reverse</command> and <command>Exit</command>.  When
-	you select <command>Reverse</command>, the text contained in
-	the textfield is reversed, and displayed in the stringitem.
-	Exit does what you might expect.
-      </para>
-
-      <para>
-	The code is fairly self-explanatory, with a few key points
-	worth noting.  Within the <command>reverse</command> proc,
-	<command>getprop</command> and <command>setprop</command> are
-	used to fetch and set properties of the textfield and
-	stringitem.  All the GUI elements have fairly similar
-	arguments, for instance <option>label</option> for the label,
-	and <option>code</option> for the code associated with them.
-	Note thouth that the code associated with the form is
-	evaluated immediately, whereas that associated with the
-	commands is only evaluated when they are selected.  Lastly, to
-	actually display this on the screen, it's necessary to set the
-	form as the screen item currently displayed.
-      </para>
-
-      <para>The program looks more or less like this when run:
-
-      </para>
-
-      <screenshot>
-	<mediaobject>
-	  <imageobject><imagedata fileref="reverse-screen.png"
-	  format="PNG"/></imageobject>
-	  <caption>
-	    "reverse" screenshot, with textfield, stringitem, and two
-	    commands, Reverse and Exit
-	  </caption>
-	</mediaobject>
-      </screenshot>
-
-    </section>
-
     <section id="hacking_hecl_j2me">
       <title>Hacking Hecl's Java ME code</title>
 
@@ -7057,18 +6954,34 @@ FIXME
 	To compile different combinations of things, Hecl makes a couple of property files
 	available that are used like so:
       </para>
-      <screen>
+      <programlisting>
  ant -propertyfile ./cldc10midp10.properties midlet
-      </screen>
+      </programlisting>
       <para>
 	Which compiles the CLDC 1.0 / MIDP 1.0 version of Hecl and places the jar in the
       <filename>jars/cldc1.0-midp1.0/</filename> directory, or:
       </para>
-      <screen>
+      <programlisting>
  ant -propertyfile ./cldc11midp20.properties midlet
-      </screen>
+      </programlisting>
       <para>Which compiles the CLDC 1.1 / MIDP 2.0 version, and places the jar in the
       <filename>jars/cldc1.1-midp2.0/</filename> directory.</para>
     </section>
   </section>
 </article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

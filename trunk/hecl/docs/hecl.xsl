@@ -21,6 +21,8 @@
   <xsl:param name="use.id.as.filename" select="1"/>
   <xsl:param name="header.rule" select="0"/>
 
+  <xsl:param name="chunk.section.depth" select="2" />
+
   <xsl:param name="navig.graphics" select="1"/>
   <xsl:param name="navig.graphics.extension" select="'.png'"/>
   <xsl:param name="admon.graphics" select="1"/>

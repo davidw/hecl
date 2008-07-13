@@ -1,3 +1,13 @@
+2008-07-13  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xsl: Split pages up one level deeoper.
+
+	* docs/hecl.css: Added Hecl color for headers, tweaked screen and
+	programlisting.
+
+	* docs/hecl.xml: Clean up some redundant sections, leaving just
+	the tutorial and quick start guide.  Added some missing section id's.
+
 2008-07-12  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Fixed JarHack paths to use new command line stuff.

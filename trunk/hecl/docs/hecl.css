@@ -20,16 +20,12 @@ div.cmdsynopsis {
 pre.programlisting {
     background-color: #ccccff;
     padding: 1ex;
-    width: 60%;
     margin-left: 5%;
-    margin-right: auto;
 }
 
 pre.screen {
     padding: 1ex;
-    width: 60%;
     margin-left: 5%;
-    margin-right: auto;
     background-color: #ccffcc;
 }
 
@@ -51,6 +47,10 @@ A:hover {
 
 A.top:visited {
     color: #5555ff;
+}
+
+img {
+    border: 0;
 }
 
 div.mediaobject img {
@@ -80,4 +80,14 @@ div.section {
 
 span.guibutton {
     font-weight: bold;
+}
+
+.navheader {
+    background-color: #f9b93e;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navheader th {
+    font-size: 25px;
 }
