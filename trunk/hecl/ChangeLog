@@ -1,3 +1,7 @@
+2008-07-14  David N. Welton  <davidw@dedasys.com>
+
+	* misc.xml: Re-added showenv build target here.
+
 2008-07-13  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xsl: Split pages up one level deeoper.

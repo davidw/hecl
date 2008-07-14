@@ -129,4 +129,9 @@
       includes="jars/cldc1.1-midp2.0/Hecl.jar" update="true" />
 
   </target>
+
+  <target name="showenv">
+    <exec executable="/usr/bin/env">
+    </exec>
+  </target>
 </project>
