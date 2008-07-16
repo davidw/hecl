@@ -28,6 +28,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -50,6 +52,7 @@ class AndroidBuilder {
 	opts.addOption("permissions", true, "Android Permissions");
 	opts.addOption("intentfilter", true, "Intent Filter File");
 	opts.addOption("extraclass", true, "Extra class");
+	opts.addOption("script", true, "Script file");
 
 	CommandLineParser parser = new PosixParser();
 	CommandLine cmd = parser.parse(opts, args);
@@ -96,10 +99,14 @@ class AndroidBuilder {
 	    extraClass = cmd.getOptionValue("extraclass");
 	}
 
-
 	String intentfilterFile = "";
- 	if(cmd.hasOption("package")) {
+ 	if(cmd.hasOption("intentfilter")) {
 	    intentfilterFile = cmd.getOptionValue("intentfilter");
+	}
+
+	String scriptFilename = null;
+ 	if(cmd.hasOption("script")) {
+	    scriptFilename = cmd.getOptionValue("script");
 	}
 
 	/* Calculate some other stuff based on the informatin we have. */
@@ -275,8 +282,41 @@ class AndroidBuilder {
 	runProcess("zip", "-j", "-r", heclapk, manifest);
 	runProcess("zip", "-j", "-r", heclapk, dexfile);
 
-	/* Finally, rename the whole business back to the calling directory. */
-	(new File(heclapk)).renameTo(new File(System.getProperty("user.dir") + "/" + appclass + ".apk"));
+	/* Finally, rename the whole business back to the calling
+	 * directory.  We copy the whole thing across as a .zip
+	 * archive in order to replace the script.hcl file. */
+
+	String newfilename = System.getProperty("user.dir") + "/" + appclass + ".apk";
+	if (scriptFilename == null) {
+	    /* Just move it over. */
+	    (new File(heclapk)).renameTo(new File(newfilename));
+	} else {
+	    /* Copy it bit by bit, and replace the script.hcl file. */
+	    ZipInputStream zif = new ZipInputStream(new FileInputStream(heclapk));
+	    ZipOutputStream zof = new ZipOutputStream(new FileOutputStream(newfilename));
+
+	    int read;
+	    byte[] buf = new byte[4096];
+	    ZipEntry ze = zif.getNextEntry();
+	    while (ze != null) {
+		zof.putNextEntry(new ZipEntry(ze.getName()));
+		if ("res/raw/script.hcl".equals(ze.getName())) {
+		    FileInputStream inf = new FileInputStream(scriptFilename);
+		    while ((read = inf.read(buf)) != -1) {
+			zof.write(buf, 0, read);
+		    }
+		    inf.close();
+		} else {
+		    while ((read = zif.read(buf)) != -1) {
+			zof.write(buf, 0, read);
+		    }
+		}
+		ze = zif.getNextEntry();
+	    }
+
+	    zif.close();
+	    zof.close();
+	}
 
 	/* FIXME - we should probably destroy the temporary directory,
 	 * but it's very useful for debugging purposes.  */

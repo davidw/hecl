@@ -1,6 +1,13 @@
+2008-07-16  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added -script option to specify the script file to build into the
+	.apk.  Added .zip file copying code to move all the .zip files
+	over from the old location, instead of simply moving the file.
+
 2008-07-14  David N. Welton  <davidw@dedasys.com>
 
-	* misc.xml: Re-added showenv build target here.
+	* misc.xml: Re-added showenv build target here
 
 2008-07-13  David N. Welton  <davidw@dedasys.com>
 
