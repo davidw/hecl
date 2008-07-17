@@ -1,9 +1,9 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Interfacing Hecl and Java</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="kxml.getname.html" title="kxml.getname"><link rel="next" href="j2me.html" title="Hecl and Java ME"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="kxml.getname.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id2586023">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="heclandjava.html#creating_new_hecl_commands">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="heclandjava.html#building_hecl">Building Hecl: Ant Targets</a></span></dt><dt><span class="section"><a href="heclandjava.html#id2586474">JavaDocs</a></span></dt></dl></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Interfacing Hecl and Java</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="kxml.getname.html" title="kxml.getname"><link rel="next" href="creating_new_hecl_commands.html" title="Creating new Hecl commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Interfacing Hecl and Java</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="kxml.getname.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="creating_new_hecl_commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="heclandjava"></a>Interfacing Hecl and Java</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="heclandjava.html#id2586033">Calling Hecl code from Java</a></span></dt><dt><span class="section"><a href="creating_new_hecl_commands.html">Creating new Hecl commands</a></span></dt><dt><span class="section"><a href="building_hecl.html">Building Hecl: Ant Targets</a></span></dt><dt><span class="section"><a href="hecl_javadocs.html">JavaDocs</a></span></dt></dl></div><p>
       Hecl is not a replacement for Java, and is indeed meant to work hand in hand with Java.  We
       attempt to make it as easy as possible to call Java from Hecl, via the creation of new Hecl
       commands that can call Java code, in addition to calling Hecl from Java, which is a matter of
       a few lines of code.
-      </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2586023"></a>Calling Hecl code from Java</h3></div></div></div><pre class="programlisting">
+      </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2586033"></a>Calling Hecl code from Java</h3></div></div></div><pre class="programlisting">
 import org.hecl.files.HeclFile;
 
 import org.hecl.Eval;
@@ -38,81 +38,4 @@ import org.hecl.HeclException;
 	you don't have files, you can still use
 	<code class="methodname">interp.eval</code> to evaluate some code,
 	which could come from whatever source you desire.
-      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="creating_new_hecl_commands"></a>Creating new Hecl commands</h3></div></div></div><p>
-	Creating new Hecl commands is relatively simple.  The first step is to create a new class
-	for your command in a file, say <code class="filename">HelloCmd.java</code>, which, for simplicity's
-	sake, you could put in <code class="filename">core/org/hecl/</code>.  The code would look something
-	like this:
-      </p><pre class="programlisting">
-import org.hecl.Command;
-import org.hecl.HeclException;
-import org.hecl.Interp;
-import org.hecl.Thing;
-
-class HelloCmd implements Command {
-
-    public Thing cmdCode(Interp interp, Thing[] argv)
-	throws HeclException {
-
-	System.out.println("Hello world");
-	return null;
-    }
-}
-      </pre><p>
-	The command takes an interpreter and an array of <code class="classname">Thing</code>s as arguments,
-	where the first <code class="classname">Thing</code> is the name of the command itself, and the
-	others are the arguments to it.
-      </p><p>
-	The "glue" that connects the name of your Hecl command with the Java code is also relatively
-	simple:
-      </p><pre class="programlisting">
-	interp.addCommand("hello", new HelloCmd());
-      </pre><p>
-	The above code would be included somewhere in <code class="filename">commandline/Hecl.java</code>,
-	<code class="filename">midp20/Hecl.java</code> or elsewhere, depending on what platform you're
-	working on; or <code class="filename">core/org/hecl/Interp.java</code> if you want to include it as
-	part of the Hecl core.
-      </p><p>
-	Easy, no?  There are a few other useful methods that you
-	should be aware of, to share variables between Hecl and Java,
-	and to return results from your Hecl commands:
-      </p><div class="itemizedlist"><ul type="disc"><li><code class="methodsynopsis"><span class="methodname">interp.setVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>,<br>              <span class="methodparam"><span class="type">Thing </span><span class="parameter">value</span></span>);</code>
-	  This sets the value of <em class="parameter"><code>varname</code></em> to
-	  some value.
-	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>);</code><br><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">String </span><span class="parameter">varname</span></span>);</code>
-	  These methods take a variable name, either in string form or
-	  as a <code class="classname">Thing</code>, and return the
-	  <code class="classname">Thing</code> associated with that variable.
-	</li><li><p><code class="varname">interp.result</code> is used to set the
-	    result of a command.  This oft-used variable is accessed
-	    directly for simplicity, speed and smaller code size.
-	  </p></li><li><code class="methodsynopsis"><span class="type">int </span><span class="methodname">IntThing.get</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">thing</span></span>);</code>
-	  Get an int from a Thing.
-	</li><li><code class="methodsynopsis"><span class="type">String </span><span class="methodname">StringThing.get</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">thing</span></span>);</code>
-	  Get a String from a Thing.
-	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam"><span class="type">int </span><span class="parameter">i</span></span>);</code>
-	  Creates a new thing from an int.
-	</li></ul></div><p>There are similar methods for strings, floats (where applicable), hashes and lists.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="building_hecl"></a>Building Hecl: Ant Targets</h3></div></div></div><p>
-	Since Hecl can be built for many different platforms, with many different capabilities, it
-	requires a fairly complex build system, based on <a class="ulink" href="http://ant.apache.org/" target="_top">Ant</a>, <a class="ulink" href="http://antenna.sourceforge.net/" target="_top">Antenna</a>, and for Java ME, <a class="ulink" href="http://proguard.sourceforge.net/" target="_top">Proguard.</a>.  However, it's not necessary to
-	understand the intricacies of this system unless you're doing more advanced hacking: in that
-	case, you should ask on the mailing list if you need help.
-      </p><p>The most important build targets are the following:</p><table class="simplelist" border="0" summary="Simple list"><tr><td><span class="command"><strong>ant build</strong></span>: Build everything.  This is a time-consuming process,
-	but is the best way to make sure you have built everything with the latest code.
-	</td></tr><tr><td><span class="command"><strong>ant packageCommandline</strong></span>: Builds the
-	<code class="filename">jars/j2se/Hecl.jar</code> file for the j2se/command line version of Hecl.
-	</td></tr><tr><td>
-	  <span class="command"><strong>ant -propertyfile ./cldc11midp20.properties midlet</strong></span>: Builds the MIDP 2.0
-	  version of Hecl.
-	</td></tr><tr><td>
-	  <span class="command"><strong>ant -propertyfile ./cldc10midp10.properties midlet</strong></span>: Builds the MIDP 1.0
-	  version of Hecl.
-	</td></tr><tr><td>
-	  <span class="command"><strong>ant installAndroidPackage</strong></span>: Builds the Android version of Hecl and
-	  installs it on the Android emulator, which must be running for the final step to work.
-	</td></tr><tr><td>
-	  <span class="command"><strong>ant docs</strong></span>: Creates both the DocBook documentation and runs Javadoc.
-	</td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="id2586474"></a>JavaDocs</h3></div></div></div><p>
-	For the complete Hecl javadoc documentation, see the <a class="ulink" href="jdocs" target="_top">Hecl Javadocs</a>.  And, of course, look at
-	  the Hecl source code to see how it's done!
-      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="kxml.getname.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="j2me.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">kxml.getname </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl and Java ME</td></tr></table></div></body></html>
+      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="kxml.getname.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="creating_new_hecl_commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">kxml.getname </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Creating new Hecl commands</td></tr></table></div></body></html>

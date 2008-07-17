@@ -1,3 +1,8 @@
+2008-07-17  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added Android quick start section.  Changed
+	navigation icons again.
+
 2008-07-16  David N. Welton  <davidw@dedasys.com>
 
 	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:

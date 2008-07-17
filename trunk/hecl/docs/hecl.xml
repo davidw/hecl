@@ -33,6 +33,7 @@
       <year>2005</year>
       <year>2006</year>
       <year>2007</year>
+      <year>2008</year>
       <holder>
 	David N. Welton
       </holder>
@@ -6968,20 +6969,98 @@ FIXME
       <filename>jars/cldc1.1-midp2.0/</filename> directory.</para>
     </section>
   </section>
+
+  <section id="android">
+    <title>Hecl and Android</title>
+
+    <para>
+      As of mid-2008, Hecl runs on Google's <ulink
+      url="http://code.google.com/android/">Android</ulink> platform, although it's not yet a
+      'mature' port.  That's ok right now, though, because Android isn't production ready yet,
+      either.
+    </para>
+
+    <para>Due to a different GUI model, a very extensive API, and a much more complete
+      implementation of Java
+      <footnote>
+	<para>
+	  Android doesn't actually run Java, it just compiles code written in Java into bytecodes for
+	  the Dalvik engine.
+	</para>
+      </footnote>
+      Hecl on Android takes a different approach: the Android version of Hecl includes a
+      <command>java</command> command, and introspection capabilities in order to be able to
+      dynamically create Hecl commands that call out to native Java calls.
+    </para>
+
+    <section id="android_quick_start">
+      <title>Android Hecl Quick Start</title>
+
+      <para>
+	Developing for Android Hecl is quite similar to Java ME development, with the same cycle of
+	editing a script, creating an application bundle, and testing it in an emulator.
+      </para>
+
+
+      <procedure>
+	<step>
+	  <para>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
+	  world":</para>
+	  <programlisting>set layout [linearlayout -new $context]
+$layout setorientation VERTICAL
+set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+set tv [textview -new $context -text {Hello World} -layoutparams $layoutparams]
+
+$layout addview $tv
+[activity] setcontentview $layout
+</programlisting>
+
+	  <para>
+	    To see more code, have a look at <filename>android/res/raw/script.hcl</filename>, which
+	    has examples of many different widgets.
+	  </para>
+
+	</step>
+
+	<step>
+	  <para>You won't need it right away, but you might as well start the emulator:</para>
+	  <programlisting>/opt/android-sdk_m5-rc15_linux-x86/tools/emulator &amp;</programlisting>
+	</step>
+
+	<step>
+	  <para>Now we create the new <filename>Hello.apk</filename> file.
+	  </para>
+
+	  <programlisting>java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk_m5-rc15_linux-x86/ -class Hello -label Hello -package hello.world -script hello.hcl</programlisting>
+
+	  <para>
+	    The command line options are as follows:
+	  </para>
+
+	  <simplelist>
+	    <member><option>-android</option>: The location of the Android SDK</member>
+	    <member><option>-class</option>: The class name to utilize for the new .apk.</member>
+	    <member><option>-label</option>: The user-visible name of the package.</member>
+	    <member><option>-package</option>: The Java package to use.  You can pretty much use any
+	    name you like, it doesn't matter much.</member>
+	    <member><option>-script</option>: The location of the script you want to use in the new .apk.</member>
+	  </simplelist>
+
+	</step>
+
+	<step>
+	  <para>Once you have successfully created a new <filename>Hello.apk</filename>, you can
+	  send it to the emulator:
+	  </para>
+	  <programlisting>/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</programlisting>
+
+	</step>
+
+      </procedure>
+
+    </section>
+
+  </section>
+
 </article>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

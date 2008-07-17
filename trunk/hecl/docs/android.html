@@ -1,0 +1,35 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Android</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="hacking_hecl_j2me.html" title="Hacking Hecl's Java ME code"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Android</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="hacking_hecl_j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> </td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="android"></a>Hecl and Android</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="android.html#android_quick_start">Android Hecl Quick Start</a></span></dt></dl></div><p>
+      As of mid-2008, Hecl runs on Google's <a class="ulink" href="http://code.google.com/android/" target="_top">Android</a> platform, although it's not yet a
+      'mature' port.  That's ok right now, though, because Android isn't production ready yet,
+      either.
+    </p><p>Due to a different GUI model, a very extensive API, and a much more complete
+      implementation of Java
+      <sup>[<a name="id2594509" href="#ftn.id2594509" class="footnote">1</a>]</sup>
+      Hecl on Android takes a different approach: the Android version of Hecl includes a
+      <span class="command"><strong>java</strong></span> command, and introspection capabilities in order to be able to
+      dynamically create Hecl commands that call out to native Java calls.
+    </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="android_quick_start"></a>Android Hecl Quick Start</h3></div></div></div><p>
+	Developing for Android Hecl is quite similar to Java ME development, with the same cycle of
+	editing a script, creating an application bundle, and testing it in an emulator.
+      </p><div class="procedure"><ol type="1"><li><p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
+	  world":</p><pre class="programlisting">set layout [linearlayout -new $context]
+$layout setorientation VERTICAL
+set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
+
+set tv [textview -new $context -text {Hello World} -layoutparams $layoutparams]
+
+$layout addview $tv
+[activity] setcontentview $layout
+</pre><p>
+	    To see more code, have a look at <code class="filename">android/res/raw/script.hcl</code>, which
+	    has examples of many different widgets.
+	  </p></li><li><p>You won't need it right away, but you might as well start the emulator:</p><pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/emulator &amp;</pre></li><li><p>Now we create the new <code class="filename">Hello.apk</code> file.
+	  </p><pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk_m5-rc15_linux-x86/ -class Hello -label Hello -package hello.world -script hello.hcl</pre><p>
+	    The command line options are as follows:
+	  </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">-android</code>: The location of the Android SDK</td></tr><tr><td><code class="option">-class</code>: The class name to utilize for the new .apk.</td></tr><tr><td><code class="option">-label</code>: The user-visible name of the package.</td></tr><tr><td><code class="option">-package</code>: The Java package to use.  You can pretty much use any
+	    name you like, it doesn't matter much.</td></tr><tr><td><code class="option">-script</code>: The location of the script you want to use in the new .apk.</td></tr></table></li><li><p>Once you have successfully created a new <code class="filename">Hello.apk</code>, you can
+	  send it to the emulator:
+	  </p><pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</pre></li></ol></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.id2594509" href="#id2594509" class="para">1</a>] </sup>
+	  Android doesn't actually run Java, it just compiles code written in Java into bytecodes for
+	  the Dalvik engine.
+	</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="hacking_hecl_j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Hacking Hecl's Java ME code </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
