@@ -6997,6 +6997,12 @@ FIXME
       <title>Android Hecl Quick Start</title>
 
       <para>
+	To work with Android, of course the first thing you need to do is to get the SDK from
+	Google: <ulink url="http://code.google.com/android/download.html" />.  On my system, I
+	installed it in here: <filename>/opt/android-sdk_m5-rc15_linux-x86/</filename>.
+      </para>
+
+      <para>
 	Developing for Android Hecl is quite similar to Java ME development, with the same cycle of
 	editing a script, creating an application bundle, and testing it in an emulator.
       </para>
