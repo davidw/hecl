@@ -11,6 +11,7 @@
       version="true"
       use="true">
       <classpath path="jars/jline-0.9.92.jar"></classpath>
+      <classpath path="jars/commons-cli-1.1.jar"></classpath>
       <classpath path="heclbuilder/swing-layout-1.0.jar"></classpath>
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${wtk.home}/lib/midpapi20.jar"/>

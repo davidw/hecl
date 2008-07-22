@@ -1,3 +1,7 @@
+2008-07-22  David N. Welton  <davidw@dedasys.com>
+
+	* misc.xml: Added cli to javadocs classpaths.
+
 2008-07-17  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added Android quick start section.  Changed
