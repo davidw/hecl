@@ -1,3 +1,8 @@
+2008-07-30  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added emulator running command line for hello
+	world.
+
 2008-07-22  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Make the Android SDK location explicit.

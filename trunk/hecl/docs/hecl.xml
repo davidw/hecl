@@ -72,7 +72,7 @@
       vs <userinput>puts "Hello World"</userinput> - 41
       keystrokes (shifted letters count double) versus 22.  Hecl is
       built to <ulink
-      url="http://www.dedasys.com/articles/scalable_systems.html">"scale
+      url="http://www.welton.it/articles/scalable_systems.html">"scale
       down"</ulink> - especially in terms of its users, meaning that
       it is very quick to learn, and can be quickly put to productive
       use even by those who are not programmers by trade.
@@ -4254,8 +4254,12 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
       </para>
 
       <para>
-	Now, we can run the code in the emulator to see the application (figure 2).
+	Now, we can run the code in the emulator to see the application:
       </para>
+
+<programlisting>
+/opt/WTK2.5.2/bin/emulator -cp ~/Hello.jar Hecl
+</programlisting>
 
       <screenshot>
 	<screeninfo>Figure 2: Hecl Hello World screenshot</screeninfo>

@@ -142,8 +142,10 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	script, and creates the resulting <code class="filename">Hello.jar</code> in your home directory
 	(referenced as <code class="filename">~/</code> in the command above).
       </p><p>
-	Now, we can run the code in the emulator to see the application (figure 2).
-      </p><div class="screenshot"><div><img src="hello_screenshot1.png"></div></div><p>
+	Now, we can run the code in the emulator to see the application:
+      </p><pre class="programlisting">
+/opt/WTK2.5.2/bin/emulator -cp ~/Hello.jar Hecl
+</pre><div class="screenshot"><div><img src="hello_screenshot1.png"></div></div><p>
 	Highlighted, from the top, are the form's <code class="option">-title</code>, the
 	<span class="command"><strong>stringitem</strong></span>, and in the lower right corner, the command labeled Hello.
       </p><p>
