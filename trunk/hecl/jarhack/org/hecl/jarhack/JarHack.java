@@ -29,6 +29,13 @@ import java.util.Vector;
 
 import java.util.jar.*;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.PosixParser;
+
 /**
  * <code>JarHack</code> -- this class provides several static methods
  * that can be used to create .jar and .jad files from a template
@@ -179,17 +186,44 @@ public class JarHack {
      *
      * @param args a <code>String[]</code> value
      */
-    public static void main(String[] args) {
-	if (args.length < 4 || args.length > 5) {
-	    System.err.println(
-		"Usage: JarHack original.jar destination_dir ApplicationName yourscript.hcl ?url?");
-	    System.exit(1);
+    public static void main(String[] args) throws ParseException {
+	Options opts = new Options();
+
+	String sourcefile = null;
+	String destdir = null;
+	String appname = null;
+	String scriptfile = null;
+
+	opts.addOption("hecljar", true, "Location of Java ME Hecl jar");
+	opts.addOption("destdir", true, "Directory where the .jar and .jad will be created");
+	opts.addOption("name", true, "Name of MIDLet to create: $name.jar and $name.jad");
+	opts.addOption("script", true, "Script filename");
+
+	CommandLineParser parser = new PosixParser();
+	CommandLine cmd = parser.parse(opts, args);
+
+	if(cmd.hasOption("hecljar")) {
+	    sourcefile = cmd.getOptionValue("hecljar");
+	} else {
+	    usage(opts);
+	}
+	if(cmd.hasOption("destdir")) {
+	    destdir = cmd.getOptionValue("destdir");
+	} else {
+	    usage(opts);
+	}
+	if(cmd.hasOption("name")) {
+	    appname = cmd.getOptionValue("name");
+	} else {
+	    usage(opts);
+	}
+	if(cmd.hasOption("script")) {
+	    scriptfile = cmd.getOptionValue("script");
+	} else {
+	    usage(opts);
 	}
 
-	String sourcefile = args[0];
-	String destdir = args[1];
-	String appname = args[2];
-	String scriptfile = args[3];
+
 	String url;
 	if (args.length == 5) {
 	    url = args[4];
@@ -212,6 +246,12 @@ public class JarHack {
 	    System.err.println("Error: " + e);
 	    e.printStackTrace();
 	}
+    }
+
+    private static void usage(Options opts) {
+	HelpFormatter formatter = new HelpFormatter();
+	formatter.printHelp("JarHack", opts);
+	System.exit(1);
     }
 
     /**

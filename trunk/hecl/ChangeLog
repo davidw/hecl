@@ -1,3 +1,8 @@
+2008-08-18  David N. Welton  <davidw@dedasys.com>
+
+	* jarhack/org/hecl/jarhack/JarHack.java: Commit the new command
+	line options!  Oops.
+
 2008-07-30  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added emulator running command line for hello
