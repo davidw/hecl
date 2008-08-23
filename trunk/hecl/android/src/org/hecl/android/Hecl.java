@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.widget.Button;
@@ -255,11 +256,11 @@ public class Hecl extends Activity
      * selects a menu item.  The callbacks are set up via the
      * menucallback command, defined in AndroidCmd.
      *
-     * @param item a <code>Menu.Item</code> value
+     * @param item a <code>MenuItem</code> value
      * @return a <code>boolean</code> value
      */
     @Override
-    public boolean onOptionsItemSelected(Menu.Item item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
 
 	if (onOptionsItemSelectedCallBack != null) {
 	    try {

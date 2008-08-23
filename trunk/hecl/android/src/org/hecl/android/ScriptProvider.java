@@ -21,9 +21,10 @@ package org.hecl.android;
 import android.content.ContentProvider;
 
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.content.ContentValues;
-import android.content.Resources;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -65,6 +66,10 @@ public class ScriptProvider extends ContentProvider {
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
+        DatabaseHelper(Context context) {
+            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        }
+
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE scripts (_id INTEGER PRIMARY KEY,"
@@ -81,9 +86,8 @@ public class ScriptProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        DatabaseHelper dbHelper = new DatabaseHelper();
-        db = dbHelper.openDatabase(getContext(), DATABASE_NAME, null, DATABASE_VERSION);
-        return (db == null) ? false : true;
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+	return true;
     }
 
     @Override

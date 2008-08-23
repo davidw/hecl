@@ -200,7 +200,7 @@ public class AndroidCmd extends Operator {
 	JavaCmd.load(ip, "android.database.Cursor", "cursor");
 
 	JavaCmd.load(ip, "android.view.Menu", "menu");
-	JavaCmd.load(ip, "android.view.Menu$Item", "menuitem");
+	JavaCmd.load(ip, "android.view.MenuItem", "menuitem");
 	JavaCmd.load(ip, "android.view.View", "view");
 
 	JavaCmd.load(ip, "android.widget.AdapterView", "adapterview");

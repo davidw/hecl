@@ -1,4 +1,4 @@
-/* Copyright 2007 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2007-2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package org.hecl.android;
 
 import java.util.Vector;
+import android.app.DatePickerDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,8 +44,9 @@ import org.hecl.Thing;
 public class HeclCallback implements android.view.View.OnClickListener,
 			  android.widget.AdapterView.OnItemClickListener,
 			  android.widget.AdapterView.OnItemSelectedListener,
-			  android.widget.DatePicker.OnDateSetListener,
-			  android.widget.TimePicker.OnTimeSetListener,
+			  android.widget.DatePicker.OnDateChangedListener,
+			  android.app.DatePickerDialog.OnDateSetListener,
+			  android.app.TimePickerDialog.OnTimeSetListener,
 			  android.widget.TimePicker.OnTimeChangedListener,
 			  android.widget.CompoundButton.OnCheckedChangeListener {
 
@@ -67,7 +69,21 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	}
     }
 
-    public void dateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(ObjectThing.create(view));
+	    vec.add(IntThing.create(year));
+	    vec.add(IntThing.create(monthOfYear));
+	    vec.add(IntThing.create(dayOfMonth));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl datechanged callback", he.toString());
+	}
+    }
+
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 	try {
 	    Vector vec = ListThing.get(script.deepcopy());
 	    vec.add(ObjectThing.create(view));
@@ -81,7 +97,7 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	}
     }
 
-    public void timeSet(TimePicker view, int hourOfDay, int minute) {
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 	try {
 	    Vector vec = ListThing.get(script.deepcopy());
 	    vec.add(ObjectThing.create(view));
@@ -94,7 +110,7 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	}
     }
 
-    public void timeChanged(TimePicker view, int hourOfDay, int minute) {
+    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 	try {
 	    Vector vec = ListThing.get(script.deepcopy());
 	    vec.add(ObjectThing.create(view));

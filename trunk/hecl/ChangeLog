@@ -1,3 +1,24 @@
+2008-08-23  David N. Welton  <davidw@dedasys.com>
+
+	* android/build.xml: Added tasks from new default Android project
+	build.xml.
+
+	* android/res/raw/script.hcl: Updated to new SDK.  Removed Gtalk
+	code, mp3 introduction.
+
+	* android/src/org/hecl/android/Hecl.java: Use MenuItem instead of
+	Menu.Item, for 0.9 SDK.
+
+	* android/src/org/hecl/android/HeclCallback.java: Updated to 0.9 SDK.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use MenuItem
+	instead of Menu$Item, for 0.9 upgrade.
+
+	* android/src/org/hecl/android/ScriptProvider.java: Updated to 0.9 SDK.
+
+	* android/AndroidManifest.xml: Added permissions for REORDER_TASKS
+	and INTERNET.
+
 2008-08-18  David N. Welton  <davidw@dedasys.com>
 
 	* jarhack/org/hecl/jarhack/JarHack.java: Commit the new command

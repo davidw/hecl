@@ -27,8 +27,7 @@ proc main {} {
     set lview [basiclist $context [list "Introduction" "Simple Widgets" "Web View" "Date Picker" \
 				       "Time Picker" "Progress Dialog" "Spinner" \
 				       "Hecl Editor" "Hecl Server" \
-				       "Contacts" "Task List" \
-				       "Send GTalk Message"] \
+				       "Contacts" "Task List"] \
 		   -layoutparams $layoutparams]
 
     $lview requestfocus
@@ -52,7 +51,7 @@ proc MenuSetup {} {
     # user, and it's necessary to set it up.
 
     proc MenuCallBack {menu} {
-	$menu add 0 0 "View Source"
+	$menu add "View Source"
     }
 
     [activity] -field onCreateOptionsMenuCallBack MenuCallBack
@@ -109,19 +108,7 @@ CreateActivity Introduction "Introduction" {
     $layout addview [textview -new $context \
 			   -text "Hello, and welcome to Hecl on Android.  This application gives you a brief overview of some of the things the Hecl scripting language is capable of on Android.  And of course, the entire application is written in Hecl!\n\nYou can even view and edit the source code by using the 'view source' menu button." \
 			   -layoutparams $layoutparams -textsize $textsize]
-    after 1 PlayIntro
 }
-
-proc PlayIntro {} {
-    catch {
-	java android.media.MediaPlayer mediaplayer
-	set mp [mediaplayer create [activity] [reslookup R.raw.zintro]]
-	$mp prepareAsync
-	$mp start
-    } err
-    androidlog "Error: $err"
-}
-
 
 # SimpleWidgets --
 #
@@ -252,7 +239,7 @@ proc DatePicker {} {
     java android.app.DatePickerDialog datedialog
 
     set callback [callback -new [list [list Callback]]]
-    set dp [datedialog -new [list $context $callback 2007 10 10 1]]
+    set dp [datedialog -new [list $context $callback 2007 10 1]]
     $dp show
 }
 
@@ -266,9 +253,7 @@ proc TimePicker {} {
     java android.app.TimePickerDialog timedialog
 
     set callback [callback -new [list [list Callback]]]
-    set tp [timedialog -new \
-		[list $context $callback \
-		     "It's 5 o'clock somewhere" 5 0 1]]
+    set tp [timedialog -new [list $context $callback 5 0 0]]
     $tp show
 }
 
@@ -430,7 +415,7 @@ CreateActivity Contacts "Contacts" {
     set cursor [contentQuery content://contacts/people/]
 
     set i 0
-    while { $cursor next } {
+    while { $cursor moveToNext } {
 	set name [$cursor getstring [$cursor getcolumnindex name]]
 	set number [$cursor getstring [$cursor getcolumnindex number]]
 	$layout addview [textview -new $context \
@@ -618,79 +603,6 @@ CreateActivity HeclServer "Hecl Server" {
 	}
     }
 }
-
-CreateActivity SendGTalk "Send GTalk Message" {
-    set context [activity]
-
-    set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
-
-    set layout [linearlayout -new $context -layoutparams $layoutparams]
-    $layout setorientation VERTICAL
-
-    $layout addview [textview -new $context \
-			 -layoutparams $layoutparams \
-			 -text "Sending GTalk message to David Welton, Hecl creator:"]
-
-    set msgtext [edittext -new $context -layoutparams $layoutparams]
-    set sendbutton [button -new $context -layoutparams $layoutparams -text "Send"]
-
-    set callback [callback -new [list [list SendMessage $msgtext]]]
-    $sendbutton setonclicklistener $callback
-
-    set answers [textview -new $context -layoutparams $layoutparams -text ""]
-
-    java org.hecl.Interp interp
-    java org.hecl.android.HeclServiceConnection hserviceconnection
-    java android.content.Intent intent
-
-    java com.google.android.gtalkservice.IGTalkService gtalkservice
-    java com.google.android.gtalkservice.IGTalkSession gtalksession
-    java {com.google.android.gtalkservice.IGTalkService$Stub} gtalkstub
-    java {com.google.android.gtalkservice.GTalkServiceConstants} gtalkconstants
-    java com.google.android.gtalkservice.IChatSession chatsession
-
-    $layout addview $msgtext
-    $layout addview $sendbutton
-    $layout addview $answers
-    $context setcontentview $layout
-
-    set conn [hserviceconnection -new [list [thisinterp]]]
-
-    proc RecvMessage {args} [code {
-	set answers $a
-	set oldtext [$answers gettext]
-	gui [list $answers settext "${oldtext}\n[lindex $args 1]"]
-    } [list a $answers]]
-
-    proc onserviceconnected {classname service} {
-	set gtalkservice [gtalkstub asInterface $service]
-	global GtalkSession
-	set GtalkSession [[$gtalkservice getDefaultSession] createChatSession "davidnwelton@gmail.com"]
-	set hcb [heclchatlistener -new [list [thisinterp]]]
-	$hcb -field newMessageReceived [list RecvMessage]
-	$GtalkSession addRemoteChatListener $hcb
-    }
-
-    $conn -field onserviceconnected onserviceconnected
-    set i [intent -new [list]]
-    set i [$i setcomponent [gtalkconstants -field GTALK_SERVICE_COMPONENT]]
-
-    $context bindservice $i $conn 0
-}
-
-# SendMessage --
-#
-#	Send GTalk message.  This currently doesn't deal with the
-#	response
-
-java org.hecl.android.HeclChatListener heclchatlistener;
-
-proc SendMessage {msgtext sendbutton} {
-    set message_txt [$msgtext gettext]
-    global GtalkSession
-    $GtalkSession sendTextMessage "Android Hecl User says: $message_txt"
-}
-
 
 # SelectDemo --
 #

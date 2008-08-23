@@ -5,11 +5,13 @@
   <uses-permission android:name="android.permission.GET_TASKS" />
   <uses-permission android:name="android.permission.ACCESS_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_GPS" />
+  <uses-permission android:name="android.permission.REORDER_TASKS" />
+  <uses-permission android:name="android.permission.INTERNET" />
 
   <application android:icon="@org.hecl.android:drawable/aicon">
 
-    <provider android:name="org.hecl.android.ScriptProvider"
-      android:authorities="org.hecl.android.Scripts" />
+<!--     <provider android:name="org.hecl.android.ScriptProvider" -->
+<!--       android:authorities="org.hecl.android.Scripts" /> -->
 
     <activity android:name="org.hecl.android.Hecl" android:label="Hecl">
       <intent-filter>
