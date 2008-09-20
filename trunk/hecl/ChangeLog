@@ -1,3 +1,10 @@
+2008-09-20  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpCmd.java: Catch any potential errors thrown by
+	System.getProperty.  In reality there shouldn't be any, but the
+	microemulator applet chokes on these calls.  We'll remove the
+	try/catch statements when microemulator is fixed.
+
 2008-08-23  David N. Welton  <davidw@dedasys.com>
 
 	* android/build.xml: Added tasks from new default Android project

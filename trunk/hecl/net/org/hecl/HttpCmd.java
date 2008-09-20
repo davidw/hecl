@@ -190,19 +190,34 @@ public class HttpCmd extends org.hecl.Operator {
 
     static {
 //#ifdef j2me
-	String conf = System.getProperty("microedition.configuration");
-        String prof = System.getProperty("microedition.profiles");
+	String conf = "";
+        String prof = "";
+
+	/* FIXME - when microemulator no longer throws errors, we can
+	 * remove these try/catch statements.  */
+	try {
+	    conf = System.getProperty("microedition.configuration");
+	    prof = System.getProperty("microedition.profiles");
+	} catch (Exception ace) {
+	    System.err.println("Access control exception: " + ace.toString());
+	}
+
 	int space = prof.indexOf(' ');
 	if (space != -1) {
 	    prof = prof.substring(0, space -1);
 	}
 	defuseragent = "Profile/" + prof + " Configuration/" + conf;
-	deflocale = System.getProperty("microedition.locale");
+	try {
+	    deflocale = System.getProperty("microedition.locale");
+	} catch (Exception ace) {
+	    System.err.println("Access control exception: " + ace.toString());
+	}
 //#else
 	// No special treatment for j2se at the moment.
 //#endif 
-	if(deflocale == null)
+	if(deflocale == null) {
 	    deflocale = "en-US";
+	}
 	cmdtable.put("http.geturl", new HttpCmd(GETURL,1,-1));
         cmdtable.put("http.formatQuery", new HttpCmd(FORMATQUERY,0,-1));
         cmdtable.put("http.data", new HttpCmd(GETDATA,0,-1));
