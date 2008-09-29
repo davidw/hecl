@@ -22,6 +22,7 @@ import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Form;
 import javax.microedition.midlet.MIDlet;
 
+import org.hecl.HeclTask;
 import org.hecl.Interp;
 import org.hecl.Thing;
 import org.hecl.rms.RMSCmd;
@@ -45,6 +46,7 @@ public class Hecl extends MIDlet {
     private static Display display;
 
     private Interp interp;
+    private HeclTask evaltask = null;
 
     private boolean started = false;
 
@@ -175,9 +177,7 @@ public class Hecl extends MIDlet {
 //#endif
 
 	    f.append("\nOK - executing");
-	    runScript(script.toString());
-	    script = null;
-	    f = null;
+	    evaltask = interp.evalIdle(new Thing(script.toString()));
 	}
     }
 
@@ -191,13 +191,29 @@ public class Hecl extends MIDlet {
      */
     public void runScript(String s) {
 	try {
+	    /* First wait for the idleEval call to complete... */
+	    while(evaltask == null) {
+		Thread.currentThread().yield();
+	    }
+	    while (!evaltask.isDone()) {
+		try {
+		    synchronized(evaltask) {
+			evaltask.wait();
+		    }
+		}
+		catch(Exception e) {
+		    // ignore
+		    e.printStackTrace();
+		}
+	    }
+
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
 	    /* At least let the user know there was an error. */
 	    Alert a = new Alert("Hecl error", e.toString(),
 				null, null);
 	    display.setCurrent(a);
-	    /* e.printStackTrace(); */
+	    /* e.printStackTrace();  */
 	    System.err.println("Error in runScript: " + e);
 	}
     }

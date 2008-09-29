@@ -78,8 +78,20 @@ public class Hecl extends MIDlet {
      */
     public void runScript(String s) {
 	try {
-	    if (evaltask != null) {
-		interp.cancelIdle(evaltask);
+	    /* First wait for the idleEval call to complete... */
+	    while(evaltask == null) {
+		Thread.currentThread().yield();
+	    }
+	    while (!evaltask.isDone()) {
+		try {
+		    synchronized(evaltask) {
+			evaltask.wait();
+		    }
+		}
+		catch(Exception e) {
+		    // ignore
+		    e.printStackTrace();
+		}
 	    }
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
