@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005-2007 data2c GmbH (www.data2c.com)
+ * Copyright (C) 2005-2008 data2c GmbH (www.data2c.com)
  *
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
  */
@@ -16,6 +16,7 @@ import javax.microedition.lcdui.Displayable;
 
 import org.hecl.Interp;
 import org.hecl.HeclException;
+import org.hecl.HeclTask;
 import org.hecl.ListThing;
 import org.hecl.Thing;
 import org.hecl.midp20.MidletCmd;
@@ -32,6 +33,7 @@ import org.hecl.rms.RMSCmd;
  */
 public class Hecl extends MIDlet {
     protected Interp interp = null;
+    protected HeclTask evaltask = null;
 
     public void destroyApp(boolean b) {
 	notifyDestroyed();
@@ -59,7 +61,7 @@ public class Hecl extends MIDlet {
 	    MidletCmd.load(interp,this);
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
-	    interp.evalIdle(new Thing(scriptcontent));
+	    evaltask = interp.evalIdle(new Thing(scriptcontent));
 	}
 	catch (Exception e) {
 	    e.printStackTrace();
@@ -76,6 +78,9 @@ public class Hecl extends MIDlet {
      */
     public void runScript(String s) {
 	try {
+	    if (evaltask != null) {
+		interp.cancelIdle(evaltask);
+	    }
 	    interp.eval(new Thing(s));
 	} catch (Exception e) {
 	    /* At least let the user know there was an error. */
