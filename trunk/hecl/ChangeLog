@@ -1,3 +1,19 @@
+2008-10-02  David N. Welton  <davidw@dedasys.com>
+
+	* android/android.properties: Updated to 1.0 SDK.
+
+2008-09-29  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/Hecl.java: Fiddled with the startup sequence to use
+	evalIdle like the midp20 version, and break runScript out into its
+	own thing that is only used by the applet version.
+
+	* midp20/script.hcl: Eliminated ;'s from line endings.
+
+	* midp20/Hecl.java: Store HeclTask associated with main script
+	evaluation in order to wait for its completion in runScript, which
+	is used for the Hecl Builder applets.
+
 2008-09-20  David N. Welton  <davidw@dedasys.com>
 
 	* net/org/hecl/HttpCmd.java: Catch any potential errors thrown by
