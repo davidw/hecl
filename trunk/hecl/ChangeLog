@@ -1,5 +1,10 @@
 2008-10-06  David N. Welton  <davidw@dedasys.com>
 
+	* net/org/hecl/HttpCmd.java: System.getProperty doesn't throw
+	errors any more, when used with the new midlet applets.  However,
+	it may return null for the properties in question.  Guard against
+	this.
+
 	* misc.xml: Added packageMidletApplets, which utilizes AppletTweak
 	to create the applet jars from the midlet jars, for all applicable
 	versions of Hecl.

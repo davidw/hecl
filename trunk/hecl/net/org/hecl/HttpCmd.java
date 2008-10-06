@@ -190,16 +190,14 @@ public class HttpCmd extends org.hecl.Operator {
 
     static {
 //#ifdef j2me
-	String conf = "";
-        String prof = "";
+	String conf = System.getProperty("microedition.configuration");
+	String prof = System.getProperty("microedition.profiles");
 
-	/* FIXME - when microemulator no longer throws errors, we can
-	 * remove these try/catch statements.  */
-	try {
-	    conf = System.getProperty("microedition.configuration");
-	    prof = System.getProperty("microedition.profiles");
-	} catch (Exception ace) {
-	    System.err.println("Access control exception: " + ace.toString());
+	if (prof == null) {
+	    prof = "none";
+	}
+	if (conf == null) {
+	    conf = "none";
 	}
 
 	int space = prof.indexOf(' ');
