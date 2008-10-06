@@ -131,6 +131,19 @@
     </jar>
   </target>
 
+  <target name="packageAppletTweak">
+    <mkdir dir="${j2se.build}/applettweak" />
+    <javac srcdir="applettweak" destdir="${j2se.build}/applettweak">
+      <classpath path="jars/microemulator.jar" />
+    </javac>
+    <jar destfile="jars/AppletTweak.jar" basedir="${j2se.build}/applettweak">
+      <zipfileset src="jars/microemulator.jar"/>
+      <manifest>
+	<attribute name="Main-Class" value="org/hecl/applettweak/AppletTweak"></attribute>
+      </manifest>
+    </jar>
+  </target>
+
   <!-- package targets -->
 
   <!-- Build a jar containing the hecl core. -->

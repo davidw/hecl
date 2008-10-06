@@ -1,5 +1,13 @@
 2008-10-06  David N. Welton  <davidw@dedasys.com>
 
+	* misc.xml: Added packageMidletApplets, which utilizes AppletTweak
+	to create the applet jars from the midlet jars, for all applicable
+	versions of Hecl.
+
+	* core.xml: Added packageAppletTweak to create the jar file that
+	goes on to tweak the midlet jars to make the suitable for
+	consumption by the microemulator applet.
+
 	* jars/microemulator.jar: Added a copy of this for AppletTweak.
 
 	* applettweak/org/hecl/applettweak/AppletTweak.java: Wrote a bit

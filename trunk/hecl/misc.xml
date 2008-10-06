@@ -131,6 +131,23 @@
 
   </target>
 
+  <target name="packageMidletApplets" depends="buildAllJavaME,packageAppletTweak"
+    description="Create applet versions of midlet jars">
+
+    <mkdir dir="jars/applet/cldc1.0-midp1.0" />
+    <mkdir dir="jars/applet/cldc1.1-midp2.0" />
+
+    <java jar="jars/AppletTweak.jar" fork="true">
+      <arg line="file:///${basedir}/jars/cldc1.0-midp1.0/Hecl.jar" />
+      <arg line="jars/applet/cldc1.0-midp1.0/Hecl.jar" />
+    </java>
+
+    <java jar="jars/AppletTweak.jar" fork="true">
+      <arg line="file:///${basedir}/jars/cldc1.1-midp2.0/Hecl.jar" />
+      <arg line="jars/applet/cldc1.1-midp2.0/Hecl.jar" />
+    </java>
+  </target>
+
   <target name="showenv">
     <exec executable="/usr/bin/env">
     </exec>
