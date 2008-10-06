@@ -1,5 +1,7 @@
 2008-10-06  David N. Welton  <davidw@dedasys.com>
 
+	* jars/microemulator.jar: Added a copy of this for AppletTweak.
+
 	* applettweak/org/hecl/applettweak/AppletTweak.java: Wrote a bit
 	of code to perform the necessary bytecode hacks on the Hecl jars
 	in order to make the work as applets in microemulator.
