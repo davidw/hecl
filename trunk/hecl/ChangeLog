@@ -1,3 +1,9 @@
+2008-10-06  David N. Welton  <davidw@dedasys.com>
+
+	* applettweak/org/hecl/applettweak/AppletTweak.java: Wrote a bit
+	of code to perform the necessary bytecode hacks on the Hecl jars
+	in order to make the work as applets in microemulator.
+
 2008-10-02  David N. Welton  <davidw@dedasys.com>
 
 	* android/android.properties: Updated to 1.0 SDK.
