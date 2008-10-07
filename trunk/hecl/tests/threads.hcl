@@ -44,6 +44,7 @@ test threads-2 {
     global http_event_test
     set http_event_test [list]
     twait forever
+    after 500
 
     puts "repeatit ran [llen $http_event_test] times"
 

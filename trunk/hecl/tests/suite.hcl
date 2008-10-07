@@ -22,6 +22,7 @@ testfiles {
     global.hcl
     hash.hcl
     http.hcl
+    i18n.hcl
     if.hcl
     incr.hcl
     index.hcl

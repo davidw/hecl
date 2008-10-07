@@ -72,3 +72,17 @@ test java-10 {
     set s [str -new [list "foobar"]]
     $s equals [null]
 } {0}
+
+test java-11 {
+    java java.lang.String str
+
+    set s [str -new [list "foobar"]]
+    set bytes [$s getBytes]
+    set bytes
+} {foobar}
+
+test java-12 {
+    java java.io.ByteArrayInputStream bais
+    set b [bais -new [list "foobar"]]
+    $b available
+} {6}

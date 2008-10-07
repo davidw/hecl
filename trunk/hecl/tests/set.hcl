@@ -47,3 +47,21 @@ test emptything-1 {
     append $a x
     set b [puts b]
 } {}
+
+test set-5 {
+    set var0 "a"
+    set var1 [set var0]
+    append $var1 "b"
+    set var2 [set var1]
+    append $var2 "c"
+    list $var0 $var1 $var2
+} {abc abc abc}
+
+test set-6 {
+    set var0 "a"
+    set var1 $var0
+    append $var1 "b"
+    set var2 $var1
+    append $var2 "c"
+    list $var0 $var1 $var2
+} {abc abc abc}

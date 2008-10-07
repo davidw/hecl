@@ -1,5 +1,9 @@
 2008-10-07  David N. Welton  <davidw@dedasys.com>
 
+	* tests/java.hcl: Added a few more tests.
+
+	* tests/i18n.hcl: Added i18n tests with various character sets.
+
 	* core/org/hecl/ObjectThing.java: Make a null ObjectThing return
 	a [null] string so that at least it's possible to replicate it
 	with the null command.
