@@ -1,3 +1,8 @@
+2008-10-07  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListThing.java: Added cautionary/explanatory
+	comment about ListThing vectors.
+
 2008-10-06  David N. Welton  <davidw@dedasys.com>
 
 	* net/org/hecl/HttpCmd.java: System.getProperty doesn't throw

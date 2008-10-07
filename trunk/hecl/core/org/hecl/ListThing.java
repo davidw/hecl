@@ -67,7 +67,9 @@ public class ListThing implements RealThing {
     /**
      * <code>create</code> allocates and returns a new ListThing typed Thing.
      *
-     * @param v a <code>Vector</code> value
+     * @param v a <code>Vector</code> value.  Note that the Vector
+     * must contain Things, rather than, say, int's or Strings or
+     * something else!
      * @return a <code>Thing</code> value
      */
     public static Thing create(Vector v) {
