@@ -1,5 +1,8 @@
 2008-10-07  David N. Welton  <davidw@dedasys.com>
 
+	* java/org/hecl/java/Reflector.java: Print some more stuff out
+	when things go wrong in "instantiate".
+
 	* tests/java.hcl: Added a few more tests.
 
 	* tests/i18n.hcl: Added i18n tests with various character sets.

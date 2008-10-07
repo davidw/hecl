@@ -132,9 +132,8 @@ public class Reflector {
 
 	Object[] args = new Object[0];
 	Constructor selected = null;
+	Constructor[] constructors = forclass.getConstructors();
 	try {
-	    Constructor[] constructors = forclass.getConstructors();
-
 	    if (constructors == null) {
 		throw new HeclException(forclass.toString() + " has no constructors!");
 	    }
@@ -168,8 +167,26 @@ public class Reflector {
 	    msg += " " + e.getTargetException().toString();
 	    throw new HeclException(msg);
 	} catch (Exception e) {
-	    e.printStackTrace();
-	    throw new HeclException("Reflector instantiate error :" + e.toString());
+	    /* FIXME - this should go in some more generalized method. */
+	    StringBuffer jtypes = new StringBuffer("");
+	    StringBuffer hvals = new StringBuffer("");
+	    for (Constructor c : constructors) {
+		jtypes.append(" (");
+		for (Class cls : c.getParameterTypes()) {
+		    jtypes.append(cls.toString());
+		    jtypes.append(" ");
+		}
+		jtypes.append(")");
+	    }
+
+	    hvals.append(" (");
+	    for (Thing t : argv) {
+		hvals.append(t.toString() + " ");
+	    }
+	    hvals.append(")");
+
+	    throw new HeclException("Reflector instantiate error :" + e.toString() +
+				    " constructors: " + jtypes + " arguments:" + hvals);
 	}
     }
 
