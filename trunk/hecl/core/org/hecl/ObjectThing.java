@@ -103,7 +103,7 @@ public class ObjectThing implements RealThing {
      */
     public String getStringRep() {
 	/* FIXME! */
-	return val != null ? val.toString() : "null";
+	return val != null ? val.toString() : "[null]";
         //return val.toString();
     }
 }
