@@ -45,7 +45,7 @@ $defform setcurrent</textarea><br/>
 	    </td>
 
 	    <td>
-	      <applet id="microemulator20" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,Hecl2.jar">
+	      <applet id="microemulator20" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,/jars/applet/cldc1.1-midp2.0/Hecl.jar">
 		<param name="midlet" value="Hecl">
 	      </applet>
 	    </td>
@@ -81,7 +81,7 @@ setcurrent $main;
 	    </td>
 
 	    <td>
-	      <applet id="microemulator10" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,Hecl.jar">
+	      <applet id="microemulator10" code="org.microemu.applet.Main" width="228" height="472" archive="microemu-javase-applet.jar,/jars/applet/cldc1.0-midp1.0/Hecl.jar">
 		<param name="midlet" value="Hecl">
 	      </applet>
 	    </td>
