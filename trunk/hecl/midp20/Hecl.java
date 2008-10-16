@@ -9,15 +9,18 @@ import java.util.Vector;
 
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
+import javax.microedition.lcdui.Gauge;
 
 import org.hecl.Interp;
 import org.hecl.HeclException;
 import org.hecl.HeclTask;
 import org.hecl.ListThing;
+import org.hecl.ObjectThing;
 import org.hecl.Thing;
 import org.hecl.midp20.MidletCmd;
 import org.hecl.misc.HeclUtils;
@@ -45,6 +48,11 @@ public class Hecl extends MIDlet {
     public void startApp() {
 	Display display = Display.getDisplay(this);
 	try {
+	    Alert a = new Alert("Loading Hecl", "Loading Hecl...", null, AlertType.INFO);
+	    display.setCurrent(a);
+	    a.setTimeout(10000);
+	    a.setIndicator(new Gauge(null, false,
+				     Gauge.INDEFINITE, Gauge.CONTINUOUS_RUNNING));
 	    interp = new Interp();
 	    Vector v = new Vector();
 	    for(int i = 0; i<args.length; ++i) {
@@ -61,6 +69,8 @@ public class Hecl extends MIDlet {
 	    MidletCmd.load(interp,this);
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
+
+	    interp.setVar("splash", ObjectThing.create(a));
 	    evaltask = interp.evalIdle(new Thing(scriptcontent));
 	}
 	catch (Exception e) {
