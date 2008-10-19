@@ -1,3 +1,12 @@
+2008-10-19  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/GaugeCmd.java: maxvalue and
+	initial value were backwards in the constructor call.
+
+2008-10-16  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/Hecl.java: Added a "loading hecl..." alert and guage.
+
 2008-10-07  David N. Welton  <davidw@dedasys.com>
 
 	* java/org/hecl/java/Reflector.java: Print some more stuff out
