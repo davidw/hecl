@@ -25,6 +25,7 @@ import org.hecl.Thing;
 import org.hecl.midp20.MidletCmd;
 import org.hecl.misc.HeclUtils;
 import org.hecl.net.HttpCmd;
+import org.hecl.net.Base64Cmd;
 import org.hecl.rms.RMSCmd;
 
 /**
@@ -63,6 +64,7 @@ public class Hecl extends MIDlet {
 	    // load extensions into interpreter...
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
+	    Base64Cmd.load(interp);
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
