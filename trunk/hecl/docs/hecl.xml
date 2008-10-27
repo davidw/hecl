@@ -5066,7 +5066,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	advanced than the 1.0 commands, and should be used if
 	possible.  This is a fairly complete list of which devices are
 	MIDP2.0 capable: <ulink
-	url="http://www.j2mepolish.org/devices/platform_MIDP_2.0.html"
+	  url="http://devices.j2mepolish.org/interactivedb/searchdevices.faces"
 	/>
       </para>
 
@@ -5151,6 +5151,10 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 [lcdui.alert -title "Reactor core meltdown" -text \
     "You went and pressed the red button, didn't you!" -timeout forever] setcurrent
 	  </programlisting>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/141" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -5323,8 +5327,9 @@ $graphics frect [list 80 10] [list 10 80]
 $graphics frect [list 10 50] [list 80 10]
 $canvas setcurrent
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>FIXME</screen>
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/142" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -5556,10 +5561,18 @@ $canvas setcurrent
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set choicegroup [lcdui.choicegroup -label "60ies bands"]
+$choicegroup append "Beatles"
+$choicegroup append "Beach Boys"
+$choicegroup append "Rolling Stones"
+set form [lcdui.form -title "ChoiceGroup example form"]
+$form append "Pick one:"
+$form append $choicegroup
+$form setcurrent
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/143" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -5645,10 +5658,39 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set exitcmd [lcdui.command -label Exit -longlabel Exit -type exit -priority 2]
+set backcmd [lcdui.command -label Back -longlabel Back -type back -priority 1]
+set addtextcmd [lcdui.command -label AddText -longlabel AddText -type screen -priority 1]
+
+proc NewForm {} {
+    global exitcmd
+    global backcmd
+    global addtextcmd
+    set form [lcdui.form -title "Commands" -commandaction HandleCmd]
+    $form setcurrent
+    $form addcommand $exitcmd
+    $form addcommand $backcmd
+    $form addcommand $addtextcmd
+}
+
+proc HandleCmd {cmd form} {
+   global exitcmd
+   global backcmd
+   if { eq $cmd $backcmd } {
+   	NewForm
+   } elseif { eq $cmd $exitcmd } {
+   	[lcdui.alert -title "Goodbye" -text "Goodbye!" -type info -timeout forever] setcurrent
+        after 1000 midlet.exit
+   }
+   $form append "Blah blah"
+}
+
+NewForm
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/144" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -5732,10 +5774,15 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set date [lcdui.date -label "Current date and time:" -date [clock time] -type date_time]
+set form [lcdui.form -title "Date Form"]
+$form append $date
+$form setcurrent
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/144" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -5928,11 +5975,10 @@ FIXME
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>
-	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+	  <para>
+	    See the example script in the midp20/ directory.  <ulink
+	      url="http://hecl.svn.sourceforge.net/viewvc/hecl/trunk/hecl/midp20/script.hcl?view=markup"></ulink>
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -6089,10 +6135,20 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set form [lcdui.form -title "Font examples"]
+
+$form setcurrent
+
+foreach f [sort [lcdui.font names]] {
+    set s [lcdui.stringitem -text $f]
+    $s configure -font $f
+    $form append $s
+}
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/147" />
+	  </para>
+
 	</refsect1>
       </refentry>
 
@@ -6200,10 +6256,31 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set choicegroup [lcdui.choicegroup -label Choice -type popup]
+foreach x {c1 c2 c3} {
+    $choicegroup append $x
+}
+set ticker [lcdui.ticker -text "I am a Ticker!"]
+
+set form [lcdui.form -title "Example Form"]
+$form setcurrent
+$form configure -ticker $ticker
+$form append [lcdui.textfield -label "TextField" -text "TextField" -uneditable 1]
+$form append [lcdui.textfield -label "Editable TextField" -text "editable text"]
+$form append [lcdui.imageitem -image $logo -anchor center]
+$form append [lcdui.spacer -label spacer1 -minwidth 200 -minheight 2]
+$form append [lcdui.stringitem -text "Stringitem"]
+$form append [lcdui.spacer -label spacer2 -minwidth 200 -minheight 4]
+$form append [lcdui.date -label "Date/Time" -date [clock time]]
+$form append $choicegroup
+$form append [lcdui.imageitem -image $logo]
+$form append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
+		     -value 10 -maxvalue 10]
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/148" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -6274,10 +6351,15 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+set form [lcdui.form -title "Gauge Example"]
+$form append [lcdui.gauge -label "From 1 to 10" -interactive 1 \
+		     -value 6 -maxvalue 10]
+$form setcurrent
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/149" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -6395,13 +6477,91 @@ FIXME
 	  </itemizedlist>
 
 	</refsect1>
+
+	<refsect1>
+	  <title>Creating base64 encoded images</title>
+
+	  <para>
+	    There are two ways to include images in Hecl applications.  One is to add the image to
+	    the .jar file itself.  The second is to include it directly in the script, as a base64
+	    included string.  Here's how to do so on a Linux machine:
+	  </para>
+
+	  <procedure>
+	    <step>
+	      <para>
+		Create an image.  For example, with "The Gimp", an image manipulation program on
+		Linux, you might create a PNG, <filename>x.png</filename>.
+	      </para>
+	    </step>
+
+	    <step>
+	      <para>
+		Now you need to turn the binary PNG file into a string that can be included in a script:
+	      </para>
+	      <screen>base64 &lt; x.png &gt; x.txt</screen>
+	    </step>
+
+	    <step>
+	      <para>Now copy and paste x.txt into your script, like in the script below</para>
+	    </step>
+
+	  </procedure>
+
+	</refsect1>
+
+
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
+# base64 encoded PNG
+set data {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}
+
+set logo [lcdui.image -resource /hecl_logo.png]
+set ximg [lcdui.image -data [base64::decode $data]]
+set form [lcdui.form -title "Show Image"]
+$form append $logo
+$form append $ximg
+$form setcurrent
 	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/150" />
+	  </para>
+
 	</refsect1>
       </refentry>
 
@@ -6457,14 +6617,6 @@ FIXME
 	    </listitem>
 	  </itemizedlist>
 	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
-	</refsect1>
       </refentry>
 
       <refentry id="lcdui_list">
@@ -6515,10 +6667,23 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
-	  </programlisting>
+set selectcmd [lcdui.command -label Select -longlabel Select -type item -priority 1]
+set lst [lcdui.list -title "List Example" -commandaction selectname]
+set names {Anna Barbara Carla Daniela Emanuela Federica}
+foreach n $names {
+    $lst append $n
+}
+$lst setcurrent
+$lst addcommand $selectcmd
+proc selectname {cmd lst} {
+    global names
+    [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] setcurrent
+}</programlisting>
 	  <para>Produces:</para>
-	  <screen>yyy</screen>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/151" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -6556,10 +6721,32 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-xxx
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+set form [lcdui.form -title "Settings Demo" -commandaction menu1sel]
+$form setcurrent
+
+foreach s {"-color"
+    "-alphalevels"
+    "-alertimagewidth"
+    "-alertimageheight"
+    "-listimagewidth"
+    "-listimageheight"
+    "-choiceimagewidth"
+    "-choiceimageheight"
+    "-bg"
+    "-fg"
+    "-hilightbg"
+    "-hilightfg"
+    "-border"
+    "-hilightborder"
+    "-borderstyle"
+    "-hilightborderstyle"
+} {
+    $form append [lcdui.stringitem -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
+}</programlisting>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/152" />
+	  </para>
 	</refsect1>
       </refentry>
 
@@ -6634,14 +6821,6 @@ xxx
 	    <ulink
 	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/StringItem.html">javax.microedition.lcdui.StringItem</ulink>
 	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
 	</refsect1>
       </refentry>
 
@@ -6775,10 +6954,20 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+set evalcmd [lcdui.command -label Evaluate -longlabel Evaluate]
+set textbox [lcdui.textbox -text {[lcdui.alert -text "hi!"] setcurrent} \
+	-commandaction runCode]
+$textbox setcurrent
+$textbox addcommand $evalcmd
+
+proc runCode {cmd txtbox} {
+    eval [$txtbox cget -text]
+}</programlisting>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/153" />
+	  </para>
+
 	</refsect1>
       </refentry>
 
@@ -6875,10 +7064,22 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+set evalcmd [lcdui.command -label Evaluate -longlabel Evaluate]
+set textfield [lcdui.textfield -text {[lcdui.alert -text "hi!"] setcurrent}]
+set form [lcdui.form -title "Text Field Example" -commandaction \
+    [list runCode $textfield]]
+$form append $textfield
+$form setcurrent
+$form addcommand $evalcmd
+
+proc runCode {txtfld cmd frm} {
+    eval [$txtfld cget -text]
+}</programlisting>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/154" />
+	  </para>
+
 	</refsect1>
       </refentry>
 
@@ -6905,10 +7106,20 @@ FIXME
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-FIXME
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>yyy</screen>
+set ticker [lcdui.ticker -text "The time is [clock format [clock time]]"]
+set form [lcdui.form -title "Ticker Example" -ticker $ticker]
+$form setcurrent
+
+proc updateTicker {ticker} {
+    $ticker configure -text "The time is [clock format [clock time]]"
+    after 1000 [list updateTicker $ticker]
+}
+
+after 1000 [list updateTicker $ticker]</programlisting>
+
+	  <para>
+	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/155" />
+	  </para>
 	</refsect1>
       </refentry>
 

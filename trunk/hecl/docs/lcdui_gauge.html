@@ -6,7 +6,7 @@
 	    ] [configure
 	      <em class="replaceable"><code>-optname</code></em>
 	      <em class="replaceable"><code>optval</code></em>
-	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2592130"></a><h2>Description</h2><p>
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2563199"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.gauge</strong></span> command creates a gauge element, and returns a
 	    command/object that can be used to manipulate it. For an in-depth look at the Java code
 	    that this command is based on, see: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Gauge.html" target="_top">javax.microedition.lcdui.Gauge</a>
@@ -19,6 +19,11 @@
 	      "indefinite" if there is no maximum value.
               </p><p><code class="option">-interactive</code>: Either 1 or 0, depending on whether the gauge is
 	      interactive, or is for display purposes only.
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2592192"></a><h2>Example</h2><pre class="programlisting">
-FIXME
-	  </pre><p>Produces:</p><pre class="screen">yyy</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_form.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_image.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.form </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.image</td></tr></table></div></body></html>
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2563261"></a><h2>Example</h2><pre class="programlisting">
+set form [lcdui.form -title "Gauge Example"]
+$form append [lcdui.gauge -label "From 1 to 10" -interactive 1 \
+		     -value 6 -maxvalue 10]
+$form setcurrent
+	  </pre><p>
+	    Live example: <a class="ulink" href="http://www.heclbuilder.com/scripts/show/149" target="_top">http://www.heclbuilder.com/scripts/show/149</a>
+	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_form.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_image.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.form </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.image</td></tr></table></div></body></html>
