@@ -274,7 +274,7 @@
 
   <!-- Package the application without signing it.
   This allows for the application to be signed later with an official publishing key. -->
-  <target name="release" depends="dex, package-res">
+  <target name="android-release" depends="dex, package-res">
     <echo>Packaging ${out-unsigned-package} for release...</echo>
     <exec executable="${apk-builder}" failonerror="true">
       <arg value="${out-unsigned-package-ospath}" />
