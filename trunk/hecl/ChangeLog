@@ -1,3 +1,14 @@
+2008-12-22  David N. Welton  <davidw@dedasys.com>
+
+	* android/AndroidManifest.xml: Added version numbers/names.
+	Added READ_PHONE_STATE permission.
+
+	* android/bin/Hecl.apk: Added signed copy of the .apk.
+
+	* android/android.properties: Update to latest version of the SDK.
+
+	* android/build.xml: Use android-release insead of release.
+
 2008-10-27  David N. Welton  <davidw@dedasys.com>
 
 	* docs/hecl.xml: Added live examples on heclbuilder.com for many
