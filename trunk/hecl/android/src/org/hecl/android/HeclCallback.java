@@ -24,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import org.hecl.DoubleThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -41,14 +42,16 @@ import org.hecl.Thing;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class HeclCallback implements android.view.View.OnClickListener,
-			  android.widget.AdapterView.OnItemClickListener,
-			  android.widget.AdapterView.OnItemSelectedListener,
-			  android.widget.DatePicker.OnDateChangedListener,
+public class HeclCallback implements
 			  android.app.DatePickerDialog.OnDateSetListener,
 			  android.app.TimePickerDialog.OnTimeSetListener,
+			  android.hardware.SensorListener,
+			  android.widget.AdapterView.OnItemClickListener,
+			  android.widget.AdapterView.OnItemSelectedListener,
+			  android.widget.CompoundButton.OnCheckedChangeListener,
+			  android.widget.DatePicker.OnDateChangedListener,
 			  android.widget.TimePicker.OnTimeChangedListener,
-			  android.widget.CompoundButton.OnCheckedChangeListener {
+			  android.view.View.OnClickListener {
 
     public static Interp interp;
 
@@ -66,6 +69,32 @@ public class HeclCallback implements android.view.View.OnClickListener,
 	} catch (HeclException he) {
 	    Hecl.logStacktrace(he);
 	    Log.v("hecl onclick callback", he.toString());
+	}
+    }
+
+    public void onAccuracyChanged(int sensor, int accuracy) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(IntThing.create(sensor));
+	    vec.add(IntThing.create(accuracy));
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onAccuracyChanged callback", he.toString());
+	}
+    }
+
+    public void onSensorChanged(int sensor, float[] values) {
+	try {
+	    Vector vec = ListThing.get(script.deepcopy());
+	    vec.add(IntThing.create(sensor));
+ 	    for (float f : values) {
+		vec.add(DoubleThing.create(f));
+	    }
+	    interp.eval(ListThing.create(vec));
+	} catch (HeclException he) {
+	    Hecl.logStacktrace(he);
+	    Log.v("hecl onSensorChanged callback", he.toString());
 	}
     }
 
