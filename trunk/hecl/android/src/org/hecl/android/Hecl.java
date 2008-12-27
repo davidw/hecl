@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -344,6 +345,19 @@ public class Hecl extends Activity
      */
     public HeclHandler getHandler() {
 	return heclHandler;
+    }
+
+
+    /**
+     * The <code>onConfigurationChanged</code> method overrides
+     * configuration change notifications.
+     *
+     * @param newConfig a <code>Configuration</code> value
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+	// ignore orientation change
+	super.onConfigurationChanged(newConfig);
     }
 
 }

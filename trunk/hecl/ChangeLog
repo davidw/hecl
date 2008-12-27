@@ -1,3 +1,12 @@
+2008-12-27  David N. Welton  <davidw@dedasys.com>
+
+	* android/AndroidManifest.xml: Catch the orientation and
+	keyboardHidden configuration changes and ignore them.
+
+	* android/src/org/hecl/android/Hecl.java: Override of
+	onConfigurationChanged method in order to let Android Hecl ignore
+	configuration changes.
+
 2008-12-22  David N. Welton  <davidw@dedasys.com>
 
 	* android/AndroidManifest.xml: Added version numbers/names.

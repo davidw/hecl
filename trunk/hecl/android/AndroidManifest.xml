@@ -16,14 +16,16 @@
 <!--     <provider android:name="org.hecl.android.ScriptProvider" -->
 <!--       android:authorities="org.hecl.android.Scripts" /> -->
 
-    <activity android:name="org.hecl.android.Hecl" android:label="Hecl">
+    <activity android:name="org.hecl.android.Hecl" android:label="Hecl"
+      android:configChanges="orientation|keyboardHidden">
       <intent-filter>
 	<action android:name="android.intent.action.MAIN" />
 	<category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:name="org.hecl.android.SubHecl" android:label="SubHecl">
+    <activity android:name="org.hecl.android.SubHecl" android:label="SubHecl"
+      android:configChanges="orientation|keyboardHidden">
       <intent-filter>
 	<action android:name="android.intent.action.MAIN" />
       </intent-filter>
