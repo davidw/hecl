@@ -218,7 +218,11 @@ public class AndroidCmd extends Operator {
 
 	JavaCmd.load(ip, "org.hecl.android.HeclCallback", "callback");
 
-	HeclCallback.interp = ip;
+	/* All callbacks should happen in the main interpreter unless
+	 * we fiddle with things to do otherwise. */
+	if (HeclCallback.interp == null) {
+	    HeclCallback.interp = ip;
+	}
     }
 
     public static void unload(Interp ip) throws HeclException {

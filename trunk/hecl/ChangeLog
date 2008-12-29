@@ -1,3 +1,12 @@
+2008-12-30  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Twiddle the load
+	method to not stash a new interp in the HeclCallback.interp
+	field if one's already there.  We don't want random interpreters
+	hijacking the event processing mechanism.
+
+	* android/AndroidManifest.xml: Updated permissions.
+
 2008-12-27  David N. Welton  <davidw@dedasys.com>
 
 	* android/AndroidManifest.xml: Catch the orientation and

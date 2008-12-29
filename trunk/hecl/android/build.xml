@@ -179,7 +179,7 @@
   </target>
 
   <target name="compileAndroidMain"
-    description="Compile Hecl command line support"
+    description="Compile Android Hecl sources"
     depends="compileAndroid,compileAndroidHttp,compileAndroidJava">
 
     <javac srcdir="android/src"
