@@ -10,7 +10,7 @@
 	    ] [
 	      -type
 	      back |  cancel |  exit |  help |  item |  ok |  screen |  stop
-	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2561628"></a><h2>Description</h2><p>
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2658918"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.command</strong></span> command creates a
 	    command that can be attached to a Screen or an Item.  For
 	    an in-depth look at the Java code that this command is
@@ -23,7 +23,7 @@
 	      indicating the order of appearance of commands, 1 being
 	      the highest priority.</p></li><li><p><code class="option">-type</code>: Indicates the type of
 	      command.  The command types are documented <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary" target="_top">here</a>
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2561707"></a><h2>Example</h2><pre class="programlisting">
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2658998"></a><h2>Example</h2><pre class="programlisting">
 set exitcmd [lcdui.command -label Exit -longlabel Exit -type exit -priority 2]
 set backcmd [lcdui.command -label Back -longlabel Back -type back -priority 1]
 set addtextcmd [lcdui.command -label AddText -longlabel AddText -type screen -priority 1]

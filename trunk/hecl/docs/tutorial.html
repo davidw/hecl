@@ -28,6 +28,10 @@ puts "Hecl, from 1 to 10: $rating"</pre><p>
       if the string has no spaces in it.  For instance,
       <strong class="userinput"><code>puts helloworld</code></strong> is legitimate.
     </p><p>
+      Something else visible in the above command is that Hecl commands occur one per line, and that
+      no line ending is necessary, as in languages like C where lines end in a semicolon.  In Hecl,
+      the semicolon is optional, and can be used to put more than one command on a line:
+    </p><pre class="programlisting">puts "hello" ; puts "world" </pre><p>
       Another way of grouping multiple words in Hecl is with braces:
       {}.  Hecl does not automatically perform any substitution on the
       variables or commands grouped within braces, as it does with
