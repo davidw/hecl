@@ -78,8 +78,11 @@ public class Hecl extends MIDlet {
 	    Base64Cmd.load(interp);
   		org.hecl.mwtgui.MwtCmds.load(interp, this);
 	    org.hecl.mwtgui.MidletCmd.load(interp,this);
+//#if kxml == 1
+	    org.hecl.kxml.KXMLCmd.load(interp);
+//#endif
 	    String scriptcontent =
-		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
+			HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 
 	    interp.setVar("splash", ObjectThing.create(a));
 	    evaltask = interp.evalIdle(new Thing(scriptcontent));
