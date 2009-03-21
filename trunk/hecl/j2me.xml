@@ -4,7 +4,7 @@
 <!-- j2melibs, midp10gui, midp20gui, midlet -->
 	<target name="mwt"
     description="Compile MWT code"
-    depends="j2meLibs,mwtgui">
+    depends="j2meLibs,mwtgui,extras">
 
     <mkdir dir="${j2me.mwtguiclasspath}"/>
     <mkdir dir="${j2me.mwtpre}/mwt"/>
