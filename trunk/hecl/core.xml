@@ -11,6 +11,9 @@
     <mkdir dir="${j2se.build}" />
     <mkdir dir="${j2se.pre}" />
     <mkdir dir="${j2se.rel}" />
+		<mkdir dir="${j2me.mwtbuild}" />
+		<mkdir dir="${j2me.mwtpre}" />
+		<mkdir dir="${j2me.mwtrel}" />
   </target>
 
   <target name="compileCore"

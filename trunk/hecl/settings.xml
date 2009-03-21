@@ -132,7 +132,11 @@
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.rel" value="${relprefix}/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
 
-  <property name="cldc" value="cldc${wtk.cldc.version}"/>
+  <property name="j2me.mwtbuild" value="${buildprefix}/j2me/final/mwt"/>
+  <property name="j2me.mwtpre" value="${buildprefix}/j2me/pre/mwt"/>
+  <property name="j2me.mwtrel" value="${relprefix}/mwt"/>
+  
+	<property name="cldc" value="cldc${wtk.cldc.version}"/>
 
   <property name="j2me.app" value="Hecl"/>
   <property name="j2me.appversion" value="1.1"/>
@@ -144,11 +148,19 @@
   <property name="j2me.heclgui.jar" value="${j2me.build}/${j2me.app}gui.jar"/>
   <property name="j2me.hecl.lib.jad" value="${j2me.build}/${j2me.app}lib.jad"/>
   <property name="j2me.hecl.lib.jar" value="${j2me.build}/${j2me.app}lib.jar"/>
+  <property name="j2me.heclmwtgui.jad" value="${j2me.mwtbuild}/Mwtgui.jad"/>
+  <property name="j2me.heclmwtgui.jar" value="${j2me.mwtbuild}/Mwtgui.jar"/>
 
   <property name="j2me.coreclasspath" value="${j2me.build}"/>
   <path id="j2me.coreclasspath">
     <pathelement location="${j2me.coreclasspath}"/>
   </path>
+
+  <property name="j2me.mwtcoreclasspath" value="${j2me.mwtbuild}"/>
+  <path id="j2me.mwtcoreclasspath">
+    <pathelement location="${j2me.mwtcoreclasspath}"/>
+  </path>
+
   <property name="j2me.awtclasspath" value="${j2me.build}"/>
   <path id="j2me.awtclasspath">
     <pathelement location="${j2me.awtclasspath}"/>
@@ -166,6 +178,14 @@
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
 
+	 <!-- MWT properties -->
+ 	<property name="mwt.lib" value="jars/mwt.jar" />
+  <property name="j2me.mwtguiclasspath" value="${j2me.mwtbuild}"/>
+  <path id="j2me.mwtguiclasspath">
+    <pathelement location="${j2me.mwtguiclasspath}"/>
+  </path>
+
+ 
   <!-- KXML properties -->
   <property name="kxml.lib" value="jars/kxml2-2.3.0.jar" />
   <property name="j2me.kxmlclasspath" value="${j2me.build}"/>

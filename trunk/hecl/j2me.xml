@@ -2,6 +2,31 @@
   <!-- J2ME build targets -->
 
 <!-- j2melibs, midp10gui, midp20gui, midlet -->
+	<target name="mwt"
+    description="Compile MWT code"
+    depends="j2meLibs,mwtgui">
+
+    <mkdir dir="${j2me.mwtguiclasspath}"/>
+    <mkdir dir="${j2me.mwtpre}/mwt"/>
+
+    <copy file="mwt/hecl_logo.png" todir="${j2me.mwtbuild}" overwrite="true"/>
+		<copy todir="${j2me.mwtbuild}" overwrite="true">
+			<fileset dir="${j2me.coreclasspath}"  includes="**/*.class" />
+		</copy> 
+
+
+    <wtkpreprocess
+      srcdir="mwt"
+      symbols="${j2me.defines}"
+      destdir="${j2me.mwtpre}/mwt"/>
+	 
+    <wtkbuild srcdir="${j2me.mwtpre}/mwt" target="1.1" source="1.2"
+      cldc="false"
+      destdir="${j2me.mwtcoreclasspath}">
+      <classpath refid="j2me.mwtguiclasspath"/>
+      <classpath refid="j2me.coreclasspath"/>
+    </wtkbuild>
+  </target>
 
   <target name="midp"
     description="Compile MIDP2.0 code"
@@ -72,6 +97,21 @@
       <classpath path="${kxml.lib}"/>
     </wtkbuild>
   </target>
+
+	<target name="compileMwtGui" description="Compile Hecl MWT-Extension"
+    depends="initCompile">
+    <mkdir dir="${j2me.mwtguiclasspath}"/>
+    <mkdir dir="${j2me.mwtpre}/mwtgui"/>
+    <wtkpreprocess srcdir="mwtgui"
+      destdir="${j2me.mwtpre}/mwtgui"
+      symbols="${j2me.defines}"
+      />
+    <wtkbuild srcdir="${j2me.mwtpre}/mwtgui"  target="1.1" source="1.2"
+      destdir="${j2me.mwtguiclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${mwt.lib}"/>
+    </wtkbuild>
+  </target> 
 
   <target name="compileJ2MEHttp"
     depends="initCompile,compileJ2MECore,compileJ2MErms"
@@ -169,6 +209,32 @@
     </jar>
   </target>
 
+ <target name="mwtgui"
+    description="Compile J2ME MWT GUI"
+    depends="compileMwtGui">
+    <property name="wtk.cldc.version" value="1.1"/>
+    <property name="cldcstr" value="11"/>
+    <property name="wtk.midp.version" value="2.0"/>
+    <property name="midpstr" value="20"/>
+    <mkdir dir="${j2me.mwtguiclasspath}"/>
+    <mkdir dir="${j2me.mwtpre}/mwtgui"/>
+    <unjar src="jars/mwt.jar" dest="${j2me.mwtbuild}" />
+    <wtkpreprocess srcdir="mwtgui" destdir="${j2me.mwtpre}/mwtgui"
+      symbols="ant:j2me,ant:cldc1.1"/>
+    <wtkbuild srcdir="${j2me.mwtpre}/mwtgui" target="1.1" source="1.2"
+      cldc="false"
+      destdir="${j2me.mwtguiclasspath}">
+      <classpath refid="j2me.mwtcoreclasspath"/>
+      <classpath refid="j2me.coreclasspath"/>
+    </wtkbuild>
+    <jar destfile="${j2me.heclmwtgui.jar}"
+      basedir="${j2me.mwtbuild}"
+      excludes="stand/**,**jad,**jar,*html,*hcl,*.class"
+      update="true">
+    </jar>
+  </target>
+
+
   <target name="j2melib"
     description="Stuff the j2me class files into a jar for later use
     as embedded language in external projects"
@@ -209,10 +275,12 @@
   </target>
 
 
+
   <target name="extra-kxml" if="buildkxml" description="Build kxml stuff if the user has decided to">
     <unjar src="jars/kxml2-2.3.0.jar" dest="${j2me.build}" />
     <antcall target="compileJ2MEkxml"/>
   </target>
+
 
   <target name="extras" depends="extra-kxml" description="Use this to link in extra packages">
   </target>
@@ -267,6 +335,54 @@
     <copy file="${j2me.hecl.jar}" todir="${j2me.rel}" overwrite="true"/>
   </target>
 
+ <target name="mwtmidlet" depends="mwt">
+
+    <wtkjad
+      name="${j2me.app}"
+      version="${j2me.appversion}"
+      vendor="${j2me.vendor}"
+      jadfile="${j2me.heclmwtgui.jad}"
+      jarfile="${j2me.heclmwtgui.jar}">
+
+      <midlet name="${j2me.app}" class="${j2me.entryclass}"/>
+      <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+      <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+    </wtkjad>
+
+
+    <copy file="mwt/script.hcl" todir="${j2me.mwtbuild}" overwrite="true"/>
+    <copy file="mwt/Hecl.png" todir="${j2me.mwtbuild}" overwrite="true"/>
+    <wtkpackage
+      basedir="${j2me.mwtbuild}"
+      excludes="pre/**,**jad,**jar"
+      jadfile="${j2me.heclmwtgui.jad}"
+      jarfile="${j2me.heclmwtgui.jar}"
+      cldc="false"
+			classpath="${j2me.coreclasspath}"
+      preverify="${preverify}"
+      obfuscate="${obfuscate}"
+      verbose="false">
+
+      <preserve class="Hecl { &lt;methods&gt;; }" />
+
+      <manifest>
+	<attribute name="MIDlet-Name" value="Hecl"/>
+	<attribute name="MIDlet-Vendor" value="dedasys"/>
+	<attribute name="MIDlet-Version" value="2.0"/>
+	<attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
+	<!--
+	<attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
+	-->
+	<attribute name="MIDlet-Jar-URL" value="Hecl.jar"/>
+	<attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
+	<attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
+      </manifest>
+    </wtkpackage>
+    <copy file="${j2me.heclmwtgui.jad}" todir="${j2me.mwtrel}" overwrite="true"/>
+    <copy file="${j2me.heclmwtgui.jar}" todir="${j2me.mwtrel}" overwrite="true"/>
+  </target>
+
+
   <target name="buildAllJavaME" depends="packageCommandline">
 
     <!-- This is kind of an ugly hack - it would be better to be able to depend on this somehow, but
@@ -283,6 +399,13 @@
       <arg value="cldc11midp20.properties" />
       <arg value="midlet" />
     </exec>
+
+		<exec executable="ant" failonerror="true">
+      <arg value="-propertyfile" />
+      <arg value="mwt.properties" />
+      <arg value="mwtmidlet" />
+    </exec>
+
   </target>
 
 </project>
