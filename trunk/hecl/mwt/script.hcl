@@ -16,7 +16,7 @@ set skin2 [mwt.skin {FFFFFF 000000 A1C632 CFFF40}]
 
 set main [mwt.window -x 5 -y 5 -width [- $width 5] -height [- $height 5] -skin [list $skin "style_default"]]
 $main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 20 -width 80 -height 35 -text "buttons" -actiontype 1 -font [list "style_default" $f1]]
-$main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 60 -width 80 -height 35 -text "lables" -actiontype 2 -font [list "style_default" $f1]]
+$main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 60 -width 80 -height 35 -text "labels" -actiontype 2 -font [list "style_default" $f1]]
 $main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 100 -width 80 -height 35 -text "window" -actiontype 3 -font [list "style_default" $f1]]
 $main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 140 -width 80 -height 35 -text "font" -actiontype 4 -font [list "style_default" $f1]]
 $main add [mwt.button -x [- [/ [$main cget -width] 2] 40] -y 180 -width 80 -height 35 -text "skins" -actiontype 5 -font [list "style_default" $f1]]

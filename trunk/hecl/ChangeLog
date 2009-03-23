@@ -1,3 +1,12 @@
+2009-03-23  David N. Welton  <davidw@dedasys.com>
+
+	* mwt/script.hcl: Fixed misspelling.
+
+2009-01-26  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Mention the use of ; to separate commands on one
+	line.
+
 2008-12-30  David N. Welton  <davidw@dedasys.com>
 
 	* android/src/org/hecl/android/AndroidCmd.java: Twiddle the load
