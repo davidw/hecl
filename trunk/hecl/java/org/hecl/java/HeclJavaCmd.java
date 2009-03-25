@@ -1,4 +1,4 @@
-/* Copyright 2007 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2007-2009 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -35,8 +35,16 @@ public class HeclJavaCmd implements org.hecl.Command {
     }
 
     public Thing cmdCode(Interp interp, Thing[] argv) throws HeclException {
-	JavaCmd.load(interp, argv[1].toString(), argv[2].toString());
-	return argv[2];
+	if (argv.length == 3) {
+	    JavaCmd.load(interp, argv[1].toString(), argv[2].toString());
+	    return argv[2];
+	} else if (argv.length == 2) {
+	    JavaCmd.load(interp, argv[1].toString(), null);
+	    return new Thing("");
+	} else {
+	    throw HeclException.createWrongNumArgsException(argv, 1,
+							    "JavaClass ?heclcommand?");
+	}
     }
 
     public static void load(Interp interp)

@@ -1,3 +1,9 @@
+2009-03-25  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/HeclJavaCmd.java: The 'java' command now has
+	a one-argument version that takes only the name of a class that we
+	wish to inform Hecl of.
+
 2009-03-23  David N. Welton  <davidw@dedasys.com>
 
 	* mwt/script.hcl: Fixed misspelling.

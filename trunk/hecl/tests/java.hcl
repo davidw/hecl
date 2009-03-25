@@ -26,7 +26,7 @@ test java-4 {
 
 test java-5 {
     java java.lang.System sys
-    java java.io.PrintStream ps
+    java java.io.PrintStream
     set prints [sys -field err]
     $prints println "yay!"
 } {}

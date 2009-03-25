@@ -48,7 +48,7 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
     private Class thisclass = null;
     private Reflector classreflector = null;
 
-    public JavaCmd(String clsname, String cmd)
+    public JavaCmd(String clsname)
 	throws HeclException {
 
 	classreflector = new Reflector(clsname);
@@ -143,8 +143,10 @@ public class JavaCmd implements ClassCommand, org.hecl.Command {
 	if (commands == null) {
 	    commands = new Vector();
 	}
-	JavaCmd newjavacmd = new JavaCmd(cname, cmd);
-	ip.addCommand(cmd, newjavacmd);
+	JavaCmd newjavacmd = new JavaCmd(cname);
+	if (cmd != null) {
+	    ip.addCommand(cmd, newjavacmd);
+	}
 	ip.addClassCmd(newjavacmd.getCmdClass(), newjavacmd);
 	commands.add(newjavacmd);
     }
