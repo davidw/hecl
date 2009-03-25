@@ -81,7 +81,11 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     static final Thing GLOBALREFTHING = new Thing("");
 
+    /* Used to cache command lookups. */
     public long cacheversion = 0;
+
+    /* Do we have the Java reflection stuff? */
+    private static boolean javacmdpresent = false;
 
     /**
      * The <code>commands</code> <code>Hashtable</code> provides the
@@ -121,6 +125,13 @@ public class Interp extends Thread/*implements Runnable*/ {
      * @exception HeclException if an error occurs
      */
     public Interp() throws HeclException {
+	try {
+	    Class.forName("org.hecl.java.JavaCmd");
+	    javacmdpresent = true;
+	} catch (ClassNotFoundException e) {
+	    javacmdpresent = false;
+	}
+
         // Set up stack frame for globals.
         stack.push(new Hashtable());
         initInterp();
@@ -333,10 +344,23 @@ public class Interp extends Thread/*implements Runnable*/ {
 		    }
 		}
 	    }
+
 	    // Add what we found to the cache, so we do not need to look it up
 	    // next time.
-	    if(found != null)
+	    if(found != null) {
 		this.classcmdcache.put(clazz,found);
+	    } else if (javacmdpresent) {
+		/* Still nothing - let's see if we have the Java
+		 * reflection stuff loaded and try using that.  FIXME -
+		 * consider making this configurable? */
+		try {
+		    org.hecl.java.JavaCmd.load(this, clazz.getName(), null);
+		    return findClassCmd(clazz);
+		} catch (HeclException he) {
+		    /* Ignore this. */
+		}
+	    }
+
 	}
 	return found;
     }

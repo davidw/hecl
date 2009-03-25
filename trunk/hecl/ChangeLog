@@ -1,5 +1,9 @@
 2009-03-25  David N. Welton  <davidw@dedasys.com>
 
+	* core/org/hecl/Interp.java: Added a bit of code that does the
+	following: if we haven't been able to look up a classcmd, try
+	loading it up via the reflection stuff.
+
 	* java/org/hecl/java/HeclJavaCmd.java: The 'java' command now has
 	a one-argument version that takes only the name of a class that we
 	wish to inform Hecl of.
