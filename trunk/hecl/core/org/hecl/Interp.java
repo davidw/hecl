@@ -125,11 +125,12 @@ public class Interp extends Thread/*implements Runnable*/ {
      * @exception HeclException if an error occurs
      */
     public Interp() throws HeclException {
+	/* Check and see if  */
 	try {
 	    Class.forName("org.hecl.java.JavaCmd");
 	    javacmdpresent = true;
 	} catch (ClassNotFoundException e) {
-	    javacmdpresent = false;
+	    /* Ignore it - nothing changes.  */
 	}
 
         // Set up stack frame for globals.
