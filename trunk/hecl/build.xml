@@ -35,13 +35,13 @@
   </target>
 
   <!-- This does *everything* -->
-  <target name="build" description="Complete build" depends="compile,package,buildAllJavaME,docs"/>
+  <target name="build" description="Complete build" depends="compile,package,docs"/>
 
   <target name="compile" description="Compile everything"
     depends="packageCommandline,packageStandalone,compileApplet,buildAllJavaME"/>
 
   <target name="package" description="Package things into JARs"
-    depends="packageJARs,packageApplet,HeclBuilderJar,packageAndroid"/>
+    depends="packageJARs,packageApplet,packageMidletApplets,HeclBuilderJar,packageAndroid"/>
 
   <!-- clean targets -->
   <target name="clean" description="Clean the build"

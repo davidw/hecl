@@ -1,4 +1,4 @@
-/* Copyright 2004-2007 David N. Welton, DedaSys LLC
+/* Copyright 2004-2009 David N. Welton, DedaSys LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -354,12 +354,17 @@ public class Interp extends Thread/*implements Runnable*/ {
 		/* Still nothing - let's see if we have the Java
 		 * reflection stuff loaded and try using that.  FIXME -
 		 * consider making this configurable? */
+//#ifdef j2se
 		try {
 		    org.hecl.java.JavaCmd.load(this, clazz.getName(), null);
 		    return findClassCmd(clazz);
 		} catch (HeclException he) {
 		    /* Ignore this. */
 		}
+//#else
+		return findClassCmd(clazz);
+//#endif
+
 	    }
 
 	}

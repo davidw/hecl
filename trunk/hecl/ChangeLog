@@ -1,3 +1,8 @@
+2009-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* core.xml: Compile the java package along with the core in order
+	to include the reflection stuff.
+
 2009-03-25  David N. Welton  <davidw@dedasys.com>
 
 	* core/org/hecl/Interp.java: Added a bit of code that does the
