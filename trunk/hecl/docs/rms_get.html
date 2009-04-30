@@ -1,5 +1,5 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>rms.get</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="recordstore_commands.html" title="RecordStore"><link rel="prev" href="rms_set.html" title="rms.set"><link rel="next" href="rms_add.html" title="rms.add"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">rms.get</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="rms_set.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">RecordStore</th><td width="20%" align="right"> <a accesskey="n" href="rms_add.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="rms_get"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>rms.get &#8212; Fetch the value of the specified record store
-	  and record id</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rms.get</code>  <em class="replaceable"><code>rsname</code></em> [<em class="replaceable"><code>recordid</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id2653150"></a><h2>Description</h2><p>
+	  and record id</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rms.get</code>  <em class="replaceable"><code>rsname</code></em> [<em class="replaceable"><code>recordid</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id2658885"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>rms.get</strong></span> command returns the value
 	    of the data stored in record store
 	    <code class="option"><em class="replaceable"><code>rsname</code></em></code>.  The
@@ -7,7 +7,7 @@
 	    <code class="option"><em class="replaceable"><code>recordid</code></em></code>
 	    specifies the record id, and defaults to 1.  An error is
 	    thrown if the record does not exist.
-	  </p></div><div class="refsect1" lang="en"><a name="id2653178"></a><h2>Example</h2><pre class="programlisting">
+	  </p></div><div class="refsect1" lang="en"><a name="id2658912"></a><h2>Example</h2><pre class="programlisting">
 rms.set highscore 1 [highscore]
 ... application restarted ...
 set highscore [rms.get highscore 1]

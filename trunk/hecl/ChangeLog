@@ -1,3 +1,7 @@
+2009-04-30  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added kxml.gettext docs.
+
 2009-04-29  David N. Welton  <davidw@dedasys.com>
 
 	* core.xml: Compile the java package along with the core in order

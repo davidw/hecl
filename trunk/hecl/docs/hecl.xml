@@ -3555,6 +3555,39 @@ set xmlParser [kxml.create]
                 </programlisting>
             </refsect1>
         </refentry>
+
+      <refentry id="kxml.gettext">
+	<refnamediv>
+	  <refname>kxml.gettext</refname>
+	  <refpurpose>Returns the text content of the current event as a string.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>kxml.gettext</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>kxml.gettext</command> returns the text content of the current XML event as
+	    a string.
+	  </para>
+	  <para>
+	    The value returned depends on current event type, for example for TEXT event it is
+	    element content (this is typical case when <command>kxml.next</command> is used). See
+	    description of <command>kxml.nextToken</command> for detailed description of possible
+	    returned values for different types of events.
+	  </para>
+	  <para>
+	    <note>
+	      In case of ENTITY_REF, this method returns the entity replacement text (or an empty
+	      string if not available).
+	    </note>
+	  </para>
+	</refsect1>
+      </refentry>
+
+
         <refentry id="kxml.input">
             <refnamediv>
                 <refname>kxml.input</refname>
