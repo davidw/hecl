@@ -17,7 +17,7 @@
 	      <em class="replaceable"><code>optval</code></em>
 	    ] [flush
 	      [<em class="replaceable"><code>x y width height</code></em>]
-	    ] [graphics] [repaint] [servicerepaints]</p></div></div><div class="refsect1" lang="en"><a name="id2663816"></a><h2>Description</h2><p>
+	    ] [graphics] [repaint] [servicerepaints]</p></div></div><div class="refsect1" lang="en"><a name="id2938317"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.canvas</strong></span> command creates a
 	    canvas that can be used to draw arbitrary items, such as
 	    rectangles, text, circles, and respond to keyboard events.
@@ -67,7 +67,7 @@
 	      </p></li><li><p>
 		<span class="command"><strong>servicerepaints</strong></span>: Forces any repaints
 		that haven't occured yet to be performed immediately.
-	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2663991"></a><h2>Example</h2><pre class="programlisting">
+	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2938491"></a><h2>Example</h2><pre class="programlisting">
 set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
 set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]

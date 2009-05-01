@@ -6,7 +6,7 @@
 	    ] [configure
 	      <em class="replaceable"><code>-optname</code></em>
 	      <em class="replaceable"><code>optval</code></em>
-	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2666346"></a><h2>Description</h2><p>
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2940846"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.gauge</strong></span> command creates a gauge element, and returns a
 	    command/object that can be used to manipulate it. For an in-depth look at the Java code
 	    that this command is based on, see: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Gauge.html" target="_top">javax.microedition.lcdui.Gauge</a>
@@ -19,7 +19,7 @@
 	      "indefinite" if there is no maximum value.
               </p><p><code class="option">-interactive</code>: Either 1 or 0, depending on whether the gauge is
 	      interactive, or is for display purposes only.
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2666409"></a><h2>Example</h2><pre class="programlisting">
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2940909"></a><h2>Example</h2><pre class="programlisting">
 set form [lcdui.form -title "Gauge Example"]
 $form append [lcdui.gauge -label "From 1 to 10" -interactive 1 \
 		     -value 6 -maxvalue 10]
