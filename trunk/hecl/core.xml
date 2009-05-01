@@ -11,9 +11,9 @@
     <mkdir dir="${j2se.build}" />
     <mkdir dir="${j2se.pre}" />
     <mkdir dir="${j2se.rel}" />
-		<mkdir dir="${j2me.mwtbuild}" />
-		<mkdir dir="${j2me.mwtpre}" />
-		<mkdir dir="${j2me.mwtrel}" />
+    <mkdir dir="${j2me.mwtbuild}" />
+    <mkdir dir="${j2me.mwtpre}" />
+    <mkdir dir="${j2me.mwtrel}" />
   </target>
 
   <target name="compileCore"
@@ -21,6 +21,9 @@
     description="Compile core Hecl functionality">
     <mkdir dir="${j2se.pre}/core"/>
     <wtkpreprocess srcdir="core" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
+    <!-- We need to include the "java" package in the compile, because the j2se version of Hecl uses
+    it: -->
+    <wtkpreprocess srcdir="java" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
     <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}" debug="${hecldebug}" >
       <classpath refid="classpath"/>
       <classpath path="jars/jline-0.9.92.jar"></classpath>
@@ -174,7 +177,7 @@
 
     <jar destfile="${j2se.hecl.cmdline.jar}"
       basedir="${j2se.build}"
-      excludes="**jad,**jar,StandaloneHecl.class,*html,**/applet/**"
+      excludes="**jad,**jar,StandaloneHecl.class,*html,**/applet/**,**/applettweak/**,**/jarhack/**"
       update="true">
       <manifest>
 	<attribute name="Main-Class" value="Hecl"/>
