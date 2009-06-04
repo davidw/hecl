@@ -35,7 +35,7 @@ import org.hecl.ObjectThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 //import org.hecl.hecltk.graphics.Drawable;
-import org.hecl.mwtmisc.HeclUtils;
+import org.hecl.misc.HeclUtils;
 import org.hecl.mwtgui.ext.HeclWindow;
 
 /**
