@@ -49,6 +49,7 @@
     <delete file="jars/AndroidBuilder.jar"/>
     <delete file="jars/HeclBuilder.jar"/>
     <delete file="jars/JarHack.jar"/>
+    <delete file="mwt/Hecl.java"/>
     <delete>
       <fileset dir="jars/j2se/" includes="*.jar"/>
     </delete>
