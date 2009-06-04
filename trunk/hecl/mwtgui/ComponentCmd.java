@@ -27,7 +27,7 @@ import org.hecl.Interp;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
-import org.hecl.mwtmisc.HeclUtils;
+import org.hecl.misc.HeclUtils;
 
 /**
  *
