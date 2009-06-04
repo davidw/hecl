@@ -41,7 +41,7 @@ import org.hecl.RealThing;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-import org.hecl.mwtmisc.HeclUtils;
+import org.hecl.misc.HeclUtils;
 
 
 public class MidletCmd extends Operator {
