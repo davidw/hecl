@@ -69,6 +69,9 @@ public class Hecl extends MIDlet {
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
 	    MidletCmd.load(interp,this);
+//#if mwt == 1
+			 org.hecl.mwtgui.MwtCmds.load(interp, this);
+//#endif
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 
