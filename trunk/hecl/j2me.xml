@@ -8,19 +8,19 @@
 
     <mkdir dir="${j2me.mwtguiclasspath}"/>
     <mkdir dir="${j2me.mwtpre}/mwt"/>
+    <mkdir dir="${j2me.mwtpre}/midp20gui"/>
 
+		<copy file="midp20/Hecl.java" todir="mwt" />
     <copy file="mwt/hecl_logo.png" todir="${j2me.mwtbuild}" overwrite="true"/>
 		<copy todir="${j2me.mwtbuild}" overwrite="true">
 			<fileset dir="${j2me.coreclasspath}"  includes="**/*.class" />
 		</copy> 
-
-
-    <wtkpreprocess
+     <wtkpreprocess
       srcdir="mwt"
       symbols="${j2me.defines}"
       destdir="${j2me.mwtpre}/mwt"/>
 	 
-    <wtkbuild srcdir="${j2me.mwtpre}/mwt" target="1.1" source="1.2"
+    <wtkbuild srcdir="${j2me.mwtpre}" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.mwtcoreclasspath}">
       <classpath refid="j2me.mwtguiclasspath"/>
@@ -102,11 +102,13 @@
     depends="initCompile">
     <mkdir dir="${j2me.mwtguiclasspath}"/>
     <mkdir dir="${j2me.mwtpre}/mwtgui"/>
+		<wtkpreprocess srcdir="midp20gui" destdir="${j2me.mwtpre}/midp20gui"
+      symbols="ant:j2me,ant:cldc1.1"/>
     <wtkpreprocess srcdir="mwtgui"
       destdir="${j2me.mwtpre}/mwtgui"
       symbols="${j2me.defines}"
       />
-    <wtkbuild srcdir="${j2me.mwtpre}/mwtgui"  target="1.1" source="1.2"
+    <wtkbuild srcdir="${j2me.mwtpre}"  target="1.1" source="1.2"
       destdir="${j2me.mwtguiclasspath}">
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${mwt.lib}"/>
