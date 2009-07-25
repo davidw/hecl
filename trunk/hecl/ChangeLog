@@ -1,5 +1,8 @@
 2009-07-25  David N. Welton  <davidw@dedasys.com>
 
+	* android/build.xml: Added patch from Pat Thoyts to fix building
+	with more recent SDK.
+
 	* settings.xml, j2me.xml, jarhack/org/hecl/jarhack/JarHack.java:
 	Patch from "Zakaria"
 	( http://pemula.linux.or.id/ ) that fixes some issues with the

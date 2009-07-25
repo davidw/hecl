@@ -16,7 +16,7 @@
   <!-- ************************************************************************************* -->
   <!-- No user servicable parts below. -->
 
-  <property name="android-framework" value="${android-tools}/lib/framework.aidl" />
+  <property name="android-framework" value="${android-platform}/framework.aidl" />
 
   <!-- Input directories -->
   <property name="resource-dir" value="android/res" />
@@ -78,23 +78,23 @@
   </condition>
 
   <!-- Tools -->
-  <condition property="aapt" value="${android-tools}/aapt.exe" else="${android-tools}/aapt" >
+  <condition property="aapt" value="${android-platform-tools}/aapt.exe" else="${android-platform-tools}/aapt" >
     <os family="windows"/>
   </condition>
-  <condition property="aidl" value="${android-tools}/aidl.exe" else="${android-tools}/aidl" >
+  <condition property="aidl" value="${android-platform-tools}/aidl.exe" else="${android-platform-tools}/aidl" >
     <os family="windows"/>
   </condition>
   <condition property="adb" value="${android-tools}/adb.exe" else="${android-tools}/adb" >
     <os family="windows"/>
   </condition>
-  <condition property="dx" value="${android-tools}/dx.bat" else="${android-tools}/dx" >
+  <condition property="dx" value="${android-platform-tools}/dx.bat" else="${android-platform-tools}/dx" >
     <os family="windows"/>
   </condition>
   <condition property="apk-builder" value="${android-tools}/apkbuilder.bat" else="${android-tools}/apkbuilder" >
     <os family="windows"/>
   </condition>
 
-  <property name="android-jar" value="${sdk-folder}/android.jar" />
+  <property name="android-jar" value="${android-platform}/android.jar" />
 
   <!-- Rules -->
 
@@ -105,6 +105,7 @@
     <mkdir dir="${outdir-classes}" />
     <mkdir dir="${android.pre}/core"/>
     <mkdir dir="${android.build}" />
+    <mkdir dir="${external-libs-ospath}" />
   </target>
 
   <!-- Generate the R.java file for this project's resources. -->
@@ -203,7 +204,7 @@
       <arg value="--dex" />
       <arg value="--output=${intermediate-dex-ospath}" />
       <arg path="android/Hecl.jar" />
-      <fileset dir="${external-libs}" includes="*.jar"/>
+      <fileset dir="${android-platform-tools}/lib" includes="*.jar"/>
     </apply>
   </target>
 
