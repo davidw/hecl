@@ -296,7 +296,7 @@
       jadfile="${j2me.hecl.jad}"
       jarfile="${j2me.hecl.jar}">
 
-      <midlet name="${j2me.app}" class="${j2me.entryclass}"/>
+      <midlet name="${j2me.app}" icon="${j2me.icon}" class="${j2me.entryclass}"/>
       <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
       <attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>
     </wtkjad>

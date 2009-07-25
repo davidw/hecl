@@ -161,7 +161,7 @@ public class JarHack {
 	String parent = jf.getParent();
 	File jadfile = new File(parent + File.separatorChar + appname + ".jad");
 	FileWriter of = new FileWriter(jadfile);
-	of.write("MIDlet-1: "+appname+", Hecl.png, Hecl" + "\n" +
+	of.write("MIDlet-1: "+appname+", /Hecl.png, Hecl" + "\n" +
 		 "MIDlet-Info-URL: http://www.hecl.org" + "\n" +
 		 "MIDlet-Jar-Size: " + jf.length() + "\n" +
 		 "MIDlet-Jar-URL: " + url + "\n" +
