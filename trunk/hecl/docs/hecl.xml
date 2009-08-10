@@ -6739,25 +6739,57 @@ proc selectname {cmd lst} {
 
 	    <arg choice="opt">-color</arg>
 	    <arg choice="opt">-alphalevels</arg>
+
 	    <arg choice="opt">-alertimagewidth</arg>
 	    <arg choice="opt">-alertimageheight</arg>
 	    <arg choice="opt">-listimagewidth</arg>
 	    <arg choice="opt">-listimageheight</arg>
-
 	    <arg choice="opt">-choiceimagewidth</arg>
 	    <arg choice="opt">-choiceimageheight</arg>
 
 	    <arg choice="opt">-bg</arg>
 	    <arg choice="opt">-fg</arg>
 
+	    <arg choice="opt">-hilightbg</arg>
+	    <arg choice="opt">-hilightfg</arg>
+	    <arg choice="opt">-border</arg>
+	    <arg choice="opt">-hilightborder</arg>
+	    <arg choice="opt">-borderstyle</arg>
+	    <arg choice="opt">-hilightborderstyle</arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>lcdui.settings</command> command 
-	    <option><replaceable>filename</replaceable></option>.
+	    The <command>lcdui.settings</command> command returns information about the phone the
+	    program is running on.
 	  </para>
+
+	  <simplelist>
+	    <member><option>-color</option>: is this a color display? 1 or 0</member>
+	    <member><option>-alphalevels</option>: number of alpha levels</member>
+	    <member><option>-alertimagewidth</option>: width in pixels of the alert image</member>
+	    <member><option>-alertimageheight</option>: height in pixels of the alert image</member>
+	    <member><option>-listimagewidth</option>: width in pixels of the list image</member>
+	    <member><option>-listimageheight</option>: height in pixels of the list image</member>
+	    <member><option>-choiceimagewidth</option>: width in pixels of the choice image</member>
+	    <member><option>-choiceimageheight</option>: height in pixels of the choice image</member>
+
+	    <member><option>-bg</option>: background color</member>
+	    <member><option>-fg</option>: foreground color</member>
+
+	    <member><option>-hilightbg</option>: background hilight color</member>
+	    <member><option>-hilightfg</option>: foreground hilight color</member>
+
+	    <member><option>-border</option>: border color</member>
+	    <member><option>-hilightborder</option>: border hilight color</member>
+	    <member><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</member>
+	    <member><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</member>
+
+
+	  </simplelist>
+
 	</refsect1>
 	<refsect1>
 	  <title>Example</title>

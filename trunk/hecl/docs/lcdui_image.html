@@ -17,7 +17,7 @@
 	      [thumbwidth
 		[thumbwidth]
 	      ]
-	    ] [graphics]</p></div></div><div class="refsect1" lang="en"><a name="id2941075"></a><h2>Description</h2><p>
+	    ] [graphics]</p></div></div><div class="refsect1" lang="en"><a name="id2694223"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.image</strong></span> command creates an image, from some data, either by
 	    indicating a filename, record store, or a resource name.  It returns an object/command
 	    that can be utilized to manipulate the image.  Mutable images are those loaded from
@@ -40,7 +40,7 @@
 	  </p><div class="itemizedlist"><ul type="disc"><li><p><span class="command"><strong>thumbnail</strong></span>: Creates a thumbnail from the image.
               </p></li><li><p><span class="command"><strong>graphics</strong></span>: Unless the image is immutable, creates and returns
 	      a new graphics object associated with the image.
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2941205"></a><h2>Creating base64 encoded images</h2><p>
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2694352"></a><h2>Creating base64 encoded images</h2><p>
 	    There are two ways to include images in Hecl applications.  One is to add the image to
 	    the .jar file itself.  The second is to include it directly in the script, as a base64
 	    included string.  Here's how to do so on a Linux machine:
@@ -49,7 +49,7 @@
 		Linux, you might create a PNG, <code class="filename">x.png</code>.
 	      </p></li><li><p>
 		Now you need to turn the binary PNG file into a string that can be included in a script:
-	      </p><pre class="screen">base64 &lt; x.png &gt; x.txt</pre></li><li><p>Now copy and paste x.txt into your script, like in the script below</p></li></ol></div></div><div class="refsect1" lang="en"><a name="id2941264"></a><h2>Example</h2><pre class="programlisting">
+	      </p><pre class="screen">base64 &lt; x.png &gt; x.txt</pre></li><li><p>Now copy and paste x.txt into your script, like in the script below</p></li></ol></div></div><div class="refsect1" lang="en"><a name="id2694412"></a><h2>Example</h2><pre class="programlisting">
 # base64 encoded PNG
 set data {iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A
 /wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9gKGBQIB6A2RzQAAAAZdEVYdENv
