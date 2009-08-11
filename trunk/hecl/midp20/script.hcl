@@ -82,7 +82,8 @@ foreach {l p} {
     "MMAPI Snapshot Format" video.snapshot.encodings} {
     if {= [catch {set p [system.getproperty $p]}] 0} {
 	if {> [strlen $p] 0} {
-	    $infoform append [lcdui.textfield -label $l -text $p -uneditable 1]
+	    $infoform append [lcdui.textfield -label $l -maxlength 256 -text \
+				  [strrange $p 0 255] -uneditable 1]
 	}
     }
 }
@@ -241,10 +242,10 @@ proc mainsel {cmd d} {
 	createFontForm
     } elseif {= $idx 3} {
 	# Call...
-	midlet.platformrequest "tel:+4369911259952"
+	midlet.platformrequest "tel:+393488866859"
     } elseif {= $idx 4} {
 	# Send SMS...
-	midlet.platformrequest "sms:+4369911259952"
+	midlet.platformrequest "sms:+393488866859"
     } elseif {= $idx 5} {
 	# Textbox
 	global textbox
