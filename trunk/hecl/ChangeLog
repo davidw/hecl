@@ -1,5 +1,10 @@
 2009-08-12  David N. Welton  <davidw@dedasys.com>
 
+	* midp20/script.hcl: Fix the numbers again.
+
+	* midp20/Hecl.java: Use Alert.FOREVER instead of a specific
+	timeout period.
+
 	* midp20/script.hcl: New script, from Zakaria.  Allows editing of
 	scripts.  Committing as-is, but probably needs some modifications.
 

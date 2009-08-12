@@ -51,7 +51,7 @@ public class Hecl extends MIDlet {
 	try {
 	    Alert a = new Alert("Loading Hecl", "Loading Hecl...", null, AlertType.INFO);
 	    display.setCurrent(a);
-	    a.setTimeout(10000);
+	    a.setTimeout(Alert.FOREVER);
 	    a.setIndicator(new Gauge(null, false,
 				     Gauge.INDEFINITE, Gauge.CONTINUOUS_RUNNING));
 	    interp = new Interp();

@@ -168,12 +168,12 @@ ChangeFont $switchfont $pickfont $fonts $txt $sizesi $fontsi $switchfont $form
 
 :AddSample Call {
 # Call...
-midlet.platformrequest "tel:+4369911259952"
+midlet.platformrequest "tel:+393488866859"
 }
 
 :AddSample SMS {
 # Send SMS...
-midlet.platformrequest "sms:+4369911259952"
+midlet.platformrequest "sms:+393488866859"
 }
 
 :AddSample TextBox {
