@@ -1,0 +1,614 @@
+2008-12-30  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Twiddle the load
+	method to not stash a new interp in the HeclCallback.interp
+	field if one's already there.  We don't want random interpreters
+	hijacking the event processing mechanism.
+
+	* android/AndroidManifest.xml: Updated permissions.
+
+2008-12-27  David N. Welton  <davidw@dedasys.com>
+
+	* android/AndroidManifest.xml: Catch the orientation and
+	keyboardHidden configuration changes and ignore them.
+
+	* android/src/org/hecl/android/Hecl.java: Override of
+	onConfigurationChanged method in order to let Android Hecl ignore
+	configuration changes.
+
+2008-12-22  David N. Welton  <davidw@dedasys.com>
+
+	* android/AndroidManifest.xml: Added version numbers/names.
+	Added READ_PHONE_STATE permission.
+
+	* android/bin/Hecl.apk: Added signed copy of the .apk.
+
+	* android/android.properties: Update to latest version of the SDK.
+
+	* android/build.xml: Use android-release insead of release.
+
+2008-10-27  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added live examples on heclbuilder.com for many
+	of the lcdui.* commands.
+
+2008-10-24  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/Hecl.java: Be sure to include Base64 commands.
+
+2008-10-19  David N. Welton  <davidw@dedasys.com>
+
+	* midp20gui/org/hecl/midp20/lcdui/GaugeCmd.java: maxvalue and
+	initial value were backwards in the constructor call.
+
+2008-10-16  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/Hecl.java: Added a "loading hecl..." alert and guage.
+
+2008-10-07  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Print some more stuff out
+	when things go wrong in "instantiate".
+
+	* tests/java.hcl: Added a few more tests.
+
+	* tests/i18n.hcl: Added i18n tests with various character sets.
+
+	* core/org/hecl/ObjectThing.java: Make a null ObjectThing return
+	a [null] string so that at least it's possible to replicate it
+	with the null command.
+
+	* core/org/hecl/ListThing.java: Added cautionary/explanatory
+	comment about ListThing vectors.
+
+2008-10-06  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpCmd.java: System.getProperty doesn't throw
+	errors any more, when used with the new midlet applets.  However,
+	it may return null for the properties in question.  Guard against
+	this.
+
+	* misc.xml: Added packageMidletApplets, which utilizes AppletTweak
+	to create the applet jars from the midlet jars, for all applicable
+	versions of Hecl.
+
+	* core.xml: Added packageAppletTweak to create the jar file that
+	goes on to tweak the midlet jars to make the suitable for
+	consumption by the microemulator applet.
+
+	* jars/microemulator.jar: Added a copy of this for AppletTweak.
+
+	* applettweak/org/hecl/applettweak/AppletTweak.java: Wrote a bit
+	of code to perform the necessary bytecode hacks on the Hecl jars
+	in order to make the work as applets in microemulator.
+
+2008-10-02  David N. Welton  <davidw@dedasys.com>
+
+	* android/android.properties: Updated to 1.0 SDK.
+
+2008-09-29  David N. Welton  <davidw@dedasys.com>
+
+	* midp10/Hecl.java: Fiddled with the startup sequence to use
+	evalIdle like the midp20 version, and break runScript out into its
+	own thing that is only used by the applet version.
+
+	* midp20/script.hcl: Eliminated ;'s from line endings.
+
+	* midp20/Hecl.java: Store HeclTask associated with main script
+	evaluation in order to wait for its completion in runScript, which
+	is used for the Hecl Builder applets.
+
+2008-09-20  David N. Welton  <davidw@dedasys.com>
+
+	* net/org/hecl/HttpCmd.java: Catch any potential errors thrown by
+	System.getProperty.  In reality there shouldn't be any, but the
+	microemulator applet chokes on these calls.  We'll remove the
+	try/catch statements when microemulator is fixed.
+
+2008-08-23  David N. Welton  <davidw@dedasys.com>
+
+	* android/build.xml: Added tasks from new default Android project
+	build.xml.
+
+	* android/res/raw/script.hcl: Updated to new SDK.  Removed Gtalk
+	code, mp3 introduction.
+
+	* android/src/org/hecl/android/Hecl.java: Use MenuItem instead of
+	Menu.Item, for 0.9 SDK.
+
+	* android/src/org/hecl/android/HeclCallback.java: Updated to 0.9 SDK.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Use MenuItem
+	instead of Menu$Item, for 0.9 upgrade.
+
+	* android/src/org/hecl/android/ScriptProvider.java: Updated to 0.9 SDK.
+
+	* android/AndroidManifest.xml: Added permissions for REORDER_TASKS
+	and INTERNET.
+
+2008-08-18  David N. Welton  <davidw@dedasys.com>
+
+	* jarhack/org/hecl/jarhack/JarHack.java: Commit the new command
+	line options!  Oops.
+
+2008-07-30  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added emulator running command line for hello
+	world.
+
+2008-07-22  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Make the Android SDK location explicit.
+
+	* misc.xml: Added cli to javadocs classpaths.
+
+2008-07-17  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Added Android quick start section.  Changed
+	navigation icons again.
+
+2008-07-16  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added -script option to specify the script file to build into the
+	.apk.  Added .zip file copying code to move all the .zip files
+	over from the old location, instead of simply moving the file.
+
+2008-07-14  David N. Welton  <davidw@dedasys.com>
+
+	* misc.xml: Re-added showenv build target here
+
+2008-07-13  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xsl: Split pages up one level deeoper.
+
+	* docs/hecl.css: Added Hecl color for headers, tweaked screen and
+	programlisting.
+
+	* docs/hecl.xml: Clean up some redundant sections, leaving just
+	the tutorial and quick start guide.  Added some missing section id's.
+
+2008-07-12  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Fixed JarHack paths to use new command line stuff.
+
+	* misc.xml: Fix HeclBuilder paths.
+
+	* heclbuilder/org/hecl/heclbuilder/HeclBuilderGui.java: Moved to
+	org.hecl.heclbuilder namespace.
+
+	* core.xml: Build JarHack with commons cli in order to be able to
+	use real command line options.
+
+	* jarhack/org/hecl/jarhack/JarHack.java: Moved JarHack into an
+	org.hecl.jarhack namespace
+
+	* docs/hecl.xml: Tweaks to correct Hecl Commands information.
+	Added information about build targets.
+
+2008-07-11  David N. Welton  <davidw@dedasys.com>
+
+	* android/build.xml: Clarify android package install target's name.
+
+	* j2me.xml: Moved the buildAllJavaME target here from the misc.xml
+	file.  It was previously known as 'buildEverything'.
+
+	* misc.xml: packageAndroidBuilder depends on packageAndroid
+	instead of the actual install step.
+
+	* build.xml: Attempt to include *everything* as dependencies for
+	the 'build' target, including all platforms, docs, and the various
+	support jars.
+
+2008-07-10  David N. Welton  <davidw@dedasys.com>
+
+	* settings.xml: Make sure we set kxml to false so builds work
+	correctly.
+
+2008-07-09  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Make canvas example work as standalone program.
+
+2008-05-06  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/ListThing.java: Same change as in HashThing: don't
+	return literal Things.
+
+	* core/org/hecl/HashThing.java: If value is a literal, don't
+	return it: make a copy.  Bug caught by Thorsten Schemm
+	<lists@pader-sync.com>.
+
+	* tests/hash.hcl: Added tests for change to HashThing.
+
+2008-04-29  David N. Welton  <davidw@dedasys.com>
+
+	* settings.xml: Default wtk.wma.enabled to true. Cleaned up some cruft.
+
+	* midp10/Hecl.java, midp10gui/GUI.java: Reworked conditional
+	compilation for 'sms' define.
+
+	* midp10gui/SMS.java: Moved here from midp10/.
+
+	* docs/hecl.xml: Docbook from Martin Mainusch <donus@gmx.net>
+	describing the kxml extension.
+
+2008-04-24  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/Hecl.java: Conditionally add kxml support.
+
+	* cldc11midp20.properties (kxml): kxml is disabled by default.
+
+	* misc.xml: packageAndroidBuilder target, used to build an android
+	application builder.
+
+	* j2me.xml: Added kxml build target, as well as an 'extras' target
+	that can be used to conditionally hook in extra packages.
+
+	* settings.xml: Added kxml settings.
+
+2008-04-23  David N. Welton  <davidw@dedasys.com>
+
+	* kxml/org/hecl/kxml/KXMLCmd.java: Added this code, from Martin
+	Mainusch donus@gmx.net.  It's an interface to a small xml parser.
+
+2008-04-19  David N. Welton  <davidw@dedasys.com>
+
+	* midp20/Hecl.java: Added runScript method so that things like
+	emulators can interact with the midlet.  Used for
+	http://www.hecl.org/applet/
+
+2008-04-16  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/MathCmds.java: Added some more math commands to
+	non cldc1.0 builds, thanks to Alexander Futasz
+	<Alexander.Futasz@fokus.fraunhofer.de>
+
+2008-04-14  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added final tweaks.
+
+2008-04-11  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added the ability to edit screens,
+	save and then run them.
+
+	* tests/intro.hcl: Added a couple of tests to better run intro
+	proccode through its paces.
+
+	* core/org/hecl/Stanza.java: Changed the rules for turning a
+	Stanza back into a string to better take into account lists,
+	strings with spaces and stanzas beginning with a [command].
+
+2008-04-10  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added some extra, hacky flags.  -intentfilter lets you pass in the
+	name of an .xml file that will be added to the AndroidManifest.xml
+	as the intent-receiver.  Also added an -extraclass flag that lets
+	you pass the name of a .class file that you can add to the final
+	result to be compiled.  I use this to generate an intent receiver
+	for another application I'm working on.  This is all sort of
+	hacky...
+
+2008-04-08  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added checkboxes and radiobuttons to
+	the simple widgets and removed them from the main demo list.
+	Make the script evaluator do an alert as well as returning a
+	value.  Fixed gtalk system to send messages to me.  Removed
+	subactivity... not really important.
+
+	* commandline/Hecl.java: Fixed onDestroy callback so that it can
+	be used by SubHecl.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed some java
+	commandsin favor of loading them on an as-needed bases at runtime:
+	checkbox, radiogrouplayoutparams, radiobutton, radiogroup,
+	timepicker.
+
+	* java/org/hecl/java/Reflector.java: Added more conversions:
+	floats and doubles get transformed into the right java types now.
+	Also, byte[] gets turned into a StringThing, and vice versa when
+	going from StringThing to a byte[] signature.
+
+2008-04-06  David N. Welton  <davidw@dedasys.com>
+
+	* android/README.eclipse: Added some helpful information from
+	Martin Mainusch about using Eclipse with Hecl/Android.
+
+2008-04-05  David N. Welton  <davidw@dedasys.com>
+
+	* tests/threads.hcl: Added test for DONT_WAIT bug.
+
+	* core/org/hecl/Interp.java: If DONT_WAIT flag is set, don't wait,
+	and dont look at any wait times.
+
+	* core.xml: Applet depends on HeclJava to compile.
+
+2008-04-04  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added a "thisinterp" command for
+	the J2SE version, which returns an ObjectThing with the current
+	interprter in it.  Also fixed the after command to return a handle
+	to the event.
+
+2008-03-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed menusetup
+	and menucallback commands in favor of public fields of the Hecl
+	class.
+
+	* android/src/org/hecl/android/Hecl.java: Removed menu junk in
+	favor of two callbacks for menus.
+
+	* android/res/raw/script.hcl: Added MenuSetup proc with new menu
+	view source command.
+
+	* core/org/hecl/SubstThing.java: Removed code utilizing the
+	literal flag, as this is entirely covered in Interp's setVar
+	method.
+
+	* core/org/hecl/Thing.java: setCopyVal won't copy into literals,
+	either.
+
+	* core/org/hecl/Parse.java: Set literal bit for all things created
+	in the parser.
+
+	* core/org/hecl/Interp.java: addTimer isn't synchronized any more
+	- we synchronize on the timers object instead.  setVar: if the
+	value is literal, make a deepcopy of it.
+
+	* core/org/hecl/Stanza.java: Don't automatically set copy flag -
+	it's not needed.
+
+	* core/org/hecl/SubstThing.java: Added code to handle literal
+	Things.
+
+	* core/org/hecl/PrintThing.java: Print out the literal flag in
+	addition to the copy flag.
+
+	* core/org/hecl/Thing.java: Added 'literal' flag, which is used
+	exclusively for Things that come from the parser.
+
+2008-03-08  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/Hecl.java: Added refcount scheme
+	for creating new interpreters so as to avoid doing this in SubHecl
+	instances.
+
+2008-03-05  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added permissions flag to set permissions in the
+	AndroidManifest.xml file.  Tweaked icon stuff to use a name that
+	works (fingers crossed).  Move resulting file into current working
+	directory.
+
+2008-03-04  David N. Welton  <davidw@dedasys.com>
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Added a few more comments, command line options.
+
+	* android/build.xml: Make a jar and then create the dex files from
+	that.
+
+	* android/src/org/hecl/android/Hecl.java: Use a boolean to protect
+	the interp creation code that should only be run once, instead of
+	ugly class based code.  Added a createCommands method that gets
+	overridden by facade classes created by AndroidBuilder.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Moved hecl and
+	subhecl command creation to Hecl.java itself, so that they can be
+	subclassed by made up classes created by AndroidBuilder.
+
+	* androidbuilder/org/hecl/androidbuilder/AndroidBuilder.java:
+	Beginnings of a tool to be utilized for creating Hecl Android
+	applications.
+
+2008-02-28  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/HeclServiceConnection.java: Removed
+	extra copies of cmdline.
+
+2008-02-24  David N. Welton  <davidw@dedasys.com>
+
+	* android/src/org/hecl/android/HeclChatListener.java: Listener for
+	gtalk chat sessions.
+
+	* android/src/org/hecl/android/HeclServiceConnection.java:
+	Listener for service connections.
+
+2008-02-20  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/lib.hcl: Added 'gui' command (need a better
+	name), to post code back to the main thread.
+
+	* android/src/org/hecl/android/Hecl.java: Added stubs for onStop
+	and onDestroy.  I suppose we could do callbacks here.
+
+	* android/AndroidManifest.xml: Added ACCESS_LOCATION and
+	ACCESS_GPS permissions.
+
+	* docs/hecl.xml: Corrected path for Hecl jar.  Updated to WTK 2.5.2.
+
+2008-02-18  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Besides the update to M5, added a
+	GTalk component.
+
+	* android/src/org/hecl/android/Hecl.java: Updated to M5 - use
+	Toast's instead of Notifications.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Updated to M5 -
+	removed the 'query' command - it's now possible to do the same
+	thing entirely in Hecl.
+
+	* android/src/org/hecl/android/ScriptProvider.java: Initial
+	reworking to update to M5.
+
+	* android/AndroidManifest.xml: Updated to M5.
+
+	* java/org/hecl/java/Reflector.java: Check first for null Hecl
+	objects, as these can match any Java object.
+
+2008-02-08  David N. Welton  <davidw@dedasys.com>
+
+	* tests/java.hcl: Added test for null parameter.
+
+	* java/org/hecl/java/Reflector.java: Changed the way we pass
+	things around in heclTypeToJavaType and mapParams: since we could
+	legitimately be returning 'null', we utilize a one-element array
+	to stash a return value in.  This fixes a problem we had with
+	accepting null values.
+
+	* java/org/hecl/java/NullCmd.java: Added separate null command here.
+
+	* commandline/Hecl.java: Add in [null] command.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Move the [null]
+	command from here into the java/ package.
+
+	* android/AndroidManifest.xml: Give Hecl XMPP permissions.
+
+2008-02-06  David N. Welton  <davidw@dedasys.com>
+
+	* android/res/raw/script.hcl: Added interactive server.
+
+	* android/src/org/hecl/android/HeclHandler.java: added initial
+	Handler to handle messages passed around between threads.
+
+2008-02-03  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Added constructors method to
+	return a list of types that can be passed to create a new object
+	of this type.
+
+	* java/org/hecl/java/JavaCmd.java: Added -constructors subcommand.
+
+	* android/res/raw/script.hcl: Added a simple Hecl server that can
+	be accessed from outside via telnet.
+
+	* android/src/org/hecl/android/Hecl.java: Load base64 stuff by
+	default.
+
+2008-01-31  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/StringCmds.java: Added strreplace command.
+
+	* tests/string.hcl: Added strreplace command tests.
+
+2008-01-26  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Extracted hecl to java
+	method, which is used in multiple places.
+
+	* tests/java.hcl: Added some tests to make sure that
+	getting/setting fields works, and throws an error when it doesn't.
+
+	* java/org/hecl/java/JavaCmd.java: -field, with two arguments, now
+	can set the field as well.
+
+2008-01-25  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Centralized the
+	transformation of Java objects into Hecl Things.
+
+2008-01-22  David N. Welton  <davidw@dedasys.com>
+
+	* tests/threads.hcl: Added a test to poke and prod the
+	synchronization of the Interp.eval method.
+
+	* android/res/raw/script.hcl: Use sub-activities for new screens.
+
+	* tests/performance.hcl: Run the bubble sort performance test too.
+
+	* tests/sort-performance.hcl: Added bubblesort performance test.
+	Thanks to Celso Pinto <hecl@7syntax.com>.
+
+2008-01-15  David N. Welton  <davidw@dedasys.com>
+
+	* docs/hecl.xml: Reworked the installation/tools portion of the
+	document, including a quick set of instructions of how to make
+	Eclipse work with Hecl scripts, by Martin Mainusch
+	<DONUS@gmx.net>.  Also redid some of the section on hacking the
+	Hecl Java ME code.
+
+	* jars/: Rearranged the Java ME jars.
+
+2008-01-11  David N. Welton  <davidw@dedasys.com>
+
+	* java/org/hecl/java/Reflector.java: Don't load methodnames until
+	it's actually necessary.  This also speeds the load time.
+
+	* android/android.properties: Added properties file so that people
+	will have something to modify.
+
+	* android/res/raw/script.hcl: Added java integration commands as
+	needed.  This speeds the loading time, because the Hecl/Java
+	integrations are only done when they're needed.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Removed a number
+	of commands, which can be loaded on an as-needed basis in order to
+	speed up loading time.
+
+2008-01-10  David N. Welton  <davidw@dedasys.com>
+
+	* settings.xml: Set an android flag in the build symbols.
+
+	* tests/circular.hcl: Comment out test that crashes the test suite
+	for the time being.
+
+	* android/res/raw/lib.hcl: Added newActivity proc to create new
+	SubHecl activities.
+
+	* android/res/raw/script.hcl: Added some things to deal with the
+	Script provider, and create new activities.
+
+	* android/src/org/hecl/android/Hecl.java: Made interp static so
+	that other things bundled with Hecl can access it, such as
+	SubHecl.  Make sure to set the correct hecl instance in AndroidCmd
+	on resume.
+
+	* android/src/org/hecl/android/AndroidCmd.java: Added intent
+	command.  Changed 'log' command to androidlog so as to not
+	conflict with the math operation log.
+
+	* android/AndroidManifest.xml: Added ScriptProvider.
+
+	* net/org/hecl/HttpCmd.java: We no longer need to pass the Interp
+	to HttpRequest.
+
+	* net/org/hecl/HttpRequest.java: *For the moment*, don't do the
+	synchronized notify of the Interp object, as this conflicts with
+	the synchronized version of Interp's eval method.  As a
+	consequence, we also eliminate references to the object to
+	synchronize on.
+
+2008-01-08  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/HeclTask.java: Print stack trace even for 'normal'
+	exceptions.
+
+	* midp20gui/org/hecl/midp20/lcdui/ChoiceGroupCmd.java: Make sure
+	that the user doesn't try and create the ChoiceGroup as implicit.
+
+	* core/org/hecl/Properties.java: Make sure that properties are
+	even-numbered.
+
+2008-01-07  David N. Welton  <davidw@dedasys.com>
+
+	* applet/org/hecl/applet/HeclApplet.java: Add in Hecl java
+	command, print stack traces on errors.
+
+2008-01-05  David N. Welton  <davidw@dedasys.com>
+
+	* tests/suite.hcl: Added http.hcl.
+
+	* tests/http.hcl: Test http command.  Ideally this wouldn't run if
+	we're not connected to the internet.
+
+2008-01-02  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/Interp.java: Added fancier commandline completion
+	system that completes first on the available command names, and
+	subsequently on available variable names.
