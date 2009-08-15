@@ -56,6 +56,7 @@ class InterpCmds extends Operator {
     protected static final int FREEMEM = 23;
     protected static final int TOTALMEM = 24;
 
+    public static final int ALIAS = 25;
 
     public static final int HASCLASS = 70;//Class.forName()
 
@@ -91,6 +92,10 @@ class InterpCmds extends Operator {
 
 	  case RENAME:
 	    interp.cmdRename(argv[1].toString(), argv[2].toString());
+	    break;
+
+	  case ALIAS:
+	    interp.cmdAlias(argv[1].toString(), argv[2].toString());
 	    break;
 
 	  case EVAL:
@@ -427,6 +432,7 @@ class InterpCmds extends Operator {
         cmdtable.put("unset", new InterpCmds(UNSET, 1, 1));
         cmdtable.put("proc", new InterpCmds(PROC, 3, 3));
         cmdtable.put("rename", new InterpCmds(RENAME, 2, 2));
+        cmdtable.put("alias", new InterpCmds(ALIAS, 2, 2));
         cmdtable.put("eval", new InterpCmds(EVAL, 1, 1));
         cmdtable.put("global", new InterpCmds(GLOBAL, 0, -1));
         cmdtable.put("intro", new InterpCmds(INTROSPECT, 1, -1));

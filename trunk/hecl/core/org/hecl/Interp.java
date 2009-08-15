@@ -761,13 +761,19 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     public synchronized void cmdRename(String oldname, String newname)
 	throws HeclException {
+	cmdAlias(oldname, newname);
+	commands.remove(oldname);
+    }
+
+    public synchronized void cmdAlias(String oldname, String newname)
+	throws HeclException {
 	Command tmp = (Command)commands.get(oldname);
 	if (tmp == null) {
             throw new HeclException("Command " + oldname + " does not exist");
 	}
 	commands.put(newname, tmp);
-	commands.remove(oldname);
     }
+
 
     /**
      * The <code>stackIncr</code> method creates a new stack frame. Used in

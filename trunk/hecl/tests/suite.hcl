@@ -9,6 +9,7 @@ source harness.hcl
 
 testfiles {
     after.hcl
+    alias.hcl
     append.hcl
     break.hcl
     catch.hcl
