@@ -3,94 +3,71 @@
 # TODO: Canvas based editor
 
 set :mf [lcdui.textbox -title "Hecl IDE" -maxlength 4096 -uneditable 1 \
-  -text "# Please wait..."]
+	     -text "# Please wait..."]
 $:mf setcurrent
 
-# Abbreviated to save keystroke on mobile
-proc abbr {} {
-  upeval {
-    global /alert /canvas /choice /cmd /date /font /form /gauge /img /imgit \
-      /list /set /spc /strit /txtbox /txt /ticker /add /rm /show \
-      /act: /eh: /sc: /ll:
-  }
-}
-set /alert  lcdui.alert
-set /canvas lcdui.canvas
-set /choice lcdui.choicegroup
-set /cmd    lcdui.command
-set /date   lcdui.date
-set /font   lcdui.font
-set /form   lcdui.form
-set /gauge  lcdui.gauge
-set /img    lcdui.image
-set /imgit  lcdui.imageitem
-set /list   lcdui.list
-set /set    lcdui.settings
-set /spc    lcdui.spacer
-set /strit  lcdui.stringitem
-set /txtbox lcdui.textbox
-set /txt    lcdui.textfield
-set /ticker lcdui.ticker
-set /add    addcommand
-set /rm     removecommand
-set /show   setcurrent
-set /act:   -commandaction
-set /eh:    -eventhandler
-set /sc:    -selectcommand
-set /ll:    -longlabel
-
-# Stuff to make abbr defaults
-rename proc proc:orig
-proc:orig proc {name arglist body} {
-  proc:orig $name $arglist "abbr\n$body"
-}
-
-abbr
+alias lcdui.alert	/alert
+alias lcdui.canvas	/canvas
+alias lcdui.choicegroup	/choice
+alias lcdui.command	/cmd
+alias lcdui.date	/date
+alias lcdui.font	/font
+alias lcdui.form	/form
+alias lcdui.gauge	/gauge
+alias lcdui.image	/img
+alias lcdui.imageitem	/imgit
+alias lcdui.list	/list
+alias lcdui.settings	/alias
+alias lcdui.spacer	/spc
+alias lcdui.stringitem	/strit
+alias lcdui.textbox	/txtbox
+alias lcdui.textfield	/txt
+alias lcdui.ticker	/ticker
 
 # Capture puts output
 rename puts DEBUG
 set :out ""
-proc:orig puts {txt} {
-  global :out
-  append $:out "$txt\n"
+proc puts {txt} {
+    global :out
+    append $:out "$txt\n"
 }
 
 # Anonymous proc generator
 set :ac 0
-proc:orig : {args body} {
-  global :ac
-  set :ac [1+ $:ac]
-  set name ":anon:$:ac"
-  proc $name $args "abbr\n$body"
-  return $name
+proc : {args body} {
+    global :ac
+    set :ac [1+ $:ac]
+    set name ":anon:$:ac"
+    proc $name $args $body
+    return $name
 }
 
 set :ex [hash {}]
 set :exkeys {}
 
 # EXAMPLES
-proc:orig :AddSample {name code} {
-  global :ex :exkeys
-  hset $:ex $name [strtriml $code]
-  lappend $:exkeys $name
+proc AddSample {name code} {
+    global :ex :exkeys
+    hset $:ex $name [strtriml $code]
+    lappend $:exkeys $name
 }
 
-:AddSample "Hello World" {
+AddSample "Hello World" {
 # See Examples for more
 puts "Hello World"
 }
 
-:AddSample "List" {
-set sel [$/cmd -label Select $/ll: Select -type item]
-set back [$/cmd -label Back $/ll: Back -type back]
+AddSample "List" {
+set sel [/cmd -label Select -longlabel Select -type item]
+set back [/cmd -label Back -longlabel Back -type back]
 set lst {One Two Three Four Five Six}
-set menu [$/list $/sc: $sel $/act: [: {cmd menu} {
+set menu [/list -selectcommand $sel -commandaction [: {cmd menu} {
   global sel lst
   if {eq $cmd $sel} {
     set index [$menu selection get]
     showmsg Selection "You choose [lindex $lst $index]" {
       global menu
-      $menu $/show
+      $menu setcurrent
     }
   } else {
     exit
@@ -99,38 +76,38 @@ set menu [$/list $/sc: $sel $/act: [: {cmd menu} {
 foreach name $lst {
   $menu append $name
 }
-$menu $/add $sel
-$menu $/add $back
-$menu $/show
+$menu addcommand $sel
+$menu addcommand $back
+$menu setcurrent
 }
 
-:AddSample Form {
-set form [$/form -title "Demo Form" $/act: [: {cmd form} {
+AddSample Form {
+set form [/form -title "Demo Form" -commandaction [: {cmd form} {
   exit
 }]]
-$form configure -ticker [$/ticker -text "I am a Ticker!"]
-$form append [$/txt -label "TextField" -text "You can't edit this" \
+$form configure -ticker [/ticker -text "I am a Ticker!"]
+$form append [/txt -label "TextField" -text "You can't edit this" \
   -uneditable 1]
-$form append [$/txt -label "Editable TextField" -text "Change me"]
-set logo [$/img -resource /hecl_logo.png]
-$form append [$/imgit -image $logo -anchor center]
-$form append [$/spc -label spacer1 -minwidth 200 -minheight 2]
-$form append [$/strit -text "StringItem"]
-$form append [$/spc -label spacer2 -minwidth 200 -minheight 4]
-$form append [$/date -label "Date/Time"]
-set choice [$/choice -label Choice -type popup]
+$form append [/txt -label "Editable TextField" -text "Change me"]
+set logo [/img -resource /hecl_logo.png]
+$form append [/imgit -image $logo -anchor center]
+$form append [/spc -label spacer1 -minwidth 200 -minheight 2]
+$form append [/strit -text "StringItem"]
+$form append [/spc -label spacer2 -minwidth 200 -minheight 4]
+$form append [/date -label "Date/Time"]
+set choice [/choice -label Choice -type popup]
 foreach item {One Two Three Four} {
   $choice append $item
 }
 $form append $choice
-$form append [$/imgit -image $logo]
-$form append [$/gauge -label "How cool is Hecl?" -interactive 1 \
+$form append [/imgit -image $logo]
+$form append [/gauge -label "How cool is Hecl?" -interactive 1 \
   -value 10 -maxvalue 10]
-$form $/add [$/cmd -label Back $/ll: Back -type back]
-$form $/show
+$form addcommand [/cmd -label Back -longlabel Back -type back]
+$form setcurrent
 }
 
-:AddSample Font {
+AddSample Font {
 proc ChangeFont {switchfont pickfont fonts txt sizesi fontsi cmd form} {
   set f [lindex $fonts [$pickfont selection get]]
   if { eq $cmd $switchfont } {
@@ -138,60 +115,60 @@ proc ChangeFont {switchfont pickfont fonts txt sizesi fontsi cmd form} {
     # This seems to be necessary, at least in the emulator, in order
     # for the change to actually take effect.
     $fontsi configure -text $txt
-    $sizesi configure -text [$/font $f stringwidth $txt]
+    $sizesi configure -text [/font $f stringwidth $txt]
   } else {
     exit
   }
 }
 
 set txt "Hello World"
-set form [$/form -title "Font Demo"]
-set fonts [sort [$/font names]]
+set form [/form -title "Font Demo"]
+set fonts [sort [/font names]]
 $form setcurrent
-set pickfont [$/choice -label "Pick a font:" -type popup]
+set pickfont [/choice -label "Pick a font:" -type popup]
 $form append $pickfont
 foreach f $fonts {
   $pickfont append $f
 }
-set fontsi [$/strit -label "Sample text:" -text $txt]
-set sizesi [$/strit -label "Size (pixels):"]
+set fontsi [/strit -label "Sample text:" -text $txt]
+set sizesi [/strit -label "Size (pixels):"]
 $form append $fontsi
 $form append $sizesi
 
-set switchfont [$/cmd -label "Switch font" $/ll: "Switch font"]
-set exit [$/cmd -label "Exit" $/ll: "Exit" -type exit]
-$form $/add $switchfont
-$form $/add $exit
-$form configure $/act: [list ChangeFont $switchfont $pickfont $fonts $txt $sizesi $fontsi]
+set switchfont [/cmd -label "Switch font" -longlabel "Switch font"]
+set exit [/cmd -label "Exit" -longlabel "Exit" -type exit]
+$form addcommand $switchfont
+$form addcommand $exit
+$form configure -commandaction [list ChangeFont $switchfont $pickfont $fonts $txt $sizesi $fontsi]
 ChangeFont $switchfont $pickfont $fonts $txt $sizesi $fontsi $switchfont $form
 }
 
-:AddSample Call {
+AddSample Call {
 # Call...
 midlet.platformrequest "tel:+393488866859"
 }
 
-:AddSample SMS {
+AddSample SMS {
 # Send SMS...
 midlet.platformrequest "sms:+393488866859"
 }
 
-:AddSample TextBox {
-set textbox [$/txtbox -text "Hello world" $/act: [: {cmd textbox} {exit}]]
-$textbox $/add [$/cmd -label Exit $/ll: Exit -type exit]
-$textbox $/show
+AddSample TextBox {
+set textbox [/txtbox -text "Hello world" -commandaction [: {cmd textbox} {exit}]]
+$textbox addcommand [/cmd -label Exit -longlabel Exit -type exit]
+$textbox setcurrent
 }
 
-:AddSample Alert {
-[$/alert -type confirmation -timeout forever \
+AddSample Alert {
+[/alert -type confirmation -timeout forever \
   -title Alert -text "This is the alert message!" \
-  $/act: [: {c a} {exit}]] $/show
+  -commandaction [: {c a} {exit}]] setcurrent
 }
 
-:AddSample Information {
-set form [$/form -title Information $/act: [: {c f} {exit}]]
+AddSample Information {
+set form [/form -title Information -commandaction [: {c f} {exit}]]
 
-$form append [$/txt -label "Midlet Version" -text [midlet.getappproperty "MIDlet-Version"] -uneditable 1]
+$form append [/txt -label "Midlet Version" -text [midlet.getappproperty "MIDlet-Version"] -uneditable 1]
 
 set plist {
 "Java Profile" microedition.profiles
@@ -206,21 +183,21 @@ set plist {
 foreach {l p} $plist {
   if {= [catch {set p [system.getproperty $p]}] 0} {
     if {> [strlen $p] 0} {
-      $form append [$/txt -label $l -text $p -uneditable 1]
+      $form append [/txt -label $l -text $p -uneditable 1]
     }
   }
 }
 
-$form append [$/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
+$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
 
-$form append [$/txt -label "File Access" -text [midlet.checkpermissions "javax.microedition.io.Connector.file.read"] -uneditable 1]
+$form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.microedition.io.Connector.file.read"] -uneditable 1]
 
-$form $/add [$/cmd -label Exit $/ll: Exit -type exit]
-$form $/show
+$form addcommand [/cmd -label Exit -longlabel Exit -type exit]
+$form setcurrent
 }
 
-:AddSample Settings {
-set form [$/form -title "Settings Demo" $/act: [: {c f} {exit}]]
+AddSample Settings {
+set form [/form -title "Settings Demo" -commandaction [: {c f} {exit}]]
 
 foreach s {
   "-color"
@@ -240,14 +217,14 @@ foreach s {
   "-borderstyle"
   "-hilightborderstyle"
 } {
-  $form append [$/strit -label "[strtrim $s -]:" -text [$/set cget $s]]
+  $form append [/strit -label "[strtrim $s -]:" -text [/set cget $s]]
 }
 
-$form $/add [$/cmd -label Exit $/ll: Exit -type exit]
-$form $/show
+$form addcommand [/cmd -label Exit -longlabel Exit -type exit]
+$form setcurrent
 }
 
-:AddSample Canvas {
+AddSample Canvas {
 proc DrawH {g x y} {
   global WIDTH HEIGHT
   set y2 [+ $y 70]
@@ -264,8 +241,8 @@ proc DrawH {g x y} {
 
 set X 0
 set Y 0
-set c [$/canvas -title "Test Canvas" $/act: [: {cmd canvas} {exit}] \
-  $/eh: [: {canvas event} {
+set c [/canvas -title "Test Canvas" -commandaction [: {cmd canvas} {exit}] \
+	   -eventhandler [: {canvas event} {
   global X Y
   # Don't act unless key press or key repeat
   set reason [$event cget -reason]
@@ -284,15 +261,15 @@ set c [$/canvas -title "Test Canvas" $/act: [: {cmd canvas} {exit}] \
   DrawH [$canvas graphics] $X $Y
   $canvas flush
 }]]
-$c $/add [$/cmd -label Exit $/ll: Exit -type exit]
-$c $/show
+$c addcommand [/cmd -label Exit -longlabel Exit -type exit]
+$c setcurrent
 set WIDTH [$c cget -width]
 set HEIGHT [$c cget -height]
 DrawH [$c graphics] $X $Y
 $c repaint
 }
 
-:AddSample "Canvas Events" {
+AddSample "Canvas Events" {
 set Y 0
 proc LineY {} {
   global HEIGHT Y LINEH
@@ -320,8 +297,8 @@ proc PrintLn {g txt} {
 
 set LAST ""
 set REPEAT 0
-set c [$/canvas -title "Canvas Events" -fullscreen 1 \
-  $/eh: [: {c e} {
+set c [/canvas -title "Canvas Events" -fullscreen 1 \
+  -eventhandler [: {c e} {
     global LAST REPEAT
     set reason [$e cget -reason]
     if {or [> $reason 7] [< $reason 2]} {return}
@@ -349,11 +326,11 @@ set c [$/canvas -title "Canvas Events" -fullscreen 1 \
       exit
     }
   }]]
-$c $/show
+$c setcurrent
 set g [$c graphics]
 set WIDTH [$g cget -clipwidth]
 set HEIGHT [$g cget -clipheight]
-set LINEH [$/font [$g cget -font] cget -height]
+set LINEH [/font [$g cget -font] cget -height]
 set MAXLINE [/ $HEIGHT $LINEH]
 PrintLn $g "Canvas ${WIDTH}x$HEIGHT, $MAXLINE lines $LINEH pixel each"
 PrintLn $g "Press keys to test, Press 0 to quit"
@@ -366,28 +343,28 @@ set :err ""
 
 set :showmain {
   global :mf
-  $:mf $/show
+  $:mf setcurrent
 }
 set :adc $:showmain
-set :ok [$/cmd -label OK $/ll: OK -type ok]
-set :de [$/cmd -label Edit $/ll: Edit -type cancel]
-set :def [$/txtbox $/act: [: {cmd form} {
+set :ok [/cmd -label OK -longlabel OK -type ok]
+set :de [/cmd -label Edit -longlabel Edit -type cancel]
+set :def [/txtbox -commandaction [: {cmd form} {
   global :df
-  $:df $/show
+  $:df setcurrent
 }]]
-set :df [$/alert -title Hecl -type info $/act: [: {cmd alert} {
+set :df [/alert -title Hecl -type info -commandaction [: {cmd alert} {
   global :ok :adc :de :def
   if {eq $cmd $:ok} {
     eval $:adc
   } elseif {eq $cmd $:de} {
     $:def conf -text [$alert cget -text]
     $:def conf -title [$alert cget -title]
-    $:def $/show
+    $:def setcurrent
   }
 }]]
-$:def $/add $:ok
-$:df $/add $:ok
-$:df $/add $:de
+$:def addcommand $:ok
+$:df addcommand $:ok
+$:df addcommand $:de
 
 proc showmsg {title text args} {
   global :adc :showmain :df
@@ -401,12 +378,12 @@ proc showmsg {title text args} {
   }
   $:df conf -title $title
   $:df conf -text $text
-  $:df $/show
+  $:df setcurrent
 }
 
 set :s:ac 0
 set :s:fm 0
-proc:orig :Setup {} {
+proc Setup {} {
   global :out :ac :s:ac :s:fm
   set :out ""
   set :s:ac [copy $:ac]
@@ -420,14 +397,14 @@ proc exit {} {
   set :ac [copy $:s:ac]
 
   if {strlen $:out} {
-    $:mf $/add $:outc
-    showmsg Output $:out {:ShowMem}
+    $:mf addcommand $:outc
+    showmsg Output $:out {ShowMem}
   } else {
-    :ShowMem
+    ShowMem
   }
 }
 
-proc :ShowMem {} {
+proc ShowMem {} {
   global :s:fm
   set total [runtime.totalmemory]
   set mb [long [- $total $:s:fm]]
@@ -437,42 +414,42 @@ proc :ShowMem {} {
   showmsg Memory "Total: $total\nBefore: $mb\nAfter: $ma\nChanged: $mc"
 }
 
-proc :LoadExample {name} {
+proc LoadExample {name} {
   global :src :ex :mf
   set :src [hget $:ex $name]
   $:mf conf -text $:src
 }
 
 # Example List
-set :sel [$/cmd -label Select $/ll: Select -type item]
-set :sf [$/list -title "Examples:" $/sc: $:sel $/act: [: {cmd lst} {
+set :sel [/cmd -label Select -longlabel Select -type item]
+set :sf [/list -title "Examples:" -selectcommand $:sel -commandaction [: {cmd lst} {
     global :sel :exkeys :mf
     if {eq $cmd $:sel} {
-      :LoadExample [lindex $:exkeys [$lst selection get]]
+	LoadExample [lindex $:exkeys [$lst selection get]]
     }
-    $:mf $/show
+    $:mf setcurrent
   }]]
 foreach name $:exkeys {
   $:sf append $name
 }
-$:sf $/add $:sel
-$:sf $/add [$/cmd -label Back $/ll: Back -type back]
+$:sf addcommand $:sel
+$:sf addcommand [/cmd -label Back -longlabel Back -type back]
 
 # Main
-set :run  [$/cmd -label Run $/ll: "Run the code" -type ok]
-set :undo [$/cmd -label Undo $/ll: "Undo edit" -type cancel]
-set :errc  [$/cmd -label Errors $/ll: "Show errors" -type item]
-set :outc  [$/cmd -label Output $/ll: "Show output" -type item -priority 2]
-set :sample [$/cmd -label Examples $/ll: Examples -type item -priority 3]
-set :exit [$/cmd -label Exit $/ll: "Exit Hecl" -type item -priority 4]
+set :run  [/cmd -label Run -longlabel "Run the code" -type ok]
+set :undo [/cmd -label Undo -longlabel "Undo edit" -type cancel]
+set :errc  [/cmd -label Errors -longlabel "Show errors" -type item]
+set :outc  [/cmd -label Output -longlabel "Show output" -type item -priority 2]
+set :sample [/cmd -label Examples -longlabel Examples -type item -priority 3]
+set :exit [/cmd -label Exit -longlabel "Exit Hecl" -type item -priority 4]
 
-$:mf conf $/act: [: {cmd main} {
+$:mf conf -commandaction [: {cmd main} {
     global :src :err :out :run :undo :errc :outc :sample :exit
     if {eq $cmd $:run} {
       set :src [$main cget -text]
-      :Setup
-      $main $/rm $:errc
-      $main $/rm $:outc
+      Setup
+      $main removecommand $:errc
+      $main removecommand $:outc
       if {
         catch {
           upeval 0 $:src
@@ -480,7 +457,7 @@ $:mf conf $/act: [: {cmd main} {
           if {$main cget -isshown} {exit}
         } :err
       } {
-        $main $/add $:errc
+        $main addcommand $:errc
         showmsg Errors $:err {exit}
       }
     } elseif {eq $cmd $:undo} {
@@ -491,16 +468,16 @@ $:mf conf $/act: [: {cmd main} {
       showmsg Output $:out
     } elseif {eq $cmd $:sample} {
       global :sf
-      $:sf $/show
+      $:sf setcurrent
     } elseif {eq $cmd $:exit} {
       midlet.exit
     }
   }]
-$:mf $/add $:run
-$:mf $/add $:undo
-$:mf $/add $:sample
-$:mf $/add $:exit
-:LoadExample "Hello World"
+$:mf addcommand $:run
+$:mf addcommand $:undo
+$:mf addcommand $:sample
+$:mf addcommand $:exit
+LoadExample "Hello World"
 $:mf conf -uneditable 0
 
 #DEBUG [join [sort [intro commands]] "\n"]
