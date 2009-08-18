@@ -1,8 +1,8 @@
 <project name="j2me" basedir=".">
   <!-- J2ME build targets -->
 
-<!-- j2melibs, midp10gui, midp20gui, midlet -->
-	<target name="mwt"
+  <!-- j2melibs, midp10gui, midp20gui, midlet -->
+  <target name="mwt"
     description="Compile MWT code"
     depends="j2meLibs,mwtgui,extras">
 
@@ -10,16 +10,16 @@
     <mkdir dir="${j2me.mwtpre}/mwt"/>
     <mkdir dir="${j2me.mwtpre}/midp20gui"/>
 
-		<copy file="midp20/Hecl.java" todir="mwt" />
+    <copy file="midp20/Hecl.java" todir="mwt" />
     <copy file="mwt/hecl_logo.png" todir="${j2me.mwtbuild}" overwrite="true"/>
-		<copy todir="${j2me.mwtbuild}" overwrite="true">
-			<fileset dir="${j2me.coreclasspath}"  includes="**/*.class" />
-		</copy> 
-     <wtkpreprocess
+    <copy todir="${j2me.mwtbuild}" overwrite="true">
+      <fileset dir="${j2me.coreclasspath}"  includes="**/*.class" />
+    </copy>
+    <wtkpreprocess
       srcdir="mwt"
       symbols="${j2me.defines}"
       destdir="${j2me.mwtpre}/mwt"/>
-	 
+
     <wtkbuild srcdir="${j2me.mwtpre}" target="1.1" source="1.2"
       cldc="false"
       destdir="${j2me.mwtcoreclasspath}">
@@ -98,11 +98,11 @@
     </wtkbuild>
   </target>
 
-	<target name="compileMwtGui" description="Compile Hecl MWT-Extension"
+  <target name="compileMwtGui" description="Compile Hecl MWT-Extension"
     depends="initCompile">
     <mkdir dir="${j2me.mwtguiclasspath}"/>
     <mkdir dir="${j2me.mwtpre}/mwtgui"/>
-		<wtkpreprocess srcdir="midp20gui" destdir="${j2me.mwtpre}/midp20gui"
+    <wtkpreprocess srcdir="midp20gui" destdir="${j2me.mwtpre}/midp20gui"
       symbols="ant:j2me,ant:cldc1.1"/>
     <wtkpreprocess srcdir="mwtgui"
       destdir="${j2me.mwtpre}/mwtgui"
@@ -121,17 +121,17 @@
     <mkdir dir="${j2me.httpclasspath}"/>
     <!--<mkdir dir="${j2me.pre}/http"/>
     <wtkpreprocess
-      srcdir="http_micro"
-      destdir="${j2me.pre}/http"
-      symbols="${j2me.defines}">
-    </wtkpreprocess>
+    srcdir="http_micro"
+    destdir="${j2me.pre}/http"
+    symbols="${j2me.defines}">
+  </wtkpreprocess>
     <wtkpreprocess srcdir="http" destdir="${j2me.pre}/http"
-      symbols="${j2me.defines}">
-    </wtkpreprocess>
+    symbols="${j2me.defines}">
+  </wtkpreprocess>
     <wtkbuild srcdir="${j2me.pre}/http" target="1.1" source="1.2"
-      destdir="${j2me.httpclasspath}">
-      <classpath refid="j2me.coreclasspath"/>
-    </wtkbuild>
+    destdir="${j2me.httpclasspath}">
+    <classpath refid="j2me.coreclasspath"/>
+  </wtkbuild>
     -->
     <mkdir dir="${j2me.pre}/net"/>
     <wtkpreprocess srcdir="net" destdir="${j2me.pre}/net"
@@ -211,7 +211,7 @@
     </jar>
   </target>
 
- <target name="mwtgui"
+  <target name="mwtgui"
     description="Compile J2ME MWT GUI"
     depends="compileMwtGui">
     <property name="wtk.cldc.version" value="1.1"/>
@@ -337,7 +337,7 @@
     <copy file="${j2me.hecl.jar}" todir="${j2me.rel}" overwrite="true"/>
   </target>
 
- <target name="mwtmidlet" depends="mwt">
+  <target name="mwtmidlet" depends="mwt">
 
     <wtkjad
       name="${j2me.app}"
@@ -360,7 +360,7 @@
       jadfile="${j2me.heclmwtgui.jad}"
       jarfile="${j2me.heclmwtgui.jar}"
       cldc="false"
-			classpath="${j2me.coreclasspath}"
+      classpath="${j2me.coreclasspath}"
       preverify="${preverify}"
       obfuscate="${obfuscate}"
       verbose="false">
@@ -389,7 +389,7 @@
 
     <!-- This is kind of an ugly hack - it would be better to be able to depend on this somehow, but
     we don't build this all that often. -->
-		<exec executable="ant" failonerror="true">
+    <exec executable="ant" failonerror="true">
       <arg value="-propertyfile" />
       <arg value="mwt.properties" />
       <arg value="mwtmidlet" />
@@ -406,7 +406,7 @@
       <arg value="cldc11midp20.properties" />
       <arg value="midlet" />
     </exec>
-	
+    
   </target>
 
 </project>
