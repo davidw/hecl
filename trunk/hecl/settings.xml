@@ -137,7 +137,7 @@
   <property name="j2me.mwtpre" value="${buildprefix}/j2me/pre/mwt"/>
   <property name="j2me.mwtrel" value="${relprefix}/mwt"/>
   
-	<property name="cldc" value="cldc${wtk.cldc.version}"/>
+  <property name="cldc" value="cldc${wtk.cldc.version}"/>
 
   <property name="j2me.app" value="Hecl"/>
   <property name="j2me.appversion" value="1.1"/>
@@ -180,14 +180,13 @@
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
 
-	 <!-- MWT properties -->
- 	<property name="mwt.lib" value="jars/mwt.jar" />
+  <!-- MWT properties -->
+  <property name="mwt.lib" value="jars/mwt.jar" />
   <property name="j2me.mwtguiclasspath" value="${j2me.mwtbuild}"/>
   <path id="j2me.mwtguiclasspath">
     <pathelement location="${j2me.mwtguiclasspath}"/>
   </path>
 
- 
   <!-- KXML properties -->
   <property name="kxml.lib" value="jars/kxml2-2.3.0.jar" />
   <property name="j2me.kxmlclasspath" value="${j2me.build}"/>
