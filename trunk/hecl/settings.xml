@@ -198,7 +198,7 @@
     <equals arg1="1" arg2="${kxml}"/>
   </condition>
 
-  <!-- Android stuff -->
+  <!-- Android settings -->
 
   <property name="android.pre" value="${buildprefix}/android/pre/"/>
   <property name="android.build" value="${buildprefix}/android/final"/>
@@ -213,5 +213,9 @@
   <!-- Additional classpath locations, specified in build.properties file -->
   <path id="classpath">
   </path>
+
+  <!-- BlackBerry settings -->
+
+  <property name="bb.rel" value="${relprefix}/blackberry"/>
 
 </project>

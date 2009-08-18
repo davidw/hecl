@@ -1,3 +1,17 @@
+2009-08-18  David N. Welton  <davidw@dedasys.com>
+
+	* blackberry.xml: Improved BB build system to use its own 'main'
+	Hecl.java file: blackberry/Hecl.java.  Currently it still uses
+	most of the J2ME code.
+
+2009-08-15  David N. Welton  <davidw@dedasys.com>
+
+	* core/org/hecl/InterpCmds.java: Added alias command, which adds
+	an alias using cmdAlias.
+
+	* core/org/hecl/Interp.java: Added cmdAlias method which adds an
+	alias for a command in the interpreter.
+
 2009-08-14  David N. Welton  <davidw@dedasys.com>
 
 	* blackberry.xml: Initial version of Blackberry build

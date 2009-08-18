@@ -27,6 +27,7 @@
   <import file="j2me.xml"/>
   <import file="misc.xml"/>
   <import file="android/build.xml"/>
+  <import file="blackberry.xml"/>
 
   <target name="echo">
     <echo message="Java version: ${ant.java.version}, defines:'${j2se.defines}'"/>
