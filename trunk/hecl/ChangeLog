@@ -1,5 +1,9 @@
 2009-08-18  David N. Welton  <davidw@dedasys.com>
 
+	* midp20/script.hcl: Reworking the example script.  Fixed some
+	whitespace issues (4, not 2:-), and don't display memory after
+	each example invocation.
+
 	* blackberry.xml: Improved BB build system to use its own 'main'
 	Hecl.java file: blackberry/Hecl.java.  Currently it still uses
 	most of the J2ME code.
