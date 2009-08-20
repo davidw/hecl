@@ -1,4 +1,6 @@
 /*
+ * Main BlackBerry Hecl entry point.
+ *
  * Copyright (C) 2005-2009 data2c GmbH (www.data2c.com), DedaSys LLC (www.dedasys.com)
  *
  * Author: Wolfgang S. Kechel - wolfgang.kechel@data2c.com
@@ -65,6 +67,7 @@ public class Hecl extends MIDlet {
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
+	    ServiceBookCmd.load(interp);
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif

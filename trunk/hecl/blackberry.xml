@@ -22,6 +22,7 @@
       cldc="false"
       destdir="${j2me.guiclasspath}">
       <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${jde.home}/lib/net_rim_api.jar"></classpath>
     </wtkbuild>
   </target>
 
@@ -43,7 +44,7 @@
       <equals arg1="1.0" arg2="${wtk.midp.version}"/>
     </condition>
 
-    <copy file="${midpdir}/script.hcl" todir="${j2me.build}" overwrite="true"/>
+    <copy file="blackberry/script.hcl" todir="${j2me.build}" overwrite="true"/>
     <copy file="${midpdir}/Hecl.png" todir="${j2me.build}" overwrite="true"/>
 
     <wtkpackage
@@ -53,8 +54,10 @@
       jarfile="${j2me.hecl.jar}"
       cldc="false"
       preverify="${preverify}"
-      obfuscate="${obfuscate}"
+      obfuscate="false"
       verbose="false">
+<!--       obfuscate="${obfuscate}" -->
+
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
 
