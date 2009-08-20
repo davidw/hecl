@@ -60,12 +60,7 @@ proc AddSample {name code} {
 
 AddSample "Hello World" {
 # See Examples for more 9
-puts [servicebook.records]
-
-foreach r [servicebook.records] {
-    puts "CID: [hget $r CID]"
-}
-
+puts "hello world"
 }
 
 AddSample "List" {
@@ -155,12 +150,12 @@ ChangeFont $switchfont $pickfont $fonts $txt $sizesi $fontsi $switchfont $form
 }
 
 AddSample Call {
-# Call...
+# FIXME
 midlet.platformrequest "tel:+393488866859"
 }
 
 AddSample SMS {
-# Send SMS...
+# FIXME
 midlet.platformrequest "sms:+393488866859"
 }
 
@@ -174,6 +169,13 @@ AddSample Alert {
 [/alert -type confirmation -timeout forever \
      -title Alert -text "This is the alert message!" \
      -commandaction [: {c a} {done}]] setcurrent
+}
+
+AddSample "BlackBerry Information" {
+set form [/form -title "BlackBerry Information" -commandaction [: {c f} {done}]]
+foreach r [servicebook.records] {
+    $form append "CID: [hget $r CID] Name: [hget $r Name]"
+}
 }
 
 AddSample Information {

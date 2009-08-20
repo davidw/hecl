@@ -88,11 +88,7 @@ class ServiceBookCmd extends Operator {
 		    res.put("CAPort", IntThing.create(rec.getCAPort()));
 		    res.put("CARealm", new Thing(rec.getCARealm()));
 		    res.put("CID", new Thing(rec.getCid()));
-
-		    /* Need more stuff here...  */
-
 		    res.put("UID", new Thing(rec.getUid()));
-
 		    res.put("CidHash", IntThing.create(rec.getCidHash()));
 		    res.put("CompressionMode", IntThing.create(rec.getCompressionMode()));
 		    res.put("DataSourceId", new Thing(rec.getDataSourceId()));
