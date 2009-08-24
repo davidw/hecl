@@ -68,6 +68,7 @@ public class Hecl extends MIDlet {
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
 	    ServiceBookCmd.load(interp);
+	    BrowserCmd.load(interp);
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
