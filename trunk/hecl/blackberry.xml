@@ -1,5 +1,6 @@
 <project name="Hecl Blackberry" default="build">
-  <property file="blackberry.properties" />
+
+  <!-- To compile the Blackberry code: ant -propertyfile ./blackberry.properties blackberry -->
 
   <!-- In order for this to work, you need to edit the blackberry.properties file to indicate the
   location of the BlackBerry JDE and the simulator. -->

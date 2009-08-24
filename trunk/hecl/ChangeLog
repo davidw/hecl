@@ -1,5 +1,8 @@
 2009-08-24  David N. Welton  <davidw@dedasys.com>
 
+	* blackberry.xml: Use properties file to override build location
+	in order to separate stuff from j2me build environment.
+
 	* blackberry/BrowserCmd.java: Added browser.open command to open
 	the blackberry browser with a user-specified URL.
 
