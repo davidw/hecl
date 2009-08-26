@@ -1,9 +1,0 @@
-2005-10-21  David N. Welton  <davidw@dedasys.com>
-
-	* jfreechart/JFreeChartHecl.java: Changed save to savechart, some
-	other tweaks.
-
-2005-10-17  David N. Welton  <davidw@dedasys.com>
-
-	* build.xml: Initial commit.
-
