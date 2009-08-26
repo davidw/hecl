@@ -87,7 +87,11 @@ class InterpCmds extends Operator {
 	    break;
 
 	  case PROC:
-	    interp.commands.put(argv[1].toString(), new Proc(argv[2], argv[3]));
+	      if (argv.length == 4) {
+		  interp.commands.put(argv[1].toString(), new Proc(argv[2], argv[3]));
+	      } else {
+		  return ObjectThing.create(new Proc(argv[1], argv[2]));
+	      }
 	    break;
 
 	  case RENAME:
@@ -430,7 +434,7 @@ class InterpCmds extends Operator {
     static {
 	cmdtable.put("set", new InterpCmds(SET, 1 ,2));
         cmdtable.put("unset", new InterpCmds(UNSET, 1, 1));
-        cmdtable.put("proc", new InterpCmds(PROC, 3, 3));
+        cmdtable.put("proc", new InterpCmds(PROC, 2, 3));
         cmdtable.put("rename", new InterpCmds(RENAME, 2, 2));
         cmdtable.put("alias", new InterpCmds(ALIAS, 2, 2));
         cmdtable.put("eval", new InterpCmds(EVAL, 1, 1));

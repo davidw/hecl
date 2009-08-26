@@ -748,6 +748,10 @@ public class Interp extends Thread/*implements Runnable*/ {
 
         commands.put("puts", new PutsCmd());
         commands.put("sort", new SortCmd());
+
+	addClassCmd(Proc.class, new AnonProc());
+
+
 	//	System.err.println("<--initinterp");
     }
 

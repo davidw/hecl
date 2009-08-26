@@ -109,7 +109,7 @@ class Stanza {
 	    realthing = newargv[0].getVal();
 	    if(realthing instanceof ObjectThing) {
 		info = interp.findClassCmd(((ObjectThing)realthing).get().getClass());
-		if(info != null && argv.length < 2) {
+		if(info != null && argv.length < 1) {
 		    throw new HeclException("Class-command required methodname",this.lineno);
 		}
 	    }
