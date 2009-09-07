@@ -58,6 +58,10 @@ proc AddSample {name code} {
 # The following "AddSample"s are all examples of UI screens and
 # widgets:
 
+AddSample "BB Browser" {
+browser.open http://www.hecl.org
+}
+
 AddSample "Hello World" {
 # See Examples for more 9
 puts "hello world"
