@@ -185,6 +185,7 @@ set plist {
     "Java Version" java.fullversion
     "MMAPI Snapshot Capable?" supports.video.capture
     "MMAPI Snapshot Format" video.snapshot.encodings
+    "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
     if {= [catch {set p [system.getproperty $p]}] 0} {
@@ -194,9 +195,9 @@ foreach {l p} $plist {
     }
 }
 
-$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
+$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
 
-$form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.microedition.io.Connector.file.read"] -uneditable 1]
+$form append [/txt -label "File Access" -text [midlet.checkpermissions "microedition.io.Connector.file.read"] -uneditable 1]
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
@@ -470,6 +471,7 @@ $SourceCode conf -commandaction [: {cmd main} {
 	    showmsg Errors $:err {done}
 	}
     } elseif {eq $cmd $:undo} {
+	global :src
 	$main conf -text $:src
     } elseif {eq $cmd $:errc} {
 	showmsg Errors $:err
