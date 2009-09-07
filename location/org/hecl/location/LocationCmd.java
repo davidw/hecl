@@ -46,7 +46,7 @@ class LocationCmd extends Operator {
 	    case GET: {
 		try {
 		    LocationProvider lp = LocationProvider.getInstance(new Criteria());
-		    Location loc = lp.getLocation(60);
+		    Location loc = lp.getLocation(IntThing.get(argv[1]));
 		    Coordinates c = loc.getQualifiedCoordinates();
 		    Vector v = new Vector();
 		    v.addElement(DoubleThing.create(c.getLatitude()));
@@ -84,7 +84,7 @@ class LocationCmd extends Operator {
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
-	    cmdtable.put("location.get", new LocationCmd(GET,0,0));
+	    cmdtable.put("location.get", new LocationCmd(GET,1,1));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create browser commands.");
