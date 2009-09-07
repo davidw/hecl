@@ -179,6 +179,11 @@
   <path id="j2me.rmsclasspath">
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
+  <property name="j2me.locationclasspath" value="${j2me.build}"/>
+  <path id="j2me.locationclasspath">
+    <pathelement location="${j2me.locationclasspath}"/>
+  </path>
+
 
   <!-- MWT properties -->
   <property name="mwt.lib" value="jars/mwt.jar" />
