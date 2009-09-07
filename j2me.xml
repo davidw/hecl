@@ -159,7 +159,7 @@
   </target>
 
 
-  <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms,compileJ2MELocation">
+  <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
   </target>
 
 

@@ -65,14 +65,19 @@ public class Hecl extends MIDlet {
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
+//#if locationapi == 1
 	    LocationCmd.load(interp);
+//#endif
+
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
 	    MidletCmd.load(interp,this);
+
 //#if mwt == 1
 			 org.hecl.mwtgui.MwtCmds.load(interp, this);
 //#endif
+
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 
