@@ -143,7 +143,23 @@
     </wtkbuild>
   </target>
 
-  <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
+  <target name="compileJ2MELocation"
+    depends="initCompile,compileJ2MECore,compileJ2MErms"
+    description="Compile J2ME Hecl Location support">
+    <mkdir dir="${j2me.locationclasspath}"/>
+    <mkdir dir="${j2me.pre}/location"/>
+    <wtkpreprocess srcdir="location" destdir="${j2me.pre}/location"
+      symbols="${j2me.defines}">
+    </wtkpreprocess>
+    <wtkbuild srcdir="${j2me.pre}/location" target="1.1" source="1.2"
+      destdir="${j2me.locationclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${wtk.home}/lib/jsr179.jar"/>
+    </wtkbuild>
+  </target>
+
+
+  <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms,compileJ2MELocation">
   </target>
 
 
@@ -317,6 +333,8 @@
       preverify="${preverify}"
       obfuscate="${obfuscate}"
       verbose="false">
+
+      <classpath path="${wtk.home}/lib/jsr179.jar"/>
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
 
