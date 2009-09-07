@@ -12,7 +12,7 @@
 	    ] [configure
 	      <em class="replaceable"><code>-optname</code></em>
 	      <em class="replaceable"><code>optval</code></em>
-	    ]</p></div></div><div class="refsect1" lang="en"><a name="id2692642"></a><h2>Description</h2><p>
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.9.3"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.date</strong></span> command creates a widget
 	    that can either display, or allow the user to enter a
 	    date, a time, or both.  For
@@ -28,7 +28,7 @@
 	      select both a date and a time.
               </p></li><li><p><code class="option">-date</code>: The current time,
 	      expressed in milliseconds.
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id2692721"></a><h2>Example</h2><pre class="programlisting">
+              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.9.4"></a><h2>Example</h2><pre class="programlisting">
 set date [lcdui.date -label "Current date and time:" -date [clock time] -type date_time]
 set form [lcdui.form -title "Date Form"]
 $form append $date
