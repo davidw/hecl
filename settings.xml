@@ -124,10 +124,14 @@
   <property name="j2se.hecl.applet.jar" value="${j2se.build}/HeclApplet.jar"/>
 
   <!-- J2ME ************************************** -->
-  <!-- build base dirs -->
+
+  <!-- Use the Location API? JSR 179 -->
+  <property name="locationapi" value="false"/>
+  <!-- Use the KXML XML parser API? -->
   <property name="kxml" value="false"/>
+  <!-- Use the MWT toolkit? -->
   <property name="mwt" value="false"/>
-  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml},mwt=${mwt}"/>
+  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,kxml=${kxml},mwt=${mwt},locationapi=${locationapi}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
@@ -184,7 +188,6 @@
     <pathelement location="${j2me.locationclasspath}"/>
   </path>
 
-
   <!-- MWT properties -->
   <property name="mwt.lib" value="jars/mwt.jar" />
   <property name="j2me.mwtguiclasspath" value="${j2me.mwtbuild}"/>
@@ -201,6 +204,11 @@
 
   <condition property="buildkxml" value="buildkxml">
     <equals arg1="1" arg2="${kxml}"/>
+  </condition>
+
+  <!-- Location API settings -->
+  <condition property="buildlocationapi" value="buildlocationapi">
+    <equals arg1="1" arg2="${locationapi}"/>
   </condition>
 
   <!-- Android settings -->
