@@ -238,4 +238,9 @@ public class CodeThing implements RealThing {
         }
         return out.toString();
     }
+
+    public Vector getStanzas() {
+	return stanzas;
+    }
+
 }

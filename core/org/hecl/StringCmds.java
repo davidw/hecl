@@ -56,6 +56,8 @@ class StringCmds extends Operator {
 
     public static final int STRREPLACE = 20;
 
+    public static final int CODECMD = 100;
+
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String str = argv[1].toString();
@@ -242,6 +244,26 @@ class StringCmds extends Operator {
 		return new Thing(resstr);
 	    }
 
+	    case CODECMD: {
+		/* Get the code stanzas - CodeThing.get transforms the
+		argument into parsed code. */
+		CodeThing code = CodeThing.get(interp, argv[1]);
+		Vector stanzas = code.getStanzas();
+		Vector varnames = ListThing.get(argv[2]);
+
+		/* Set command. */
+		Thing set = new Thing("set");
+
+		for (Enumeration e = varnames.elements(); e.hasMoreElements();) {
+		    Thing key = (Thing)e.nextElement();
+		    Thing val = (Thing)e.nextElement();
+		    Thing[] newargv = { set, key, val };
+		    stanzas.insertElementAt(new Stanza(null, newargv, 0), 0);
+		}
+
+		return new Thing(code);
+	    }
+
 	    default:
 		throw new HeclException("Unknown string command '"
 					+ argv[1].toString() + "' with code '"
@@ -364,5 +386,6 @@ class StringCmds extends Operator {
 	cmdtable.put("strtriml", new StringCmds(STRTRIML,1,2));
 	cmdtable.put("strtrimr", new StringCmds(STRTRIMR,1,2));
 	cmdtable.put("strreplace", new StringCmds(STRREPLACE,2,2));
+	cmdtable.put("code", new StringCmds(CODECMD,2,2));
     }
 }
