@@ -32,6 +32,8 @@ import java.util.Vector;
 import org.hecl.DoubleThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
+import org.hecl.HashThing;
 import org.hecl.ListThing;
 import org.hecl.Operator;
 import org.hecl.StringThing;
@@ -47,12 +49,17 @@ class LocationCmd extends Operator {
 		try {
 		    LocationProvider lp = LocationProvider.getInstance(new Criteria());
 		    Location loc = lp.getLocation(IntThing.get(argv[1]));
-		    Coordinates c = loc.getQualifiedCoordinates();
-		    Vector v = new Vector();
-		    v.addElement(DoubleThing.create(c.getLatitude()));
-		    v.addElement(DoubleThing.create(c.getLongitude()));
-		    v.addElement(DoubleThing.create(c.getAltitude()));
-		    return ListThing.create(v);
+		    QualifiedCoordinates c = loc.getQualifiedCoordinates();
+		    Hashtable h = new Hashtable();
+		    h.put("lat", DoubleThing.create(c.getLatitude()));
+		    h.put("lon", DoubleThing.create(c.getLongitude()));
+		    h.put("alt", DoubleThing.create(c.getAltitude()));
+		    h.put("haccuracy", DoubleThing.create(c.getHorizontalAccuracy()));
+		    h.put("vaccuracy", DoubleThing.create(c.getVerticalAccuracy()));
+		    h.put("location_method", locationMethod(loc.getLocationMethod()));
+		    h.put("speed", DoubleThing.create(loc.getSpeed()));
+		    h.put("course", DoubleThing.create(loc.getCourse()));
+		    return HashThing.create(h);
 		} catch (LocationException le) {
 		    throw new HeclException("location.get error: " + le.toString());
 		} catch (InterruptedException ie) {
@@ -66,6 +73,23 @@ class LocationCmd extends Operator {
 				    + cmd + "'.");
 
 	}
+    }
+
+    private static final Thing locationMethod(int lmethod) throws HeclException {
+	Hashtable r = new Hashtable();
+	if ((Location.MTA_ASSISTED & lmethod) > 0) {
+	    r.put("ASSISTED", IntThing.create(1));
+	}
+	if ((Location.MTA_UNASSISTED & lmethod) > 0) { r.put("UNASSISTED", IntThing.create(1)); }
+	if ((Location.MTE_ANGLEOFARRIVAL & lmethod) > 0) { r.put("ANGLEOFARRIVAL", IntThing.create(1)); }
+	if ((Location.MTE_CELLID & lmethod) > 0) { r.put("CELLID", IntThing.create(1)); }
+	if ((Location.MTE_SATELLITE & lmethod) > 0) { r.put("SATELLITE", IntThing.create(1)); }
+	if ((Location.MTE_SHORTRANGE & lmethod) > 0) { r.put("SHORTRANGE", IntThing.create(1)); }
+	if ((Location.MTE_TIMEDIFFERENCE & lmethod) > 0) { r.put("TIMEDIFFERENCE", IntThing.create(1)); }
+	if ((Location.MTE_TIMEOFARRIVAL & lmethod) > 0) { r.put("TIMEOFARRIVAL", IntThing.create(1)); }
+	if ((Location.MTY_NETWORKBASED & lmethod) > 0) { r.put("NETWORKBASED", IntThing.create(1)); }
+	if ((Location.MTY_TERMINALBASED & lmethod) > 0) { r.put("TERMINALBASED", IntThing.create(1)); }
+	return HashThing.create(r);
     }
 
     public static void load(Interp ip) throws HeclException {

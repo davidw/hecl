@@ -171,6 +171,17 @@ AddSample Alert {
      -commandaction [: {c a} {done}]] setcurrent
 }
 
+# Only add this if we have the location.get command:
+if { < 0 [llen [search [intro commands] x {eq $x location.get}]] } {
+AddSample LocationAPI {
+set locationform [lcdui.form -title "Location Information" -commandaction [: {c f} {done}]]
+foreach {k v} [location.get 100] {
+    $locationform append [lcdui.textfield -label $k -text $v]
+}
+$locationform setcurrent
+}
+}
+
 AddSample Information {
 set form [/form -title Information -commandaction [: {c f} {done}]]
 
@@ -185,6 +196,7 @@ set plist {
     "Java Version" java.fullversion
     "MMAPI Snapshot Capable?" supports.video.capture
     "MMAPI Snapshot Format" video.snapshot.encodings
+    "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
     if {= [catch {set p [system.getproperty $p]}] 0} {
@@ -201,6 +213,8 @@ $form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.mi
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
 }
+
+
 
 AddSample Settings {
 set form [/form -title "Settings Demo" -commandaction [: {c f} {done}]]
