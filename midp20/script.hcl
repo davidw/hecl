@@ -231,6 +231,39 @@ $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
 }
 
+AddSample "File Browser" {
+
+proc FileSelect {root files bselect bback cmd menu} {
+    if {eq $cmd $bselect} {
+	set index [$menu selection get]
+	if {eq $index ""} {
+	    return
+	}
+
+	set f [lindex $files $index]
+	set lst [file.list "file:///$root$f"]
+	$menu deleteall
+	foreach x $lst {
+	    $menu append $x
+	}
+	$menu configure -commandaction [list FileSelect $f $lst $bselect $bback]
+    } elseif {eq $cmd $bback} {
+	DEBUG "root is $root"
+    }
+}
+
+set devs [file.devs]
+set bselect [lcdui.command -label Select -longlabel Select -type item]
+set bback [lcdui.command -label Back -longlabel Back -type item]
+set browser [lcdui.list -selectcommand $bselect -title "File Browser" \
+		 -commandaction [list FileSelect "" $devs $bselect $bback]]
+$browser addcommand $bback
+$browser setcurrent
+foreach d $devs {
+    $browser append $d
+}
+}
+
 AddSample Canvas {
 proc DrawH {g x y} {
     global WIDTH HEIGHT
