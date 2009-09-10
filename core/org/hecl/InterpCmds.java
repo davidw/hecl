@@ -142,11 +142,19 @@ class InterpCmds extends Operator {
 		    results.addElement(t);
 		}
 		return ListThing.create(results);
-	    }
-	    if (subcmd.equals("proccode")) {
+	    } else if (subcmd.equals("proccode")) {
 		Proc p = (Proc)interp.commands.get(argv[2].toString());
 		return new Thing(p.getCode().getVal());
 	    }
+
+//#if debugcmds == 1
+	    else if (subcmd.equals("objectid")) {
+		Vector v = new Vector();
+		v.addElement(IntThing.create(argv[2].hashCode()));
+		v.addElement(IntThing.create(argv[2].getVal().hashCode()));
+		return ListThing.create(v);
+	    }
+//#endif
 	    break;
 
 	  case RETURN:
