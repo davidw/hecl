@@ -233,30 +233,50 @@ $form setcurrent
 
 AddSample "File Browser" {
 
-proc FileSelect {root files bselect bback cmd menu} {
+proc FileSelect {infohash bselect bback cmd menu} {
+    set root [hget $infohash root]
+    DEBUG "root is $root"
+
     if {eq $cmd $bselect} {
 	set index [$menu selection get]
 	if {eq $index ""} {
 	    return
 	}
 
-	set f [lindex $files $index]
-	set lst [file.list "file:///$root$f"]
-	$menu deleteall
-	foreach x $lst {
-	    $menu append $x
-	}
-	$menu configure -commandaction [list FileSelect $f $lst $bselect $bback]
+	set f [lindex [hget $infohash paths] $index]
+
+	lappend $root $f
+
     } elseif {eq $cmd $bback} {
-	DEBUG "root is $root"
+	lset $root -1
     }
+    # If we are back at the root level, we need to do file.devs
+    # instead of file.list
+    if { = 0 [llen $root] } {
+	set lst [file.devs]
+    } else {
+	set cpath "file:///[join $root {}]"
+	set lst [file.list "$cpath"]
+    }
+    hset $infohash paths $lst
+    $menu deleteall
+    foreach x $lst {
+	$menu append $x
+    }
+
+    $menu configure -commandaction [list FileSelect $infohash $bselect $bback]
+    DEBUG $infohash
 }
 
+set h [hash {}]
 set devs [file.devs]
+hset $h paths $devs
+hset $h root {}
+
 set bselect [lcdui.command -label Select -longlabel Select -type item]
 set bback [lcdui.command -label Back -longlabel Back -type item]
 set browser [lcdui.list -selectcommand $bselect -title "File Browser" \
-		 -commandaction [list FileSelect "" $devs $bselect $bback]]
+		 -commandaction [list FileSelect $h $bselect $bback]]
 $browser addcommand $bback
 $browser setcurrent
 foreach d $devs {
