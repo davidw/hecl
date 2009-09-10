@@ -32,7 +32,10 @@ import java.util.Vector;
 import org.hecl.DoubleThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
 import org.hecl.ListThing;
+import org.hecl.LongThing;
+import org.hecl.ObjectThing;
 import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
@@ -40,7 +43,7 @@ import org.hecl.Thing;
 
 public class FileCmds extends Operator {
     public static final int READABLE = 10;
-    public static final int WRITEABLE = 20;
+    public static final int WRITABLE = 20;
     public static final int HIDDEN = 30;
 
     public static final int EXISTS = 40;
@@ -79,6 +82,59 @@ public class FileCmds extends Operator {
 
 	try {
 	    switch(cmd) {
+		case READABLE:
+		{
+		    if (argv.length == 3) {
+			boolean readable = IntThing.get(argv[2]) == 1;
+			fconn.setReadable(readable);
+		    }
+		    return IntThing.create(fconn.canRead());
+		}
+
+		case WRITABLE:
+		{
+		    if (argv.length == 3) {
+			boolean writable = IntThing.get(argv[2]) == 1;
+			fconn.setWritable(writable);
+		    }
+		    return IntThing.create(fconn.canWrite());
+		}
+
+		case HIDDEN:
+		{
+		    if (argv.length == 3) {
+			boolean hidden = IntThing.get(argv[2]) == 1;
+			fconn.setHidden(hidden);
+		    }
+		    return IntThing.create(fconn.isHidden());
+		}
+
+		case EXISTS:
+ 		{
+		    return IntThing.create(fconn.exists());
+		}
+
+		case SIZE:
+		{
+		    return LongThing.create(fconn.fileSize());
+		}
+		case BASENAME:
+		{
+		    return new Thing(fconn.getName());
+		}
+		case MTIME:
+		{
+		    return LongThing.create(fconn.lastModified());
+		}
+		case ISDIRECTORY:
+ 		{
+		    return IntThing.create(fconn.isDirectory());
+		}
+
+		case ISOPEN:
+ 		{
+		    return IntThing.create(fconn.isOpen());
+		}
 
 		case LIST: {
 		    Vector v = new Vector();
@@ -122,6 +178,18 @@ public class FileCmds extends Operator {
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
+	    cmdtable.put("file.readable", new FileCmds(READABLE,1,2));
+	    cmdtable.put("file.writable", new FileCmds(WRITABLE,1,2));
+	    cmdtable.put("file.hidden", new FileCmds(HIDDEN,1,2));
+	    cmdtable.put("file.exists", new FileCmds(EXISTS,1,1));
+
+	    cmdtable.put("file.exists", new FileCmds(EXISTS,1,1));
+	    cmdtable.put("file.size", new FileCmds(SIZE,1,1));
+	    cmdtable.put("file.basename", new FileCmds(BASENAME,1,1));
+	    cmdtable.put("file.mtime", new FileCmds(MTIME,1,1));
+	    cmdtable.put("file.isdirectory", new FileCmds(ISDIRECTORY,1,1));
+	    cmdtable.put("file.isopen", new FileCmds(ISOPEN,1,1));
+
 	    cmdtable.put("file.list", new FileCmds(LIST,1,1));
 	    cmdtable.put("file.devs", new FileCmds(LISTROOTS,0,0));
 	} catch (Exception e) {
