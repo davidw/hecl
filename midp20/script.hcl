@@ -235,8 +235,6 @@ AddSample "File Browser" {
 
 proc FileSelect {infohash bselect bback cmd menu} {
     set root [hget $infohash root]
-    DEBUG "root is $root"
-    DEBUG "infohash is [intro objectid $infohash]"
 
     if {eq $cmd $bselect} {
 	set index [$menu selection get]
@@ -266,15 +264,12 @@ proc FileSelect {infohash bselect bback cmd menu} {
     }
 
     $menu configure -commandaction [list FileSelect $infohash $bselect $bback]
-    DEBUG $infohash
 }
 
 set h [hash {}]
 set devs [file.devs]
 hset $h paths $devs
 hset $h root {}
-
-DEBUG "hash is [intro objectid $h]"
 
 set bselect [lcdui.command -label Select -longlabel Select -type item]
 set bback [lcdui.command -label Back -longlabel Back -type item]
