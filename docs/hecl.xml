@@ -4141,14 +4141,12 @@ class HelloCmd implements Command {
 
 	<listitem>
 	  <para>
-	    Hecl itself. You can get it from the Sourceforge <ulink
-	      url="http://sourceforge.net/project/showfiles.php?group_id=122383">download
-	      page</ulink>.
+	    Hecl itself. You can get it from the <ulink
+	      url="http://github.com/davidw/hecl/tree/master">GitHub project page</ulink>.
 	    <note>
 	      <para>
 		Hecl is always improving, so you should also consider checking out Hecl directly
-		from subversion: <userinput>svn co
-		https://hecl.svn.sourceforge.net/svnroot/hecl/trunk/hecl hecl</userinput>
+		from git: <userinput>git clone git://github.com/davidw/hecl.git</userinput>
 	      </para>
 	    </note>
 	  </para>
@@ -6014,7 +6012,7 @@ $form setcurrent
 	  <title>Example</title>
 	  <para>
 	    See the example script in the midp20/ directory.  <ulink
-	      url="http://hecl.svn.sourceforge.net/viewvc/hecl/trunk/hecl/midp20/script.hcl?view=markup"></ulink>
+	      url="http://github.com/davidw/hecl/blob/66bbb4890953a97e6a2880d19095d5da2336ba57/midp20/script.hcl"></ulink>
 	  </para>
 	</refsect1>
       </refentry>
