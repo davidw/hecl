@@ -1,5 +1,5 @@
-		      Hecl Programming Language
-		      =========================
+Hecl Programming Language
+=========================
 
 The Hecl Programming Language is an attempt to create a programming
 language that works the way I want it to.  The goals I have in mind
@@ -21,11 +21,12 @@ are:
 
 * Embeddable.  Hecl is easy to embed into your own Java applications.
 
-* Compatible with many Java versions - J2ME, PJava, J2SE etc.
+* JavaME/J2ME.  Hecl is built to run in Java ME, which provides a much
+  smaller API than 'regular' Java.
 
 To get started, read the INSTALL file and the documentation, starting
 with docs/index.html.
 
--- David N. Welton
+----
 
-$Id$
+David N. Welton - davidw@dedasys.com
