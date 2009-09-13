@@ -7420,6 +7420,45 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
+      <refentry id="midlet_flashbacklight">
+	<refnamediv>
+	  <refname>midlet.flashbacklight</refname>
+	  <refpurpose>Flash the device's backlight</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.vibrate</command>
+	    <arg choice="req"><replaceable>milliseconds</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Flashes the device's backlight for N milliseconds.  Returns 1 if the light can be
+	    controlled by the application, and the display is in the foreground; otherwise, 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_vibrate">
+	<refnamediv>
+	  <refname>midlet.vibrate</refname>
+	  <refpurpose>Vibrate the device</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.vibrate</command>
+	    <arg choice="req"><replaceable>milliseconds</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Activates the device's vibrator for N milliseconds.  Returns 1 if the vibrator can be
+	    controlled by the application and the display is in the foreground; otherwise 0.
+	  </para>
+	</refsect1>
+      </refentry>
 
     </section>
 
