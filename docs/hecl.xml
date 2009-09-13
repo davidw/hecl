@@ -2508,6 +2508,47 @@ alone
       </refsect1>
     </refentry>
 
+    <refentry id="system_hasproperty">
+      <refnamediv>
+	<refname>system.hasproperty</refname>
+	<refpurpose>Check for existence of system properties</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>system.hasproperty</command>
+	  <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Query for the existence of system properties that can be retrieved with the
+	  <command>system.getproperty</command> command.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="system_getproperty">
+      <refnamediv>
+	<refname>system.getproperty</refname>
+	<refpurpose>Get system properties</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>system.getproperty</command>
+	  <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Retrieve information about system properties.  Here is a list of some available system
+	  properties on Java ME platforms: <ulink
+	    url="http://developers.sun.com/mobility/midp/questions/properties/index.html"></ulink>
+	</para>
+      </refsect1>
+    </refentry>
+
     <refentry id="throw">
       <refnamediv>
 	<refname>throw</refname>
@@ -7244,6 +7285,64 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
+      <refentry id="midlet_checkpermissions">
+	<refnamediv>
+	  <refname>midlet.checkpermissions</refname>
+	  <refpurpose>Query permission information</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.checkpermissions</command>
+	    <arg choice="req"><replaceable>permission_name</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    This command returns information about whether a given permission has been granted to
+	    the midlet.  Quoting from the Java documentation:
+	  </para>
+	  <blockquote>
+	    Get the status of the specified permission. If no API on the device defines the specific
+	    permission requested then it must be reported as denied. If the status of the permission
+	    is not known because it might require a user interaction then it should be reported as
+	    unknown.
+	  </blockquote>
+	  <para>
+	    The command returns 0 if the permission is denied; 1 if the permission is allowed, and
+	    -1 if the status is unknown
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+midlet.checkpermissions "javax.microedition.io.Connector.file.read"
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_getappproperty">
+	<refnamediv>
+	  <refname>midlet.getappproperty</refname>
+	  <refpurpose>Get application properties</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.getappproperty</command>
+	    <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Lets the midlet retrieve application properties, as defined in the .jad file.
+	  </para>
+	  <para>
+	    See also: <xref linkend="system_getproperty">system.getproperty</xref>
+	  </para>
+	</refsect1>
+      </refentry>
+
       <refentry id="midlet_platformrequest">
 	<refnamediv>
 	  <refname>midlet.platformrequest</refname>
@@ -7292,9 +7391,35 @@ midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
 	    Also, keep in mind that on some devices, launching an external application may terminate
 	    the currently running midlet.
 	  </note>
-
 	</refsect1>
       </refentry>
+
+      <refentry id="midlet_resourceasstring">
+	<refnamediv>
+	  <refname>midlet.resourceasstring</refname>
+	  <refpurpose>Get a resource file as a string</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.resourceasstring</command>
+	    <arg choice="req"><replaceable>resourcename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Given a resource <option><replaceable>resourcename</replaceable></option>, returns it as
+	    a string.  This could be used, for instance, to load additional Hecl files.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+eval [midlet.resourceasstring "./more_commands.hcl"]
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
 
     </section>
 
