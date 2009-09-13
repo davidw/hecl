@@ -195,9 +195,9 @@ foreach {l p} $plist {
     }
 }
 
-$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
+$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
 
-$form append [/txt -label "File Access" -text [midlet.checkpermissions "microedition.io.Connector.file.read"] -uneditable 1]
+$form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.microedition.io.Connector.file.read"] -uneditable 1]
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
