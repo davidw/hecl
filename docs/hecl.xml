@@ -7285,6 +7285,14 @@ midlet.platformrequest "http://www.hecl.org"
 # Install the jad/jar
 midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
 	  </programlisting>
+
+	  <note>
+	    There is not much standard about this command.  It may or may not support different url
+	    types on different phones.  Making phone calls with "tel:" URL's should always work.
+	    Also, keep in mind that on some devices, launching an external application may terminate
+	    the currently running midlet.
+	  </note>
+
 	</refsect1>
       </refentry>
 
