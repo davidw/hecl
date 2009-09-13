@@ -24,8 +24,9 @@
       <sourcepath>
 	<pathelement path="files"/>
       </sourcepath>
+
       <sourcepath>
-	<pathelement path="http"/>
+	<pathelement path="net"/>
       </sourcepath>
       <sourcepath>
 	<pathelement path="heclbuilder"/>
