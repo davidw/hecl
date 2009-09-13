@@ -34,5 +34,3 @@ hello world
 
    You will need to set up android/android.properties to point the
    right place, though.
-
-$Id: INSTALL 540 2008-01-11 14:21:48Z davidw $
