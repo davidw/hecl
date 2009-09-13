@@ -21,8 +21,8 @@ limitations under the License.
 
 package org.hecl.net;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
-
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Operator;
@@ -36,11 +36,17 @@ public class Base64Cmd extends org.hecl.Operator {
 
 	switch(cmd) {
 	  case ENCODE:
-	    return new Thing(new String(Base64.encode(argv[1].toString().getBytes())));
-
+	      try {
+		  return new Thing(new String(Base64.encode(argv[1].toString().getBytes("ISO-8859-1"))));
+	      } catch (UnsupportedEncodingException e) {
+		  return new Thing(new String(Base64.encode(argv[1].toString().getBytes())));
+	      }
 	  case DECODE:
-	    return new Thing(new String(Base64.decode(argv[1].toString())));
-	    
+	      try {
+		  return new Thing(new String(Base64.decode(argv[1].toString(), "ISO-8859-1")));
+	      } catch (UnsupportedEncodingException e) {
+		  return new Thing(new String(Base64.decode(argv[1].toString())));
+	      }
 	  default:
 	    throw new HeclException("Unknown base64 command '"
 				    + argv[0].toString() + "' with code '"

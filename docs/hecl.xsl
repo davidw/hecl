@@ -52,5 +52,21 @@
 
   <xsl:variable name="arg.or.sep"> | </xsl:variable>
 
+  <xsl:variable name="mycounter" select="1000"/>
+
+  <xsl:template name="object.id">
+    <xsl:param name="object" select="."/>
+    <xsl:choose>
+      <xsl:when test="$object/@id">
+	<xsl:value-of select="$object/@id"/>
+      </xsl:when>
+      <xsl:when test="$object/@xml:id">
+	<xsl:value-of select="$object/@xml:id"/>
+      </xsl:when>
+      <xsl:otherwise>
+	id-<xsl:number level="multiple" count="*"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>

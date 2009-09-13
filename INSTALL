@@ -26,13 +26,13 @@ hello world
 
    java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
-5) Java ME versions - see docs/j2me.html#javame_tutorial
+5) Java ME versions - see docs/j2me.html
 
 6) Android - to compile and install the Android example, do:
 
-   ant installPackage
+   ant packageAndroid
 
    You will need to set up android/android.properties to point the
    right place, though.
 
-$Id$
+$Id: INSTALL 540 2008-01-11 14:21:48Z davidw $
