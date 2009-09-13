@@ -185,6 +185,7 @@ set plist {
     "Java Version" java.fullversion
     "MMAPI Snapshot Capable?" supports.video.capture
     "MMAPI Snapshot Format" video.snapshot.encodings
+    "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
     if {= [catch {set p [system.getproperty $p]}] 0} {
@@ -470,6 +471,7 @@ $SourceCode conf -commandaction [: {cmd main} {
 	    showmsg Errors $:err {done}
 	}
     } elseif {eq $cmd $:undo} {
+	global :src
 	$main conf -text $:src
     } elseif {eq $cmd $:errc} {
 	showmsg Errors $:err

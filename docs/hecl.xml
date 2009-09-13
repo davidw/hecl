@@ -19,8 +19,6 @@
    permissions and limitations under the License.
 -->
 
-<!-- $Id$ -->
-
 <article>
   <articleinfo>
     <title>
@@ -34,6 +32,7 @@
       <year>2006</year>
       <year>2007</year>
       <year>2008</year>
+      <year>2009</year>
       <holder>
 	David N. Welton
       </holder>
@@ -101,12 +100,10 @@
     </para>
 
     <para>
-      Contributions in the form of code, ideas, suggestions, or even
-      donations are welcome.  Hecl is still growing, so your thoughts
-      are important, and you can help shape the language's future.
-      You can download the latest code via Subversion from the
-      SourceForge project page: <ulink
-      url="http://sourceforge.net/projects/hecl/">http://sourceforge.net/projects/hecl/</ulink>.
+      Contributions in the form of code, ideas, suggestions, or even donations are welcome.  Hecl is
+      still growing, so your thoughts are important, and you can help shape the language's future.
+      You can download the latest code via git from the GitHub project page: <ulink
+      url="http://github.com/davidw/hecl/tree/master">http://github.com/davidw/hecl/tree/master</ulink>.
     </para>
 
     <para>
@@ -2511,6 +2508,47 @@ alone
       </refsect1>
     </refentry>
 
+    <refentry id="system_hasproperty">
+      <refnamediv>
+	<refname>system.hasproperty</refname>
+	<refpurpose>Check for existence of system properties</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>system.hasproperty</command>
+	  <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Query for the existence of system properties that can be retrieved with the
+	  <command>system.getproperty</command> command.
+	</para>
+      </refsect1>
+    </refentry>
+
+    <refentry id="system_getproperty">
+      <refnamediv>
+	<refname>system.getproperty</refname>
+	<refpurpose>Get system properties</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>system.getproperty</command>
+	  <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  Retrieve information about system properties.  Here is a list of some available system
+	  properties on Java ME platforms: <ulink
+	    url="http://developers.sun.com/mobility/midp/questions/properties/index.html"></ulink>
+	</para>
+      </refsect1>
+    </refentry>
+
     <refentry id="throw">
       <refnamediv>
 	<refname>throw</refname>
@@ -4145,14 +4183,12 @@ class HelloCmd implements Command {
 
 	<listitem>
 	  <para>
-	    Hecl itself. You can get it from the Sourceforge <ulink
-	      url="http://sourceforge.net/project/showfiles.php?group_id=122383">download
-	      page</ulink>.
+	    Hecl itself. You can get it from the <ulink
+	      url="http://github.com/davidw/hecl/tree/master">GitHub project page</ulink>.
 	    <note>
 	      <para>
 		Hecl is always improving, so you should also consider checking out Hecl directly
-		from subversion: <userinput>svn co
-		https://hecl.svn.sourceforge.net/svnroot/hecl/trunk/hecl hecl</userinput>
+		from git: <userinput>git clone git://github.com/davidw/hecl.git</userinput>
 	      </para>
 	    </note>
 	  </para>
@@ -6018,7 +6054,7 @@ $form setcurrent
 	  <title>Example</title>
 	  <para>
 	    See the example script in the midp20/ directory.  <ulink
-	      url="http://hecl.svn.sourceforge.net/viewvc/hecl/trunk/hecl/midp20/script.hcl?view=markup"></ulink>
+	      url="http://github.com/davidw/hecl/blob/66bbb4890953a97e6a2880d19095d5da2336ba57/midp20/script.hcl"></ulink>
 	  </para>
 	</refsect1>
       </refentry>
@@ -7195,6 +7231,195 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	  </para>
 	</refsect1>
       </refentry>
+
+      <refentry id="midlet_exit">
+	<refnamediv>
+	  <refname>midlet.exit</refname>
+	  <refpurpose>Exit from the Midetl</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.exit</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title> <para>Exit from the current Midlet by calling
+	  <methodname>notifyDestroyed</methodname></para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_pause">
+	<refnamediv>
+	  <refname>midlet.pause</refname>
+	  <refpurpose>Pause the current midlet</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.pause</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Pause the current midlet by calling the <methodname>notifyPaused</methodname> method.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_resume">
+	<refnamediv>
+	  <refname>midlet.resume</refname>
+	  <refpurpose>Resume execution of the current midlet</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.resume</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Attempts to resume execution of the midlet by calling the
+	    <methodname>resumeRequest</methodname> method.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_checkpermissions">
+	<refnamediv>
+	  <refname>midlet.checkpermissions</refname>
+	  <refpurpose>Query permission information</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.checkpermissions</command>
+	    <arg choice="req"><replaceable>permission_name</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    This command returns information about whether a given permission has been granted to
+	    the midlet.  Quoting from the Java documentation:
+	  </para>
+	  <blockquote>
+	    Get the status of the specified permission. If no API on the device defines the specific
+	    permission requested then it must be reported as denied. If the status of the permission
+	    is not known because it might require a user interaction then it should be reported as
+	    unknown.
+	  </blockquote>
+	  <para>
+	    The command returns 0 if the permission is denied; 1 if the permission is allowed, and
+	    -1 if the status is unknown
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+midlet.checkpermissions "javax.microedition.io.Connector.file.read"
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_getappproperty">
+	<refnamediv>
+	  <refname>midlet.getappproperty</refname>
+	  <refpurpose>Get application properties</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.getappproperty</command>
+	    <arg choice="req"><replaceable>propertyname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Lets the midlet retrieve application properties, as defined in the .jad file.
+	  </para>
+	  <para>
+	    See also: <xref linkend="system_getproperty">system.getproperty</xref>
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_platformrequest">
+	<refnamediv>
+	  <refname>midlet.platformrequest</refname>
+	  <refpurpose>Perform platform-specific actions</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.platformrequest</command>
+	    <arg choice="req"><replaceable>url</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    From the Javadocs:
+	  </para>
+	  <blockquote>
+	    <para>Requests that the device handle (for example, display or install) the indicated URL.</para>
+
+	    <para>If the platform has the appropriate capabilities and resources available, it
+	    SHOULD bring the appropriate application to the foreground and let the user interact
+	    with the content, while keeping the MIDlet suite running in the background. If the
+	    platform does not have appropriate capabilities or resources available, it MAY wait to
+	    handle the URL request until after the MIDlet suite exits. In this case, when the
+	    requesting MIDlet suite exits, the platform MUST then bring the appropriate application
+	    (if one exists) to the foreground to let the user interact with the content.</para>
+	  </blockquote>
+	  <para>
+	    In other words, depending on the device, you can launch applications with
+	    midlet.platformrequest.  For example:
+	  </para>
+	  <programlisting>
+# Make a phone call
+midlet.platformrequest "tel:+393488866859"
+# Start the sms sending application
+midlet.platformrequest "sms:+393488866859"
+# Open a web page
+midlet.platformrequest "http://www.hecl.org"
+# Install the jad/jar
+midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
+	  </programlisting>
+
+	  <note>
+	    There is not much standard about this command.  It may or may not support different url
+	    types on different phones.  Making phone calls with "tel:" URL's should always work.
+	    Also, keep in mind that on some devices, launching an external application may terminate
+	    the currently running midlet.
+	  </note>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_resourceasstring">
+	<refnamediv>
+	  <refname>midlet.resourceasstring</refname>
+	  <refpurpose>Get a resource file as a string</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.resourceasstring</command>
+	    <arg choice="req"><replaceable>resourcename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Given a resource <option><replaceable>resourcename</replaceable></option>, returns it as
+	    a string.  This could be used, for instance, to load additional Hecl files.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>
+eval [midlet.resourceasstring "./more_commands.hcl"]
+	  </programlisting>
+	</refsect1>
+      </refentry>
+
 
     </section>
 

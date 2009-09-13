@@ -8,8 +8,8 @@ it's better than nothing.
 Building Hecl
 -------------
 
-ant installPackage builds Hecl and sends it to the running Android
-emulator.
+ant android-install (or android-reinstall) builds Hecl and sends it to
+the running Android emulator.
 
 Editing the script
 ------------------
