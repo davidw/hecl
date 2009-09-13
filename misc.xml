@@ -16,6 +16,8 @@
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${wtk.home}/lib/midpapi20.jar"/>
 
+      <arg value="-notimestamp"/>
+
       <sourcepath>
 	<pathelement path="build/j2se/pre/core/"/>
       </sourcepath>
