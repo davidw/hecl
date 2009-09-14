@@ -159,6 +159,11 @@ AddSample SMS {
 midlet.platformrequest "sms:+393488866859"
 }
 
+AddSample "Vibrate / Backlight" {
+midlet.vibrate 2000
+midlet.flashbacklight 2000
+}
+
 AddSample TextBox {
 set textbox [/txtbox -text "Hello world" -commandaction [: {cmd textbox} {done}]]
 $textbox addcommand [/cmd -label Exit -longlabel Exit -type exit]
@@ -484,6 +489,7 @@ $SourceCode conf -commandaction [: {cmd main} {
 	    showmsg Errors $:err {done}
 	}
     } elseif {eq $cmd $:undo} {
+	global :src
 	$main conf -text $:src
     } elseif {eq $cmd $:errc} {
 	showmsg Errors $:err

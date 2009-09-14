@@ -75,19 +75,6 @@
     description="Compile J2SE Hecl http support"
     depends="initCompile,compileCore">
     <mkdir dir="${j2se.build}"/>
-    <!--
-    <mkdir dir="${j2se.pre}/http"/>
-    <wtkpreprocess srcdir="http" destdir="${j2se.pre}/http"
-      symbols="${j2se.defines}"/>
-    <wtkpreprocess srcdir="http_standard" destdir="${j2se.pre}/http"
-      symbols="${j2se.defines}"/>
-    <javac srcdir="${j2se.pre}/http"
-      destdir="${j2se.build}"
-      debug="${hecldebug}">
-      <classpath refid="j2se.coreclasspath"/>
-      <classpath refid="classpath"/>
-    </javac>
-    -->
     <mkdir dir="${j2se.pre}/net"/>
     <wtkpreprocess srcdir="net" destdir="${j2se.pre}/net"
       symbols="${j2se.defines}"/>

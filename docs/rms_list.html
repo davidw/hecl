@@ -1,13 +1,13 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>rms.list</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="recordstore_commands.html" title="RecordStore"><link rel="prev" href="recordstore_commands.html" title="RecordStore"><link rel="next" href="rms_size.html" title="rms.size"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">rms.list</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="recordstore_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">RecordStore</th><td width="20%" align="right"> <a accesskey="n" href="rms_size.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="rms_list"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>rms.list &#8212; 
 	    List available record store names, or id's for a
-	    name.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rms.list</code>  [<em class="replaceable"><code>rsname</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id2686260"></a><h2>Description</h2><p>
+	    name.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">rms.list</code>  [<em class="replaceable"><code>rsname</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id-1.6.6.3.3"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>rms.list</strong></span> command, when called
 	    without arguments, returns a list of names of the
 	    available record stores that have already been created.
 	    When called with an <code class="option"><em class="replaceable"><code>record store
 	    name</code></em></code> returns the list of id's that
 	    are currently in use for that record store.
-	  </p></div><div class="refsect1" lang="en"><a name="id2686284"></a><h2>Example</h2><pre class="programlisting">
+	  </p></div><div class="refsect1" lang="en"><a name="id-1.6.6.3.4"></a><h2>Example</h2><pre class="programlisting">
 foreach name [rs.list] {
     puts "Listing of id's for $name :"
     puts [rs.list $name]

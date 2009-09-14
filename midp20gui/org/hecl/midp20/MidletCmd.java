@@ -61,6 +61,10 @@ public class MidletCmd extends Operator {
     protected static final int CONTENTTYPES = 21;
     protected static final int PROTOCOLS = 22;
 
+    protected static final int VIBRATE = 30;
+    protected static final int FLASHBACKLIGHT = 40;
+
+
     public static MIDlet midlet() {
 	return themidlet;
     }
@@ -210,6 +214,13 @@ public class MidletCmd extends Operator {
 	  case PROTOCOLS:
 	    return ListThing.create(tov(Manager.getSupportedContentTypes(
 					    argv[1].toString())));
+          case VIBRATE:
+	      return IntThing.create(getDisplay().vibrate(
+					 IntThing.get(argv[1])));
+          case FLASHBACKLIGHT:
+	      return IntThing.create(getDisplay().flashBacklight(
+					 IntThing.get(argv[1])));
+
 //#endif
 
 	  default:
@@ -258,6 +269,10 @@ public class MidletCmd extends Operator {
 	    cmdtable.put("midlet.getappproperty", new MidletCmd(GETPROP,1,1));
 	    cmdtable.put("midlet.hasappproperty", new MidletCmd(HASPROP,1,1));
 	    cmdtable.put("midlet.resourceasstring", new MidletCmd(RESASSTRING,1,2));
+
+	    cmdtable.put("midlet.vibrate", new MidletCmd(VIBRATE,1,1));
+	    cmdtable.put("midlet.flashbacklight", new MidletCmd(FLASHBACKLIGHT,1,1));
+
 	    cmdtable.put("manager.playtone", new MidletCmd(PLAYTONE,3,3));
 	    cmdtable.put("manager.contentypes", new MidletCmd(CONTENTTYPES,1,1));
 	    cmdtable.put("manager.protocols", new MidletCmd(PROTOCOLS,1,1));

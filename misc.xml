@@ -16,14 +16,17 @@
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${wtk.home}/lib/midpapi20.jar"/>
 
+      <arg value="-notimestamp"/>
+
       <sourcepath>
 	<pathelement path="build/j2se/pre/core/"/>
       </sourcepath>
       <sourcepath>
 	<pathelement path="files"/>
       </sourcepath>
+
       <sourcepath>
-	<pathelement path="http"/>
+	<pathelement path="build/j2se/pre/net"/>
       </sourcepath>
       <sourcepath>
 	<pathelement path="heclbuilder"/>
