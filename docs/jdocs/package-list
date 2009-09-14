@@ -1,7 +1,6 @@
 org.hecl
 org.hecl.files
 org.hecl.heclbuilder
-org.hecl.http
 org.hecl.jarhack
 org.hecl.java
 org.hecl.midp20

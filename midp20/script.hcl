@@ -159,6 +159,11 @@ AddSample SMS {
 midlet.platformrequest "sms:+393488866859"
 }
 
+AddSample "Vibrate / Backlight" {
+midlet.vibrate 2000
+midlet.flashbacklight 2000
+}
+
 AddSample TextBox {
 set textbox [/txtbox -text "Hello world" -commandaction [: {cmd textbox} {done}]]
 $textbox addcommand [/cmd -label Exit -longlabel Exit -type exit]
@@ -195,9 +200,9 @@ foreach {l p} $plist {
     }
 }
 
-$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
+$form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
 
-$form append [/txt -label "File Access" -text [midlet.checkpermissions "microedition.io.Connector.file.read"] -uneditable 1]
+$form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.microedition.io.Connector.file.read"] -uneditable 1]
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
