@@ -14,11 +14,10 @@
       </p><div class="procedure"><ol type="1"><li><p>
 	    To work with Android, of course the first thing you need to do is to get the SDK from
 	    Google: <a class="ulink" href="http://code.google.com/android/download.html" target="_top">http://code.google.com/android/download.html</a>.  On my system, I
-	    installed it in here: <code class="filename">/opt/android-sdk_m5-rc15_linux-x86/</code>.  Next,
-	    edit <code class="filename">android/android.properties</code> to point to the SDK, and the tools
-	    it needs to work (usually the <code class="filename">tools</code> directory within the SDK
-	    directory).
-      </p></li><li><p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
+	    installed it in here: <code class="filename">/opt/android-sdk/</code>.
+	  </p></li><li><p>Next, edit <code class="filename">android/android.properties</code> to point to the SDK, and
+	    the tools it needs to work (usually the <code class="filename">tools</code> directory within the
+	    SDK directory).</p></li><li><p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
 	  world":</p><pre class="programlisting">set context [activity]
 set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
@@ -31,12 +30,23 @@ $layout addview $tv
 </pre><p>
 	    To see more code, have a look at <code class="filename">android/res/raw/script.hcl</code>, which
 	    has examples of many different widgets.
-	  </p></li><li><p>You won't need it right away, but you might as well start the emulator:</p><pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/emulator &amp;</pre></li><li><p>Now we create the new <code class="filename">Hello.apk</code> file.
-	  </p><pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk_m5-rc15_linux-x86/ -class Hello -label Hello -package hello.world -script hello.hcl</pre><p>
+	  </p></li><li><p>You won't need it right away, but you might as well start the emulator:</p><pre class="programlisting">/opt/android-sdk/tools/emulator -avd your_avd</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+	      You need to create an "AVD" before launching the emulator.  This is documented here:
+		<a class="ulink" href="http://developer.android.com/guide/developing/tools/emulator.html#avds" target="_top">http://developer.android.com/guide/developing/tools/emulator.html#avds</a>
+	    </p></td></tr></table></div></li><li><p>Now we create the new <code class="filename">Hello.apk</code> file.
+	  </p><pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It's important to point out that the directory used with the
+	      <code class="option">-android</code> option is a subdirectory of the SDK:
+	      <code class="filename">/opt/android-sdk/platforms/android-1.5/</code>, rather than the top
+	      level.</p></td></tr></table></div><p>
 	    The command line options are as follows:
-	  </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">-android</code>: The location of the Android SDK</td></tr><tr><td><code class="option">-class</code>: The class name to utilize for the new .apk.</td></tr><tr><td><code class="option">-label</code>: The user-visible name of the package.</td></tr><tr><td><code class="option">-package</code>: The Java package to use.  You can pretty much use any
-	    name you like, it doesn't matter much.</td></tr><tr><td><code class="option">-script</code>: The location of the script you want to use in the new .apk.</td></tr></table></li><li><p>Once you have successfully created a new <code class="filename">Hello.apk</code>, you can
-	  send it to the emulator:
+	  </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">-android</code>: The location of the Android SDK.
+	    </td></tr><tr><td><code class="option">-class</code>: The class name to utilize for the new .apk.</td></tr><tr><td><code class="option">-label</code>: The user-visible name of the package.</td></tr><tr><td><code class="option">-package</code>: The Java package to use.  You can pretty much use any
+	    name you like, it doesn't matter much.</td></tr><tr><td><code class="option">-script</code>: The location of the script you want to use in the new .apk.</td></tr></table></li><li><p>
+	    We now have a <code class="filename">Hecl.apk</code> file.  We need to sign it with the debug
+	    key:
+	    </p><pre class="programlisting">keytool -genkeypair -keystore debug.keystore -keypass android -alias androiddebugkey -storepass android -dname "CN=Android Debug,O=Android,C=US"</pre><p>
+	    </p><pre class="programlisting">jarsigner -keystore debug.keystore -keypass android -storepass android -verbose Hello.apk androiddebugkey</pre><p>
+	  </p></li><li><p>At this piont, we can send the signed file, <code class="filename">Hello.apk</code> to the emulator:
 	  </p><pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</pre></li></ol></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.%0A%09id-1.9.3.1.1" href="#%0A%09id-1.9.3.1.1" class="para">1</a>] </sup>
 	  Android doesn't actually run Java, it just compiles code written in Java into bytecodes for
 	  the Dalvik engine.
