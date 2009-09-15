@@ -19,7 +19,8 @@
 	    it needs to work (usually the <code class="filename">tools</code> directory within the SDK
 	    directory).
       </p></li><li><p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
-	  world":</p><pre class="programlisting">set layout [linearlayout -new $context]
+	  world":</p><pre class="programlisting">set context [activity]
+set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 

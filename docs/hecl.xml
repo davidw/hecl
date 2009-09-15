@@ -7571,7 +7571,8 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	<step>
 	  <para>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
 	  world":</para>
-	  <programlisting>set layout [linearlayout -new $context]
+	  <programlisting>set context [activity]
+set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
