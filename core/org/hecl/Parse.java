@@ -44,13 +44,6 @@ public class Parse {
 
     protected boolean parselist = false;
 
-//#ifdef j2se
-    protected static final char eol[] =
-	System.getProperty("line.separator").toCharArray();
-//#else
-    protected static final char eol[] = { '\n' };
-//#endif
-
     /**
      * The <code>more</code> method returns a boolean value indicating whether
      * there is more text to be parsed or not.
@@ -592,10 +585,10 @@ public class Parse {
 	    appendToCurrent((char)0x0d);
 	    break;
 	  case 'n':
-	    appendToCurrent(eol[0]);
+	    appendToCurrent(Interp.eol[0]);
 //#ifdef j2se
-	    if (eol.length > 1) {
-		appendToCurrent(eol[1]);
+	    if (Interp.eol.length > 1) {
+		appendToCurrent(Interp.eol[1]);
 	    }
 //#endif
 	    break;

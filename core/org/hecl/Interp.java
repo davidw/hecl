@@ -117,7 +117,18 @@ public class Interp extends Thread/*implements Runnable*/ {
     protected long maxblocktime = 0;	    // block time in milliseconds
     protected Vector ci = new Vector();
     protected Hashtable classcmdcache = new Hashtable();
-    
+
+    /**
+     * <code>eol</code> is the end-of-line character or characters.
+     *
+     */
+//#ifdef j2se
+    public static final char eol[] =
+	System.getProperty("line.separator").toCharArray();
+//#else
+    public static final char eol[] = { '\n' };
+//#endif
+
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
      * variable hashtables, a stack, and an error stack.
