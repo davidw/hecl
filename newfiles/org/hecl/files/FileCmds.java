@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.hecl.DoubleThing;
+import org.hecl.HashThing;
 import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.IntThing;
@@ -40,7 +41,13 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-
+/**
+ * The <code>FileCmds</code> class implements various file handling
+ * commands, but not actual opening/closing of files.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class FileCmds extends Operator {
     public static final int READABLE = 10;
     public static final int WRITABLE = 20;
@@ -65,6 +72,8 @@ public class FileCmds extends Operator {
     public static final int TRUNCATE = 140;
 
     public static final int LISTROOTS = 150;
+
+    public static final int DU = 160;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String fname = null;
@@ -151,6 +160,28 @@ public class FileCmds extends Operator {
 		    }
 		    return ListThing.create(v);
 		}
+
+		case MKDIR: {
+		    fconn.mkdir();
+		    return new Thing(fname);
+		}
+
+		case RENAME: {
+		    fconn.rename(argv[2].toString());
+		    return argv[2];
+		}
+
+		case TRUNCATE: {
+		    fconn.truncate(LongThing.get(argv[2]));
+		}
+
+		case DU: {
+		    Hashtable du = new Hashtable();
+		    du.put("total", LongThing.create(fconn.totalSize()));
+		    du.put("used", LongThing.create(fconn.usedSize()));
+		    return HashThing.create(du);
+		}
+
 		default:
 		    throw new HeclException("Unknown file command '"
 					    + argv[0].toString() + "' with code '"
@@ -190,8 +221,13 @@ public class FileCmds extends Operator {
 	    cmdtable.put("file.isdirectory", new FileCmds(ISDIRECTORY,1,1));
 	    cmdtable.put("file.isopen", new FileCmds(ISOPEN,1,1));
 
+	    cmdtable.put("file.mkdir", new FileCmds(MKDIR,1,1));
+	    cmdtable.put("file.truncate", new FileCmds(TRUNCATE,1,1));
+	    cmdtable.put("file.rename", new FileCmds(RENAME,2,2));
+
 	    cmdtable.put("file.list", new FileCmds(LIST,1,1));
 	    cmdtable.put("file.devs", new FileCmds(LISTROOTS,0,0));
+	    cmdtable.put("file.du", new FileCmds(DU,1,1));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create file commands.");
