@@ -19,10 +19,14 @@
 
 package org.hecl.files;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 //#if javaversion >= 1.5
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 //#else
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
@@ -47,12 +51,13 @@ import org.hecl.Thing;
 
 /**
  * The <code>FileCmds</code> class implements various file handling
- * commands, but not actual opening/closing of files.
+ * commands.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
 public class FileCmds extends Operator {
+    public static final int OPEN = 1;
     public static final int READABLE = 10;
     public static final int WRITABLE = 20;
     public static final int HIDDEN = 30;
@@ -123,7 +128,9 @@ public class FileCmds extends Operator {
 		return interp.currentFile;
 	    }
 	    case CD: {
+//#if javaversion >= 1.5
 		return new Thing(System.setProperty("user.dir", argv[1].toString()));
+//#endif
 	    }
 	}
 
@@ -140,7 +147,7 @@ public class FileCmds extends Operator {
 	if (cmd != LISTROOTS) {
 	    fname = StringThing.get(argv[1]);
 	    try {
-		fconn = (FileConnection)Connector.open(fname);
+ 		fconn = (FileConnection)Connector.open(fname);
 	    } catch (IOException e) {
 		throw new HeclException("IO Exception in " +
 					argv[0].toString() + ": " + e.toString());
@@ -150,6 +157,27 @@ public class FileCmds extends Operator {
 
 //#if javaversion >= 1.5
 	switch(cmd) {
+	    case OPEN: {
+		boolean write = false;
+		if (argv.length == 3) {
+		    String perms = argv[2].toString();
+		    if (perms.indexOf('w') > -1) {
+			write = true;
+		    }
+		}
+		Object retval;
+		try {
+		    if (write) {
+			retval = new DataOutputStream(new FileOutputStream(new File(fname)));
+		    } else {
+			retval = new DataInputStream(new FileInputStream(new File(fname)));
+		    }
+		} catch (IOException ioe) {
+		    throw new HeclException("Error opening '" + fname + "' :" + ioe.toString());
+		}
+		return ObjectThing.create(retval);
+	    }
+
 	    case READABLE:
 	    {
 /* 		    if (argv.length == 3) {
@@ -298,6 +326,23 @@ public class FileCmds extends Operator {
 
 	try {
 	    switch(cmd) {
+		case OPEN: {
+		    boolean write = false;
+		    if (argv.length == 3) {
+			String perms = argv[2].toString();
+			if (perms.indexOf('w') > -1) {
+			    write = true;
+			}
+		    }
+		    Object retval;
+		    if (write) {
+			retval = fconn.openDataOutputStream();
+		    } else {
+			retval = fconn.openDataInputStream();
+		    }
+		    return ObjectThing.create(retval);
+		}
+
 		case READABLE:
 		{
 		    if (argv.length == 3) {
@@ -394,11 +439,13 @@ public class FileCmds extends Operator {
 		    Vector reversed = new Vector();
 
 		    reversed.addElement(fconn.getName());
-		    FileConnection path = fconn.getPath();
+		    String path = fconn.getPath();
+		    FileConnection parent = null;
 
 		    while (path != null) {
-			reversed.addElement(path.getName());
-			path = path.getPath();
+			parent = (FileConnection)Connector.open(path);
+			reversed.addElement(parent.getName());
+			path = parent.getPath();
 		    }
 
 		    /* Ok, now we correct the order of the list by
@@ -439,6 +486,7 @@ public class FileCmds extends Operator {
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
+	    cmdtable.put("open", new FileCmds(OPEN,1,2));
 	    cmdtable.put("file.readable", new FileCmds(READABLE,1,2));
 	    cmdtable.put("file.writable", new FileCmds(WRITABLE,1,2));
 	    cmdtable.put("file.hidden", new FileCmds(HIDDEN,1,2));

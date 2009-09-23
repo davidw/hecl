@@ -35,7 +35,7 @@ import org.hecl.Interp;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
-class HeclStreamCmds implements ClassCommand {
+public class HeclStreamCmds implements ClassCommand {
 
     private boolean is_input_flag = false;
 
@@ -108,5 +108,4 @@ class HeclStreamCmds implements ClassCommand {
 	interp.removeClassCmd(DataInputStream.class);
 	interp.removeClassCmd(DataOutputStream.class);
     }
-
 }

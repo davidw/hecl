@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 //#else
 import javax.microedition.io.Connector;
+import javax.microedition.io.file.FileConnection;
 //#endif
 
 import java.io.DataInputStream;
@@ -47,7 +48,7 @@ public class HeclFileUtils {
     }
 //#else
     public static Thing readFile(String filename) throws HeclException, IOException {
-	fconn = (FileConnection)Connector.open(filename);
+	FileConnection fconn = (FileConnection)Connector.open(filename);
 	return readFileFromDis(fconn.openDataInputStream());
     }
 //#endif
