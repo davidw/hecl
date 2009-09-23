@@ -46,17 +46,17 @@
   <target name="compileFiles"
     depends="initCompile,compileCore"
     description="Compile Hecl files support">
-    <javac srcdir="files"
+    <wtkpreprocess srcdir="newfiles" destdir="${j2se.pre}/newfiles" symbols="${j2se.defines}"/>
+    <javac srcdir="${j2se.pre}/newfiles"
       destdir="${j2se.build}"
-      debug="${hecldebug}"
-      >
+      debug="${hecldebug}">
       <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
 
   <target name="compileLoad"
-    depends="initCompile,compileCore"
+    depends="initCompile,compileCore,compileFiles"
     description="Compile Hecl load (classloader) support">
     <mkdir dir="${j2se.build}/load"/>
     <mkdir dir="${j2se.pre}"/>
@@ -101,7 +101,7 @@
 
   <target name="compileCommandline"
     description="Compile Hecl command line support"
-    depends="initCompile,compileCore,compileFiles,compileHttp,compileLoad,compileJava">
+    depends="initCompile,compileCore,compileHttp,compileLoad,compileJava,compileFiles">
     <javac srcdir="commandline"
       destdir="${j2se.build}"
       debug="${hecldebug}">

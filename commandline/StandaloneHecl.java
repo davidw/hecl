@@ -19,7 +19,6 @@ import org.hecl.Thing;
 import org.hecl.load.LoadCmd;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
-import org.hecl.files.HeclFile;
 
 /**
  * <code>StandaloneHecl</code> is an example of how to use Hecl to run
@@ -35,8 +34,6 @@ public class StandaloneHecl {
     public static void main(String[] args) {
         try {
             Interp interp = new Interp();
-	    new HeclFile().loadModule(interp);
-	    //new HttpModule().loadModule(interp);
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
 	    LoadCmd.load(interp);
