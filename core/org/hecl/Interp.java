@@ -129,6 +129,18 @@ public class Interp extends Thread/*implements Runnable*/ {
     public static final char eol[] = { '\n' };
 //#endif
 
+//#if files || j2se
+    /**
+     * <code>fileseparator</code> is the file separator, such as "/".
+     *
+     */
+    public static final String fileseparator =
+	System.getProperty("file.separator");
+
+    public Thing currentFile = new Thing("");
+
+//#endif
+
     /**
      * Creates a new <code>Interp</code> instance, initializing command and
      * variable hashtables, a stack, and an error stack.
