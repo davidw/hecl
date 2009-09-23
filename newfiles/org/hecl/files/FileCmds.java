@@ -79,16 +79,76 @@ public class FileCmds extends Operator {
 
     public static final int DU = 160;
 
-//#if javaversion >= 1.5
+    public static final int FILESPLIT = 170;
+    public static final int FILEJOIN = 180;
+
+    public static final int SOURCE = 190;
+    public static final int CURRENTFILE = 200;
+    public static final int CD = 210;
+
+
     public Thing operate(int cmd, Interp interp, Thing[] argv)
 	throws HeclException {
-	File tfile = null;
 	String fname = null;
+	/* These commands are platform agnostic - we'll handle them first. */
+
+	switch(cmd) {
+	    /* Note that FILESPLIT is much more platform dependent, so
+	     * has been moved to that section of code.  */
+	    case FILEJOIN: {
+		Vector filenamelist = ListThing.get(argv[1]);
+		/* takes a list like {a b c} and converts it to a
+		   filename such as a/b/c. */
+		StringBuffer res = new StringBuffer("");
+		boolean first = true;
+		for (int i = 0; i < filenamelist.size(); i++) {
+		    if (first == false) {
+			res.append(Interp.fileseparator);
+		    } else {
+			/* FIXME - broken on windows */
+			if (!filenamelist.elementAt(i).toString().equals("/")) {
+			    first = false;
+			}
+		    }
+		    res.append(filenamelist.elementAt(i).toString());
+		}
+		return new Thing(res.toString());
+	    }
+
+	    case SOURCE: {
+		HeclFileUtils.sourceFile(interp, argv[1].toString());
+		return null;
+	    }
+	    case CURRENTFILE: {
+		return interp.currentFile;
+	    }
+	    case CD: {
+		return new Thing(System.setProperty("user.dir", argv[1].toString()));
+	    }
+	}
+
+
+//#if javaversion >= 1.5
+	File tfile = null;
 	if (cmd != LISTROOTS) {
 	    fname = StringThing.get(argv[1]);
 	    tfile = new File(fname);
 	}
+//#else
+	FileConnection fconn = null;
 
+	if (cmd != LISTROOTS) {
+	    fname = StringThing.get(argv[1]);
+	    try {
+		fconn = (FileConnection)Connector.open(fname);
+	    } catch (IOException e) {
+		throw new HeclException("IO Exception in " +
+					argv[0].toString() + ": " + e.toString());
+	    }
+	}
+//#endif
+
+//#if javaversion >= 1.5
 	switch(cmd) {
 	    case READABLE:
 	    {
@@ -187,27 +247,54 @@ public class FileCmds extends Operator {
 //#endif
 	    }
 
+	    case FILESPLIT: {
+		Vector resultv = new Vector();
+		Vector reversed = new Vector();
+		File fn = new File(fname);
+		File pf = fn.getParentFile();
+
+		String fns;
+		String pfs;
+
+		/* Walk through all elements, compare the element with
+		 * its parent, and tack the difference onto the
+		 * Vector.  */
+		String ss = null;
+		while (pf != null) {
+		    fns = fn.toString();
+		    pfs = pf.toString();
+
+		    ss = fns.substring(pfs.length(), fns.length());
+		    /* The 'diff' operation leaves path components
+		     * with a leading slash.  Remove it. */
+		    if (ss.charAt(0) == File.separatorChar) {
+			ss = ss.substring(1, ss.length());
+		    }
+		    reversed.addElement(new Thing(ss));
+		    fn = pf;
+		    pf = pf.getParentFile();
+		}
+		reversed.addElement(new Thing(fn.toString()));
+
+		/* Ok, now we correct the order of the list by
+		 * reversing it. */
+		int j = 0;
+		for (int i = reversed.size() - 1; i >= 0 ; i --) {
+		    Thing t = (Thing)reversed.elementAt(i);
+		    resultv.addElement(t);
+		    j ++;
+		}
+
+		return ListThing.create(resultv);
+	    }
+
 	    default:
 		throw new HeclException("Unknown file command '"
 					+ argv[0].toString() + "' with code '"
 					+ cmd + "'.");
 	}
-
-    }
 //#else
-    public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
-	String fname = null;
-	FileConnection fconn = null;
 
-	if (cmd != LISTROOTS) {
-	    fname = StringThing.get(argv[1]);
-	    try {
-		fconn = (FileConnection)Connector.open(fname);
-	    } catch (IOException e) {
-		throw new HeclException("IO Exception in " +
-					argv[0].toString() + ": " + e.toString());
-	    }
-	}
 
 	try {
 	    switch(cmd) {
@@ -302,6 +389,28 @@ public class FileCmds extends Operator {
 		    return HashThing.create(du);
 		}
 
+		case FILESPLIT: {
+		    Vector resultv = new Vector();
+		    Vector reversed = new Vector();
+
+		    reversed.addElement(fconn.getName());
+		    FileConnection path = fconn.getPath();
+
+		    while (path != null) {
+			reversed.addElement(path.getName());
+			path = path.getPath();
+		    }
+
+		    /* Ok, now we correct the order of the list by
+		     * reversing it. */
+		    for (int i = reversed.size() - 1; i >= 0 ; i --) {
+			Thing t = (Thing)reversed.elementAt(i);
+			resultv.addElement(t);
+		    }
+
+		    return ListThing.create(resultv);
+		}
+
 		default:
 		    throw new HeclException("Unknown file command '"
 					    + argv[0].toString() + "' with code '"
@@ -311,8 +420,8 @@ public class FileCmds extends Operator {
 	    throw new HeclException("IO Exception in " +
 				    argv[0].toString() + ": " + e.toString());
 	}
-    }
 //#endif
+    }
 
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip,cmdtable);
@@ -349,6 +458,14 @@ public class FileCmds extends Operator {
 	    cmdtable.put("file.list", new FileCmds(LIST,1,1));
 	    cmdtable.put("file.devs", new FileCmds(LISTROOTS,0,0));
 	    cmdtable.put("file.du", new FileCmds(DU,1,1));
+
+	    cmdtable.put("file.split", new FileCmds(FILESPLIT,1,1));
+	    cmdtable.put("file.join", new FileCmds(FILEJOIN,1,1));
+
+	    cmdtable.put("source", new FileCmds(SOURCE,1,1));
+	    cmdtable.put("file.current", new FileCmds(CURRENTFILE,0,0));
+	    cmdtable.put("file.cd", new FileCmds(CD,1,1));
+
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create file commands.");

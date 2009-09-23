@@ -56,11 +56,16 @@ public class HeclFileUtils {
 	int bsize = 1024;
 	byte[] buf = new byte[bsize];
 	byte[] acc = null;
+	byte[] oldacc = null;
 	int len = 0;
 	int pos = 0;
 	int i = 1;
 	while ((len = dis.read(buf)) > -1) {
+	    oldacc = acc;
 	    acc = new byte[i * bsize];
+	    if (oldacc != null) {
+		System.arraycopy(oldacc, 0, acc, 0, (i-1) * bsize);
+	    }
 	    System.arraycopy(buf, 0, acc, pos, len);
 	    pos += len;
 	    i ++;
@@ -74,6 +79,9 @@ public class HeclFileUtils {
 
     public static void sourceFile(Interp interp, String filename)
 	throws HeclException {
+
+	interp.currentFile = new Thing(filename);
+
 	try {
 	    interp.eval(readFile(filename));
 	} catch (HeclException he) {
