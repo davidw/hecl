@@ -21,9 +21,13 @@ package org.hecl.files;
 
 import java.io.IOException;
 
+//#if javaversion >= 1.5
+import java.io.File;
+//#else
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
+//#endif
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -75,6 +79,122 @@ public class FileCmds extends Operator {
 
     public static final int DU = 160;
 
+//#if javaversion >= 1.5
+    public Thing operate(int cmd, Interp interp, Thing[] argv)
+	throws HeclException {
+	File tfile = null;
+	String fname = null;
+	if (cmd != LISTROOTS) {
+	    fname = StringThing.get(argv[1]);
+	    tfile = new File(fname);
+	}
+
+	switch(cmd) {
+	    case READABLE:
+	    {
+/* 		    if (argv.length == 3) {
+		    boolean readable = IntThing.get(argv[2]) == 1;
+		    fconn.setReadable(readable);
+		    }  */
+		return IntThing.create(tfile.canRead());
+	    }
+
+	    case WRITABLE:
+	    {
+/* 		    if (argv.length == 3) {
+		    boolean writable = IntThing.get(argv[2]) == 1;
+		    fconn.setWritable(writable);
+		    }  */
+		return IntThing.create(tfile.canWrite());
+	    }
+
+	    case HIDDEN:
+	    {
+/* 		    if (argv.length == 3) {
+		    boolean hidden = IntThing.get(argv[2]) == 1;
+		    fconn.setHidden(hidden);
+		    }  */
+		return IntThing.create(tfile.isHidden());
+	    }
+
+	    case EXISTS:
+	    {
+		return IntThing.create(tfile.exists());
+	    }
+
+	    case SIZE:
+	    {
+		return LongThing.create(tfile.length());
+	    }
+	    case BASENAME:
+	    {
+		return new Thing(tfile.getName());
+	    }
+	    case MTIME:
+	    {
+		return LongThing.create(tfile.lastModified());
+	    }
+	    case ISDIRECTORY:
+	    {
+		return IntThing.create(tfile.isDirectory());
+	    }
+
+	    case ISOPEN:
+	    {
+		throw new HeclException("not implemented");
+	    }
+
+	    case LIST: {
+		Vector v = new Vector();
+		String[] filenames = tfile.list();
+		for (int i = 0; i < filenames.length; i++) {
+		    v.addElement(new Thing(filenames[i]));
+		}
+		return ListThing.create(v);
+	    }
+
+	    case LISTROOTS: {
+		Vector v = new Vector();
+		File[] roots = File.listRoots();
+		for (int i = 0; i < roots.length; i++) {
+		    v.addElement(new Thing(roots[i].getName()));
+		}
+		return ListThing.create(v);
+	    }
+
+	    case MKDIR: {
+		tfile.mkdir();
+		return new Thing(fname);
+	    }
+
+	    case RENAME: {
+		tfile.renameTo(new File(argv[2].toString()));
+		return argv[2];
+	    }
+
+	    case TRUNCATE: {
+		throw new HeclException("not implemented");
+	    }
+
+	    case DU: {
+//#if javaversion >= 1.6
+		Hashtable du = new Hashtable();
+		du.put("total", LongThing.create(tfile.getTotalSpace()));
+		du.put("used", LongThing.create(tfile.getUsableSpace()));
+		return HashThing.create(du);
+//#else
+		throw new HeclException("not implemented");
+//#endif
+	    }
+
+	    default:
+		throw new HeclException("Unknown file command '"
+					+ argv[0].toString() + "' with code '"
+					+ cmd + "'.");
+	}
+
+    }
+//#else
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	String fname = null;
 	FileConnection fconn = null;
@@ -192,6 +312,7 @@ public class FileCmds extends Operator {
 				    argv[0].toString() + ": " + e.toString());
 	}
     }
+//#endif
 
     public static void load(Interp ip) throws HeclException {
 	Operator.load(ip,cmdtable);
