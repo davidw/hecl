@@ -323,7 +323,6 @@ public class FileCmds extends Operator {
 	}
 //#else
 
-
 	try {
 	    switch(cmd) {
 		case OPEN: {
@@ -435,27 +434,10 @@ public class FileCmds extends Operator {
 		}
 
 		case FILESPLIT: {
-		    Vector resultv = new Vector();
-		    Vector reversed = new Vector();
-
-		    reversed.addElement(fconn.getName());
-		    String path = fconn.getPath();
-		    FileConnection parent = null;
-
-		    while (path != null) {
-			parent = (FileConnection)Connector.open(path);
-			reversed.addElement(parent.getName());
-			path = parent.getPath();
-		    }
-
-		    /* Ok, now we correct the order of the list by
-		     * reversing it. */
-		    for (int i = reversed.size() - 1; i >= 0 ; i --) {
-			Thing t = (Thing)reversed.elementAt(i);
-			resultv.addElement(t);
-		    }
-
-		    return ListThing.create(resultv);
+		    /* This isn't very good, but it's basically the
+		     * best we can do with what's available in JSR
+		     * 75. */
+		    return ListThing.stringSplit(fname, Interp.fileseparator);
 		}
 
 		default:
