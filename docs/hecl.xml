@@ -4554,8 +4554,8 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
 	commands, and is a complete programming language that can do some interesting and dynamic
 	things. If you're curious, the best way to learn more is to keep reading the documentation,
-	and sign up for the <ulink url="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Hecl
-	mailing list</ulink> on SourceForge.
+	and sign up for the <ulink url="http://groups.google.com/group/hecl">Hecl Google
+	Group</ulink>, which can be accessed either as a web forum or as a mailing list.
       </para>
 
     </section>
