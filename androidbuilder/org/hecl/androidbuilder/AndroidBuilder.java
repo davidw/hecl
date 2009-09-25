@@ -1,4 +1,4 @@
-/* Copyright 2008 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2008-2009 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -208,8 +208,8 @@ class AndroidBuilder {
 		       new FileOutputStream(iconfile));
 
 	/* Now, we run aapt to generate a new, compressed .xml file... */
-	runProcess(aapt, "package", "-f", "-c", "-M", manifest,
-		   "-S", resdir, "-I", androidjar, tmppackage);
+	runProcess(aapt, "package", "-f", "-M", manifest,
+		   "-S", resdir, "-I", androidjar, "-F", tmppackage);
 
 	/* Then we extract it, overwriting AndroidManifest.xml*/
 	ZipFile zipfile = new ZipFile(tmppackage);
@@ -276,7 +276,7 @@ class AndroidBuilder {
 	/* Run the dx program to turn them into Android dex stuff. */
 	String dexfile = dirname + "/" + "classes.dex";
 	runProcess(dx, "-JXmx384M", "--dex", "--output=" + dexfile,
-		   "--locals=full",  "--positions=lines", hecljar);
+		   "--positions=lines", hecljar);
 
 	/* Replace the apk's AndroidManifest.xml and classes.dex */
 	runProcess("zip", "-j", "-r", heclapk, manifest);
