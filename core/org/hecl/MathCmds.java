@@ -306,7 +306,7 @@ public class MathCmds extends org.hecl.Operator {
 	    throw new HeclException("Integral argument required.");
 //#endif
 
-//#ifdef ant:j2se
+//#ifdef j2se
 	  case POW:
 	    return DoubleThing.create(Math.pow(a.doubleValue(), b.doubleValue()));
 //#if javaversion >= 1.5
