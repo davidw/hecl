@@ -35,6 +35,14 @@ import org.hecl.Interp;
 import org.hecl.ObjectThing;
 import org.hecl.Thing;
 
+/**
+ * The <code>HeclStreamCmds</code> class implements command handlers
+ * for DataInputStream and DataOutputStream, which are handled as
+ * "class commands".
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class HeclStreamCmds implements ClassCommand {
 
     private boolean is_input_flag = false;

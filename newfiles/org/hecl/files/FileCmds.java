@@ -95,14 +95,14 @@ public class FileCmds extends Operator {
     public Thing operate(int cmd, Interp interp, Thing[] argv)
 	throws HeclException {
 	String fname = null;
-	/* These commands are platform agnostic - we'll handle them first. */
 
+	/* These commands are platform agnostic - we'll handle them first. */
 	switch(cmd) {
 	    /* Note that FILESPLIT is much more platform dependent, so
-	     * has been moved to that section of code.  */
+	       it is below, in the two sections of ifdef'ed code.  */
 	    case FILEJOIN: {
 		Vector filenamelist = ListThing.get(argv[1]);
-		/* takes a list like {a b c} and converts it to a
+		/* Takes a list like {a b c} and converts it to a
 		   filename such as a/b/c. */
 		StringBuffer res = new StringBuffer("");
 		boolean first = true;
@@ -135,6 +135,7 @@ public class FileCmds extends Operator {
 	}
 
 
+	/* 'Regular' Java uses File, J2ME uses FileConnection. */
 //#if javaversion >= 1.5
 	File tfile = null;
 	if (cmd != LISTROOTS) {
@@ -154,6 +155,7 @@ public class FileCmds extends Operator {
 	    }
 	}
 //#endif
+
 
 //#if javaversion >= 1.5
 	switch(cmd) {
@@ -434,9 +436,9 @@ public class FileCmds extends Operator {
 		}
 
 		case FILESPLIT: {
-		    /* This isn't very good, but it's basically the
-		     * best we can do with what's available in JSR
-		     * 75. */
+		    /* This isn't very good, but it's basically the *
+		       best we can do with what's available on mobile
+		       devices. */
 		    return ListThing.stringSplit(fname, Interp.fileseparator);
 		}
 
@@ -500,6 +502,5 @@ public class FileCmds extends Operator {
 	    e.printStackTrace();
 	    System.out.println("Can't create file commands.");
 	}
-
     }
 }

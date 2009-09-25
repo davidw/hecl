@@ -39,8 +39,24 @@ import org.hecl.HeclException;
 import org.hecl.Interp;
 import org.hecl.Thing;
 
+/**
+ * The <code>HeclFileUtils</code> class provides several utility
+ * functions that are used both by FileCmds, and elsewhere in Hecl.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class HeclFileUtils {
 
+    /**
+     * <code>readFile</code> takes a filename and returns the file's
+     * contents as a Thing.
+     *
+     * @param filename a <code>String</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     * @exception IOException if an error occurs
+     */
 //#if javaversion >= 1.5
     public static Thing readFile(String filename) throws HeclException, IOException {
 	File realfn = new File(filename).getAbsoluteFile();
@@ -53,6 +69,15 @@ public class HeclFileUtils {
     }
 //#endif
 
+    /**
+     * <code>readFileFromDis</code>, given a DataInputStream, reads
+     * from the stream until no more can be read, and returns the
+     * results as a Thing.
+     *
+     * @param dis a <code>DataInputStream</code> value
+     * @return a <code>Thing</code> value
+     * @exception IOException if an error occurs
+     */
     public static Thing readFileFromDis(DataInputStream dis) throws IOException {
 	int bsize = 1024;
 	byte[] buf = new byte[bsize];
@@ -74,10 +99,25 @@ public class HeclFileUtils {
 	return new Thing(new String(acc, 0, pos));
     }
 
+    /**
+     * Describe <code>writeFile</code> method here.
+     *
+     * @param filename a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void writeFile(String filename) throws HeclException {
 
     }
 
+    /**
+     * The <code>sourceFile</code> method takes a file name.  It opens
+     * that file, reads the contents, and evaluates them with the
+     * provided interpreter.
+     *
+     * @param interp an <code>Interp</code> value
+     * @param filename a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
     public static void sourceFile(Interp interp, String filename)
 	throws HeclException {
 
