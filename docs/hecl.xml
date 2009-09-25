@@ -4554,8 +4554,8 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
 	commands, and is a complete programming language that can do some interesting and dynamic
 	things. If you're curious, the best way to learn more is to keep reading the documentation,
-	and sign up for the <ulink url="http://lists.sourceforge.net/lists/listinfo/hecl-devel">Hecl
-	mailing list</ulink> on SourceForge.
+	and sign up for the <ulink url="http://groups.google.com/group/hecl">Hecl Google
+	Group</ulink>, which can be accessed either as a web forum or as a mailing list.
       </para>
 
     </section>
@@ -7560,18 +7560,21 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	  <para>
 	    To work with Android, of course the first thing you need to do is to get the SDK from
 	    Google: <ulink url="http://code.google.com/android/download.html" />.  On my system, I
-	    installed it in here: <filename>/opt/android-sdk_m5-rc15_linux-x86/</filename>.  Next,
-	    edit <filename>android/android.properties</filename> to point to the SDK, and the tools
-	    it needs to work (usually the <filename>tools</filename> directory within the SDK
-	    directory).
-      </para>
+	    installed it in here: <filename>/opt/android-sdk/</filename>.
+	  </para>
+	</step>
 
+	<step>
+	  <para>Next, edit <filename>android/android.properties</filename> to point to the SDK, and
+	    the tools it needs to work (usually the <filename>tools</filename> directory within the
+	    SDK directory).</para>
 	</step>
 
 	<step>
 	  <para>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
 	  world":</para>
-	  <programlisting>set layout [linearlayout -new $context]
+	  <programlisting>set context [activity]
+set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
@@ -7590,21 +7593,36 @@ $layout addview $tv
 
 	<step>
 	  <para>You won't need it right away, but you might as well start the emulator:</para>
-	  <programlisting>/opt/android-sdk_m5-rc15_linux-x86/tools/emulator &amp;</programlisting>
+	  <programlisting>/opt/android-sdk/tools/emulator -avd your_avd</programlisting>
+	  <note>
+	    <para>
+	      You need to create an "AVD" before launching the emulator.  This is documented here:
+		<ulink
+		url="http://developer.android.com/guide/developing/tools/emulator.html#avds"></ulink>
+	    </para>
+	  </note>
 	</step>
 
 	<step>
 	  <para>Now we create the new <filename>Hello.apk</filename> file.
 	  </para>
 
-	  <programlisting>java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk_m5-rc15_linux-x86/ -class Hello -label Hello -package hello.world -script hello.hcl</programlisting>
+	  <programlisting>java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</programlisting>
+
+	  <note>
+	    <para>It's important to point out that the directory used with the
+	      <option>-android</option> option is a subdirectory of the SDK:
+	      <filename>/opt/android-sdk/platforms/android-1.5/</filename>, rather than the top
+	      level.</para>
+	  </note>
 
 	  <para>
 	    The command line options are as follows:
 	  </para>
 
 	  <simplelist>
-	    <member><option>-android</option>: The location of the Android SDK</member>
+	    <member><option>-android</option>: The location of the Android SDK.
+	    </member>
 	    <member><option>-class</option>: The class name to utilize for the new .apk.</member>
 	    <member><option>-label</option>: The user-visible name of the package.</member>
 	    <member><option>-package</option>: The Java package to use.  You can pretty much use any
@@ -7612,11 +7630,20 @@ $layout addview $tv
 	    <member><option>-script</option>: The location of the script you want to use in the new .apk.</member>
 	  </simplelist>
 
+
 	</step>
 
 	<step>
-	  <para>Once you have successfully created a new <filename>Hello.apk</filename>, you can
-	  send it to the emulator:
+	  <para>
+	    We now have a <filename>Hecl.apk</filename> file.  We need to sign it with the debug
+	    key:
+	    <programlisting>keytool -genkeypair -keystore debug.keystore -keypass android -alias androiddebugkey -storepass android -dname "CN=Android Debug,O=Android,C=US"</programlisting>
+	    <programlisting>jarsigner -keystore debug.keystore -keypass android -storepass android -verbose Hello.apk androiddebugkey</programlisting>
+	  </para>
+	</step>
+
+	<step>
+	  <para>At this piont, we can send the signed file, <filename>Hello.apk</filename> to the emulator:
 	  </para>
 	  <programlisting>/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</programlisting>
 
