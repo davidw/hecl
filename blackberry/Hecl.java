@@ -72,6 +72,11 @@ public class Hecl extends MIDlet {
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
+
+//#if files == 1
+	    org.hecl.files.FileCmds.load(interp);
+//#endif
+
 	    MidletCmd.load(interp,this);
 //#if mwt == 1
 			 org.hecl.mwtgui.MwtCmds.load(interp, this);
