@@ -38,6 +38,8 @@ import org.hecl.rms.RMSCmd;
 public class Hecl extends MIDlet {
     protected Interp interp = null;
     protected HeclTask evaltask = null;
+    protected String[] args = {};
+    protected boolean started = false;
 
     public void destroyApp(boolean b) {
 	notifyDestroyed();
@@ -47,6 +49,11 @@ public class Hecl extends MIDlet {
     }
 
     public void startApp() {
+	if (started) {
+	    return;
+	}
+	started = true;
+
 	Display display = Display.getDisplay(this);
 	try {
 	    Alert a = new Alert("Loading Hecl", "Loading Hecl...", null, AlertType.INFO);
@@ -119,8 +126,5 @@ public class Hecl extends MIDlet {
 	    System.err.println("Error in runScript: " + e);
 	}
     }
-
-    protected String[] args = {};
-    protected boolean started = false;
 }
 
