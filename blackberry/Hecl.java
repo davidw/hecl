@@ -132,6 +132,5 @@ public class Hecl extends MIDlet {
     }
 
     protected String[] args = {};
-    protected boolean started = false;
 }
 
