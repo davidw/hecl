@@ -108,6 +108,17 @@ public class Properties {
 	return props.containsKey(name);
     }
 
+    /**
+     * The <code>getAndDelProp</code> method fetches and deletes the
+     * value associated with 'name', or returns null if there is no
+     * value associated with it.
+     *
+     * @param name a <code>String</code> value
+     * @return a <code>Thing</code> value
+     */
+    public Thing getAndDelProp(String name) {
+	return (Thing)props.remove(name);
+    }
 
     /**
      * <code>delProp</code> removes a property from the property set.
