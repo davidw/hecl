@@ -18,7 +18,10 @@
  */
 
 import net.rim.blackberry.api.invoke.Invoke;
+import net.rim.blackberry.api.invoke.AddressBookArguments; /* FIXME - TODO */
 import net.rim.blackberry.api.invoke.ApplicationArguments;
+import net.rim.blackberry.api.invoke.CalculatorArguments;
+import net.rim.blackberry.api.invoke.CalendarArguments; /* FIXME - TODO */
 import net.rim.blackberry.api.invoke.CameraArguments;
 import net.rim.blackberry.api.invoke.PhoneArguments;
 
@@ -35,6 +38,7 @@ class InvokeCmds extends Operator {
     public static final int CALL = 10;
     public static final int CAMERA = 20;
     public static final int VIDEO = 30;
+    public static final int CALCULATOR = 40;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch(cmd) {
@@ -43,6 +47,13 @@ class InvokeCmds extends Operator {
 					 new PhoneArguments(PhoneArguments.ARG_CALL, argv[1].toString()));
 		return Thing.emptyThing();
 	    }
+
+	    case CALCULATOR: {
+		Invoke.invokeApplication(Invoke.APP_TYPE_CALCULATOR,
+					 new CalculatorArguments());
+		return Thing.emptyThing();
+	    }
+
 
 	    case CAMERA: {
 		Invoke.invokeApplication(Invoke.APP_TYPE_CAMERA,
@@ -83,6 +94,7 @@ class InvokeCmds extends Operator {
     static {
 	try {
 	    cmdtable.put("invoke.call", new InvokeCmds(CALL,1,1));
+	    cmdtable.put("invoke.calculator", new InvokeCmds(CALCULATOR,0,0));
 	    cmdtable.put("invoke.camera", new InvokeCmds(CAMERA,0,0));
 	    cmdtable.put("invoke.video", new InvokeCmds(VIDEO,0,0));
 	} catch (Exception e) {
