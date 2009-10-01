@@ -497,8 +497,4 @@ $SourceCode conf -uneditable 0
 
 $:sf setcurrent
 
-proc midlet.resume {} {
-    DEBUG "resuming midlet..."
-}
-
 #DEBUG [join [sort [intro commands]] "\n"]
