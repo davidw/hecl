@@ -189,6 +189,16 @@ The <code>Properties</code> class is used to parse command line
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Properties.html#getAndDelProp(java.lang.String)">getAndDelProp</A></B>(java.lang.String&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>getAndDelProp</code> method fetches and deletes the
+ value associated with 'name', or returns null if there is no
+ value associated with it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../org/hecl/Properties.html#getProp(java.lang.String)">getProp</A></B>(java.lang.String&nbsp;name)</CODE>
 
 <BR>
@@ -203,6 +213,14 @@ The <code>Properties</code> class is used to parse command line
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>getProps</code> converts the properties back into an
  array of <code>Thing</code>s.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Properties.html#isEmpty()">isEmpty</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>isEmpty</code> test if property set is empty.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -363,6 +381,22 @@ public boolean <B>existsProp</B>(java.lang.String&nbsp;name)</PRE>
 </DL>
 <HR>
 
+<A NAME="getAndDelProp(java.lang.String)"><!-- --></A><H3>
+getAndDelProp</H3>
+<PRE>
+public <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A> <B>getAndDelProp</B>(java.lang.String&nbsp;name)</PRE>
+<DL>
+<DD>The <code>getAndDelProp</code> method fetches and deletes the
+ value associated with 'name', or returns null if there is no
+ value associated with it.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - a <code>String</code> value
+<DT><B>Returns:</B><DD>a <code>Thing</code> value</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="delProp(java.lang.String)"><!-- --></A><H3>
 delProp</H3>
 <PRE>
@@ -388,6 +422,20 @@ public <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]
 
 <DT><B>Returns:</B><DD>an array of <code>Thing</code>s, being property name
  and property value.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isEmpty()"><!-- --></A><H3>
+isEmpty</H3>
+<PRE>
+public boolean <B>isEmpty</B>()</PRE>
+<DL>
+<DD><code>isEmpty</code> test if property set is empty.
+<P>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>true if it's empty, flase otherwise.</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->
