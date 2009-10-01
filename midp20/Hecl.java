@@ -46,10 +46,16 @@ public class Hecl extends MIDlet {
     }
 
     public void pauseApp() {
+	if (interp.commandExists("midlet.pause")) {
+	    interp.evalAsync(new Thing("midlet.pause"));
+	}
     }
 
     public void startApp() {
 	if (started) {
+	    if (interp.commandExists("midlet.resume")) {
+		interp.evalAsync(new Thing("midlet.resume"));
+	    }
 	    return;
 	}
 	started = true;
