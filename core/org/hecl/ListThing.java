@@ -316,14 +316,25 @@ public class ListThing implements RealThing {
 	    splitstr = " ";
 	}
 
-	idx = str.indexOf(splitstr);
-	while (idx >= 0) {
-	    result.addElement(new Thing(str.substring(last, idx)));
-	    last = idx + splitstr.length();
-	    idx = str.indexOf(splitstr, last);
-	}
-	result.addElement(new Thing(str.substring(last, str.length())));
-	return ListThing.create(result);
+	int splitstringlen = splitstr.length();
 
+	if (splitstringlen > 0) {
+	    idx = str.indexOf(splitstr);
+	    while (idx >= 0) {
+		result.addElement(new Thing(str.substring(last, idx)));
+		last = idx + splitstringlen;
+		idx = str.indexOf(splitstr, last);
+	    }
+	    result.addElement(new Thing(str.substring(last, str.length())));
+	} else {
+	    /* This is a special case: when the splitstring is an
+	     * empty string "". */
+	    for(int i = 0; i < str.length(); i++) {
+		char[] c = new char[1];
+		c[0] = str.charAt(i);
+		result.addElement(new Thing(new String(c)));
+	    }
+	}
+	return ListThing.create(result);
     }
 }
