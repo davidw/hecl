@@ -57,6 +57,7 @@
       jadfile="${j2me.hecl.jad}"
       jarfile="${j2me.hecl.jar}"
       cldc="false"
+      classpath="${jde.home}/lib/net_rim_api.jar"
       preverify="${preverify}"
       obfuscate="false"
       verbose="false">

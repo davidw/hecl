@@ -91,10 +91,6 @@ public class Interp extends Thread/*implements Runnable*/ {
      * The <code>commands</code> <code>Hashtable</code> provides the
      * mapping from the strings containing command names to the code
      * implementing the commands.
-     *
-     * We save some space by making this public and removing the
-     * accessors.
-     *
      */
     protected Hashtable commands = new Hashtable();
 
@@ -415,6 +411,16 @@ public class Interp extends Thread/*implements Runnable*/ {
 	commands.remove(name);
     }
 
+    /**
+     * The <code>commandExists</code> method returns true if a command
+     * exists, otherwise false.
+     *
+     * @param name a <code>String</code> value
+     * @return a <code>boolean</code> value
+     */
+    public synchronized boolean commandExists(String name) {
+	return commands.containsKey(name);
+    }
 
     /**
      * Attach auxiliary data to an <code>Interp</code>.

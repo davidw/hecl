@@ -229,6 +229,14 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;char[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Interp.html#eol">eol</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>eol</code> is the end-of-line character or characters.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;java.util.Stack</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../org/hecl/Interp.html#error">error</A></B></CODE>
 
@@ -487,6 +495,15 @@ java.lang.Object
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>cmdRename</code> method renames a command, or throws
  an error if the original command didn't exist.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Interp.html#commandExists(java.lang.String)">commandExists</A></B>(java.lang.String&nbsp;name)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>commandExists</code> method returns true if a command
+ exists, otherwise false.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -982,9 +999,6 @@ protected java.util.Hashtable <B>commands</B></PRE>
 <DD>The <code>commands</code> <code>Hashtable</code> provides the
  mapping from the strings containing command names to the code
  implementing the commands.
-
- We save some space by making this public and removing the
- accessors.
 <P>
 <DL>
 </DL>
@@ -1109,6 +1123,18 @@ classcmdcache</H3>
 <PRE>
 protected java.util.Hashtable <B>classcmdcache</B></PRE>
 <DL>
+<DL>
+</DL>
+</DL>
+<HR>
+
+<A NAME="eol"><!-- --></A><H3>
+eol</H3>
+<PRE>
+public static final char[] <B>eol</B></PRE>
+<DL>
+<DD><code>eol</code> is the end-of-line character or characters.
+<P>
 <DL>
 </DL>
 </DL>
@@ -1240,6 +1266,21 @@ public void <B>removeCommand</B>(java.lang.String&nbsp;name)</PRE>
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>name</CODE> - the name of the command to add.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="commandExists(java.lang.String)"><!-- --></A><H3>
+commandExists</H3>
+<PRE>
+public boolean <B>commandExists</B>(java.lang.String&nbsp;name)</PRE>
+<DL>
+<DD>The <code>commandExists</code> method returns true if a command
+ exists, otherwise false.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>name</CODE> - a <code>String</code> value
+<DT><B>Returns:</B><DD>a <code>boolean</code> value</DL>
 </DD>
 </DL>
 <HR>

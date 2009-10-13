@@ -7285,6 +7285,43 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
+      <refentry id="midlet_onpause">
+	<refnamediv>
+	  <refname>midlet.onpause</refname>
+	  <refpurpose>Hook to call when midlet execution is paused</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.onpause</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    If this command is defined in the interpreter, it is called before the midlet is paused.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="midlet_onresume">
+	<refnamediv>
+	  <refname>midlet.onresume</refname>
+	  <refpurpose>Hook to call when midlet execution is resumed</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>midlet.onresume</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    If this command is defined in the interpreter, it is called when execution of the midlet
+	    is resumed.
+	  </para>
+	</refsect1>
+      </refentry>
+
       <refentry id="midlet_checkpermissions">
 	<refnamediv>
 	  <refname>midlet.checkpermissions</refname>

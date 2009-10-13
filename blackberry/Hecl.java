@@ -40,6 +40,7 @@ import org.hecl.rms.RMSCmd;
 public class Hecl extends MIDlet {
     protected Interp interp = null;
     protected HeclTask evaltask = null;
+    private boolean started = false;
 
     public void destroyApp(boolean b) {
 	notifyDestroyed();
@@ -49,6 +50,11 @@ public class Hecl extends MIDlet {
     }
 
     public void startApp() {
+	if (started) {
+	    return;
+	}
+	started = true;
+
 	Display display = Display.getDisplay(this);
 	try {
 	    Alert a = new Alert("Loading Hecl", "Loading Hecl...", null, AlertType.INFO);
@@ -69,6 +75,7 @@ public class Hecl extends MIDlet {
 	    Base64Cmd.load(interp);
 	    ServiceBookCmd.load(interp);
 	    BrowserCmd.load(interp);
+	    InvokeCmds.load(interp);
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
@@ -130,6 +137,5 @@ public class Hecl extends MIDlet {
     }
 
     protected String[] args = {};
-    protected boolean started = false;
 }
 
