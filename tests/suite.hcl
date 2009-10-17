@@ -7,6 +7,12 @@ file.cd $destdir
 
 source harness.hcl
 
+if { = [llen $argv] 2 } {
+    testfiles [list [lindex $argv 1]]
+    totals
+    exit
+}
+
 testfiles {
     after.hcl
     alias.hcl
