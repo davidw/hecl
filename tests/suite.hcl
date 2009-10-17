@@ -23,6 +23,7 @@ testfiles {
     deepcopy.hcl
     equality.hcl
     eval.hcl
+    files.hcl
     filter.hcl
     for.hcl
     foreach.hcl
