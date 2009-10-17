@@ -78,7 +78,7 @@ public class Hecl {
             }
 	    interp.setVar("argv", ListThing.create(argv));
 	    extend(interp);
-	    if(args.length == 1) {
+	    if(args.length >= 1) {
 		HeclFileUtils.sourceFile(interp, args[0]);
 	    } else {
 		interp.readEvalPrint(System.in,System.out,System.err);
