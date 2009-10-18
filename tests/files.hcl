@@ -56,3 +56,25 @@ test write-read-1 {
 
     set errors
 } {0}
+
+test readln-1 {
+    set fn "/tmp/hecl-test-[clock seconds]"
+    set f [open $fn w]
+    for {set i 0} {<= $i 1000} {incr $i} {
+	$f writeln "hello world $i"
+    }
+    $f close
+
+    set f [open $fn]
+    set i 0
+    set line ""
+    while { true } {
+	set lline $line
+	set line [$f readln]
+	if { eq $line "" } {
+	    break
+	}
+	incr $i
+    }
+    list $i $lline
+} {1001 {hello world 1000}}

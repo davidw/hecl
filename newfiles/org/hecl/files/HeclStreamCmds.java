@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -71,6 +72,27 @@ public class HeclStreamCmds implements ClassCommand {
 			return HeclFileUtils.readFileFromDis(dis);
 		    }
 		} else if (subcmd.equals("readln")) {
+		    StringBuffer sb = new StringBuffer();
+		    int c = 0;
+		    int last = 0;
+		    while (true) {
+			last = c;
+			c = dis.read();
+			if (c == -1) {
+			    break;
+			} else if (c == Interp.eol[0] &&
+				   Interp.eol.length == 1) {
+			    break;
+			} else if (Interp.eol.length == 2 &&
+				   c == Interp.eol[1] &&
+				   last == Interp.eol[0]) {
+			    sb.setLength(sb.length() - 1);
+			    break;
+			} else {
+			    sb.append((char)c);
+			}
+		    }
+		    return new Thing(new String(sb));
 		}
 	    } else {
 		DataOutputStream dos = (DataOutputStream)target;
@@ -91,7 +113,7 @@ public class HeclStreamCmds implements ClassCommand {
 		    if (Interp.eol.length > 1) {
 			dos.writeByte(Interp.eol[1]);
 		    }
-		    retval = IntThing.create(bytes.length);
+		    retval = IntThing.create(bytes.length + Interp.eol.length);
 		}
 	    }
 	} catch (IOException ioe) {
