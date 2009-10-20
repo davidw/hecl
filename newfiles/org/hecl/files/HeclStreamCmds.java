@@ -94,7 +94,8 @@ public class HeclStreamCmds implements ClassCommand {
 		    }
 		    return new Thing(new String(sb));
 		}
-	    } else {
+	    }
+	    if (target.writable()) {
 		DataOutputStream dos = target.dataoutputstream;
 		if (subcmd.equals("close")) {
 		    dos.close();

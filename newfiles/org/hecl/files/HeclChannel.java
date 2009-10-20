@@ -49,7 +49,7 @@ public class HeclChannel {
 	return false;
     }
 
-    public boolean writeable() {
+    public boolean writable() {
 	if (dataoutputstream != null) {
 	    return true;
 	}
