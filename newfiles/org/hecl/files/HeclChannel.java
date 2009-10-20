@@ -41,4 +41,19 @@ public class HeclChannel {
 	datainputstream = dis;
 	dataoutputstream = dos;
     }
+
+    public boolean readable() {
+	if (datainputstream != null) {
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean writeable() {
+	if (dataoutputstream != null) {
+	    return true;
+	}
+	return false;
+    }
+
 }

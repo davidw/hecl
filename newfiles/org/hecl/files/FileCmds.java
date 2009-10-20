@@ -167,12 +167,12 @@ public class FileCmds extends Operator {
 			write = true;
 		    }
 		}
-		Object retval;
+		HeclChannel retval;
 		try {
 		    if (write) {
-			retval = new DataOutputStream(new FileOutputStream(new File(fname)));
+			retval = new HeclChannel(new DataOutputStream(new FileOutputStream(new File(fname))));
 		    } else {
-			retval = new DataInputStream(new FileInputStream(new File(fname)));
+			retval = new HeclChannel(new DataInputStream(new FileInputStream(new File(fname))));
 		    }
 		} catch (IOException ioe) {
 		    throw new HeclException("Error opening '" + fname + "' :" + ioe.toString());

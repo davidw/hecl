@@ -51,13 +51,13 @@ public class HeclStreamCmds implements ClassCommand {
     public Thing method(Interp interp, ClassCommandInfo context, Thing[] argv)
 	throws HeclException {
 	String subcmd = argv[1].toString().toLowerCase();
-	Object target = ObjectThing.get(argv[0]);
+	HeclChannel target = (HeclChannel)ObjectThing.get(argv[0]);
 	Thing retval = null;
 	Thing empty = new Thing("");
 
 	try {
-	    if (is_input_flag) {
-		DataInputStream dis = (DataInputStream)target;
+	    if (target.readable()) {
+		DataInputStream dis = target.datainputstream;
 		if (subcmd.equals("close")) {
 		    dis.close();
 		    retval = empty;
@@ -95,7 +95,7 @@ public class HeclStreamCmds implements ClassCommand {
 		    return new Thing(new String(sb));
 		}
 	    } else {
-		DataOutputStream dos = (DataOutputStream)target;
+		DataOutputStream dos = target.dataoutputstream;
 		if (subcmd.equals("close")) {
 		    dos.close();
 		    retval = empty;
@@ -117,7 +117,7 @@ public class HeclStreamCmds implements ClassCommand {
 		}
 	    }
 	} catch (IOException ioe) {
-	    throw new HeclException("IOException: " + ioe.toString());
+	    throw new HeclException("IOException in " + subcmd + ": " + ioe.toString());
 	}
 
 	if (retval == null) {
@@ -131,11 +131,11 @@ public class HeclStreamCmds implements ClassCommand {
     }
 
     public static void load(Interp interp) {
-	interp.addClassCmd(DataInputStream.class, new HeclStreamCmds(true));
-	interp.addClassCmd(DataOutputStream.class, new HeclStreamCmds(false));
+	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds(true));
+	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds(false));
     }
     public static void unload(Interp interp) {
-	interp.removeClassCmd(DataInputStream.class);
-	interp.removeClassCmd(DataOutputStream.class);
+	interp.removeClassCmd(HeclChannel.class);
+	interp.removeClassCmd(HeclChannel.class);
     }
 }
