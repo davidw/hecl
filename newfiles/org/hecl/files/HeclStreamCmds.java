@@ -46,8 +46,6 @@ import org.hecl.Thing;
  */
 public class HeclStreamCmds implements ClassCommand {
 
-    private boolean is_input_flag = false;
-
     public Thing method(Interp interp, ClassCommandInfo context, Thing[] argv)
 	throws HeclException {
 	String subcmd = argv[1].toString().toLowerCase();
@@ -127,13 +125,12 @@ public class HeclStreamCmds implements ClassCommand {
 	return retval;
     }
 
-    public HeclStreamCmds(boolean is_input) {
-	is_input_flag = is_input;
+    public HeclStreamCmds() {
     }
 
     public static void load(Interp interp) {
-	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds(true));
-	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds(false));
+	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds());
+	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds());
     }
     public static void unload(Interp interp) {
 	interp.removeClassCmd(HeclChannel.class);

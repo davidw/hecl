@@ -100,16 +100,6 @@ public class HeclFileUtils {
     }
 
     /**
-     * Describe <code>writeFile</code> method here.
-     *
-     * @param filename a <code>String</code> value
-     * @exception HeclException if an error occurs
-     */
-    public static void writeFile(String filename) throws HeclException {
-
-    }
-
-    /**
      * The <code>sourceFile</code> method takes a file name.  It opens
      * that file, reads the contents, and evaluates them with the
      * provided interpreter.

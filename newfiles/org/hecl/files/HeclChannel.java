@@ -25,23 +25,65 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * The <code>HeclChannel</code> class acts as a container for a data
+ * input stream and/or data output stream.  This makes it possible to
+ * both read and write from one "channel".
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
+
 public class HeclChannel {
+    /**
+     * <code>datainputstream</code> is the stream that this channel
+     * reads from.
+     *
+     */
     public DataInputStream datainputstream = null;
+    /**
+     * <code>dataoutputstream</code> is the stream this channel writes
+     * to.
+     *
+     */
     public DataOutputStream dataoutputstream = null;
 
+    /**
+     * Creates a new read-only <code>HeclChannel</code> instance.
+     *
+     * @param dis a <code>DataInputStream</code> value
+     */
     public HeclChannel(DataInputStream dis) {
 	datainputstream = dis;
     }
 
+    /**
+     * Creates a new write-only <code>HeclChannel</code> instance.
+     *
+     * @param dos a <code>DataOutputStream</code> value
+     */
     public HeclChannel(DataOutputStream dos) {
 	dataoutputstream = dos;
     }
 
+    /**
+     * Creates a new <code>HeclChannel</code> instance for reading and
+     * writing.
+     *
+     * @param dis a <code>DataInputStream</code> value
+     * @param dos a <code>DataOutputStream</code> value
+     */
     public HeclChannel(DataInputStream dis, DataOutputStream dos) {
 	datainputstream = dis;
 	dataoutputstream = dos;
     }
 
+    /**
+     * <code>readable</code> returns true if the channel is open for
+     * reading.
+     *
+     * @return a <code>boolean</code> value
+     */
     public boolean readable() {
 	if (datainputstream != null) {
 	    return true;
@@ -49,6 +91,12 @@ public class HeclChannel {
 	return false;
     }
 
+    /**
+     * <code>writable</code> returns true if the channel is open for
+     * writing.
+     *
+     * @return a <code>boolean</code> value
+     */
     public boolean writable() {
 	if (dataoutputstream != null) {
 	    return true;

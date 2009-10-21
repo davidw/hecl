@@ -50,8 +50,9 @@ import org.hecl.StringThing;
 import org.hecl.Thing;
 
 /**
- * The <code>FileCmds</code> class implements various file handling
- * commands.
+ * The <code>FileCmds</code> class implements various file commands -
+ * most importantly, open, but also various operations to check
+ * whether a file exists, is readable, is a directory, and so on.
  *
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
