@@ -2441,6 +2441,38 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
+    <refentry id="strreplace">
+      <refnamediv>
+	<refname>strreplace</refname>
+	<refpurpose>Replace string A in string B</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>strreplace</command>
+	  <arg choice="req">
+	    <arg choice="req"><replaceable>{from to}</replaceable></arg>
+	  </arg>
+	  <arg choice="req"><replaceable>string</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+
+	<para>The <command>strreplace</command> command replaces each instance of
+	  <option>from</option> with <option>to</option> in <option>string</option>.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	  <programlisting>
+puts [strreplace {hi hello} blahhiblahblahhihiblah]
+	  </programlisting>
+	  <para>Produces:</para>
+	  <screen>blahhelloblahblahhellohelloblah</screen>
+      </refsect1>
+    </refentry>
+
+
     <refentry id="strtrim">
       <refnamediv>
 	<refname>strtrim</refname>
