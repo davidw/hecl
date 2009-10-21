@@ -1031,6 +1031,44 @@ puts $res
       </refsect1>
     </refentry>
 
+    <!-- copy -->
+    <refentry id="copy">
+      <refnamediv>
+	<refname>copy</refname>
+	<refpurpose>Copy a Hecl value.</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>cd</command>
+	  <arg choice="req"><replaceable>value</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>copy</command> command makes a deep copy of a
+	  Hecl value, whereas normally, Hecl variables contain
+	  references.
+	</para>
+      </refsect1>
+      <refsect1>
+	<title>Example</title>
+	<programlisting>hecl&gt; set foo 1
+set bee $foo
+set bop [copy $foo]
+incr $foo
+puts "foo is $foo"
+puts "bee is $bee"
+puts "bop is $bop"
+	</programlisting>
+	<para>Produces:</para>
+	<screen>foo is 2
+bee is 2
+bop is 1
+</screen>
+      </refsect1>
+    </refentry>
+
     <refentry id="double">
       <refnamediv>
 	<refname>double</refname>
@@ -2870,44 +2908,6 @@ append $foo "beebop"
 	    actual working directory.  Apparently that's not possible
 	    with Java.
 	  </para>
-	</refsect1>
-      </refentry>
-
-      <!-- copy -->
-      <refentry id="copy">
-	<refnamediv>
-	  <refname>copy</refname>
-	  <refpurpose>Copy a Hecl value.</refpurpose>
-	</refnamediv>
-	<refsynopsisdiv>
-	  <cmdsynopsis>
-	    <command>cd</command>
-	    <arg choice="req"><replaceable>value</replaceable></arg>
-	  </cmdsynopsis>
-	</refsynopsisdiv>
-	<refsect1>
-	  <title>Description</title>
-	  <para>
-	    The <command>copy</command> command makes a deep copy of a
-	    Hecl value, whereas normally, Hecl variables contain
-	    references.
-	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>hecl&gt; set foo 1
-set bee $foo
-set bop [copy $foo]
-incr $foo
-puts "foo is $foo"
-puts "bee is $bee"
-puts "bop is $bop"
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>foo is 2
-bee is 2
-bop is 1
-</screen>
 	</refsect1>
       </refentry>
 
