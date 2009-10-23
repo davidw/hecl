@@ -3009,6 +3009,25 @@ puts $foo
 	</refsect1>
       </refentry>
 
+      <refentry id="file_delete">
+	<refnamediv>
+	  <refname>file.delete</refname>
+	  <refpurpose>Delete the file.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.exists</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Delete <option>filename</option>.
+	  </para>
+	</refsect1>
+      </refentry>
+
       <refentry id="file_devs">
 	<refnamediv>
 	  <refname>file.devs</refname>
@@ -3063,25 +3082,6 @@ puts $foo
 	  <title>Description</title>
 	  <para>
 	    Returns 1 if the file exists, otherwise 0.
-	  </para>
-	</refsect1>
-      </refentry>
-
-      <refentry id="file_delete">
-	<refnamediv>
-	  <refname>file.delete</refname>
-	  <refpurpose>Delete the file.</refpurpose>
-	</refnamediv>
-	<refsynopsisdiv>
-	  <cmdsynopsis>
-	    <command>file.exists</command>
-	    <arg choice="req"><replaceable>filename</replaceable></arg>
-	  </cmdsynopsis>
-	</refsynopsisdiv>
-	<refsect1>
-	  <title>Description</title>
-	  <para>
-	    Delete <option>filename</option>.
 	  </para>
 	</refsect1>
       </refentry>
