@@ -213,6 +213,12 @@ public class FileCmds extends Operator {
 		return IntThing.create(tfile.exists());
 	    }
 
+	    case DELETE:
+	    {
+		tfile.delete();
+		return Thing.emptyThing();
+	    }
+
 	    case SIZE:
 	    {
 		return LongThing.create(tfile.length());
@@ -264,6 +270,7 @@ public class FileCmds extends Operator {
 	    }
 
 	    case TRUNCATE: {
+		/* FIXME */
 		throw new HeclException("not implemented");
 	    }
 
@@ -377,6 +384,12 @@ public class FileCmds extends Operator {
 		    return IntThing.create(fconn.exists());
 		}
 
+		case DELETE:
+ 		{
+		    fconn.delete();
+		    return Thing.emptyThing();
+		}
+
 		case SIZE:
 		{
 		    return LongThing.create(fconn.fileSize());
@@ -476,14 +489,13 @@ public class FileCmds extends Operator {
 	    cmdtable.put("file.writable", new FileCmds(WRITABLE,1,2));
 	    cmdtable.put("file.hidden", new FileCmds(HIDDEN,1,2));
 	    cmdtable.put("file.exists", new FileCmds(EXISTS,1,1));
-
-	    cmdtable.put("file.exists", new FileCmds(EXISTS,1,1));
 	    cmdtable.put("file.size", new FileCmds(SIZE,1,1));
 	    cmdtable.put("file.basename", new FileCmds(BASENAME,1,1));
 	    cmdtable.put("file.mtime", new FileCmds(MTIME,1,1));
 	    cmdtable.put("file.isdirectory", new FileCmds(ISDIRECTORY,1,1));
 	    cmdtable.put("file.isopen", new FileCmds(ISOPEN,1,1));
 
+	    cmdtable.put("file.delete", new FileCmds(DELETE,1,1));
 	    cmdtable.put("file.mkdir", new FileCmds(MKDIR,1,1));
 	    cmdtable.put("file.truncate", new FileCmds(TRUNCATE,1,1));
 	    cmdtable.put("file.rename", new FileCmds(RENAME,2,2));
