@@ -2881,159 +2881,393 @@ append $foo "beebop"
     <section>
       <title>File Interaction</title>
       <para>
-	J2ME systems do not always have a file system, so these are
-	not necessarily available for that environment.
+	J2ME systems do not always have a file system, so these are not necessarily available.  It
+	is possible to compile Hecl with or without these commands.
       </para>
 
-      <!-- cd -->
-      <refentry id="cd">
+      <refentry id="open">
 	<refnamediv>
-	  <refname>cd</refname>
-	  <refpurpose>Change working directory.</refpurpose>
+	  <refname>open</refname>
+	  <refpurpose>Opens a file for reading or writing.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>cd</command>
+	    <command>open</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	    <arg choice="opt">w</arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Opens <option>filename</option> for reading or writing, depending on whether the
+	    <option>w</option> flag is set or not.  The form of <option>filename</option> is
+	    platform-dependant.  On Java ME systems, it needs to be a URI.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_readable">
+	<refnamediv>
+	  <refname>file.readable</refname>
+	  <refpurpose>Is the file readable?.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.readable</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Checks to see whether the file exists and is readable, and if so, returns 1.  Otherwise,
+	    returns 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_writable">
+	<refnamediv>
+	  <refname>file.writable</refname>
+	  <refpurpose>Is the file writable?.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.writable</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Checks to see whether the file exists and is writable, and if so, returns 1.  Otherwise,
+	    returns 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_hidden">
+	<refnamediv>
+	  <refname>file.hidden</refname>
+	  <refpurpose>Is the file hidden?.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.hidden</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Return 1 if the file is "hidden".  To quote from the relevant Java documentation:
+	    <blockquote>
+	      The exact definition of hidden is system-dependent. For example, on UNIX systems a
+	      file is considered to be hidden if its name begins with a period character ('.'). On
+	      Win32 and FAT file systems, a file is considered to be hidden if it has been marked as
+	      such in the file's attributes. If hidden files are not supported on the referenced
+	      file system, this method always returns false.
+	    </blockquote>
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_exists">
+	<refnamediv>
+	  <refname>file.exists</refname>
+	  <refpurpose>Does the file exist?.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.exists</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns 1 if the file exists, otherwise 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_delete">
+	<refnamediv>
+	  <refname>file.delete</refname>
+	  <refpurpose>Delete the file.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.exists</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Delete <option>filename</option>.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_size">
+	<refnamediv>
+	  <refname>file.size</refname>
+	  <refpurpose>Returns the file's size.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.size</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns <option>filename</option>'s size, in bytes.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_basename">
+	<refnamediv>
+	  <refname>file.basename</refname>
+	  <refpurpose>Returns the file name with no paths.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.basename</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns the file's name, with no URL schema or paths.
+	  </para>
+	</refsect1>
+	<refsect1>
+	  <title>Example</title>
+	  <programlisting>file.basename file:///foo/bar/bee/bop.txt</programlisting>
+	  <para>Would return</para>
+	  <screen>bop.txt</screen>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_mtime">
+	<refnamediv>
+	  <refname>file.mtime</refname>
+	  <refpurpose>Returns the file modification time.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.mtime</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns the time the file was last modified, as a value expressed in milliseconds since
+	    the "epoch" (00:00:00 GMT, January 1, 1970).
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_isdirectory">
+	<refnamediv>
+	  <refname>file.isdirectory</refname>
+	  <refpurpose>Is this a directory?</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.isdirectory</command>
+	    <arg choice="req"><replaceable>path</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns 1 if the path in question is a directory, otherwise 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_isopen">
+	<refnamediv>
+	  <refname>file.isopen</refname>
+	  <refpurpose>Is the file currently in use?</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.isopen</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns 1 if the file is currently open, otherwise 0.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_mkdir">
+	<refnamediv>
+	  <refname>file.mkdir</refname>
+	  <refpurpose>Creates the directory.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.mkdir</command>
 	    <arg choice="req"><replaceable>directory</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>cd</command> command changes the current
-	    working directory to
-	    <option><replaceable>directory</replaceable></option>.  Or
-	    at least it changes where <emphasis>Java</emphasis> thinks
-	    the working directory is.  It does not change the process'
-	    actual working directory.  Apparently that's not possible
-	    with Java.
+	    Creates the named directory.
 	  </para>
 	</refsect1>
       </refentry>
 
-      <!-- currentfile -->
-      <refentry id="currentfile">
+      <refentry id="file_truncate">
 	<refnamediv>
-	  <refname>currentfile</refname>
-	  <refpurpose>The file currently being sourced.</refpurpose>
+	  <refname>file.truncate</refname>
+	  <refpurpose>Truncates the file.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>currentfile</command>
+	    <command>file.truncate</command>
+	    <arg choice="req"><replaceable>filename</replaceable></arg>
+	    <arg choice="req"><replaceable>newlength</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>currentfile</command> command returns the
-	    filename of the file currently being sourced.
+	    Truncates the file, making it at most <option>newlength</option> bytes long.
 	  </para>
 	</refsect1>
       </refentry>
 
-      <!-- filetolist -->
-      <refentry id="filetolist">
+      <refentry id="file_rename">
 	<refnamediv>
-	  <refname>filetolist</refname>
-	  <refpurpose>Takes a filename and returns a list.</refpurpose>
+	  <refname>file.rename</refname>
+	  <refpurpose>Rename a file.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>filetolist</command>
+	    <command>file.rename</command>
+	    <arg choice="req"><replaceable>oldname</replaceable></arg>
+	    <arg choice="req"><replaceable>newname</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Renames <option>oldname</option> to <option>newname.</option>
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_list">
+	<refnamediv>
+	  <refname>file.list</refname>
+	  <refpurpose>List files in a directory.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.list</command>
+	    <arg choice="req"><replaceable>directory</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Lists the files in the specified directory.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_devs">
+	<refnamediv>
+	  <refname>file.devs</refname>
+	  <refpurpose>List available devices.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.devs</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns a list of the root devices.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_du">
+	<refnamediv>
+	  <refname>file.du</refname>
+	  <refpurpose>"Disk" usage.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.du</command>
 	    <arg choice="req"><replaceable>filename</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>filetolist</command> command takes an argument,
-	    <option><replaceable>filename</replaceable></option>, and
-	    returns a list of all the file's directory components.
+	    Returns a hash with the following keys: <constant>total</constant> - the total amount of
+	    space on the storage device where the file resides, and <constant>used</constant> - the
+	    amount of space currently utilized.
 	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>hecl> filetolist /var/lib/dpkg/info
-/ var lib dpkg info
-	  </programlisting>
 	</refsect1>
       </refentry>
 
-
-      <!-- listtofile -->
-
-      <refentry id="listtofile">
+      <refentry id="file_split">
 	<refnamediv>
-	  <refname>listtofile</refname> <refpurpose>List to file takes
-	  a list and transforms it into a filename, adding the correct
-	  file seperator for the platform in question.
-	  </refpurpose>
+	  <refname>file.split</refname>
+	  <refpurpose>Return a list of a path's components.</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
-	    <command>listtofile</command>
-	    <arg choice="req"><replaceable>list</replaceable></arg>
-	  </cmdsynopsis>
-	</refsynopsisdiv>
-	<refsect1>
-	  <title>Description</title>
-	  <para>
-	    The <command>listtofile</command> command takes a list and
-	    returns a filename.  The filename doesn't need to exist on
-	    the system.
-	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>hecl> set lst [list / etc passwd]
-/ etc passwd
-hecl> listtofile $lst
-/etc/passwd
-	  </programlisting>
-	</refsect1>
-      </refentry>
-
-
-      <!-- readall -->
-
-      <refentry id="readall">
-	<refnamediv>
-	  <refname>readall</refname>
-	  <refpurpose>Reads an entire file and returns its contents.</refpurpose>
-	</refnamediv>
-	<refsynopsisdiv>
-	  <cmdsynopsis>
-	    <command>readall</command>
+	    <command>file.split</command>
 	    <arg choice="req"><replaceable>filename</replaceable></arg>
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>readall</command> command reads an entire
-	    file and returns its contents.
-	    <option><replaceable>filename</replaceable></option>.
+	    Takes a filename and returns a list of all the file's components.
 	  </para>
-	</refsect1>
-	<refsect1>
-	  <title>Example</title>
-	  <programlisting>
-set data [readall foo.txt]
-set lines [split $data "\n"]
-set i 1
-foreach line $lines {
-    puts "$i $line"
-    incr $i
-}
-	  </programlisting>
-	  <para>Produces:</para>
-	  <screen>1 .....
-2 ........
-3 ........
-etc...</screen>
 	</refsect1>
       </refentry>
 
+      <refentry id="file_join">
+	<refnamediv>
+	  <refname>file.join</refname>
+	  <refpurpose>Creates a filename from a list.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.join</command>
+	    <arg choice="req"><replaceable>list of path elements</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Given a list of path elements, like {foo bar bee bop}, creates a filename like
+	    foo/bar/bee/bop.
+	  </para>
+	</refsect1>
+      </refentry>
 
       <!-- source -->
       <refentry id="source">
@@ -3066,6 +3300,53 @@ puts $foo
 	  <screen>Hello world</screen>
 	</refsect1>
       </refentry>
+
+      <refentry id="file_current">
+	<refnamediv>
+	  <refname>file.current</refname>
+	  <refpurpose>Returns the name of the file currently being evaluated.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.current</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns the name of the file currently being evaluated.  For instance, if a file
+	    <filename>foobar.hcl</filename> is being sourceed, and there is a call to
+	    <command>file.current</command> in it, it will return the name of the file,
+	    <filename>foobar.hcl</filename>.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry id="file_cd">
+	<refnamediv>
+	  <refname>file.cd</refname>
+	  <refpurpose>Change working directory.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>file.cd</command>
+	    <arg choice="req"><replaceable>directory</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>cd</command> command changes the current
+	    working directory to
+	    <option><replaceable>directory</replaceable></option>.  Or
+	    at least it changes where <emphasis>Java</emphasis> thinks
+	    the working directory is.  It does not change the process'
+	    actual working directory.  Apparently that's not possible
+	    with Java.
+	  </para>
+	</refsect1>
+      </refentry>
+
     </section>
 
     <section id="http_commands">
