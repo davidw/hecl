@@ -3070,7 +3070,7 @@ puts $foo
       <refentry id="file_exists">
 	<refnamediv>
 	  <refname>file.exists</refname>
-	  <refpurpose>Does the file exist?.</refpurpose>
+	  <refpurpose>Does the file exist?</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
@@ -3089,7 +3089,7 @@ puts $foo
       <refentry id="file_hidden">
 	<refnamediv>
 	  <refname>file.hidden</refname>
-	  <refpurpose>Is the file hidden?.</refpurpose>
+	  <refpurpose>Is the file hidden?</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
@@ -3231,7 +3231,7 @@ puts $foo
       <refentry id="file_readable">
 	<refnamediv>
 	  <refname>file.readable</refname>
-	  <refpurpose>Is the file readable?.</refpurpose>
+	  <refpurpose>Is the file readable?</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
@@ -3329,7 +3329,7 @@ puts $foo
       <refentry id="file_writable">
 	<refnamediv>
 	  <refname>file.writable</refname>
-	  <refpurpose>Is the file writable?.</refpurpose>
+	  <refpurpose>Is the file writable?</refpurpose>
 	</refnamediv>
 	<refsynopsisdiv>
 	  <cmdsynopsis>
