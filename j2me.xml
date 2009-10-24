@@ -134,7 +134,7 @@
     description="Compile J2ME Hecl File support">
     <mkdir dir="${j2me.fileclasspath}"/>
     <mkdir dir="${j2me.pre}/location"/>
-    <wtkpreprocess srcdir="newfiles" destdir="${j2me.pre}/files"
+    <wtkpreprocess srcdir="files" destdir="${j2me.pre}/files"
       symbols="${j2me.defines}">
     </wtkpreprocess>
     <wtkbuild srcdir="${j2me.pre}/files" target="1.1" source="1.2"
