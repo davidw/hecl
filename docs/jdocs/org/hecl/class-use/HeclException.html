@@ -917,8 +917,10 @@ Uses of <A HREF="../../../org/hecl/HeclException.html" title="class in org.hecl"
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>HeclFile.</B><B><A HREF="../../../org/hecl/files/HeclFile.html#loadModule(org.hecl.Interp)">loadModule</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclStreamCmds.</B><B><A HREF="../../../org/hecl/files/HeclStreamCmds.html#method(org.hecl.Interp, org.hecl.ClassCommandInfo, org.hecl.Thing[])">method</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+       <A HREF="../../../org/hecl/ClassCommandInfo.html" title="class in org.hecl">ClassCommandInfo</A>&nbsp;context,
+       <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -935,22 +937,21 @@ Uses of <A HREF="../../../org/hecl/HeclException.html" title="class in org.hecl"
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;java.lang.StringBuffer</CODE></FONT></TD>
-<TD><CODE><B>HeclFile.</B><B><A HREF="../../../org/hecl/files/HeclFile.html#readFile(java.lang.String)">readFile</A></B>(java.lang.String&nbsp;filename)</CODE>
+<CODE>static&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclFileUtils.</B><B><A HREF="../../../org/hecl/files/HeclFileUtils.html#readFile(java.lang.String)">readFile</A></B>(java.lang.String&nbsp;filename)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>readFile</code> reads in a text file, given a filename,
- and returns its contents as a StringBuffer.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>readFile</code> takes a filename and returns the file's
+ contents as a Thing.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>HeclFile.</B><B><A HREF="../../../org/hecl/files/HeclFile.html#sourceFile(org.hecl.Interp, java.lang.String)">sourceFile</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>HeclFileUtils.</B><B><A HREF="../../../org/hecl/files/HeclFileUtils.html#sourceFile(org.hecl.Interp, java.lang.String)">sourceFile</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
            java.lang.String&nbsp;filename)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>sourceFile</code> method is the equivalent of the
- "source" command.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>sourceFile</code> method takes a file name.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -959,24 +960,6 @@ Uses of <A HREF="../../../org/hecl/HeclException.html" title="class in org.hecl"
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>HeclFile.</B><B><A HREF="../../../org/hecl/files/HeclFile.html#unloadModule(org.hecl.Interp)">unloadModule</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>HeclFile.</B><B><A HREF="../../../org/hecl/files/HeclFile.html#writeFile(java.lang.String, java.lang.String)">writeFile</A></B>(java.lang.String&nbsp;filename,
-          java.lang.String&nbsp;data)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>writeFile</code> method writes the 'data' String to
- the file given by 'filename'.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -134,6 +134,14 @@ Uses of <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>Interp.</B><B><A HREF="../../../org/hecl/Interp.html#currentFile">currentFile</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>MathCmds.</B><B><A HREF="../../../org/hecl/MathCmds.html#E">E</A></B></CODE>
 
@@ -547,6 +555,16 @@ Uses of <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>setLiteral</code> method sets the thing in question
  to be a literal Thing, and returns it.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ListThing.</B><B><A HREF="../../../org/hecl/ListThing.html#stringSplit(java.lang.String, java.lang.String)">stringSplit</A></B>(java.lang.String&nbsp;str,
+            java.lang.String&nbsp;splitstr)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>stringSplit</code> method takes a string and splits
+ it according to another string,</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1091,12 +1109,41 @@ Uses of <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclStreamCmds.</B><B><A HREF="../../../org/hecl/files/HeclStreamCmds.html#method(org.hecl.Interp, org.hecl.ClassCommandInfo, org.hecl.Thing[])">method</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+       <A HREF="../../../org/hecl/ClassCommandInfo.html" title="class in org.hecl">ClassCommandInfo</A>&nbsp;context,
+       <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>FileCmds.</B><B><A HREF="../../../org/hecl/files/FileCmds.html#operate(int, org.hecl.Interp, org.hecl.Thing[])">operate</A></B>(int&nbsp;cmd,
         <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclFileUtils.</B><B><A HREF="../../../org/hecl/files/HeclFileUtils.html#readFile(java.lang.String)">readFile</A></B>(java.lang.String&nbsp;filename)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>readFile</code> takes a filename and returns the file's
+ contents as a Thing.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclFileUtils.</B><B><A HREF="../../../org/hecl/files/HeclFileUtils.html#readFileFromDis(java.io.DataInputStream)">readFileFromDis</A></B>(java.io.DataInputStream&nbsp;dis)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>readFileFromDis</code>, given a DataInputStream, reads
+ from the stream until no more can be read, and returns the
+ results as a Thing.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -1105,6 +1152,16 @@ Uses of <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../org/hecl/files/package-summary.html">org.hecl.files</A> with parameters of type <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>HeclStreamCmds.</B><B><A HREF="../../../org/hecl/files/HeclStreamCmds.html#method(org.hecl.Interp, org.hecl.ClassCommandInfo, org.hecl.Thing[])">method</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+       <A HREF="../../../org/hecl/ClassCommandInfo.html" title="class in org.hecl">ClassCommandInfo</A>&nbsp;context,
+       <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
