@@ -67,6 +67,12 @@ AddSample "Hello World" {
 puts "hello world"
 }
 
+# You need to create this and copy it over somehow for this example to
+# work.
+AddSample "External Script" {
+    source file:///SDCard/test.hcl
+}
+
 AddSample "List" {
 set sel [/cmd -label Select -longlabel Select -type item]
 set back [/cmd -label Back -longlabel Back -type back]

@@ -29,7 +29,8 @@ import org.hecl.ClassCommand;
 import org.hecl.ClassCommandInfo;
 
 import org.hecl.files.FileCmds;
-import org.hecl.files.HeclFile;
+import org.hecl.files.HeclFileUtils;
+import org.hecl.files.HeclStreamCmds;
 import org.hecl.load.LoadCmd;
 import org.hecl.net.Base64Cmd;
 import org.hecl.net.HttpCmd;
@@ -63,6 +64,7 @@ public class Hecl {
             int i;
 	    /* Add the standard packages in. */
 	    FileCmds.load(interp);
+	    HeclStreamCmds.load(interp);
 	    Base64Cmd.load(interp);
 	    HttpCmd.load(interp);
 	    LoadCmd.load(interp);
@@ -76,8 +78,8 @@ public class Hecl {
             }
 	    interp.setVar("argv", ListThing.create(argv));
 	    extend(interp);
-	    if(args.length == 1) {
-		HeclFile.sourceFile(interp, args[0]);
+	    if(args.length >= 1) {
+		HeclFileUtils.sourceFile(interp, args[0]);
 	    } else {
 		interp.readEvalPrint(System.in,System.out,System.err);
 	    }

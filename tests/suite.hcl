@@ -1,11 +1,17 @@
 # Suite.hcl - Hecl test suite.
 
 # Move to the correct directory.
-set destdir [listtofile [lrange [filetolist [currentfile]] 0 -2]]
+set destdir [file.join [lrange [file.split [file.current]] 0 -2]]
 puts "Running in $destdir"
-cd $destdir
+file.cd $destdir
 
 source harness.hcl
+
+if { = [llen $argv] 2 } {
+    testfiles [list [lindex $argv 1]]
+    totals
+    exit
+}
 
 testfiles {
     after.hcl
@@ -17,6 +23,7 @@ testfiles {
     deepcopy.hcl
     equality.hcl
     eval.hcl
+    files.hcl
     filter.hcl
     for.hcl
     foreach.hcl

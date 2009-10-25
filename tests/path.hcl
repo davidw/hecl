@@ -1,29 +1,29 @@
 # path.hcl - path manipulation tests.
 
-test filetolist-1 {
-    filetolist /a/b/c
+test file.split-1 {
+    file.split /a/b/c
 } {/ a b c}
 
-test filetolist-2 {
-    filetolist a/b/c
+test file.split-2 {
+    file.split a/b/c
 } {a b c}
 
-test filetolist-3 {
-    filetolist a
+test file.split-3 {
+    file.split a
 } {a}
 
-test filetolist-4 {
-    filetolist /a
+test file.split-4 {
+    file.split /a
 } {/ a}
 
-test filetolist-5 {
-    filetolist ""
+test file.split-5 {
+    file.split ""
 } {}
 
-test listtofile-1 {
-    listtofile {a b c}
+test file.join-1 {
+    file.join {a b c}
 } {a/b/c}
 
-test listtofile-2 {
-    listtofile {/ a b c}
+test file.join-2 {
+    file.join {/ a b c}
 } {/a/b/c}

@@ -57,6 +57,7 @@
       jadfile="${j2me.hecl.jad}"
       jarfile="${j2me.hecl.jar}"
       cldc="false"
+      classpath="${jde.home}/lib/net_rim_api.jar"
       preverify="${preverify}"
       obfuscate="false"
       verbose="false">
@@ -70,9 +71,7 @@
 	<attribute name="MIDlet-Vendor" value="dedasys"/>
 	<attribute name="MIDlet-Version" value="2.0"/>
 	<attribute name="MIDlet-Permissions" value="javax.microedition.io.Connector.http"/>
-	<!--
 	<attribute name="MIDlet-1" value="Hecl, Hecl.png, Hecl"/>
-	-->
 	<attribute name="MIDlet-Jar-URL" value="Hecl.jar"/>
 	<attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
 	<attribute name="MicroEdition-Configuration" value="CLDC-${wtk.cldc.version}"/>

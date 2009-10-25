@@ -156,6 +156,14 @@ test strreplace-2 {
     strreplace {xxx yyy} foobar
 } {foobar}
 
+test strreplace-3 {
+    strreplace {hi hello} xxxhiyyyhizzzhi
+} {xxxhelloyyyhellozzzhello}
+
+test strreplace-4 {
+    strreplace {hi hello} xxxhiyyyhizzz
+} {xxxhelloyyyhellozzz}
+
 ### Local Variables:
 ### mode:tcl
 ### coding:utf-8

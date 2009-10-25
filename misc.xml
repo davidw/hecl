@@ -22,7 +22,7 @@
 	<pathelement path="build/j2se/pre/core/"/>
       </sourcepath>
       <sourcepath>
-	<pathelement path="files"/>
+	<pathelement path="build/j2se/pre/files"/>
       </sourcepath>
 
       <sourcepath>

@@ -298,4 +298,43 @@ public class ListThing implements RealThing {
 	}
         return resbuf.toString();
     }
+
+    /**
+     * The <code>stringSplit</code> method takes a string and splits
+     * it according to another string,
+     *
+     * @param str a <code>String</code> value
+     * @param splitstr a <code>String</code> value
+     * @return a <code>Thing</code> value
+     */
+    public static Thing stringSplit(String str, String splitstr) {
+	int idx = 0;
+	int last = 0;
+	Vector result = new Vector();
+	if (splitstr == null) {
+	    /* By default, we split on spaces. */
+	    splitstr = " ";
+	}
+
+	int splitstringlen = splitstr.length();
+
+	if (splitstringlen > 0) {
+	    idx = str.indexOf(splitstr);
+	    while (idx >= 0) {
+		result.addElement(new Thing(str.substring(last, idx)));
+		last = idx + splitstringlen;
+		idx = str.indexOf(splitstr, last);
+	    }
+	    result.addElement(new Thing(str.substring(last, str.length())));
+	} else {
+	    /* This is a special case: when the splitstring is an
+	     * empty string "". */
+	    for(int i = 0; i < str.length(); i++) {
+		char[] c = new char[1];
+		c[0] = str.charAt(i);
+		result.addElement(new Thing(new String(c)));
+	    }
+	}
+	return ListThing.create(result);
+    }
 }

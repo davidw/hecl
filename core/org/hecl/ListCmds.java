@@ -1,4 +1,4 @@
-/* Copyright 2006 David N. Welton
+/* Copyright 2006-2009 David N. Welton
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -165,26 +165,14 @@ class ListCmds extends Operator {
 		}
 		return new Thing(strres);
 
-	    case SPLIT:
-		result = new Vector();
+	    case SPLIT: {
 		String str = argv[1].toString();
 		String splitstr = null;
 		if (argv.length > 2) {
 		    splitstr = argv[2].toString();
-		} else {
-		    /* By default, we split on spaces. */
-		    splitstr = " ";
 		}
-
-		idx = str.indexOf(splitstr);
-		while (idx >= 0) {
-		    result.addElement(new Thing(str.substring(last, idx)));
-		    last = idx + splitstr.length();
-		    idx = str.indexOf(splitstr, last);
-		}
-		result.addElement(new Thing(str.substring(last, str.length())));
-		return ListThing.create(result);
-
+		return ListThing.stringSplit(str, splitstr);
+	    }
 	    default:
 		throw new HeclException("Unknown list command '"
 					+ argv[0].toString() + "' with code '"

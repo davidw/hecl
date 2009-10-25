@@ -54,7 +54,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../org/hecl/files/HeclFile.html" title="class in org.hecl.files"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../org/hecl/files/HeclChannel.html" title="class in org.hecl.files"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?org/hecl/files/FileCmds.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="FileCmds.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -74,9 +74,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -103,6 +103,18 @@ java.lang.Object
 </PRE>
 
 <P>
+The <code>FileCmds</code> class implements various file commands -
+ most importantly, open, but also various operations to check
+ whether a file exists, is readable, is a directory, and so on.
+<P>
+
+<P>
+<DL>
+<DT><B>Version:</B></DT>
+  <DD>1.0</DD>
+<DT><B>Author:</B></DT>
+  <DD><a href="mailto:davidw@dedasys.com">David N. Welton</a></DD>
+</DL>
 <HR>
 
 <P>
@@ -113,6 +125,14 @@ java.lang.Object
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#BASENAME">BASENAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -133,7 +153,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#FILESIZE">FILESIZE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#DELETE">DELETE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -141,7 +161,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#FILETOLIST">FILETOLIST</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#DU">DU</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -149,7 +169,7 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#LISTTOFILE">LISTTOFILE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#EXISTS">EXISTS</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -157,7 +177,103 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#READALL">READALL</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#FILEJOIN">FILEJOIN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#FILESPLIT">FILESPLIT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#HIDDEN">HIDDEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#ISDIRECTORY">ISDIRECTORY</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#ISOPEN">ISOPEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#LIST">LIST</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#LISTROOTS">LISTROOTS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#MKDIR">MKDIR</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#MTIME">MTIME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#OPEN">OPEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#READABLE">READABLE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#RENAME">RENAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#SIZE">SIZE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -173,7 +289,15 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#WRITE">WRITE</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#TRUNCATE">TRUNCATE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#WRITABLE">WRITABLE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -186,6 +310,26 @@ java.lang.Object
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../org/hecl/Operator.html#cmdcode">cmdcode</A>, <A HREF="../../../org/hecl/Operator.html#maxargs">maxargs</A>, <A HREF="../../../org/hecl/Operator.html#minargs">minargs</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected </CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#FileCmds(int, int, int)">FileCmds</A></B>(int&nbsp;cmdcode,
+         int&nbsp;minargs,
+         int&nbsp;maxargs)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -255,43 +399,193 @@ java.lang.Object
 </TR>
 </TABLE>
 
-<A NAME="CD"><!-- --></A><H3>
-CD</H3>
+<A NAME="OPEN"><!-- --></A><H3>
+OPEN</H3>
 <PRE>
-public static final int <B>CD</B></PRE>
+public static final int <B>OPEN</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CD">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.OPEN">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="CURRENTFILE"><!-- --></A><H3>
-CURRENTFILE</H3>
+<A NAME="READABLE"><!-- --></A><H3>
+READABLE</H3>
 <PRE>
-public static final int <B>CURRENTFILE</B></PRE>
+public static final int <B>READABLE</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CURRENTFILE">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.READABLE">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="READALL"><!-- --></A><H3>
-READALL</H3>
+<A NAME="WRITABLE"><!-- --></A><H3>
+WRITABLE</H3>
 <PRE>
-public static final int <B>READALL</B></PRE>
+public static final int <B>WRITABLE</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.READALL">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.WRITABLE">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="WRITE"><!-- --></A><H3>
-WRITE</H3>
+<A NAME="HIDDEN"><!-- --></A><H3>
+HIDDEN</H3>
 <PRE>
-public static final int <B>WRITE</B></PRE>
+public static final int <B>HIDDEN</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.WRITE">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.HIDDEN">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="EXISTS"><!-- --></A><H3>
+EXISTS</H3>
+<PRE>
+public static final int <B>EXISTS</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.EXISTS">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="DELETE"><!-- --></A><H3>
+DELETE</H3>
+<PRE>
+public static final int <B>DELETE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.DELETE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="SIZE"><!-- --></A><H3>
+SIZE</H3>
+<PRE>
+public static final int <B>SIZE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.SIZE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="BASENAME"><!-- --></A><H3>
+BASENAME</H3>
+<PRE>
+public static final int <B>BASENAME</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.BASENAME">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="MTIME"><!-- --></A><H3>
+MTIME</H3>
+<PRE>
+public static final int <B>MTIME</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.MTIME">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="ISDIRECTORY"><!-- --></A><H3>
+ISDIRECTORY</H3>
+<PRE>
+public static final int <B>ISDIRECTORY</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.ISDIRECTORY">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="ISOPEN"><!-- --></A><H3>
+ISOPEN</H3>
+<PRE>
+public static final int <B>ISOPEN</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.ISOPEN">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="LIST"><!-- --></A><H3>
+LIST</H3>
+<PRE>
+public static final int <B>LIST</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.LIST">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="MKDIR"><!-- --></A><H3>
+MKDIR</H3>
+<PRE>
+public static final int <B>MKDIR</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.MKDIR">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="RENAME"><!-- --></A><H3>
+RENAME</H3>
+<PRE>
+public static final int <B>RENAME</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.RENAME">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="TRUNCATE"><!-- --></A><H3>
+TRUNCATE</H3>
+<PRE>
+public static final int <B>TRUNCATE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.TRUNCATE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="LISTROOTS"><!-- --></A><H3>
+LISTROOTS</H3>
+<PRE>
+public static final int <B>LISTROOTS</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.LISTROOTS">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="DU"><!-- --></A><H3>
+DU</H3>
+<PRE>
+public static final int <B>DU</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.DU">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="FILESPLIT"><!-- --></A><H3>
+FILESPLIT</H3>
+<PRE>
+public static final int <B>FILESPLIT</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.FILESPLIT">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="FILEJOIN"><!-- --></A><H3>
+FILEJOIN</H3>
+<PRE>
+public static final int <B>FILEJOIN</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.FILEJOIN">Constant Field Values</A></DL>
 </DL>
 <HR>
 
@@ -305,33 +599,42 @@ public static final int <B>SOURCE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="FILESIZE"><!-- --></A><H3>
-FILESIZE</H3>
+<A NAME="CURRENTFILE"><!-- --></A><H3>
+CURRENTFILE</H3>
 <PRE>
-public static final int <B>FILESIZE</B></PRE>
+public static final int <B>CURRENTFILE</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.FILESIZE">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CURRENTFILE">Constant Field Values</A></DL>
 </DL>
 <HR>
 
-<A NAME="FILETOLIST"><!-- --></A><H3>
-FILETOLIST</H3>
+<A NAME="CD"><!-- --></A><H3>
+CD</H3>
 <PRE>
-public static final int <B>FILETOLIST</B></PRE>
+public static final int <B>CD</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.FILETOLIST">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CD">Constant Field Values</A></DL>
 </DL>
-<HR>
 
-<A NAME="LISTTOFILE"><!-- --></A><H3>
-LISTTOFILE</H3>
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="FileCmds(int, int, int)"><!-- --></A><H3>
+FileCmds</H3>
 <PRE>
-public static final int <B>LISTTOFILE</B></PRE>
+protected <B>FileCmds</B>(int&nbsp;cmdcode,
+                   int&nbsp;minargs,
+                   int&nbsp;maxargs)</PRE>
 <DL>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.LISTTOFILE">Constant Field Values</A></DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -425,7 +728,7 @@ public static void <B>unload</B>(<A HREF="../../../org/hecl/Interp.html" title="
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../org/hecl/files/HeclFile.html" title="class in org.hecl.files"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../org/hecl/files/HeclChannel.html" title="class in org.hecl.files"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?org/hecl/files/FileCmds.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="FileCmds.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -445,9 +748,9 @@ public static void <B>unload</B>(<A HREF="../../../org/hecl/Interp.html" title="
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>
