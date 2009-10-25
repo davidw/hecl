@@ -227,18 +227,19 @@ class StringCmds extends Operator {
 
 	    case STRREPLACE: {
 		// strreplace {from to} stringwithfromtoreplace
-		String resstr = null;
+		String resstr = "";
 		Vector v = ListThing.get(argv[1]);
 		String original = argv[2].toString();
 		String from = ((Thing)v.elementAt(0)).toString();
+		String to = ((Thing)v.elementAt(1)).toString();
 		int start = original.indexOf(from);
-		if (start < 0) {
-		    resstr = original;
-		} else {
-		    resstr = original.substring(0, start) +
-			((Thing)v.elementAt(1)).toString() +
-			original.substring(start + from.length(), original.length());
+		int idx = 0;
+		while (start >= 0) {
+		    resstr += original.substring(idx, start) + to;
+		    idx = (start + from.length());
+		    start = original.indexOf(from, idx);
 		}
+		resstr += original.substring(idx, original.length());
 		return new Thing(resstr);
 	    }
 

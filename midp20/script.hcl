@@ -236,6 +236,78 @@ $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
 }
 
+AddSample "File Browser" {
+
+proc FileSelect {infohash bselect bback binfo cmd menu} {
+    set root [hget $infohash root]
+
+    set index [$menu selection get]
+
+    set f [lindex [hget $infohash paths] $index]
+
+    if {eq $cmd $bselect} {
+	lappend $root $f
+    } elseif {eq $cmd $bback} {
+	lset $root -1
+    }
+
+    # If we are back at the root level, we need to do file.devs
+    # instead of file.list
+    if { = 0 [llen $root] } {
+	set lst [file.devs]
+    } else {
+	set cpath "file:///[join $root {}]"
+	set lst [file.list "$cpath"]
+    }
+
+    # Show some information on the file in question.
+    if {eq $cmd $binfo} {
+	set dismiss [lcdui.command -label Ok -longlabel Ok -type ok]
+	set bform [lcdui.form -title "Info: $f" -commandaction [: {cmd form} [list $menu setcurrent]]]
+	$bform addcommand $dismiss
+	set directory [file.isdirectory $cpath]
+
+	$bform append [lcdui.stringitem -label "Readable?" -text [file.readable $cpath]]
+	$bform append [lcdui.stringitem -label "Writable?" -text [file.writable $cpath]]
+	$bform append [lcdui.stringitem -label "Hidden?" -text [file.hidden $cpath]]
+	if { not $directory } {
+	    $bform append [lcdui.stringitem -label "Size" -text [file.size $cpath]]
+	}
+	$bform append [lcdui.stringitem -label "Basename" -text [file.basename $cpath]]
+	$bform append [lcdui.stringitem -label "Last Modified" -text [file.mtime $cpath]]
+	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
+	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]
+	$bform setcurrent
+    }
+
+    hset $infohash paths $lst
+    $menu deleteall
+    foreach x $lst {
+	$menu append $x
+    }
+
+    #Re-add the infohash into the -commandaction.
+    $menu configure -commandaction [list FileSelect $infohash $bselect $bback $binfo]
+}
+
+set h [hash {}]
+set devs [file.devs]
+hset $h paths $devs
+hset $h root {}
+
+set bselect [lcdui.command -label Select -longlabel Select -type item]
+set bback [lcdui.command -label Back -longlabel Back -type item]
+set binfo [lcdui.command -label Info -longlabel "File Info" -type item]
+set browser [lcdui.list -selectcommand $bselect -title "File Browser" \
+		 -commandaction [list FileSelect $h $bselect $bback $binfo]]
+$browser addcommand $bback
+$browser addcommand $binfo
+$browser setcurrent
+foreach d $devs {
+    $browser append $d
+}
+}
+
 AddSample Canvas {
 proc DrawH {g x y} {
     global WIDTH HEIGHT

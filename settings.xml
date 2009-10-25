@@ -127,7 +127,9 @@
   <!-- build base dirs -->
   <property name="kxml" value="false"/>
   <property name="mwt" value="false"/>
-  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt}"/>
+  <property name="files" value="false"/>
+
+  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt},files=${files}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
@@ -180,6 +182,11 @@
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
 
+  <property name="j2me.filesclasspath" value="${j2me.build}"/>
+  <path id="j2me.filesclasspath">
+    <pathelement location="${j2me.filesclasspath}"/>
+  </path>
+
   <!-- MWT properties -->
   <property name="mwt.lib" value="jars/mwt.jar" />
   <property name="j2me.mwtguiclasspath" value="${j2me.mwtbuild}"/>
@@ -196,6 +203,11 @@
 
   <condition property="buildkxml" value="buildkxml">
     <equals arg1="1" arg2="${kxml}"/>
+  </condition>
+
+  <!-- File API settings -->
+  <condition property="buildfiles" value="buildfiles">
+    <equals arg1="1" arg2="${files}"/>
   </condition>
 
   <!-- Android settings -->

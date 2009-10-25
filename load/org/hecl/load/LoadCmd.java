@@ -21,7 +21,7 @@ import org.hecl.Interp;
 import org.hecl.ListThing;
 import org.hecl.Thing;
 
-import org.hecl.files.HeclFile;
+import org.hecl.files.HeclFileUtils;
 import org.hecl.HeclModule;
 
 import java.net.URI;
@@ -58,8 +58,9 @@ public class LoadCmd implements Command {
 		/* Apparently the URI's must be absolute. */
 		URI uri = new URI(((Thing)urlv.elementAt(i)).toString());
 		if (!uri.isAbsolute()) {
-		    URI current = new URI("file://" + HeclFile.currentFile);
-		    uri = current.resolve(uri.normalize());
+		    /* FIXME!!!  */
+/* 		    URI current = new URI("file://" + HeclFile.currentFile);
+		    uri = current.resolve(uri.normalize());  */
 		}
 		urls[i] = uri.toURL();
 	    }
