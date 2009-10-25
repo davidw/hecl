@@ -15,13 +15,16 @@
 
 package org.hecl.heclbuilder;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.FileOutputStream;
 
 import javax.swing.JOptionPane;
 
 import org.hecl.HeclException;
-import org.hecl.files.HeclFile;
 
+import org.hecl.files.HeclFileUtils;
 
 /**
  * <code>HeclEditor</code> -- This class provides a very, very crude
@@ -51,8 +54,8 @@ public class HeclEditor extends javax.swing.JFrame {
         scriptfile = new File(filename);
         if (scriptfile.exists()) {
             try {
-                script = HeclFile.readFile(filename);
-            } catch (HeclException e) {
+                script = new StringBuffer(HeclFileUtils.readFile(filename).toString());
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(
 		    null, "File Error", "Error reading file: " + filename + "\n" + e.toString(),
 		    JOptionPane.ERROR_MESSAGE);
@@ -125,12 +128,39 @@ public class HeclEditor extends javax.swing.JFrame {
 
     private void menuSaveActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            HeclFile.writeFile(scriptfile.toString(), editPanel.getText());
+            writeFile(scriptfile.toString(), editPanel.getText());
         } catch (HeclException e) {
             JOptionPane.showMessageDialog(
 		null, "File Error",
 		"Could not write to: " + scriptfile + "\n" + e.toString(),
 		JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static void writeFile(String filename, String data) throws HeclException {
+	File realfn = new File(filename).getAbsoluteFile();
+	BufferedOutputStream fos = null;
+
+	try {
+	    char[] chars = new char[data.length()];
+	    data.getChars(0, data.length(), chars, 0);
+
+	    fos = new BufferedOutputStream(new FileOutputStream(realfn));
+	    for (int i = 0; i < chars.length; i++) {
+		fos.write(chars[i]);
+	    }
+	} catch (IOException e) {
+	    throw new HeclException("error writing to " + realfn +
+				    " : " + e.toString());
+	} finally {
+	    try {
+		if (fos != null) {
+		    fos.close();
+		}
+	    } catch (IOException e) {
+		throw new HeclException("error closing " + realfn +
+					" stream" + " : " + e.toString());
+	    }
+	}
     }
 }

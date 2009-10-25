@@ -131,7 +131,9 @@
   <property name="kxml" value="false"/>
   <!-- Use the MWT toolkit? -->
   <property name="mwt" value="false"/>
-  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt},locationapi=${locationapi}"/>
+  <property name="files" value="false"/>
+
+  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt},files=${files},locationapi=${locationapi}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
@@ -188,6 +190,11 @@
     <pathelement location="${j2me.locationclasspath}"/>
   </path>
 
+  <property name="j2me.filesclasspath" value="${j2me.build}"/>
+  <path id="j2me.filesclasspath">
+    <pathelement location="${j2me.filesclasspath}"/>
+  </path>
+
   <!-- MWT properties -->
   <property name="mwt.lib" value="jars/mwt.jar" />
   <property name="j2me.mwtguiclasspath" value="${j2me.mwtbuild}"/>
@@ -206,9 +213,15 @@
     <equals arg1="1" arg2="${kxml}"/>
   </condition>
 
+<<<<<<< HEAD:settings.xml
   <!-- Location API settings -->
   <condition property="buildlocationapi" value="buildlocationapi">
     <equals arg1="1" arg2="${locationapi}"/>
+=======
+  <!-- File API settings -->
+  <condition property="buildfiles" value="buildfiles">
+    <equals arg1="1" arg2="${files}"/>
+>>>>>>> master:settings.xml
   </condition>
 
   <!-- Android settings -->

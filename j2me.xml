@@ -144,6 +144,20 @@
     </wtkbuild>
   </target>
 
+  <target name="compileJ2MEFiles"
+    depends="initCompile,compileJ2MECore,compileJ2MErms"
+    description="Compile J2ME Hecl File support">
+    <mkdir dir="${j2me.fileclasspath}"/>
+    <mkdir dir="${j2me.pre}/location"/>
+    <wtkpreprocess srcdir="files" destdir="${j2me.pre}/files"
+      symbols="${j2me.defines}">
+    </wtkpreprocess>
+    <wtkbuild srcdir="${j2me.pre}/files" target="1.1" source="1.2"
+      destdir="${j2me.filesclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${wtk.home}/lib/jsr75.jar"/>
+    </wtkbuild>
+  </target>
 
   <target name="j2meLibs" depends="compileJ2MECore,compileJ2MEHttp,compileJ2MErms">
   </target>
@@ -278,6 +292,11 @@
     <copy file="${j2me.hecl.lib.jar}" todir="${j2me.rel}" overwrite="true"/>
   </target>
 
+  <target name="extra-files" if="buildfiles" description="File API - if the user has
+    compiled it in">
+    <antcall target="compileJ2MEFiles"/>
+  </target>
+
   <target name="extra-kxml" if="buildkxml" description="Build kxml stuff if the user has decided to">
     <unjar src="jars/kxml2-2.3.0.jar" dest="${j2me.build}" />
     <antcall target="compileJ2MEkxml"/>
@@ -287,7 +306,7 @@
     <antcall target="compileJ2MELocation"/>
   </target>
 
-  <target name="extras" depends="extra-kxml,extra-locationapi" description="Use this to link in extra packages">
+  <target name="extras" depends="extra-kxml,extra-files,extra-locationapi" description="Use this to link in extra packages">
   </target>
 
   <target name="midlet" depends="midp">
