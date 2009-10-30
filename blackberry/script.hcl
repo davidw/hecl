@@ -206,7 +206,7 @@ set plist {
 foreach {l p} $plist {
     if {= [catch {set p [system.getproperty $p]}] 0} {
 	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text $p -uneditable 1]
+	    $form append [/txt -label $l -text [strrange $p 0 30] -uneditable 1]
 	}
     }
 }
