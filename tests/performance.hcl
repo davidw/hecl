@@ -1,8 +1,9 @@
 # performance.hcl -- performance tests go here.
 
-# Move to the current working directory.
-cd [listtofile [lrange [filetolist [currentfile]] 0 -2]]
-
+# Move to the correct directory.
+set destdir [file.join [lrange [file.split [file.current]] 0 -2]]
+puts "Running in $destdir"
+file.cd $destdir
 
 proc stopwatch {name code} {
     global times
