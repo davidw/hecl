@@ -213,15 +213,13 @@
     <equals arg1="1" arg2="${kxml}"/>
   </condition>
 
-<<<<<<< HEAD:settings.xml
   <!-- Location API settings -->
   <condition property="buildlocationapi" value="buildlocationapi">
     <equals arg1="1" arg2="${locationapi}"/>
-=======
+  </condition>
   <!-- File API settings -->
   <condition property="buildfiles" value="buildfiles">
     <equals arg1="1" arg2="${files}"/>
->>>>>>> master:settings.xml
   </condition>
 
   <!-- Android settings -->
