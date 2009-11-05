@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+package org.hecl.location;
+
 import java.lang.InterruptedException;
 
 import javax.microedition.location.Coordinates;
@@ -39,31 +41,26 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-
-class LocationCmd extends Operator {
+public class LocationCmd extends Operator {
     public static final int GET = 1;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch(cmd) {
 	    case GET: {
-		try {
-		    LocationProvider lp = LocationProvider.getInstance(new Criteria());
-		    Location loc = lp.getLocation(IntThing.get(argv[1]));
-		    QualifiedCoordinates c = loc.getQualifiedCoordinates();
-		    Hashtable h = new Hashtable();
-		    h.put("lat", DoubleThing.create(c.getLatitude()));
-		    h.put("lon", DoubleThing.create(c.getLongitude()));
-		    h.put("alt", DoubleThing.create(c.getAltitude()));
-		    h.put("haccuracy", DoubleThing.create(c.getHorizontalAccuracy()));
-		    h.put("vaccuracy", DoubleThing.create(c.getVerticalAccuracy()));
-		    h.put("location_method", locationMethod(loc.getLocationMethod()));
-		    h.put("speed", DoubleThing.create(loc.getSpeed()));
-		    h.put("course", DoubleThing.create(loc.getCourse()));
-		    return HashThing.create(h);
-		} catch (LocationException le) {
-		    throw new HeclException("location.get error: " + le.toString());
-		} catch (InterruptedException ie) {
-		    throw new HeclException("location.get error: " + ie.toString());
+		if (argv.length == 2) {
+		    /* Simply fetch the information, blocking the application. */
+		    return getLocation(IntThing.get(argv[1]));
+		} else if (argv.length > 2 &&
+			   argv[1].toString().equals("-callback")) {
+		    /* Use a callback in a separate thread. */
+		    int timeout = 100;
+		    if (argv.length == 4) {
+			timeout = IntThing.get(argv[3]);
+		    }
+
+		    LocationRequest locationrequest = new LocationRequest(interp, argv[2], timeout);
+		    locationrequest.start();
+		    return Thing.emptyThing();
 		}
 	    }
 
@@ -72,6 +69,28 @@ class LocationCmd extends Operator {
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 
+	}
+    }
+
+    protected static final Thing getLocation(int timeout) throws HeclException {
+	try {
+	    LocationProvider lp = LocationProvider.getInstance(new Criteria());
+	    Location loc = lp.getLocation(timeout);
+	    QualifiedCoordinates c = loc.getQualifiedCoordinates();
+	    Hashtable h = new Hashtable();
+	    h.put("lat", DoubleThing.create(c.getLatitude()));
+	    h.put("lon", DoubleThing.create(c.getLongitude()));
+	    h.put("alt", DoubleThing.create(c.getAltitude()));
+	    h.put("haccuracy", DoubleThing.create(c.getHorizontalAccuracy()));
+	    h.put("vaccuracy", DoubleThing.create(c.getVerticalAccuracy()));
+	    h.put("location_method", locationMethod(loc.getLocationMethod()));
+	    h.put("speed", DoubleThing.create(loc.getSpeed()));
+	    h.put("course", DoubleThing.create(loc.getCourse()));
+	    return HashThing.create(h);
+	} catch (LocationException le) {
+	    throw new HeclException("location.get error: " + le.toString());
+	} catch (InterruptedException ie) {
+	    throw new HeclException("location.get error: " + ie.toString());
 	}
     }
 
@@ -108,7 +127,7 @@ class LocationCmd extends Operator {
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
-	    cmdtable.put("location.get", new LocationCmd(GET,1,1));
+	    cmdtable.put("location.get", new LocationCmd(GET,1,3));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create browser commands.");
