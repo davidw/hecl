@@ -1,5 +1,14 @@
 2009-11-05  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
 
+	* tests/suite.hcl: 
+	* tests/threads.hcl: 
+	* tests/intro.hcl: Enhanced tests. intro-test needs to be run
+	first to avoid clobbered global namespace. intro modified to ease
+	checking for commands. More time can be spend on this to make it
+	really elaborate. Changed thread test 2 to stop creation of
+	background tasks when test is done. The old behavior caused some
+	problems when the test run terminated (Java error empty stack).
+
 	* core/org/hecl/Proc.java: Modified implementation to collect as
 	much information as possible during creation and avoid to
 	repeatedly redo the work for every invocation. This shall sage
