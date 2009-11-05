@@ -1,5 +1,7 @@
 2009-11-05  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
 
+	* tests/performance.hcl: Updated to use new file.* commands.
+
 	* tests/suite.hcl: 
 	* tests/threads.hcl: 
 	* tests/intro.hcl: Enhanced tests. intro-test needs to be run
