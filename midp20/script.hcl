@@ -180,9 +180,12 @@ AddSample Alert {
 if { < 0 [llen [search [intro commands] x {eq $x location.get}]] } {
 AddSample LocationAPI {
 set locationform [lcdui.form -title "Location Information" -commandaction [: {c f} {done}]]
-foreach {k v} [location.get 100] {
-    $locationform append [lcdui.textfield -label $k -text $v]
+proc LocationCallback {results} {
+    foreach {k v} $results {
+	$locationform append [lcdui.textfield -label $k -text $v]
+    }
 }
+location.get -callback LocationCallback 100
 $locationform setcurrent
 }
 }
