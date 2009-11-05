@@ -67,7 +67,13 @@ public class FileCmds extends Operator {
     public static final int DELETE = 50;
 
     public static final int SIZE = 60;
-    public static final int BASENAME = 70;
+
+    public static final int NAME = 70;
+    public static final int PATH = 71;
+    public static final int ABSPATH = 72;
+    public static final int CANONPATH = 73;
+    public static final int ISABSOLUTE = 74;
+
     public static final int MTIME = 80;
 
     public static final int ISDIRECTORY = 90;
@@ -91,6 +97,7 @@ public class FileCmds extends Operator {
     public static final int SOURCE = 190;
     public static final int CURRENTFILE = 200;
     public static final int CD = 210;
+    public static final int GETCWD = 220;
 
 
     public Thing operate(int cmd, Interp interp, Thing[] argv)
@@ -128,6 +135,8 @@ public class FileCmds extends Operator {
 	    case CURRENTFILE: {
 		return interp.currentFile;
 	    }
+	    case GETCWD:
+	         return new Thing(System.getProperty("user.dir"));
 	    case CD: {
 //#if javaversion >= 1.5
 		return new Thing(System.setProperty("user.dir", argv[1].toString()));
@@ -209,37 +218,36 @@ public class FileCmds extends Operator {
 	    }
 
 	    case EXISTS:
-	    {
 		return IntThing.create(tfile.exists());
-	    }
-
 	    case DELETE:
-	    {
-		tfile.delete();
-		return Thing.emptyThing();
-	    }
-
+	      return IntThing.create(tfile.delete());
 	    case SIZE:
-	    {
 		return LongThing.create(tfile.length());
-	    }
-	    case BASENAME:
-	    {
+	    case NAME:
 		return new Thing(tfile.getName());
-	    }
+	    case PATH:
+		return new Thing(tfile.getPath());
+	    case ABSPATH:
+		return new Thing(tfile.getAbsolutePath());
+	    case CANONPATH:
+	      try {
+		  return new Thing(tfile.getCanonicalPath());
+	      }
+	      catch(Exception e) {
+		  throw new HeclException("I/O error for file '"
+					  +tfile.toString()+",: "+
+					  e.toString());
+	      }
+	      
+	    case ISABSOLUTE:
+		return IntThing.create(tfile.isAbsolute());
 	    case MTIME:
-	    {
 		return LongThing.create(tfile.lastModified());
-	    }
 	    case ISDIRECTORY:
-	    {
 		return IntThing.create(tfile.isDirectory());
-	    }
 
 	    case ISOPEN:
-	    {
 		throw new HeclException("not implemented");
-	    }
 
 	    case LIST: {
 		Vector v = new Vector();
@@ -394,7 +402,7 @@ public class FileCmds extends Operator {
 		{
 		    return LongThing.create(fconn.fileSize());
 		}
-		case BASENAME:
+		case NAME:
 		{
 		    return new Thing(fconn.getName());
 		}
@@ -490,7 +498,13 @@ public class FileCmds extends Operator {
 	    cmdtable.put("file.hidden", new FileCmds(HIDDEN,1,2));
 	    cmdtable.put("file.exists", new FileCmds(EXISTS,1,1));
 	    cmdtable.put("file.size", new FileCmds(SIZE,1,1));
-	    cmdtable.put("file.basename", new FileCmds(BASENAME,1,1));
+	    cmdtable.put("file.name", new FileCmds(NAME,1,1));
+//#if javaversion >= 1.6
+	    cmdtable.put("file.path", new FileCmds(PATH,1,1));
+	    cmdtable.put("file.absolutepath", new FileCmds(ABSPATH,1,1));
+	    cmdtable.put("file.canonicalpath", new FileCmds(CANONPATH,1,1));
+	    cmdtable.put("file.isabsolute", new FileCmds(ISABSOLUTE,1,1));
+//#endif
 	    cmdtable.put("file.mtime", new FileCmds(MTIME,1,1));
 	    cmdtable.put("file.isdirectory", new FileCmds(ISDIRECTORY,1,1));
 	    cmdtable.put("file.isopen", new FileCmds(ISOPEN,1,1));
@@ -509,6 +523,7 @@ public class FileCmds extends Operator {
 
 	    cmdtable.put("source", new FileCmds(SOURCE,1,1));
 	    cmdtable.put("file.current", new FileCmds(CURRENTFILE,0,0));
+	    cmdtable.put("file.getcwd", new FileCmds(GETCWD,0,0));
 	    cmdtable.put("file.cd", new FileCmds(CD,1,1));
 
 	} catch (Exception e) {
