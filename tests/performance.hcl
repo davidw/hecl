@@ -1,6 +1,6 @@
 # performance.hcl -- performance tests go here.
 
-# Move to the current working directory.
+# Move to the correct directory.
 set destdir [file.join [lrange [file.split [file.current]] 0 -2]]
 puts "Running in $destdir"
 file.cd $destdir

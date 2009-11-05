@@ -42,3 +42,17 @@ stopwatch while-5 {
 	}
     }
 }
+
+stopwatch loop-with-proc-1 {
+    set i 1
+
+    proc someproc {x} {
+	incr $x
+    }
+
+    time {
+	while { < $i 10000 } {
+	    someproc $i
+	}
+    }
+}
