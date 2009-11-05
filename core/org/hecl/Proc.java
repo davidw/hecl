@@ -24,8 +24,6 @@ import java.util.Vector;
  * @version 1.0
  */
 
-import java.util.Vector;
-
 class Proc implements Command {
     private Thing code;
     /** Array of command line arguments */
