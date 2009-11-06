@@ -51,7 +51,7 @@ stopwatch loop-with-proc-1 {
     }
 
     time {
-	while { < $i 10000 } {
+	while { < $i 100000 } {
 	    someproc $i
 	}
     }
