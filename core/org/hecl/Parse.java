@@ -276,7 +276,8 @@ public class Parse {
                 case ';' :
 		    return;
                 case ' ' :
-                case '	' :
+                case '\t' :
+                case '\f' :
                     continue;
                 case '{' :
                     parseBlock(state);
@@ -457,7 +458,7 @@ public class Parse {
 		    /* If we are not dealing with a variable parse
 		     * such as $\ {foo}, and the next character
 		     * isn't a space, we have a problem. */
-		    if (!invar && ch != ' ' && ch != '	' &&
+		    if (!invar && ch != ' ' && ch != '\t' && ch != '\f' &&
 			ch != '\n' && ch != '\r' && ch != ';' && ch != 0) {
 			throw new HeclException("Extra characters after close-brace");
 		    }
@@ -535,7 +536,8 @@ public class Parse {
 		addDollar();
 		break;
 	      case ' ' :
-	      case '	' :
+	      case '\t' :
+	      case '\f':
 		return;
 	      case '\n' :
 		state.lineno ++;
