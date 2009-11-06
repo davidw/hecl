@@ -1,3 +1,10 @@
+2009-11-06  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/StringCmds.java: Formfeed is now a default split
+	character (since it is whitespace).
+
+	* core/org/hecl/Parse.java: Added support for formfeed notation '\f'.
+
 2009-11-05  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
 
 	* tests/performance.hcl: Updated to use new file.* commands.

@@ -581,6 +581,9 @@ public class Parse {
 	    }
 	  case '\n':
 	    return true;
+	  case '\f':
+	    appendToCurrent('\f');
+	    break;
 	  case 'r':
 	    appendToCurrent((char)0x0d);
 	    break;
