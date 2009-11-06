@@ -26,17 +26,36 @@ import org.hecl.Interp;
 import org.hecl.ListThing;
 import org.hecl.Thing;
 
+/**
+ * The <code>LocationRequest</code> class is a thread that sets in
+ * motion the location information request, and sends and async
+ * request back to the interpreter when the information is available.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class LocationRequest extends Thread {
     Interp interp = null;
     Thing callbackProc = null;
     int timeout = 100;
 
+    /**
+     * Creates a new <code>LocationRequest</code> instance.
+     *
+     * @param i an <code>Interp</code> value
+     * @param c a <code>Thing</code> value
+     * @param t an <code>int</code> value
+     */
     public LocationRequest(Interp i, Thing c, int t) {
 	interp = i;
 	callbackProc = c;
 	timeout = t;
     }
 
+    /**
+     * The <code>run</code> method is where the real work is done.
+     *
+     */
     public synchronized void run() {
 	try {
 	    Vector cmd = ListThing.get(callbackProc.deepcopy());

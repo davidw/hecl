@@ -41,6 +41,14 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+/**
+ * The <code>LocationCmd</code> class implements the location API
+ * commands, which utilize a GPS (or other methods) to obtain location
+ * information.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class LocationCmd extends Operator {
     public static final int GET = 1;
 
@@ -72,6 +80,15 @@ public class LocationCmd extends Operator {
 	}
     }
 
+    /**
+     * The <code>getLocation</code> method does the actual API call to
+     * obtain the location information, and package it up in a
+     * HashThing for the consumption of the user.
+     *
+     * @param timeout an <code>int</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     protected static final Thing getLocation(int timeout) throws HeclException {
 	try {
 	    LocationProvider lp = LocationProvider.getInstance(new Criteria());
@@ -94,6 +111,16 @@ public class LocationCmd extends Operator {
 	}
     }
 
+
+    /**
+     * The <code>locationMethod</code> method creates a HashThing
+     * reporting some information about the location information
+     * lookup.
+     *
+     * @param lmethod an <code>int</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static final Thing locationMethod(int lmethod) throws HeclException {
 	Hashtable r = new Hashtable();
 	if ((Location.MTA_ASSISTED & lmethod) > 0) {
