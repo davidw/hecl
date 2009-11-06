@@ -79,7 +79,7 @@ public class Hecl extends MIDlet {
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
 //#if locationapi == 1
-	    LocationCmd.load(interp);
+	    org.hecl.location.LocationCmd.load(interp);
 //#endif
 
 //#if kxml == 1
