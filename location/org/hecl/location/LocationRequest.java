@@ -62,7 +62,7 @@ public class LocationRequest extends Thread {
 	    cmd.addElement(LocationCmd.getLocation(timeout));
 	    interp.evalAsync(ListThing.create(cmd));
 	} catch (HeclException he) {
-	    /* FIXME - bgerror  */
+	    interp.backgroundError(he.toString());
 	}
     }
 
