@@ -180,12 +180,12 @@ AddSample Alert {
 if { < 0 [llen [search [intro commands] x {eq $x location.get}]] } {
 AddSample LocationAPI {
 set locationform [lcdui.form -title "Location Information" -commandaction [: {c f} {done}]]
-proc LocationCallback {results} {
+proc LocationCallback {lf results} {
     foreach {k v} $results {
-	$locationform append [lcdui.textfield -label $k -text $v]
+	$lf append [lcdui.textfield -label $k -text $v]
     }
 }
-location.get -callback LocationCallback 100
+location.get -callback [list LocationCallback $locationform] 10
 $locationform setcurrent
 }
 }
@@ -586,3 +586,7 @@ $SourceCode conf -uneditable 0
 $:sf setcurrent
 
 #DEBUG [join [sort [intro commands]] "\n"]
+
+proc bgerror {e} {
+    [lcdui.alert -title "BgError" -text $e] setcurrent
+}
