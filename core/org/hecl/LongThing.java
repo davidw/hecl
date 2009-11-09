@@ -55,8 +55,10 @@ public class LongThing extends FractionalThing {
      * Creates a new <code>LongThing</code> instance from string s.
      *
      * @param s a <code>String</code> value
+     * @throw NumberFormatException when argum,ent does not adhere to number
+     * syntax.
      */
-    public LongThing(String s) {
+    public LongThing(String s) throws NumberFormatException {
         this(Long.parseLong(s));
     }
 
