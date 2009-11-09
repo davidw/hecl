@@ -130,8 +130,11 @@ public abstract class NumberThing implements RealThing {
      *
      * @param t a <code>Thing</code> value
      * @return a <code>NumberThing</code> value
+     * @throws NumberFormatException when argument does not adhere to number
+     * format syntax.
      */
-    public static NumberThing asNumber(Thing t) {
+    public static NumberThing asNumber(Thing t)
+	throws NumberFormatException {
 	if(isNumber(t))
 	    return (NumberThing)(t.getVal());
 	String s = t.toString();

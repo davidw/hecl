@@ -61,8 +61,9 @@ class DoubleThing extends FractionalThing {
     /**
      * Creates a new <code>DoubleThing</code> instance from string s.
      * 
-     * @param s
-     *            a <code>String</code> value
+     * @param s a <code>String</code> value
+     * @throws NumberFormatException when argum,ent does not adhere to
+     * floating point number syntax.
      */
     public DoubleThing(String s) throws NumberFormatException {
         set(Double.valueOf(s));
