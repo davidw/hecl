@@ -1,0 +1,16 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>location.get</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="location_commands.html" title="Location"><link rel="prev" href="location_commands.html" title="Location"><link rel="next" href="networking_commands.html" title="Net"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">location.get</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="location_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Location</th><td width="20%" align="right"> <a accesskey="n" href="networking_commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="location_get"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>location.get &#8212; Get location information.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">location.get</code>  <em class="replaceable"><code>timeout</code></em> |  
+		-callback
+		 <em class="replaceable"><code>callbackProc</code></em>
+		 [<em class="replaceable"><code>timeout</code></em>]
+	      </p></div></div><div class="refsect1" lang="en"><a name="id-1.6.5.3.3"></a><h2>Description</h2><p>
+	    The <span class="command"><strong>location.get</strong></span> command operates in two ways:
+	  </p><div class="orderedlist"><ol type="1"><li><p>
+		The simplist way to call it is to simply call the command with a
+		<code class="option">timeout</code> argument.  The program will block until the command returns
+		an answer, which could take up to several minutes.
+	      </p></li><li><p>
+		The alternative way of calling <span class="command"><strong>location.get</strong></span> is to pass it a
+		<code class="option">callback</code>, which is the name of a proc that will be called when the
+		information is available.  Program execution continues and does not block on the
+		location.get call.
+	      </p></li></ol></div><pre class="programlisting">http.status [http.geturl http://www.dedasys.com]</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="location_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="location_commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="networking_commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Location </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Net</td></tr></table></div></body></html>
