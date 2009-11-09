@@ -66,7 +66,7 @@ class DoubleThing extends FractionalThing {
      * floating point number syntax.
      */
     public DoubleThing(String s) throws NumberFormatException {
-        set(Double.valueOf(s));
+        set(Double.parseDouble(s));
     }
 
     /**

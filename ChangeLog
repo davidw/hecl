@@ -1,5 +1,8 @@
 2009-11-09  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
 
+	* core/org/hecl/DoubleThing.java (http): Reverted back to
+	parseDouble since valueOf returns Double instead of double.
+
 	* core/org/hecl/Parse.java (addCurrent): Enhanced to try even
 	harder to generate numbers when possible. Checking for number now
 	allows sign and exponent marker.
