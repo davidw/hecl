@@ -3510,6 +3510,59 @@ eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 	</refsect1>
       </refentry>
 
+    </section>
+
+    <section id="location_commands">
+      <title>Location</title>
+      <para>
+	Access to your phone's location API (JSR 179).  Get information on your precise location.
+	<note>Not available on all phones.</note>
+      </para>
+
+      <refentry id="location_get">
+	<refnamediv>
+	  <refname>location.get</refname>
+	  <refpurpose>Get location information.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>location.get</command>
+	    <group choice="req">
+	    <arg choice="req"><replaceable>timeout</replaceable></arg>
+	      <arg choice="req">
+		<arg choice="req">-callback</arg>
+		<arg choice="req"><replaceable>callbackProc</replaceable></arg>
+		<arg choice="opt"><replaceable>timeout</replaceable></arg>
+	      </arg>
+	    </group>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>location.get</command> command operates in two ways:
+	  </para>
+	  <orderedlist>
+	    <listitem>
+	      <para>
+		The simplist way to call it is to simply call the command with a
+		<option>timeout</option> argument.  The program will block until the command returns
+		an answer, which could take up to several minutes.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		The alternative way of calling <command>location.get</command> is to pass it a
+		<option>callbackProc</option>, which is the name of a proc that will be called when
+		the information is available.  Program execution continues and does not block on the
+		location.get call.  The <option>callbackProc</option> takes one argument, which is a
+		hash of information about the location.
+	      </para>
+	    </listitem>
+	  </orderedlist>
+	  <programlisting>http.status [http.geturl http://www.dedasys.com]</programlisting>
+	</refsect1>
+      </refentry>
 
     </section>
 
