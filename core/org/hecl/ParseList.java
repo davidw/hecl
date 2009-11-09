@@ -48,7 +48,7 @@ public class ParseList extends Parse {
             if (state.done()) {
                 return;
             }
-            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
                 continue;
             }
             switch (ch) {
@@ -135,7 +135,7 @@ public class ParseList extends Parse {
             if (state.done()) {
 		return;
             }
-            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r' || ch == '\f') {
                 return;
             }
 	    appendToCurrent(ch);
