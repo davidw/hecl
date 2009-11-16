@@ -690,8 +690,8 @@ public class HeclCanvas extends GameCanvas implements CommandListener {
 	try {
 	    // Blackberry
 	    Class.forName("net.rim.device.api.system.Application");
-	    KEYCODE_LEFT_SK = 524288;
-	    KEYCODE_RIGHT_SK = 1769472;
+	    KEYCODE_LEFT_SK = 0x80000;
+	    KEYCODE_RIGHT_SK = 0x1b0000;
 	    //Globals.set("isblackberry", new Boolean(true));
 	} catch (ClassNotFoundException e2) {
 	}
