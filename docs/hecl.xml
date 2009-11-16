@@ -289,12 +289,26 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
   <section id="tutorial">
     <title>Hecl Tutorial</title>
+    <note>
+      <para>
+	This is a general tutorial on the Hecl language - if you're looking for the tutorial about
+	Hecl on Java ME, it's here: <link linkend="javame_tutorial">Java ME Tutorial</link>.
+      </para>
+    </note>
     <para>
-      Like many people, I enjoy taking something and experimenting
-      with it before going and reading the instructions!  With this in
-      mind, I have written a brief tutorial that you can use to start
-      exploring Hecl on your own.
+      Like many people, I enjoy taking something and experimenting with it before going and reading
+      the instructions!  With this in mind, I have written a brief tutorial that you can use to
+      start exploring Hecl on your own.
     </para>
+
+    <para>
+      To launch the interactive Hecl shell:
+    </para>
+
+    <screen>java -jar ./jars/j2se/Hecl.jar</screen>
+
+    <para>This will give you a prompt: <prompt>hecl&gt;</prompt> where you can type in
+    commands.</para>
 
     <para>
       Of course, we would be out of place not to begin with the famous
@@ -4411,6 +4425,14 @@ class HelloCmd implements Command {
 
     <section id="javame_tutorial">
       <title>Hecl Java ME Tutorial</title>
+
+    <note>
+      <para>
+	This is a tutorial showing you how to use Hecl to write applications for Java ME.  If you
+	want a simple introduction to the Hecl language, you can find that here: <link
+	linkend="tutorial">tutorial</link>.
+      </para>
+    </note>
 
       <para>
 	This tutorial first appeared here:
