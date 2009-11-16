@@ -375,7 +375,7 @@ puts [set rating]</programlisting>
     </para>
 
     <para>
-      In order to choose between one or more 
+      In order to choose between one or more
     </para>
 
     <programlisting>set temp 10
@@ -432,8 +432,11 @@ foreach {x} $lst {
 }</programlisting>
 
     <para>
-      Create new commands with the "proc" command.  In this example we
-      create a command that prints out a numbered list.
+      Create new commands with the "proc" command.  In this example we create a command that prints
+      out a numbered list.  In Hecl, commands created within procs normally are only visible within
+      that proc, and are cleaned up when the procedure exits.  For exceptions to this rule, see the
+      <link linkend="global"><command>global</command></link> and <link
+      linkend="upeval"><command>upeval</command></link> commands.
     </para>
 
     <programlisting>set list {red blue green}
