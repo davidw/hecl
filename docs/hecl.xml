@@ -7121,39 +7121,95 @@ proc selectname {cmd lst} {
 	    program is running on.
 	  </para>
 
-	  <simplelist>
-	    <member><option>-color</option>: is this a color display? 1 or 0</member>
-	    <member><option>-alphalevels</option>: number of alpha levels</member>
-	    <member><option>-alertimagewidth</option>: width in pixels of the alert image</member>
-	    <member><option>-alertimageheight</option>: height in pixels of the alert image</member>
-	    <member><option>-listimagewidth</option>: width in pixels of the list image</member>
-	    <member><option>-listimageheight</option>: height in pixels of the list image</member>
-	    <member><option>-choiceimagewidth</option>: width in pixels of the choice image</member>
-	    <member><option>-choiceimageheight</option>: height in pixels of the choice image</member>
+	  <itemizedlist>
+	    <listitem><option>-color</option>: is this a color display? 1 or 0</listitem>
+	    <listitem><option>-alphalevels</option>: number of alpha levels</listitem>
+	    <listitem><option>-alertimagewidth</option>: width in pixels of the alert image</listitem>
+	    <listitem><option>-alertimageheight</option>: height in pixels of the alert image</listitem>
+	    <listitem><option>-listimagewidth</option>: width in pixels of the list image</listitem>
+	    <listitem><option>-listimageheight</option>: height in pixels of the list image</listitem>
+	    <listitem><option>-choiceimagewidth</option>: width in pixels of the choice image</listitem>
+	    <listitem><option>-choiceimageheight</option>: height in pixels of the choice image</listitem>
 
-	    <member><option>-bg</option>: background color</member>
-	    <member><option>-fg</option>: foreground color</member>
+	    <listitem><option>-bg</option>: background color</listitem>
+	    <listitem><option>-fg</option>: foreground color</listitem>
 
-	    <member><option>-hilightbg</option>: background hilight color</member>
-	    <member><option>-hilightfg</option>: foreground hilight color</member>
+	    <listitem><option>-hilightbg</option>: background hilight color</listitem>
+	    <listitem><option>-hilightfg</option>: foreground hilight color</listitem>
 
-	    <member><option>-border</option>: border color</member>
-	    <member><option>-hilightborder</option>: border hilight color</member>
-	    <member><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</member>
-	    <member><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</member>
+	    <listitem><option>-border</option>: border color</listitem>
+	    <listitem><option>-hilightborder</option>: border hilight color</listitem>
+	    <listitem><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</listitem>
+	    <listitem><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</listitem>
+ 	    <listitem><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.
+	      <para>
+		This setting enables the use of fullscreen mode for a canvas. The lcdui
+		<classname>Canvas</classname> class behaves different in fullscreen mode: it does
+		not show commands. Full screen mode is enabled by default, so a canvas (being a
+		subclass of <classname>lcdui.game.GameCanvas</classname>) can be created in
+		fullscreen mode. On some devices the behavior in fullscreen mode is broken, so this
+		setting gives you the chance to avoid the fullscreen usage without changing the
+		application itself but only the application startup that might detect certain phone
+		features and turn off fullscreen mode generally for all canvases.
+	      </para>
+	      <para>
+		Devices being picky in fullscreen mode include most of the Blackberry devices since
+		handling of commands is totally different from other Java ME devices. Most
+		BlackBerry devices use the dial to select between command entries.
+	      </para>
+	    </listitem>
 
- 	    <member><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the
-	    canvas widget.</member>
+	    <listitem><option>-cvdocmds</option>: Get/set whether to display commands in the full
+	    screen canvas or not.
+	      <para>
+		Enables the display of commands by the hecl canvas. When it fullscreen mode,
+		canvases do not show commands. You may want a canvas in fullscreen mode and wish to
+		use commands as usual, so the canvas in hecl provides a fallback mechanism to show
+		commands attached to the canvas by itself.
+	      </para>
+	    </listitem>
 
-	    <member><option>-cvdocmds</option>: Get/set whether to display commands in the canvas or not.</member>
-	    <member><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.</member>
-	    <member><option>-cvcmdbg</option>: Get/set color value for command background color in canvas.</member>
-	    <member><option>-cvcmdfg</option>: Get/set color value for command foreground color in canvas.</member>
+	    <listitem><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.
+	      <para>
+		Enables treatment of commands attached to a canvas even in fullscreen mode. This
+		behavior is implemented in the Hecl midp layer and may be slidely different from the
+		regular phone behavior for commands attached to other lcdui interafce elements like
+		a form or list.The setting has an effect only for a canvas in fullscreen mode and
+		enables command handling similar to the command handling of non-fullscreen canvases.
+	      </para>
+	    </listitem>
 
-	    <member><option>-skleft</option>: Get/set the numeric keycode for the left soft key.</member>
-	    <member><option>-skright</option>: Get/set the numeric keycode for the right soft key.</member>
+	    <listitem>
+	      <option>-cvcmdbg</option>: Get/set color value for command background color in canvas,
+	      when Hecl's full screen Canvas command handling is enabled (see above).
+	    </listitem>
 
-	  </simplelist>
+	    <listitem><option>-cvcmdfg</option>: Get/set color value for command foreground color in
+	      canvas, when Hecl's full screen Canvas command handling is enabled (see above).
+	    </listitem>
+
+	    <listitem><option>-skleft</option>: Get/set the numeric keycode for the left soft key.
+	      <para>
+		The values are used to identify the keys triggering command handling for a
+		canvas. The standard settings for these values are the usual keycode -6 (left) and
+		-7 (right) that work on most Java ME devices. There are some well-known differences
+		that are detected by the Hecl midp package:
+	      </para>
+	      <para>
+		Siemens S65 and friends: -1 (left), -4 (right) - detected via existence of class
+		<classname>com.siemens.mp.lcdui.Image</classname> Blackberry: 524288=0x80000 (left),
+		0x1b0000 (right) - detected via existence of class
+		<classname>net.rim.device.api.system.Application</classname>
+	      </para>
+	      <para>
+		Application developers can tailor these settings for specific device models in their
+		own applications.
+	      </para>
+	    </listitem>
+	    <listitem><option>-skright</option>: Get/set the numeric keycode for the right soft key
+	    (see explanation above).</listitem>
+
+	  </itemizedlist>
 
 	</refsect1>
 	<refsect1>
