@@ -7105,6 +7105,38 @@ proc selectname {cmd lst} {
 	    <arg choice="opt">-borderstyle</arg>
 	    <arg choice="opt">-hilightborderstyle</arg>
 
+ 	    <arg choice="opt">-cvfullscreen
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvdocmds
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvkeepcmdsinfullscreen
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvcmdbg
+	      <arg choice="opt">color</arg>
+	    </arg>
+	    <arg choice="opt">-cvcmdfg
+	      <arg choice="opt">color</arg>
+	    </arg>
+
+	    <arg choice="opt">-skleft
+	      <arg choice="opt">keycode</arg>
+	    </arg>
+	    <arg choice="opt">-skright
+	      <arg choice="opt">keycode</arg>
+	    </arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
@@ -7135,6 +7167,16 @@ proc selectname {cmd lst} {
 	    <member><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</member>
 	    <member><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</member>
 
+ 	    <member><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the
+	    canvas widget.</member>
+
+	    <member><option>-cvdocmds</option>: Get/set whether to display commands in the canvas or not.</member>
+	    <member><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.</member>
+	    <member><option>-cvcmdbg</option>: Get/set color value for command background color in canvas.</member>
+	    <member><option>-cvcmdfg</option>: Get/set color value for command foreground color in canvas.</member>
+
+	    <member><option>-skleft</option>: Get/set the numeric keycode for the left soft key.</member>
+	    <member><option>-skright</option>: Get/set the numeric keycode for the right soft key.</member>
 
 	  </simplelist>
 
