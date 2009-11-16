@@ -4443,56 +4443,6 @@ class HelloCmd implements Command {
       </para>
 
       <para>
-	These days, almost everyone has a cell phone; cell phones keep getting faster, smarter, and
-	more capable, yet relatively few applications exist for them. The Hecl programming language
-	makes it easy to script applications for your cell phone - with just a few lines of code, you
-	can create applications that you can carry with you, everywhere.
-      </para>
-
-      <para>
-	I first fell in love with computers when my parents bought me a Commodore 64, a fairly nice
-	computer for the time. Thanks to Moore's law, and the relentless pace of development, the
-	average cell phone is now more powerful than that machine from just 20 some years ago. While
-	it's understandable that many people just want to make phone calls, think of all the
-	programs out there waiting to be written that take advantage of the fact that you almost
-	always have a cell phone with you. I think I'm just beginning to scratch the surface of
-	what's possible, especially as phones continue to get faster, and have better connections to
-	the internet.
-      </para>
-
-      <para>
-	I became interested in writing cell phone applications several years ago, after a rainy day
-	high in the Italian Dolomites near Cortina d'Ampezzo - my old phone ended up in a mud puddle
-	and died, leading me to purchase a new phone with J2ME (Java) capabilities. Writing
-	applications in Java was okay, but I thought to myself that it would be an interesting
-	experiment to try and create a scripting language that runs on top of the J2ME (now known as
-	Java Micro Edition or Java ME) environment.
-      </para>
-
-      <para>When I created Hecl, I did so with several goals in mind:</para>
-
-      <orderedlist>
-	<listitem>
-	  <para>
-	    Make it even easier and faster for experienced programmers to create cell phone applications.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    Make it possible for novice programmers to create cell phone applications without the
-	    burden of dealing with Java.
-	  </para>
-	</listitem>
-      </orderedlist>
-
-      <para>
-	Hecl has other benefits too - it's faster to develop applications, because you don't have to
-	recompile after each change. In the hands of a clever programmer, it's also possible to do
-	interesting things with Hecl because of its interpreted nature. You could start an
-	application on your phone, and download additional bits of code off the web.
-      </para>
-
-      <para>
 	The aim of this tutorial is to help you create cell phone applications, so let's get started
 	right away. You'll need a few things first:
       </para>
