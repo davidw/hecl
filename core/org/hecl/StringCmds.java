@@ -358,7 +358,7 @@ class StringCmds extends Operator {
     }
 
     private static Vector defsplitstrings;
-    private static String deftrimchars = "\t\n\r ";
+    private static String deftrimchars = "\t\n\r\f ";
 
     private static Hashtable cmdtable = new Hashtable();
 
@@ -368,6 +368,7 @@ class StringCmds extends Operator {
 	defsplitstrings.addElement(new Thing("\t"));
 	defsplitstrings.addElement(new Thing("\n"));
 	defsplitstrings.addElement(new Thing("\r"));
+	defsplitstrings.addElement(new Thing("\f"));
 
         cmdtable.put("append", new StringCmds(APPEND,1,-1));
         cmdtable.put("eq", new StringCmds(EQ,2,2));

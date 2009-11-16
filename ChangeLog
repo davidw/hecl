@@ -1,3 +1,50 @@
+2009-11-09  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/DoubleThing.java (http): Reverted back to
+	parseDouble since valueOf returns Double instead of double.
+
+	* core/org/hecl/Parse.java (addCurrent): Enhanced to try even
+	harder to generate numbers when possible. Checking for number now
+	allows sign and exponent marker.
+
+	* core/org/hecl/NumberThing.java (asNumber): 
+	* core/org/hecl/LongThing.java: Added proper throw declaration.
+
+	* core/org/hecl/DoubleThing.java (http): Use valueOf instead of
+	parseDouble (faster). Added proper throw declaration.
+
+2009-11-06  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
+
+	* core/org/hecl/StringCmds.java: Formfeed is now a default split
+	character (since it is whitespace).
+
+	* core/org/hecl/Parse.java: Added support for formfeed notation '\f'.
+
+2009-11-05  Wolfgang S. Kechel - data2c GmbH  <wolfgang.kechel@data2c.com>
+
+	* tests/performance.hcl: Updated to use new file.* commands.
+
+	* tests/suite.hcl: 
+	* tests/threads.hcl: 
+	* tests/intro.hcl: Enhanced tests. intro-test needs to be run
+	first to avoid clobbered global namespace. intro modified to ease
+	checking for commands. More time can be spend on this to make it
+	really elaborate. Changed thread test 2 to stop creation of
+	background tasks when test is done. The old behavior caused some
+	problems when the test run terminated (Java error empty stack).
+
+	* core/org/hecl/Proc.java: Modified implementation to collect as
+	much information as possible during creation and avoid to
+	repeatedly redo the work for every invocation. This shall sage
+	some execution cycles and speed up interpretation.
+	Corrected subtle bug in stack treatment when non-HeclException has
+	been thrown. Stack is now cleaned up properly in finally clause.
+
+	* files/org/hecl/files/FileCmds.java: Added new commands
+	file.absolutepath, file.canonicalpath, file.isabsolute, file.getcwd.
+	Changed file.basename into file.name
+	Changed file.delete to return result code.
+
 2009-08-24  David N. Welton  <davidw@dedasys.com>
 
 	* blackberry.xml: Use properties file to override build location

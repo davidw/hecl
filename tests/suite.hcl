@@ -13,7 +13,9 @@ if { = [llen $argv] 2 } {
     exit
 }
 
+# intro.hcl must occur first!!
 testfiles {
+    intro.hcl
     after.hcl
     alias.hcl
     append.hcl
@@ -34,7 +36,6 @@ testfiles {
     if.hcl
     incr.hcl
     index.hcl
-    intro.hcl
     java.hcl
     join.hcl
     list.hcl
