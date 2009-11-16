@@ -38,6 +38,7 @@ import org.hecl.IntThing;
 import org.hecl.HashThing;
 import org.hecl.ListThing;
 import org.hecl.Operator;
+import org.hecl.Properties;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
@@ -58,15 +59,20 @@ public class LocationCmd extends Operator {
 		if (argv.length == 2) {
 		    /* Simply fetch the information, blocking the application. */
 		    return getLocation(IntThing.get(argv[1]));
-		} else if (argv.length > 2 &&
-			   argv[1].toString().equals("-callback")) {
+		} else if (argv.length > 2) {
+		    Properties props = new Properties();
+		    props.setProps(argv, 1);
 		    /* Use a callback in a separate thread. */
 		    int timeout = 100;
-		    if (argv.length == 4) {
-			timeout = IntThing.get(argv[3]);
+		    if (props.existsProp("-timeout")) {
+			timeout = IntThing.get(props.getProp("-timeout"));
 		    }
 
-		    LocationRequest locationrequest = new LocationRequest(interp, argv[2], timeout);
+		    LocationRequest locationrequest =
+			new LocationRequest(interp,
+					    props.getProp("-callback"),
+					    props.getProp("-onerror"),
+					    timeout);
 		    locationrequest.start();
 		    return Thing.emptyThing();
 		}
@@ -154,7 +160,7 @@ public class LocationCmd extends Operator {
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
-	    cmdtable.put("location.get", new LocationCmd(GET,1,3));
+	    cmdtable.put("location.get", new LocationCmd(GET,1,6));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create browser commands.");

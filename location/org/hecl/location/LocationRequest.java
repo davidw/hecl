@@ -37,6 +37,7 @@ import org.hecl.Thing;
 public class LocationRequest extends Thread {
     Interp interp = null;
     Thing callbackProc = null;
+    Thing onErrorProc = null;
     int timeout = 100;
 
     /**
@@ -46,9 +47,10 @@ public class LocationRequest extends Thread {
      * @param c a <code>Thing</code> value
      * @param t an <code>int</code> value
      */
-    public LocationRequest(Interp i, Thing c, int t) {
+    public LocationRequest(Interp i, Thing cback, Thing onerr, int t) {
 	interp = i;
-	callbackProc = c;
+	callbackProc = cback;
+	onErrorProc = onerr;
 	timeout = t;
     }
 
@@ -57,12 +59,27 @@ public class LocationRequest extends Thread {
      *
      */
     public synchronized void run() {
+	Vector cmd = null;
 	try {
-	    Vector cmd = ListThing.get(callbackProc.deepcopy());
+	    cmd = ListThing.get(callbackProc.deepcopy());
 	    cmd.addElement(LocationCmd.getLocation(timeout));
-	    interp.evalAsync(ListThing.create(cmd));
+	    interp.eval(ListThing.create(cmd));
 	} catch (HeclException he) {
-	    interp.backgroundError(he.toString());
+	    /* If there is no error proc, call bgerror. */
+	    if (onErrorProc != null) {
+		try {
+		    cmd = ListThing.get(onErrorProc.deepcopy());
+		    cmd.addElement(new Thing(he.toString()));
+		    interp.evalAsync(ListThing.create(cmd));
+		} catch (HeclException reallywrong) {
+		    /* Ok, something has gone very wrong, shunt it off
+		     * to bgerror. */
+		    interp.backgroundError(he.toString() + " AND " +
+					   reallywrong.toString());
+		}
+	    } else {
+		interp.backgroundError(he.toString());
+	    }
 	}
     }
 
