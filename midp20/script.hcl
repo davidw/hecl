@@ -19,7 +19,6 @@ alias lcdui.gauge	/gauge
 alias lcdui.image	/img
 alias lcdui.imageitem	/imgit
 alias lcdui.list	/list
-alias lcdui.settings	/set
 alias lcdui.spacer	/spc
 alias lcdui.stringitem	/strit
 alias lcdui.textbox	/txtbox
@@ -245,7 +244,7 @@ foreach s {
     "-borderstyle"
     "-hilightborderstyle"
 } {
-    $form append [/strit -label "[strtrim $s -]:" -text [/set cget $s]]
+    $form append [/strit -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
 }
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]

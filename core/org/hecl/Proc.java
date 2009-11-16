@@ -31,6 +31,13 @@ class Proc implements Command {
     /** # of arguments to procedure, negative for varargs */
     private int argcount;
 
+    /**
+     * <code>refcount</code> is used to ensure that, if we recurse
+     * into this proc, that when we leave it, the cache version is
+     * bumped.
+     */
+    private int refcount = 0;
+
      /**
      * Creates a new <code>Proc</code> instance, with the variable names in
      * cmdvars, and the actual code in cmdcode.
@@ -79,6 +86,7 @@ class Proc implements Command {
 				    + " has too many arguments");
         /* Push a new frame onto the stack. */
         interp.stackIncr();
+	refcount ++;
 	try {
 	    /* Set the variables from argv.  Add one to argv, because
 	     * argv0 is the name of the proc itself. */
@@ -109,9 +117,11 @@ class Proc implements Command {
 	}
 	finally {
 	    /* We're done, pop the stack. */
+	    refcount --;
+	    if (refcount > 0) {
+		interp.cacheversion ++;
+	    }
 	    interp.stackDecr();
-	    //Hashtable ht = interp.stackDecr();
-	    //ht = null;
 	}
     }
     /**

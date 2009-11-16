@@ -289,12 +289,26 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
   <section id="tutorial">
     <title>Hecl Tutorial</title>
+    <note>
+      <para>
+	This is a general tutorial on the Hecl language - if you're looking for the tutorial about
+	Hecl on Java ME, it's here: <link linkend="javame_tutorial">Java ME Tutorial</link>.
+      </para>
+    </note>
     <para>
-      Like many people, I enjoy taking something and experimenting
-      with it before going and reading the instructions!  With this in
-      mind, I have written a brief tutorial that you can use to start
-      exploring Hecl on your own.
+      Like many people, I enjoy taking something and experimenting with it before going and reading
+      the instructions!  With this in mind, I have written a brief tutorial that you can use to
+      start exploring Hecl on your own.
     </para>
+
+    <para>
+      To launch the interactive Hecl shell:
+    </para>
+
+    <screen>java -jar ./jars/j2se/Hecl.jar</screen>
+
+    <para>This will give you a prompt: <prompt>hecl&gt;</prompt> where you can type in
+    commands.</para>
 
     <para>
       Of course, we would be out of place not to begin with the famous
@@ -375,7 +389,7 @@ puts [set rating]</programlisting>
     </para>
 
     <para>
-      In order to choose between one or more 
+      In order to choose between one or more
     </para>
 
     <programlisting>set temp 10
@@ -432,8 +446,11 @@ foreach {x} $lst {
 }</programlisting>
 
     <para>
-      Create new commands with the "proc" command.  In this example we
-      create a command that prints out a numbered list.
+      Create new commands with the "proc" command.  In this example we create a command that prints
+      out a numbered list.  In Hecl, commands created within procs normally are only visible within
+      that proc, and are cleaned up when the procedure exits.  For exceptions to this rule, see the
+      <link linkend="global"><command>global</command></link> and <link
+      linkend="upeval"><command>upeval</command></link> commands.
     </para>
 
     <programlisting>set list {red blue green}
@@ -3373,16 +3390,12 @@ puts $foo
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>http.geturl</command> command performs an
-	    HTTP request to the given
-	    <option><replaceable>url</replaceable></option> and
-	    returns information about the results.  This information
-	    is returned as a hash table that can be accessed with the
-	    various h* commands such as hget.  The list of keys
-	    returned includes the following, which are set by Hecl.
-	    Also created as keys are the various HTTP headers, such as
-	    connection, content-length, content-type, last-modified,
-	    and so on.
+	    The <command>http.geturl</command> command performs an HTTP request to the given
+	    <option><replaceable>url</replaceable></option> and returns information about the
+	    results.  This information is returned as a hash table that can be accessed with the
+	    various h* commands such as <command>hget</command>.  The list of keys returned includes
+	    the following, which are set by Hecl.  Also created as keys are the various HTTP
+	    headers, such as connection, content-length, content-type, last-modified, and so on.
 	  </para>
 	  <itemizedlist>
 	    <listitem>
@@ -3394,7 +3407,9 @@ puts $foo
 		the returned data.</para></listitem>
 
 	    <listitem>
-	      <para><constant>data</constant>: The returned data.</para></listitem>
+	      <para><constant>data</constant>: The returned data.  For instance, if you fetched an
+	      ordinary web page, this would be its HTML contents.</para>
+	    </listitem>
 
 	    <listitem>
 	      <para><constant>ncode</constant>: The numeric code of
@@ -3420,6 +3435,11 @@ puts $foo
 # Evaluate Hecl script located on a web site.
 eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 	  </programlisting>
+	  <para>Add some headers to a request:</para>
+	  <programlisting>
+http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
+	  </programlisting>
+
 	</refsect1>
       </refentry>
 
@@ -4462,62 +4482,20 @@ class HelloCmd implements Command {
     <section id="javame_tutorial">
       <title>Hecl Java ME Tutorial</title>
 
+    <note>
+      <para>
+	This is a tutorial showing you how to use Hecl to write applications for Java ME.  If you
+	want a simple introduction to the Hecl language, you can find that here: <link
+	linkend="tutorial">tutorial</link>.
+      </para>
+    </note>
+
       <para>
 	This tutorial first appeared here:
 	<ulink url="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl">
 	  Create a simple application with Hecl - Introducing Hecl, a mobile phone scripting
 	  language </ulink>.  It is a tutorial style introduction writing Hecl code for mobile
 	  phones, by David Welton.
-      </para>
-
-      <para>
-	These days, almost everyone has a cell phone; cell phones keep getting faster, smarter, and
-	more capable, yet relatively few applications exist for them. The Hecl programming language
-	makes it easy to script applications for your cell phone - with just a few lines of code, you
-	can create applications that you can carry with you, everywhere.
-      </para>
-
-      <para>
-	I first fell in love with computers when my parents bought me a Commodore 64, a fairly nice
-	computer for the time. Thanks to Moore's law, and the relentless pace of development, the
-	average cell phone is now more powerful than that machine from just 20 some years ago. While
-	it's understandable that many people just want to make phone calls, think of all the
-	programs out there waiting to be written that take advantage of the fact that you almost
-	always have a cell phone with you. I think I'm just beginning to scratch the surface of
-	what's possible, especially as phones continue to get faster, and have better connections to
-	the internet.
-      </para>
-
-      <para>
-	I became interested in writing cell phone applications several years ago, after a rainy day
-	high in the Italian Dolomites near Cortina d'Ampezzo - my old phone ended up in a mud puddle
-	and died, leading me to purchase a new phone with J2ME (Java) capabilities. Writing
-	applications in Java was okay, but I thought to myself that it would be an interesting
-	experiment to try and create a scripting language that runs on top of the J2ME (now known as
-	Java Micro Edition or Java ME) environment.
-      </para>
-
-      <para>When I created Hecl, I did so with several goals in mind:</para>
-
-      <orderedlist>
-	<listitem>
-	  <para>
-	    Make it even easier and faster for experienced programmers to create cell phone applications.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    Make it possible for novice programmers to create cell phone applications without the
-	    burden of dealing with Java.
-	  </para>
-	</listitem>
-      </orderedlist>
-
-      <para>
-	Hecl has other benefits too - it's faster to develop applications, because you don't have to
-	recompile after each change. In the hands of a clever programmer, it's also possible to do
-	interesting things with Hecl because of its interpreted nature. You could start an
-	application on your phone, and download additional bits of code off the web.
       </para>
 
       <para>
@@ -7158,6 +7136,38 @@ proc selectname {cmd lst} {
 	    <arg choice="opt">-borderstyle</arg>
 	    <arg choice="opt">-hilightborderstyle</arg>
 
+ 	    <arg choice="opt">-cvfullscreen
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvdocmds
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvkeepcmdsinfullscreen
+	      <group choice="opt">
+		<arg choice="req">1</arg>
+		<arg choice="req">0</arg>
+	      </group>
+	    </arg>
+	    <arg choice="opt">-cvcmdbg
+	      <arg choice="opt">color</arg>
+	    </arg>
+	    <arg choice="opt">-cvcmdfg
+	      <arg choice="opt">color</arg>
+	    </arg>
+
+	    <arg choice="opt">-skleft
+	      <arg choice="opt">keycode</arg>
+	    </arg>
+	    <arg choice="opt">-skright
+	      <arg choice="opt">keycode</arg>
+	    </arg>
+
 	  </cmdsynopsis>
 	</refsynopsisdiv>
 	<refsect1>
@@ -7167,29 +7177,95 @@ proc selectname {cmd lst} {
 	    program is running on.
 	  </para>
 
-	  <simplelist>
-	    <member><option>-color</option>: is this a color display? 1 or 0</member>
-	    <member><option>-alphalevels</option>: number of alpha levels</member>
-	    <member><option>-alertimagewidth</option>: width in pixels of the alert image</member>
-	    <member><option>-alertimageheight</option>: height in pixels of the alert image</member>
-	    <member><option>-listimagewidth</option>: width in pixels of the list image</member>
-	    <member><option>-listimageheight</option>: height in pixels of the list image</member>
-	    <member><option>-choiceimagewidth</option>: width in pixels of the choice image</member>
-	    <member><option>-choiceimageheight</option>: height in pixels of the choice image</member>
+	  <itemizedlist>
+	    <listitem><option>-color</option>: is this a color display? 1 or 0</listitem>
+	    <listitem><option>-alphalevels</option>: number of alpha levels</listitem>
+	    <listitem><option>-alertimagewidth</option>: width in pixels of the alert image</listitem>
+	    <listitem><option>-alertimageheight</option>: height in pixels of the alert image</listitem>
+	    <listitem><option>-listimagewidth</option>: width in pixels of the list image</listitem>
+	    <listitem><option>-listimageheight</option>: height in pixels of the list image</listitem>
+	    <listitem><option>-choiceimagewidth</option>: width in pixels of the choice image</listitem>
+	    <listitem><option>-choiceimageheight</option>: height in pixels of the choice image</listitem>
 
-	    <member><option>-bg</option>: background color</member>
-	    <member><option>-fg</option>: foreground color</member>
+	    <listitem><option>-bg</option>: background color</listitem>
+	    <listitem><option>-fg</option>: foreground color</listitem>
 
-	    <member><option>-hilightbg</option>: background hilight color</member>
-	    <member><option>-hilightfg</option>: foreground hilight color</member>
+	    <listitem><option>-hilightbg</option>: background hilight color</listitem>
+	    <listitem><option>-hilightfg</option>: foreground hilight color</listitem>
 
-	    <member><option>-border</option>: border color</member>
-	    <member><option>-hilightborder</option>: border hilight color</member>
-	    <member><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</member>
-	    <member><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</member>
+	    <listitem><option>-border</option>: border color</listitem>
+	    <listitem><option>-hilightborder</option>: border hilight color</listitem>
+	    <listitem><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</listitem>
+	    <listitem><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</listitem>
+ 	    <listitem><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.
+	      <para>
+		This setting enables the use of fullscreen mode for a canvas. The lcdui
+		<classname>Canvas</classname> class behaves different in fullscreen mode: it does
+		not show commands. Full screen mode is enabled by default, so a canvas (being a
+		subclass of <classname>lcdui.game.GameCanvas</classname>) can be created in
+		fullscreen mode. On some devices the behavior in fullscreen mode is broken, so this
+		setting gives you the chance to avoid the fullscreen usage without changing the
+		application itself but only the application startup that might detect certain phone
+		features and turn off fullscreen mode generally for all canvases.
+	      </para>
+	      <para>
+		Devices being picky in fullscreen mode include most of the Blackberry devices since
+		handling of commands is totally different from other Java ME devices. Most
+		BlackBerry devices use the dial to select between command entries.
+	      </para>
+	    </listitem>
 
+	    <listitem><option>-cvdocmds</option>: Get/set whether to display commands in the full
+	    screen canvas or not.
+	      <para>
+		Enables the display of commands by the hecl canvas. When it fullscreen mode,
+		canvases do not show commands. You may want a canvas in fullscreen mode and wish to
+		use commands as usual, so the canvas in hecl provides a fallback mechanism to show
+		commands attached to the canvas by itself.
+	      </para>
+	    </listitem>
 
-	  </simplelist>
+	    <listitem><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.
+	      <para>
+		Enables treatment of commands attached to a canvas even in fullscreen mode. This
+		behavior is implemented in the Hecl midp layer and may be slidely different from the
+		regular phone behavior for commands attached to other lcdui interafce elements like
+		a form or list.The setting has an effect only for a canvas in fullscreen mode and
+		enables command handling similar to the command handling of non-fullscreen canvases.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <option>-cvcmdbg</option>: Get/set color value for command background color in canvas,
+	      when Hecl's full screen Canvas command handling is enabled (see above).
+	    </listitem>
+
+	    <listitem><option>-cvcmdfg</option>: Get/set color value for command foreground color in
+	      canvas, when Hecl's full screen Canvas command handling is enabled (see above).
+	    </listitem>
+
+	    <listitem><option>-skleft</option>: Get/set the numeric keycode for the left soft key.
+	      <para>
+		The values are used to identify the keys triggering command handling for a
+		canvas. The standard settings for these values are the usual keycode -6 (left) and
+		-7 (right) that work on most Java ME devices. There are some well-known differences
+		that are detected by the Hecl midp package:
+	      </para>
+	      <para>
+		Siemens S65 and friends: -1 (left), -4 (right) - detected via existence of class
+		<classname>com.siemens.mp.lcdui.Image</classname> Blackberry: 524288=0x80000 (left),
+		0x1b0000 (right) - detected via existence of class
+		<classname>net.rim.device.api.system.Application</classname>
+	      </para>
+	      <para>
+		Application developers can tailor these settings for specific device models in their
+		own applications.
+	      </para>
+	    </listitem>
+	    <listitem><option>-skright</option>: Get/set the numeric keycode for the right soft key
+	    (see explanation above).</listitem>
+
+	  </itemizedlist>
 
 	</refsect1>
 	<refsect1>

@@ -67,3 +67,17 @@ test varargs-3 {
 test varargs-4 {
     varargproc x y 1 2 3 4 5 6
 } {x y 1 2 3 4 5 6}
+
+test recurse-1 {
+    proc Recurse {o} {
+	if {> $o 1} {
+	    set res "<"
+	    append $res [Recurse [- $o 1]]
+	    append $res ">"
+	    return $res
+	} else {
+	    return $o
+	}
+    }
+    Recurse 5
+} {<<<<1>>>>}

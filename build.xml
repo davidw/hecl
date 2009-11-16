@@ -6,7 +6,7 @@
   <!--
   To customize your Hecl build, please see the file settings.xml.
 
-  To create a midlet for CLDC1.1/MIDP2.0, do:
+  To create a midlet for CLDC1.1/MIDP2.0 (most modern phones - you probably want this) do:
 
   ant -propertyfile ./cldc11midp20.properties midlet
 
