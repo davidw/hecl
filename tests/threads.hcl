@@ -29,19 +29,26 @@ test threads-2 {
     puts "Running threads-2 test - this one takes about 10 seconds"
 
     proc repeatit {} {
-	global http_event_test
-	lappend $http_event_test [hget [http.geturl http://hecl.org] ncode]
-	after 1 repeatit
+	global stop_threads_2;
+	global http_event_test;
+	if {= 0 $stop_threads_2} {
+	    lappend $http_event_test [hget [http.geturl http://hecl.org] ncode]
+	    after 5 repeatit
+	}
     }
 
     proc bye {} {
+	global stop_threads_2;
+	set stop_threads_2 1;
 	tnotify forever
     }
 
     set e [after 10000 bye]
-    set f [after 1 repeatit]
+    set f [after 5 repeatit]
 
     global http_event_test
+    global stop_threads_2;
+    set stop_threads_2 0;
     set http_event_test [list]
     twait forever
     after 500
@@ -49,5 +56,5 @@ test threads-2 {
     puts "repeatit ran [llen $http_event_test] times"
 
     set myres [< 3 [llen $http_event_test]]
-    set myres
+    set myres;
 } {1}

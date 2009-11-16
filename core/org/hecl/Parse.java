@@ -146,7 +146,7 @@ public class Parse {
 	outBufused = false;
     }
 
-
+	    
     /**
      * The <code>addCurrent</code> method adds a new element to the command
      * parsed.
@@ -163,17 +163,17 @@ public class Parse {
 	    Thing newthing = null;
  	    if (outBufNumeric) {
 		String s = str.getStringRep();
+		//System.err.println("checking for number, s="+s);
 		try {
 		    newthing = new Thing(NumberThing.asNumber(new Thing(s)));
-		    newthing.literal = true;
 		} catch (NumberFormatException e) {
+		    //System.err.println(e.toString());
 		}
 	    }
 	    if (newthing == null) {
 		newthing = new Thing(str);
-		newthing.literal = true;
 	    }
-	    outList.addElement(newthing);
+	    outList.addElement(newthing.setLiteral());
 	} else if (outGroup.size() > 1) {
 	    Vector outv = new Vector();
 	    for (Enumeration e = outGroup.elements(); e.hasMoreElements();) {
@@ -203,7 +203,12 @@ public class Parse {
 	    outBufused = true;
 	    outGroup.addElement(outBuf);
 	}
-	if (outBufNumeric && !Character.isDigit(ch) && ch != '.') {
+	if (outBufNumeric
+	    && !(Character.isDigit(ch)
+		 || ch != '.'		    // decimal separator
+		 || ch == 'E' || ch == 'e'  // exponent marker
+		 || ch == '+' || ch == '-'  // signs
+		)) {
 	    outBufNumeric = false;
 	}
 	outBuf.append(ch);
@@ -276,7 +281,8 @@ public class Parse {
                 case ';' :
 		    return;
                 case ' ' :
-                case '	' :
+                case '\t' :
+                case '\f' :
                     continue;
                 case '{' :
                     parseBlock(state);
@@ -457,7 +463,7 @@ public class Parse {
 		    /* If we are not dealing with a variable parse
 		     * such as $\ {foo}, and the next character
 		     * isn't a space, we have a problem. */
-		    if (!invar && ch != ' ' && ch != '	' &&
+		    if (!invar && ch != ' ' && ch != '\t' && ch != '\f' &&
 			ch != '\n' && ch != '\r' && ch != ';' && ch != 0) {
 			throw new HeclException("Extra characters after close-brace");
 		    }
@@ -535,7 +541,8 @@ public class Parse {
 		addDollar();
 		break;
 	      case ' ' :
-	      case '	' :
+	      case '\t' :
+	      case '\f':
 		return;
 	      case '\n' :
 		state.lineno ++;
@@ -581,6 +588,9 @@ public class Parse {
 	    }
 	  case '\n':
 	    return true;
+	  case '\f':
+	    appendToCurrent('\f');
+	    break;
 	  case 'r':
 	    appendToCurrent((char)0x0d);
 	    break;

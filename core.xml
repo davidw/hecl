@@ -26,7 +26,7 @@
     <wtkpreprocess srcdir="java" destdir="${j2se.pre}/core" symbols="${j2se.defines}"/>
     <javac srcdir="${j2se.pre}/core" destdir="${j2se.build}" debug="${hecldebug}" >
       <classpath refid="classpath"/>
-      <classpath path="jars/jline-0.9.92.jar"></classpath>
+      <classpath path="jars/jline-0.9.94.jar"></classpath>
     </javac>
   </target>
 
@@ -107,7 +107,7 @@
       debug="${hecldebug}">
       <classpath refid="j2se.coreclasspath"/>
       <classpath refid="classpath"/>
-      <classpath path="jars/jline-0.9.92.jar"></classpath>
+      <classpath path="jars/jline-0.9.94.jar"></classpath>
     </javac>
   </target>
 
@@ -160,7 +160,7 @@
     description="Create Jar for command line Hecl"
     depends="compileCommandline,compileHttp,packageLib">
 
-    <unjar src="jars/jline-0.9.92.jar" dest="${j2se.build}" />
+    <unjar src="jars/jline-0.9.94.jar" dest="${j2se.build}" />
 
     <jar destfile="${j2se.hecl.cmdline.jar}"
       basedir="${j2se.build}"

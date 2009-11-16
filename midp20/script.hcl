@@ -19,7 +19,7 @@ alias lcdui.gauge	/gauge
 alias lcdui.image	/img
 alias lcdui.imageitem	/imgit
 alias lcdui.list	/list
-alias lcdui.settings	/alias
+alias lcdui.settings	/set
 alias lcdui.spacer	/spc
 alias lcdui.stringitem	/strit
 alias lcdui.textbox	/txtbox
