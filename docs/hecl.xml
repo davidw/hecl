@@ -3390,16 +3390,12 @@ puts $foo
 	<refsect1>
 	  <title>Description</title>
 	  <para>
-	    The <command>http.geturl</command> command performs an
-	    HTTP request to the given
-	    <option><replaceable>url</replaceable></option> and
-	    returns information about the results.  This information
-	    is returned as a hash table that can be accessed with the
-	    various h* commands such as hget.  The list of keys
-	    returned includes the following, which are set by Hecl.
-	    Also created as keys are the various HTTP headers, such as
-	    connection, content-length, content-type, last-modified,
-	    and so on.
+	    The <command>http.geturl</command> command performs an HTTP request to the given
+	    <option><replaceable>url</replaceable></option> and returns information about the
+	    results.  This information is returned as a hash table that can be accessed with the
+	    various h* commands such as <command>hget</command>.  The list of keys returned includes
+	    the following, which are set by Hecl.  Also created as keys are the various HTTP
+	    headers, such as connection, content-length, content-type, last-modified, and so on.
 	  </para>
 	  <itemizedlist>
 	    <listitem>
@@ -3411,7 +3407,9 @@ puts $foo
 		the returned data.</para></listitem>
 
 	    <listitem>
-	      <para><constant>data</constant>: The returned data.</para></listitem>
+	      <para><constant>data</constant>: The returned data.  For instance, if you fetched an
+	      ordinary web page, this would be its HTML contents.</para>
+	    </listitem>
 
 	    <listitem>
 	      <para><constant>ncode</constant>: The numeric code of
@@ -3437,6 +3435,11 @@ puts $foo
 # Evaluate Hecl script located on a web site.
 eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
 	  </programlisting>
+	  <para>Add some headers to a request:</para>
+	  <programlisting>
+http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
+	  </programlisting>
+
 	</refsect1>
       </refentry>
 
