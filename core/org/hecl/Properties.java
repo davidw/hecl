@@ -150,12 +150,12 @@ public class Properties {
 	return t;
     }
 
-	  /**
- 		 * <code>isEmpty</code> test if property set is empty.
- 		 *
- 		 * @return true if it's empty, flase otherwise.
- 		 */
-		public boolean isEmpty() {
-			return props.isEmpty();
-		}
+    /**
+     * <code>isEmpty</code> test if property set is empty.
+     *
+     * @return true if it's empty, flase otherwise.
+     */
+    public boolean isEmpty() {
+	return props.isEmpty();
+    }
 }
