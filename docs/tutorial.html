@@ -1,9 +1,14 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><p>
-      Like many people, I enjoy taking something and experimenting
-      with it before going and reading the instructions!  With this in
-      mind, I have written a brief tutorial that you can use to start
-      exploring Hecl on your own.
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+	This is a general tutorial on the Hecl language - if you're looking for the tutorial about
+	Hecl on Java ME, it's here: <a class="link" href="j2me.html#javame_tutorial" title="Hecl Java ME Tutorial">Java ME Tutorial</a>.
+      </p></td></tr></table></div><p>
+      Like many people, I enjoy taking something and experimenting with it before going and reading
+      the instructions!  With this in mind, I have written a brief tutorial that you can use to
+      start exploring Hecl on your own.
     </p><p>
+      To launch the interactive Hecl shell:
+    </p><pre class="screen">java -jar ./jars/j2se/Hecl.jar</pre><p>This will give you a prompt: <code class="prompt">hecl&gt;</code> where you can type in
+    commands.</p><p>
       Of course, we would be out of place not to begin with the famous
       "Hello, World".  Behold:
     </p><pre class="programlisting">puts "Hello, World"</pre><p>
@@ -55,7 +60,7 @@ puts [set rating]</pre><p>
       adds them together and return the result, which is then printed
       out by the <span class="command"><strong>puts </strong></span> command.
     </p><p>
-      In order to choose between one or more 
+      In order to choose between one or more
     </p><pre class="programlisting">set temp 10
 if { &lt; $temp 0 } {
     puts "It's freezing"
@@ -92,8 +97,10 @@ foreach {m n} $lst {
 foreach {x} $lst {
     puts  "Or one at a time: $x"
 }</pre><p>
-      Create new commands with the "proc" command.  In this example we
-      create a command that prints out a numbered list.
+      Create new commands with the "proc" command.  In this example we create a command that prints
+      out a numbered list.  In Hecl, commands created within procs normally are only visible within
+      that proc, and are cleaned up when the procedure exits.  For exceptions to this rule, see the
+      <a class="link" href="global.html" title="global"><span class="command"><strong>global</strong></span></a> and <a class="link" href="upeval.html" title="upeval"><span class="command"><strong>upeval</strong></span></a> commands.
     </p><pre class="programlisting">set list {red blue green}
 proc printvals {vals} {
     set num 1

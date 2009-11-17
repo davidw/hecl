@@ -1,7 +1,68 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.settings</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_list.html" title="lcdui.list"><link rel="next" href="lcdui_spacer.html" title="lcdui.spacer"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.settings</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_list.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_spacer.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_settings"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.settings &#8212; Returns or sets information about the graphical environment.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.settings</code>  [-color] [-alphalevels] [-alertimagewidth] [-alertimageheight] [-listimagewidth] [-listimageheight] [-choiceimagewidth] [-choiceimageheight] [-bg] [-fg] [-hilightbg] [-hilightfg] [-border] [-hilightborder] [-borderstyle] [-hilightborderstyle]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.17.3"></a><h2>Description</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.settings</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_list.html" title="lcdui.list"><link rel="next" href="lcdui_spacer.html" title="lcdui.spacer"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.settings</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_list.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_spacer.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_settings"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.settings &#8212; Returns or sets information about the graphical environment.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.settings</code>  [-color] [-alphalevels] [-alertimagewidth] [-alertimageheight] [-listimagewidth] [-listimageheight] [-choiceimagewidth] [-choiceimageheight] [-bg] [-fg] [-hilightbg] [-hilightfg] [-border] [-hilightborder] [-borderstyle] [-hilightborderstyle] [-cvfullscreen
+	      [1 |  0]
+	    ] [-cvdocmds
+	      [1 |  0]
+	    ] [-cvkeepcmdsinfullscreen
+	      [1 |  0]
+	    ] [-cvcmdbg
+	      [color]
+	    ] [-cvcmdfg
+	      [color]
+	    ] [-skleft
+	      [keycode]
+	    ] [-skright
+	      [keycode]
+	    ]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.17.3"></a><h2>Description</h2><p>
 	    The <span class="command"><strong>lcdui.settings</strong></span> command returns information about the phone the
 	    program is running on.
-	  </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">-color</code>: is this a color display? 1 or 0</td></tr><tr><td><code class="option">-alphalevels</code>: number of alpha levels</td></tr><tr><td><code class="option">-alertimagewidth</code>: width in pixels of the alert image</td></tr><tr><td><code class="option">-alertimageheight</code>: height in pixels of the alert image</td></tr><tr><td><code class="option">-listimagewidth</code>: width in pixels of the list image</td></tr><tr><td><code class="option">-listimageheight</code>: height in pixels of the list image</td></tr><tr><td><code class="option">-choiceimagewidth</code>: width in pixels of the choice image</td></tr><tr><td><code class="option">-choiceimageheight</code>: height in pixels of the choice image</td></tr><tr><td><code class="option">-bg</code>: background color</td></tr><tr><td><code class="option">-fg</code>: foreground color</td></tr><tr><td><code class="option">-hilightbg</code>: background hilight color</td></tr><tr><td><code class="option">-hilightfg</code>: foreground hilight color</td></tr><tr><td><code class="option">-border</code>: border color</td></tr><tr><td><code class="option">-hilightborder</code>: border hilight color</td></tr><tr><td><code class="option">-borderstyle</code>: border style - can be either DOTTED (1) or SOLID (0)</td></tr><tr><td><code class="option">-hilightborderstyle</code>: border highlight style - can be either DOTTED (1) or SOLID (0)</td></tr></table></div><div class="refsect1" lang="en"><a name="id-1.8.6.17.4"></a><h2>Example</h2><pre class="programlisting">
+	  </p><div class="itemizedlist"><ul type="disc"><li><code class="option">-color</code>: is this a color display? 1 or 0</li><li><code class="option">-alphalevels</code>: number of alpha levels</li><li><code class="option">-alertimagewidth</code>: width in pixels of the alert image</li><li><code class="option">-alertimageheight</code>: height in pixels of the alert image</li><li><code class="option">-listimagewidth</code>: width in pixels of the list image</li><li><code class="option">-listimageheight</code>: height in pixels of the list image</li><li><code class="option">-choiceimagewidth</code>: width in pixels of the choice image</li><li><code class="option">-choiceimageheight</code>: height in pixels of the choice image</li><li><code class="option">-bg</code>: background color</li><li><code class="option">-fg</code>: foreground color</li><li><code class="option">-hilightbg</code>: background hilight color</li><li><code class="option">-hilightfg</code>: foreground hilight color</li><li><code class="option">-border</code>: border color</li><li><code class="option">-hilightborder</code>: border hilight color</li><li><code class="option">-borderstyle</code>: border style - can be either DOTTED (1) or SOLID (0)</li><li><code class="option">-hilightborderstyle</code>: border highlight style - can be either DOTTED (1) or SOLID (0)</li><li><code class="option">-cvfullscreen</code>: Get/set whether full screen mode is allowed for the canvas widget.
+	      <p>
+		This setting enables the use of fullscreen mode for a canvas. The lcdui
+		<code class="classname">Canvas</code> class behaves different in fullscreen mode: it does
+		not show commands. Full screen mode is enabled by default, so a canvas (being a
+		subclass of <code class="classname">lcdui.game.GameCanvas</code>) can be created in
+		fullscreen mode. On some devices the behavior in fullscreen mode is broken, so this
+		setting gives you the chance to avoid the fullscreen usage without changing the
+		application itself but only the application startup that might detect certain phone
+		features and turn off fullscreen mode generally for all canvases.
+	      </p><p>
+		Devices being picky in fullscreen mode include most of the Blackberry devices since
+		handling of commands is totally different from other Java ME devices. Most
+		BlackBerry devices use the dial to select between command entries.
+	      </p></li><li><code class="option">-cvdocmds</code>: Get/set whether to display commands in the full
+	    screen canvas or not.
+	      <p>
+		Enables the display of commands by the hecl canvas. When it fullscreen mode,
+		canvases do not show commands. You may want a canvas in fullscreen mode and wish to
+		use commands as usual, so the canvas in hecl provides a fallback mechanism to show
+		commands attached to the canvas by itself.
+	      </p></li><li><code class="option">-cvkeepcmdsinfullscreen</code>: Get/set whether to add commands in full screen mode.
+	      <p>
+		Enables treatment of commands attached to a canvas even in fullscreen mode. This
+		behavior is implemented in the Hecl midp layer and may be slidely different from the
+		regular phone behavior for commands attached to other lcdui interafce elements like
+		a form or list.The setting has an effect only for a canvas in fullscreen mode and
+		enables command handling similar to the command handling of non-fullscreen canvases.
+	      </p></li><li><code class="option">-cvcmdbg</code>: Get/set color value for command background color in canvas,
+	      when Hecl's full screen Canvas command handling is enabled (see above).
+	    </li><li><code class="option">-cvcmdfg</code>: Get/set color value for command foreground color in
+	      canvas, when Hecl's full screen Canvas command handling is enabled (see above).
+	    </li><li><code class="option">-skleft</code>: Get/set the numeric keycode for the left soft key.
+	      <p>
+		The values are used to identify the keys triggering command handling for a
+		canvas. The standard settings for these values are the usual keycode -6 (left) and
+		-7 (right) that work on most Java ME devices. There are some well-known differences
+		that are detected by the Hecl midp package:
+	      </p><p>
+		Siemens S65 and friends: -1 (left), -4 (right) - detected via existence of class
+		<code class="classname">com.siemens.mp.lcdui.Image</code> Blackberry: 524288=0x80000 (left),
+		0x1b0000 (right) - detected via existence of class
+		<code class="classname">net.rim.device.api.system.Application</code>
+	      </p><p>
+		Application developers can tailor these settings for specific device models in their
+		own applications.
+	      </p></li><li><code class="option">-skright</code>: Get/set the numeric keycode for the right soft key
+	    (see explanation above).</li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.17.4"></a><h2>Example</h2><pre class="programlisting">
 set form [lcdui.form -title "Settings Demo" -commandaction menu1sel]
 $form setcurrent
 
