@@ -3548,11 +3548,18 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	  <cmdsynopsis>
 	    <command>location.get</command>
 	    <group choice="req">
-	    <arg choice="req"><replaceable>timeout</replaceable></arg>
+	      <arg choice="req"><replaceable>timeout</replaceable></arg>
 	      <arg choice="req">
 		<arg choice="req">-callback</arg>
 		<arg choice="req"><replaceable>callbackProc</replaceable></arg>
-		<arg choice="opt"><replaceable>timeout</replaceable></arg>
+		<arg choice="opt">
+		  <arg choice="req">-timeout</arg>
+		  <arg choice="req"><replaceable>timeout</replaceable></arg>
+		</arg>
+		<arg choice="opt">
+		  <arg choice="req">-onerror</arg>
+		  <arg choice="req"><replaceable>onErrorProc</replaceable></arg>
+		</arg>
 	      </arg>
 	    </group>
 	  </cmdsynopsis>
@@ -3565,18 +3572,22 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	  <orderedlist>
 	    <listitem>
 	      <para>
-		The simplist way to call it is to simply call the command with a
-		<option>timeout</option> argument.  The program will block until the command returns
-		an answer, which could take up to several minutes.
+		The simplist way is to simply call the command with a <option>timeout</option>
+		argument.  The program will block until the command returns an answer, which could
+		take up to several minutes.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
 		The alternative way of calling <command>location.get</command> is to pass it a
-		<option>callbackProc</option>, which is the name of a proc that will be called when
-		the information is available.  Program execution continues and does not block on the
-		location.get call.  The <option>callbackProc</option> takes one argument, which is a
-		hash of information about the location.
+		<option>-callback <replaceable>callbackProc</replaceable></option>, which is the
+		name of a proc that will be called when the information is available.  Program
+		execution continues and does not block on the location.get call.  The
+		<option>callbackProc</option> takes one argument, which is a hash of information
+		about the location.  When using <option>-callback</option> it is also possible to
+		specify a <option>-timeout</option> option (in seconds), and an
+		<option>-onerror</option> option.  This is used in case of errors: the specified
+		<option><replaceable>onErrorProc</replaceable></option>
 	      </para>
 	    </listitem>
 	  </orderedlist>
