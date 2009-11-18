@@ -79,7 +79,11 @@ public class Hecl extends MIDlet {
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
 //#if locationapi == 1
-	    org.hecl.location.LocationCmd.load(interp);
+	    try {
+		Class.forName("javax.microedition.location.Location");
+		org.hecl.location.LocationCmd.load(interp);
+	    } catch (Exception e) {
+	    }
 //#endif
 
 //#if kxml == 1
