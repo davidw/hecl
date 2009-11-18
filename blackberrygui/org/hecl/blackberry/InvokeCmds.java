@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+package org.hecl.blackberry;
+
 import net.rim.blackberry.api.invoke.Invoke;
 import net.rim.blackberry.api.invoke.AddressBookArguments; /* FIXME - TODO */
 import net.rim.blackberry.api.invoke.ApplicationArguments;
@@ -33,8 +35,7 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-
-class InvokeCmds extends Operator {
+public class InvokeCmds extends Operator {
     public static final int CALL = 10;
     public static final int CAMERA = 20;
     public static final int VIDEO = 30;

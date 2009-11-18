@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+package org.hecl.blackberry;
+
 import java.io.UnsupportedEncodingException;
 
 import net.rim.blackberry.api.browser.Browser;
@@ -29,8 +31,7 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
-
-class BrowserCmd extends Operator {
+public class BrowserCmd extends Operator {
     public static final int OPEN = 1;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {

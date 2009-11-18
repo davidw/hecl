@@ -73,9 +73,9 @@ public class Hecl extends MIDlet {
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
-	    ServiceBookCmd.load(interp);
-	    BrowserCmd.load(interp);
-	    InvokeCmds.load(interp);
+	    org.hecl.blackberry.ServiceBookCmd.load(interp);
+	    org.hecl.blackberry.BrowserCmd.load(interp);
+	    org.hecl.blackberry.InvokeCmds.load(interp);
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif

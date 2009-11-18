@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+package org.hecl.blackberry;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -34,8 +36,7 @@ import org.hecl.ObjectThing;
 import org.hecl.Operator;
 import org.hecl.Thing;
 
-
-class ServiceBookCmd extends Operator {
+public class ServiceBookCmd extends Operator {
     public static final int RECORDS = 1;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
