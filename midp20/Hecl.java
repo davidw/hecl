@@ -97,7 +97,7 @@ public class Hecl extends MIDlet {
 	    MidletCmd.load(interp,this);
 
 //#if mwt == 1
-			 org.hecl.mwtgui.MwtCmds.load(interp, this);
+	    org.hecl.mwtgui.MwtCmds.load(interp, this);
 //#endif
 
 	    String scriptcontent =
