@@ -1,5 +1,6 @@
 /*
- * Main BlackBerry Hecl entry point.
+ * Main BlackBerry Hecl entry point.  This is mostly a copy of
+ * midp20/Hecl.java, but not entirely.
  *
  * Copyright (C) 2005-2009 data2c GmbH (www.data2c.com), DedaSys LLC (www.dedasys.com)
  *
