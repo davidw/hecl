@@ -1,3 +1,4 @@
+//#condition midp >= 2.0
 /*
  * Copyright 2009
  * DedaSys LLC - http://www.dedasys.com
@@ -16,6 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.hecl.files;
 
 import java.io.IOException;
 
@@ -86,9 +89,7 @@ public class FileFinder extends List implements CommandListener {
 	if (c == cancelBrowse) {
 	    ffcallback.cancel(this);
 	    return;
-	}
-
-	if (c == selectFile) {
+	} else if (c == selectFile) {
 	    String newFile = this.getString(this.getSelectedIndex());
 
 	    if (newFile == null) {
@@ -103,7 +104,7 @@ public class FileFinder extends List implements CommandListener {
 	    }
 	    this.deleteAll();
 
-	    FileConnection fconn = null;
+ 	    FileConnection fconn = null;
 	    try {
  		fconn = (FileConnection)Connector.open(currentFile);
 	    } catch (Exception e) {

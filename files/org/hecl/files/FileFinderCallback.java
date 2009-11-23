@@ -1,3 +1,4 @@
+//#condition midp >= 2.0
 /*
  * Copyright 2009
  * DedaSys LLC - http://www.dedasys.com
@@ -16,6 +17,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.hecl.files;
 
 import javax.microedition.io.file.FileConnection;
 
