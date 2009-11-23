@@ -1,11 +1,9 @@
-[lcdui.alert -text "Loading something ..." -type ok] setcurrent
+set fname "file:///SDCard/hecl.hcl"
 
-# set fname "file:///SDCard/hecl.hcl"
+set mainform [lcdui.form]
 
-# #set mainform [lcdui.form]
-
-# set a [lcdui.alert -text "Loading $fname ..." -type ok]
-# $a setcurrent
+set a [lcdui.alert -text "Loading $fname ..."]
+$a setcurrent
 # set err ""
 # catch {
 #     source $fname
