@@ -63,10 +63,7 @@ public class LocationCmd extends Operator {
 		    Properties props = new Properties();
 		    props.setProps(argv, 1);
 		    /* Use a callback in a separate thread. */
-		    int timeout = 100;
-		    if (props.existsProp("-timeout")) {
-			timeout = IntThing.get(props.getProp("-timeout"));
-		    }
+		    int timeout = IntThing.get(props.getProp("-timeout", IntThing.create(100)));
 
 		    LocationRequest locationrequest =
 			new LocationRequest(interp,
