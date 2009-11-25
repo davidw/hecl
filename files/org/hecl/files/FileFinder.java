@@ -23,6 +23,7 @@ package org.hecl.files;
 import java.io.IOException;
 
 import java.util.Enumeration;
+import java.util.Vector;
 
 import javax.microedition.midlet.MIDlet;
 
@@ -44,10 +45,12 @@ import javax.microedition.io.file.FileSystemRegistry;
  * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
  * @version 1.0
  */
-public class FileFinder extends List implements CommandListener {
-    Command selectFile = null;
-    Command cancelBrowse = null;
+public class FileFinder extends List implements CommandListener, Runnable {
+    Command selectFileCmd = null;
+    Command cancelBrowseCmd = null;
+    Command upCmd = null;
     String currentFile = "";
+    String lastFile = "";
     FileFinderCallback ffcallback = null;
 
     /**
@@ -55,27 +58,24 @@ public class FileFinder extends List implements CommandListener {
      *
      * @param title a <code>String</code> value
      * @param startDir a <code>String</code> value that specifies
-     * where to start looking.
+     * where to start looking.  If this is null, start from the
+     * 'roots'.
      * @param callback a <code>FileFinderCallback</code> value
      */
     public FileFinder(String title, String startDir, FileFinderCallback callback) {
 	super(title, List.IMPLICIT);
 	ffcallback = callback;
 
-	if (startDir == null) {
-	    for (Enumeration e = FileSystemRegistry.listRoots(); e.hasMoreElements();) {
-		this.append((String)e.nextElement(), null);
-	    }
-	} else {
-	    /* Start things off in the right place in order to avoid
-	     * annoying file selection dialogs as much as possible. */
-	    this.append(startDir, null);
-	}
+	currentFile = startDir;
+
 	this.setCommandListener(this);
-	selectFile = new Command("Select", Command.ITEM, 1);
-	cancelBrowse = new Command("Cancel", Command.CANCEL, 2);
-	this.addCommand(cancelBrowse);
-	this.setSelectCommand(selectFile);
+	selectFileCmd = new Command("Select", Command.ITEM, 1);
+	cancelBrowseCmd = new Command("Cancel", Command.CANCEL, 3);
+	upCmd = new Command("Up", Command.ITEM, 2);
+	this.setSelectCommand(selectFileCmd);
+	this.addCommand(upCmd);
+	this.addCommand(cancelBrowseCmd);
+	run();
     }
 
     /**
@@ -86,44 +86,101 @@ public class FileFinder extends List implements CommandListener {
      * @param d a <code>Displayable</code> value
      */
     public void commandAction(Command c, Displayable d) {
-	if (c == cancelBrowse) {
+	if (c == cancelBrowseCmd) {
 	    ffcallback.cancel(this);
 	    return;
-	} else if (c == selectFile) {
-	    String newFile = this.getString(this.getSelectedIndex());
+	} else if (c == upCmd) {
+	    up();
+	    this.deleteAll();
+	} else if (c == selectFileCmd) {
+	    //System.err.println("commandAction currentfile: " + currentFile);
+	    int idx = this.getSelectedIndex();
+	    if (idx < 0) {
+		/* Nothing has been selected. */
+		return;
+	    }
+	    String newFile = this.getString(idx);
+
+	    //System.err.println("newfile : " + newFile);
 
 	    if (newFile == null) {
 		ffcallback.error(this, "No file selected");
 		return;
 	    }
 
-	    if (currentFile == "") {
-		currentFile = "file://" + newFile;
+	    if(newFile.startsWith("file:///")) {
+		currentFile = newFile;
 	    } else {
+		if (currentFile == null || currentFile == "") {
+		    currentFile = "file:///";
+		}
 		currentFile = currentFile + newFile;
 	    }
 	    this.deleteAll();
+	}
+	/* Kick off the thread to finish processing and displaying
+	 * information.  */
+	new Thread(this).start();
+    }
 
- 	    FileConnection fconn = null;
-	    try {
- 		fconn = (FileConnection)Connector.open(currentFile);
-	    } catch (Exception e) {
-		ffcallback.error(this, "Cannot open FileConnection \"" + currentFile + "\" :" + e.toString());
-		return;
-	    }
+    private void up() {
+	if (currentFile == null) {
+	    return;
+	}
+	int last = currentFile.lastIndexOf('/');
+	int secondlast = currentFile.lastIndexOf('/', last-1);
 
-	    if (ffcallback.match(this, fconn)) {
-		ffcallback.selected(this, currentFile);
-		return;
-	    }
+	//System.err.println("up currentfile: " + currentFile + " ("+last+") ("+secondlast+")");
 
-	    try {
-		for (Enumeration e = fconn.list(); e.hasMoreElements();) {
-		    this.append((String)e.nextElement(), null);
-		}
-	    } catch (Exception e) {
-		ffcallback.error(this, "Cannot list files: " + e.toString());
+	/* It's only a root. */
+	if (currentFile.startsWith("file:///") && secondlast == 7) {
+	    currentFile = null;
+	    return;
+	}
+	currentFile = currentFile.substring(0, secondlast) + "/";
+    }
+
+    /**
+     * The <code>run</code> method (in other words, a new thread) is
+     * where we offload the processing so that it is not run in the
+     * commandAction.
+     *
+     */
+    public synchronized void run() {
+	FileConnection fconn = null;
+
+ 	if (currentFile == null) {
+	    for (Enumeration e = FileSystemRegistry.listRoots(); e.hasMoreElements();) {
+		String root = (String)e.nextElement();
+		this.append(root, null);
+		//System.err.println("root: " + root);
 	    }
+	    return;
+	}
+
+	//System.err.println("run currentfile: " + currentFile);
+
+	try {
+	    fconn = (FileConnection)Connector.open(currentFile);
+	} catch (Exception e) {
+	    ffcallback.error(this, "Cannot open FileConnection \"" + currentFile + "\" :" + e.toString());
+	    return;
+	}
+
+	if (ffcallback.match(this, fconn)) {
+	    ffcallback.selected(this, currentFile);
+	    return;
+	}
+
+	try {
+	    for (Enumeration e = fconn.list(); e.hasMoreElements();) {
+		String fname = (String)e.nextElement();
+		this.append(fname, null);
+		//System.err.println("filename : " + fname);
+	    }
+	} catch (Exception e) {
+	    ffcallback.error(this, "Cannot list files: " + e.toString());
 	}
     }
+
 }
