@@ -123,6 +123,11 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	new Thread(this).start();
     }
 
+    /**
+     * The <code>up</code> method is called when the user presses the
+     * 'up' command, in order to attempt to go up a directory.
+     *
+     */
     private void up() {
 	if (currentFile == null) {
 	    return;
@@ -149,6 +154,7 @@ public class FileFinder extends List implements CommandListener, Runnable {
     public synchronized void run() {
 	FileConnection fconn = null;
 
+	/* If there is no currentFile, show the roots and return. */
  	if (currentFile == null) {
 	    for (Enumeration e = FileSystemRegistry.listRoots(); e.hasMoreElements();) {
 		String root = (String)e.nextElement();
@@ -167,11 +173,14 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	    return;
 	}
 
+	/* If the selected file is a match, we indicate that we have
+	 * selected it, and return. */
 	if (ffcallback.match(this, fconn)) {
 	    ffcallback.selected(this, currentFile);
 	    return;
 	}
 
+	/* Otherwise, try and do a listing. */
 	try {
 	    for (Enumeration e = fconn.list(); e.hasMoreElements();) {
 		String fname = (String)e.nextElement();
