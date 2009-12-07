@@ -20,7 +20,7 @@
   <!-- default: 0 -->
   <property name="debugcmds" value="0" />
 
-  <!-- General WTk settings -->
+  <!-- General WTK settings -->
   <!-- make it fit for your local installation -->
   <property name="my.wtk.home" value="/opt/WTK2.5.2"/>
 
