@@ -337,4 +337,25 @@ public class ListThing implements RealThing {
 	}
 	return ListThing.create(result);
     }
+
+
+    /**
+     * The <code>buildCmd</code> method takes a Thing, treats it as a
+     * list, and adds arguments to it from the args array.  The whole
+     * thing is returned and is ready to be executed by interp.eval().
+     * This is a convenience function utilized in various callbacks
+     * throughout the code.
+     *
+     * @param cmd a <code>Thing</code> value
+     * @param args an <code>Object</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static Thing buildCmd(Thing cmd, Object[] args) throws HeclException {
+	Vector v = ListThing.get(cmd.deepcopy());
+	for(int i = 0; i < args.length; i++) {
+	    v.addElement(args[i]);
+	}
+	return ListThing.create(v);
+    }
 }
