@@ -36,6 +36,15 @@ import org.hecl.midp20.lcdui.ScreenCmd;
 
 import javax.microedition.io.file.FileConnection;
 
+
+/**
+ * The <code>FileFinderCmds</code> class implements the
+ * FileFinderCallback methods as well as the 'filefinder' command
+ * itself.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
     private Thing errorCmd = null;
     private Thing matchCmd = null;
