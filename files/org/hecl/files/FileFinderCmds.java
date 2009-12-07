@@ -26,6 +26,8 @@ import org.hecl.ClassCommand;
 import org.hecl.ClassCommandInfo;
 import org.hecl.HeclException;
 import org.hecl.Interp;
+import org.hecl.IntThing;
+import org.hecl.ListThing;
 import org.hecl.ObjectThing;
 import org.hecl.Properties;
 import org.hecl.Thing;
@@ -35,20 +37,30 @@ import org.hecl.midp20.lcdui.ScreenCmd;
 import javax.microedition.io.file.FileConnection;
 
 public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
+    private Thing errorCmd = null;
+    private Thing matchCmd = null;
+    private Thing selectedCmd = null;
+    private Interp interp = null;
 
     public Thing method(Interp interp, ClassCommandInfo context, Thing[] argv)
 	throws HeclException {
 	return new Thing("");
     }
 
-    public Thing cmdCode(Interp interp, Thing[] argv)
+    public Thing cmdCode(Interp ip, Thing[] argv)
 	throws HeclException {
+	interp = ip;
 	Properties props = new Properties();
 	props.setProps(argv, 1);
 	String startDir = null;
 	if (props.existsProp("-startdir")) {
 	    startDir = props.getProp("-startdir").toString();
 	}
+
+	errorCmd = props.getProp("-errorcmd");
+	matchCmd = props.getProp("-matchcmd");
+	selectedCmd = props.getProp("-selectedcmd");
+
 	return ObjectThing.create(
 	    new FileFinder(
 		props.getProp("-title", new Thing("File Finder")).toString(),
@@ -56,15 +68,53 @@ public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
     }
 
 
+    /* These are all from FileFinderCallback.java  */
+
     public void error(FileFinder ff, String errmsg) {
-	System.err.println(errmsg);
+	if (errorCmd == null) {
+	    System.err.println(errmsg);
+	} else {
+	    try {
+		Thing res = interp.eval(ListThing.buildCmd(errorCmd, new Object [] {
+			    new Thing(errmsg)
+			}));
+	    } catch (Exception e) {
+		System.err.println("Original error: " + errmsg + " error handler error: " + e.toString());
+	    }
+	}
     }
 
     public boolean match(FileFinder ff, FileConnection fconn) {
-	return !fconn.isDirectory();
+	if (matchCmd == null) {
+	    /* We try and have a decent default: match any file. */
+	    return !fconn.isDirectory();
+	} else {
+	    try {
+		Thing res = interp.eval(ListThing.buildCmd(matchCmd, new Object [] {
+			    new Thing(fconn.getURL())
+			}));
+		return IntThing.get(res) == 1;
+	    } catch (Exception e) {
+		error(ff, e.toString());
+	    }
+	}
+	return false;
     }
 
     public void selected(FileFinder ff, String currentFile) {
+	if (selectedCmd != null) {
+	    Object [] arguments = {
+		new Thing(currentFile)
+	    };
+	    try {
+		Thing cmd = ListThing.buildCmd(selectedCmd, arguments);
+		interp.evalAsync(cmd);
+	    } catch (Exception e) {
+		error(ff, e.toString());
+	    }
+	}
+	/* Since a file has been selected, we can dispose of the
+	 * FileFinder. */
 	ff = null;
     }
 

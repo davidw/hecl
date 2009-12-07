@@ -93,15 +93,12 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	    up();
 	    this.deleteAll();
 	} else if (c == selectFileCmd) {
-	    //System.err.println("commandAction currentfile: " + currentFile);
 	    int idx = this.getSelectedIndex();
 	    if (idx < 0) {
 		/* Nothing has been selected. */
 		return;
 	    }
 	    String newFile = this.getString(idx);
-
-	    //System.err.println("newfile : " + newFile);
 
 	    if (newFile == null) {
 		ffcallback.error(this, "No file selected");
@@ -135,8 +132,6 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	int last = currentFile.lastIndexOf('/');
 	int secondlast = currentFile.lastIndexOf('/', last-1);
 
-	//System.err.println("up currentfile: " + currentFile + " ("+last+") ("+secondlast+")");
-
 	/* It's only a root. */
 	if (currentFile.startsWith("file:///") && secondlast == 7) {
 	    currentFile = null;
@@ -159,12 +154,9 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	    for (Enumeration e = FileSystemRegistry.listRoots(); e.hasMoreElements();) {
 		String root = (String)e.nextElement();
 		this.append(root, null);
-		//System.err.println("root: " + root);
 	    }
 	    return;
 	}
-
-	//System.err.println("run currentfile: " + currentFile);
 
 	try {
 	    fconn = (FileConnection)Connector.open(currentFile);
@@ -185,7 +177,6 @@ public class FileFinder extends List implements CommandListener, Runnable {
 	    for (Enumeration e = fconn.list(); e.hasMoreElements();) {
 		String fname = (String)e.nextElement();
 		this.append(fname, null);
-		//System.err.println("filename : " + fname);
 	    }
 	} catch (Exception e) {
 	    ffcallback.error(this, "Cannot list files: " + e.toString());
