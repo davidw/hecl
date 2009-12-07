@@ -22,13 +22,49 @@ package org.hecl.files;
 
 import javax.microedition.io.file.FileConnection;
 
+/**
+ * The <code>FileFinderCallback</code> interface should be implemented
+ * by classes that wish to interact with a FileFinder.  The
+ * implementation is passed to the FileFinder in its constructor.
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public abstract interface FileFinderCallback {
 
+    /**
+     * The <code>error</code> method is called when something goes
+     * wrong.
+     *
+     * @param ff a <code>FileFinder</code> value
+     * @param errmsg a <code>String</code> value
+     */
     public void error(FileFinder ff, String errmsg);
 
+    /**
+     * The <code>match</code> method is called to determine whether
+     * the given file object matches the user's criteria.
+     *
+     * @param ff a <code>FileFinder</code> value
+     * @param fconn a <code>FileConnection</code> value
+     * @return a <code>boolean</code> value
+     */
     public boolean match(FileFinder ff, FileConnection fconn);
 
+    /**
+     * The <code>selected</code> method is called when a file matches
+     * the 'match' method, and is selected.
+     *
+     * @param ff a <code>FileFinder</code> value
+     * @param currentFile a <code>String</code> value
+     */
     public void selected(FileFinder ff, String currentFile);
 
+    /**
+     * The <code>cancel</code> method is a callback that is called
+     * when the user hits 'cancel' to stop browsing files.
+     *
+     * @param ff a <code>FileFinder</code> value
+     */
     public void cancel(FileFinder ff);
 }
