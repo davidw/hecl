@@ -10,14 +10,14 @@
     depends="">
     <antcall target="blackberryCod">
       <param name="scriptname" value="blackberry/script.hcl"/>
-      <param name="codename" value="HeclDemo"/>
-      <param name="j2me.app" value="HeclDemo"/>
+      <param name="codename" value="Hecl"/>
+      <param name="j2me.app" value="Hecl"/>
     </antcall>
 
     <antcall target="blackberryCod">
-      <param name="scriptname" value="blackberry/hecl.hcl"/>
-      <param name="codename" value="Hecl"/>
-      <param name="j2me.app" value="Hecl"/>
+      <param name="scriptname" value="blackberry/heclfile.hcl"/>
+      <param name="codename" value="HeclFile"/>
+      <param name="j2me.app" value="HeclFile"/>
     </antcall>
   </target>
 
