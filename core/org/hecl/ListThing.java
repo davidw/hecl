@@ -347,11 +347,11 @@ public class ListThing implements RealThing {
      * throughout the code.
      *
      * @param cmd a <code>Thing</code> value
-     * @param args an <code>Object</code> value
+     * @param args an array of <code>Thing</code> values
      * @return a <code>Thing</code> value
      * @exception HeclException if an error occurs
      */
-    public static Thing buildCmd(Thing cmd, Object[] args) throws HeclException {
+    public static Thing buildCmd(Thing cmd, Thing[] args) throws HeclException {
 	Vector v = ListThing.get(cmd.deepcopy());
 	for(int i = 0; i < args.length; i++) {
 	    v.addElement(args[i]);
