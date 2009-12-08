@@ -147,7 +147,7 @@
   <target name="compileJ2MEFiles"
     depends="initCompile,compileJ2MECore,compileJ2MErms"
     description="Compile J2ME Hecl File support">
-    <mkdir dir="${j2me.fileclasspath}"/>
+    <mkdir dir="${j2me.filesclasspath}"/>
     <mkdir dir="${j2me.pre}/location"/>
     <wtkpreprocess srcdir="files" destdir="${j2me.pre}/files"
       symbols="${j2me.defines}">
