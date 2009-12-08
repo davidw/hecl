@@ -84,9 +84,8 @@ public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
 	    System.err.println(errmsg);
 	} else {
 	    try {
-		Thing res = interp.eval(ListThing.buildCmd(errorCmd, new Object [] {
-			    new Thing(errmsg)
-			}));
+		Thing res = interp.eval(ListThing.buildCmdList(errorCmd, new Thing [] {
+			    new Thing(errmsg)}));
 	    } catch (Exception e) {
 		System.err.println("Original error: " + errmsg + " error handler error: " + e.toString());
 	    }
@@ -99,7 +98,7 @@ public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
 	    return !fconn.isDirectory();
 	} else {
 	    try {
-		Thing res = interp.eval(ListThing.buildCmd(matchCmd, new Object [] {
+		Thing res = interp.eval(ListThing.buildCmdList(matchCmd, new Thing [] {
 			    new Thing(fconn.getURL())
 			}));
 		return IntThing.get(res) == 1;
@@ -112,12 +111,11 @@ public class FileFinderCmds extends ScreenCmd implements FileFinderCallback {
 
     public void selected(FileFinder ff, String currentFile) {
 	if (selectedCmd != null) {
-	    Object [] arguments = {
-		new Thing(currentFile)
-	    };
 	    try {
-		Thing cmd = ListThing.buildCmd(selectedCmd, arguments);
-		interp.evalAsync(cmd);
+		interp.evalAsync(ListThing.buildCmdList(selectedCmd,
+							new Thing [] {
+							    new Thing(currentFile)
+							}));
 	    } catch (Exception e) {
 		error(ff, e.toString());
 	    }
