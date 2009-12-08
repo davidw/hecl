@@ -9,12 +9,12 @@ proc StoredHeclFile {} {
 	set hf [rms.get heclfile]
     }
     if { ne $hf "" } { return $hf }
-    set root [lindex [file.devs] 0]
-    return "file:///${root}/hecl.hcl"
+    return "file:///SDCard/hecl.hcl"
 }
 
 # Save the selected file.
 proc SaveHeclFile {fname} {
+    rms.create heclfile
     if { < 0 [llen [rms.list heclfile]] } {
 	rms.set heclfile 1 $fname
     } else {
