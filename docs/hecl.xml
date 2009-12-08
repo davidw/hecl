@@ -174,8 +174,11 @@
 	  </member>
 
 	  <member>
-	    Hecl uses the <link url="http://ant.apache.org/">Apache Ant</link> build system, so you
-	    need to install that as well to compile Hecl.
+	    Hecl uses the <ulink url="http://ant.apache.org/">Apache Ant</ulink> build system, so
+	    you need to install that as well to compile Hecl.  If you are on Windows, this may
+	    require a bit of extra work.  Here are some <ulink
+	    url="http://blogs.sun.com/rajeshthekkadath/entry/installing_ant_on_windows">instructions
+	    for setting up Ant on Windows</ulink>.
 	  </member>
 	</simplelist>
 
@@ -210,12 +213,38 @@ java -jar jars/j2se/Hecl.jar tests/suite.hcl
 java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	</screen>
       </step>
+
     </procedure>
 
+    <para>
+      If you're going to be recompiling (you don't need to recompile if you're only going to be
+      writing scripts, though!) Hecl for Java ME, you also need to follow these instructions.
+    </para>
+
+    <procedure>
+      <step>
+	<para>
+	  You'll need to download and install Sun's "Java Wireless Toolkit", here: <ulink
+	    url="http://java.sun.com/products/sjwtoolkit/index.jsp" />.
+	</para>
+      </step>
+      <step>
+	<para>
+	  You also need to make Hecl aware of the WTK.  For instance, in my installation, the
+	  <filename>settings.xml</filename> file has the following:
+	</para>
+	<screen>
+&lt;!-- General WTK settings --&gt;
+&lt;!-- make it fit for your local installation --&gt;
+&lt;property name="my.wtk.home" value="/opt/WTK2.5.2"/&gt;
+	</screen>
+	<para>You would need to change <filename>/opt/WTK25.2</filename> to wherever the WTK is
+	located on your system.</para>
+      </step>
+    </procedure>
 
     <para>
-      See <xref linkend="j2me"/> for more information on installation
-      and use with J2ME.
+      See <xref linkend="j2me"/> for further information on installation and use with J2ME.
     </para>
 
     <section id="tools_and_editors">

@@ -18,8 +18,10 @@
 	    Depending on what you want to utilize Hecl for, you'll want one or both of the <a class="ulink" href="http://java.sun.com/javame/downloads/index.jsp" target="_top">Sun Java Wireless Toolkit</a>
 	      or <a class="ulink" href="http://code.google.com/android/download.html" target="_top">Android SDK</a>.
 	  </td></tr><tr><td>
-	    Hecl uses the Apache Ant build system, so you
-	    need to install that as well to compile Hecl.
+	    Hecl uses the <a class="ulink" href="http://ant.apache.org/" target="_top">Apache Ant</a> build system, so
+	    you need to install that as well to compile Hecl.  If you are on Windows, this may
+	    require a bit of extra work.  Here are some <a class="ulink" href="http://blogs.sun.com/rajeshthekkadath/entry/installing_ant_on_windows" target="_top">instructions
+	    for setting up Ant on Windows</a>.
 	  </td></tr></table></li><li>
 	To compile the standard, J2SE version of Hecl, do this:
 	<pre class="screen">
@@ -43,8 +45,20 @@ java -jar jars/j2se/Hecl.jar tests/suite.hcl
 	<pre class="screen">
 java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	</pre></li></ol></div><p>
-      See <a class="xref" href="j2me.html" title="Hecl and Java ME">the section called &#8220;Hecl and Java ME&#8221;</a> for more information on installation
-      and use with J2ME.
+      If you're going to be recompiling (you don't need to recompile if you're only going to be
+      writing scripts, though!) Hecl for Java ME, you also need to follow these instructions.
+    </p><div class="procedure"><ol type="1"><li><p>
+	  You'll need to download and install Sun's "Java Wireless Toolkit", here: <a class="ulink" href="http://java.sun.com/products/sjwtoolkit/index.jsp" target="_top">http://java.sun.com/products/sjwtoolkit/index.jsp</a>.
+	</p></li><li><p>
+	  You also need to make Hecl aware of the WTK.  For instance, in my installation, the
+	  <code class="filename">settings.xml</code> file has the following:
+	</p><pre class="screen">
+&lt;!-- General WTK settings --&gt;
+&lt;!-- make it fit for your local installation --&gt;
+&lt;property name="my.wtk.home" value="/opt/WTK2.5.2"/&gt;
+	</pre><p>You would need to change <code class="filename">/opt/WTK25.2</code> to wherever the WTK is
+	located on your system.</p></li></ol></div><p>
+      See <a class="xref" href="j2me.html" title="Hecl and Java ME">the section called &#8220;Hecl and Java ME&#8221;</a> for further information on installation and use with J2ME.
     </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="tools_and_editors"></a>Tools &amp; Editors</h3></div></div></div><p>
 	Even if you're not interested in recompiling Hecl to hack on the source code, to write Hecl
 	scripts, you need some kind of editor for programming.  Hecl is close enough in syntax to

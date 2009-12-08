@@ -430,7 +430,19 @@
       <arg value="cldc11midp20.properties" />
       <arg value="midlet" />
     </exec>
-    
+  </target>
+
+  <target name="HeclFile" depends="midlet,packageJarHack">
+    <java jar="jars/JarHack.jar" fork="true">
+      <arg value="-hecljar"/>
+      <arg value="jars/cldc1.1-midp2.0/Hecl.jar"/>
+      <arg value="-destdir"/>
+      <arg value="jars/cldc1.1-midp2.0/"/>
+      <arg value="-name"/>
+      <arg value="HeclFile"/>
+      <arg value="-script"/>
+      <arg value="midp20/heclfile.hcl"/>
+    </java>
   </target>
 
 </project>
