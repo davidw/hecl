@@ -15,6 +15,7 @@ proc StoredHeclFile {} {
 
 # Save the selected file.
 proc SaveHeclFile {fname} {
+    rms.create heclfile
     if { < 0 [llen [rms.list heclfile]] } {
 	rms.set heclfile 1 $fname
     } else {
