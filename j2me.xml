@@ -144,6 +144,21 @@
     </wtkbuild>
   </target>
 
+  <target name="compileJ2MEPIM"
+    depends="initCompile,compileJ2MECore,compileJ2MErms"
+    description="Compile J2ME Hecl PIM support">
+    <mkdir dir="${j2me.pimclasspath}"/>
+    <mkdir dir="${j2me.pre}/location"/>
+    <wtkpreprocess srcdir="pim" destdir="${j2me.pre}/pim"
+      symbols="${j2me.defines}">
+    </wtkpreprocess>
+    <wtkbuild srcdir="${j2me.pre}/pim" target="1.1" source="1.2"
+      destdir="${j2me.pimclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${wtk.home}/lib/jsr75.jar"/>
+    </wtkbuild>
+  </target>
+
   <target name="compileJ2MEFiles"
     depends="initCompile,compileJ2MECore,compileJ2MErms"
     description="Compile J2ME Hecl File support">
@@ -297,6 +312,10 @@
     <antcall target="compileJ2MEFiles"/>
   </target>
 
+  <target name="extra-pim" if="buildpim" description="PIM API - if the user has decided to include it">
+    <antcall target="compileJ2MEPIM"/>
+  </target>
+
   <target name="extra-kxml" if="buildkxml" description="Build kxml stuff if the user has decided to">
     <unjar src="jars/kxml2-2.3.0.jar" dest="${j2me.build}" />
     <antcall target="compileJ2MEkxml"/>
@@ -306,7 +325,7 @@
     <antcall target="compileJ2MELocation"/>
   </target>
 
-  <target name="extras" depends="extra-kxml,extra-files,extra-locationapi" description="Use this to link in extra packages">
+  <target name="extras" depends="extra-kxml,extra-files,extra-locationapi,extra-pim" description="Use this to link in extra packages">
   </target>
 
   <target name="midlet" depends="midp">

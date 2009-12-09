@@ -131,9 +131,10 @@
   <property name="kxml" value="false"/>
   <!-- Use the MWT toolkit? -->
   <property name="mwt" value="false"/>
-  <property name="files" value="false"/>
+  <!-- Use the FileConnection API? -->
+  <property name="pim" value="false"/>
 
-  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt},files=${files},locationapi=${locationapi}"/>
+  <property name="j2me.defines" value="j2me=1,sms='${wtk.wma.enabled}',cldc=${wtk.cldc.version},midp=${wtk.midp.version},javaversion=1.2,debugcmds=${debugcmds},kxml=${kxml},mwt=${mwt},files=${files},locationapi=${locationapi},pim=${pim}"/>
 
   <property name="j2me.build" value="${buildprefix}/j2me/final/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
   <property name="j2me.pre" value="${buildprefix}/j2me/pre/cldc${wtk.cldc.version}-midp${wtk.midp.version}"/>
@@ -185,9 +186,15 @@
   <path id="j2me.rmsclasspath">
     <pathelement location="${j2me.rmsclasspath}"/>
   </path>
+
   <property name="j2me.locationclasspath" value="${j2me.build}"/>
   <path id="j2me.locationclasspath">
     <pathelement location="${j2me.locationclasspath}"/>
+  </path>
+
+  <property name="j2me.pimclasspath" value="${j2me.build}"/>
+  <path id="j2me.pimclasspath">
+    <pathelement location="${j2me.pimclasspath}"/>
   </path>
 
   <property name="j2me.filesclasspath" value="${j2me.build}"/>
@@ -220,6 +227,11 @@
   <!-- File API settings -->
   <condition property="buildfiles" value="buildfiles">
     <equals arg1="1" arg2="${files}"/>
+  </condition>
+
+  <!-- PIM API settings -->
+  <condition property="buildpim" value="buildpim">
+    <equals arg1="1" arg2="${pim}"/>
   </condition>
 
   <!-- Android settings -->
