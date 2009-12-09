@@ -2930,6 +2930,57 @@ append $foo "beebop"
 	J2ME systems do not always have a file system, so these are not necessarily available.  It
 	is possible to compile Hecl with or without these commands.
       </para>
+      <note>
+	<para>The <command>filefinder</command> command is a bit different from the others, in that
+	it is a graphical widget that is used to select files, rather than a command that only
+	interacts with the filesystem.</para>
+      </note>
+
+      <refentry id="filefinder">
+	<refnamediv>
+	  <refname>filefinder</refname>
+	  <refpurpose>File selection widget.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>filefinder</command>
+	    <arg choice="opt">-startdir <replaceable>start_directory</replaceable></arg>
+	    <arg choice="opt">-selectedcmd <replaceable>selected_command</replaceable></arg>
+	    <arg choice="opt">-matchcmd <replaceable>match_command</replaceable></arg>
+	    <arg choice="opt">-errorcmd <replaceable>error_command</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Creates a <command>lcdui.list</command> based file selection dialog that lets the user
+	    navigate up and down through directories and select a file.  The options are as follows:
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><option>-startdir</option>: selects the directory to start the search in.</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-selectedcmd</option>: a <command>proc</command> that by default takes
+	      one argument: the name of the selected file.</para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-matchcmd</option>: a <command>proc</command> that takes one argument:
+	      the full URL of the file to match against.  If the file is a match, the proc must
+	      return a 1, otherwise 0.  If a match occurs, the <option>-selectedcmd</option> will
+	      subsequently be called.</para>
+	    </listitem>
+	    <listitem>
+	      <para><option>-errorcmd</option>: a <command>proc</command> that is called with one
+	      argument: an error message.  This is called when some error occurs and can be used to
+	      display an error message.</para>
+	    </listitem>
+
+	  </itemizedlist>
+	</refsect1>
+      </refentry>
+
 
       <refentry id="open">
 	<refnamediv>
