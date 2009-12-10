@@ -62,12 +62,6 @@ AddSample "Hello World" {
 puts "Hello World"
 }
 
-AddSample "PIM" {
-set res [pim.lists CONTACT]
-append $res [pim.list_contacts]
-puts $res
-}
-
 AddSample "List" {
 set sel [/cmd -label Select -longlabel Select -type item]
 set back [/cmd -label Back -longlabel Back -type back]
@@ -179,6 +173,25 @@ AddSample Alert {
 [/alert -type confirmation -timeout forever \
      -title Alert -text "This is the alert message!" \
      -commandaction [: {c a} {done}]] setcurrent
+}
+
+# Only do this if we have the pim.lists command:
+if { < 0 [llen [search [intro commands] x {eq $x pim.lists}]] } {
+AddSample "PIM" {
+set form [lcdui.form -title "Contacts" -commandaction [: {cmd form} {
+    done
+}]]
+$form setcurrent
+set contacts [pim.list_contacts]
+foreach c $contacts {
+    foreach k [hkeys $c] {
+	if { eq $k Name } {
+	    $form append [lcdui.stringitem -label $k -text [hget $c $k]]
+	}
+    }
+    $form append [lcdui.spacer]
+}
+}
 }
 
 # Only add this if we have the location.get command:
