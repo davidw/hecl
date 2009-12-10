@@ -111,6 +111,7 @@ public class HeclPIMCmds extends Operator {
 	    int nvalues = c.countValues(f);
 	    Vector values = new Vector();
 	    for (int j = 0; j < nvalues; j++) {
+		Thing attrs = attributes2thing(clist, c.getAttributes(f, j));
 		Thing thingval = null;
 		switch (datatype) {
 		    case PIMItem.BINARY:
@@ -139,11 +140,33 @@ public class HeclPIMCmds extends Operator {
 		    default:
 			throw new HeclException("Unsupported data type: " + datatype + " for field " + label);
 		}
+		values.addElement(attrs);
 		values.addElement(thingval);
 	    }
 	    hres.put(label, ListThing.create(values));
 	}
 	return HashThing.create(hres);
+    }
+
+    /**
+     * The <code>attributes2thing</code> method walks through
+     * potential values for attributes, and if they are present,
+     * fetches the label and adds it to a list, which is then
+     * returned.
+     *
+     * @param clist a <code>ContactList</code> value
+     * @param attributes an <code>int</code> value
+     * @return a <code>Thing</code> value
+     */
+    private static Thing attributes2thing(ContactList clist, int attributes) {
+	Vector resv = new Vector();
+	for (int i = 0; i < 10; i++) {
+	    int attr = (1 << i) & attributes;
+	    if (attr != 0) {
+		resv.addElement(new Thing(clist.getAttributeLabel(attr)));
+	    }
+	}
+	return ListThing.create(resv);
     }
 
     /**
