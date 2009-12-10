@@ -71,7 +71,6 @@ public class HeclPIMCmds extends Operator {
 		    while (e.hasMoreElements()) {
 			Contact c = (Contact)e.nextElement();
 			v.addElement(contact2thing(clist, c));
-			System.err.println(c);
 		    }
 		    return ListThing.create(v);
 		} catch (Exception e) {
@@ -91,6 +90,17 @@ public class HeclPIMCmds extends Operator {
 	}
     }
 
+    /**
+     * The <code>contact2thing</code> method transforms a contact into
+     * a Thing that takes this form: a hash table with data types as
+     * keys, and lists as values.  For instance, you might have {Phone
+     * {123456 654321}}.
+     *
+     * @param clist a <code>ContactList</code> value
+     * @param c a <code>Contact</code> value
+     * @return a <code>Thing</code> value
+     * @exception HeclException if an error occurs
+     */
     private static Thing contact2thing(ContactList clist, Contact c) throws HeclException {
 	int []fields = c.getFields();
 	Hashtable hres = new Hashtable();
@@ -136,6 +146,14 @@ public class HeclPIMCmds extends Operator {
 	return HashThing.create(hres);
     }
 
+    /**
+     * The <code>string2type</code> method takes a type of list as a
+     * string transforms it into an integer of the correct type.
+     *
+     * @param stype a <code>String</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
     private static int string2type(String stype) throws HeclException {
 	if (stype.equals("CONTACT")) {
 	    return PIM.CONTACT_LIST;
