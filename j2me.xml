@@ -360,6 +360,7 @@
       verbose="false">
 
       <classpath path="${wtk.home}/lib/jsr179.jar"/>
+      <classpath path="${wtk.home}/lib/jsr75.jar"/>
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
 
