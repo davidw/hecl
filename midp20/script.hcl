@@ -62,6 +62,12 @@ AddSample "Hello World" {
 puts "Hello World"
 }
 
+AddSample "PIM" {
+set res [pim.lists CONTACT]
+append $res [pim.list_contacts]
+puts $res
+}
+
 AddSample "List" {
 set sel [/cmd -label Select -longlabel Select -type item]
 set back [/cmd -label Back -longlabel Back -type back]

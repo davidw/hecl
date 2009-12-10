@@ -95,6 +95,10 @@ public class Hecl extends MIDlet {
 	    org.hecl.files.FileFinderCmds.load(interp);
 //#endif
 
+//#if pim == 1
+	    org.hecl.pim.HeclPIMCmds.load(interp);
+//#endif
+
 	    MidletCmd.load(interp,this);
 
 //#if mwt == 1
