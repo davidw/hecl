@@ -197,6 +197,44 @@ foreach c $contacts {
     $form append [lcdui.spacer]
 }
 }
+AddSample "Contact Search" {
+
+proc SearchContactsCmd {field searchcmd cmd form} {
+    if { eq $cmd $searchcmd } {
+	set name [$field cget -text]
+	set contacts [pim.list_contacts [hash [list FORMATTED_NAME [list {} $name]]]]
+
+	set sz [$form size]
+	for {set i 1} { < $i $sz } { incr $i } {
+	    $form delete $i
+	}
+
+	if { = 0 [llen $contacts] } {
+	    return
+	}
+	if { <= 10 [llen $contacts] } {
+	    set contacts [lrange $contacts 0 9]
+	}
+
+	foreach c $contacts {
+	    foreach k [hkeys $c] {
+		set name [hget $c $k]
+		$form append [lcdui.stringitem -label $k -text [strtrim [join ${name}]]]
+	    }
+	    $form append [lcdui.spacer]
+	}
+    } else {
+	done
+    }
+}
+set searchcmd [lcdui.command -label Search -longlabel Search]
+set field [lcdui.textfield]
+set form [lcdui.form -title "Contacts" -commandaction [list SearchContactsCmd $field $searchcmd]]
+$form append $field
+$form addcommand $searchcmd
+$form addcommand [lcdui.command -label Back -longlabel Back -type back]
+$form setcurrent
+}
 }
 
 # Only add this if we have the location.get command:
