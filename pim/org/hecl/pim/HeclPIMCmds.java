@@ -62,11 +62,20 @@ public class HeclPIMCmds extends Operator {
 		}
 		return ListThing.create(v);
 	    }
+
 	    case LIST_CONTACTS: {
 		ContactList clist = null;
 		try {
 		    clist = (ContactList)pim.openPIMList(PIM.CONTACT_LIST, PIM.READ_ONLY);
-		    Enumeration e = clist.items();
+		    Enumeration e = null;
+		    /* If an optional argument is present, it is a
+		     * contact in hash form that is used to filter the
+		     * results. */
+		    if (argv.length == 2) {
+			e = clist.items(thing2contact(clist, argv[1]));
+		    } else {
+			e = clist.items();
+		    }
 		    Vector v = new Vector();
 		    while (e.hasMoreElements()) {
 			Contact c = (Contact)e.nextElement();
@@ -149,6 +158,62 @@ public class HeclPIMCmds extends Operator {
     }
 
     /**
+     * The <code>thing2contact</code> method transforms a Hecl Thing,
+     * structured as a hash with list values, into a Contact.
+     *
+     * @param clist a <code>ContactList</code> value
+     * @param ch a <code>Thing</code> value
+     * @return a <code>Contact</code> value
+     * @exception HeclException if an error occurs
+     */
+    private static Contact thing2contact(ContactList clist, Thing ch) throws HeclException {
+	Hashtable chash = HashThing.get(ch);
+	Contact retc = clist.createContact();
+
+	for (Enumeration e = chash.keys(); e.hasMoreElements();) {
+	    String key = (String) e.nextElement();
+	    Vector vals = ListThing.get((Thing)chash.get(key));
+	    int field = lookupContactString(key);
+	    int datatype = clist.getFieldDataType(field);
+	    for (Enumeration f = vals.elements(); f.hasMoreElements();) {
+		int attrs = thing2attributes(clist, (Thing)f.nextElement());
+		Thing thingval = (Thing)f.nextElement();
+
+		switch (datatype) {
+		    case PIMItem.BINARY:
+			byte[] bytes = thingval.toString().getBytes();
+			retc.addBinary(field, attrs, bytes, 0, bytes.length);
+			break;
+		    case PIMItem.BOOLEAN:
+			retc.addBoolean(field, attrs, IntThing.get(thingval) != 0);
+			break;
+		    case PIMItem.DATE:
+			retc.addDate(field, attrs, LongThing.get(thingval));
+			break;
+		    case PIMItem.INT:
+			retc.addInt(field, attrs, IntThing.get(thingval));
+			break;
+		    case PIMItem.STRING:
+			retc.addString(field, attrs, thingval.toString());
+			break;
+		    case PIMItem.STRING_ARRAY:
+			Vector strarrvec = ListThing.get(thingval);
+			String[] sarray = new String[strarrvec.size()];
+			for (int k = 0; k < sarray.length; k++) {
+			    sarray[k] = ((Thing)strarrvec.elementAt(k)).toString();
+			}
+			retc.addStringArray(field, attrs, sarray);
+			break;
+		    default:
+			throw new HeclException("Unsupported data type: " + datatype);
+
+		}
+	    }
+	}
+	return retc;
+    }
+
+    /**
      * The <code>attributes2thing</code> method walks through
      * potential values for attributes, and if they are present,
      * fetches the label and adds it to a list, which is then
@@ -167,6 +232,28 @@ public class HeclPIMCmds extends Operator {
 	    }
 	}
 	return ListThing.create(resv);
+    }
+
+
+    /**
+     * The <code>thing2attributes</code> method takes a list of
+     * attributes like {ATTR_AUTO ATTR_PAGER ATTR_MOBILE} and
+     * transforms it into an integer representing those integer
+     * attributes.
+     *
+     * @param clist a <code>ContactList</code> value
+     * @param attributes a <code>Thing</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
+    private static int thing2attributes(ContactList clist, Thing attributes) throws HeclException {
+	int attrs = 0;
+	Vector attrv = ListThing.get(attributes);
+	for (Enumeration e = attrv.elements(); e.hasMoreElements();) {
+	    Thing a = (Thing) e.nextElement();
+	    attrs |= lookupContactString(a.toString());
+	}
+	return attrs;
     }
 
     /**
@@ -336,7 +423,6 @@ public class HeclPIMCmds extends Operator {
 	Contact.NAME_PREFIX,
 	Contact.NAME_SUFFIX
     };
-
 
     private static Hashtable cmdtable = new Hashtable();
     static {
