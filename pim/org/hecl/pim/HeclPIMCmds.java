@@ -107,7 +107,7 @@ public class HeclPIMCmds extends Operator {
 	for (int i = 0; i < fields.length; i++) {
 	    int f = fields[i];
 	    int datatype = clist.getFieldDataType(f);
-	    String label = clist.getFieldLabel(f);
+	    String label = lookupContactInt(f);
 	    int nvalues = c.countValues(f);
 	    Vector values = new Vector();
 	    for (int j = 0; j < nvalues; j++) {
@@ -158,12 +158,12 @@ public class HeclPIMCmds extends Operator {
      * @param attributes an <code>int</code> value
      * @return a <code>Thing</code> value
      */
-    private static Thing attributes2thing(ContactList clist, int attributes) {
+    private static Thing attributes2thing(ContactList clist, int attributes) throws HeclException {
 	Vector resv = new Vector();
 	for (int i = 0; i < 10; i++) {
 	    int attr = (1 << i) & attributes;
 	    if (attr != 0) {
-		resv.addElement(new Thing(clist.getAttributeLabel(attr)));
+		resv.addElement(new Thing(lookupContactInt(attr)));
 	    }
 	}
 	return ListThing.create(resv);
@@ -201,6 +201,113 @@ public class HeclPIMCmds extends Operator {
     protected HeclPIMCmds(int cmdcode, int minargs, int maxargs) {
 	super(cmdcode,minargs,maxargs);
     }
+
+    private static String lookupContactInt(int x) throws HeclException {
+	for(int i = 0; i < ContactIntLookup.length; i++) {
+	    if (ContactIntLookup[i] == x) {
+		return ContactStringLookup[i];
+	    }
+	}
+	throw new HeclException("Can't find " + x + " in Contact int constants");
+    }
+
+    private static int lookupContactString(String name) throws HeclException {
+	for(int i = 0; i < ContactStringLookup.length; i++) {
+	    if (ContactStringLookup[i].equals(name)) {
+		return ContactIntLookup[i];
+	    }
+	}
+	throw new HeclException("Can't find " + name + " in Contact string constants");
+    }
+
+    private final static String[] ContactStringLookup = {
+	"ADDR",
+	"BIRTHDAY",
+	"CLASS",
+	"EMAIL",
+	"FORMATTED_ADDR",
+	"FORMATTED_NAME",
+	"NAME",
+	"NICKNAME",
+	"NOTE",
+	"ORG",
+	"PHOTO",
+	"PHOTO_URL",
+	"PUBLIC_KEY",
+	"PUBLIC_KEY_STRING",
+	"REVISION",
+	"TEL",
+	"TITLE",
+	"UID",
+	"URL",
+	"ATTR_ASST",
+	"ATTR_AUTO",
+	"ATTR_FAX",
+	"ATTR_HOME",
+	"ATTR_MOBILE",
+	"ATTR_OTHER",
+	"ATTR_PAGER",
+	"ATTR_PREFERRED",
+	"ATTR_SMS",
+	"ATTR_WORK",
+	"ADDR_POBOX",
+	"ADDR_EXTRA",
+	"ADDR_STREET",
+	"ADDR_LOCALITY",
+	"ADDR_REGION",
+	"ADDR_POSTALCODE",
+	"ADDR_COUNTRY",
+	"NAME_FAMILY",
+	"NAME_GIVEN",
+	"NAME_OTHER",
+	"NAME_PREFIX",
+	"NAME_SUFFIX"
+    };
+
+    private final static int[] ContactIntLookup = {
+	Contact.ADDR,
+	Contact.BIRTHDAY,
+	Contact.CLASS,
+	Contact.EMAIL,
+	Contact.FORMATTED_ADDR,
+	Contact.FORMATTED_NAME,
+	Contact.NAME,
+	Contact.NICKNAME,
+	Contact.NOTE,
+	Contact.ORG,
+	Contact.PHOTO,
+	Contact.PHOTO_URL,
+	Contact.PUBLIC_KEY,
+	Contact.PUBLIC_KEY_STRING,
+	Contact.REVISION,
+	Contact.TEL,
+	Contact.TITLE,
+	Contact.UID,
+	Contact.URL,
+	Contact.ATTR_ASST,
+	Contact.ATTR_AUTO,
+	Contact.ATTR_FAX,
+	Contact.ATTR_HOME,
+	Contact.ATTR_MOBILE,
+	Contact.ATTR_OTHER,
+	Contact.ATTR_PAGER,
+	Contact.ATTR_PREFERRED,
+	Contact.ATTR_SMS,
+	Contact.ATTR_WORK,
+	Contact.ADDR_POBOX,
+	Contact.ADDR_EXTRA,
+	Contact.ADDR_STREET,
+	Contact.ADDR_LOCALITY,
+	Contact.ADDR_REGION,
+	Contact.ADDR_POSTALCODE,
+	Contact.ADDR_COUNTRY,
+	Contact.NAME_FAMILY,
+	Contact.NAME_GIVEN,
+	Contact.NAME_OTHER,
+	Contact.NAME_PREFIX,
+	Contact.NAME_SUFFIX
+    };
+
 
     private static Hashtable cmdtable = new Hashtable();
     static {
