@@ -48,6 +48,7 @@ import org.hecl.Thing;
 public class HeclPIMCmds extends Operator {
     public static final int LISTS = 1;
     public static final int LIST_CONTACTS = 2;
+    public static final int ADD_CONTACT = 3;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	PIM pim = PIM.getInstance();
@@ -83,7 +84,7 @@ public class HeclPIMCmds extends Operator {
 		    }
 		    return ListThing.create(v);
 		} catch (Exception e) {
-		    throw new HeclException("Error in pim.items: " + e.toString());
+		    throw new HeclException("Error in pim.list_contacts: " + e.toString());
 		} finally {
 		    try {
 			clist.close();
@@ -92,6 +93,25 @@ public class HeclPIMCmds extends Operator {
 		    }
 		}
 	    }
+
+	    case ADD_CONTACT: {
+		ContactList clist = null;
+		try {
+		    clist = (ContactList)pim.openPIMList(PIM.CONTACT_LIST, PIM.WRITE_ONLY);
+		    Contact c = thing2contact(clist, argv[1]);
+		    c.commit();
+		} catch (Exception e) {
+		    throw new HeclException("Error in pim.add_contact: " + e.toString());
+		} finally {
+		    try {
+			clist.close();
+		    } catch (Exception e) {
+			throw new HeclException("Problem closing contact list: " + e.toString());
+		    }
+		}
+		return IntThing.create(true);
+	    }
+
 	    default:
 		throw new HeclException("Unknown pim command '"
 					+ argv[0].toString() + "' with code '"
@@ -429,6 +449,7 @@ public class HeclPIMCmds extends Operator {
 	try {
 	    cmdtable.put("pim.lists", new HeclPIMCmds(LISTS,1,1));
 	    cmdtable.put("pim.list_contacts", new HeclPIMCmds(LIST_CONTACTS,0,1));
+	    cmdtable.put("pim.add_contact", new HeclPIMCmds(ADD_CONTACT,1,1));
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create pim commands.");
