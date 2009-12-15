@@ -184,7 +184,12 @@ set form [lcdui.form -title "Contacts" -commandaction [: {cmd form} {
 $form addcommand [lcdui.command -label Back -longlabel Back -type back]
 $form setcurrent
 set contacts [pim.list_contacts]
-foreach c [lrange $contacts 0 9] {
+
+if { <= 10 [llen $contacts] } {
+    set contacts [lrange $contacts 0 9]
+}
+
+foreach c $contacts {
     foreach k [hkeys $c] {
 	set name [hget $c $k]
 	$form append [lcdui.stringitem -label $k -text [strtrim [join ${name}]]]
