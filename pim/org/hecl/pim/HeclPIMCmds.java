@@ -202,6 +202,15 @@ public class HeclPIMCmds extends Operator {
 	super(cmdcode,minargs,maxargs);
     }
 
+    /**
+     * The <code>lookupContactInt</code> method takes an int that
+     * corresponds to a constant in the Contact class, and returns the
+     * corresponding string.
+     *
+     * @param x an <code>int</code> value
+     * @return a <code>String</code> value
+     * @exception HeclException if an error occurs
+     */
     private static String lookupContactInt(int x) throws HeclException {
 	for(int i = 0; i < ContactIntLookup.length; i++) {
 	    if (ContactIntLookup[i] == x) {
@@ -211,6 +220,15 @@ public class HeclPIMCmds extends Operator {
 	throw new HeclException("Can't find " + x + " in Contact int constants");
     }
 
+    /**
+     * The <code>lookupContactString</code> method takes a string that
+     * should match an integer constant in the Contact class, and
+     * returns the corresponding constant.
+     *
+     * @param name a <code>String</code> value
+     * @return an <code>int</code> value
+     * @exception HeclException if an error occurs
+     */
     private static int lookupContactString(String name) throws HeclException {
 	for(int i = 0; i < ContactStringLookup.length; i++) {
 	    if (ContactStringLookup[i].equals(name)) {
@@ -220,6 +238,11 @@ public class HeclPIMCmds extends Operator {
 	throw new HeclException("Can't find " + name + " in Contact string constants");
     }
 
+    /**
+     * <code>ContactStringLookup</code> is an array of strings
+     * corresponding to the ContactIntLookup array, below.
+     *
+     */
     private final static String[] ContactStringLookup = {
 	"ADDR",
 	"BIRTHDAY",
@@ -264,6 +287,12 @@ public class HeclPIMCmds extends Operator {
 	"NAME_SUFFIX"
     };
 
+    /**
+     * THe <code>ContactIntLookup</code> array is composed of
+     * integers, which are constants in the Contact class.  The order
+     * must match the order of ContactStringLookup, above.
+     *
+     */
     private final static int[] ContactIntLookup = {
 	Contact.ADDR,
 	Contact.BIRTHDAY,
