@@ -181,13 +181,13 @@ AddSample "PIM" {
 set form [lcdui.form -title "Contacts" -commandaction [: {cmd form} {
     done
 }]]
+$form addcommand [lcdui.command -label Back -longlabel Back -type back]
 $form setcurrent
 set contacts [pim.list_contacts]
-foreach c $contacts {
+foreach c [lrange $contacts 0 9] {
     foreach k [hkeys $c] {
-	if { eq $k Name } {
-	    $form append [lcdui.stringitem -label $k -text [hget $c $k]]
-	}
+	set name [hget $c $k]
+	$form append [lcdui.stringitem -label $k -text [strtrim [join ${name}]]]
     }
     $form append [lcdui.spacer]
 }
