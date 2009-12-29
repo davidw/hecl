@@ -33,7 +33,7 @@
 
     <wtkpreprocess
       srcdir="blackberry"
-      symbols="${j2me.defines}"
+      symbols="${j2me.defines},jde.version=${jde.version}"
       destdir="${j2me.pre}/blackberry"/>
 
     <wtkpreprocess

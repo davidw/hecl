@@ -24,7 +24,9 @@ import net.rim.blackberry.api.invoke.AddressBookArguments; /* FIXME - TODO */
 import net.rim.blackberry.api.invoke.ApplicationArguments;
 import net.rim.blackberry.api.invoke.CalculatorArguments;
 import net.rim.blackberry.api.invoke.CalendarArguments; /* FIXME - TODO */
+//#if jde.version > 4.3
 import net.rim.blackberry.api.invoke.CameraArguments;
+//#endif
 import net.rim.blackberry.api.invoke.PhoneArguments;
 
 import java.util.Hashtable;
@@ -56,6 +58,7 @@ public class InvokeCmds extends Operator {
 	    }
 
 
+//#if jde.version > 4.3
 	    case CAMERA: {
 		Invoke.invokeApplication(Invoke.APP_TYPE_CAMERA,
 					 new CameraArguments(CameraArguments.ARG_CAMERA_APP));
@@ -67,7 +70,7 @@ public class InvokeCmds extends Operator {
 					 new CameraArguments(CameraArguments.ARG_VIDEO_RECORDER));
 		return Thing.emptyThing();
 	    }
-
+//#endif
 
 	  default:
 	    throw new HeclException("Unknown browser command '"
