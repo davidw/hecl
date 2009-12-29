@@ -99,8 +99,10 @@ public class InvokeCmds extends Operator {
 	try {
 	    cmdtable.put("invoke.call", new InvokeCmds(CALL,1,1));
 	    cmdtable.put("invoke.calculator", new InvokeCmds(CALCULATOR,0,0));
+//#if jde.version > 4.3
 	    cmdtable.put("invoke.camera", new InvokeCmds(CAMERA,0,0));
 	    cmdtable.put("invoke.video", new InvokeCmds(VIDEO,0,0));
+//#endif
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    System.out.println("Can't create browser commands.");
