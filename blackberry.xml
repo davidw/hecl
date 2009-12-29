@@ -33,12 +33,12 @@
 
     <wtkpreprocess
       srcdir="blackberry"
-      symbols="${j2me.defines},jde.version=${jde.version}"
+      symbols="${j2me.defines},jdeversion=${jde.version}"
       destdir="${j2me.pre}/blackberry"/>
 
     <wtkpreprocess
       srcdir="blackberrygui"
-      symbols="${j2me.defines}"
+      symbols="${j2me.defines},jdeversion=${jde.version}"
       destdir="${j2me.pre}/blackberry"/>
 
     <wtkbuild srcdir="${j2me.pre}/blackberry" target="1.1" source="1.2"
