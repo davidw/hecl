@@ -235,6 +235,15 @@ $form addcommand $searchcmd
 $form addcommand [lcdui.command -label Back -longlabel Back -type back]
 $form setcurrent
 }
+
+AddSample "Add davidw Contact" {
+    set contact [hash [list FORMATTED_NAME [list {} "David N. Welton"] \
+			   TEL [list {ATTR_MOBILE} +39.348.8866859] \
+			   URL [list {} http://www.welton.it/davidw]]]
+    pim.add_contact $contact
+    puts "Added contact: $contact"
+}
+
 }
 
 # Only add this if we have the location.get command:
