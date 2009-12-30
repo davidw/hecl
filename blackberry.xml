@@ -21,10 +21,18 @@
     </antcall>
   </target>
 
+  <target name="bbjdeversion" description="Tool to fetch JDE version">
+    <javac srcdir="build-tools" destdir="build-tools" includes="BBJDEVersion.java">
+    </javac>
+    <java classname="BBJDEVersion" classpath="build-tools" outputproperty="jde.version">
+      <arg value="${jde.home}/bin/rapc.jar"></arg>
+    </java>
+    <echo message="BlackBerry JDE Version ${jde.version}"></echo>
+  </target>
 
   <target name="blackberryCompile"
     description="Compile BlackBerry version of J2ME code"
-    depends="j2meLibs,midpgui,extras">
+    depends="bbjdeversion,j2meLibs,midpgui,extras">
 
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp${wtk.midp.version}"/>
