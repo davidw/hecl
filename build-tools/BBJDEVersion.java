@@ -14,17 +14,18 @@ limitations under the License.
 */
 
 import java.io.IOException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 
 import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
 import java.util.jar.JarFile;
 
+/**
+ * <code>BBJDEVersion</code> fetches a file, app.version from the
+ * rapc.jar distributed with the Blackberry JDE
+ *
+ * @author <a href="mailto:davidw@dedasys.com">David N. Welton</a>
+ * @version 1.0
+ */
 public class BBJDEVersion {
 
     public static void main(String[] args) {
@@ -41,15 +42,13 @@ public class BBJDEVersion {
 	    is.read(buf);
 	    String sversion = (new String(buf)).trim();
 
-	    if (false) {
-		System.out.println(sversion);
-	    } else {
-		String[] res = sversion.split("\\.");
-		System.out.println(res[0] + "." + res[1]);
-	    }
+	    /* Only print out the major/minor version numbers. */
+	    String[] res = sversion.split("\\.");
+	    System.out.println(res[0] + "." + res[1]);
 	    jf.close();
 	} catch (Exception e) {
 	    System.err.println("BBJDEVersion Exception: " + e.toString());
+	    System.exit(-1);
 	}
     }
 }
