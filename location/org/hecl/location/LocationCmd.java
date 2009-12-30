@@ -76,7 +76,7 @@ public class LocationCmd extends Operator {
 	    }
 
 	  default:
-	    throw new HeclException("Unknown browser command '"
+	    throw new HeclException("Unknown location command '"
 				    + argv[0].toString() + "' with code '"
 				    + cmd + "'.");
 
@@ -160,8 +160,7 @@ public class LocationCmd extends Operator {
 	    cmdtable.put("location.get", new LocationCmd(GET,1,6));
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    System.out.println("Can't create browser commands.");
+	    System.out.println("Can't create pim commands.");
 	}
-
     }
 }
