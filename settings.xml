@@ -22,7 +22,7 @@
 
   <!-- General WTK settings -->
   <!-- make it fit for your local installation -->
-  <property name="my.wtk.home" value="c:/WTK2.5.2_01/"/>
+  <property name="my.wtk.home" value="/opt/WTK2.5.2"/>
 
   <!-- ProGuard location -->
   <property name="wtk.proguard.home" value="build-tools/"/>
