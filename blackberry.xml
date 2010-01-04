@@ -116,4 +116,19 @@
     </java>
   </target>
 
+  <target name="bb-sign">
+    <java jar="${jde.home}/bin/SignatureTool.jar" fork="true">
+      <arg value="-c"/>
+      <arg value="jars/blackberry/*.cod"/>
+    </java>
+
+    <mkdir dir="${bb.rel}"/>
+
+    <move todir="${bb.rel.signed}">
+      <fileset dir="${bb.rel}">
+	<include name="*.cod"/>
+      </fileset>
+    </move>
+  </target>
+
 </project>

@@ -22,7 +22,7 @@
 
   <!-- General WTK settings -->
   <!-- make it fit for your local installation -->
-  <property name="my.wtk.home" value="/opt/WTK2.5.2"/>
+  <property name="my.wtk.home" value="c:/WTK2.5.2_01/"/>
 
   <!-- ProGuard location -->
   <property name="wtk.proguard.home" value="build-tools/"/>
@@ -241,5 +241,6 @@
   <!-- BlackBerry settings -->
 
   <property name="bb.rel" value="${relprefix}/blackberry"/>
+  <property name="bb.rel.signed" value="${relprefix}/blackberry/signed"/>
 
 </project>
