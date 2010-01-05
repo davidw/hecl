@@ -84,6 +84,7 @@ public class Hecl extends MIDlet {
 	    org.hecl.blackberry.ServiceBookCmd.load(interp);
 	    org.hecl.blackberry.BrowserCmd.load(interp);
 	    org.hecl.blackberry.InvokeCmds.load(interp);
+	    org.hecl.blackberry.DeviceCmds.load(interp);
 //#if locationapi == 1
 	    try {
 		Class.forName("javax.microedition.location.Location");
