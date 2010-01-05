@@ -29,7 +29,7 @@ import org.hecl.Thing;
 
 import net.rim.device.api.system.DeviceInfo;
 
-public class MiscCmds extends Operator {
+public class DeviceCmds extends Operator {
     public static final int VERSION = 1;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -40,7 +40,7 @@ public class MiscCmds extends Operator {
 	    }
 
 	    default:
-		throw new HeclException("Unknown miscellaneous blackberry command '"
+		throw new HeclException("Unknown device command '"
 					+ argv[0].toString() + "' with code '"
 					+ cmd + "'.");
 	}
@@ -55,17 +55,17 @@ public class MiscCmds extends Operator {
 	Operator.unload(ip,cmdtable);
     }
 
-    protected MiscCmds(int cmdcode,int minargs,int maxargs) {
+    protected DeviceCmds(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
     }
 
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
-	    cmdtable.put("misc.systemversion", new MiscCmds(VERSION,0,0));
+	    cmdtable.put("device.systemversion", new DeviceCmds(VERSION,0,0));
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    System.out.println("Can't create misc commands.");
+	    System.out.println("Can't create device commands.");
 	}
     }
 }
