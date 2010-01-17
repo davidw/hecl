@@ -190,6 +190,7 @@ set form [/form -title "BlackBerry Information" -commandaction [: {c f} {done}]]
 foreach r [servicebook.records] {
     $form append "CID: [hget $r CID] Name: [hget $r Name]"
 }
+$form setcurrent
 }
 
 # Only add this if we have the location.get command:
