@@ -210,11 +210,8 @@ set plist {
     "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
-    if {= [catch {set p [system.getproperty $p]}] 0} {
-	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text $p -uneditable 1]
-	}
-    }
+    set prop [system.getproperty $p]
+    $form append [/txt -label $l -uneditable 1 -growtext $prop]
 }
 
 $form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
