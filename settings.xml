@@ -253,5 +253,6 @@
   <!-- BlackBerry settings -->
 
   <property name="bb.rel" value="${relprefix}/blackberry"/>
+  <property name="bb.rel.signed" value="${relprefix}/blackberry/signed"/>
 
 </project>

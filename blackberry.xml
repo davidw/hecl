@@ -3,11 +3,36 @@
   <!-- To compile the Blackberry code: ant -propertyfile ./blackberry.properties blackberry -->
 
   <!-- In order for this to work, you need to edit the blackberry.properties file to indicate the
-  location of the BlackBerry JDE and the simulator. -->
+       location of the BlackBerry JDE and the simulator. -->
+
+  <target name="blackberry"
+	  description="Create BlackBerry Hecl"
+	  depends="">
+    <antcall target="blackberryCod">
+      <param name="scriptname" value="blackberry/script.hcl"/>
+      <param name="codename" value="Hecl"/>
+      <param name="j2me.app" value="Hecl"/>
+    </antcall>
+
+    <antcall target="blackberryCod">
+      <param name="scriptname" value="blackberry/heclfile.hcl"/>
+      <param name="codename" value="HeclFile"/>
+      <param name="j2me.app" value="HeclFile"/>
+    </antcall>
+  </target>
+
+  <target name="bbjdeversion" description="Tool to fetch JDE version">
+    <javac srcdir="build-tools" destdir="build-tools" includes="BBJDEVersion.java">
+    </javac>
+    <java classname="BBJDEVersion" classpath="build-tools" outputproperty="jde.version">
+      <arg value="${jde.home}/bin/rapc.jar"></arg>
+    </java>
+    <echo message="BlackBerry JDE Version ${jde.version}"></echo>
+  </target>
 
   <target name="blackberryCompile"
-    description="Compile BlackBerry version of J2ME code"
-    depends="j2meLibs,midpgui,extras">
+	  description="Compile BlackBerry version of J2ME code"
+	  depends="bbjdeversion,j2meLibs,midpgui,extras">
 
     <mkdir dir="${j2me.guiclasspath}"/>
     <mkdir dir="${j2me.pre}/midp${wtk.midp.version}"/>
@@ -15,29 +40,33 @@
     <copy file="midp20/hecl_logo.png" todir="${j2me.build}" overwrite="true"/>
 
     <wtkpreprocess
-      srcdir="blackberry"
-      symbols="${j2me.defines}"
-      destdir="${j2me.pre}/blackberry"/>
+       srcdir="blackberry"
+       symbols="${j2me.defines},jdeversion=${jde.version}"
+       destdir="${j2me.pre}/blackberry"/>
+
+    <wtkpreprocess
+       srcdir="blackberrygui"
+       symbols="${j2me.defines},jdeversion=${jde.version}"
+       destdir="${j2me.pre}/blackberry"/>
 
     <wtkbuild srcdir="${j2me.pre}/blackberry" target="1.1" source="1.2"
-      cldc="false"
-      destdir="${j2me.guiclasspath}">
+	      cldc="false"
+	      destdir="${j2me.guiclasspath}">
       <classpath refid="j2me.coreclasspath"/>
       <classpath path="${jde.home}/lib/net_rim_api.jar"></classpath>
     </wtkbuild>
   </target>
 
-
-  <target name="blackberry" depends="blackberryCompile">
+  <target name="blackberryCod" depends="blackberryCompile">
 
     <mkdir dir="${bb.rel}"/>
 
     <wtkjad
-      name="${j2me.app}"
-      version="${j2me.appversion}"
-      vendor="${j2me.vendor}"
-      jadfile="${j2me.hecl.jad}"
-      jarfile="${j2me.hecl.jar}">
+       name="${j2me.app}"
+       version="${j2me.appversion}"
+       vendor="${j2me.vendor}"
+       jadfile="${j2me.hecl.jad}"
+       jarfile="${j2me.hecl.jar}">
 
       <midlet name="${j2me.app}" icon="${j2me.icon}" class="${j2me.entryclass}"/>
       <attribute name="MicroEdition-Profile" value="MIDP-${wtk.midp.version}"/>
@@ -48,20 +77,20 @@
       <equals arg1="1.0" arg2="${wtk.midp.version}"/>
     </condition>
 
-    <copy file="blackberry/script.hcl" todir="${j2me.build}" overwrite="true"/>
+    <copy file="${scriptname}" tofile="${j2me.build}/script.hcl" overwrite="true"/>
     <copy file="${midpdir}/Hecl.png" todir="${j2me.build}" overwrite="true"/>
 
     <wtkpackage
-      basedir="${j2me.build}"
-      excludes="pre/**,**jad,**jar"
-      jadfile="${j2me.hecl.jad}"
-      jarfile="${j2me.hecl.jar}"
-      cldc="false"
-      classpath="${jde.home}/lib/net_rim_api.jar"
-      preverify="${preverify}"
-      obfuscate="false"
-      verbose="false">
-<!--       obfuscate="${obfuscate}" -->
+       basedir="${j2me.build}"
+       excludes="pre/**,**jad,**jar"
+       jadfile="${j2me.hecl.jad}"
+       jarfile="${j2me.hecl.jar}"
+       cldc="false"
+       classpath="${jde.home}/lib/net_rim_api.jar"
+       preverify="${preverify}"
+       obfuscate="false"
+       verbose="false">
+      <!--       obfuscate="${obfuscate}" -->
 
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
@@ -80,10 +109,17 @@
 
     <java jar="${jde.home}/bin/rapc.jar" fork="true" dir="${bb.rel}">
       <arg value="import=${jde.home}/lib/net_rim_api.jar"></arg>
-      <arg value="codename=Hecl"></arg>
+      <arg value="codename=${codename}"></arg>
       <arg value="-midlet"></arg>
       <arg value="../../${j2me.hecl.jad}"></arg>
       <arg value="../../${j2me.hecl.jar}"></arg>
+    </java>
+  </target>
+
+  <target name="bb-sign">
+    <java jar="${jde.home}/bin/SignatureTool.jar" fork="true">
+      <arg value="-c"/>
+      <arg value="jars/blackberry/*.cod"/>
     </java>
   </target>
 

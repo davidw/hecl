@@ -93,10 +93,34 @@ public class TextBoxCmd extends ScreenCmd {
 
 	if(optname.equals(WidgetInfo.NTYPE)) {
 	    int c = (tb.getConstraints() & TextField.CONSTRAINT_MASK);
-		
 	    tb.setConstraints(c | WidgetInfo.toTextType(optval));
 	    return;
 	}
+
+	if(optname.equals(WidgetInfo.NTRUNCATE)) {
+	    int max = tb.getMaxSize();
+	    String newtext = optval.toString();
+	    if (newtext.length() > max) {
+		newtext = newtext.substring(0, max);
+	    }
+	    tb.setString(newtext);
+	    return;
+	}
+
+	if(optname.equals(WidgetInfo.NGROW)) {
+	    int max = tb.getMaxSize();
+	    String newtext = optval.toString();
+	    int textlen = newtext.length();
+	    if (textlen > max) {
+		int newmax = tb.setMaxSize(textlen);
+		if (newmax < textlen) {
+		    newtext = newtext.substring(0, newmax);
+		}
+	    }
+	    tb.setString(newtext);
+	    return;
+	}
+
 	if(optname.equals(WidgetInfo.NTEXT)) {
 	    tb.setString(optval.toString());
 	    return;

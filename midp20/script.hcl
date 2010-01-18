@@ -363,7 +363,7 @@ proc FileSelect {infohash bselect bback binfo cmd menu} {
 	if { not $directory } {
 	    $bform append [lcdui.stringitem -label "Size" -text [file.size $cpath]]
 	}
-	$bform append [lcdui.stringitem -label "Basename" -text [file.basename $cpath]]
+	$bform append [lcdui.stringitem -label "Basename" -text [file.name $cpath]]
 	$bform append [lcdui.stringitem -label "Last Modified" -text [file.mtime $cpath]]
 	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
 	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]
