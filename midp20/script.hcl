@@ -177,7 +177,7 @@ AddSample Alert {
 
 # Only do this if we have the pim.lists command:
 if { < 0 [llen [search [intro commands] x {eq $x pim.lists}]] } {
-AddSample "PIM" {
+AddSample "Show Contacts" {
 set form [lcdui.form -title "Contacts" -commandaction [: {cmd form} {
     done
 }]]
@@ -190,9 +190,20 @@ if { <= 10 [llen $contacts] } {
 }
 
 foreach c $contacts {
+    DEBUG $c
     foreach k [hkeys $c] {
-	set name [hget $c $k]
-	$form append [lcdui.stringitem -label $k -text [strtrim [join ${name}]]]
+	set attrvals [hget $c $k]
+	set text ""
+	# attributes and values are throwaways as they simply consume
+	# those labels.
+	foreach {attributes attrs values vals} $attrvals {
+	    set attrtext ""
+	    if { < 0 [llen $attrs] } {
+		set attrtext "([join $attrs]) "
+	    }
+	    append $text "${attrtext}[strtrim [join $vals]] "
+	}
+	$form append [lcdui.stringitem -label $k -text $text]
     }
     $form append [lcdui.spacer]
 }
@@ -202,7 +213,7 @@ AddSample "Contact Search" {
 proc SearchContactsCmd {field searchcmd cmd form} {
     if { eq $cmd $searchcmd } {
 	set name [$field cget -text]
-	set contacts [pim.list_contacts [hash [list FORMATTED_NAME [list {} $name]]]]
+	set contacts [pim.list_contacts [hash [list FORMATTED_NAME [list attributes {} values $name]]]]
 
 	set sz [$form size]
 	for {set i 1} { < $i $sz } { incr $i } {

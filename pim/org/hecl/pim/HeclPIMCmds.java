@@ -122,8 +122,14 @@ public class HeclPIMCmds extends Operator {
     /**
      * The <code>contact2thing</code> method transforms a contact into
      * a Thing that takes this form: a hash table with data types as
-     * keys, and lists as values.  For instance, you might have {Phone
-     * {123456 654321}}.
+     * keys, and lists as values.  For instance, here is a series of
+     * TEL records with attributes:
+     *
+     * TEL {attributes ATTR_WORK values {(416) 999-1111 ext 1000} attributes {ATTR_FAX ATTR_WORK} values {(416) 333-9999}}
+     *
+     * Here is a simple record with no attributes and one value:
+     *
+     * FORMATTED_NAME {attributes  values {David N. Welton}}
      *
      * @param clist a <code>ContactList</code> value
      * @param c a <code>Contact</code> value
@@ -139,7 +145,9 @@ public class HeclPIMCmds extends Operator {
 	    String label = lookupContactInt(f);
 	    int nvalues = c.countValues(f);
 	    Vector values = new Vector();
+	    // System.out.println("Processing label: " + label);
 	    for (int j = 0; j < nvalues; j++) {
+		// System.out.println("Attributes for " + label + " are: " + c.getAttributes(f, j));
 		Thing attrs = attributes2thing(clist, c.getAttributes(f, j));
 		Thing thingval = null;
 		switch (datatype) {
@@ -169,7 +177,9 @@ public class HeclPIMCmds extends Operator {
 		    default:
 			throw new HeclException("Unsupported data type: " + datatype + " for field " + label);
 		}
+		values.addElement(new Thing("attributes"));
 		values.addElement(attrs);
+		values.addElement(new Thing("values"));
 		values.addElement(thingval);
 	    }
 	    hres.put(label, ListThing.create(values));
@@ -196,7 +206,11 @@ public class HeclPIMCmds extends Operator {
 	    int field = lookupContactString(key);
 	    int datatype = clist.getFieldDataType(field);
 	    for (Enumeration f = vals.elements(); f.hasMoreElements();) {
+		/* Throw away "attributes": */
+		f.nextElement();
 		int attrs = thing2attributes(clist, (Thing)f.nextElement());
+		/* Throw away "values": */
+		f.nextElement();
 		Thing thingval = (Thing)f.nextElement();
 
 		switch (datatype) {
