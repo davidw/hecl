@@ -57,10 +57,6 @@ proc AddSample {name code} {
 # The following "AddSample"s are all examples of UI screens and
 # widgets:
 
-AddSample "BB Browser" {
-browser.open http://www.hecl.org
-}
-
 AddSample "Hello World" {
 # See Examples for more 9
 puts "hello world"
@@ -96,7 +92,7 @@ $menu addcommand $back
 $menu setcurrent
 }
 
-AddSample Form {
+AddSample "Form" {
 set form [/form -title "Demo Form" -commandaction [: {cmd form} {
     done
 }]]
@@ -183,6 +179,10 @@ AddSample Alert {
 [/alert -type confirmation -timeout forever \
      -title Alert -text "This is the alert message!" \
      -commandaction [: {c a} {done}]] setcurrent
+}
+
+AddSample "BlackBerry Browser" {
+browser.open http://www.hecl.org
 }
 
 AddSample "BlackBerry Information" {
