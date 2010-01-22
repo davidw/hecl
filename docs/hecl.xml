@@ -4663,8 +4663,13 @@ class HelloCmd implements Command {
       <para>That should bring up something like this:</para>
 
       <screenshot>
-	<screeninfo>Figure 1: Hecl demo screen shot</screeninfo>
-	<graphic fileref="demo_screenshot.png"></graphic>
+	<title>Figure 1: Hecl demo screen shot</title>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="demo_screenshot.png">
+	    </imagedata>
+	  </imageobject>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -4791,8 +4796,13 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<screeninfo>Figure 2: Hecl Hello World screenshot</screeninfo>
-	<graphic fileref="hello_screenshot1.png"></graphic>
+	<title>Figure 2: Hecl Hello World screenshot</title>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="hello_screenshot1.png">
+	    </imagedata>
+	  </imageobject>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -4968,8 +4978,15 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<screeninfo>Figure 3: Initial shoplist form</screeninfo>
-	<graphic fileref="shoplist1.png"></graphic>
+	<title>Figure 3: Initial shoplist form</title>
+
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="shoplist1.png">
+	    </imagedata>
+	  </imageobject>
+	</mediaobject>
+
       </screenshot>
 
       <para>
@@ -4988,8 +5005,14 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
       </para>
 
       <screenshot>
-	<screeninfo>Figure 4: Shopping List</screeninfo>
-	<graphic fileref="shoplist2.png"></graphic>
+	<title>Figure 4: Shopping List</title>
+
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="shoplist2.png">
+	    </imagedata>
+	  </imageobject>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -6467,8 +6490,10 @@ $form setcurrent
 	      the key involved in the event.
               </para>
 	      <note>
-		Be aware that different phones may use different
-		numbers.
+		<para>
+		  Be aware that different phones may use different
+		  numbers.
+		</para>
 	      </note>
 	    </listitem>
 
@@ -7270,26 +7295,26 @@ proc selectname {cmd lst} {
 	  </para>
 
 	  <itemizedlist>
-	    <listitem><option>-color</option>: is this a color display? 1 or 0</listitem>
-	    <listitem><option>-alphalevels</option>: number of alpha levels</listitem>
-	    <listitem><option>-alertimagewidth</option>: width in pixels of the alert image</listitem>
-	    <listitem><option>-alertimageheight</option>: height in pixels of the alert image</listitem>
-	    <listitem><option>-listimagewidth</option>: width in pixels of the list image</listitem>
-	    <listitem><option>-listimageheight</option>: height in pixels of the list image</listitem>
-	    <listitem><option>-choiceimagewidth</option>: width in pixels of the choice image</listitem>
-	    <listitem><option>-choiceimageheight</option>: height in pixels of the choice image</listitem>
+	    <listitem><para><option>-color</option>: is this a color display? 1 or 0</para></listitem>
+	    <listitem><para><option>-alphalevels</option>: number of alpha levels</para></listitem>
+	    <listitem><para><option>-alertimagewidth</option>: width in pixels of the alert image</para></listitem>
+	    <listitem><para><option>-alertimageheight</option>: height in pixels of the alert image</para></listitem>
+	    <listitem><para><option>-listimagewidth</option>: width in pixels of the list image</para></listitem>
+	    <listitem><para><option>-listimageheight</option>: height in pixels of the list image</para></listitem>
+	    <listitem><para><option>-choiceimagewidth</option>: width in pixels of the choice image</para></listitem>
+	    <listitem><para><option>-choiceimageheight</option>: height in pixels of the choice image</para></listitem>
 
-	    <listitem><option>-bg</option>: background color</listitem>
-	    <listitem><option>-fg</option>: foreground color</listitem>
+	    <listitem><para><option>-bg</option>: background color</para></listitem>
+	    <listitem><para><option>-fg</option>: foreground color</para></listitem>
 
-	    <listitem><option>-hilightbg</option>: background hilight color</listitem>
-	    <listitem><option>-hilightfg</option>: foreground hilight color</listitem>
+	    <listitem><para><option>-hilightbg</option>: background hilight color</para></listitem>
+	    <listitem><para><option>-hilightfg</option>: foreground hilight color</para></listitem>
 
-	    <listitem><option>-border</option>: border color</listitem>
-	    <listitem><option>-hilightborder</option>: border hilight color</listitem>
-	    <listitem><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</listitem>
-	    <listitem><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</listitem>
- 	    <listitem><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.
+	    <listitem><para><option>-border</option>: border color</para></listitem>
+	    <listitem><para><option>-hilightborder</option>: border hilight color</para></listitem>
+	    <listitem><para><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</para></listitem>
+	    <listitem><para><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</para></listitem>
+ 	    <listitem><para><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.</para>
 	      <para>
 		This setting enables the use of fullscreen mode for a canvas. The lcdui
 		<classname>Canvas</classname> class behaves different in fullscreen mode: it does
@@ -7307,8 +7332,8 @@ proc selectname {cmd lst} {
 	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvdocmds</option>: Get/set whether to display commands in the full
-	    screen canvas or not.
+	    <listitem><para><option>-cvdocmds</option>: Get/set whether to display commands in the full
+	    screen canvas or not.</para>
 	      <para>
 		Enables the display of commands by the hecl canvas. When it fullscreen mode,
 		canvases do not show commands. You may want a canvas in fullscreen mode and wish to
@@ -7317,7 +7342,7 @@ proc selectname {cmd lst} {
 	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.
+	    <listitem><para><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.</para>
 	      <para>
 		Enables treatment of commands attached to a canvas even in fullscreen mode. This
 		behavior is implemented in the Hecl midp layer and may be slidely different from the
@@ -7328,15 +7353,18 @@ proc selectname {cmd lst} {
 	    </listitem>
 
 	    <listitem>
-	      <option>-cvcmdbg</option>: Get/set color value for command background color in canvas,
-	      when Hecl's full screen Canvas command handling is enabled (see above).
+	      <para>
+		<option>-cvcmdbg</option>: Get/set color value for
+		command background color in canvas, when Hecl's full
+		screen Canvas command handling is enabled (see above).
+	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvcmdfg</option>: Get/set color value for command foreground color in
+	    <listitem><para><option>-cvcmdfg</option>: Get/set color value for command foreground color in
 	      canvas, when Hecl's full screen Canvas command handling is enabled (see above).
-	    </listitem>
+	    </para></listitem>
 
-	    <listitem><option>-skleft</option>: Get/set the numeric keycode for the left soft key.
+	    <listitem><para><option>-skleft</option>: Get/set the numeric keycode for the left soft key.</para>
 	      <para>
 		The values are used to identify the keys triggering command handling for a
 		canvas. The standard settings for these values are the usual keycode -6 (left) and
@@ -7354,8 +7382,8 @@ proc selectname {cmd lst} {
 		own applications.
 	      </para>
 	    </listitem>
-	    <listitem><option>-skright</option>: Get/set the numeric keycode for the right soft key
-	    (see explanation above).</listitem>
+	    <listitem><para><option>-skright</option>: Get/set the numeric keycode for the right soft key
+	    (see explanation above).</para></listitem>
 
 	  </itemizedlist>
 
@@ -7502,7 +7530,7 @@ foreach s {"-color"
 	      </group>
 	    </arg>
 
-	    <arg chocie="opt">
+	    <arg choice="opt">
 	      configure
 	      <group choice="req">
 		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
@@ -7649,7 +7677,7 @@ proc runCode {cmd txtbox} {
 	      </group>
 	    </arg>
 
-	    <arg chocie="opt">
+	    <arg choice="opt">
 	      configure
 	      <group choice="req">
 		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
@@ -7868,10 +7896,13 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	    the midlet.  Quoting from the Java documentation:
 	  </para>
 	  <blockquote>
-	    Get the status of the specified permission. If no API on the device defines the specific
-	    permission requested then it must be reported as denied. If the status of the permission
-	    is not known because it might require a user interaction then it should be reported as
-	    unknown.
+	    <para>
+	      Get the status of the specified permission. If no API on
+	      the device defines the specific permission requested
+	      then it must be reported as denied. If the status of the
+	      permission is not known because it might require a user
+	      interaction then it should be reported as unknown.
+	    </para>
 	  </blockquote>
 	  <para>
 	    The command returns 0 if the permission is denied; 1 if the permission is allowed, and
@@ -7903,7 +7934,7 @@ midlet.checkpermissions "javax.microedition.io.Connector.file.read"
 	    Lets the midlet retrieve application properties, as defined in the .jad file.
 	  </para>
 	  <para>
-	    See also: <xref linkend="system_getproperty">system.getproperty</xref>
+	    See also: <link linkend="system_getproperty">system.getproperty</link>
 	  </para>
 	</refsect1>
       </refentry>
@@ -7951,10 +7982,14 @@ midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
 	  </programlisting>
 
 	  <note>
-	    There is not much standard about this command.  It may or may not support different url
-	    types on different phones.  Making phone calls with "tel:" URL's should always work.
-	    Also, keep in mind that on some devices, launching an external application may terminate
-	    the currently running midlet.
+	    <para>
+	      There is not much standard about this command.  It may
+	      or may not support different url types on different
+	      phones.  Making phone calls with "tel:" URL's should
+	      always work.  Also, keep in mind that on some devices,
+	      launching an external application may terminate the
+	      currently running midlet.
+	    </para>
 	  </note>
 	</refsect1>
       </refentry>
@@ -8090,9 +8125,40 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
     <title>Hecl and BlackBerry</title>
 
     <para>
-      The BlackBerry platform allows you to utilize Java ME code, which is what we do to make Hecl
-      run on that platform.  This means that almost all of the  Java ME commands
+      The BlackBerry platform allows you to utilize Java ME code,
+      which is what we do to make Hecl run on that platform.  This
+      means that almost all of the <link linkend='midp20commands'>Java
+      ME commands</link> are available, plus additional commands
+      specific to the BlackBerry environment.
     </para>
+
+    <section xml:id="blackberry_commands">
+      <title>BlackBerry Commands</title>
+
+      <refentry xml:id="browser_open">
+	<refnamediv>
+	  <refname>browser.open</refname>
+	  <refpurpose>Launches the BlackBerry browser</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>browser.open</command>
+	    <arg choice="req"><replaceable>url</replaceable></arg>
+	    <arg></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>browser.open</command> command launches the
+	    BlackBerry browser.  It does not block while the browser
+	    remains open, so the execution of the Hecl script
+	    continues.
+	  </para>
+	</refsect1>
+      </refentry>
+
+    </section>
 
   </section>
 
