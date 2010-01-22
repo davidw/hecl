@@ -4663,12 +4663,12 @@ class HelloCmd implements Command {
       <para>That should bring up something like this:</para>
 
       <screenshot>
-	<title>Figure 1: Hecl demo screen shot</title>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="demo_screenshot.png">
 	    </imagedata>
 	  </imageobject>
+	  <caption><para>Figure 1: Hecl demo screen shot</para></caption>
 	</mediaobject>
       </screenshot>
 
@@ -4796,12 +4796,12 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<title>Figure 2: Hecl Hello World screenshot</title>
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="hello_screenshot1.png">
 	    </imagedata>
 	  </imageobject>
+	  <caption><para>Figure 2: Hecl Hello World screenshot</para></caption>
 	</mediaobject>
       </screenshot>
 
@@ -4978,13 +4978,14 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<title>Figure 3: Initial shoplist form</title>
-
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="shoplist1.png">
 	    </imagedata>
 	  </imageobject>
+	  <caption>
+	    <para>Figure 3: Initial shoplist form</para>
+	  </caption>
 	</mediaobject>
 
       </screenshot>
@@ -5005,13 +5006,12 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
       </para>
 
       <screenshot>
-	<title>Figure 4: Shopping List</title>
-
 	<mediaobject>
 	  <imageobject>
 	    <imagedata fileref="shoplist2.png">
 	    </imagedata>
 	  </imageobject>
+	  <caption><para>Figure 4: Shopping List</para></caption>
 	</mediaobject>
       </screenshot>
 
@@ -8154,6 +8154,100 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	    BlackBerry browser.  It does not block while the browser
 	    remains open, so the execution of the Hecl script
 	    continues.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="device_systemversion">
+	<refnamediv>
+	  <refname>device.systemversion</refname>
+	  <refpurpose>Returns a string with the system version information</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>device.systemversion</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns a string containing the system version of the device.
+	  </para>
+	  <note>
+	    <para>This always returns an empty string on the emulator</para>
+	  </note>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_call">
+	<refnamediv>
+	  <refname>invoke.call</refname>
+	  <refpurpose>Makes a phone call using the built-in dialer</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.call</command>
+	    <arg choice="req"><replaceable>phone_number</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Makes a call to the specified phone number, using the built in "dial" application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_calculator">
+	<refnamediv>
+	  <refname>invoke.calculator</refname>
+	  <refpurpose>Opens the built in calculator application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.calculator</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the calculator application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_camera">
+	<refnamediv>
+	  <refname>invoke.camera</refname>
+	  <refpurpose>Starts the camera application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.camera</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the camera application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_video">
+	<refnamediv>
+	  <refname>invoke.video</refname>
+	  <refpurpose>Starts the video application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.video</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the video application.
 	  </para>
 	</refsect1>
       </refentry>
