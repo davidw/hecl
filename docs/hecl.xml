@@ -133,7 +133,7 @@
 
   </section>
 
-  <section id="installation">
+  <section xml:id="installation">
     <title>Installation / Tools &amp; Editors</title>
     <para>
       Hecl is easy to compile and install as a standard J2SE application.
@@ -252,7 +252,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
       See <xref linkend="j2me"/> for further information on installation and use with J2ME.
     </para>
 
-    <section id="tools_and_editors">
+    <section xml:id="tools_and_editors">
       <title>Tools &amp; Editors</title>
       <para>
 	Even if you're not interested in recompiling Hecl to hack on the source code, to write Hecl
@@ -320,7 +320,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
   </section>
 
-  <section id="tutorial">
+  <section xml:id="tutorial">
     <title>Hecl Tutorial</title>
     <note>
       <para>
@@ -522,7 +522,7 @@ set foo
 
   </section>
 
-  <section id="commands">
+  <section xml:id="commands">
     <title>Hecl Commands</title>
 
     <para>
@@ -530,7 +530,7 @@ set foo
     </para>
 
     <!-- = -->
-    <refentry id="equality">
+    <refentry xml:id="equality">
       <refnamediv>
 	<refname>= !=</refname> <refpurpose>Integer
 	equality</refpurpose>
@@ -571,7 +571,7 @@ puts [!= 1 1]
 
 
     <!-- + - * / math commands -->
-    <refentry id="math">
+    <refentry xml:id="math">
       <refnamediv>
 	<refname>+ - * /</refname>
 	<refpurpose>Basic math commands.</refpurpose>
@@ -619,7 +619,7 @@ puts [/ 100 5]
       </refsect1>
     </refentry>
 
-    <refentry id="fpmath">
+    <refentry xml:id="fpmath">
       <refnamediv>
 	<refname>abs acos acos asin asin atan atan cbrt ceil cos cosh
 cosh exp expm1 floor hypot log log10 log1p pow random round signum sin
@@ -668,7 +668,7 @@ sinh sqrt tan tanh tanh</refname>
     </refentry>
 
     <!-- after -->
-    <refentry id="after">
+    <refentry xml:id="after">
       <refnamediv>
 	<refname>after</refname>
 	<refpurpose>Sleep / delayed script evaluation</refpurpose>
@@ -776,7 +776,7 @@ Event timer#8 cancelled
 
 
     <!-- and -->
-    <refentry id="and">
+    <refentry xml:id="and">
       <refnamediv>
 	<refname>and</refname>
 	<refpurpose>Logical and</refpurpose>
@@ -820,7 +820,7 @@ hecl> and 1 2 4 8
 
 
     <!-- append -->
-    <refentry id="append">
+    <refentry xml:id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -851,7 +851,7 @@ append $foo "beebop"
     </refentry>
 
     <!-- break -->
-    <refentry id="break">
+    <refentry xml:id="break">
       <refnamediv>
 	<refname>break</refname>
 	<refpurpose>Break out of a loop.</refpurpose>
@@ -888,7 +888,7 @@ while { true } {
       </refsect1>
     </refentry>
 
-    <refentry id="bgerror">
+    <refentry xml:id="bgerror">
       <refnamediv>
        <refname>bgerror</refname>
        <refpurpose>Called for background task errors.</refpurpose>
@@ -921,7 +921,7 @@ timer#7
 
 
     <!-- catch -->
-    <refentry id="catch">
+    <refentry xml:id="catch">
       <refnamediv>
 	<refname>catch</refname>
 	<refpurpose>
@@ -962,7 +962,7 @@ set foo
     </refentry>
 
     <!-- classof -->
-    <refentry id="classof">
+    <refentry xml:id="classof">
       <refnamediv>
 	<refname>classof</refname>
 	<refpurpose>
@@ -999,7 +999,7 @@ org.hecl.StringThing
       </refsect1>
     </refentry>
 
-    <refentry id="clock">
+    <refentry xml:id="clock">
       <refnamediv>
 	<refname>clock</refname>
 	<refpurpose>Provides time utilities</refpurpose>
@@ -1040,7 +1040,7 @@ Fri Jun 15 13:22:20 CEST 2007
     </refentry>
 
     <!-- continue -->
-    <refentry id="continue">
+    <refentry xml:id="continue">
       <refnamediv>
 	<refname>continue</refname>
 	<refpurpose>Skip to next cycle of a loop</refpurpose>
@@ -1083,7 +1083,7 @@ puts $res
     </refentry>
 
     <!-- copy -->
-    <refentry id="copy">
+    <refentry xml:id="copy">
       <refnamediv>
 	<refname>copy</refname>
 	<refpurpose>Copy a Hecl value.</refpurpose>
@@ -1120,7 +1120,7 @@ bop is 1
       </refsect1>
     </refentry>
 
-    <refentry id="double">
+    <refentry xml:id="double">
       <refnamediv>
 	<refname>double</refname>
 	<refpurpose>Cast as a double</refpurpose>
@@ -1147,7 +1147,7 @@ bop is 1
     </refentry>
 
     <!-- eq -->
-    <refentry id="eq">
+    <refentry xml:id="eq">
       <refnamediv>
 	<refname>eq</refname>
 	<refpurpose>Tests string equivalence.</refpurpose>
@@ -1185,7 +1185,7 @@ if {eq 1 1.0} {
       </refsect1>
     </refentry>
 
-    <refentry id="eval">
+    <refentry xml:id="eval">
       <refnamediv>
 	<refname>eval</refname>
 	<refpurpose>Evaluate Hecl code.</refpurpose>
@@ -1218,7 +1218,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="exit">
+    <refentry xml:id="exit">
       <refnamediv>
 	<refname>exit</refname>
 	<refpurpose>Exit the current process</refpurpose>
@@ -1240,7 +1240,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="false">
+    <refentry xml:id="false">
       <refnamediv>
 	<refname>false</refname>
 	<refpurpose>Return false</refpurpose>
@@ -1259,7 +1259,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="filter">
+    <refentry xml:id="filter">
       <refnamediv>
 	<refname>filter</refname>
 	<refpurpose>Filter a list.</refpurpose>
@@ -1294,7 +1294,7 @@ puts [filter $lst x {= $x 4}]
       </refsect1>
     </refentry>
 
-    <refentry id="float">
+    <refentry xml:id="float">
       <refnamediv>
 	<refname>float</refname>
 	<refpurpose>Cast as a float</refpurpose>
@@ -1320,7 +1320,7 @@ puts [filter $lst x {= $x 4}]
       </refsect1>
     </refentry>
 
-    <refentry id="for">
+    <refentry xml:id="for">
       <refnamediv>
 	<refname>for</refname>
 	<refpurpose>For loop.</refpurpose>
@@ -1363,7 +1363,7 @@ puts $out
       </refsect1>
     </refentry>
 
-    <refentry id="foreach">
+    <refentry xml:id="foreach">
       <refnamediv>
 	<refname>foreach</refname>
 	<refpurpose>Iterate over elements in a list.</refpurpose>
@@ -1406,7 +1406,7 @@ puts $res
     </refentry>
 
     <!-- global -->
-    <refentry id="global">
+    <refentry xml:id="global">
       <refnamediv>
 	<refname>global</refname>
 	<refpurpose>Use global variable from within a proc.</refpurpose>
@@ -1444,7 +1444,7 @@ puts $foo
       </refsect1>
     </refentry>
 
-    <refentry id="hasclass">
+    <refentry xml:id="hasclass">
       <refnamediv>
 	<refname>hasclass</refname>
 	<refpurpose>An interface to <methodname>Class.forName</methodname></refpurpose>
@@ -1480,7 +1480,7 @@ hecl> hasclass oogyboogy
     </refentry>
 
     <!-- hash, hget, hset -->
-    <refentry id="hash">
+    <refentry xml:id="hash">
       <refnamediv>
 	<refname>hash</refname>
 	<refpurpose>Create and manipulate hash tables.</refpurpose>
@@ -1547,7 +1547,7 @@ puts [hget $foo a]
     </refentry>
 
     <!-- if -->
-    <refentry id="if">
+    <refentry xml:id="if">
       <refnamediv>
 	<refname>if</refname>
 	<refpurpose>Conditionally execute code.</refpurpose>
@@ -1611,7 +1611,7 @@ if { > 0 1 } {
     </refentry>
 
     <!-- incr -->
-    <refentry id="incr">
+    <refentry xml:id="incr">
       <refnamediv>
 	<refname>incr</refname>
 	<refpurpose>Increment a variable.</refpurpose>
@@ -1647,7 +1647,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- intro -->
-     <refentry id="intro">
+     <refentry xml:id="intro">
       <refnamediv>
 	<refname>intro</refname>
 	<refpurpose>Introspection command.</refpurpose>
@@ -1679,7 +1679,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- join -->
-     <refentry id="join">
+     <refentry xml:id="join">
       <refnamediv>
 	<refname>join</refname>
 	<refpurpose>Join elements of a list to create a string.</refpurpose>
@@ -1713,7 +1713,7 @@ puts [join {a b c} "|"]
     </refentry>
 
     <!-- lappend -->
-     <refentry id="lappend">
+     <refentry xml:id="lappend">
       <refnamediv>
 	<refname>lappend</refname>
 	<refpurpose>Append an element to a list.</refpurpose>
@@ -1748,7 +1748,7 @@ a b {c d}</screen>
     </refentry>
 
     <!-- lindex -->
-    <refentry id="lindex">
+    <refentry xml:id="lindex">
       <refnamediv>
 	<refname>lindex</refname>
 	<refpurpose>Return the Nth element of a list</refpurpose>
@@ -1780,7 +1780,7 @@ puts [lindex {a b c} 2]
 
 
     <!-- list -->
-     <refentry id="list">
+     <refentry xml:id="list">
       <refnamediv>
 	<refname>list</refname>
 	<refpurpose>Create a list</refpurpose>
@@ -1812,7 +1812,7 @@ puts [list a b c [list 1 2 3]]
     </refentry>
 
     <!-- llen -->
-     <refentry id="llen">
+     <refentry xml:id="llen">
       <refnamediv>
 	<refname>llen</refname>
 	<refpurpose>List length.</refpurpose>
@@ -1841,7 +1841,7 @@ puts [llen {1 2 3 {a b c}}]
     </refentry>
 
     <!-- lrange -->
-    <refentry id="lrange">
+    <refentry xml:id="lrange">
       <refnamediv>
 	<refname>lrange</refname>
 	<refpurpose>Get range of elements from a list.</refpurpose>
@@ -1875,7 +1875,7 @@ lrange {a b c d e f g} 0 2
     </refentry>
 
     <!-- lset -->
-    <refentry id="lset">
+    <refentry xml:id="lset">
       <refnamediv>
 	<refname>lset</refname>
 	<refpurpose>Set list elements.</refpurpose>
@@ -1916,7 +1916,7 @@ a c</screen>
     </refentry>
 
     <!-- ne -->
-    <refentry id="ne">
+    <refentry xml:id="ne">
       <refnamediv>
 	<refname>ne</refname>
 	<refpurpose>String "not equal".</refpurpose>
@@ -1950,7 +1950,7 @@ if {ne 1 00001} {
     </refentry>
 
     <!-- not -->
-    <refentry id="not">
+    <refentry xml:id="not">
       <refnamediv>
 	<refname>not</refname>
 	<refpurpose>Logical not</refpurpose>
@@ -1982,7 +1982,7 @@ hecl> not 4
     </refentry>
 
     <!-- or -->
-    <refentry id="or">
+    <refentry xml:id="or">
       <refnamediv>
 	<refname>or</refname>
 	<refpurpose>Logical or</refpurpose>
@@ -2023,7 +2023,7 @@ hecl> or 1 2 4
 
 
     <!-- proc -->
-    <refentry id="proc">
+    <refentry xml:id="proc">
       <refnamediv>
 	<refname>proc</refname>
 	<refpurpose>Create a new procedure.</refpurpose>
@@ -2086,7 +2086,7 @@ Args: x y z</screen>
     </refentry>
 
      <!-- puts -->
-     <refentry id="puts">
+     <refentry xml:id="puts">
       <refnamediv>
 	<refname>puts</refname>
 	<refpurpose>Print text.</refpurpose>
@@ -2114,7 +2114,7 @@ puts "Hello, world"
       </refsect1>
     </refentry>
 
-    <refentry id="rename">
+    <refentry xml:id="rename">
       <refnamediv>
 	<refname>rename</refname>
 	<refpurpose>Rename a command</refpurpose>
@@ -2140,7 +2140,7 @@ hello world
     </refentry>
 
     <!-- return -->
-    <refentry id="return">
+    <refentry xml:id="return">
       <refnamediv>
 	<refname>return</refname>
 	<refpurpose>Returns a value from a procedure.</refpurpose>
@@ -2175,7 +2175,7 @@ puts [someproc]
     </refentry>
 
     <!-- search -->
-    <refentry id="search">
+    <refentry xml:id="search">
       <refnamediv>
 	<refname>search</refname>
 	<refpurpose>Find the first instance of something in a list.</refpurpose>
@@ -2208,7 +2208,7 @@ puts [search $lst x {= $x 4}]
     </refentry>
 
     <!-- set -->
-    <refentry id="set">
+    <refentry xml:id="set">
       <refnamediv>
 	<refname>set</refname>
 	<refpurpose>Set a variable.</refpurpose>
@@ -2246,7 +2246,7 @@ foo is bar and bee is bop
     </refentry>
 
      <!-- sort -->
-     <refentry id="sort">
+     <refentry xml:id="sort">
       <refnamediv>
 	<refname>sort</refname>
 	<refpurpose>Sorts list alphabetically.</refpurpose>
@@ -2277,7 +2277,7 @@ puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
     </refentry>
 
     <!-- split -->
-    <refentry id="split">
+    <refentry xml:id="split">
       <refnamediv>
 	<refname>split</refname>
 	<refpurpose>Split a string into a list.</refpurpose>
@@ -2312,7 +2312,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-     <refentry id="strbytelen">
+     <refentry xml:id="strbytelen">
       <refnamediv>
 	<refname>strbytelen</refname>
 	<refpurpose>Return the length of the string, in bytes.</refpurpose>
@@ -2334,7 +2334,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strcmp">
+    <refentry xml:id="strcmp">
       <refnamediv>
 	<refname>strcmp</refname>
 	<refpurpose>Compare two strings, return 0 if equal.</refpurpose>
@@ -2357,7 +2357,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strfind">
+    <refentry xml:id="strfind">
       <refnamediv>
 	<refname>strfind</refname>
 	<refpurpose>Find one string in another.</refpurpose>
@@ -2381,7 +2381,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strindex">
+    <refentry xml:id="strindex">
       <refnamediv>
 	<refname>strindex</refname>
 	<refpurpose>Return the index'th character of string.</refpurpose>
@@ -2413,7 +2413,7 @@ d</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strlast">
+    <refentry xml:id="strlast">
       <refnamediv>
 	<refname>strlast</refname>
 	<refpurpose>Get the last occurance of one string within
@@ -2441,7 +2441,7 @@ d</screen>
     </refentry>
 
     <!-- strlen -->
-    <refentry id="strlen">
+    <refentry xml:id="strlen">
       <refnamediv>
 	<refname>strlen</refname>
 	<refpurpose>String length.</refpurpose>
@@ -2469,7 +2469,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strlower">
+    <refentry xml:id="strlower">
       <refnamediv>
 	<refname>strlower</refname>
 	<refpurpose>Lower case a string</refpurpose>
@@ -2487,7 +2487,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strrange">
+    <refentry xml:id="strrange">
       <refnamediv>
 	<refname>strrange</refname>
 	<refpurpose>Return a substring from a string</refpurpose>
@@ -2513,7 +2513,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strrep">
+    <refentry xml:id="strrep">
       <refnamediv>
 	<refname>strrep</refname>
 	<refpurpose>Repeat a string N times</refpurpose>
@@ -2535,7 +2535,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strreplace">
+    <refentry xml:id="strreplace">
       <refnamediv>
 	<refname>strreplace</refname>
 	<refpurpose>Replace string A in string B</refpurpose>
@@ -2567,7 +2567,7 @@ puts [strreplace {hi hello} blahhiblahblahhihiblah]
     </refentry>
 
 
-    <refentry id="strtrim">
+    <refentry xml:id="strtrim">
       <refnamediv>
 	<refname>strtrim</refname>
 	<refpurpose>Remove whitespace or other characters from the
@@ -2614,7 +2614,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="strupper">
+    <refentry xml:id="strupper">
       <refnamediv>
 	<refname>strupper</refname>
 	<refpurpose>Upper case a string</refpurpose>
@@ -2634,7 +2634,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="system_hasproperty">
+    <refentry xml:id="system_hasproperty">
       <refnamediv>
 	<refname>system.hasproperty</refname>
 	<refpurpose>Check for existence of system properties</refpurpose>
@@ -2654,7 +2654,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="system_getproperty">
+    <refentry xml:id="system_getproperty">
       <refnamediv>
 	<refname>system.getproperty</refname>
 	<refpurpose>Get system properties</refpurpose>
@@ -2674,7 +2674,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="throw">
+    <refentry xml:id="throw">
       <refnamediv>
 	<refname>throw</refname>
 	<refpurpose>Generates an exception that can be caught with
@@ -2714,7 +2714,7 @@ hecl> throw "oh no" USERERROR
     </refentry>
 
     <!-- time -->
-    <refentry id="time">
+    <refentry xml:id="time">
       <refnamediv>
 	<refname>time</refname>
 	<refpurpose>Time the execution of a script.</refpurpose>
@@ -2755,7 +2755,7 @@ puts "Time is $time"
     </refentry>
 
      <!-- true -->
-     <refentry id="true">
+     <refentry xml:id="true">
       <refnamediv>
 	<refname>true</refname>
 	<refpurpose>Returns true.</refpurpose>
@@ -2784,7 +2784,7 @@ if { true } {
     </refentry>
 
     <!-- unset -->
-    <refentry id="unset">
+    <refentry xml:id="unset">
       <refnamediv>
 	<refname>unset</refname>
 	<refpurpose>Unset a variable.</refpurpose>
@@ -2804,7 +2804,7 @@ if { true } {
     </refentry>
 
     <!-- upeval -->
-    <refentry id="upeval">
+    <refentry xml:id="upeval">
       <refnamediv>
 	<refname>upeval</refname>
 	<refpurpose>Evaluate script in next stack frame up.</refpurpose>
@@ -2851,7 +2851,7 @@ puts $foo
     </refentry>
 
     <!-- while -->
-    <refentry id="while">
+    <refentry xml:id="while">
       <refnamediv>
 	<refname>while</refname>
 	<refpurpose>While loop.</refpurpose>
@@ -2892,7 +2892,7 @@ i is 5
     </refentry>
 
 <!--
-     <refentry id="append">
+     <refentry xml:id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -2925,7 +2925,7 @@ append $foo "beebop"
 
   </section>
 
-  <section id="extensioncommands">
+  <section xml:id="extensioncommands">
     <title>Hecl Extension Commands</title>
 
     <para>
@@ -2945,7 +2945,7 @@ append $foo "beebop"
 	interacts with the filesystem.</para>
       </note>
 
-      <refentry id="filefinder">
+      <refentry xml:id="filefinder">
 	<refnamediv>
 	  <refname>filefinder</refname>
 	  <refpurpose>File selection widget.</refpurpose>
@@ -2991,7 +2991,7 @@ append $foo "beebop"
       </refentry>
 
 
-      <refentry id="open">
+      <refentry xml:id="open">
 	<refnamediv>
 	  <refname>open</refname>
 	  <refpurpose>Opens a file for reading or writing.</refpurpose>
@@ -3013,7 +3013,7 @@ append $foo "beebop"
 	</refsect1>
       </refentry>
 
-      <refentry id="source">
+      <refentry xml:id="source">
 	<refnamediv>
 	  <refname>source</refname>
 	  <refpurpose>Evaluate Hecl script in a file.</refpurpose>
@@ -3044,7 +3044,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_basename">
+      <refentry xml:id="file_basename">
 	<refnamediv>
 	  <refname>file.basename</refname>
 	  <refpurpose>Returns the file name with no paths.</refpurpose>
@@ -3069,7 +3069,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_cd">
+      <refentry xml:id="file_cd">
 	<refnamediv>
 	  <refname>file.cd</refname>
 	  <refpurpose>Change working directory.</refpurpose>
@@ -3094,7 +3094,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_current">
+      <refentry xml:id="file_current">
 	<refnamediv>
 	  <refname>file.current</refname>
 	  <refpurpose>Returns the name of the file currently being evaluated.</refpurpose>
@@ -3115,7 +3115,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_delete">
+      <refentry xml:id="file_delete">
 	<refnamediv>
 	  <refname>file.delete</refname>
 	  <refpurpose>Delete the file.</refpurpose>
@@ -3134,7 +3134,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_devs">
+      <refentry xml:id="file_devs">
 	<refnamediv>
 	  <refname>file.devs</refname>
 	  <refpurpose>List available devices.</refpurpose>
@@ -3152,7 +3152,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_du">
+      <refentry xml:id="file_du">
 	<refnamediv>
 	  <refname>file.du</refname>
 	  <refpurpose>"Disk" usage.</refpurpose>
@@ -3173,7 +3173,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_exists">
+      <refentry xml:id="file_exists">
 	<refnamediv>
 	  <refname>file.exists</refname>
 	  <refpurpose>Does the file exist?</refpurpose>
@@ -3192,7 +3192,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_hidden">
+      <refentry xml:id="file_hidden">
 	<refnamediv>
 	  <refname>file.hidden</refname>
 	  <refpurpose>Is the file hidden?</refpurpose>
@@ -3223,7 +3223,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_isdirectory">
+      <refentry xml:id="file_isdirectory">
 	<refnamediv>
 	  <refname>file.isdirectory</refname>
 	  <refpurpose>Is this a directory?</refpurpose>
@@ -3242,7 +3242,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_isopen">
+      <refentry xml:id="file_isopen">
 	<refnamediv>
 	  <refname>file.isopen</refname>
 	  <refpurpose>Is the file currently in use?</refpurpose>
@@ -3261,7 +3261,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_join">
+      <refentry xml:id="file_join">
 	<refnamediv>
 	  <refname>file.join</refname>
 	  <refpurpose>Creates a filename from a list.</refpurpose>
@@ -3281,7 +3281,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_list">
+      <refentry xml:id="file_list">
 	<refnamediv>
 	  <refname>file.list</refname>
 	  <refpurpose>List files in a directory.</refpurpose>
@@ -3300,7 +3300,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_mkdir">
+      <refentry xml:id="file_mkdir">
 	<refnamediv>
 	  <refname>file.mkdir</refname>
 	  <refpurpose>Creates the directory.</refpurpose>
@@ -3319,7 +3319,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_mtime">
+      <refentry xml:id="file_mtime">
 	<refnamediv>
 	  <refname>file.mtime</refname>
 	  <refpurpose>Returns the file modification time.</refpurpose>
@@ -3339,7 +3339,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_readable">
+      <refentry xml:id="file_readable">
 	<refnamediv>
 	  <refname>file.readable</refname>
 	  <refpurpose>Is the file readable?</refpurpose>
@@ -3359,7 +3359,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_rename">
+      <refentry xml:id="file_rename">
 	<refnamediv>
 	  <refname>file.rename</refname>
 	  <refpurpose>Rename a file.</refpurpose>
@@ -3379,7 +3379,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_size">
+      <refentry xml:id="file_size">
 	<refnamediv>
 	  <refname>file.size</refname>
 	  <refpurpose>Returns the file's size.</refpurpose>
@@ -3398,7 +3398,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_split">
+      <refentry xml:id="file_split">
 	<refnamediv>
 	  <refname>file.split</refname>
 	  <refpurpose>Return a list of a path's components.</refpurpose>
@@ -3417,7 +3417,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_truncate">
+      <refentry xml:id="file_truncate">
 	<refnamediv>
 	  <refname>file.truncate</refname>
 	  <refpurpose>Truncates the file.</refpurpose>
@@ -3437,7 +3437,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_writable">
+      <refentry xml:id="file_writable">
 	<refnamediv>
 	  <refname>file.writable</refname>
 	  <refpurpose>Is the file writable?</refpurpose>
@@ -3459,7 +3459,7 @@ puts $foo
 
     </section>
 
-    <section id="http_commands">
+    <section xml:id="http_commands">
       <title>HTTP</title>
 
       <para>
@@ -3467,7 +3467,7 @@ puts $foo
 	(although they may not be able to create TCP/IP sockets).  Hecl
 	provides basic http commands</para>
 
-      <refentry id="http_geturl">
+      <refentry xml:id="http_geturl">
 	<refnamediv>
 	  <refname>http.geturl</refname>
 	  <refpurpose>Fetch contents of a URL.</refpurpose>
@@ -3537,7 +3537,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_formatQuery">
+      <refentry xml:id="http_formatQuery">
 	<refnamediv>
 	  <refname>http.formatQuery</refname>
 	  <refpurpose>URL Encode a request</refpurpose>
@@ -3558,7 +3558,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_data">
+      <refentry xml:id="http_data">
 	<refnamediv>
 	  <refname>http.data</refname>
 	  <refpurpose>A shortcut to get the data from an http.geturl response.</refpurpose>
@@ -3580,7 +3580,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_ncode">
+      <refentry xml:id="http_ncode">
 	<refnamediv>
 	  <refname>http.ncode</refname>
 	  <refpurpose>A shortcut to get the numeric code from an http.geturl response.</refpurpose>
@@ -3602,7 +3602,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_status">
+      <refentry xml:id="http_status">
 	<refnamediv>
 	  <refname>http.status</refname>
 	  <refpurpose>A shortcut to get the status from an http.geturl response.</refpurpose>
@@ -3626,7 +3626,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 
     </section>
 
-    <section id="location_commands">
+    <section xml:id="location_commands">
       <title>Location</title>
       <para>
 	Access to your phone's location API (JSR 179).  Get information on your precise location.
@@ -3635,7 +3635,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</note>
       </para>
 
-      <refentry id="location_get">
+      <refentry xml:id="location_get">
 	<refnamediv>
 	  <refname>location.get</refname>
 	  <refpurpose>Get location information.</refpurpose>
@@ -3693,12 +3693,12 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 
     </section>
 
-    <section id="networking_commands">
+    <section xml:id="networking_commands">
       <title>Net</title>
 
       <para>Networking commands</para>
 
-      <refentry id="base64_decode">
+      <refentry xml:id="base64_decode">
 	<refnamediv>
 	  <refname>base64::decode</refname>
 	  <refpurpose>Base 64 decode</refpurpose>
@@ -3718,7 +3718,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="base64_encode">
+      <refentry xml:id="base64_encode">
 	<refnamediv>
 	  <refname>base64::encode</refname>
 	  <refpurpose>Base 64 encode</refpurpose>
@@ -3741,7 +3741,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 
     </section>
 
-    <section id="recordstore_commands">
+    <section xml:id="recordstore_commands">
       <title>RecordStore</title>
 
       <para>
@@ -3750,7 +3750,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	store data between invocations of the application.
       </para>
 
-      <refentry id="rms_list">
+      <refentry xml:id="rms_list">
 	<refnamediv>
 	  <refname>rms.list</refname>
 	  <refpurpose>
@@ -3787,7 +3787,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_size">
+      <refentry xml:id="rms_size">
 	<refnamediv>
 	  <refname>rms.size</refname>
 	  <refpurpose>Returns the size occupied by the record store</refpurpose>
@@ -3807,7 +3807,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_sizeavail">
+      <refentry xml:id="rms_sizeavail">
 	<refnamediv>
 	  <refname>rms.sizeavail</refname>
 	  <refpurpose>Returns the amount of space available to grow
@@ -3828,7 +3828,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_set">
+      <refentry xml:id="rms_set">
 	<refnamediv>
 	  <refname>rms.set</refname>
 	  <refpurpose>Sets the value of a record store</refpurpose>
@@ -3853,7 +3853,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_get">
+      <refentry xml:id="rms_get">
 	<refnamediv>
 	  <refname>rms.get</refname>
 	  <refpurpose>Fetch the value of the specified record store
@@ -3888,7 +3888,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_add">
+      <refentry xml:id="rms_add">
 	<refnamediv>
 	  <refname>rms.add</refname>
 	  <refpurpose>Adds data to the specified record store,
@@ -3911,7 +3911,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_delete">
+      <refentry xml:id="rms_delete">
 	<refnamediv>
 	  <refname>rms.delete</refname>
 	  <refpurpose>Deletes either the record store, or a record id
@@ -3935,7 +3935,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hset">
+      <refentry xml:id="rms_hset">
 	<refnamediv>
 	  <refname>rms.hset</refname>
 	  <refpurpose>Sets a key/value pair in the given record store.</refpurpose>
@@ -3961,7 +3961,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hget">
+      <refentry xml:id="rms_hget">
 	<refnamediv>
 	  <refname>rms.hget</refname>
 	  <refpurpose>Gets the value of a given key in the specified
@@ -3985,7 +3985,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hexists">
+      <refentry xml:id="rms_hexists">
 	<refnamediv>
 	  <refname>rms.hexists</refname>
 	  <refpurpose>Determine whether a given key exists in a record
@@ -4008,7 +4008,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hkeys">
+      <refentry xml:id="rms_hkeys">
 	<refnamediv>
 	  <refname>rms.hkeys</refname>
 	  <refpurpose>Returns all keys associated with a given record store.</refpurpose>
@@ -4028,7 +4028,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hdel">
+      <refentry xml:id="rms_hdel">
 	<refnamediv>
 	  <refname>rms.hdel</refname>
 	  <refpurpose>Deletes a key from the specified record store.</refpurpose>
@@ -4052,7 +4052,7 @@ set highscore [rms.get highscore 1]
       </refentry>
     </section>
 
-    <section id="kxml">
+    <section xml:id="kxml">
         <title>K-XML</title>
         <para>
 	  The K-XML extension provides the kXML 2 parser functionality for hecl. kXML 2 implements
@@ -4066,7 +4066,7 @@ set highscore [rms.get highscore 1]
 	  <filename>cldc11midp20.properties</filename> file and recompile Hecl.
 	</para>
       </note>
-        <refentry id="kxml.create">
+        <refentry xml:id="kxml.create">
             <refnamediv>
                 <refname>kxml.create</refname>
                 <refpurpose>Returns the kxml parser object.</refpurpose>
@@ -4086,7 +4086,7 @@ set xmlParser [kxml.create]
             </refsect1>
         </refentry>
 
-      <refentry id="kxml.gettext">
+      <refentry xml:id="kxml.gettext">
 	<refnamediv>
 	  <refname>kxml.gettext</refname>
 	  <refpurpose>Returns the text content of the current event as a string.</refpurpose>
@@ -4121,7 +4121,7 @@ set xmlParser [kxml.create]
       </refentry>
 
 
-        <refentry id="kxml.input">
+        <refentry xml:id="kxml.input">
             <refnamediv>
                 <refname>kxml.input</refname>
                 <refpurpose>Sets a input stream the kxml-parser is going to process.</refpurpose>
@@ -4147,7 +4147,7 @@ kxml.input $xmlParser $xmlStream
                 </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.nexttag">
+        <refentry xml:id="kxml.nexttag">
             <refnamediv>
                 <refname>kxml.nexttag</refname>
                 <refpurpose>Call <command>kxml.next</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.</refpurpose>
@@ -4165,7 +4165,7 @@ kxml.input $xmlParser $xmlStream
                 <para>Call <command>kxml.nexttag</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.It will skip whitespace TEXT before actual tag if any.</para>
             </refsect1>
         </refentry>
-        <refentry id="kxml.next">
+        <refentry xml:id="kxml.next">
             <refnamediv>
                 <refname>kxml.next</refname>
                 <refpurpose>Get next parsing event.</refpurpose>
@@ -4207,7 +4207,7 @@ kxml.input $xmlParser $xmlStream
                 </itemizedlist>
             </refsect1>
         </refentry>
-        <refentry id="kxml.requirestart">
+        <refentry xml:id="kxml.requirestart">
             <refnamediv>
                 <refname>kxml.requirestart</refname>
                 <refpurpose>Test if the current event is START_TAG type and do match the given name.</refpurpose>
@@ -4231,7 +4231,7 @@ kxml.requirestart $xmlParser "forecast_conditions"
                 </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.requireend">
+        <refentry xml:id="kxml.requireend">
             <refnamediv>
                 <refname>kxml.requireend</refname>
                 <refpurpose>Test if the current event is END_TAG type and do match the given name.</refpurpose>
@@ -4254,7 +4254,7 @@ kxml.requireend $xmlParser "forecast_conditions"
                 </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.attrcount">
+        <refentry xml:id="kxml.attrcount">
             <refnamediv>
                 <refname>kxml.attrcount</refname>
                 <refpurpose>Returns the number of attributes of the current start tag.</refpurpose>
@@ -4271,7 +4271,7 @@ kxml.requireend $xmlParser "forecast_conditions"
 	      <para>Returns the number of attributes of the current start tag, or -1 if the current event type is not START_TAG. </para>
             </refsect1>
         </refentry>
-        <refentry id="kxml.attrvalue">
+        <refentry xml:id="kxml.attrvalue">
             <refnamediv>
                 <refname>kxml.attrvalue</refname>
                 <refpurpose>Returns the given attributes value.</refpurpose>
@@ -4290,7 +4290,7 @@ kxml.requireend $xmlParser "forecast_conditions"
                 <para>Returns the given attributes value.</para>
             </refsect1>
         </refentry>
-        <refentry id="kxml.getname">
+        <refentry xml:id="kxml.getname">
             <refnamediv>
                 <refname>kxml.getname</refname>
                 <refpurpose> For START_TAG or END_TAG events, the name of the current element is returned.</refpurpose>
@@ -4320,7 +4320,7 @@ while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
   </section>
 
 
-  <section id="heclandjava">
+  <section xml:id="heclandjava">
     <title>Interfacing Hecl and Java</title>
 
     <para>
@@ -4372,7 +4372,7 @@ import org.hecl.HeclException;
       </para>
     </section>
 
-    <section id="creating_new_hecl_commands">
+    <section xml:id="creating_new_hecl_commands">
       <title>Creating new Hecl commands</title>
 
       <para>
@@ -4521,7 +4521,7 @@ class HelloCmd implements Command {
 
     </section>
 
-    <section id="building_hecl">
+    <section xml:id="building_hecl">
       <title>Building Hecl: Ant Targets</title>
 
       <para>
@@ -4566,7 +4566,7 @@ class HelloCmd implements Command {
     </section>
 
 
-    <section id="hecl_javadocs">
+    <section xml:id="hecl_javadocs">
       <title>JavaDocs</title>
 
       <para>
@@ -4579,7 +4579,7 @@ class HelloCmd implements Command {
   </section>
 
 
-  <section id="j2me">
+  <section xml:id="j2me">
     <title>Hecl and Java ME</title>
 
     <para>
@@ -4590,7 +4590,7 @@ class HelloCmd implements Command {
     </para>
 
 
-    <section id="javame_tutorial">
+    <section xml:id="javame_tutorial">
       <title>Hecl Java ME Tutorial</title>
 
     <note>
@@ -5011,7 +5011,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 
     </section>
 
-    <section id="javame_quick_start">
+    <section xml:id="javame_quick_start">
       <title>Quick start to developing Java ME apps</title>
 
       <para>
@@ -5063,7 +5063,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
     </section>
 
 
-    <section id="midp10_commands">
+    <section xml:id="midp10_commands">
       <title>Hecl J2ME MIDP1.0 Commands</title>
 
       <note>
@@ -5081,7 +5081,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	these commands and widgets in use.
       </para>
 
-      <refentry id="midp10_alert">
+      <refentry xml:id="midp10_alert">
 	<refnamediv>
 	  <refname>alert</refname>
 	  <refpurpose>Creates an alert</refpurpose>
@@ -5113,7 +5113,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_choicegroup">
+      <refentry xml:id="midp10_choicegroup">
 	<refnamediv>
 	  <refname>choicegroup</refname>
 	  <refpurpose>Displays a choicegroup in the current form</refpurpose>
@@ -5140,7 +5140,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_cmd">
+      <refentry xml:id="midp10_cmd">
 	<refnamediv>
 	  <refname>cmd</refname>
 	  <refpurpose>Adds a command to a form/listbox/textbox</refpurpose>
@@ -5174,7 +5174,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_datefield">
+      <refentry xml:id="midp10_datefield">
 	<refnamediv>
 	  <refname>datefield</refname>
 	  <refpurpose>Displays an datefield in the current form</refpurpose>
@@ -5200,7 +5200,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_j2me_exit">
+      <refentry xml:id="midp10_j2me_exit">
 	<refnamediv>
 	  <refname>exit</refname>
 	  <refpurpose>Exits the application</refpurpose>
@@ -5218,7 +5218,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_form">
+      <refentry xml:id="midp10_form">
 	<refnamediv>
 	  <refname>form</refname>
 	  <refpurpose>Creates a form</refpurpose>
@@ -5241,7 +5241,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_gauge">
+      <refentry xml:id="midp10_gauge">
 	<refnamediv>
 	  <refname>gauge</refname>
 	  <refpurpose>Displays an gauge in the current form</refpurpose>
@@ -5270,7 +5270,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_getindex">
+      <refentry xml:id="midp10_getindex">
 	<refnamediv>
 	  <refname>getindex</refname>
 	  <refpurpose>Fetches a reference to the N'th element in a
@@ -5291,7 +5291,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_getprop">
+      <refentry xml:id="midp10_getprop">
 	<refnamediv>
 	  <refname>getprop</refname>
 	  <refpurpose>Fetches the value of a given property from a widget</refpurpose>
@@ -5322,7 +5322,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_listbox">
+      <refentry xml:id="midp10_listbox">
 	<refnamediv>
 	  <refname>listbox</refname>
 	  <refpurpose>Creates a listbox</refpurpose>
@@ -5356,7 +5356,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_noscreen">
+      <refentry xml:id="midp10_noscreen">
 	<refnamediv>
 	  <refname>noscreen</refname>
 	  <refpurpose>Runs without a current screen widget</refpurpose>
@@ -5379,7 +5379,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_screenappend">
+      <refentry xml:id="midp10_screenappend">
 	<refnamediv>
 	  <refname>screenappend</refname>
 	  <refpurpose>Appends an item to a form or listbox</refpurpose>
@@ -5403,7 +5403,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setcurrent">
+      <refentry xml:id="midp10_setcurrent">
 	<refnamediv>
 	  <refname>setcurrent</refname>
 	  <refpurpose>Displays an alert/form/listbox/textbox</refpurpose>
@@ -5428,7 +5428,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setindex">
+      <refentry xml:id="midp10_setindex">
 	<refnamediv>
 	  <refname>setindex</refname>
 
@@ -5456,7 +5456,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setprop">
+      <refentry xml:id="midp10_setprop">
 	<refnamediv>
 	  <refname>setprop</refname>
 	  <refpurpose>Sets a given property of a widget</refpurpose>
@@ -5478,7 +5478,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_string">
+      <refentry xml:id="midp10_string">
 	<refnamediv>
 	  <refname>string</refname>
 	  <refpurpose>Adds a string to the current form.</refpurpose>
@@ -5499,7 +5499,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_stringitem">
+      <refentry xml:id="midp10_stringitem">
 	<refnamediv>
 	  <refname>stringitem</refname>
 	  <refpurpose>Displays a stringitem in the current form</refpurpose>
@@ -5519,7 +5519,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_textbox">
+      <refentry xml:id="midp10_textbox">
 	<refnamediv>
 	  <refname>textbox</refname>
 	  <refpurpose>Creates a textbox</refpurpose>
@@ -5554,7 +5554,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_textfield">
+      <refentry xml:id="midp10_textfield">
 	<refnamediv>
 	  <refname>textfield</refname>
 	  <refpurpose>Displays a textfield in the current form</refpurpose>
@@ -5588,7 +5588,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 
     </section>
 
-    <section id="midp20commands">
+    <section xml:id="midp20commands">
       <title>Hecl Java ME MIDP2.0 Commands</title>
 
       <para>
@@ -5610,7 +5610,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	Wolfgang Kechel.  Thanks!
       </para>
 
-      <refentry id="lcdui_alert">
+      <refentry xml:id="lcdui_alert">
 	<refnamediv>
 	  <refname>lcdui.alert</refname>
 	  <refpurpose>Pops up an alert</refpurpose>
@@ -5685,7 +5685,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_canvas">
+      <refentry xml:id="lcdui_canvas">
 	<refnamediv>
 	  <refname>lcdui.canvas</refname>
 	  <refpurpose>Creates a canvas</refpurpose>
@@ -5859,7 +5859,7 @@ $canvas setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_choicegroup">
+      <refentry xml:id="lcdui_choicegroup">
 	<refnamediv>
 	  <refname>lcdui.choicegroup</refname>
 	  <refpurpose>Creates a group of potential choices that can be
@@ -6101,7 +6101,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_command">
+      <refentry xml:id="lcdui_command">
 	<refnamediv>
 	  <refname>lcdui.command</refname>
 	  <refpurpose>Creates a command that can be attached to a screen</refpurpose>
@@ -6217,7 +6217,7 @@ NewForm
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_date">
+      <refentry xml:id="lcdui_date">
 	<refnamediv>
 	  <refname>lcdui.date</refname>
 	  <refpurpose>Date/Time widget for lcdui forms</refpurpose>
@@ -6308,7 +6308,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_event">
+      <refentry xml:id="lcdui_event">
 	<refnamediv>
 	  <refname><replaceable>$eventcmd</replaceable></refname>
 	  <refpurpose>Command/object describing a Canvas event.</refpurpose>
@@ -6501,7 +6501,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_font">
+      <refentry xml:id="lcdui_font">
 	<refnamediv>
 	  <refname>lcdui.font</refname>
 	  <refpurpose>Font information and manipulation command.</refpurpose>
@@ -6670,7 +6670,7 @@ foreach f [sort [lcdui.font names]] {
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_form">
+      <refentry xml:id="lcdui_form">
 	<refnamediv>
 	  <refname>lcdui.form</refname>
 	  <refpurpose>Creates a form that can contain various widgets</refpurpose>
@@ -6801,7 +6801,7 @@ $form append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_gauge">
+      <refentry xml:id="lcdui_gauge">
 	<refnamediv>
 	  <refname>lcdui.gauge</refname>
 	  <refpurpose>Creates a gauge widget that can be attached to a
@@ -6879,7 +6879,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_image">
+      <refentry xml:id="lcdui_image">
 	<refnamediv>
 	  <refname>lcdui.image</refname>
 	  <refpurpose>Creates an image.</refpurpose>
@@ -7080,7 +7080,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_imageitem">
+      <refentry xml:id="lcdui_imageitem">
 	<refnamediv>
 	  <refname>lcdui.imageitem</refname>
 	  <refpurpose>An item that can contain an image, in order to attach it to a form.</refpurpose>
@@ -7132,7 +7132,7 @@ $form setcurrent
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_list">
+      <refentry xml:id="lcdui_list">
 	<refnamediv>
 	  <refname>lcdui.list</refname>
 	  <refpurpose>Creates a full-screen list</refpurpose>
@@ -7199,7 +7199,7 @@ proc selectname {cmd lst} {
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_settings">
+      <refentry xml:id="lcdui_settings">
 	<refnamediv>
 	  <refname>lcdui.settings</refname>
 	  <refpurpose>Returns or sets information about the graphical environment.</refpurpose>
@@ -7392,7 +7392,7 @@ foreach s {"-color"
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_spacer">
+      <refentry xml:id="lcdui_spacer">
 	<refnamediv>
 	  <refname>lcdui.spacer</refname>
 	  <refpurpose>Creates a spacer element in a form.</refpurpose>
@@ -7415,7 +7415,7 @@ foreach s {"-color"
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_stringitem">
+      <refentry xml:id="lcdui_stringitem">
 	<refnamediv>
 	  <refname>lcdui.stringitem</refname>
 	  <refpurpose>Creates a string item that can be added to a form.</refpurpose>
@@ -7464,7 +7464,7 @@ foreach s {"-color"
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_textbox">
+      <refentry xml:id="lcdui_textbox">
 	<refnamediv>
 	  <refname>lcdui.textbox</refname>
 	  <refpurpose>Creates a text box for editing larger blocks of text.</refpurpose>
@@ -7610,7 +7610,7 @@ proc runCode {cmd txtbox} {
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_textfield">
+      <refentry xml:id="lcdui_textfield">
 	<refnamediv>
 	  <refname>lcdui.textfield</refname>
 	  <refpurpose>Creates a small text editing widget that can be attached to a
@@ -7721,7 +7721,7 @@ proc runCode {txtfld cmd frm} {
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_ticker">
+      <refentry xml:id="lcdui_ticker">
 	<refnamediv>
 	  <refname>lcdui.ticker</refname>
 	  <refpurpose>Creates a ticker that scrolls horizontally.</refpurpose>
@@ -7760,7 +7760,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_exit">
+      <refentry xml:id="midlet_exit">
 	<refnamediv>
 	  <refname>midlet.exit</refname>
 	  <refpurpose>Exit from the Midetl</refpurpose>
@@ -7776,7 +7776,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_pause">
+      <refentry xml:id="midlet_pause">
 	<refnamediv>
 	  <refname>midlet.pause</refname>
 	  <refpurpose>Pause the current midlet</refpurpose>
@@ -7794,7 +7794,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_resume">
+      <refentry xml:id="midlet_resume">
 	<refnamediv>
 	  <refname>midlet.resume</refname>
 	  <refpurpose>Resume execution of the current midlet</refpurpose>
@@ -7813,7 +7813,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_onpause">
+      <refentry xml:id="midlet_onpause">
 	<refnamediv>
 	  <refname>midlet.onpause</refname>
 	  <refpurpose>Hook to call when midlet execution is paused</refpurpose>
@@ -7831,7 +7831,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_onresume">
+      <refentry xml:id="midlet_onresume">
 	<refnamediv>
 	  <refname>midlet.onresume</refname>
 	  <refpurpose>Hook to call when midlet execution is resumed</refpurpose>
@@ -7850,7 +7850,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_checkpermissions">
+      <refentry xml:id="midlet_checkpermissions">
 	<refnamediv>
 	  <refname>midlet.checkpermissions</refname>
 	  <refpurpose>Query permission information</refpurpose>
@@ -7886,7 +7886,7 @@ midlet.checkpermissions "javax.microedition.io.Connector.file.read"
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_getappproperty">
+      <refentry xml:id="midlet_getappproperty">
 	<refnamediv>
 	  <refname>midlet.getappproperty</refname>
 	  <refpurpose>Get application properties</refpurpose>
@@ -7908,7 +7908,7 @@ midlet.checkpermissions "javax.microedition.io.Connector.file.read"
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_platformrequest">
+      <refentry xml:id="midlet_platformrequest">
 	<refnamediv>
 	  <refname>midlet.platformrequest</refname>
 	  <refpurpose>Perform platform-specific actions</refpurpose>
@@ -7959,7 +7959,7 @@ midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_resourceasstring">
+      <refentry xml:id="midlet_resourceasstring">
 	<refnamediv>
 	  <refname>midlet.resourceasstring</refname>
 	  <refpurpose>Get a resource file as a string</refpurpose>
@@ -7985,7 +7985,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_flashbacklight">
+      <refentry xml:id="midlet_flashbacklight">
 	<refnamediv>
 	  <refname>midlet.flashbacklight</refname>
 	  <refpurpose>Flash the device's backlight</refpurpose>
@@ -8005,7 +8005,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_vibrate">
+      <refentry xml:id="midlet_vibrate">
 	<refnamediv>
 	  <refname>midlet.vibrate</refname>
 	  <refpurpose>Vibrate the device</refpurpose>
@@ -8027,7 +8027,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 
     </section>
 
-    <section id="hacking_hecl_j2me">
+    <section xml:id="hacking_hecl_j2me">
       <title>Hacking Hecl's Java ME code</title>
 
       <para>
@@ -8086,17 +8086,17 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
     </section>
   </section>
 
-  <section id="blackberry">
+  <section xml:id="blackberry">
     <title>Hecl and BlackBerry</title>
 
     <para>
       The BlackBerry platform allows you to utilize Java ME code, which is what we do to make Hecl
-      run on that platform.
+      run on that platform.  This means that almost all of the  Java ME commands
     </para>
 
   </section>
 
-  <section id="android">
+  <section xml:id="android">
     <title>Hecl and Android</title>
 
     <para>
@@ -8118,7 +8118,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
       dynamically create Hecl commands that call out to native Java calls.
     </para>
 
-    <section id="android_quick_start">
+    <section xml:id="android_quick_start">
       <title>Android Hecl Quick Start</title>
 
       <para>
