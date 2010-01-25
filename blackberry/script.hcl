@@ -185,8 +185,8 @@ AddSample "BlackBerry Browser" {
 browser.open http://www.hecl.org
 }
 
-AddSample "BlackBerry Information" {
-set form [/form -title "BlackBerry Information" -commandaction [: {c f} {done}]]
+AddSample "BlackBerry Connection Information" {
+set form [/form -title "BlackBerry Connection Information" -commandaction [: {c f} {done}]]
 foreach r [servicebook.records] {
     $form append "CID: [hget $r CID] Name: [hget $r Name]"
 }
