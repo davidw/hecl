@@ -2031,7 +2031,7 @@ hecl> or 1 2 4
       <refsynopsisdiv>
 	<cmdsynopsis>
 	  <command>proc</command>
-	  <arg choice="req"><replaceable>name</replaceable></arg>
+	  <arg choice="opt"><replaceable>name</replaceable></arg>
 	  <arg choice="req"><replaceable>arglist</replaceable></arg>
 	  <arg choice="req"><replaceable>body</replaceable></arg>
 	</cmdsynopsis>
@@ -2039,10 +2039,11 @@ hecl> or 1 2 4
       <refsect1>
 	<title>Description</title>
 	<para>
-	  The <command>proc</command> command creates new procedures,
-	  which are virtually indistinguishable from built-in Hecl
-	  commands.  <option><replaceable>name</replaceable></option>
-	  is the name of the new command,
+	  The <command>proc</command> command creates new procedures, which are virtually
+	  indistinguishable from built-in Hecl
+	  commands.  <option><replaceable>name</replaceable></option> is the name of the new
+	  command, or, if it is absent, an anonymous procedure is created (and should be stored in a
+	  variable).
 	  <option><replaceable>arglist</replaceable></option> is a
 	  list of arguments that the new command will take and make
 	  available as local variables within the
@@ -2083,6 +2084,18 @@ showargs x y z
 	<screen>Args: 
 Args: x y z</screen>
       </refsect1>
+
+      <refsect1>
+	<title>Anonymous proc Example</title>
+	  <programlisting>
+set foo [proc {x} { puts $x }]
+$foo beebop
+	</programlisting>
+	<para>Produces:</para>
+	<screen>beebop</screen>
+      </refsect1>
+
+
     </refentry>
 
      <!-- puts -->
