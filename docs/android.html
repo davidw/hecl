@@ -1,24 +1,43 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Android</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="hacking_hecl_j2me.html" title="Hacking Hecl's Java ME code"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Android</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="hacking_hecl_j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> </td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="android"></a>Hecl and Android</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="android.html#android_quick_start">Android Hecl Quick Start</a></span></dt></dl></div><p>
-      As of mid-2008, Hecl runs on Google's <a class="ulink" href="http://code.google.com/android/" target="_top">Android</a> platform, although it's not yet a
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Android</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="servicebook_records.html" title="servicebook.records"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Android</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="servicebook_records.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> </td></tr></table></div><div class="section" title="Hecl and Android"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="android"></a>Hecl and Android</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="android.html#android_quick_start">Android Hecl Quick Start</a></span></dt></dl></div>
+    
+
+    <p>
+      As of mid-2008, Hecl runs on Google's <a class="link" href="http://code.google.com/android/" target="_top">Android</a> platform, although it's not yet a
       'mature' port.  That's ok right now, though, because Android isn't production ready yet,
       either.
-    </p><p>Due to a different GUI model, a very extensive API, and a much more complete
+    </p>
+
+    <p>Due to a different GUI model, a very extensive API, and a much more complete
       implementation of Java
-      <sup>[<a name="id-1.9.3.1" href="#ftn.%0A%09id-1.9.3.1" class="footnote">1</a>]</sup>
+      <sup>[<a name="id-1.10.3.1" href="#ftn.%0A%09id-1.10.3.1" class="footnote">1</a>]</sup>
       Hecl on Android takes a different approach: the Android version of Hecl includes a
       <span class="command"><strong>java</strong></span> command, and introspection capabilities in order to be able to
       dynamically create Hecl commands that call out to native Java calls.
-    </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="android_quick_start"></a>Android Hecl Quick Start</h3></div></div></div><p>
+    </p>
+
+    <div class="section" title="Android Hecl Quick Start"><div class="titlepage"><div><div><h3 class="title"><a name="android_quick_start"></a>Android Hecl Quick Start</h3></div></div></div>
+      
+
+      <p>
 	Developing for Android Hecl is quite similar to Java ME development, with the same cycle of
 	editing a script, creating an application bundle, and testing it in an emulator.
-      </p><div class="procedure"><ol type="1"><li><p>
+      </p>
+
+
+      <div class="procedure"><ol class="procedure" type="1"><li class="step" title="Step 1">
+	  <p>
 	    To work with Android, of course the first thing you need to do is to get the SDK from
-	    Google: <a class="ulink" href="http://code.google.com/android/download.html" target="_top">http://code.google.com/android/download.html</a>.  On my system, I
+	    Google: <a class="link" href="http://code.google.com/android/download.html" target="_top">http://code.google.com/android/download.html</a>.  On my system, I
 	    installed it in here: <code class="filename">/opt/android-sdk/</code>.
-	  </p></li><li><p>Next, edit <code class="filename">android/android.properties</code> to point to the SDK, and
+	  </p>
+	</li><li class="step" title="Step 2">
+	  <p>Next, edit <code class="filename">android/android.properties</code> to point to the SDK, and
 	    the tools it needs to work (usually the <code class="filename">tools</code> directory within the
-	    SDK directory).</p></li><li><p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
-	  world":</p><pre class="programlisting">set context [activity]
+	    SDK directory).</p>
+	</li><li class="step" title="Step 3">
+	  <p>As with Java ME Hecl, you need a script file to work with.  Here's a "hello
+	  world":</p>
+	  <pre class="programlisting">set context [activity]
 set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
@@ -27,27 +46,63 @@ set tv [textview -new $context -text {Hello World} -layoutparams $layoutparams]
 
 $layout addview $tv
 [activity] setcontentview $layout
-</pre><p>
+</pre>
+
+	  <p>
 	    To see more code, have a look at <code class="filename">android/res/raw/script.hcl</code>, which
 	    has examples of many different widgets.
-	  </p></li><li><p>You won't need it right away, but you might as well start the emulator:</p><pre class="programlisting">/opt/android-sdk/tools/emulator -avd your_avd</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+	  </p>
+
+	</li><li class="step" title="Step 4">
+	  <p>You won't need it right away, but you might as well start the emulator:</p>
+	  <pre class="programlisting">/opt/android-sdk/tools/emulator -avd your_avd</pre>
+	  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	    <p>
 	      You need to create an "AVD" before launching the emulator.  This is documented here:
-		<a class="ulink" href="http://developer.android.com/guide/developing/tools/emulator.html#avds" target="_top">http://developer.android.com/guide/developing/tools/emulator.html#avds</a>
-	    </p></td></tr></table></div></li><li><p>Now we create the new <code class="filename">Hello.apk</code> file.
-	  </p><pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It's important to point out that the directory used with the
+		<a class="link" href="http://developer.android.com/guide/developing/tools/emulator.html#avds" target="_top">http://developer.android.com/guide/developing/tools/emulator.html#avds</a>
+	    </p>
+	  </td></tr></table></div>
+	</li><li class="step" title="Step 5">
+	  <p>Now we create the new <code class="filename">Hello.apk</code> file.
+	  </p>
+
+	  <pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</pre>
+
+	  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	    <p>It's important to point out that the directory used with the
 	      <code class="option">-android</code> option is a subdirectory of the SDK:
 	      <code class="filename">/opt/android-sdk/platforms/android-1.5/</code>, rather than the top
-	      level.</p></td></tr></table></div><p>
+	      level.</p>
+	  </td></tr></table></div>
+
+	  <p>
 	    The command line options are as follows:
-	  </p><table class="simplelist" border="0" summary="Simple list"><tr><td><code class="option">-android</code>: The location of the Android SDK.
+	  </p>
+
+	  <table border="0" summary="Simple list" class="simplelist"><tr><td><code class="option">-android</code>: The location of the Android SDK.
 	    </td></tr><tr><td><code class="option">-class</code>: The class name to utilize for the new .apk.</td></tr><tr><td><code class="option">-label</code>: The user-visible name of the package.</td></tr><tr><td><code class="option">-package</code>: The Java package to use.  You can pretty much use any
-	    name you like, it doesn't matter much.</td></tr><tr><td><code class="option">-script</code>: The location of the script you want to use in the new .apk.</td></tr></table></li><li><p>
+	    name you like, it doesn't matter much.</td></tr><tr><td><code class="option">-script</code>: The location of the script you want to use in the new .apk.</td></tr></table>
+
+
+	</li><li class="step" title="Step 6">
+	  <p>
 	    We now have a <code class="filename">Hecl.apk</code> file.  We need to sign it with the debug
 	    key:
 	    </p><pre class="programlisting">keytool -genkeypair -keystore debug.keystore -keypass android -alias androiddebugkey -storepass android -dname "CN=Android Debug,O=Android,C=US"</pre><p>
 	    </p><pre class="programlisting">jarsigner -keystore debug.keystore -keypass android -storepass android -verbose Hello.apk androiddebugkey</pre><p>
-	  </p></li><li><p>At this piont, we can send the signed file, <code class="filename">Hello.apk</code> to the emulator:
-	  </p><pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</pre></li></ol></div></div><div class="footnotes"><br><hr width="100" align="left"><div class="footnote"><p><sup>[<a name="ftn.%0A%09id-1.9.3.1.1" href="#%0A%09id-1.9.3.1.1" class="para">1</a>] </sup>
+	  </p>
+	</li><li class="step" title="Step 7">
+	  <p>At this piont, we can send the signed file, <code class="filename">Hello.apk</code> to the emulator:
+	  </p>
+	  <pre class="programlisting">/opt/android-sdk_m5-rc15_linux-x86/tools/adb install Hello.apk</pre>
+
+	</li></ol></div>
+
+    </div>
+
+  <div class="footnotes"><br><hr width="100" align="left"><div class="footnote">
+	<p><sup>[<a name="ftn.%0A%09id-1.10.3.1.1" href="#%0A%09id-1.10.3.1.1" class="para">1</a>] </sup>
 	  Android doesn't actually run Java, it just compiles code written in Java into bytecodes for
 	  the Dalvik engine.
-	</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="hacking_hecl_j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">Hacking Hecl's Java ME code </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>
+	</p>
+      </div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="servicebook_records.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> </td></tr><tr><td width="40%" align="left" valign="top">servicebook.records </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> </td></tr></table></div></body></html>

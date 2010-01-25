@@ -1,9 +1,30 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>bgerror</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="break.html" title="break"><link rel="next" href="catch.html" title="catch"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">bgerror</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="break.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="catch.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="bgerror"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>bgerror &#8212; Called for background task errors.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">append</code>  <em class="replaceable"><code>message</code></em></p></div></div><div class="refsect1" lang="en"><a name="id-1.5.10.3"></a><h2>Description</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>bgerror</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="commands.html" title="Hecl Commands"><link rel="prev" href="break.html" title="break"><link rel="next" href="catch.html" title="catch"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">bgerror</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="break.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Commands</th><td width="20%" align="right"> <a accesskey="n" href="catch.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="bgerror"><div class="refentry.separator"><hr></div><a name="bgerror"></a><div class="titlepage"></div>
+      <div class="refnamediv"><h2>Name</h2><p>
+       bgerror
+        &#8212; Called for background task errors.
+      </p></div>
+      <div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+       <div class="cmdsynopsis"><p>
+         <code class="command">append</code> 
+          <em class="replaceable"><code>message</code></em>
+       </p></div>
+      </div>
+      <div class="refsect1" title="Description"><a name="id-1.5.10.3"></a><h2>Description</h2>
+       
+       <p>
          Hecl calls <span class="command"><strong>bgerror</strong></span> when there is a
          problem in a background task (created with the
          <span class="command"><strong>after</strong></span> command, for instance).
-       </p></div><div class="refsect1" lang="en"><a name="id-1.5.10.4"></a><h2>Example</h2><pre class="programlisting">
+       </p>
+      </div>
+      <div class="refsect1" title="Example"><a name="id-1.5.10.4"></a><h2>Example</h2>
+       
+         <pre class="programlisting">
 hecl&gt; proc bgerror {msg} { puts "Houston, we have a problem: $msg" }
 hecl&gt; after 1 { beebop }
 timer#7
-         </pre><p>Produces:</p><pre class="screen">Houston, we have a problem: Command beebop does not exist</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="break.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="catch.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">break </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> catch</td></tr></table></div></body></html>
+         </pre>
+         <p>Produces:</p>
+         <pre class="screen">Houston, we have a problem: Command beebop does not exist</pre>
+      </div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="break.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="catch.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">break </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> catch</td></tr></table></div></body></html>

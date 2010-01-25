@@ -1,28 +1,46 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl Tutorial</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="installation.html" title="Installation / Tools &amp; Editors"><link rel="next" href="commands.html" title="Hecl Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl Tutorial</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" title="Hecl Tutorial"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tutorial"></a>Hecl Tutorial</h2></div></div></div>
+    
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p>
 	This is a general tutorial on the Hecl language - if you're looking for the tutorial about
 	Hecl on Java ME, it's here: <a class="link" href="j2me.html#javame_tutorial" title="Hecl Java ME Tutorial">Java ME Tutorial</a>.
-      </p></td></tr></table></div><p>
+      </p>
+    </td></tr></table></div>
+    <p>
       Like many people, I enjoy taking something and experimenting with it before going and reading
       the instructions!  With this in mind, I have written a brief tutorial that you can use to
       start exploring Hecl on your own.
-    </p><p>
+    </p>
+
+    <p>
       To launch the interactive Hecl shell:
-    </p><pre class="screen">java -jar ./jars/j2se/Hecl.jar</pre><p>This will give you a prompt: <code class="prompt">hecl&gt;</code> where you can type in
-    commands.</p><p>
+    </p>
+
+    <pre class="screen">java -jar ./jars/j2se/Hecl.jar</pre>
+
+    <p>This will give you a prompt: <code class="prompt">hecl&gt;</code> where you can type in
+    commands.</p>
+
+    <p>
       Of course, we would be out of place not to begin with the famous
       "Hello, World".  Behold:
-    </p><pre class="programlisting">puts "Hello, World"</pre><p>
+    </p>
+    <pre class="programlisting">puts "Hello, World"</pre>
+    <p>
       Hecl is based on the notion of commands, which take any number
       of arguments.  The <span class="command"><strong>puts</strong></span> command takes one
       argument, a string, and prints it out.
-    </p><p>
+    </p>
+    <p>
       Like all programming languages, Hecl provides variables that may
       be used to store information. Here, we set a variable,
       <code class="varname">rating</code>, and then print it out in the midst of
       a string.  This is called "interpolation", and is a convenient
       way of creating new strings.
-    </p><pre class="programlisting">set rating 10
-puts "Hecl, from 1 to 10: $rating"</pre><p>
+    </p>
+	    <pre class="programlisting">set rating 10
+puts "Hecl, from 1 to 10: $rating"</pre>
+    <p>
       Something else we notice in the above examples is that we use
       double quotes "" to group a series of things.  In Hecl, commands
       and their arguments are separated by spaces.  Since
@@ -32,46 +50,78 @@ puts "Hecl, from 1 to 10: $rating"</pre><p>
       quotes to delineate a string, but in Hecl that is not necessary
       if the string has no spaces in it.  For instance,
       <strong class="userinput"><code>puts helloworld</code></strong> is legitimate.
-    </p><p>
+    </p>
+
+    <p>
       Something else visible in the above command is that Hecl commands occur one per line, and that
       no line ending is necessary, as in languages like C where lines end in a semicolon.  In Hecl,
       the semicolon is optional, and can be used to put more than one command on a line:
-    </p><pre class="programlisting">puts "hello" ; puts "world" </pre><p>
+    </p>
+
+    <pre class="programlisting">puts "hello" ; puts "world" </pre>
+
+    <p>
       Another way of grouping multiple words in Hecl is with braces:
       {}.  Hecl does not automatically perform any substitution on the
       variables or commands grouped within braces, as it does with
       quotes.
-    </p><pre class="programlisting">puts {The $dollar $signs $are printed	    literally$$ - no substitution}</pre><p>
+    </p>
+
+    <pre class="programlisting">puts {The $dollar $signs $are printed	    literally$$ - no substitution}</pre>
+
+    <p>
       Aside from the dollar sign, which returns a reference to the
       value of a variable, it is also possible to utilize the results
       of one command as the input of a second command.  For example:
-    </p><pre class="programlisting">set rating 10
+    </p>
+
+    <pre class="programlisting">set rating 10
 puts "Rating:"
-puts [set rating]</pre><p>
+puts [set rating]</pre>
+
+    <p>
       In this case, we pass the results of the <span class="command"><strong>set</strong></span>
       command to the <span class="command"><strong>puts</strong></span> command.  In reality, <strong class="userinput"><code>set
 	rating</code></strong> is just a long way of writing
       <code class="option">$rating</code> but it's a good example.
-    </p><p>
+    </p>
+
+    <p>
       Like everything else in Hecl, we perform math operations as
       commands:
-    </p><pre class="programlisting">puts "2 + 2 = [+ 2 2]"</pre><p>
+    </p>
+
+    <pre class="programlisting">puts "2 + 2 = [+ 2 2]"</pre>
+
+    <p>
       In the example, the <span class="command"><strong>+</strong></span> takes two arguments,
       adds them together and return the result, which is then printed
       out by the <span class="command"><strong>puts </strong></span> command.
-    </p><p>
+    </p>
+
+    <p>
       In order to choose between one or more
-    </p><pre class="programlisting">set temp 10
+    </p>
+
+    <pre class="programlisting">set temp 10
 if { &lt; $temp 0 } {
     puts "It's freezing"
 } else {
     puts "Not freezing"
-}</pre><p>"while" loop command:</p><pre class="programlisting">set i 0
+}</pre>
+
+    <p>"while" loop command:</p>
+
+    <pre class="programlisting">set i 0
 while { &lt; $i 10 } {
     puts "i is now $i"
     incr $i
 }
-</pre><p>Lists:</p><pre class="programlisting">set foo [list a b c]
+</pre>
+
+    <p>Lists:</p>
+
+    <pre class="programlisting">set foo [list a b c]
 set bar {a b c}
 lappend $foo d
 lappend $bar d
@@ -79,7 +129,11 @@ set foo
 # Returns 'a b c d'
 set bar
 # Returns 'a b c d'
-</pre><p>Hash tables:</p><pre class="programlisting">set foo [hash {a b c d}]
+</pre>
+
+    <p>Hash tables:</p>
+
+    <pre class="programlisting">set foo [hash {a b c d}]
 puts [hget $foo a]
 # prints 'b'
 puts [hget $foo c]
@@ -89,19 +143,27 @@ puts [hget $foo c]
 # prints '2'
 puts $foo
 # prints 'a b c 2' (although not necessarily in that order)
-</pre><p>"foreach" loop command:</p><pre class="programlisting">set lst {a b c d e f}
+</pre>
+
+    <p>"foreach" loop command:</p>
+
+    <pre class="programlisting">set lst {a b c d e f}
 foreach {m n} $lst {
     puts  "It is possible to grab two variables at a time: $m $n"
 }
 
 foreach {x} $lst {
     puts  "Or one at a time: $x"
-}</pre><p>
+}</pre>
+
+    <p>
       Create new commands with the "proc" command.  In this example we create a command that prints
       out a numbered list.  In Hecl, commands created within procs normally are only visible within
       that proc, and are cleaned up when the procedure exits.  For exceptions to this rule, see the
       <a class="link" href="global.html" title="global"><span class="command"><strong>global</strong></span></a> and <a class="link" href="upeval.html" title="upeval"><span class="command"><strong>upeval</strong></span></a> commands.
-    </p><pre class="programlisting">set list {red blue green}
+    </p>
+
+    <pre class="programlisting">set list {red blue green}
 proc printvals {vals} {
     set num 1
     foreach v $vals {
@@ -110,11 +172,15 @@ proc printvals {vals} {
     }
 }
 
-printvals $list</pre><p>
+printvals $list</pre>
+
+    <p>
       Hecl is very flexible - in this example, we create a
       "do...while" loop command that works as if it were a native loop
       construct.
-    </p><pre class="programlisting">proc do {code while condition} {
+    </p>
+
+    <pre class="programlisting">proc do {code while condition} {
     upeval $code
     while { upeval $condition } {
 	upeval $code
@@ -129,4 +195,6 @@ do {
 } while { &lt; $x 10 }
 set foo
 # Returns 100 - because the loop is run once and only once.
-</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Installation / Tools &amp; Editors </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl Commands</td></tr></table></div></body></html>
+</pre>
+
+  </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="installation.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Installation / Tools &amp; Editors </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl Commands</td></tr></table></div></body></html>

@@ -1,21 +1,41 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Quick start to developing Java ME apps</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="j2me.html" title="Hecl and Java ME"><link rel="prev" href="j2me.html" title="Hecl and Java ME"><link rel="next" href="midp10_commands.html" title="Hecl J2ME MIDP1.0 Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Quick start to developing Java ME apps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl and Java ME</th><td width="20%" align="right"> <a accesskey="n" href="midp10_commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="javame_quick_start"></a>Quick start to developing Java ME apps</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Quick start to developing Java ME apps</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="j2me.html" title="Hecl and Java ME"><link rel="prev" href="j2me.html" title="Hecl and Java ME"><link rel="next" href="midp10_commands.html" title="Hecl J2ME MIDP1.0 Commands"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Quick start to developing Java ME apps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl and Java ME</th><td width="20%" align="right"> <a accesskey="n" href="midp10_commands.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" title="Quick start to developing Java ME apps"><div class="titlepage"><div><div><h3 class="title"><a name="javame_quick_start"></a>Quick start to developing Java ME apps</h3></div></div></div>
+      
+
+      <p>
 	Creating new Hecl applications is quick and easy:
-      </p><div class="procedure"><ol type="1"><li><p>
+      </p>
+
+      <div class="procedure"><ol class="procedure" type="1"><li class="step" title="Step 1">
+	  <p>
 	    Create a Hecl script.  For starters, you could use the <code class="filename">hello.hcl</code>
 	    script from the tutorial.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="step" title="Step 2">
+	  <p>
 	    Use <span class="command"><strong>JarHack</strong></span> to create a new jar and accompanying
 	    jad file:
-	  </p><pre class="programlisting">java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir /tmp -name Hello -script hello.hcl</pre><p>
+	  </p>
+	  <pre class="programlisting">java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir /tmp -name Hello -script hello.hcl</pre>
+	  <p>
 	    This creates <code class="filename">Hello.jar</code> and <code class="filename">Hello.jad</code> in the
 	    <code class="filename">/tmp</code> directory, using the <code class="filename">hello.hcl</code> script.
 	    It utilizes the MIDP 2.0 version of Hecl in <code class="filename">jars/cldc1.1-midp2.0/Hecl.jar</code>
-	  </p></li><li><p>To run this code in the emulator:</p><pre class="programlisting">/opt/WTK2.5.2/bin/emulator -classpath /tmp/Hello.jar Hecl</pre></li><li><p>
+	  </p>
+	</li><li class="step" title="Step 3">
+	  <p>To run this code in the emulator:</p>
+	  <pre class="programlisting">/opt/WTK2.5.2/bin/emulator -classpath /tmp/Hello.jar Hecl</pre>
+	</li><li class="step" title="Step 4">
+	  <p>
 	    Once you've iterated through a few versions of the script, and are satisfied, you're
 	    ready to move it to your phone.  Unfortunately, we can't do that for you, as there is no
 	    standard method - each phone manufacturer provides their own way.  On Linux, I use the
 	    following command:
-	  </p><pre class="programlisting">gammu nothing --nokiaaddfile Application Hecl</pre><p>
+	  </p>
+	  <pre class="programlisting">gammu nothing --nokiaaddfile Application Hecl</pre>
+
+	  <p>
 	    Another way to accomplish this is to put the jar and jad files on a web site and
 	    download them with your phone's browser.
-	  </p></li></ol></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="j2me.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="midp10_commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Hecl and Java ME </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl J2ME MIDP1.0 Commands</td></tr></table></div></body></html>
+	  </p>
+	</li></ol></div>
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="j2me.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="j2me.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="midp10_commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Hecl and Java ME </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Hecl J2ME MIDP1.0 Commands</td></tr></table></div></body></html>

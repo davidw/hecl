@@ -1,17 +1,47 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.list</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_imageitem.html" title="lcdui.imageitem"><link rel="next" href="lcdui_settings.html" title="lcdui.settings"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.list</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_imageitem.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_settings.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_list"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.list &#8212; Creates a full-screen list</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.list</code>  [-title <em class="replaceable"><code>title</code></em>] [-type
-	      exclusive |  multiple |  implicit
-	    ] [-selectcommand <em class="replaceable"><code>cmd</code></em>]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.16.3"></a><h2>Description</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.list</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_imageitem.html" title="lcdui.imageitem"><link rel="next" href="lcdui_settings.html" title="lcdui.settings"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.list</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_imageitem.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_settings.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="lcdui.list"><div class="refentry.separator"><hr></div><a name="lcdui_list"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  lcdui.list
+	   &#8212; Creates a full-screen list
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">lcdui.list</code> 
+	     [-title <em class="replaceable"><code>title</code></em>]
+	     [-type
+	      
+		exclusive
+		 |  multiple
+		 |  implicit
+	      
+	    ]
+	     [-selectcommand <em class="replaceable"><code>cmd</code></em>]
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.8.6.16.3"></a><h2>Description</h2>
+	  
+	  <p>
 	    The <span class="command"><strong>lcdui.list</strong></span> command creates a full-screen list and returns a
 	    command/object that can be used to manipulate it. For an in-depth look at the Java code
-	    that this command is based on, see: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/List.html" target="_top">javax.microedition.lcdui.List</a>
-	  </p><p>The options unique to this command are as follows:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">-type</code>: One of <code class="option">exclusive</code>,
+	    that this command is based on, see: <a class="link" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/List.html" target="_top">javax.microedition.lcdui.List</a>
+	  </p>
+	  <p>The options unique to this command are as follows:</p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="option">-type</code>: One of <code class="option">exclusive</code>,
 		<code class="option">multiple</code> or <code class="option">implicit</code>.  Exclusive and multiple
 		correspond, respectively, to radio buttons and checkboxes.  Implicit lists act like
 		a menu, dispatching to the list's <code class="option">-commandaction</code> when a list item
 		is selected.
-              </p></li><li><p><code class="option">-selectcommand</code>: Select the command which should be used for
+              </p>
+	    </li><li class="listitem">
+	      <p><code class="option">-selectcommand</code>: Select the command which should be used for
 	      implicit list select actions.
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.16.4"></a><h2>Example</h2><pre class="programlisting">
+              </p>
+	    </li></ul></div>
+	</div>
+
+	<div class="refsect1" title="Example"><a name="id-1.8.6.16.4"></a><h2>Example</h2>
+	  
+	  <pre class="programlisting">
 set selectcmd [lcdui.command -label Select -longlabel Select -type item -priority 1]
 set lst [lcdui.list -title "List Example" -commandaction selectname]
 set names {Anna Barbara Carla Daniela Emanuela Federica}
@@ -23,6 +53,11 @@ $lst addcommand $selectcmd
 proc selectname {cmd lst} {
     global names
     [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] setcurrent
-}</pre><p>Produces:</p><p>
-	    Live example: <a class="ulink" href="http://www.heclbuilder.com/scripts/show/151" target="_top">http://www.heclbuilder.com/scripts/show/151</a>
-	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_imageitem.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_settings.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.imageitem </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.settings</td></tr></table></div></body></html>
+}</pre>
+	  <p>Produces:</p>
+
+	  <p>
+	    Live example: <a class="link" href="http://www.heclbuilder.com/scripts/show/151" target="_top">http://www.heclbuilder.com/scripts/show/151</a>
+	  </p>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_imageitem.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_settings.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.imageitem </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.settings</td></tr></table></div></body></html>
