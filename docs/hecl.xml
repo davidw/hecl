@@ -8252,6 +8252,71 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
+      <refentry xml:id="servicebook_records">
+	<refnamediv>
+	  <refname>servicebook.records</refname>
+	  <refpurpose>Retrieves connection information about various connection types</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>servicebook.records</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    This call returns a list of all "service records".  Each
+	    record is a hash with the following fields defined.  For
+	    their meanings, please refer to this link: <link
+	    xl:href="http://www.blackberry.com/developers/docs/4.7.0api/net/rim/device/api/servicebook/ServiceRecord.html"></link>
+	  </para>
+	  <para>
+	    <constant>APN</constant>
+	    <constant>ApplicationData</constant>
+	    <constant>BBRHosts</constant>
+	    <constant>BBRHosts</constant>
+	    <constant>BBRPorts</constant>
+	    <constant>BBRPorts</constant>
+	    <constant>CAAddress</constant>
+	    <constant>CAPort</constant>
+	    <constant>CARealm</constant>
+	    <constant>CID</constant>
+	    <constant>UID</constant>
+	    <constant>CidHash</constant>
+	    <constant>CompressionMode</constant>
+	    <constant>DataSourceId</constant>
+	    <constant>Description</constant>
+	    <constant>DisabledState</constant>
+	    <constant>EncryptionMode</constant>
+	    <constant>HomeAddress</constant>
+	    <constant>Id</constant>
+	    <constant>KeyHashForService</constant>
+	    <constant>LastUpdated</constant>
+	    <constant>Name</constant>
+	    <constant>NameHash</constant>
+	    <constant>NetworkAddress</constant>
+	    <constant>NetworkType</constant>
+	    <constant>Source</constant>
+	    <constant>Type</constant>
+	    <constant>Uid</constant>
+	    <constant>UidHash</constant>
+	    <constant>UserId</constant>
+	    <constant>isDirty</constant>
+	    <constant>isDisabled</constant>
+	    <constant>isEncrypted</constant>
+	    <constant>isInvisible</constant>
+	    <constant>isRecordProtected</constant>
+	    <constant>isRestoredFromBackup</constant>
+	    <constant>isRestoreDisabled</constant>
+	    <constant>isRestoreEnabled</constant>
+	    <constant>isSecureService</constant>
+	    <constant>isValid</constant>
+	    <constant>isWeakSecureService</constant>
+	  </para>
+	</refsect1>
+      </refentry>
+
+
     </section>
 
   </section>
