@@ -1,5 +1,6 @@
 /*
- * Main BlackBerry Hecl entry point.
+ * Main BlackBerry Hecl entry point.  This is mostly a copy of
+ * midp20/Hecl.java, but not entirely.
  *
  * Copyright (C) 2005-2009 data2c GmbH (www.data2c.com), DedaSys LLC (www.dedasys.com)
  *
@@ -40,17 +41,24 @@ import org.hecl.rms.RMSCmd;
 public class Hecl extends MIDlet {
     protected Interp interp = null;
     protected HeclTask evaltask = null;
-    private boolean started = false;
+    protected String[] args = {};
+    protected boolean started = false;
 
     public void destroyApp(boolean b) {
 	notifyDestroyed();
     }
 
     public void pauseApp() {
+	if (interp.commandExists("midlet.onpause")) {
+	    interp.evalAsync(new Thing("midlet.onpause"));
+	}
     }
 
     public void startApp() {
 	if (started) {
+	    if (interp.commandExists("midlet.onresume")) {
+		interp.evalAsync(new Thing("midlet.onresume"));
+	    }
 	    return;
 	}
 	started = true;
@@ -73,21 +81,33 @@ public class Hecl extends MIDlet {
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
-	    ServiceBookCmd.load(interp);
-	    BrowserCmd.load(interp);
-	    InvokeCmds.load(interp);
+	    org.hecl.blackberry.ServiceBookCmd.load(interp);
+	    org.hecl.blackberry.BrowserCmd.load(interp);
+	    org.hecl.blackberry.InvokeCmds.load(interp);
+	    org.hecl.blackberry.DeviceCmds.load(interp);
+//#if locationapi == 1
+	    try {
+		Class.forName("javax.microedition.location.Location");
+		org.hecl.location.LocationCmd.load(interp);
+	    } catch (Exception e) {
+	    }
+//#endif
+
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
 
 //#if files == 1
 	    org.hecl.files.FileCmds.load(interp);
+	    org.hecl.files.FileFinderCmds.load(interp);
 //#endif
 
 	    MidletCmd.load(interp,this);
+
 //#if mwt == 1
-			 org.hecl.mwtgui.MwtCmds.load(interp, this);
+	    org.hecl.mwtgui.MwtCmds.load(interp, this);
 //#endif
+
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 
@@ -135,7 +155,5 @@ public class Hecl extends MIDlet {
 	    System.err.println("Error in runScript: " + e);
 	}
     }
-
-    protected String[] args = {};
 }
 

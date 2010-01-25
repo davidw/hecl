@@ -129,10 +129,25 @@
     </wtkbuild>
   </target>
 
+  <target name="compileJ2MELocation"
+    depends="initCompile,compileJ2MECore,compileJ2MErms"
+    description="Compile J2ME Hecl Location support">
+    <mkdir dir="${j2me.locationclasspath}"/>
+    <mkdir dir="${j2me.pre}/location"/>
+    <wtkpreprocess srcdir="location" destdir="${j2me.pre}/location"
+      symbols="${j2me.defines}">
+    </wtkpreprocess>
+    <wtkbuild srcdir="${j2me.pre}/location" target="1.1" source="1.2"
+      destdir="${j2me.locationclasspath}">
+      <classpath refid="j2me.coreclasspath"/>
+      <classpath path="${wtk.home}/lib/jsr179.jar"/>
+    </wtkbuild>
+  </target>
+
   <target name="compileJ2MEFiles"
     depends="initCompile,compileJ2MECore,compileJ2MErms"
     description="Compile J2ME Hecl File support">
-    <mkdir dir="${j2me.fileclasspath}"/>
+    <mkdir dir="${j2me.filesclasspath}"/>
     <mkdir dir="${j2me.pre}/location"/>
     <wtkpreprocess srcdir="files" destdir="${j2me.pre}/files"
       symbols="${j2me.defines}">
@@ -287,7 +302,11 @@
     <antcall target="compileJ2MEkxml"/>
   </target>
 
-  <target name="extras" depends="extra-kxml,extra-files" description="Use this to link in extra packages">
+  <target name="extra-locationapi" if="buildlocationapi" description="Build Location API stuff if the user has decided to">
+    <antcall target="compileJ2MELocation"/>
+  </target>
+
+  <target name="extras" depends="extra-kxml,extra-files,extra-locationapi" description="Use this to link in extra packages">
   </target>
 
   <target name="midlet" depends="midp">
@@ -320,6 +339,8 @@
       preverify="${preverify}"
       obfuscate="${obfuscate}"
       verbose="false">
+
+      <classpath path="${wtk.home}/lib/jsr179.jar"/>
 
       <preserve class="Hecl { &lt;methods&gt;; }" />
 
@@ -409,7 +430,19 @@
       <arg value="cldc11midp20.properties" />
       <arg value="midlet" />
     </exec>
-    
+  </target>
+
+  <target name="HeclFile" depends="midlet,packageJarHack">
+    <java jar="jars/JarHack.jar" fork="true">
+      <arg value="-hecljar"/>
+      <arg value="jars/cldc1.1-midp2.0/Hecl.jar"/>
+      <arg value="-destdir"/>
+      <arg value="jars/cldc1.1-midp2.0/"/>
+      <arg value="-name"/>
+      <arg value="HeclFile"/>
+      <arg value="-script"/>
+      <arg value="midp20/heclfile.hcl"/>
+    </java>
   </target>
 
 </project>

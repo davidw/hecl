@@ -129,7 +129,15 @@ The <code>FileCmds</code> class implements various file commands -
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#BASENAME">BASENAME</A></B></CODE>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#ABSPATH">ABSPATH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#CANONPATH">CANONPATH</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -193,7 +201,23 @@ The <code>FileCmds</code> class implements various file commands -
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#GETCWD">GETCWD</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#HIDDEN">HIDDEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#ISABSOLUTE">ISABSOLUTE</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -249,7 +273,23 @@ The <code>FileCmds</code> class implements various file commands -
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#NAME">NAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#OPEN">OPEN</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../org/hecl/files/FileCmds.html#PATH">PATH</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -469,13 +509,53 @@ public static final int <B>SIZE</B></PRE>
 </DL>
 <HR>
 
-<A NAME="BASENAME"><!-- --></A><H3>
-BASENAME</H3>
+<A NAME="NAME"><!-- --></A><H3>
+NAME</H3>
 <PRE>
-public static final int <B>BASENAME</B></PRE>
+public static final int <B>NAME</B></PRE>
 <DL>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.BASENAME">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.NAME">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="PATH"><!-- --></A><H3>
+PATH</H3>
+<PRE>
+public static final int <B>PATH</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.PATH">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="ABSPATH"><!-- --></A><H3>
+ABSPATH</H3>
+<PRE>
+public static final int <B>ABSPATH</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.ABSPATH">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="CANONPATH"><!-- --></A><H3>
+CANONPATH</H3>
+<PRE>
+public static final int <B>CANONPATH</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CANONPATH">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="ISABSOLUTE"><!-- --></A><H3>
+ISABSOLUTE</H3>
+<PRE>
+public static final int <B>ISABSOLUTE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.ISABSOLUTE">Constant Field Values</A></DL>
 </DL>
 <HR>
 
@@ -616,6 +696,16 @@ public static final int <B>CD</B></PRE>
 <DL>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.CD">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="GETCWD"><!-- --></A><H3>
+GETCWD</H3>
+<PRE>
+public static final int <B>GETCWD</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#org.hecl.files.FileCmds.GETCWD">Constant Field Values</A></DL>
 </DL>
 
 <!-- ========= CONSTRUCTOR DETAIL ======== -->

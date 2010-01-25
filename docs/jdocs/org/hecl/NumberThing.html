@@ -572,7 +572,8 @@ public abstract double <B>doubleValue</B>()</PRE>
 <A NAME="asNumber(org.hecl.Thing)"><!-- --></A><H3>
 asNumber</H3>
 <PRE>
-public static <A HREF="../../org/hecl/NumberThing.html" title="class in org.hecl">NumberThing</A> <B>asNumber</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;t)</PRE>
+public static <A HREF="../../org/hecl/NumberThing.html" title="class in org.hecl">NumberThing</A> <B>asNumber</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;t)
+                            throws java.lang.NumberFormatException</PRE>
 <DL>
 <DD><code>asNumber</code> attempts to transform Thing t into a
  number of some sort.  It first tries to get an int from t, then
@@ -583,7 +584,10 @@ public static <A HREF="../../org/hecl/NumberThing.html" title="class in org.hecl
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>t</CODE> - a <code>Thing</code> value
-<DT><B>Returns:</B><DD>a <code>NumberThing</code> value</DL>
+<DT><B>Returns:</B><DD>a <code>NumberThing</code> value
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.NumberFormatException</CODE> - when argument does not adhere to number
+ format syntax.</DL>
 </DD>
 </DL>
 <HR>

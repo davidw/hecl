@@ -130,10 +130,8 @@ public class HeclStreamCmds implements ClassCommand {
 
     public static void load(Interp interp) {
 	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds());
-	interp.addClassCmd(HeclChannel.class, new HeclStreamCmds());
     }
     public static void unload(Interp interp) {
-	interp.removeClassCmd(HeclChannel.class);
 	interp.removeClassCmd(HeclChannel.class);
     }
 }

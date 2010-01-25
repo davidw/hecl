@@ -29,6 +29,8 @@
   <xsl:param name="generate.section.toc.level" select="1"/>
   <xsl:param name="refentry.separator" select="1"/>
 
+  <xsl:param name="toc.section.depth" select="2"/>
+
 <!--
   <xsl:variable name="arg.choice.opt.open.str">?</xsl:variable>
   <xsl:variable name="arg.choice.opt.close.str">?</xsl:variable>
@@ -68,5 +70,19 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!-- This code makes it so that the main index does not contain the entire list of Hecl commands
+  from the Hecl commands section. -->
+  <xsl:template match="section" mode="toc">
+    <xsl:param name="toc-context" select="."/>
+
+    <xsl:call-template name="subtoc">
+      <xsl:with-param name="toc-context" select="$toc-context"/>
+      <xsl:with-param name="nodes" select="section
+                                           |simplesect[$simplesect.in.toc != 0]
+                                           |bridgehead[$bridgehead.in.toc != 0]"/>
+    </xsl:call-template>
+  </xsl:template>
+
 
 </xsl:stylesheet>

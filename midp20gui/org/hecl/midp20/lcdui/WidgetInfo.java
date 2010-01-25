@@ -431,6 +431,7 @@ public class WidgetInfo {
     public static final String NEXPAND = "-expand";
     public static final String NFIT = "-fit";
     public static final String NFONT = "-font";
+    public static final String NGROW = "-growtext";
     public static final String NHEIGHT = "-height";
     public static final String NIMAGE = "-image";
     public static final String NINTERACTIVE = "-interactive";
@@ -450,6 +451,7 @@ public class WidgetInfo {
     public static final String NTEXT = "-text";
     public static final String NTICKER = "-ticker";
     public static final String NTITLE = "-title";
+    public static final String NTRUNCATE = "-truncatetext";
     public static final String NTYPE = "-type";
     public static final String NVALUE = "-value";
     public static final String NVEXPAND = "-vexpand";

@@ -1,26 +1,59 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>http.geturl</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="http_commands.html" title="HTTP"><link rel="prev" href="http_commands.html" title="HTTP"><link rel="next" href="http_formatQuery.html" title="http.formatQuery"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">http.geturl</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="http_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">HTTP</th><td width="20%" align="right"> <a accesskey="n" href="http_formatQuery.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><a name="http_geturl"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>http.geturl &#8212; Fetch contents of a URL.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">http.geturl</code>  <em class="replaceable"><code>url</code></em> [-query <em class="replaceable"><code>POSTdata</code></em>] [-headers <em class="replaceable"><code>list of headers</code></em>] [-validate [1|0]]</p></div></div><div class="refsect1" lang="en"><a name="id-1.6.4.3.3"></a><h2>Description</h2><p>
-	    The <span class="command"><strong>http.geturl</strong></span> command performs an
-	    HTTP request to the given
-	    <code class="option"><em class="replaceable"><code>url</code></em></code> and
-	    returns information about the results.  This information
-	    is returned as a hash table that can be accessed with the
-	    various h* commands such as hget.  The list of keys
-	    returned includes the following, which are set by Hecl.
-	    Also created as keys are the various HTTP headers, such as
-	    connection, content-length, content-type, last-modified,
-	    and so on.
-	  </p><div class="itemizedlist"><ul type="disc"><li><p><code class="constant">binary</code>: 1 if the data
-		returned is binary, otherwise 0.</p></li><li><p><code class="constant">charset</code>: The charset used for
-		the returned data.</p></li><li><p><code class="constant">data</code>: The returned data.</p></li><li><p><code class="constant">ncode</code>: The numeric code of
-		the response, such as 404, 500, 301, and so on.</p></li><li><p><code class="constant">status</code>: The request status -
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>http.geturl</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="http_commands.html" title="HTTP"><link rel="prev" href="http_commands.html" title="HTTP"><link rel="next" href="http_formatQuery.html" title="http.formatQuery"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">http.geturl</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="http_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">HTTP</th><td width="20%" align="right"> <a accesskey="n" href="http_formatQuery.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="http.geturl"><a name="http_geturl"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  http.geturl
+	   &#8212; Fetch contents of a URL.
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">http.geturl</code> 
+	     <em class="replaceable"><code>url</code></em>
+	     [-query <em class="replaceable"><code>POSTdata</code></em>]
+	     [-headers <em class="replaceable"><code>list of headers</code></em>]
+	     [-validate [1|0]]
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.6.4.3.3"></a><h2>Description</h2>
+	  
+	  <p>
+	    The <span class="command"><strong>http.geturl</strong></span> command performs an HTTP request to the given
+	    <code class="option"><em class="replaceable"><code>url</code></em></code> and returns information about the
+	    results.  This information is returned as a hash table that can be accessed with the
+	    various h* commands such as <span class="command"><strong>hget</strong></span>.  The list of keys returned includes
+	    the following, which are set by Hecl.  Also created as keys are the various HTTP
+	    headers, such as connection, content-length, content-type, last-modified, and so on.
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="constant">binary</code>: 1 if the data
+		returned is binary, otherwise 0.</p></li><li class="listitem">
+	      <p><code class="constant">charset</code>: The charset used for
+		the returned data.</p></li><li class="listitem">
+	      <p><code class="constant">data</code>: The returned data.  For instance, if you fetched an
+	      ordinary web page, this would be its HTML contents.</p>
+	    </li><li class="listitem">
+	      <p><code class="constant">ncode</code>: The numeric code of
+		the response, such as 404, 500, 301, and so on.</p></li><li class="listitem">
+	      <p><code class="constant">status</code>: The request status -
 		ok if the request was successfully processed.
-	      </p></li></ul></div><p>
+	      </p>
+	    </li></ul></div>
+	  <p>
 	    The <code class="option">-query</code> option is used to send
 	    key/value pairs of variables.  In order to set random
 	    headers, the <code class="option">-headers</code> argument is used.
 	    The <code class="option">-validate</code> option exists to send a
 	    <code class="constant">HEAD</code> request.
-	  </p></div><div class="refsect1" lang="en"><a name="id-1.6.4.3.4"></a><h2>Example</h2><pre class="programlisting">
+	  </p>
+	</div>
+	<div class="refsect1" title="Example"><a name="id-1.6.4.3.4"></a><h2>Example</h2>
+	  
+	  <pre class="programlisting">
 # Evaluate Hecl script located on a web site.
 eval [hget [http.geturl http://www.hecl.org/somescript.hcl] data]
-	  </pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="http_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="http_commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="http_formatQuery.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">HTTP </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> http.formatQuery</td></tr></table></div></body></html>
+	  </pre>
+	  <p>Add some headers to a request:</p>
+	  <pre class="programlisting">
+http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
+	  </pre>
+
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="http_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="http_commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="http_formatQuery.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">HTTP </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> http.formatQuery</td></tr></table></div></body></html>

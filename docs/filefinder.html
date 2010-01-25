@@ -1,0 +1,37 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>filefinder</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="extensioncommands.html#%0A%09id-1.6.3.4" title="File Interaction"><link rel="prev" href="extensioncommands.html#%0A%09id-1.6.3.4" title="File Interaction"><link rel="next" href="open.html" title="open"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">filefinder</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="extensioncommands.html#%0A%09id-1.6.3.4"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">File Interaction</th><td width="20%" align="right"> <a accesskey="n" href="open.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="filefinder"><a name="filefinder"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  filefinder
+	   &#8212; File selection widget.
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">filefinder</code> 
+	     [-startdir <em class="replaceable"><code>start_directory</code></em>]
+	     [-selectedcmd <em class="replaceable"><code>selected_command</code></em>]
+	     [-matchcmd <em class="replaceable"><code>match_command</code></em>]
+	     [-errorcmd <em class="replaceable"><code>error_command</code></em>]
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.6.3.4.3"></a><h2>Description</h2>
+	  
+	  <p>
+	    Creates a <span class="command"><strong>lcdui.list</strong></span> based file selection dialog that lets the user
+	    navigate up and down through directories and select a file.  The options are as follows:
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="option">-startdir</code>: selects the directory to start the search in.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-selectedcmd</code>: a <span class="command"><strong>proc</strong></span> that by default takes
+	      one argument: the name of the selected file.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-matchcmd</code>: a <span class="command"><strong>proc</strong></span> that takes one argument:
+	      the full URL of the file to match against.  If the file is a match, the proc must
+	      return a 1, otherwise 0.  If a match occurs, the <code class="option">-selectedcmd</code> will
+	      subsequently be called.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-errorcmd</code>: a <span class="command"><strong>proc</strong></span> that is called with one
+	      argument: an error message.  This is called when some error occurs and can be used to
+	      display an error message.</p>
+	    </li></ul></div>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="extensioncommands.html#%0A%09id-1.6.3.4"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="extensioncommands.html#%0A%09id-1.6.3.4"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="open.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">File Interaction </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> open</td></tr></table></div></body></html>

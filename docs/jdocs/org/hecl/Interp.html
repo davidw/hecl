@@ -445,6 +445,15 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/Interp.html#backgroundError(java.lang.String)">backgroundError</A></B>(java.lang.String&nbsp;errorMessage)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>backgroundError</code> method can be called to
+ dispatch a bgerror command.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../org/hecl/Interp.html#cancelAsync(java.lang.String)">cancelAsync</A></B>(java.lang.String&nbsp;name)</CODE>
 
 <BR>
@@ -1952,6 +1961,20 @@ protected boolean <B>serviceIdleTask</B>()</PRE>
 
 <DT><B>Returns:</B><DD>a <code>boolean</code> indicatign that an idle task has been
  serviced (=true) or not (=false).</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="backgroundError(java.lang.String)"><!-- --></A><H3>
+backgroundError</H3>
+<PRE>
+public void <B>backgroundError</B>(java.lang.String&nbsp;errorMessage)</PRE>
+<DL>
+<DD>The <code>backgroundError</code> method can be called to
+ dispatch a bgerror command.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>errorMessage</CODE> - a <code>String</code> value</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

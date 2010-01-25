@@ -505,7 +505,7 @@ public class RMSCmd extends Operator {
 
     static {
         cmdtable.put("rms.list", new RMSCmd(RMS_LIST,0,1));
-        cmdtable.put("rms.create", new RMSCmd(RMS_CREATE,1,0));
+        cmdtable.put("rms.create", new RMSCmd(RMS_CREATE,1,1));
         cmdtable.put("rms.get", new RMSCmd(RMS_GET,1,2));
         cmdtable.put("rms.set", new RMSCmd(RMS_SET,2,3));
         cmdtable.put("rms.size", new RMSCmd(RMS_SIZE,1,1));

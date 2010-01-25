@@ -1,29 +1,74 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.command</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_choicegroup.html" title="lcdui.choicegroup"><link rel="next" href="lcdui_date.html" title="lcdui.date"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.command</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_choicegroup.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_date.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_command"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.command &#8212; Creates a command that can be attached to a screen</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.command</code>  [
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.command</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_choicegroup.html" title="lcdui.choicegroup"><link rel="next" href="lcdui_date.html" title="lcdui.date"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.command</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_choicegroup.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_date.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="lcdui.command"><div class="refentry.separator"><hr></div><a name="lcdui_command"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  lcdui.command
+	   &#8212; Creates a command that can be attached to a screen
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">lcdui.command</code> 
+
+	     [
 	      -label
 	      <em class="replaceable"><code>label</code></em>
-	    ] [
+	    ]
+
+	     [
 	      -longlabel
 	      <em class="replaceable"><code>label</code></em>
-	    ] [
+	    ]
+
+	     [
 	      -priority
 	      <em class="replaceable"><code>priority</code></em>
-	    ] [
+	    ]
+
+	     [
 	      -type
-	      back |  cancel |  exit |  help |  item |  ok |  screen |  stop
-	    ]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.8.3"></a><h2>Description</h2><p>
+	      
+		back
+		 |  cancel
+		 |  exit
+		 |  help
+		 |  item
+		 |  ok
+		 |  screen
+		 |  stop
+	      
+	    ]
+
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.8.6.8.3"></a><h2>Description</h2>
+	  
+	  <p>
 	    The <span class="command"><strong>lcdui.command</strong></span> command creates a
 	    command that can be attached to a Screen or an Item.  For
 	    an in-depth look at the Java code that this command is
-	    based on, see: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html" target="_top">javax.microedition.lcdui.Command</a>
-	  </p><p>
+	    based on, see: <a class="link" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html" target="_top">javax.microedition.lcdui.Command</a>
+	  </p>
+	  <p>
 	    The options describing the choicegroup are as follows:
-	  </p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">-label</code>: A short label for the
-	      command, which should be as short as possible.</p></li><li><p><code class="option">-longlabel</code>: A long, more
-	      descriptive label.</p></li><li><p><code class="option">-priority</code>: A positive number
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="option">-label</code>: A short label for the
+	      command, which should be as short as possible.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-longlabel</code>: A long, more
+	      descriptive label.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-priority</code>: A positive number
 	      indicating the order of appearance of commands, 1 being
-	      the highest priority.</p></li><li><p><code class="option">-type</code>: Indicates the type of
-	      command.  The command types are documented <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary" target="_top">here</a>
-              </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.8.4"></a><h2>Example</h2><pre class="programlisting">
+	      the highest priority.</p>
+	    </li><li class="listitem">
+	      <p><code class="option">-type</code>: Indicates the type of
+	      command.  The command types are documented <a class="link" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary" target="_top">here</a>
+              </p>
+	    </li></ul></div>
+
+	</div>
+	<div class="refsect1" title="Example"><a name="id-1.8.6.8.4"></a><h2>Example</h2>
+	  
+	  <pre class="programlisting">
 set exitcmd [lcdui.command -label Exit -longlabel Exit -type exit -priority 2]
 set backcmd [lcdui.command -label Back -longlabel Back -type back -priority 1]
 set addtextcmd [lcdui.command -label AddText -longlabel AddText -type screen -priority 1]
@@ -52,6 +97,10 @@ proc HandleCmd {cmd form} {
 }
 
 NewForm
-	  </pre><p>
-	    Live example: <a class="ulink" href="http://www.heclbuilder.com/scripts/show/144" target="_top">http://www.heclbuilder.com/scripts/show/144</a>
-	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_choicegroup.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_date.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.choicegroup </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.date</td></tr></table></div></body></html>
+	  </pre>
+
+	  <p>
+	    Live example: <a class="link" href="http://www.heclbuilder.com/scripts/show/144" target="_top">http://www.heclbuilder.com/scripts/show/144</a>
+	  </p>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_choicegroup.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_date.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.choicegroup </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.date</td></tr></table></div></body></html>

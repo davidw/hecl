@@ -1271,6 +1271,24 @@ public class Interp extends Thread/*implements Runnable*/ {
 	return true;
     }
 
+    /**
+     * The <code>backgroundError</code> method can be called to
+     * dispatch a bgerror command.
+     *
+     * @param errorMessage a <code>String</code> value
+     */
+    public void backgroundError(String errorMessage) {
+	try {
+	    Vector v = new Vector();
+	    v.addElement(new Thing("bgerror"));
+	    v.addElement(new Thing(errorMessage));
+	    eval(ListThing.create(v),0);
+	} catch(Exception e) {
+	    System.err.println("Hecl severe bg error: " + errorMessage + "\n" + e.toString());
+	    e.printStackTrace();
+	}
+    }
+
     protected static class WaitToken {
 	public volatile boolean waiting = true;
     }
