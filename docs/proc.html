@@ -6,7 +6,7 @@
       <div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
 	<div class="cmdsynopsis"><p>
 	  <code class="command">proc</code> 
-	   <em class="replaceable"><code>name</code></em>
+	   [<em class="replaceable"><code>name</code></em>]
 	   <em class="replaceable"><code>arglist</code></em>
 	   <em class="replaceable"><code>body</code></em>
 	</p></div>
@@ -14,10 +14,11 @@
       <div class="refsect1" title="Description"><a name="id-1.5.41.3"></a><h2>Description</h2>
 	
 	<p>
-	  The <span class="command"><strong>proc</strong></span> command creates new procedures,
-	  which are virtually indistinguishable from built-in Hecl
-	  commands.  <code class="option"><em class="replaceable"><code>name</code></em></code>
-	  is the name of the new command,
+	  The <span class="command"><strong>proc</strong></span> command creates new procedures, which are virtually
+	  indistinguishable from built-in Hecl
+	  commands.  <code class="option"><em class="replaceable"><code>name</code></em></code> is the name of the new
+	  command, or, if it is absent, an anonymous procedure is created (and should be stored in a
+	  variable).
 	  <code class="option"><em class="replaceable"><code>arglist</code></em></code> is a
 	  list of arguments that the new command will take and make
 	  available as local variables within the
@@ -58,4 +59,16 @@ showargs x y z
 	<pre class="screen">Args: 
 Args: x y z</pre>
       </div>
+
+      <div class="refsect1" title="Anonymous proc Example"><a name="id-1.5.41.6"></a><h2>Anonymous proc Example</h2>
+	
+	  <pre class="programlisting">
+set foo [proc {x} { puts $x }]
+$foo beebop
+	</pre>
+	<p>Produces:</p>
+	<pre class="screen">beebop</pre>
+      </div>
+
+
     </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="or.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="puts.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">or </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> puts</td></tr></table></div></body></html>
