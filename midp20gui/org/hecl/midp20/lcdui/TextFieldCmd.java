@@ -32,6 +32,7 @@ import org.hecl.Thing;
 import org.hecl.misc.HeclUtils;
 
 public class TextFieldCmd extends OptionCmd {
+
     public static void load(Interp ip) {
 	ip.addCommand(CMDNAME,cmd);
 	ip.addClassCmd(TextField.class,cmd);
@@ -97,10 +98,34 @@ public class TextFieldCmd extends OptionCmd {
 
 	if(optname.equals(WidgetInfo.NTYPE)) {
 	    int c = (tf.getConstraints() & TextField.CONSTRAINT_MASK);
-		
 	    tf.setConstraints(c | WidgetInfo.toTextType(optval));
 	    return;
 	}
+
+	if(optname.equals(WidgetInfo.NTRUNCATE)) {
+	    int max = tf.getMaxSize();
+	    String newtext = optval.toString();
+	    if (newtext.length() > max) {
+		newtext = newtext.substring(0, max);
+	    }
+	    tf.setString(newtext);
+	    return;
+	}
+
+	if(optname.equals(WidgetInfo.NGROW)) {
+	    int max = tf.getMaxSize();
+	    String newtext = optval.toString();
+	    int textlen = newtext.length();
+	    if (textlen > max) {
+		int newmax = tf.setMaxSize(textlen);
+		if (newmax < textlen) {
+		    newtext = newtext.substring(0, newmax);
+		}
+	    }
+	    tf.setString(newtext);
+	    return;
+	}
+
 	if(optname.equals(WidgetInfo.NTEXT)) {
 	    tf.setString(optval.toString());
 	    return;

@@ -182,6 +182,16 @@ The <code>ListThing</code> class implements lists, storing them internally
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/ListThing.html#buildCmdList(org.hecl.Thing, org.hecl.Thing[])">buildCmdList</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;cmd,
+             <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;args)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>buildCmdList</code> method takes a Thing, treats it as a
+ list, and adds arguments to it from the args array.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../org/hecl/ListThing.html#create(java.util.Vector)">create</A></B>(java.util.Vector&nbsp;v)</CODE>
 
 <BR>
@@ -499,6 +509,31 @@ public static <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thin
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>str</CODE> - a <code>String</code> value<DD><CODE>splitstr</CODE> - a <code>String</code> value
 <DT><B>Returns:</B><DD>a <code>Thing</code> value</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="buildCmdList(org.hecl.Thing, org.hecl.Thing[])"><!-- --></A><H3>
+buildCmdList</H3>
+<PRE>
+public static <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A> <B>buildCmdList</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;cmd,
+                                 <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;args)
+                          throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
+<DL>
+<DD>The <code>buildCmdList</code> method takes a Thing, treats it as a
+ list, and adds arguments to it from the args array.  The whole
+ thing is returned and is ready to be executed by interp.eval().
+ This is a convenience function utilized in various callbacks
+ throughout the code.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>cmd</CODE> - a <code>Thing</code> value<DD><CODE>args</CODE> - an array of <code>Thing</code> values
+<DT><B>Returns:</B><DD>a <code>Thing</code> value
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

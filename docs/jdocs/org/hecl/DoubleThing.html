@@ -342,12 +342,16 @@ public <B>DoubleThing</B>(boolean&nbsp;b)</PRE>
 <A NAME="DoubleThing(java.lang.String)"><!-- --></A><H3>
 DoubleThing</H3>
 <PRE>
-public <B>DoubleThing</B>(java.lang.String&nbsp;s)</PRE>
+public <B>DoubleThing</B>(java.lang.String&nbsp;s)
+            throws java.lang.NumberFormatException</PRE>
 <DL>
 <DD>Creates a new <code>DoubleThing</code> instance from string s.
 <P>
 <DL>
-<DT><B>Parameters:</B><DD><CODE>s</CODE> - a <code>String</code> value</DL>
+<DT><B>Parameters:</B><DD><CODE>s</CODE> - a <code>String</code> value
+<DT><B>Throws:</B>
+<DD><CODE>java.lang.NumberFormatException</CODE> - when argum,ent does not adhere to
+ floating point number syntax.</DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->

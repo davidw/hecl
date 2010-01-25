@@ -1,9 +1,14 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Creating new Hecl commands</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="building_hecl.html" title="Building Hecl: Ant Targets"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Creating new Hecl commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Interfacing Hecl and Java</th><td width="20%" align="right"> <a accesskey="n" href="building_hecl.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="creating_new_hecl_commands"></a>Creating new Hecl commands</h3></div></div></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Creating new Hecl commands</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="prev" href="heclandjava.html" title="Interfacing Hecl and Java"><link rel="next" href="building_hecl.html" title="Building Hecl: Ant Targets"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Creating new Hecl commands</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Interfacing Hecl and Java</th><td width="20%" align="right"> <a accesskey="n" href="building_hecl.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" title="Creating new Hecl commands"><div class="titlepage"><div><div><h3 class="title"><a name="creating_new_hecl_commands"></a>Creating new Hecl commands</h3></div></div></div>
+      
+
+      <p>
 	Creating new Hecl commands is relatively simple.  The first step is to create a new class
 	for your command in a file, say <code class="filename">HelloCmd.java</code>, which, for simplicity's
 	sake, you could put in <code class="filename">core/org/hecl/</code>.  The code would look something
 	like this:
-      </p><pre class="programlisting">
+      </p>
+
+      <pre class="programlisting">
 import org.hecl.Command;
 import org.hecl.HeclException;
 import org.hecl.Interp;
@@ -18,38 +23,89 @@ class HelloCmd implements Command {
 	return null;
     }
 }
-      </pre><p>
+      </pre>
+
+      <p>
 	The command takes an interpreter and an array of <code class="classname">Thing</code>s as arguments,
 	where the first <code class="classname">Thing</code> is the name of the command itself, and the
 	others are the arguments to it.
-      </p><p>
+      </p>
+
+      <p>
 	The "glue" that connects the name of your Hecl command with the Java code is also relatively
 	simple:
-      </p><pre class="programlisting">
+      </p>
+
+      <pre class="programlisting">
 	interp.addCommand("hello", new HelloCmd());
-      </pre><p>
+      </pre>
+
+      <p>
 	The above code would be included somewhere in <code class="filename">commandline/Hecl.java</code>,
 	<code class="filename">midp20/Hecl.java</code> or elsewhere, depending on what platform you're
 	working on; or <code class="filename">core/org/hecl/Interp.java</code> if you want to include it as
 	part of the Hecl core.
-      </p><p>
+      </p>
+
+      <p>
 	Easy, no?  There are a few other useful methods that you
 	should be aware of, to share variables between Hecl and Java,
 	and to return results from your Hecl commands:
-      </p><div class="itemizedlist"><ul type="disc"><li><code class="methodsynopsis"><span class="methodname">interp.setVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>,<br>              <span class="methodparam"><span class="type">Thing </span><span class="parameter">value</span></span>);</code>
-	  This sets the value of <em class="parameter"><code>varname</code></em> to
-	  some value.
-	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">varname</span></span>);</code><br><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam"><span class="type">String </span><span class="parameter">varname</span></span>);</code>
-	  These methods take a variable name, either in string form or
-	  as a <code class="classname">Thing</code>, and return the
-	  <code class="classname">Thing</code> associated with that variable.
-	</li><li><p><code class="varname">interp.result</code> is used to set the
+      </p>
+
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	  <code class="methodsynopsis"><span class="methodname">interp.setVar</span>(<span class="methodparam">
+	      <span class="type">Thing </span>
+	      <span class="parameter">varname</span>
+	    </span>,<br>              <span class="methodparam">
+	      <span class="type">Thing </span>
+	      <span class="parameter">value</span>
+	    </span>);</code>
+	  <p>
+	    This sets the value of <em class="parameter"><code>varname</code></em> to
+	    some value.
+	  </p>
+	</li><li class="listitem">
+	  <code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam">
+	      <span class="type">Thing </span>
+	      <span class="parameter">varname</span>
+	    </span>);</code><br>
+
+	  <code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">interp.getVar</span>(<span class="methodparam">
+	      <span class="type">String </span>
+	      <span class="parameter">varname</span>
+	    </span>);</code>
+	  <p>
+	    These methods take a variable name, either in string form
+	    or as a <code class="classname">Thing</code>, and return the
+	    <code class="classname">Thing</code> associated with that
+	    variable.
+	  </p>
+	</li><li class="listitem">
+	  <p><code class="varname">interp.result</code> is used to set the
 	    result of a command.  This oft-used variable is accessed
 	    directly for simplicity, speed and smaller code size.
-	  </p></li><li><code class="methodsynopsis"><span class="type">int </span><span class="methodname">IntThing.get</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">thing</span></span>);</code>
-	  Get an int from a Thing.
-	</li><li><code class="methodsynopsis"><span class="type">String </span><span class="methodname">StringThing.get</span>(<span class="methodparam"><span class="type">Thing </span><span class="parameter">thing</span></span>);</code>
-	  Get a String from a Thing.
-	</li><li><code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam"><span class="type">int </span><span class="parameter">i</span></span>);</code>
-	  Creates a new thing from an int.
-	</li></ul></div><p>There are similar methods for strings, floats (where applicable), hashes and lists.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="heclandjava.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="building_hecl.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Building Hecl: Ant Targets</td></tr></table></div></body></html>
+	  </p>
+	</li><li class="listitem">
+	  <code class="methodsynopsis"><span class="type">int </span><span class="methodname">IntThing.get</span>(<span class="methodparam">
+	      <span class="type">Thing </span>
+	      <span class="parameter">thing</span>
+	    </span>);</code>
+	  <p>Get an int from a Thing.</p>
+	</li><li class="listitem">
+	  <code class="methodsynopsis"><span class="type">String </span><span class="methodname">StringThing.get</span>(<span class="methodparam">
+	      <span class="type">Thing </span>
+	      <span class="parameter">thing</span>
+	    </span>);</code>
+	  <p>Get a String from a Thing.</p>
+	</li><li class="listitem">
+	  <code class="methodsynopsis"><span class="type">Thing </span><span class="methodname">IntThing.create</span>(<span class="methodparam">
+	      <span class="type">int </span>
+	      <span class="parameter">i</span>
+	    </span>);</code>
+	  <p>Creates a new thing from an int.</p>
+	</li></ul></div>
+
+      <p>There are similar methods for strings, floats (where applicable), hashes and lists.</p>
+
+    </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="heclandjava.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="heclandjava.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="building_hecl.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Interfacing Hecl and Java </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Building Hecl: Ant Targets</td></tr></table></div></body></html>

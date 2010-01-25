@@ -78,18 +78,29 @@ public class Hecl extends MIDlet {
 	    RMSCmd.load(interp);
 	    HttpCmd.load(interp);
 	    Base64Cmd.load(interp);
+//#if locationapi == 1
+	    try {
+		Class.forName("javax.microedition.location.Location");
+		org.hecl.location.LocationCmd.load(interp);
+	    } catch (Exception e) {
+	    }
+//#endif
+
 //#if kxml == 1
 	    org.hecl.kxml.KXMLCmd.load(interp);
 //#endif
 
 //#if files == 1
 	    org.hecl.files.FileCmds.load(interp);
+	    org.hecl.files.FileFinderCmds.load(interp);
 //#endif
 
 	    MidletCmd.load(interp,this);
+
 //#if mwt == 1
-			 org.hecl.mwtgui.MwtCmds.load(interp, this);
+	    org.hecl.mwtgui.MwtCmds.load(interp, this);
 //#endif
+
 	    String scriptcontent =
 		HeclUtils.getResourceAsString(this.getClass(),"/script.hcl","UTF-8");
 

@@ -1,91 +1,107 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Java ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="hecl_javadocs.html" title="JavaDocs"><link rel="next" href="javame_quick_start.html" title="Quick start to developing Java ME apps"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Java ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="hecl_javadocs.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="javame_quick_start.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and Java ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#javame_tutorial">Hecl Java ME Tutorial</a></span></dt><dt><span class="section"><a href="javame_quick_start.html">Quick start to developing Java ME apps</a></span></dt><dt><span class="section"><a href="midp10_commands.html">Hecl J2ME MIDP1.0 Commands</a></span></dt><dt><span class="section"><a href="midp20commands.html">Hecl Java ME MIDP2.0 Commands</a></span></dt><dt><span class="section"><a href="hacking_hecl_j2me.html">Hacking Hecl's Java ME code</a></span></dt></dl></div><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Hecl and Java ME</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="prev" href="hecl_javadocs.html" title="JavaDocs"><link rel="next" href="javame_quick_start.html" title="Quick start to developing Java ME apps"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Hecl and Java ME</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="hecl_javadocs.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center"> </th><td width="20%" align="right"> <a accesskey="n" href="javame_quick_start.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="section" title="Hecl and Java ME"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="j2me"></a>Hecl and Java ME</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="j2me.html#javame_tutorial">Hecl Java ME Tutorial</a></span></dt><dt><span class="section"><a href="javame_quick_start.html">Quick start to developing Java ME apps</a></span></dt><dt><span class="section"><a href="midp10_commands.html">Hecl J2ME MIDP1.0 Commands</a></span></dt><dt><span class="section"><a href="midp20commands.html">Hecl Java ME MIDP2.0 Commands</a></span></dt><dt><span class="section"><a href="hacking_hecl_j2me.html">Hacking Hecl's Java ME code</a></span></dt></dl></div>
+    
+
+    <p>
       Hecl is designed to be small enough to run on mobile devices
       such as cell phones.  This means that for the Hecl core, has
       been necessary to limit ourselves to Java API's that work with
       J2ME.
-    </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="javame_tutorial"></a>Hecl Java ME Tutorial</h3></div></div></div><p>
+    </p>
+
+
+    <div class="section" title="Hecl Java ME Tutorial"><div class="titlepage"><div><div><h3 class="title"><a name="javame_tutorial"></a>Hecl Java ME Tutorial</h3></div></div></div>
+      
+
+    <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+      <p>
+	This is a tutorial showing you how to use Hecl to write applications for Java ME.  If you
+	want a simple introduction to the Hecl language, you can find that here: <a class="link" href="tutorial.html" title="Hecl Tutorial">tutorial</a>.
+      </p>
+    </td></tr></table></div>
+
+      <p>
 	This tutorial first appeared here:
-	<a class="ulink" href="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl" target="_top">
+	<a class="link" href="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl" target="_top">
 	  Create a simple application with Hecl - Introducing Hecl, a mobile phone scripting
 	  language </a>.  It is a tutorial style introduction writing Hecl code for mobile
 	  phones, by David Welton.
-      </p><p>
-	These days, almost everyone has a cell phone; cell phones keep getting faster, smarter, and
-	more capable, yet relatively few applications exist for them. The Hecl programming language
-	makes it easy to script applications for your cell phone - with just a few lines of code, you
-	can create applications that you can carry with you, everywhere.
-      </p><p>
-	I first fell in love with computers when my parents bought me a Commodore 64, a fairly nice
-	computer for the time. Thanks to Moore's law, and the relentless pace of development, the
-	average cell phone is now more powerful than that machine from just 20 some years ago. While
-	it's understandable that many people just want to make phone calls, think of all the
-	programs out there waiting to be written that take advantage of the fact that you almost
-	always have a cell phone with you. I think I'm just beginning to scratch the surface of
-	what's possible, especially as phones continue to get faster, and have better connections to
-	the internet.
-      </p><p>
-	I became interested in writing cell phone applications several years ago, after a rainy day
-	high in the Italian Dolomites near Cortina d'Ampezzo - my old phone ended up in a mud puddle
-	and died, leading me to purchase a new phone with J2ME (Java) capabilities. Writing
-	applications in Java was okay, but I thought to myself that it would be an interesting
-	experiment to try and create a scripting language that runs on top of the J2ME (now known as
-	Java Micro Edition or Java ME) environment.
-      </p><p>When I created Hecl, I did so with several goals in mind:</p><div class="orderedlist"><ol type="1"><li><p>
-	    Make it even easier and faster for experienced programmers to create cell phone applications.
-	  </p></li><li><p>
-	    Make it possible for novice programmers to create cell phone applications without the
-	    burden of dealing with Java.
-	  </p></li></ol></div><p>
-	Hecl has other benefits too - it's faster to develop applications, because you don't have to
-	recompile after each change. In the hands of a clever programmer, it's also possible to do
-	interesting things with Hecl because of its interpreted nature. You could start an
-	application on your phone, and download additional bits of code off the web.
-      </p><p>
+      </p>
+
+      <p>
 	The aim of this tutorial is to help you create cell phone applications, so let's get started
 	right away. You'll need a few things first:
-      </p><div class="itemizedlist"><ul type="disc"><li><p>
-	    Sun's Java. This is heading towards free software, but isn't quit there yet. If you run
-	    Ubuntu, like me, you can get Java with apt: <strong class="userinput"><code>apt-get install
-	    sun-java5-jdk</code></strong>, if you've added the "multiverse" repositories to your
-	    <code class="filename">/etc/apt/sources.list</code> file: <code class="code">deb
-	    http://us.archive.ubuntu.com/ubuntu/ feisty multiverse</code>
-	  </p></li><li><p>
-	    <a class="ulink" href="http://java.sun.com/products/sjwtoolkit/download-2_5_1.html" target="_top">Sun's WTK
-	    toolkit</a>. While you don't need the tools to compile Hecl (unless you want to hack
-	    on it!), you do want the emulator, so that you don't have to load your app onto your
-	    phone each time you want to test it. It's not open source software (yet?), but it does
-	    run on Linux, Mac and Windows, and of course it is free.
-	  </p></li><li><p>
-	    Hecl itself. You can get it from the <a class="ulink" href="http://github.com/davidw/hecl/tree/master" target="_top">GitHub project page</a>.
-	    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+      </p>
+
+      <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	  <p>
+	    Sun's Java.  With Ubuntu, you can get this like so:
+	  </p>
+	  <pre class="screen">apt-get install openjdk-6-jdk</pre>
+	</li><li class="listitem">
+	  <p>
+	    <a class="link" href="http://java.sun.com/products/sjwtoolkit/index.jsp" target="_top">Sun's
+	    WTK toolkit</a>. While you don't need the tools to
+	    compile Hecl (unless you want to hack on it!), you do want
+	    the emulator, so that you don't have to load your app onto
+	    your phone each time you want to test it. It's not open
+	    source software (yet?), but it does run on Linux, Mac and
+	    Windows, and of course it is free.
+	  </p>
+	</li><li class="listitem">
+	  <p>
+	    Hecl itself. You can get it from the <a class="link" href="http://github.com/davidw/hecl/tree/master" target="_top">GitHub project page</a>.
+	    </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	      <p>
 		Hecl is always improving, so you should also consider checking out Hecl directly
 		from git: <strong class="userinput"><code>git clone git://github.com/davidw/hecl.git</code></strong>
-	      </p></td></tr></table></div><p>
-	  </p></li></ul></div><p>
+	      </p>
+	    </td></tr></table></div><p>
+	  </p>
+	</li></ul></div>
+
+      <p>
 	Sun's WTK requires installation - you can put it somewhere like <code class="filename">/opt</code>,
 	so it won't get mixed up with the rest of your system. The installation process is very
 	simple - just say yes to a few questions, and you're done. Hecl doesn't require
 	installation: everything you need is already there in the distribution.
-      </p><p>
+      </p>
+
+      <p>
 	To see if everything's working, you can try launching the emulator with the sample
 	application: <strong class="userinput"><code>/opt/WTK2.5.2/bin/emulator -classpath
 	jars/cldc1.1-midp2.0/Hecl.jar Hecl</code></strong>
-      </p><p>That should bring up something like this:</p><div class="screenshot"><div><img src="demo_screenshot.png"></div></div><p>
+      </p>
+
+      <p>That should bring up something like this:</p>
+
+      <div class="screenshot">
+	<div class="mediaobject"><img src="demo_screenshot.png"><div class="caption"><p>Figure 1: Hecl demo screen shot</p></div></div>
+      </div>
+
+      <p>
 	This is Hecl's built in demo - its source code is located in
 	<code class="filename">midp20/script.hcl</code>, but before I get too far ahead of myself, let's go
 	back and create the classic "Hello World" application, just to get started and see how to
 	work with Hecl.
-      </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>
+      </p>
+
+      <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	<p>
 	  Hecl actually comes in several flavors, with slightly different GUI commands - MIDP1.0
 	  (older phones), which has fewer commands and doesn't do as much, and MIDP2.0, for newer
 	  phones, which has a lot more features. This tutorial utilizes the MIDP2.0 commands,
 	  because that's what current phones are based on. The concepts described are very similar
 	  for the MIDP1.0 commands, but the commands are slightly different. Please contact us if
 	  you are interested in a MIDP1.0 version of this tutorial.
-	</p></td></tr></table></div><p>
+	</p>
+      </td></tr></table></div>
+
+      <p>
 	To write your first Hecl program, open a text editor, and type the following program into a
 	file - I'll call it <code class="filename">hello.hcl</code>:
-      </p><pre class="programlisting">
+      </p>
+
+<pre class="programlisting">
 proc HelloEvents {cmd form} {
     [lcdui.alert -text "Hellllllllooooo, world!" -timeout forever] setcurrent
 }
@@ -97,83 +113,131 @@ $form setcurrent
 $form addcommand $cmd
 
 $form append [lcdui.stringitem -label "Hello" -text "World"]
-</pre><p>
+</pre>
+
+      <p>
 	Not bad - 8 lines of code, and most of it's pretty clear just from looking at it. I'll go
 	through it line by line, so you understand exactly what's happening.
-      </p><div class="orderedlist"><ol type="1"><li><p>
+      </p>
+
+      <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+	  <p>
 	    The first bit of code, that starts with <code class="code">proc HelloEvents</code>, defines a
 	    "procedure": in other words a function called <span class="command"><strong>HelloEvents</strong></span>. When this
 	    function is called, it creates an "alert" - think of it as a pop up message telling you
 	    something important. <code class="option">-timeout forever</code> tells the message to stay on the
 	    screen until the user dismisses it.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="listitem">
+	  <p>
 	    The second command defines a form, with the command <span class="command"><strong>lcdui.form</strong></span>, with
 	    the title of "Hello World", and connected to the <span class="command"><strong>HelloEvents</strong></span>
 	    proc. What this connection means is that when any commands associated with the form are
 	    activated by the user, this procedure is called to handle them. The code <code class="code">set
 	    form</code> stores the form object in the variable <code class="varname">form</code>, so that it
 	    can be referenced later.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="listitem">
+	  <p>
 	    The following line creates a command that can be activated by the user. It has the label
 	    "Hello", and is stored in the variable <code class="varname">cmd</code>. I use the
 	    <code class="constant">screen</code> type for the command, which is used for user defined
 	    commands. There are some other predefined types such as <code class="constant">exit</code> and
 	    <code class="constant">back</code>.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="listitem">
+	  <p>
 	    <code class="code">$form setcurrent</code> references the previously created form, and tells Hecl to
 	    display it on the screen.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="listitem">
+	  <p>
 	    The <span class="command"><strong>addcommand</strong></span> subcommand (you could also think of it as a "method",
 	    like in an object oriented language) attaches the command I created above to the
 	    form. This makes the command visible in the form.
-	  </p></li><li><p>
+	  </p>
+	</li><li class="listitem">
+	  <p>
 	    Finally, I display a string on the form with the <span class="command"><strong>lcdui.stringitem</strong></span>
 	    command. On most phones, the <code class="option">-label</code> text is displayed in bold, and the
 	    <code class="option">-text</code> text is displayed next to it.
-	  </p></li></ol></div><p>
+	  </p>
+	</li></ol></div>
+
+      <p>
 	That's it! Now, to transform the code into a cell phone application, run a command:
-      </p><pre class="programlisting">
+      </p>
+
+<pre class="programlisting">
 java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name Hello -script hello.hcl
-</pre><p>
+</pre>
+
+      <p>
 	This is all it takes - this command takes the existing <code class="filename">Hecl.jar</code> file,
 	and replaces the Hecl script within with our newly created <code class="filename">hello.hcl</code>
 	script, and creates the resulting <code class="filename">Hello.jar</code> in your home directory
 	(referenced as <code class="filename">~/</code> in the command above).
-      </p><p>
+      </p>
+
+      <p>
 	Now, we can run the code in the emulator to see the application:
-      </p><pre class="programlisting">
+      </p>
+
+<pre class="programlisting">
 /opt/WTK2.5.2/bin/emulator -cp ~/Hello.jar Hecl
-</pre><div class="screenshot"><div><img src="hello_screenshot1.png"></div></div><p>
+</pre>
+
+      <div class="screenshot">
+	<div class="mediaobject"><img src="hello_screenshot1.png"><div class="caption"><p>Figure 2: Hecl Hello World screenshot</p></div></div>
+      </div>
+
+      <p>
 	Highlighted, from the top, are the form's <code class="option">-title</code>, the
 	<span class="command"><strong>stringitem</strong></span>, and in the lower right corner, the command labeled Hello.
-      </p><p>
+      </p>
+
+      <p>
 	If you press the "hello" button, the code in <span class="command"><strong>HelloEvents</strong></span> is executed, and
 	an "alert" is popped up onto the screen, and stays there until you hit the "Done"
 	button.
-      </p><p>
+      </p>
+
+      <p>
 	While creating an application is very easy, unfortunately, installing it on a phone is not;
 	there isn't much that Hecl can do to ease that process, which is different for each
 	phone. On Linux, for my Nokia telephone, I use the gammu program to transfer programs to my
 	phone, like so:
-      </p><pre class="programlisting">gammu nothing --nokiaaddfile Application Hecl</pre><p>
+      </p>
+
+      <pre class="programlisting">gammu nothing --nokiaaddfile Application Hecl</pre>
+
+      <p>
 	Another method that may work better across different phones is to use the phone's browser to
 	download and install the application, by placing the <code class="filename">.jar</code> and
 	<code class="filename">.jad</code> files on a publicly accessible web server, and accessing the
 	<code class="filename">.jad</code> file.
-	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Note that this will likely cost money in connection charges!</p></td></tr></table></div><p>
-      </p><p>
+	</p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	  <p>Note that this will likely cost money in connection charges!</p>
+	</td></tr></table></div><p>
+      </p>
+
+      <p>
 	So far so good. Next, I'll create a small application that you can interact with to do
-	something useful. It's a simplified version of the shopping list that can be found <a class="ulink" href="http://shoplist.dedasys.com" target="_top">here</a>. The theory of operation behind this
+	something useful. It's a simplified version of the shopping list that can be found <a class="link" href="http://shoplist.dedasys.com" target="_top">here</a>. The theory of operation behind this
 	application is simple: typing a shopping list into a mobile phone is pretty painful - it's
 	much better to do the data entry via a web page, and then fetch the list with the mobile
 	phone application.
-      </p><p>
+      </p>
+
+      <p>
 	For this tutorial, I've created a simple list on the ShopList web site, with the PIN number
-	<code class="constant">346764</code>, which can be viewed <a class="ulink" href="" target="_top">here</a>. Feel free to create your
+	<code class="constant">346764</code>, which can be viewed <a class="link" href="http://shoplist.dedasys.com/list/show/346764" target="_top">here</a>. Feel free to create your
 	own shopping lists - the site costs nothing to use. The cell phone application works like
 	so: by entering the PIN, it downloads the list of items and displays them on the phone
 	screen as a series of checkboxes. Have a look at the code to do this:
-      </p><pre class="programlisting">
+      </p>
+
+<pre class="programlisting">
 # Process events associated with the shopping list screen.
 proc ShopListEvents {exitcmd backcmd cmd shoplist} {
     if { eq $cmd $exitcmd } {
@@ -246,25 +310,35 @@ $shopform setcurrent
 
 $shopform configure -commandaction \
     [list ShopFormEvents $backcmd $exitcmd $pinfield $fetchcmd]
-</pre><p>
+</pre>
+
+      <p>
 	This is certainly more complex than the first example, but the general pattern is the same -
 	screen widgets and items are created, displayed, and procs are called to deal with
 	commands.
-      </p><p>
+      </p>
+
+      <p>
 	As I mentioned previously, commands with specific, predefined tasks have their own types, as
 	I can see with the <span class="command"><strong>back</strong></span> and <span class="command"><strong>exit</strong></span> commands, which are respectively
 	of types "back" and "exit".
-      </p><p>
+      </p>
+
+      <p>
 	After the two commands are defined, I create a form and add a textfield to it. By specifying
 	<code class="option">-type numeric</code> for the textfield, I indicate that it is only to accept
 	numbers - no letters or symbols.
-      </p><p>
+      </p>
+
+      <p>
 	After creating the Fetch command, I append the textfield to the form (or else it wouldn't be
 	visible), add the two commands to the form, and then, with <span class="command"><strong>setcurrent</strong></span>,
 	make the form visible. The last line of code configures the form to utilize the
 	<span class="command"><strong>ShopFormEvents</strong></span> proc to handle events. The list argument warrants further
 	explanation:
-      </p><p>
+      </p>
+
+      <p>
 	Hecl, like many programming languages, has a <span class="command"><strong>global</strong></span> command that could be
 	used in the various procs that utilize the <span class="command"><strong>back</strong></span> and
 	<span class="command"><strong>exit</strong></span> commands - you could simply say <code class="code">global backcmd</code>, and
@@ -278,10 +352,24 @@ $shopform configure -commandaction \
 	actually called, and <code class="varname">shopform</code> is of course the form that the proc was
 	called with. By comparing <code class="varname">$cmd</code> with the various commands that are
 	available, it's possible to determine which command called the proc, and act accordingly.
-      </p><p>Now, let's build it and run it:</p><pre class="programlisting">
+      </p>
+
+
+      <p>Now, let's build it and run it:</p>
+
+<pre class="programlisting">
 java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name ShopList -script shoplist.hcl
 /opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
-</pre><div class="screenshot"><div><img src="shoplist1.png"></div></div><p>
+</pre>
+
+      <div class="screenshot">
+	<div class="mediaobject"><img src="shoplist1.png"><div class="caption">
+	    <p>Figure 3: Initial shoplist form</p>
+	  </div></div>
+
+      </div>
+
+      <p>
 	At this point, you enter the PIN number (<code class="constant">346764</code>), and press the Fetch
 	button. This command executes the code in <span class="command"><strong>MakeList</strong></span>. The first thing it
 	does is attempt to fetch the data from the shoplist site, using the
@@ -294,17 +382,37 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	the display is split it by lines with the <span class="command"><strong>split</strong></span> command, and then iterate
 	over that list with <span class="command"><strong>foreach</strong></span>. The result looks like that displayed figure
 	4.
-      </p><div class="screenshot"><div><img src="shoplist2.png"></div></div><p>
+      </p>
+
+      <div class="screenshot">
+	<div class="mediaobject"><img src="shoplist2.png"><div class="caption"><p>Figure 4: Shopping List</p></div></div>
+      </div>
+
+      <p>
 	And there you have it, a network-based shopping list in less than 100 lines of code. Of
 	course, there is room for improvement. For instance, in the production version of this
 	shopping list application, RecordStore (in Hecl, the <span class="command"><strong>rms.*</strong></span> commands make
 	this functionality available) is utilized to save the list and its state between invocations
 	of the program, so that you can leave the application, run it again, and find the list as
 	you left it. Support for multiple lists might also be handy.
-      </p><p>
+      </p>
+
+      <p>
 	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
 	commands, and is a complete programming language that can do some interesting and dynamic
 	things. If you're curious, the best way to learn more is to keep reading the documentation,
-	and sign up for the <a class="ulink" href="http://groups.google.com/group/hecl" target="_top">Hecl Google
+	and sign up for the <a class="link" href="http://groups.google.com/group/hecl" target="_top">Hecl Google
 	Group</a>, which can be accessed either as a web forum or as a mailing list.
-      </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="hecl_javadocs.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="javame_quick_start.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">JavaDocs </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Quick start to developing Java ME apps</td></tr></table></div></body></html>
+      </p>
+
+    </div>
+
+    
+
+
+    
+
+    
+
+    
+  </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="hecl_javadocs.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"> </td><td width="40%" align="right"> <a accesskey="n" href="javame_quick_start.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">JavaDocs </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Quick start to developing Java ME apps</td></tr></table></div></body></html>

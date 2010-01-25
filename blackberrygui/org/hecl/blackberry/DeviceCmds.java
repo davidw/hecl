@@ -1,5 +1,5 @@
 /*
- * Copyright 2009
+ * Copyright 2010
  * DedaSys LLC - http://www.dedasys.com
  *
  * Author: David N. Welton <davidw@dedasys.com>
@@ -17,10 +17,8 @@
  * limitations under the License.
  */
 
-import java.io.UnsupportedEncodingException;
+package org.hecl.blackberry;
 
-import net.rim.blackberry.api.browser.Browser;
-import net.rim.blackberry.api.browser.BrowserSession;
 import java.util.Hashtable;
 
 import org.hecl.HeclException;
@@ -29,24 +27,22 @@ import org.hecl.Operator;
 import org.hecl.StringThing;
 import org.hecl.Thing;
 
+import net.rim.device.api.system.DeviceInfo;
 
-class BrowserCmd extends Operator {
-    public static final int OPEN = 1;
+public class DeviceCmds extends Operator {
+    public static final int VERSION = 1;
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch(cmd) {
 	    /* Fetch all records into a list of hashes. */
-	    case OPEN: {
-		BrowserSession session = Browser.getDefaultSession();
-		session.displayPage(StringThing.get(argv[1]));
- 		session.showBrowser();
+	    case VERSION: {
+		return new Thing(DeviceInfo.getPlatformVersion());
 	    }
 
-	  default:
-	    throw new HeclException("Unknown browser command '"
-				    + argv[0].toString() + "' with code '"
-				    + cmd + "'.");
-
+	    default:
+		throw new HeclException("Unknown device command '"
+					+ argv[0].toString() + "' with code '"
+					+ cmd + "'.");
 	}
     }
 
@@ -59,18 +55,17 @@ class BrowserCmd extends Operator {
 	Operator.unload(ip,cmdtable);
     }
 
-    protected BrowserCmd(int cmdcode,int minargs,int maxargs) {
+    protected DeviceCmds(int cmdcode,int minargs,int maxargs) {
 	super(cmdcode,minargs,maxargs);
     }
 
     private static Hashtable cmdtable = new Hashtable();
     static {
 	try {
-	    cmdtable.put("browser.open", new BrowserCmd(OPEN,1,1));
+	    cmdtable.put("device.systemversion", new DeviceCmds(VERSION,0,0));
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    System.out.println("Can't create browser commands.");
+	    System.out.println("Can't create device commands.");
 	}
-
     }
 }

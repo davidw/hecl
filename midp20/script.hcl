@@ -19,7 +19,6 @@ alias lcdui.gauge	/gauge
 alias lcdui.image	/img
 alias lcdui.imageitem	/imgit
 alias lcdui.list	/list
-alias lcdui.settings	/set
 alias lcdui.spacer	/spc
 alias lcdui.stringitem	/strit
 alias lcdui.textbox	/txtbox
@@ -176,6 +175,24 @@ AddSample Alert {
      -commandaction [: {c a} {done}]] setcurrent
 }
 
+# Only add this if we have the location.get command:
+if { < 0 [llen [search [intro commands] x {eq $x location.get}]] } {
+AddSample LocationAPI {
+set locationform [lcdui.form -title "Location Information" -commandaction [: {c f} {done}]]
+$locationform addcommand [/cmd -label Exit -longlabel Exit -type exit]
+proc LocationError {err} {
+    [/alert -title "Location Error" -text $err] setcurrent
+}
+proc LocationCallback {lf results} {
+    foreach {k v} $results {
+	$lf append [lcdui.textfield -label $k -text $v]
+    }
+}
+location.get -callback [list LocationCallback $locationform] -timeout 60 -onerror LocationError
+$locationform setcurrent
+}
+}
+
 AddSample Information {
 set form [/form -title Information -commandaction [: {c f} {done}]]
 
@@ -193,11 +210,8 @@ set plist {
     "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
-    if {= [catch {set p [system.getproperty $p]}] 0} {
-	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text $p -uneditable 1]
-	}
-    }
+    set prop [system.getproperty $p]
+    $form append [/txt -label $l -uneditable 1 -growtext $prop]
 }
 
 $form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
@@ -207,6 +221,8 @@ $form append [/txt -label "File Access" -text [midlet.checkpermissions "javax.mi
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
 }
+
+
 
 AddSample Settings {
 set form [/form -title "Settings Demo" -commandaction [: {c f} {done}]]
@@ -229,7 +245,7 @@ foreach s {
     "-borderstyle"
     "-hilightborderstyle"
 } {
-    $form append [/strit -label "[strtrim $s -]:" -text [/set cget $s]]
+    $form append [/strit -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
 }
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
@@ -273,7 +289,7 @@ proc FileSelect {infohash bselect bback binfo cmd menu} {
 	if { not $directory } {
 	    $bform append [lcdui.stringitem -label "Size" -text [file.size $cpath]]
 	}
-	$bform append [lcdui.stringitem -label "Basename" -text [file.basename $cpath]]
+	$bform append [lcdui.stringitem -label "Basename" -text [file.name $cpath]]
 	$bform append [lcdui.stringitem -label "Last Modified" -text [file.mtime $cpath]]
 	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
 	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]
@@ -570,3 +586,7 @@ $SourceCode conf -uneditable 0
 $:sf setcurrent
 
 #DEBUG [join [sort [intro commands]] "\n"]
+
+proc bgerror {e} {
+    [lcdui.alert -title "BgError" -text $e] setcurrent
+}

@@ -19,7 +19,6 @@ alias lcdui.gauge	/gauge
 alias lcdui.image	/img
 alias lcdui.imageitem	/imgit
 alias lcdui.list	/list
-alias lcdui.settings	/alias
 alias lcdui.spacer	/spc
 alias lcdui.stringitem	/strit
 alias lcdui.textbox	/txtbox
@@ -58,10 +57,6 @@ proc AddSample {name code} {
 # The following "AddSample"s are all examples of UI screens and
 # widgets:
 
-AddSample "BB Browser" {
-browser.open http://www.hecl.org
-}
-
 AddSample "Hello World" {
 # See Examples for more 9
 puts "hello world"
@@ -97,7 +92,7 @@ $menu addcommand $back
 $menu setcurrent
 }
 
-AddSample Form {
+AddSample "Form" {
 set form [/form -title "Demo Form" -commandaction [: {cmd form} {
     done
 }]]
@@ -169,6 +164,11 @@ AddSample SMS {
 midlet.platformrequest "sms:+393488866859"
 }
 
+AddSample "Vibrate / Backlight" {
+midlet.vibrate 2000
+midlet.flashbacklight 2000
+}
+
 AddSample TextBox {
 set textbox [/txtbox -text "Hello world" -commandaction [: {cmd textbox} {done}]]
 $textbox addcommand [/cmd -label Exit -longlabel Exit -type exit]
@@ -181,10 +181,33 @@ AddSample Alert {
      -commandaction [: {c a} {done}]] setcurrent
 }
 
-AddSample "BlackBerry Information" {
-set form [/form -title "BlackBerry Information" -commandaction [: {c f} {done}]]
+AddSample "BlackBerry Browser" {
+browser.open http://www.hecl.org
+}
+
+AddSample "BlackBerry Connection Information" {
+set form [/form -title "BlackBerry Connection Information" -commandaction [: {c f} {done}]]
 foreach r [servicebook.records] {
     $form append "CID: [hget $r CID] Name: [hget $r Name]"
+}
+$form setcurrent
+}
+
+# Only add this if we have the location.get command:
+if { < 0 [llen [search [intro commands] x {eq $x location.get}]] } {
+AddSample LocationAPI {
+set locationform [lcdui.form -title "Location Information" -commandaction [: {c f} {done}]]
+$locationform addcommand [/cmd -label Exit -longlabel Exit -type exit]
+proc LocationError {err} {
+    [/alert -title "Location Error" -text $err] setcurrent
+}
+proc LocationCallback {lf results} {
+    foreach {k v} $results {
+	$lf append [lcdui.textfield -label $k -text $v]
+    }
+}
+location.get -callback [list LocationCallback $locationform] -timeout 60 -onerror LocationError
+$locationform setcurrent
 }
 }
 
@@ -202,13 +225,11 @@ set plist {
     "Java Version" java.fullversion
     "MMAPI Snapshot Capable?" supports.video.capture
     "MMAPI Snapshot Format" video.snapshot.encodings
+    "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
-    if {= [catch {set p [system.getproperty $p]}] 0} {
-	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text [strrange $p 0 30] -uneditable 1]
-	}
-    }
+    set prop [system.getproperty $p]
+    $form append [/txt -label $l -uneditable 1 -growtext $prop]
 }
 
 $form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
@@ -240,11 +261,83 @@ foreach s {
     "-borderstyle"
     "-hilightborderstyle"
 } {
-    $form append [/strit -label "[strtrim $s -]:" -text [/set cget $s]]
+    $form append [/strit -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
 }
 
 $form addcommand [/cmd -label Exit -longlabel Exit -type exit]
 $form setcurrent
+}
+
+AddSample "File Browser" {
+
+proc FileSelect {infohash bselect bback binfo cmd menu} {
+    set root [hget $infohash root]
+
+    set index [$menu selection get]
+
+    set f [lindex [hget $infohash paths] $index]
+
+    if {eq $cmd $bselect} {
+	lappend $root $f
+    } elseif {eq $cmd $bback} {
+	lset $root -1
+    }
+
+    # If we are back at the root level, we need to do file.devs
+    # instead of file.list
+    if { = 0 [llen $root] } {
+	set lst [file.devs]
+    } else {
+	set cpath "file:///[join $root {}]"
+	set lst [file.list "$cpath"]
+    }
+
+    # Show some information on the file in question.
+    if {eq $cmd $binfo} {
+	set dismiss [lcdui.command -label Ok -longlabel Ok -type ok]
+	set bform [lcdui.form -title "Info: $f" -commandaction [: {cmd form} [list $menu setcurrent]]]
+	$bform addcommand $dismiss
+	set directory [file.isdirectory $cpath]
+
+	$bform append [lcdui.stringitem -label "Readable?" -text [file.readable $cpath]]
+	$bform append [lcdui.stringitem -label "Writable?" -text [file.writable $cpath]]
+	$bform append [lcdui.stringitem -label "Hidden?" -text [file.hidden $cpath]]
+	if { not $directory } {
+	    $bform append [lcdui.stringitem -label "Size" -text [file.size $cpath]]
+	}
+	$bform append [lcdui.stringitem -label "Basename" -text [file.name $cpath]]
+	$bform append [lcdui.stringitem -label "Last Modified" -text [file.mtime $cpath]]
+	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
+	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]
+	$bform setcurrent
+    }
+
+    hset $infohash paths $lst
+    $menu deleteall
+    foreach x $lst {
+	$menu append $x
+    }
+
+    #Re-add the infohash into the -commandaction.
+    $menu configure -commandaction [list FileSelect $infohash $bselect $bback $binfo]
+}
+
+set h [hash {}]
+set devs [file.devs]
+hset $h paths $devs
+hset $h root {}
+
+set bselect [lcdui.command -label Select -longlabel Select -type item]
+set bback [lcdui.command -label Back -longlabel Back -type item]
+set binfo [lcdui.command -label Info -longlabel "File Info" -type item]
+set browser [lcdui.list -selectcommand $bselect -title "File Browser" \
+		 -commandaction [list FileSelect $h $bselect $bback $binfo]]
+$browser addcommand $bback
+$browser addcommand $binfo
+$browser setcurrent
+foreach d $devs {
+    $browser append $d
+}
 }
 
 AddSample Canvas {
@@ -509,3 +602,7 @@ $SourceCode conf -uneditable 0
 $:sf setcurrent
 
 #DEBUG [join [sort [intro commands]] "\n"]
+
+proc bgerror {e} {
+    [lcdui.alert -title "BgError" -text $e] setcurrent
+}

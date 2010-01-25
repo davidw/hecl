@@ -1,37 +1,93 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.choicegroup</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_canvas.html" title="lcdui.canvas"><link rel="next" href="lcdui_command.html" title="lcdui.command"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.choicegroup</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_canvas.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_command.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_choicegroup"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.choicegroup &#8212; Creates a group of potential choices that can be
-	  added to a form.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.choicegroup</code>  [
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.choicegroup</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_canvas.html" title="lcdui.canvas"><link rel="next" href="lcdui_command.html" title="lcdui.command"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.choicegroup</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_canvas.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_command.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="lcdui.choicegroup"><div class="refentry.separator"><hr></div><a name="lcdui_choicegroup"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  lcdui.choicegroup
+	   &#8212; Creates a group of potential choices that can be
+	  added to a form.
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">lcdui.choicegroup</code> 
+	     [
 	      -label
-	      <em class="replaceable"><code>label</code></em>] [
+	      <em class="replaceable"><code>label</code></em>]
+
+	     [
 	      -type
 
-	      exclusive |  multiple |  popup
-	    ] [
+	      
+		exclusive
+		 |  multiple
+		 |  popup
+	      
+	    ]
+
+	     [
 	      -fit
-	      default |  on |  off
-	    ]</p></div><div class="cmdsynopsis"><p><code class="command">$choicegroupcmd</code>  [cget
+	      
+		default
+		 |  on
+		 |  off
+	      
+	    ]
+
+	  </p></div>
+
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">$choicegroupcmd</code> 
+
+	     [cget
 	      <em class="replaceable"><code>-optname</code></em>
-	    ] [configure
+	    ]
+	     [configure
 	      <em class="replaceable"><code>-optname</code></em>
 	      <em class="replaceable"><code>optval</code></em>
-	    ] [
+	    ]
+
+	     [
 	      append <em class="replaceable"><code>text</code></em>  [<em class="replaceable"><code>image</code></em>]
-	    ] [delete
+	    ]
+
+	     [delete
 	      <em class="replaceable"><code>itemnum</code></em>
-	    ] [deleteall] [
+	    ]
+
+	     [deleteall]
+
+	     [
 	      insert <em class="replaceable"><code>position</code></em>
 	      <em class="replaceable"><code>text</code></em>  [<em class="replaceable"><code>image</code></em>]
-	    ] [itemcget
+	    ]
+
+	     [itemcget
 	      <em class="replaceable"><code>itemnum</code></em>
 	      <em class="replaceable"><code>-option</code></em>
-	    ] [itemconfigure
+	    ]
+
+	     [itemconfigure
 	      <em class="replaceable"><code>itemnum</code></em>
 	      <em class="replaceable"><code>-option</code></em>
 	      <em class="replaceable"><code>value</code></em>
-	    ] [selection
-	      clear
+	    ]
+
+	     [selection
+	      
+		clear
 		  [<em class="replaceable"><code>index</code></em>]
-		 |  index |  get |  set <code class="option"><em class="replaceable"><code>index</code></em></code>
-	    ] [size]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.7.3"></a><h2>Description</h2><p>
+		
+		 |  index
+		 |  get
+		 |  set <code class="option"><em class="replaceable"><code>index</code></em></code>
+	      
+	    ]
+
+	     [size]
+
+	  </p></div>
+
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.8.6.7.3"></a><h2>Description</h2>
+	  
+	  <p>
 	    The <span class="command"><strong>lcdui.choicegroup</strong></span> command creates a
 	    "ChoiceGroup" widget that can be added to a form.  A
 	    ChoiceGroup is a list of options that can be selected.
@@ -41,17 +97,24 @@
 	    <code class="option">multiple</code> type), or as a popup.  (check
 	    boxes).  For an in-depth look at the Java code that this
 	    command is based on, see:
-	    <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html" target="_top">javax.microedition.lcdui.ChoiceGroup</a>
-	  </p><p>
+	    <a class="link" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html" target="_top">javax.microedition.lcdui.ChoiceGroup</a>
+	  </p>
+	  <p>
 	    The options describing the choicegroup are as follows:
-	  </p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">-lable</code>: Labels the choicegroup
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="option">-lable</code>: Labels the choicegroup
 		with the supplied text.
-	      </p></li><li><p><code class="option">-type</code>: Determines the type of the
+	      </p>
+	    </li><li class="listitem">
+	      <p><code class="option">-type</code>: Determines the type of the
 		chiocegroup, which can be one of
 		<code class="option">multiple</code> (check boxes),
 		<code class="option">exclusive</code> (radio buttons), or a
 		<code class="option">popup</code>
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<code class="option">-fit</code>: Specifies the type of
 		word-wrapping desired.  <code class="option">default</code> means
 		that the application has no preferences and that the
@@ -61,24 +124,36 @@
 		that text wrapping should not be performed and that
 		long lines will be truncated, and there should be some
 		indication of this truncation such as an ellipsis.
-	      </p></li></ul></div><p>
+	      </p>
+	    </li></ul></div>
+	  <p>
 	    The <span class="command"><strong>lcdui.choicegroup</strong></span> command returns
 	    an object that is itself a command, and can be called with
 	    several subcommands:
-	  </p><div class="itemizedlist"><ul type="disc"><li><p><span class="command"><strong>append</strong></span>: Appends the given text
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><span class="command"><strong>append</strong></span>: Appends the given text
 		to the choicegroup as one of the possible selections.
 		Optionally, an image (as generated by
 		<span class="command"><strong>lcdui.image</strong></span> may also be specified.
-	      </p></li><li><p><span class="command"><strong>delete</strong></span>: Deletes the item
+	      </p>
+	    </li><li class="listitem">
+	      <p><span class="command"><strong>delete</strong></span>: Deletes the item
 		specified by
 		<code class="option"><em class="replaceable"><code>itemnum</code></em></code>
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<span class="command"><strong>deleteall</strong></span>:
 		Deletes all items in the given choicegroup.
-	      </p></li><li><p><span class="command"><strong>insert</strong></span>: Inserts the given text,
+	      </p>
+	    </li><li class="listitem">
+	      <p><span class="command"><strong>insert</strong></span>: Inserts the given text,
 	      and optional image at
 	      <code class="option"><em class="replaceable"><code>position</code></em></code>
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<span class="command"><strong>itemcget</strong></span>: Given an item and an
 		<code class="option"><em class="replaceable"><code>-option</code></em></code>,
 		which can be one of <code class="option">-font</code>,
@@ -86,25 +161,42 @@
 		<code class="option">-selected</code>, returns the requested
 		information, with <code class="option">-selected</code> returning
 		1 if the item is selected, 0 if it isn't.
-	      </p></li><li><p><span class="command"><strong>itemconfigure</strong></span>: Instead of
+	      </p>
+	    </li><li class="listitem">
+	      <p><span class="command"><strong>itemconfigure</strong></span>: Instead of
 	      returning information about the options listed above,
-	      sets the specified option for the given item.</p></li><li><p>
+	      sets the specified option for the given item.</p></li><li class="listitem">
+	      <p>
 		<span class="command"><strong>selection</strong></span>: Used with a
 		subcommand of its own, which can be one of:
-		</p><div class="itemizedlist"><ul type="circle"><li><p>
+		</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+		    <p>
 		      <span class="command"><strong>get</strong></span>: Returns a list of integers
 		      indicating which elements are selected.
-		    </p></li><li><p>
+		    </p>
+		  </li><li class="listitem">
+		    <p>
 		      <span class="command"><strong>set</strong></span>: Selects the specified item.
-		    </p></li><li><p>
+		    </p>
+		  </li><li class="listitem">
+		    <p>
 		      <span class="command"><strong>clear</strong></span>: Clears the selection
 		      from the given item, or, if no
 		      <em class="replaceable"><code>itemnum</code></em> is given,
 		      clears all selected items.
-		    </p></li></ul></div><p>
-	      </p></li><li><p><span class="command"><strong>size</strong></span>: Returns the number of
+		    </p>
+		  </li></ul></div><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p><span class="command"><strong>size</strong></span>: Returns the number of
 		elements in the choicegroup.
-	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.7.4"></a><h2>Example</h2><pre class="programlisting">
+	      </p>
+	    </li></ul></div>
+
+	</div>
+	<div class="refsect1" title="Example"><a name="id-1.8.6.7.4"></a><h2>Example</h2>
+	  
+	  <pre class="programlisting">
 set choicegroup [lcdui.choicegroup -label "60ies bands"]
 $choicegroup append "Beatles"
 $choicegroup append "Beach Boys"
@@ -113,6 +205,9 @@ set form [lcdui.form -title "ChoiceGroup example form"]
 $form append "Pick one:"
 $form append $choicegroup
 $form setcurrent
-	  </pre><p>
-	    Live example: <a class="ulink" href="http://www.heclbuilder.com/scripts/show/143" target="_top">http://www.heclbuilder.com/scripts/show/143</a>
-	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_canvas.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_command.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.canvas </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.command</td></tr></table></div></body></html>
+	  </pre>
+	  <p>
+	    Live example: <a class="link" href="http://www.heclbuilder.com/scripts/show/143" target="_top">http://www.heclbuilder.com/scripts/show/143</a>
+	  </p>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_canvas.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_command.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.canvas </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.command</td></tr></table></div></body></html>

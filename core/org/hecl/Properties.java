@@ -96,6 +96,19 @@ public class Properties {
 	return (Thing)props.get(name);
     }
 
+    /**
+     * The <code>getProp</code> method with two arguments fetches the
+     * value of the property given by 'name', or, if that does not
+     * exist, returns a default value.
+     *
+     * @param name a <code>String</code> value
+     * @param defaultVal a <code>Thing</code> value
+     * @return a <code>Thing</code> value
+     */
+    public Thing getProp(String name, Thing defaultVal) {
+	Thing val = getProp(name);
+	return (val == null) ? defaultVal : val;
+    }
 
     /**
      * The <code>existsProp</code> method is used to determine if a
@@ -150,12 +163,12 @@ public class Properties {
 	return t;
     }
 
-	  /**
- 		 * <code>isEmpty</code> test if property set is empty.
- 		 *
- 		 * @return true if it's empty, flase otherwise.
- 		 */
-		public boolean isEmpty() {
-			return props.isEmpty();
-		}
+    /**
+     * <code>isEmpty</code> test if property set is empty.
+     *
+     * @return true if it's empty, flase otherwise.
+     */
+    public boolean isEmpty() {
+	return props.isEmpty();
+    }
 }
