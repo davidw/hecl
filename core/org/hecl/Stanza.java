@@ -93,7 +93,12 @@ class Stanza {
 	RealThing realthing = null;
 	Command tmpcommand = null;
 	ClassCommandInfo info = null;
-	
+
+	/* Fiddle with the order of things if we have a number as the
+	 * 'command' - we swap the number with the its first argument
+	 * to create an infix-like situation. */
+	int infix = 0;
+
 	//System.err.println("-->Stanza.run, this="+this);
 	
 	Thing[] newargv = new Thing[this.argv.length];
@@ -110,11 +115,20 @@ class Stanza {
 	    if(realthing instanceof ObjectThing) {
 		info = interp.findClassCmd(((ObjectThing)realthing).get().getClass());
 		if(info != null && argv.length < 2) {
-		    throw new HeclException("Class-command required methodname",this.lineno);
+		    throw new HeclException("Class-command requires a method argument", this.lineno);
 		}
+	    } else if (realthing instanceof NumberThing && this.argv.length >= 2) {
+		/* Here's where the actual swap takes place. */
+		infix = 1;
+		Thing tmp0 = newargv[0];
+		Thing tmp1 = cloneThing(interp, this.argv[1]);
+		newargv[0] = tmp1;
+		newargv[1] = tmp0;
 	    }
-	    if(info == null)
+
+	    if(info == null) {
 		cmdName = newargv[0].toString();
+	    }
 	    if(cmdName != null) {
 		//System.out.println("cmdname = " + cmdName);
 		tmpcommand = (Command)interp.commands.get(cmdName);
@@ -147,7 +161,7 @@ class Stanza {
 	 */
 	try {
 	    //for (int i = 0; i < argv.length; i++) {
-	    for (int i = 1; i < argv.length; i++) {
+	    for (int i = 1 + infix; i < argv.length; i++) {
 		realthing = argv[i].getVal();
 		if (realthing instanceof GroupThing) {
 		    newargv[i] = CodeThing.doGroupSubst(interp, argv[i]);
