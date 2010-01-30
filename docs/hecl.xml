@@ -5987,6 +5987,7 @@ $canvas setcurrent
 		</arg>
 		<arg choice="req">index</arg>
 		<arg choice="req">get</arg>
+		<arg choice="req">gettext</arg>
 		<arg choice="req">set <option><replaceable>index</replaceable></option></arg>
 	      </group>
 	    </arg>
@@ -6015,7 +6016,7 @@ $canvas setcurrent
 	  </para>
 	  <itemizedlist>
 	    <listitem>
-	      <para><option>-lable</option>: Labels the choicegroup
+	      <para><option>-label</option>: Labels the choicegroup
 		with the supplied text.
 	      </para>
 	    </listitem>
@@ -6104,6 +6105,12 @@ $canvas setcurrent
 		    <para>
 		      <command>get</command>: Returns a list of integers
 		      indicating which elements are selected.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
+		      <command>gettext</command>: Returns the text of
+		      the selected element.
 		    </para>
 		  </listitem>
 		  <listitem>
