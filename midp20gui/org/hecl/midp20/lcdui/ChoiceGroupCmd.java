@@ -162,6 +162,9 @@ public class ChoiceGroupCmd extends ItemCmd {
 		}
 		return ListThing.create(v);
 	    }
+	    if(selcmd.equals("gettext")) {
+		return new Thing(cg.getString(cg.getSelectedIndex()));
+	    }
 	    if(selcmd.equals("set")) {
 		// Need index arg.
 		++n;

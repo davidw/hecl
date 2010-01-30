@@ -69,8 +69,8 @@ set lst {One Two Three Four Five Six}
 set menu [/list -selectcommand $sel -commandaction [: {cmd menu} {
     global sel lst
     if {eq $cmd $sel} {
-	set index [$menu selection get]
-	showmsg Selection "You choose [lindex $lst $index]" {
+	set text [$menu selection gettext]
+	showmsg Selection "You choose $text" {
 	    global menu
 	    $menu setcurrent
 	}

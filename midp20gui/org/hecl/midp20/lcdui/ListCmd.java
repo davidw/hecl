@@ -164,6 +164,9 @@ public class ListCmd extends ScreenCmd {
 
 		return ListThing.create(v);
 	    }
+	    if(selcmd.equals("gettext")) {
+		return new Thing(l.getString(l.getSelectedIndex()));
+	    }
 	    if(selcmd.equals("set")) {
 		// Need index arg.
 		++n;
