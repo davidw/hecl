@@ -4673,6 +4673,18 @@ class HelloCmd implements Command {
 	jars/cldc1.1-midp2.0/Hecl.jar Hecl</userinput>
       </para>
 
+      <note>
+	<para>
+	  With version 3 of the Sun WTK (which as of 2010-01 only runs
+	  on Windows and Mac), the command line you need is as
+	  follows:
+
+	  <userinput>
+	    /opt/WTK2.5.2/bin/emulator -Xjam:install jars/cldc1.1-midp2.0/Hecl.jad
+	  </userinput>
+	</para>
+      </note>
+
       <para>That should bring up something like this:</para>
 
       <screenshot>
