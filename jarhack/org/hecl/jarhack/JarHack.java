@@ -63,8 +63,7 @@ public class JarHack {
      * @exception IOException if an error occurs
      */
     public static void substHecl(InputStream infile, String outfile,
-ring scriptfile)
-				 String newname, String scriptfile)
+				 String newname, String iconname, String scriptfile)
 	throws IOException {
 
 	JarInputStream jif = new JarInputStream(infile);
