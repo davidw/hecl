@@ -616,7 +616,7 @@ public class Interp extends Thread/*implements Runnable*/ {
     }
     
     
-    public boolean doOneEvent(int flags) {
+    public synchronized boolean doOneEvent(int flags) {
 
 	if((flags & ALL_EVENTS) == 0)
 	    flags = ALL_EVENTS;
