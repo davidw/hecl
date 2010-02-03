@@ -377,6 +377,9 @@ public class MathCmds extends org.hecl.Operator {
 //#ifdef j2se
 	  case RANDOM:
 	    return DoubleThing.create(Math.random());
+//#elif cldc > 1.0
+	  case RANDOM:
+		return DoubleThing.create(new java.util.Random().nextDouble());
 //#endif
 	  case TRUE:
 	    return new Thing(IntThing.ONE);
@@ -521,11 +524,12 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put("double",new MathCmds(CASTDOUBLE,1,1));
 	cmdtable.put("toDegrees",new MathCmds(TODEGREES,1,1));
 	cmdtable.put("toRadians",new MathCmds(TORADIANS,1,1));
+	// random... different implementation for j2se and j2me
+	cmdtable.put("random",new MathCmds(RANDOM,0,0));
 //#endif
 
 	// Stuff available only in j2se
 //#if javaversion >= 1.5
-	cmdtable.put("random",new MathCmds(RANDOM,0,0));
 	cmdtable.put("pow", new MathCmds(POW,2,2));
 	cmdtable.put("log",new MathCmds(LOG,1,1));
 	cmdtable.put("asin",new MathCmds(ASIN,1,1));
