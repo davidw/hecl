@@ -648,18 +648,17 @@ sinh sqrt tan tanh tanh</refname>
 	    the MIDP1.0 version of Hecl, and that the following
 	    commands are available only in J2SE versions of Hecl:
 	  </para>
+	  <para>
+	    <command>acos</command> <command>atan</command>
+	    <command>ceil</command> <command>round</command>
+	    <command>exp</command> <command>floor</command>
+	    <command>sin</command> <command>cos</command>
+	    <command>sqrt</command> <command>log</command>
+	    <command>tan</command> <command>asin</command>
+	  </para>
 	</note>
-	<para>
-	  <command>acos</command> <command>atan</command>
-	  <command>ceil</command> <command>round</command>
-	  <command>exp</command> <command>floor</command>
-	  <command>random</command> <command>pow</command>
-	  <command>sin</command> <command>cos</command>
-	  <command>sqrt</command> <command>log</command>
-	  <command>tan</command> <command>asin</command>
-	</para>
 	<para>The following are only available in versions of Hecl
-	built with Java 1.5 and above.</para>
+	built for Java 1.5 and above.</para>
 	<para>
 	  <command>cbrt</command> <command>cosh</command>
 	  <command>expm1</command> <command>hypot</command>
