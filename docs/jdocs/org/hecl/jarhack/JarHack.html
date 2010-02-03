@@ -173,9 +173,10 @@ java.lang.Object
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../org/hecl/jarhack/JarHack.html#substHecl(java.io.InputStream, java.lang.String, java.lang.String, java.lang.String)">substHecl</A></B>(java.io.InputStream&nbsp;infile,
+<TD><CODE><B><A HREF="../../../org/hecl/jarhack/JarHack.html#substHecl(java.io.InputStream, java.lang.String, java.lang.String, java.lang.String, java.lang.String)">substHecl</A></B>(java.io.InputStream&nbsp;infile,
           java.lang.String&nbsp;outfile,
           java.lang.String&nbsp;newname,
+          java.lang.String&nbsp;iconname,
           java.lang.String&nbsp;scriptfile)</CODE>
 
 <BR>
@@ -223,12 +224,13 @@ public <B>JarHack</B>()</PRE>
 </TR>
 </TABLE>
 
-<A NAME="substHecl(java.io.InputStream, java.lang.String, java.lang.String, java.lang.String)"><!-- --></A><H3>
+<A NAME="substHecl(java.io.InputStream, java.lang.String, java.lang.String, java.lang.String, java.lang.String)"><!-- --></A><H3>
 substHecl</H3>
 <PRE>
 public static void <B>substHecl</B>(java.io.InputStream&nbsp;infile,
                              java.lang.String&nbsp;outfile,
                              java.lang.String&nbsp;newname,
+                             java.lang.String&nbsp;iconname,
                              java.lang.String&nbsp;scriptfile)
                       throws java.io.IOException</PRE>
 <DL>
@@ -236,10 +238,11 @@ public static void <B>substHecl</B>(java.io.InputStream&nbsp;infile,
  .jar's - one as input, the second as output, in addition to the
  name of the application.  Where it counts, the old name (Hecl,
  usually) is overridden with the new name, and the new .jar file
- is written to the specified outfile.
+ is written to the specified outfile.  Via the iconname argument
+ it is also possible to specify a new icon file to use.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>infile</CODE> - a <code>FileInputStream</code> value<DD><CODE>outfile</CODE> - a <code>String</code> value<DD><CODE>newname</CODE> - a <code>String</code> value
+<DT><B>Parameters:</B><DD><CODE>infile</CODE> - a <code>FileInputStream</code> value<DD><CODE>outfile</CODE> - a <code>String</code> value<DD><CODE>newname</CODE> - a <code>String</code> value<DD><CODE>iconname</CODE> - a <code>String</code> value
 <DT><B>Throws:</B>
 <DD><CODE>java.io.IOException</CODE> - if an error occurs</DL>
 </DD>

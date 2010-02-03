@@ -172,6 +172,16 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>Operator.</B><B><A HREF="../../../org/hecl/Operator.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>cmdCode</code> method dispatches to the actual code
+ via the operate method and cmdcode argument.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>Command.</B><B><A HREF="../../../org/hecl/Command.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
@@ -179,16 +189,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>cmdCode</code> method takes an interpreter and an array of
  Things, performs some calculations, and returns a <code>Thing</code>
  representing the computed value, or <code>null</code>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>Operator.</B><B><A HREF="../../../org/hecl/Operator.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>cmdCode</code> method dispatches to the actual code
- via the operate method and cmdcode argument.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -303,9 +303,9 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>MathCmds.</B><B><A HREF="../../../org/hecl/MathCmds.html#operate(int, org.hecl.Interp, org.hecl.Thing[])">operate</A></B>(int&nbsp;cmdcode,
-        <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+<TD><CODE><B>AnonProc.</B><B><A HREF="../../../org/hecl/AnonProc.html#method(org.hecl.Interp, org.hecl.ClassCommandInfo, org.hecl.Thing[])">method</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+       <A HREF="../../../org/hecl/ClassCommandInfo.html" title="class in org.hecl">ClassCommandInfo</A>&nbsp;context,
+       <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -319,6 +319,16 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>operate</code> method dispatches to the actual code.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>MathCmds.</B><B><A HREF="../../../org/hecl/MathCmds.html#operate(int, org.hecl.Interp, org.hecl.Thing[])">operate</A></B>(int&nbsp;cmdcode,
+        <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -479,6 +489,15 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>HeclJavaCmd.</B><B><A HREF="../../../org/hecl/java/HeclJavaCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
@@ -489,15 +508,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>JavaCmd.</B><B><A HREF="../../../org/hecl/java/JavaCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -516,7 +526,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>HeclJavaCmd.</B><B><A HREF="../../../org/hecl/java/HeclJavaCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
+<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -524,7 +534,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
+<TD><CODE><B>HeclJavaCmd.</B><B><A HREF="../../../org/hecl/java/HeclJavaCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -552,6 +562,14 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>HeclJavaCmd.</B><B><A HREF="../../../org/hecl/java/HeclJavaCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
 
 <BR>
@@ -561,14 +579,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>JavaCmd.</B><B><A HREF="../../../org/hecl/java/JavaCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>NullCmd.</B><B><A HREF="../../../org/hecl/java/NullCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -637,57 +647,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -707,7 +667,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -717,7 +677,17 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -728,36 +698,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>TextBoxCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextBoxCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -777,17 +717,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>DisplayableCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DisplayableCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -807,7 +737,57 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -827,7 +807,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname)</CODE>
 
@@ -837,8 +817,9 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -846,8 +827,9 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+<TD><CODE><B>DisplayableCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DisplayableCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -855,8 +837,9 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cget(org.hecl.Interp, java.lang.Object, java.lang.String)">cget</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -864,25 +847,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -900,7 +865,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -909,7 +874,16 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -927,7 +901,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -936,25 +910,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
-        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -972,6 +928,42 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>CommandCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CommandCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
@@ -981,7 +973,25 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
+        <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cmdCode(org.hecl.Interp, org.hecl.Thing[])">cmdCode</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;interp,
         <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
 
 <BR>
@@ -1002,62 +1012,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1079,7 +1034,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1090,7 +1045,18 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1102,39 +1068,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>TextBoxCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextBoxCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1156,18 +1089,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-     java.lang.Object&nbsp;target,
-     java.lang.String&nbsp;optname,
-     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>DisplayableCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DisplayableCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1189,6 +1111,17 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
@@ -1200,7 +1133,84 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>DisplayableCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DisplayableCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+     java.lang.Object&nbsp;target,
+     java.lang.String&nbsp;optname,
+     <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#cset(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing)">cset</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
      java.lang.Object&nbsp;target,
      java.lang.String&nbsp;optname,
      <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;optval)</CODE>
@@ -1211,7 +1221,19 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>GraphicsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/GraphicsCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+          java.lang.Object&nbsp;target,
+          java.lang.String&nbsp;subcmd,
+          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+          int&nbsp;startat)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
           java.lang.Object&nbsp;target,
           java.lang.String&nbsp;subcmd,
           <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
@@ -1234,8 +1256,20 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<CODE>protected &nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>OptionCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/OptionCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+          java.lang.Object&nbsp;target,
+          java.lang.String&nbsp;subcmd,
+          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+          int&nbsp;startat)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
           java.lang.Object&nbsp;target,
           java.lang.String&nbsp;subcmd,
           <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
@@ -1247,7 +1281,43 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>GraphicsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/GraphicsCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+<TD><CODE><B>ItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ItemCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+          java.lang.Object&nbsp;target,
+          java.lang.String&nbsp;subcmd,
+          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+          int&nbsp;startat)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+          java.lang.Object&nbsp;target,
+          java.lang.String&nbsp;subcmd,
+          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+          int&nbsp;startat)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
+          java.lang.Object&nbsp;target,
+          java.lang.String&nbsp;subcmd,
+          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+          int&nbsp;startat)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
           java.lang.Object&nbsp;target,
           java.lang.String&nbsp;subcmd,
           <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
@@ -1282,68 +1352,8 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>OptionCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/OptionCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-          java.lang.Object&nbsp;target,
-          java.lang.String&nbsp;subcmd,
-          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
-          int&nbsp;startat)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-          java.lang.Object&nbsp;target,
-          java.lang.String&nbsp;subcmd,
-          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
-          int&nbsp;startat)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
 <TD><CODE><B>DisplayableCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DisplayableCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-          java.lang.Object&nbsp;target,
-          java.lang.String&nbsp;subcmd,
-          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
-          int&nbsp;startat)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ItemCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-          java.lang.Object&nbsp;target,
-          java.lang.String&nbsp;subcmd,
-          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
-          int&nbsp;startat)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
-          java.lang.Object&nbsp;target,
-          java.lang.String&nbsp;subcmd,
-          <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
-          int&nbsp;startat)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A></CODE></FONT></TD>
-<TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#handlecmd(org.hecl.Interp, java.lang.Object, java.lang.String, org.hecl.Thing[], int)">handlecmd</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip,
           java.lang.Object&nbsp;target,
           java.lang.String&nbsp;subcmd,
           <A HREF="../../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
@@ -1447,47 +1457,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1503,7 +1473,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1511,7 +1481,15 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1527,31 +1505,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1567,7 +1521,63 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>CommandCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CommandCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#load(org.hecl.Interp)">load</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1613,47 +1623,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1669,54 +1639,6 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>DateFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/DateFieldCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TextBoxCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextBoxCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>AlertCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/AlertCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
@@ -1725,7 +1647,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>EventCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/EventCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1733,7 +1655,7 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>CommandCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CommandCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+<TD><CODE><B>ListCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ListCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1749,7 +1671,95 @@ Uses of <A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TextBoxCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextBoxCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>SettingsCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SettingsCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>SpacerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/SpacerCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ChoiceGroupCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ChoiceGroupCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>StringItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/StringItemCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>FormCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/FormCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TickerCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TickerCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CommandCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CommandCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CanvasCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/CanvasCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>TextFieldCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/TextFieldCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ImageItemCmd.</B><B><A HREF="../../../org/hecl/midp20/lcdui/ImageItemCmd.html#unload(org.hecl.Interp)">unload</A></B>(<A HREF="../../../org/hecl/Interp.html" title="class in org.hecl">Interp</A>&nbsp;ip)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

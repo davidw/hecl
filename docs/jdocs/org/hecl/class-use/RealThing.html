@@ -232,36 +232,11 @@ Uses of <A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl"
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>ObjectThing.</B><B><A HREF="../../../org/hecl/ObjectThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>DoubleThing.</B><B><A HREF="../../../org/hecl/DoubleThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
 <TD><CODE><B>CodeThing.</B><B><A HREF="../../../org/hecl/CodeThing.html#deepcopy()">deepcopy</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CodeThing's <code>deepcopy</code> method makes a copy of all
  the stanzas, which in turn copy all their objects.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>RealThing.</B><B><A HREF="../../../org/hecl/RealThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>deepcopy</code> method must copy a RealThing and any values
- it contains.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -274,10 +249,43 @@ Uses of <A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl"
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>StringThing.</B><B><A HREF="../../../org/hecl/StringThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> copies the string.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
 <TD><CODE><B>ListThing.</B><B><A HREF="../../../org/hecl/ListThing.html#deepcopy()">deepcopy</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> copies a list and all of its elements.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>DoubleThing.</B><B><A HREF="../../../org/hecl/DoubleThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>GroupThing.</B><B><A HREF="../../../org/hecl/GroupThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy of a GroupThing and all its
+ elements.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>HashThing.</B><B><A HREF="../../../org/hecl/HashThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> copies the hash table and all its elements.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -298,35 +306,27 @@ Uses of <A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl"
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>HashThing.</B><B><A HREF="../../../org/hecl/HashThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> copies the hash table and all its elements.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>StringThing.</B><B><A HREF="../../../org/hecl/StringThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> copies the string.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
-<TD><CODE><B>GroupThing.</B><B><A HREF="../../../org/hecl/GroupThing.html#deepcopy()">deepcopy</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy of a GroupThing and all its
- elements.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
 <TD><CODE><B>SubstThing.</B><B><A HREF="../../../org/hecl/SubstThing.html#deepcopy()">deepcopy</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> returns a copy of the SubstThing.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>ObjectThing.</B><B><A HREF="../../../org/hecl/ObjectThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>deepcopy</code> makes a copy.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../org/hecl/RealThing.html" title="interface in org.hecl">RealThing</A></CODE></FONT></TD>
+<TD><CODE><B>RealThing.</B><B><A HREF="../../../org/hecl/RealThing.html#deepcopy()">deepcopy</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>deepcopy</code> method must copy a RealThing and any values
+ it contains.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
