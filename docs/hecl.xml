@@ -99,9 +99,12 @@
     </para>
 
     <para>
-      Contributions in the form of code, ideas, suggestions, or even donations are welcome.  Hecl is
-      still growing, so your thoughts are important, and you can help shape the language's future.
-      You can download the latest code via git from the GitHub project page: <link xl:href="http://github.com/davidw/hecl/tree/master">http://github.com/davidw/hecl/tree/master</link>.
+      Contributions in the form of code, ideas, suggestions, or even donations
+      are welcome.  Hecl is still growing, so your thoughts are important, and
+      you can help shape the language's future.  You can download the latest
+      source code via <link xl:href="http://git-scm.com/">git</link> from
+      github: <link
+      xl:href="http://github.com/davidw/hecl/tree/master">http://github.com/davidw/hecl/tree/master</link>.
     </para>
 
     <para>
@@ -4754,7 +4757,8 @@ class HelloCmd implements Command {
 
 	<listitem>
 	  <para>
-	    Hecl itself. You can get it from the <link xl:href="http://github.com/davidw/hecl/tree/master">GitHub project page</link>.
+	    Hecl itself. You can get the latest code here: <link
+	    xl:href="http://www.hecl.org/downloads/hecl-latest.tgz">http://www.hecl.org/downloads/hecl-latest.tgz</link>.
 	    <note>
 	      <para>
 		Hecl is always improving, so you should also consider checking out Hecl directly
@@ -6658,7 +6662,7 @@ $form setcurrent
 	<refsect1>
 	  <title>Example</title>
 	  <para>
-	    See the example script in the midp20/ directory.  <link xl:href="http://github.com/davidw/hecl/blob/66bbb4890953a97e6a2880d19095d5da2336ba57/midp20/script.hcl"></link>
+	    See the example script in the midp20/ directory.  <link xl:href="http://github.com/davidw/hecl/blob/master/midp20/script.hcl"></link>
 	  </para>
 	</refsect1>
       </refentry>
