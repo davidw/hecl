@@ -55,11 +55,13 @@ public class JarHack {
      * .jar's - one as input, the second as output, in addition to the
      * name of the application.  Where it counts, the old name (Hecl,
      * usually) is overridden with the new name, and the new .jar file
-     * is written to the specified outfile.
+     * is written to the specified outfile.  Via the iconname argument
+     * it is also possible to specify a new icon file to use.
      *
      * @param infile a <code>FileInputStream</code> value
      * @param outfile a <code>String</code> value
      * @param newname a <code>String</code> value
+     * @param iconname a <code>String</code> value
      * @exception IOException if an error occurs
      */
     public static void substHecl(InputStream infile, String outfile,
