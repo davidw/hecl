@@ -1,4 +1,4 @@
-/* Copyright 2004-2009 David N. Welton, DedaSys LLC
+/* Copyright 2004-2010 David N. Welton, DedaSys LLC
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -115,6 +115,16 @@ public class Interp extends Thread/*implements Runnable*/ {
     protected Hashtable classcmdcache = new Hashtable();
 
     /**
+     * <code>procclass</code> is used by CLDC 1.0 to store the 'Proc'
+     * class, since you can't just do Proc.class in that version of
+     * J2ME.
+     *
+     */
+//#if cldc < 1.1
+    static Class procclass;
+//#endif
+
+    /**
      * <code>eol</code> is the end-of-line character or characters.
      *
      */
@@ -144,8 +154,11 @@ public class Interp extends Thread/*implements Runnable*/ {
      * @exception HeclException if an error occurs
      */
     public Interp() throws HeclException {
-	/* Check and see if  */
 	try {
+//#if cldc < 1.1
+	    procclass = Class.forName("Proc");
+//#endif
+	    /* Check and see if the "java" extension is present */
 	    Class.forName("org.hecl.java.JavaCmd");
 	    javacmdpresent = true;
 	} catch (ClassNotFoundException e) {
@@ -734,7 +747,6 @@ public class Interp extends Thread/*implements Runnable*/ {
 //	System.err.println("interp stopped!");
     }
 
-
     /**
      * The <code>initCommands</code> method initializes all the built in
      * commands. These are commands available in all versions of Hecl. J2SE
@@ -778,8 +790,12 @@ public class Interp extends Thread/*implements Runnable*/ {
         commands.put("puts", new PutsCmd());
         commands.put("sort", new SortCmd());
 
-	addClassCmd(Proc.class, new AnonProc());
 
+//#if cldc < 1.1
+	addClassCmd(procclass, new AnonProc());
+//#else
+	addClassCmd(Proc.class, new AnonProc());
+//#endif
 
 	//	System.err.println("<--initinterp");
     }
