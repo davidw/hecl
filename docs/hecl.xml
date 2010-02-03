@@ -3681,11 +3681,10 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	  <orderedlist>
 	    <listitem>
 	      <para>
-		The simplist way is to simply call the command with a
-		<option>timeout</option> argument.  The program will
-		block until the command returns an answer, in the form
-		of a hash table (see below), which could take up to
-		several minutes.
+		The simplest way is to simply call the command with a
+		<option>timeout</option> argument.  The program will block until
+		the command returns an answer, in the form of a hash table (see
+		below), which could take up to several minutes.
 	      </para>
 	    </listitem>
 	    <listitem>
