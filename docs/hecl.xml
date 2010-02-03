@@ -3681,26 +3681,132 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	  <orderedlist>
 	    <listitem>
 	      <para>
-		The simplist way is to simply call the command with a <option>timeout</option>
-		argument.  The program will block until the command returns an answer, which could
-		take up to several minutes.
+		The simplist way is to simply call the command with a
+		<option>timeout</option> argument.  The program will
+		block until the command returns an answer, in the form
+		of a hash table (see below), which could take up to
+		several minutes.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		The alternative way of calling <command>location.get</command> is to pass it a
-		<option>-callback <replaceable>callbackProc</replaceable></option>, which is the
-		name of a proc that will be called when the information is available.  Program
-		execution continues and does not block on the location.get call.  The
-		<option>callbackProc</option> takes one argument, which is a hash of information
-		about the location.  When using <option>-callback</option> it is also possible to
-		specify a <option>-timeout</option> option (in seconds), and an
-		<option>-onerror</option> option.  This is used in case of errors: the specified
+		The alternative way of calling
+		<command>location.get</command> is to pass it a
+		<option>-callback
+		<replaceable>callbackProc</replaceable></option>,
+		which is the name of a proc that will be called when
+		the information is available, with a hash table
+		specifying the results.  Program execution continues
+		and does not block on the location.get call.  The
+		<option>callbackProc</option> takes one argument,
+		which is a hash of information about the location.
+		When using <option>-callback</option> it is also
+		possible to specify a <option>-timeout</option> option
+		(in seconds), and an <option>-onerror</option> option.
+		This is used in case of errors: the specified
 		<option><replaceable>onErrorProc</replaceable></option>
 	      </para>
 	    </listitem>
 	  </orderedlist>
-	  <programlisting>http.status [http.geturl http://www.dedasys.com]</programlisting>
+	  <para>
+	    Either method will supply the user with a hash table with the
+	    following elements.  See also the JavaDocs here:
+	    <link xl:href="http://library.forum.nokia.com/index.jsp?topic=/Java_Developers_Library/GUID-4AEC8DAF-DDCC-4A30-B820-23F2BA60EA52/javax/microedition/location/Location.html">javax/microedition/location/Location</link>
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<constant>lat</constant>: latitude.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<constant>lon</constant>: longitude.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>alt</constant>: altitude.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>haccuracy</constant>: horizontal accuracy, in meters.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>vaccuracy</constant>: vertical accuracy, in meters.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>location_method</constant>: contains a hash table of
+		its own with information about the method used to ascertain the
+		location.  Possible values include:
+	      </para>
+
+	      <itemizedlist>
+		<listitem>
+		  <para><constant>ASSISTED</constant>: Location method is assisted.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>UNASSISTED</constant>: Location method is unassisted.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>NETWORKBASED</constant>: Location is derived
+		  from the network.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TERMINALBASED</constant>: Location is obtained
+		  from a GPS terminal.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>ANGLEOFARRIVAL</constant>: Location method
+		  Angle of Arrival for cellular / terrestrial RF system.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>CELLID</constant>: Location method Cell-ID for
+		  cellular (in GSM, this is the same as CGI, Cell Global
+		  Identity).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>SATELLITE</constant>: Location method using
+		  satellites (for example, Global Positioning System
+		  (GPS)).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>SHORTRANGE</constant>: Location method
+		  Short-range positioning system (for example, Bluetooth
+		  LP).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TIMEDIFFERENCE</constant>: Location method
+		  Time Difference for cellular / terrestrial RF system (for
+		  example, Enhanced Observed Time Difference (E-OTD) for
+		  GSM).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TIMEOFARRIVAL</constant>: Location method Time
+		  of Arrival (TOA) for cellular / terrestrial RF system.</para>
+		</listitem>
+	      </itemizedlist>
+
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>speed</constant>: ground speed, in meters per second.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>course</constant>: course, in degrees relative to true
+		north.
+	      </para>
+	    </listitem>
+
+	  </itemizedlist>
 	</refsect1>
       </refentry>
 

@@ -30,23 +30,107 @@
 	  </p>
 	  <div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 	      <p>
-		The simplist way is to simply call the command with a <code class="option">timeout</code>
-		argument.  The program will block until the command returns an answer, which could
-		take up to several minutes.
+		The simplist way is to simply call the command with a
+		<code class="option">timeout</code> argument.  The program will
+		block until the command returns an answer, in the form
+		of a hash table (see below), which could take up to
+		several minutes.
 	      </p>
 	    </li><li class="listitem">
 	      <p>
-		The alternative way of calling <span class="command"><strong>location.get</strong></span> is to pass it a
-		<code class="option">-callback <em class="replaceable"><code>callbackProc</code></em></code>, which is the
-		name of a proc that will be called when the information is available.  Program
-		execution continues and does not block on the location.get call.  The
-		<code class="option">callbackProc</code> takes one argument, which is a hash of information
-		about the location.  When using <code class="option">-callback</code> it is also possible to
-		specify a <code class="option">-timeout</code> option (in seconds), and an
-		<code class="option">-onerror</code> option.  This is used in case of errors: the specified
+		The alternative way of calling
+		<span class="command"><strong>location.get</strong></span> is to pass it a
+		<code class="option">-callback
+		<em class="replaceable"><code>callbackProc</code></em></code>,
+		which is the name of a proc that will be called when
+		the information is available, with a hash table
+		specifying the results.  Program execution continues
+		and does not block on the location.get call.  The
+		<code class="option">callbackProc</code> takes one argument,
+		which is a hash of information about the location.
+		When using <code class="option">-callback</code> it is also
+		possible to specify a <code class="option">-timeout</code> option
+		(in seconds), and an <code class="option">-onerror</code> option.
+		This is used in case of errors: the specified
 		<code class="option"><em class="replaceable"><code>onErrorProc</code></em></code>
 	      </p>
 	    </li></ol></div>
-	  <pre class="programlisting">http.status [http.geturl http://www.dedasys.com]</pre>
+	  <p>
+	    Either method will supply the user with a hash table with the
+	    following elements.  See also the JavaDocs here:
+	    <a class="link" href="http://library.forum.nokia.com/index.jsp?topic=/Java_Developers_Library/GUID-4AEC8DAF-DDCC-4A30-B820-23F2BA60EA52/javax/microedition/location/Location.html" target="_top">javax/microedition/location/Location</a>
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p>
+		<code class="constant">lat</code>: latitude.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">lon</code>: longitude.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">alt</code>: altitude.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">haccuracy</code>: horizontal accuracy, in meters.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">vaccuracy</code>: vertical accuracy, in meters.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">location_method</code>: contains a hash table of
+		its own with information about the method used to ascertain the
+		location.  Possible values include:
+	      </p>
+
+	      <div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+		  <p><code class="constant">ASSISTED</code>: Location method is assisted.</p>
+		</li><li class="listitem">
+		  <p><code class="constant">UNASSISTED</code>: Location method is unassisted.</p>
+		</li><li class="listitem">
+		  <p><code class="constant">NETWORKBASED</code>: Location is derived
+		  from the network.</p>
+		</li><li class="listitem">
+		  <p><code class="constant">TERMINALBASED</code>: Location is obtained
+		  from a GPS terminal.</p>
+		</li><li class="listitem">
+		  <p><code class="constant">ANGLEOFARRIVAL</code>: Location method
+		  Angle of Arrival for cellular / terrestrial RF system.</p>
+		</li><li class="listitem">
+		  <p><code class="constant">CELLID</code>: Location method Cell-ID for
+		  cellular (in GSM, this is the same as CGI, Cell Global
+		  Identity).</p>
+		</li><li class="listitem">
+		  <p><code class="constant">SATELLITE</code>: Location method using
+		  satellites (for example, Global Positioning System
+		  (GPS)).</p>
+		</li><li class="listitem">
+		  <p><code class="constant">SHORTRANGE</code>: Location method
+		  Short-range positioning system (for example, Bluetooth
+		  LP).</p>
+		</li><li class="listitem">
+		  <p><code class="constant">TIMEDIFFERENCE</code>: Location method
+		  Time Difference for cellular / terrestrial RF system (for
+		  example, Enhanced Observed Time Difference (E-OTD) for
+		  GSM).</p>
+		</li><li class="listitem">
+		  <p><code class="constant">TIMEOFARRIVAL</code>: Location method Time
+		  of Arrival (TOA) for cellular / terrestrial RF system.</p>
+		</li></ul></div>
+
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">speed</code>: ground speed, in meters per second.
+	      </p>
+	    </li><li class="listitem">
+	      <p>
+		<code class="constant">course</code>: course, in degrees relative to true
+		north.
+	      </p>
+	    </li></ul></div>
 	</div>
       </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="location_commands.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="location_commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="networking_commands.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">Location </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> Net</td></tr></table></div></body></html>
