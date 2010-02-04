@@ -7928,6 +7928,201 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
+      <refentry xml:id="lcdui_item_options">
+	<refnamediv>
+	  <refname>lcdui item options</refname>
+	  <refpurpose>common options for choicegroup, datefield, gauge, imageitem, spacer, stringitem</refpurpose>
+	</refnamediv>
+	<refsection>
+	  <title>Common lcdui item options</title>
+	  <para>
+	    The lcdui "item" elements have a number of options in common, which
+	    are described here.
+	  </para>
+	  <para>
+	    Many of these options are layout options, and correspond to what is
+	    described here: <link
+	    xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html#layout">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html#layout</link>
+	  </para>
+	  <itemizedlist>
+	    <title>lcdui item configuration options</title>
+	    <para>
+	      These options may be set as follows, or as options at the time the
+	      item is created.
+	    </para>
+	    <cmdsynopsis>
+	      <command>$itemcmd</command>
+	      <arg choice="req">configure</arg>
+	      <arg choice="req"><replaceable>-optname</replaceable></arg>
+	      <arg choice="req"><replaceable>optvalue</replaceable></arg>
+	    </cmdsynopsis>
+
+	    <listitem>
+	      <para>
+	      <option>-label <replaceable>text</replaceable></option>: the item's label</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-anchor <replaceable>position</replaceable></option>: One of the following
+	      positions.  For more information, see <link
+	      xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Graphics.html">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Graphics.html</link>
+	      </para>
+	      <itemizedlist>
+		<listitem>
+		  <para><constant>n</constant>: top/center</para>
+		</listitem>
+		<listitem>
+		  <para><constant>ne</constant>: top/right</para>
+		</listitem>
+		<listitem>
+		  <para><constant>e</constant>: right/vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>se</constant>: bottom/right</para>
+		</listitem>
+		<listitem>
+		  <para><constant>s</constant>: bottom/center</para>
+		</listitem>
+		<listitem>
+		  <para><constant>sw</constant>: bottom/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>w</constant>: left/vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>nw</constant>: top/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>center</constant>: horizontally and vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>default</constant>: top/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>bl</constant>: left/baseline</para>
+		</listitem>
+		<listitem>
+		  <para><constant>bc</constant>: centered/baseline</para>
+		</listitem>
+		<listitem>
+		  <para><constant>br</constant>: right/baseline</para>
+		</listitem>
+	      </itemizedlist>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-shrink <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's width may be reduced to its minimum
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-expand <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's width may be increased to fill available space.
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-vexpand <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's height may be increased to fill available space.
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-newlinebefore <replaceable>1 | 0</replaceable></option>
+		Indicate that the next item (if any) in the container should be
+		placed on a new line or row.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-newlineafter <replaceable>1 | 0</replaceable></option>
+		Indicate that this item should be placed at the beginning of a
+		new line or row.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-layout2 <replaceable>1 | 0</replaceable></option>
+		A layout directive indicating that new MIDP 2.0 layout rules are in effect for this item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-preferredwidth <replaceable>width</replaceable></option>
+		Preferred width for the item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-preferredheight <replaceable>height</replaceable></option>
+		Preferred height for the item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-defaultcommand
+		<replaceable>command</replaceable></option> If this item is
+		clicked on, the default command to call.
+		<option><replaceable>command</replaceable></option> refers to a
+		command object, and not a Hecl proc or command.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-commandaction
+		<replaceable>command</replaceable></option>
+
+		The Hecl command to call when a command is dispatched.
+	      </para>
+	    </listitem>
+
+	  </itemizedlist>
+
+	  <itemizedlist>
+	    <title>read-only configuration information</title>
+	    <para>
+	      All of the above attributes may be read as well as written. There
+	      are several more attributes that are "read only".  They can be
+	      obtained like so:
+	    </para>
+	    <cmdsynopsis>
+	      <command>$itemcmd</command>
+	      <arg choice="req">cget</arg>
+	      <arg choice="req"><replaceable>-optname</replaceable></arg>
+	      <arg choice="req"><replaceable>optvalue</replaceable></arg>
+	    </cmdsynopsis>
+	    <listitem>
+	      <para>
+		<option>-minwidth</option> : Returns the minimum width for this item.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<option>-minheight</option> : Returns the minimum height for this item.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	</refsection>
+      </refentry>
+
       <refentry xml:id="midlet_exit">
 	<refnamediv>
 	  <refname>midlet.exit</refname>
