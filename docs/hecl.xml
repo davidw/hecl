@@ -7979,9 +7979,13 @@ after 1000 [list updateTicker $ticker]</programlisting>
       <refentry xml:id="lcdui_item_options">
 	<refnamediv>
 	  <refname>lcdui item options</refname>
-	  <refpurpose>common options for lcdui.choicegroup, lcdui.date,
-	  lcdui.gauge, lcdui.imageitem, lcdui.spacer, and
-	  lcdui.stringitem</refpurpose>
+	  <refpurpose>common options for <link
+	  linkend="lcdui_choicegroup">lcdui.choicegroup</link>, <link
+	  linkend="lcdui_date">lcdui.date</link>, <link
+	  linkend="lcdui_gauge">lcdui.gauge</link>, <link
+	  linkend="lcdui_imageitem">lcdui.imageitem</link>, <link
+	  linkend="lcdui_spacer">lcdui.spacer</link>, and <link
+	  linkend="lcdui_stringitem">lcdui.stringitem</link></refpurpose>
 	</refnamediv>
 	<refsection>
 	  <title>Common lcdui item options</title>
