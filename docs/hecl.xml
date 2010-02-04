@@ -286,13 +286,16 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	    <procedure>
 	      <step>
 		<para>
-		  Install the DLTK from the following URL: <link xl:href="http://download.eclipse.org/technology/dltk/updates"></link>, from with Eclipse.
+		  Install the DLTK from the following URL: <link
+		  xl:href="http://download.eclipse.org/technology/dltk/updates"></link>,
+		  from within Eclipse.
 		</para>
 	      </step>
 
 	      <step>
 		<para>
-		  After downloading you must just associate the *.hcl files to Tcl Source Editor.
+		  After downloading you must associate the
+		  <filename>*.hcl</filename> files with the Tcl Source Editor.
 		</para>
 
 		<para>
@@ -6104,7 +6107,15 @@ $canvas setcurrent
 
 	  </cmdsynopsis>
 
+	  <note>
+	    <para>
+	      Choicegroups also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
+
 	<refsect1>
 	  <title>Description</title>
 	  <para>
@@ -6421,6 +6432,13 @@ NewForm
 	      <replaceable>optval</replaceable>
 	    </arg>
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      Date fields also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
 
 	</refsynopsisdiv>
 	<refsect1>
@@ -7001,6 +7019,13 @@ $form append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
 	    </arg>
 	  </cmdsynopsis>
 
+	  <note>
+	    <para>
+	      Gauge items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7276,6 +7301,14 @@ $form setcurrent
 	      <replaceable>optval</replaceable>
 	    </arg>
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      Image items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7571,6 +7604,14 @@ foreach s {"-color"
 	    <arg choice="req">-minwidth <replaceable>minimum width</replaceable></arg>
 	    <arg choice="req">-minheight <replaceable>minimum height</replaceable></arg>
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      Image items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7618,8 +7659,15 @@ foreach s {"-color"
 		<arg choice="req">-font <replaceable>font</replaceable></arg>
 	      </group>
 	    </arg>
-
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      String items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7931,7 +7979,9 @@ after 1000 [list updateTicker $ticker]</programlisting>
       <refentry xml:id="lcdui_item_options">
 	<refnamediv>
 	  <refname>lcdui item options</refname>
-	  <refpurpose>common options for choicegroup, datefield, gauge, imageitem, spacer, stringitem</refpurpose>
+	  <refpurpose>common options for lcdui.choicegroup, lcdui.date,
+	  lcdui.gauge, lcdui.imageitem, lcdui.spacer, and
+	  lcdui.stringitem</refpurpose>
 	</refnamediv>
 	<refsection>
 	  <title>Common lcdui item options</title>
