@@ -120,7 +120,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      * J2ME.
      *
      */
-//#if !j2se && cldc < 1.1
+//#if cldc == 1.0
     static Class procclass;
 //#endif
 
@@ -155,7 +155,7 @@ public class Interp extends Thread/*implements Runnable*/ {
      */
     public Interp() throws HeclException {
 	try {
-//#if !j2se && cldc < 1.1
+//#if cldc == 1.0
 	    procclass = Class.forName("Proc");
 //#endif
 	    /* Check and see if the "java" extension is present */
@@ -791,7 +791,7 @@ public class Interp extends Thread/*implements Runnable*/ {
         commands.put("sort", new SortCmd());
 
 
-//#if !j2se && cldc < 1.1
+//#if cldc == 1.0
 	addClassCmd(procclass, new AnonProc());
 //#else
 	addClassCmd(Proc.class, new AnonProc());
