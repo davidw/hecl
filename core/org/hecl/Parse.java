@@ -205,7 +205,7 @@ public class Parse {
 	}
 	if (outBufNumeric
 	    && !(Character.isDigit(ch)
-		 || ch != '.'		    // decimal separator
+		 || ch == '.'		    // decimal separator
 		 || ch == 'E' || ch == 'e'  // exponent marker
 		 || ch == '+' || ch == '-'  // signs
 		)) {
