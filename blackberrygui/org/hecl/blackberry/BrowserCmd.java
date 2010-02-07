@@ -21,8 +21,6 @@ package org.hecl.blackberry;
 
 import java.io.UnsupportedEncodingException;
 
-import net.rim.blackberry.api.browser.Browser;
-import net.rim.blackberry.api.browser.BrowserSession;
 import java.util.Hashtable;
 
 import org.hecl.HeclException;
@@ -36,11 +34,10 @@ public class BrowserCmd extends Operator {
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
 	switch(cmd) {
-	    /* Fetch all records into a list of hashes. */
 	    case OPEN: {
-		BrowserSession session = Browser.getDefaultSession();
-		session.displayPage(StringThing.get(argv[1]));
- 		session.showBrowser();
+		BrowserLauncher bl = new BrowserLauncher(StringThing.get(argv[1]));
+		bl.start();
+		return null;
 	    }
 
 	  default:

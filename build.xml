@@ -39,7 +39,7 @@
   <target name="build" description="Complete build" depends="compile,package,docs"/>
 
   <target name="compile" description="Compile everything"
-    depends="packageCommandline,packageStandalone,compileApplet,buildAllJavaME"/>
+    depends="packageCommandline,packageStandalone,compileApplet,packageJarHack,buildAllJavaME"/>
 
   <target name="package" description="Package things into JARs"
     depends="packageJARs,packageApplet,packageMidletApplets,HeclBuilderJar,packageAndroid,packageAndroidBuilder"/>

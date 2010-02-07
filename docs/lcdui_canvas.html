@@ -1,79 +1,157 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.canvas</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_alert.html" title="lcdui.alert"><link rel="next" href="lcdui_choicegroup.html" title="lcdui.choicegroup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.canvas</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="lcdui_canvas"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>lcdui.canvas &#8212; Creates a canvas</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">lcdui.canvas</code>  [-autoflush
-	      1 |  0
-	    ] [-cmdbg
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>lcdui.canvas</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="lcdui_alert.html" title="lcdui.alert"><link rel="next" href="lcdui_choicegroup.html" title="lcdui.choicegroup"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">lcdui.canvas</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="lcdui.canvas"><div class="refentry.separator"><hr></div><a name="lcdui_canvas"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  lcdui.canvas
+	   &#8212; Creates a canvas
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">lcdui.canvas</code> 
+	     [-autoflush
+	      
+		1
+		 |  0
+	      
+	    ]
+
+	     [-cmdbg
 	      <em class="replaceable"><code>color</code></em>
-	    ] [-cmdfg
+	    ]
+
+	     [-cmdfg
 	      <em class="replaceable"><code>color</code></em>
-	    ] [-eventhandler
+	    ]
+
+	     [-eventhandler
 	      <em class="replaceable"><code>code</code></em>
-	    ] [-fullscreen
-	      1 |  0
-	    ] [-title <em class="replaceable"><code>title</code></em>] [-suppresskeys
-	      1 |  0
-	    ]</p></div><div class="cmdsynopsis"><p><code class="command"><em class="replaceable"><code>$canvascmd</code></em></code>  [cget
+	    ]
+
+	     [-fullscreen
+	      
+		1
+		 |  0
+	      
+	    ]
+
+	     [-title <em class="replaceable"><code>title</code></em>]
+
+	     [-suppresskeys
+	      
+		1
+		 |  0
+	      
+	    ]
+	  </p></div>
+
+	  <div class="cmdsynopsis"><p>
+	    <code class="command"><em class="replaceable"><code>$canvascmd</code></em></code> 
+
+	     [cget
 	      <em class="replaceable"><code>-optname</code></em>
-	    ] [configure
+	    ]
+	     [configure
 	      <em class="replaceable"><code>-optname</code></em>
 	      <em class="replaceable"><code>optval</code></em>
-	    ] [flush
+	    ]
+
+	     [flush
 	      [<em class="replaceable"><code>x y width height</code></em>]
-	    ] [graphics] [repaint] [servicerepaints]</p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.6.3"></a><h2>Description</h2><p>
+	    ]
+	     [graphics]
+	     [repaint]
+	     [servicerepaints]
+	  </p></div>
+
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.8.6.6.3"></a><h2>Description</h2>
+	  
+
+	  <p>
 	    The <span class="command"><strong>lcdui.canvas</strong></span> command creates a
 	    canvas that can be used to draw arbitrary items, such as
 	    rectangles, text, circles, and respond to keyboard events.
 	    For an in-depth look at the Java code that this command is
-	    based on, see: <a class="ulink" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/game/GameCanvas.html" target="_top">javax.microedition.lcdui.game.GameCanvas</a>
-	  </p><p>
+	    based on, see: <a class="link" href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/game/GameCanvas.html" target="_top">javax.microedition.lcdui.game.GameCanvas</a>
+	  </p>
+	  <p>
 	    The options describing the canvas are as follows:
-	  </p><div class="itemizedlist"><ul type="disc"><li><p><code class="option">-autoflush</code>: Takes a boolean
-		argument (1 or 0) indicating FIXME</p></li><li><p>
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p><code class="option">-autoflush</code>: Takes a boolean
+		argument (1 or 0) indicating FIXME</p></li><li class="listitem">
+	      <p>
 		<code class="option">-cmdbg</code>: Selects a background color for
 		the command background.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 	      <code class="option">-cmdfg</code>: Selects a background color for
 	      the command foreground.
-	    </p></li><li><p>
+	    </p>
+	    </li><li class="listitem">
+	      <p>
 		<code class="option">-eventhandler</code>: The Hecl code to execute
 		when an event is generated.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<code class="option">-fullscreen</code>: A boolean switch
 		specifying whether to run in "full screen" mode.
 		"Full screen" mode means that commands, which would
 		normally be accessible via certain keys on the cell
 		phone, are not accessible, and that those keys
 		generate regular events instead of calling commands.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<code class="option">-suppresskeys</code>: A boolean switch
 		specifying whether to suppress key events or not.
 		Suppressing these events, if the application does not
 		need to keep track of them, may improve performance
 		some.
-	      </p></li></ul></div><p>
+	      </p>
+	    </li></ul></div>
+	  <p>
 	    The <span class="command"><strong>lcdui.canvas</strong></span> command returns an
 	    object that is itself a command, and can be called with
 	    several subcommands:
-	  </p><div class="itemizedlist"><ul type="disc"><li><p>
+	  </p>
+	  <div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+	      <p>
 		<span class="command"><strong>flush</strong></span>: With no argument, flushes
 		(displays) the off-screen buffer to the visible
 		display.  With arguments <code class="option"><em class="replaceable"><code>x y
 		width height</code></em></code>, flushes the
 		specified section to the screen.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<span class="command"><strong>graphics</strong></span>: Returns a graphics object
 		that acts as a command to manipulate the Canvas'
 		graphics buffer.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<span class="command"><strong>repaint</strong></span>: Repaints the entire canvas.
-	      </p></li><li><p>
+	      </p>
+	    </li><li class="listitem">
+	      <p>
 		<span class="command"><strong>servicerepaints</strong></span>: Forces any repaints
 		that haven't occured yet to be performed immediately.
-	      </p></li></ul></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.6.4"></a><h2>Example</h2><pre class="programlisting">
+	      </p>
+	    </li></ul></div>
+	</div>
+	<div class="refsect1" title="Example"><a name="id-1.8.6.6.4"></a><h2>Example</h2>
+	  
+	  <pre class="programlisting">
 set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
 set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]
 $graphics frect [list 80 10] [list 10 80]
 $graphics frect [list 10 50] [list 80 10]
 $canvas setcurrent
-	  </pre><p>
-	    Live example: <a class="ulink" href="http://www.heclbuilder.com/scripts/show/142" target="_top">http://www.heclbuilder.com/scripts/show/142</a>
-	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.alert </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.choicegroup</td></tr></table></div></body></html>
+	  </pre>
+	  <p>
+	    Live example: <a class="link" href="http://www.heclbuilder.com/scripts/show/142" target="_top">http://www.heclbuilder.com/scripts/show/142</a>
+	  </p>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="lcdui_alert.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="lcdui_choicegroup.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">lcdui.alert </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> lcdui.choicegroup</td></tr></table></div></body></html>

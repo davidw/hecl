@@ -1,15 +1,35 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>midlet.platformrequest</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="midlet_getappproperty.html" title="midlet.getappproperty"><link rel="next" href="midlet_resourceasstring.html" title="midlet.resourceasstring"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">midlet.platformrequest</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="midlet_getappproperty.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="midlet_resourceasstring.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="midlet_platformrequest"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>midlet.platformrequest &#8212; Perform platform-specific actions</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">midlet.platformrequest</code>  <em class="replaceable"><code>url</code></em></p></div></div><div class="refsect1" lang="en"><a name="id-1.8.6.30.3"></a><h2>Description</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>midlet.platformrequest</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="midp20commands.html" title="Hecl Java ME MIDP2.0 Commands"><link rel="prev" href="midlet_getappproperty.html" title="midlet.getappproperty"><link rel="next" href="midlet_resourceasstring.html" title="midlet.resourceasstring"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">midlet.platformrequest</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="midlet_getappproperty.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">Hecl Java ME MIDP2.0 Commands</th><td width="20%" align="right"> <a accesskey="n" href="midlet_resourceasstring.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="midlet.platformrequest"><div class="refentry.separator"><hr></div><a name="midlet_platformrequest"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  midlet.platformrequest
+	   &#8212; Perform platform-specific actions
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">midlet.platformrequest</code> 
+	     <em class="replaceable"><code>url</code></em>
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.8.6.31.3"></a><h2>Description</h2>
+	  
+	  <p>
 	    From the Javadocs:
-	  </p><div class="blockquote"><blockquote class="blockquote"><p>Requests that the device handle (for example, display or install) the indicated URL.</p><p>If the platform has the appropriate capabilities and resources available, it
+	  </p>
+	  <div class="blockquote"><blockquote class="blockquote">
+	    <p>Requests that the device handle (for example, display or install) the indicated URL.</p>
+
+	    <p>If the platform has the appropriate capabilities and resources available, it
 	    SHOULD bring the appropriate application to the foreground and let the user interact
 	    with the content, while keeping the MIDlet suite running in the background. If the
 	    platform does not have appropriate capabilities or resources available, it MAY wait to
 	    handle the URL request until after the MIDlet suite exits. In this case, when the
 	    requesting MIDlet suite exits, the platform MUST then bring the appropriate application
-	    (if one exists) to the foreground to let the user interact with the content.</p></blockquote></div><p>
+	    (if one exists) to the foreground to let the user interact with the content.</p>
+	  </blockquote></div>
+	  <p>
 	    In other words, depending on the device, you can launch applications with
 	    midlet.platformrequest.  For example:
-	  </p><pre class="programlisting">
+	  </p>
+	  <pre class="programlisting">
 # Make a phone call
 midlet.platformrequest "tel:+393488866859"
 # Start the sms sending application
@@ -18,9 +38,17 @@ midlet.platformrequest "sms:+393488866859"
 midlet.platformrequest "http://www.hecl.org"
 # Install the jad/jar
 midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
-	  </pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
-	    There is not much standard about this command.  It may or may not support different url
-	    types on different phones.  Making phone calls with "tel:" URL's should always work.
-	    Also, keep in mind that on some devices, launching an external application may terminate
-	    the currently running midlet.
-	  </td></tr></table></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="midlet_getappproperty.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="midlet_resourceasstring.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">midlet.getappproperty </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> midlet.resourceasstring</td></tr></table></div></body></html>
+	  </pre>
+
+	  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	    <p>
+	      There is not much standard about this command.  It may
+	      or may not support different url types on different
+	      phones.  Making phone calls with "tel:" URL's should
+	      always work.  Also, keep in mind that on some devices,
+	      launching an external application may terminate the
+	      currently running midlet.
+	    </p>
+	  </td></tr></table></div>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="midlet_getappproperty.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="midp20commands.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="midlet_resourceasstring.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">midlet.getappproperty </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> midlet.resourceasstring</td></tr></table></div></body></html>

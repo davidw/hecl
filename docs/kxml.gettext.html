@@ -1,14 +1,33 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>kxml.gettext</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="kxml.html" title="K-XML"><link rel="prev" href="kxml.create.html" title="kxml.create"><link rel="next" href="kxml.input.html" title="kxml.input"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">kxml.gettext</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="kxml.create.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">K-XML</th><td width="20%" align="right"> <a accesskey="n" href="kxml.input.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" lang="en"><div class="refentry.separator"><hr></div><a name="kxml.gettext"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>kxml.gettext &#8212; Returns the text content of the current event as a string.</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><div class="cmdsynopsis"><p><code class="command">kxml.gettext</code> </p></div></div><div class="refsect1" lang="en"><a name="id-1.6.8.5.3"></a><h2>Description</h2><p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>kxml.gettext</title><link rel="stylesheet" href="hecl.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.75.1"><link rel="home" href="index.html" title="Hecl - The Mobile Scripting Language"><link rel="up" href="kxml.html" title="K-XML"><link rel="prev" href="kxml.create.html" title="kxml.create"><link rel="next" href="kxml.input.html" title="kxml.input"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">kxml.gettext</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="kxml.create.html"><img src="images/prev.png" alt="Prev"></a> </td><th width="60%" align="center">K-XML</th><td width="20%" align="right"> <a accesskey="n" href="kxml.input.html"><img src="images/next.png" alt="Next"></a></td></tr></table></div><div class="refentry" title="kxml.gettext"><div class="refentry.separator"><hr></div><a name="kxml.gettext"></a><div class="titlepage"></div>
+	<div class="refnamediv"><h2>Name</h2><p>
+	  kxml.gettext
+	   &#8212; Returns the text content of the current event as a string.
+	</p></div>
+	<div class="refsynopsisdiv" title="Synopsis"><h2>Synopsis</h2>
+	  <div class="cmdsynopsis"><p>
+	    <code class="command">kxml.gettext</code> 
+	  </p></div>
+	</div>
+	<div class="refsect1" title="Description"><a name="id-1.6.8.5.3"></a><h2>Description</h2>
+	  
+	  <p>
 	    The <span class="command"><strong>kxml.gettext</strong></span> returns the text content of the current XML event as
 	    a string.
-	  </p><p>
+	  </p>
+	  <p>
 	    The value returned depends on current event type, for example for TEXT event it is
 	    element content (this is typical case when <span class="command"><strong>kxml.next</strong></span> is used). See
 	    description of <span class="command"><strong>kxml.nextToken</strong></span> for detailed description of possible
 	    returned values for different types of events.
-	  </p><p>
-	    </p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
-	      In case of ENTITY_REF, this method returns the entity replacement text (or an empty
-	      string if not available).
+	  </p>
+	  <p>
+	    </p><div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
+	      <p>
+		In case of ENTITY_REF, this method returns the entity
+		replacement text (or an empty string if not
+		available).
+	      </p>
 	    </td></tr></table></div><p>
-	  </p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="kxml.create.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="kxml.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="kxml.input.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">kxml.create </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> kxml.input</td></tr></table></div></body></html>
+	  </p>
+	</div>
+      </div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="kxml.create.html"><img src="images/prev.png" alt="Prev"></a> </td><td width="20%" align="center"><a accesskey="u" href="kxml.html"><img src="images/up.png" alt="Up"></a></td><td width="40%" align="right"> <a accesskey="n" href="kxml.input.html"><img src="images/next.png" alt="Next"></a></td></tr><tr><td width="40%" align="left" valign="top">kxml.create </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Home"></a></td><td width="40%" align="right" valign="top"> kxml.input</td></tr></table></div></body></html>

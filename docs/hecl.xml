@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-"http://www.docbook.org/xml/4.5/docbookx.dtd" []>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xl="http://www.w3.org/1999/xlink" version="5.0">
 
 <!--
-   Copyright 2004-2008 David N. Welton
+   Copyright 2004-2010 DedaSys LLC.
 
    Licensed under the Apache License, Version 2.0 (the "License"); you
    may not use this file except in compliance with the License.  You
@@ -19,12 +18,11 @@
    permissions and limitations under the License.
 -->
 
-<article>
-  <articleinfo>
+  <info>
     <title>
-      <ulink url="http://www.hecl.org/">
+      <link xl:href="http://www.hecl.org/">
 	Hecl - The Mobile Scripting Language
-      </ulink>
+      </link>
     </title>
     <copyright>
       <year>2004</year>
@@ -33,24 +31,25 @@
       <year>2007</year>
       <year>2008</year>
       <year>2009</year>
+      <year>2010</year>
       <holder>
 	David N. Welton
       </holder>
     </copyright>
     <author>
-      <firstname>David</firstname>
-      <surname>Welton</surname>
+      <personname>David N. Welton</personname>
       <affiliation>
 	<orgname>hecl.org</orgname>
 	<address>
-	  <email>hecl-devel@lists.sourceforge.net</email>
+	  <email>hecl@googlegroups.com</email>
 	</address>
       </affiliation>
     </author>
-  </articleinfo>
+  </info>
 
   <section>
     <title>Introduction</title>
+
     <para>
       The Hecl Programming Language is a high-level scripting language
       implemented in Java.  It is intended to be small, extensible,
@@ -70,9 +69,9 @@
       <userinput>System.out.println("Hello World");</userinput>
       vs <userinput>puts "Hello World"</userinput> - 41
       keystrokes (shifted letters count double) versus 22.  Hecl is
-      built to <ulink
-      url="http://www.welton.it/articles/scalable_systems.html">"scale
-      down"</ulink> - especially in terms of its users, meaning that
+      built to <link
+      xl:href="http://www.welton.it/articles/scalable_systems.html">"scale
+      down"</link> - especially in terms of its users, meaning that
       it is very quick to learn, and can be quickly put to productive
       use even by those who are not programmers by trade.
     </para>
@@ -100,10 +99,12 @@
     </para>
 
     <para>
-      Contributions in the form of code, ideas, suggestions, or even donations are welcome.  Hecl is
-      still growing, so your thoughts are important, and you can help shape the language's future.
-      You can download the latest code via git from the GitHub project page: <ulink
-      url="http://github.com/davidw/hecl/tree/master">http://github.com/davidw/hecl/tree/master</ulink>.
+      Contributions in the form of code, ideas, suggestions, or even donations
+      are welcome.  Hecl is still growing, so your thoughts are important, and
+      you can help shape the language's future.  You can download the latest
+      source code via <link xl:href="http://git-scm.com/">git</link> from
+      github: <link
+      xl:href="http://github.com/davidw/hecl/tree/master">http://github.com/davidw/hecl/tree/master</link>.
     </para>
 
     <para>
@@ -135,15 +136,18 @@
 
   </section>
 
-  <section id="installation">
+  <section xml:id="installation">
     <title>Installation / Tools &amp; Editors</title>
     <para>
       Hecl is easy to compile and install as a standard J2SE application.
 
       <note>
-	This is only necessary if you'd like to work on Hecl's source code.  If all you want to do
-	is use it, or install it on your mobile phone, these steps aren't necessary - the standard
-	distribution contains everything you need.
+	<para>
+	  This is only necessary if you'd like to work on Hecl's
+	  source code.  If all you want to do is use it, or install it
+	  on your mobile phone, these steps aren't necessary - the
+	  standard distribution contains everything you need.
+	</para>
       </note>
     </para>
     <para>
@@ -168,23 +172,23 @@
 	  </member>
 
 	  <member>
-	    Depending on what you want to utilize Hecl for, you'll want one or both of the <ulink
-	      url="http://java.sun.com/javame/downloads/index.jsp">Sun Java Wireless Toolkit</ulink>
-	      or <ulink url="http://code.google.com/android/download.html">Android SDK</ulink>.
+	    Depending on what you want to utilize Hecl for, you'll want one or both of the <link xl:href="http://java.sun.com/javame/downloads/index.jsp">Sun Java Wireless Toolkit</link>
+	      or <link xl:href="http://code.google.com/android/download.html">Android SDK</link>.
 	  </member>
 
 	  <member>
-	    Hecl uses the <ulink url="http://ant.apache.org/">Apache Ant</ulink> build system, so
+	    Hecl uses the <link xl:href="http://ant.apache.org/">Apache Ant</link> build system, so
 	    you need to install that as well to compile Hecl.  If you are on Windows, this may
-	    require a bit of extra work.  Here are some <ulink
-	    url="http://blogs.sun.com/rajeshthekkadath/entry/installing_ant_on_windows">instructions
-	    for setting up Ant on Windows</ulink>.
+	    require a bit of extra work.  Here are some <link xl:href="http://blogs.sun.com/rajeshthekkadath/entry/installing_ant_on_windows">instructions
+	    for setting up Ant on Windows</link>.
 	  </member>
 	</simplelist>
 
       </step>
       <step>
-	To compile the standard, J2SE version of Hecl, do this:
+	<para>
+	  To compile the standard, J2SE version of Hecl, do this:
+	</para>
 	<screen>
 ant packageCommandline
 </screen>
@@ -202,13 +206,18 @@ hello world
 </screen>
       </step>
       <step>
-	If you want to check your installation of Hecl, you can run the test suite to make sure
-	everything checks out:
+	<para>
+	  If you want to check your installation of Hecl, you can run
+	  the test suite to make sure everything checks out:
+	</para>
 	<screen>
 java -jar jars/j2se/Hecl.jar tests/suite.hcl
 	</screen>
-	An (incomplete) performance test is also supplied so that you can compare numbers if you're
-	curious, or want to hack on Hecl to improve its speed:
+	<para>
+	  An (incomplete) performance test is also supplied so that
+	  you can compare numbers if you're curious, or want to hack
+	  on Hecl to improve its speed:
+	</para>
 	<screen>
 java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	</screen>
@@ -224,8 +233,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
     <procedure>
       <step>
 	<para>
-	  You'll need to download and install Sun's "Java Wireless Toolkit", here: <ulink
-	    url="http://java.sun.com/products/sjwtoolkit/index.jsp" />.
+	  You'll need to download and install Sun's "Java Wireless Toolkit", here: <link xl:href="http://java.sun.com/products/sjwtoolkit/index.jsp" />.
 	</para>
       </step>
       <step>
@@ -247,7 +255,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
       See <xref linkend="j2me"/> for further information on installation and use with J2ME.
     </para>
 
-    <section id="tools_and_editors">
+    <section xml:id="tools_and_editors">
       <title>Tools &amp; Editors</title>
       <para>
 	Even if you're not interested in recompiling Hecl to hack on the source code, to write Hecl
@@ -278,16 +286,18 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 	    <procedure>
 	      <step>
 		<para>
-		  Install the DLTK from the following URL: <ulink
-		    url="http://download.eclipse.org/technology/dltk/updates"></ulink>, from with Eclipse.
+		  Install the DLTK from the following URL: <link
+		  xl:href="http://download.eclipse.org/technology/dltk/updates"></link>,
+		  from within Eclipse.
 		</para>
 	      </step>
 
 	      <step>
 		<para>
-		  After downloading you must just associate the *.hcl files to Tcl Source Editor.
+		  After downloading you must associate the
+		  <filename>*.hcl</filename> files with the Tcl Source Editor.
 		</para>
-		
+
 		<para>
 		  <menuchoice>
 		    <guimenu>Windows</guimenu>
@@ -316,7 +326,7 @@ java -jar jars/j2se/Hecl.jar tests/performance.hcl
 
   </section>
 
-  <section id="tutorial">
+  <section xml:id="tutorial">
     <title>Hecl Tutorial</title>
     <note>
       <para>
@@ -518,7 +528,7 @@ set foo
 
   </section>
 
-  <section id="commands">
+  <section xml:id="commands">
     <title>Hecl Commands</title>
 
     <para>
@@ -526,7 +536,7 @@ set foo
     </para>
 
     <!-- = -->
-    <refentry id="equality">
+    <refentry xml:id="equality">
       <refnamediv>
 	<refname>= !=</refname> <refpurpose>Integer
 	equality</refpurpose>
@@ -567,7 +577,7 @@ puts [!= 1 1]
 
 
     <!-- + - * / math commands -->
-    <refentry id="math">
+    <refentry xml:id="math">
       <refnamediv>
 	<refname>+ - * /</refname>
 	<refpurpose>Basic math commands.</refpurpose>
@@ -615,7 +625,7 @@ puts [/ 100 5]
       </refsect1>
     </refentry>
 
-    <refentry id="fpmath">
+    <refentry xml:id="fpmath">
       <refnamediv>
 	<refname>abs acos acos asin asin atan atan cbrt ceil cos cosh
 cosh exp expm1 floor hypot log log10 log1p pow random round signum sin
@@ -633,25 +643,25 @@ sinh sqrt tan tanh tanh</refname>
 	<title>Description</title>
 	<para>
 	  Floating point math commands.  The names are mostly self
-	  explanatory, corresponding to the methods found here: <ulink
-	  url="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html">http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html</ulink>
+	  explanatory, corresponding to the methods found here: <link xl:href="http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html">http://java.sun.com/j2se/1.5.0/docs/api/java/lang/Math.html</link>
 	</para>
 	<note>
-	  Keep in mind that none of these commands are available in
-	  the MIDP1.0 version of Hecl, and that the following commands
-	  are available only in J2SE versions of Hecl:
+	  <para>
+	    Keep in mind that none of these commands are available in
+	    the MIDP1.0 version of Hecl, and that the following
+	    commands are available only in J2SE versions of Hecl:
+	  </para>
+	  <para>
+	    <command>acos</command> <command>atan</command>
+	    <command>ceil</command> <command>round</command>
+	    <command>exp</command> <command>floor</command>
+	    <command>sin</command> <command>cos</command>
+	    <command>sqrt</command> <command>log</command>
+	    <command>tan</command> <command>asin</command>
+	  </para>
 	</note>
-	<para>
-	  <command>acos</command> <command>atan</command>
-	  <command>ceil</command> <command>round</command>
-	  <command>exp</command> <command>floor</command>
-	  <command>random</command> <command>pow</command>
-	  <command>sin</command> <command>cos</command>
-	  <command>sqrt</command> <command>log</command>
-	  <command>tan</command> <command>asin</command>
-	</para>
 	<para>The following are only available in versions of Hecl
-	built with Java 1.5 and above.</para>
+	built for Java 1.5 and above.</para>
 	<para>
 	  <command>cbrt</command> <command>cosh</command>
 	  <command>expm1</command> <command>hypot</command>
@@ -663,7 +673,7 @@ sinh sqrt tan tanh tanh</refname>
     </refentry>
 
     <!-- after -->
-    <refentry id="after">
+    <refentry xml:id="after">
       <refnamediv>
 	<refname>after</refname>
 	<refpurpose>Sleep / delayed script evaluation</refpurpose>
@@ -771,7 +781,7 @@ Event timer#8 cancelled
 
 
     <!-- and -->
-    <refentry id="and">
+    <refentry xml:id="and">
       <refnamediv>
 	<refname>and</refname>
 	<refpurpose>Logical and</refpurpose>
@@ -815,7 +825,7 @@ hecl> and 1 2 4 8
 
 
     <!-- append -->
-    <refentry id="append">
+    <refentry xml:id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -846,7 +856,7 @@ append $foo "beebop"
     </refentry>
 
     <!-- break -->
-    <refentry id="break">
+    <refentry xml:id="break">
       <refnamediv>
 	<refname>break</refname>
 	<refpurpose>Break out of a loop.</refpurpose>
@@ -883,7 +893,7 @@ while { true } {
       </refsect1>
     </refentry>
 
-    <refentry id="bgerror">
+    <refentry xml:id="bgerror">
       <refnamediv>
        <refname>bgerror</refname>
        <refpurpose>Called for background task errors.</refpurpose>
@@ -916,7 +926,7 @@ timer#7
 
 
     <!-- catch -->
-    <refentry id="catch">
+    <refentry xml:id="catch">
       <refnamediv>
 	<refname>catch</refname>
 	<refpurpose>
@@ -957,7 +967,7 @@ set foo
     </refentry>
 
     <!-- classof -->
-    <refentry id="classof">
+    <refentry xml:id="classof">
       <refnamediv>
 	<refname>classof</refname>
 	<refpurpose>
@@ -994,7 +1004,7 @@ org.hecl.StringThing
       </refsect1>
     </refentry>
 
-    <refentry id="clock">
+    <refentry xml:id="clock">
       <refnamediv>
 	<refname>clock</refname>
 	<refpurpose>Provides time utilities</refpurpose>
@@ -1035,7 +1045,7 @@ Fri Jun 15 13:22:20 CEST 2007
     </refentry>
 
     <!-- continue -->
-    <refentry id="continue">
+    <refentry xml:id="continue">
       <refnamediv>
 	<refname>continue</refname>
 	<refpurpose>Skip to next cycle of a loop</refpurpose>
@@ -1078,7 +1088,7 @@ puts $res
     </refentry>
 
     <!-- copy -->
-    <refentry id="copy">
+    <refentry xml:id="copy">
       <refnamediv>
 	<refname>copy</refname>
 	<refpurpose>Copy a Hecl value.</refpurpose>
@@ -1115,7 +1125,7 @@ bop is 1
       </refsect1>
     </refentry>
 
-    <refentry id="double">
+    <refentry xml:id="double">
       <refnamediv>
 	<refname>double</refname>
 	<refpurpose>Cast as a double</refpurpose>
@@ -1133,14 +1143,16 @@ bop is 1
 	its value cast as a double.
 	</para>
 	<important>
-	  This command does not appear in the MIDP1.0 version of Hecl,
-	  because it doesn't deal with floating point.
+	  <para>
+	    This command does not appear in the MIDP1.0 version of
+	    Hecl, because it doesn't deal with floating point.
+	  </para>
 	</important>
       </refsect1>
     </refentry>
 
     <!-- eq -->
-    <refentry id="eq">
+    <refentry xml:id="eq">
       <refnamediv>
 	<refname>eq</refname>
 	<refpurpose>Tests string equivalence.</refpurpose>
@@ -1178,7 +1190,7 @@ if {eq 1 1.0} {
       </refsect1>
     </refentry>
 
-    <refentry id="eval">
+    <refentry xml:id="eval">
       <refnamediv>
 	<refname>eval</refname>
 	<refpurpose>Evaluate Hecl code.</refpurpose>
@@ -1211,7 +1223,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="exit">
+    <refentry xml:id="exit">
       <refnamediv>
 	<refname>exit</refname>
 	<refpurpose>Exit the current process</refpurpose>
@@ -1233,7 +1245,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="false">
+    <refentry xml:id="false">
       <refnamediv>
 	<refname>false</refname>
 	<refpurpose>Return false</refpurpose>
@@ -1252,7 +1264,7 @@ puts $i
       </refsect1>
     </refentry>
 
-    <refentry id="filter">
+    <refentry xml:id="filter">
       <refnamediv>
 	<refname>filter</refname>
 	<refpurpose>Filter a list.</refpurpose>
@@ -1287,7 +1299,7 @@ puts [filter $lst x {= $x 4}]
       </refsect1>
     </refentry>
 
-    <refentry id="float">
+    <refentry xml:id="float">
       <refnamediv>
 	<refname>float</refname>
 	<refpurpose>Cast as a float</refpurpose>
@@ -1305,13 +1317,15 @@ puts [filter $lst x {= $x 4}]
 	its value cast as a float.
 	</para>
 	<important>
-	  This command does not appear in the MIDP1.0 version of Hecl,
-	  because it doesn't deal with floating point.
+	  <para>
+	    This command does not appear in the MIDP1.0 version of
+	    Hecl, because it doesn't deal with floating point.
+	  </para>
 	</important>
       </refsect1>
     </refentry>
 
-    <refentry id="for">
+    <refentry xml:id="for">
       <refnamediv>
 	<refname>for</refname>
 	<refpurpose>For loop.</refpurpose>
@@ -1354,7 +1368,7 @@ puts $out
       </refsect1>
     </refentry>
 
-    <refentry id="foreach">
+    <refentry xml:id="foreach">
       <refnamediv>
 	<refname>foreach</refname>
 	<refpurpose>Iterate over elements in a list.</refpurpose>
@@ -1397,7 +1411,7 @@ puts $res
     </refentry>
 
     <!-- global -->
-    <refentry id="global">
+    <refentry xml:id="global">
       <refnamediv>
 	<refname>global</refname>
 	<refpurpose>Use global variable from within a proc.</refpurpose>
@@ -1435,7 +1449,7 @@ puts $foo
       </refsect1>
     </refentry>
 
-    <refentry id="hasclass">
+    <refentry xml:id="hasclass">
       <refnamediv>
 	<refname>hasclass</refname>
 	<refpurpose>An interface to <methodname>Class.forName</methodname></refpurpose>
@@ -1452,9 +1466,11 @@ puts $foo
 	  Reports whether a given class is present or not.
 	</para>
 	<important>
-	  Keep in mind that in J2ME, using an obfuscator, class names
-	  may not be what you think they are!  Only use this for
-	  system-defined classes.
+	  <para>
+	    Keep in mind that in J2ME, using an obfuscator, class
+	    names may not be what you think they are!  Only use this
+	    for system-defined classes.
+	  </para>
 	</important>
       </refsect1>
       <refsect1>
@@ -1469,7 +1485,7 @@ hecl> hasclass oogyboogy
     </refentry>
 
     <!-- hash, hget, hset -->
-    <refentry id="hash">
+    <refentry xml:id="hash">
       <refnamediv>
 	<refname>hash</refname>
 	<refpurpose>Create and manipulate hash tables.</refpurpose>
@@ -1536,7 +1552,7 @@ puts [hget $foo a]
     </refentry>
 
     <!-- if -->
-    <refentry id="if">
+    <refentry xml:id="if">
       <refnamediv>
 	<refname>if</refname>
 	<refpurpose>Conditionally execute code.</refpurpose>
@@ -1600,7 +1616,7 @@ if { > 0 1 } {
     </refentry>
 
     <!-- incr -->
-    <refentry id="incr">
+    <refentry xml:id="incr">
       <refnamediv>
 	<refname>incr</refname>
 	<refpurpose>Increment a variable.</refpurpose>
@@ -1636,7 +1652,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- intro -->
-     <refentry id="intro">
+     <refentry xml:id="intro">
       <refnamediv>
 	<refname>intro</refname>
 	<refpurpose>Introspection command.</refpurpose>
@@ -1668,7 +1684,7 @@ puts "foo is now $foo"
     </refentry>
 
     <!-- join -->
-     <refentry id="join">
+     <refentry xml:id="join">
       <refnamediv>
 	<refname>join</refname>
 	<refpurpose>Join elements of a list to create a string.</refpurpose>
@@ -1702,7 +1718,7 @@ puts [join {a b c} "|"]
     </refentry>
 
     <!-- lappend -->
-     <refentry id="lappend">
+     <refentry xml:id="lappend">
       <refnamediv>
 	<refname>lappend</refname>
 	<refpurpose>Append an element to a list.</refpurpose>
@@ -1737,7 +1753,7 @@ a b {c d}</screen>
     </refentry>
 
     <!-- lindex -->
-    <refentry id="lindex">
+    <refentry xml:id="lindex">
       <refnamediv>
 	<refname>lindex</refname>
 	<refpurpose>Return the Nth element of a list</refpurpose>
@@ -1769,7 +1785,7 @@ puts [lindex {a b c} 2]
 
 
     <!-- list -->
-     <refentry id="list">
+     <refentry xml:id="list">
       <refnamediv>
 	<refname>list</refname>
 	<refpurpose>Create a list</refpurpose>
@@ -1801,7 +1817,7 @@ puts [list a b c [list 1 2 3]]
     </refentry>
 
     <!-- llen -->
-     <refentry id="llen">
+     <refentry xml:id="llen">
       <refnamediv>
 	<refname>llen</refname>
 	<refpurpose>List length.</refpurpose>
@@ -1830,7 +1846,7 @@ puts [llen {1 2 3 {a b c}}]
     </refentry>
 
     <!-- lrange -->
-    <refentry id="lrange">
+    <refentry xml:id="lrange">
       <refnamediv>
 	<refname>lrange</refname>
 	<refpurpose>Get range of elements from a list.</refpurpose>
@@ -1864,7 +1880,7 @@ lrange {a b c d e f g} 0 2
     </refentry>
 
     <!-- lset -->
-    <refentry id="lset">
+    <refentry xml:id="lset">
       <refnamediv>
 	<refname>lset</refname>
 	<refpurpose>Set list elements.</refpurpose>
@@ -1905,7 +1921,7 @@ a c</screen>
     </refentry>
 
     <!-- ne -->
-    <refentry id="ne">
+    <refentry xml:id="ne">
       <refnamediv>
 	<refname>ne</refname>
 	<refpurpose>String "not equal".</refpurpose>
@@ -1939,7 +1955,7 @@ if {ne 1 00001} {
     </refentry>
 
     <!-- not -->
-    <refentry id="not">
+    <refentry xml:id="not">
       <refnamediv>
 	<refname>not</refname>
 	<refpurpose>Logical not</refpurpose>
@@ -1971,7 +1987,7 @@ hecl> not 4
     </refentry>
 
     <!-- or -->
-    <refentry id="or">
+    <refentry xml:id="or">
       <refnamediv>
 	<refname>or</refname>
 	<refpurpose>Logical or</refpurpose>
@@ -2012,7 +2028,7 @@ hecl> or 1 2 4
 
 
     <!-- proc -->
-    <refentry id="proc">
+    <refentry xml:id="proc">
       <refnamediv>
 	<refname>proc</refname>
 	<refpurpose>Create a new procedure.</refpurpose>
@@ -2020,7 +2036,7 @@ hecl> or 1 2 4
       <refsynopsisdiv>
 	<cmdsynopsis>
 	  <command>proc</command>
-	  <arg choice="req"><replaceable>name</replaceable></arg>
+	  <arg choice="opt"><replaceable>name</replaceable></arg>
 	  <arg choice="req"><replaceable>arglist</replaceable></arg>
 	  <arg choice="req"><replaceable>body</replaceable></arg>
 	</cmdsynopsis>
@@ -2028,20 +2044,20 @@ hecl> or 1 2 4
       <refsect1>
 	<title>Description</title>
 	<para>
-	  The <command>proc</command> command creates new procedures,
-	  which are virtually indistinguishable from built-in Hecl
-	  commands.  <option><replaceable>name</replaceable></option>
-	  is the name of the new command,
+	  The <command>proc</command> command creates new procedures, which are virtually
+	  indistinguishable from built-in Hecl
+	  commands.  <option><replaceable>name</replaceable></option> is the name of the new
+	  command, or, if it is absent, an anonymous procedure is created (and should be stored in a
+	  variable).
 	  <option><replaceable>arglist</replaceable></option> is a
 	  list of arguments that the new command will take and make
 	  available as local variables within the
 	  <option><replaceable>body</replaceable></option>, which is
 	  the code executed every time the command is called.  If the
-	  last element of the argument list is
-	  <important>args</important>, the variable
-	  <varname>args</varname> is a list that is filled with
-	  any arguments (including 0) above and beyond the number of
-	  arguments specified for the proc.
+	  last element of the argument list is <option>args</option>,
+	  the variable <varname>args</varname> is a list that is
+	  filled with any arguments (including 0) above and beyond the
+	  number of arguments specified for the proc.
 	</para>
       </refsect1>
       <refsect1>
@@ -2073,10 +2089,22 @@ showargs x y z
 	<screen>Args: 
 Args: x y z</screen>
       </refsect1>
+
+      <refsect1>
+	<title>Anonymous proc Example</title>
+	  <programlisting>
+set foo [proc {x} { puts $x }]
+$foo beebop
+	</programlisting>
+	<para>Produces:</para>
+	<screen>beebop</screen>
+      </refsect1>
+
+
     </refentry>
 
      <!-- puts -->
-     <refentry id="puts">
+     <refentry xml:id="puts">
       <refnamediv>
 	<refname>puts</refname>
 	<refpurpose>Print text.</refpurpose>
@@ -2104,7 +2132,7 @@ puts "Hello, world"
       </refsect1>
     </refentry>
 
-    <refentry id="rename">
+    <refentry xml:id="rename">
       <refnamediv>
 	<refname>rename</refname>
 	<refpurpose>Rename a command</refpurpose>
@@ -2130,7 +2158,7 @@ hello world
     </refentry>
 
     <!-- return -->
-    <refentry id="return">
+    <refentry xml:id="return">
       <refnamediv>
 	<refname>return</refname>
 	<refpurpose>Returns a value from a procedure.</refpurpose>
@@ -2165,7 +2193,7 @@ puts [someproc]
     </refentry>
 
     <!-- search -->
-    <refentry id="search">
+    <refentry xml:id="search">
       <refnamediv>
 	<refname>search</refname>
 	<refpurpose>Find the first instance of something in a list.</refpurpose>
@@ -2198,7 +2226,7 @@ puts [search $lst x {= $x 4}]
     </refentry>
 
     <!-- set -->
-    <refentry id="set">
+    <refentry xml:id="set">
       <refnamediv>
 	<refname>set</refname>
 	<refpurpose>Set a variable.</refpurpose>
@@ -2236,7 +2264,7 @@ foo is bar and bee is bop
     </refentry>
 
      <!-- sort -->
-     <refentry id="sort">
+     <refentry xml:id="sort">
       <refnamediv>
 	<refname>sort</refname>
 	<refpurpose>Sorts list alphabetically.</refpurpose>
@@ -2267,7 +2295,7 @@ puts [sort {padova rovigo verona vicenza venezia treviso belluno}]
     </refentry>
 
     <!-- split -->
-    <refentry id="split">
+    <refentry xml:id="split">
       <refnamediv>
 	<refname>split</refname>
 	<refpurpose>Split a string into a list.</refpurpose>
@@ -2302,7 +2330,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-     <refentry id="strbytelen">
+     <refentry xml:id="strbytelen">
       <refnamediv>
 	<refname>strbytelen</refname>
 	<refpurpose>Return the length of the string, in bytes.</refpurpose>
@@ -2324,7 +2352,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strcmp">
+    <refentry xml:id="strcmp">
       <refnamediv>
 	<refname>strcmp</refname>
 	<refpurpose>Compare two strings, return 0 if equal.</refpurpose>
@@ -2347,7 +2375,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strfind">
+    <refentry xml:id="strfind">
       <refnamediv>
 	<refname>strfind</refname>
 	<refpurpose>Find one string in another.</refpurpose>
@@ -2371,7 +2399,7 @@ aaaxbbbyccc ddd</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strindex">
+    <refentry xml:id="strindex">
       <refnamediv>
 	<refname>strindex</refname>
 	<refpurpose>Return the index'th character of string.</refpurpose>
@@ -2403,7 +2431,7 @@ d</screen>
       </refsect1>
     </refentry>
 
-    <refentry id="strlast">
+    <refentry xml:id="strlast">
       <refnamediv>
 	<refname>strlast</refname>
 	<refpurpose>Get the last occurance of one string within
@@ -2431,7 +2459,7 @@ d</screen>
     </refentry>
 
     <!-- strlen -->
-    <refentry id="strlen">
+    <refentry xml:id="strlen">
       <refnamediv>
 	<refname>strlen</refname>
 	<refpurpose>String length.</refpurpose>
@@ -2459,7 +2487,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strlower">
+    <refentry xml:id="strlower">
       <refnamediv>
 	<refname>strlower</refname>
 	<refpurpose>Lower case a string</refpurpose>
@@ -2477,7 +2505,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strrange">
+    <refentry xml:id="strrange">
       <refnamediv>
 	<refname>strrange</refname>
 	<refpurpose>Return a substring from a string</refpurpose>
@@ -2503,7 +2531,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strrep">
+    <refentry xml:id="strrep">
       <refnamediv>
 	<refname>strrep</refname>
 	<refpurpose>Repeat a string N times</refpurpose>
@@ -2525,7 +2553,7 @@ puts [strlen "abcdefghijklmnopqrstuvwxyz"]
       </refsect1>
     </refentry>
 
-    <refentry id="strreplace">
+    <refentry xml:id="strreplace">
       <refnamediv>
 	<refname>strreplace</refname>
 	<refpurpose>Replace string A in string B</refpurpose>
@@ -2557,7 +2585,7 @@ puts [strreplace {hi hello} blahhiblahblahhihiblah]
     </refentry>
 
 
-    <refentry id="strtrim">
+    <refentry xml:id="strtrim">
       <refnamediv>
 	<refname>strtrim</refname>
 	<refpurpose>Remove whitespace or other characters from the
@@ -2604,7 +2632,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="strupper">
+    <refentry xml:id="strupper">
       <refnamediv>
 	<refname>strupper</refname>
 	<refpurpose>Upper case a string</refpurpose>
@@ -2624,7 +2652,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="system_hasproperty">
+    <refentry xml:id="system_hasproperty">
       <refnamediv>
 	<refname>system.hasproperty</refname>
 	<refpurpose>Check for existence of system properties</refpurpose>
@@ -2644,7 +2672,7 @@ alone
       </refsect1>
     </refentry>
 
-    <refentry id="system_getproperty">
+    <refentry xml:id="system_getproperty">
       <refnamediv>
 	<refname>system.getproperty</refname>
 	<refpurpose>Get system properties</refpurpose>
@@ -2659,13 +2687,12 @@ alone
 	<title>Description</title>
 	<para>
 	  Retrieve information about system properties.  Here is a list of some available system
-	  properties on Java ME platforms: <ulink
-	    url="http://developers.sun.com/mobility/midp/questions/properties/index.html"></ulink>
+	  properties on Java ME platforms: <link xl:href="http://developers.sun.com/mobility/midp/questions/properties/index.html"></link>
 	</para>
       </refsect1>
     </refentry>
 
-    <refentry id="throw">
+    <refentry xml:id="throw">
       <refnamediv>
 	<refname>throw</refname>
 	<refpurpose>Generates an exception that can be caught with
@@ -2705,7 +2732,7 @@ hecl> throw "oh no" USERERROR
     </refentry>
 
     <!-- time -->
-    <refentry id="time">
+    <refentry xml:id="time">
       <refnamediv>
 	<refname>time</refname>
 	<refpurpose>Time the execution of a script.</refpurpose>
@@ -2746,7 +2773,7 @@ puts "Time is $time"
     </refentry>
 
      <!-- true -->
-     <refentry id="true">
+     <refentry xml:id="true">
       <refnamediv>
 	<refname>true</refname>
 	<refpurpose>Returns true.</refpurpose>
@@ -2775,7 +2802,7 @@ if { true } {
     </refentry>
 
     <!-- unset -->
-    <refentry id="unset">
+    <refentry xml:id="unset">
       <refnamediv>
 	<refname>unset</refname>
 	<refpurpose>Unset a variable.</refpurpose>
@@ -2795,7 +2822,7 @@ if { true } {
     </refentry>
 
     <!-- upeval -->
-    <refentry id="upeval">
+    <refentry xml:id="upeval">
       <refnamediv>
 	<refname>upeval</refname>
 	<refpurpose>Evaluate script in next stack frame up.</refpurpose>
@@ -2842,7 +2869,7 @@ puts $foo
     </refentry>
 
     <!-- while -->
-    <refentry id="while">
+    <refentry xml:id="while">
       <refnamediv>
 	<refname>while</refname>
 	<refpurpose>While loop.</refpurpose>
@@ -2883,7 +2910,7 @@ i is 5
     </refentry>
 
 <!--
-     <refentry id="append">
+     <refentry xml:id="append">
       <refnamediv>
 	<refname>append</refname>
 	<refpurpose>Append text to a variable.</refpurpose>
@@ -2916,7 +2943,7 @@ append $foo "beebop"
 
   </section>
 
-  <section id="extensioncommands">
+  <section xml:id="extensioncommands">
     <title>Hecl Extension Commands</title>
 
     <para>
@@ -2936,7 +2963,7 @@ append $foo "beebop"
 	interacts with the filesystem.</para>
       </note>
 
-      <refentry id="filefinder">
+      <refentry xml:id="filefinder">
 	<refnamediv>
 	  <refname>filefinder</refname>
 	  <refpurpose>File selection widget.</refpurpose>
@@ -2982,7 +3009,7 @@ append $foo "beebop"
       </refentry>
 
 
-      <refentry id="open">
+      <refentry xml:id="open">
 	<refnamediv>
 	  <refname>open</refname>
 	  <refpurpose>Opens a file for reading or writing.</refpurpose>
@@ -3004,7 +3031,7 @@ append $foo "beebop"
 	</refsect1>
       </refentry>
 
-      <refentry id="source">
+      <refentry xml:id="source">
 	<refnamediv>
 	  <refname>source</refname>
 	  <refpurpose>Evaluate Hecl script in a file.</refpurpose>
@@ -3035,7 +3062,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_basename">
+      <refentry xml:id="file_basename">
 	<refnamediv>
 	  <refname>file.basename</refname>
 	  <refpurpose>Returns the file name with no paths.</refpurpose>
@@ -3060,7 +3087,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_cd">
+      <refentry xml:id="file_cd">
 	<refnamediv>
 	  <refname>file.cd</refname>
 	  <refpurpose>Change working directory.</refpurpose>
@@ -3085,7 +3112,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_current">
+      <refentry xml:id="file_current">
 	<refnamediv>
 	  <refname>file.current</refname>
 	  <refpurpose>Returns the name of the file currently being evaluated.</refpurpose>
@@ -3106,7 +3133,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_delete">
+      <refentry xml:id="file_delete">
 	<refnamediv>
 	  <refname>file.delete</refname>
 	  <refpurpose>Delete the file.</refpurpose>
@@ -3125,7 +3152,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_devs">
+      <refentry xml:id="file_devs">
 	<refnamediv>
 	  <refname>file.devs</refname>
 	  <refpurpose>List available devices.</refpurpose>
@@ -3143,7 +3170,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_du">
+      <refentry xml:id="file_du">
 	<refnamediv>
 	  <refname>file.du</refname>
 	  <refpurpose>"Disk" usage.</refpurpose>
@@ -3164,7 +3191,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_exists">
+      <refentry xml:id="file_exists">
 	<refnamediv>
 	  <refname>file.exists</refname>
 	  <refpurpose>Does the file exist?</refpurpose>
@@ -3183,7 +3210,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_hidden">
+      <refentry xml:id="file_hidden">
 	<refnamediv>
 	  <refname>file.hidden</refname>
 	  <refpurpose>Is the file hidden?</refpurpose>
@@ -3199,17 +3226,22 @@ puts $foo
 	  <para>
 	    Return 1 if the file is "hidden".  To quote from the relevant Java documentation:
 	    <blockquote>
-	      The exact definition of hidden is system-dependent. For example, on UNIX systems a
-	      file is considered to be hidden if its name begins with a period character ('.'). On
-	      Win32 and FAT file systems, a file is considered to be hidden if it has been marked as
-	      such in the file's attributes. If hidden files are not supported on the referenced
-	      file system, this method always returns false.
+	      <para>
+		The exact definition of hidden is
+		system-dependent. For example, on UNIX systems a file
+		is considered to be hidden if its name begins with a
+		period character ('.'). On Win32 and FAT file systems,
+		a file is considered to be hidden if it has been
+		marked as such in the file's attributes. If hidden
+		files are not supported on the referenced file system,
+		this method always returns false.
+	      </para>
 	    </blockquote>
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="file_isdirectory">
+      <refentry xml:id="file_isdirectory">
 	<refnamediv>
 	  <refname>file.isdirectory</refname>
 	  <refpurpose>Is this a directory?</refpurpose>
@@ -3228,7 +3260,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_isopen">
+      <refentry xml:id="file_isopen">
 	<refnamediv>
 	  <refname>file.isopen</refname>
 	  <refpurpose>Is the file currently in use?</refpurpose>
@@ -3247,7 +3279,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_join">
+      <refentry xml:id="file_join">
 	<refnamediv>
 	  <refname>file.join</refname>
 	  <refpurpose>Creates a filename from a list.</refpurpose>
@@ -3267,7 +3299,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_list">
+      <refentry xml:id="file_list">
 	<refnamediv>
 	  <refname>file.list</refname>
 	  <refpurpose>List files in a directory.</refpurpose>
@@ -3286,7 +3318,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_mkdir">
+      <refentry xml:id="file_mkdir">
 	<refnamediv>
 	  <refname>file.mkdir</refname>
 	  <refpurpose>Creates the directory.</refpurpose>
@@ -3305,7 +3337,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_mtime">
+      <refentry xml:id="file_mtime">
 	<refnamediv>
 	  <refname>file.mtime</refname>
 	  <refpurpose>Returns the file modification time.</refpurpose>
@@ -3325,7 +3357,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_readable">
+      <refentry xml:id="file_readable">
 	<refnamediv>
 	  <refname>file.readable</refname>
 	  <refpurpose>Is the file readable?</refpurpose>
@@ -3345,7 +3377,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_rename">
+      <refentry xml:id="file_rename">
 	<refnamediv>
 	  <refname>file.rename</refname>
 	  <refpurpose>Rename a file.</refpurpose>
@@ -3365,7 +3397,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_size">
+      <refentry xml:id="file_size">
 	<refnamediv>
 	  <refname>file.size</refname>
 	  <refpurpose>Returns the file's size.</refpurpose>
@@ -3384,7 +3416,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_split">
+      <refentry xml:id="file_split">
 	<refnamediv>
 	  <refname>file.split</refname>
 	  <refpurpose>Return a list of a path's components.</refpurpose>
@@ -3403,7 +3435,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_truncate">
+      <refentry xml:id="file_truncate">
 	<refnamediv>
 	  <refname>file.truncate</refname>
 	  <refpurpose>Truncates the file.</refpurpose>
@@ -3423,7 +3455,7 @@ puts $foo
 	</refsect1>
       </refentry>
 
-      <refentry id="file_writable">
+      <refentry xml:id="file_writable">
 	<refnamediv>
 	  <refname>file.writable</refname>
 	  <refpurpose>Is the file writable?</refpurpose>
@@ -3445,7 +3477,7 @@ puts $foo
 
     </section>
 
-    <section id="http_commands">
+    <section xml:id="http_commands">
       <title>HTTP</title>
 
       <para>
@@ -3453,7 +3485,7 @@ puts $foo
 	(although they may not be able to create TCP/IP sockets).  Hecl
 	provides basic http commands</para>
 
-      <refentry id="http_geturl">
+      <refentry xml:id="http_geturl">
 	<refnamediv>
 	  <refname>http.geturl</refname>
 	  <refpurpose>Fetch contents of a URL.</refpurpose>
@@ -3523,7 +3555,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_formatQuery">
+      <refentry xml:id="http_formatQuery">
 	<refnamediv>
 	  <refname>http.formatQuery</refname>
 	  <refpurpose>URL Encode a request</refpurpose>
@@ -3544,7 +3576,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_data">
+      <refentry xml:id="http_data">
 	<refnamediv>
 	  <refname>http.data</refname>
 	  <refpurpose>A shortcut to get the data from an http.geturl response.</refpurpose>
@@ -3566,7 +3598,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_ncode">
+      <refentry xml:id="http_ncode">
 	<refnamediv>
 	  <refname>http.ncode</refname>
 	  <refpurpose>A shortcut to get the numeric code from an http.geturl response.</refpurpose>
@@ -3588,7 +3620,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="http_status">
+      <refentry xml:id="http_status">
 	<refnamediv>
 	  <refname>http.status</refname>
 	  <refpurpose>A shortcut to get the status from an http.geturl response.</refpurpose>
@@ -3612,14 +3644,16 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 
     </section>
 
-    <section id="location_commands">
+    <section xml:id="location_commands">
       <title>Location</title>
       <para>
 	Access to your phone's location API (JSR 179).  Get information on your precise location.
-	<note>Not available on all phones.</note>
+	<note>
+	<para>Not available on all phones.</para>
+	</note>
       </para>
 
-      <refentry id="location_get">
+      <refentry xml:id="location_get">
 	<refnamediv>
 	  <refname>location.get</refname>
 	  <refpurpose>Get location information.</refpurpose>
@@ -3652,37 +3686,142 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	  <orderedlist>
 	    <listitem>
 	      <para>
-		The simplist way is to simply call the command with a <option>timeout</option>
-		argument.  The program will block until the command returns an answer, which could
-		take up to several minutes.
+		The simplest way is to simply call the command with a
+		<option>timeout</option> argument.  The program will block until
+		the command returns an answer, in the form of a hash table (see
+		below), which could take up to several minutes.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		The alternative way of calling <command>location.get</command> is to pass it a
-		<option>-callback <replaceable>callbackProc</replaceable></option>, which is the
-		name of a proc that will be called when the information is available.  Program
-		execution continues and does not block on the location.get call.  The
-		<option>callbackProc</option> takes one argument, which is a hash of information
-		about the location.  When using <option>-callback</option> it is also possible to
-		specify a <option>-timeout</option> option (in seconds), and an
-		<option>-onerror</option> option.  This is used in case of errors: the specified
+		The alternative way of calling
+		<command>location.get</command> is to pass it a
+		<option>-callback
+		<replaceable>callbackProc</replaceable></option>,
+		which is the name of a proc that will be called when
+		the information is available, with a hash table
+		specifying the results.  Program execution continues
+		and does not block on the location.get call.  The
+		<option>callbackProc</option> takes one argument,
+		which is a hash of information about the location.
+		When using <option>-callback</option> it is also
+		possible to specify a <option>-timeout</option> option
+		(in seconds), and an <option>-onerror</option> option.
+		This is used in case of errors: the specified
 		<option><replaceable>onErrorProc</replaceable></option>
 	      </para>
 	    </listitem>
 	  </orderedlist>
-	  <programlisting>http.status [http.geturl http://www.dedasys.com]</programlisting>
+	  <para>
+	    Either method will supply the user with a hash table with the
+	    following elements.  See also the JavaDocs here:
+	    <link xl:href="http://library.forum.nokia.com/index.jsp?topic=/Java_Developers_Library/GUID-4AEC8DAF-DDCC-4A30-B820-23F2BA60EA52/javax/microedition/location/Location.html">javax/microedition/location/Location</link>
+	  </para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<constant>lat</constant>: latitude.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<constant>lon</constant>: longitude.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>alt</constant>: altitude.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>haccuracy</constant>: horizontal accuracy, in meters.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>vaccuracy</constant>: vertical accuracy, in meters.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>location_method</constant>: contains a hash table of
+		its own with information about the method used to ascertain the
+		location.  Possible values include:
+	      </para>
+
+	      <itemizedlist>
+		<listitem>
+		  <para><constant>ASSISTED</constant>: Location method is assisted.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>UNASSISTED</constant>: Location method is unassisted.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>NETWORKBASED</constant>: Location is derived
+		  from the network.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TERMINALBASED</constant>: Location is obtained
+		  from a GPS terminal.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>ANGLEOFARRIVAL</constant>: Location method
+		  Angle of Arrival for cellular / terrestrial RF system.</para>
+		</listitem>
+		<listitem>
+		  <para><constant>CELLID</constant>: Location method Cell-ID for
+		  cellular (in GSM, this is the same as CGI, Cell Global
+		  Identity).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>SATELLITE</constant>: Location method using
+		  satellites (for example, Global Positioning System
+		  (GPS)).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>SHORTRANGE</constant>: Location method
+		  Short-range positioning system (for example, Bluetooth
+		  LP).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TIMEDIFFERENCE</constant>: Location method
+		  Time Difference for cellular / terrestrial RF system (for
+		  example, Enhanced Observed Time Difference (E-OTD) for
+		  GSM).</para>
+		</listitem>
+		<listitem>
+		  <para><constant>TIMEOFARRIVAL</constant>: Location method Time
+		  of Arrival (TOA) for cellular / terrestrial RF system.</para>
+		</listitem>
+	      </itemizedlist>
+
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>speed</constant>: ground speed, in meters per second.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<constant>course</constant>: course, in degrees relative to true
+		north.
+	      </para>
+	    </listitem>
+
+	  </itemizedlist>
 	</refsect1>
       </refentry>
 
     </section>
 
-    <section id="networking_commands">
+    <section xml:id="networking_commands">
       <title>Net</title>
 
       <para>Networking commands</para>
 
-      <refentry id="base64_decode">
+      <refentry xml:id="base64_decode">
 	<refnamediv>
 	  <refname>base64::decode</refname>
 	  <refpurpose>Base 64 decode</refpurpose>
@@ -3702,7 +3841,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	</refsect1>
       </refentry>
 
-      <refentry id="base64_encode">
+      <refentry xml:id="base64_encode">
 	<refnamediv>
 	  <refname>base64::encode</refname>
 	  <refpurpose>Base 64 encode</refpurpose>
@@ -3725,7 +3864,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 
     </section>
 
-    <section id="recordstore_commands">
+    <section xml:id="recordstore_commands">
       <title>RecordStore</title>
 
       <para>
@@ -3734,7 +3873,7 @@ http.geturl http://www.hecl.org/ -headers {Set-Cookie foo=bar}
 	store data between invocations of the application.
       </para>
 
-      <refentry id="rms_list">
+      <refentry xml:id="rms_list">
 	<refnamediv>
 	  <refname>rms.list</refname>
 	  <refpurpose>
@@ -3771,7 +3910,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_size">
+      <refentry xml:id="rms_size">
 	<refnamediv>
 	  <refname>rms.size</refname>
 	  <refpurpose>Returns the size occupied by the record store</refpurpose>
@@ -3791,7 +3930,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_sizeavail">
+      <refentry xml:id="rms_sizeavail">
 	<refnamediv>
 	  <refname>rms.sizeavail</refname>
 	  <refpurpose>Returns the amount of space available to grow
@@ -3812,7 +3951,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_set">
+      <refentry xml:id="rms_set">
 	<refnamediv>
 	  <refname>rms.set</refname>
 	  <refpurpose>Sets the value of a record store</refpurpose>
@@ -3837,7 +3976,7 @@ foreach name [rs.list] {
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_get">
+      <refentry xml:id="rms_get">
 	<refnamediv>
 	  <refname>rms.get</refname>
 	  <refpurpose>Fetch the value of the specified record store
@@ -3872,7 +4011,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_add">
+      <refentry xml:id="rms_add">
 	<refnamediv>
 	  <refname>rms.add</refname>
 	  <refpurpose>Adds data to the specified record store,
@@ -3895,7 +4034,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_delete">
+      <refentry xml:id="rms_delete">
 	<refnamediv>
 	  <refname>rms.delete</refname>
 	  <refpurpose>Deletes either the record store, or a record id
@@ -3919,7 +4058,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hset">
+      <refentry xml:id="rms_hset">
 	<refnamediv>
 	  <refname>rms.hset</refname>
 	  <refpurpose>Sets a key/value pair in the given record store.</refpurpose>
@@ -3945,7 +4084,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hget">
+      <refentry xml:id="rms_hget">
 	<refnamediv>
 	  <refname>rms.hget</refname>
 	  <refpurpose>Gets the value of a given key in the specified
@@ -3969,7 +4108,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hexists">
+      <refentry xml:id="rms_hexists">
 	<refnamediv>
 	  <refname>rms.hexists</refname>
 	  <refpurpose>Determine whether a given key exists in a record
@@ -3992,7 +4131,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hkeys">
+      <refentry xml:id="rms_hkeys">
 	<refnamediv>
 	  <refname>rms.hkeys</refname>
 	  <refpurpose>Returns all keys associated with a given record store.</refpurpose>
@@ -4012,7 +4151,7 @@ set highscore [rms.get highscore 1]
 	</refsect1>
       </refentry>
 
-      <refentry id="rms_hdel">
+      <refentry xml:id="rms_hdel">
 	<refnamediv>
 	  <refname>rms.hdel</refname>
 	  <refpurpose>Deletes a key from the specified record store.</refpurpose>
@@ -4036,12 +4175,12 @@ set highscore [rms.get highscore 1]
       </refentry>
     </section>
 
-    <section id="kxml">
+    <section xml:id="kxml">
         <title>K-XML</title>
         <para>
 	  The K-XML extension provides the kXML 2 parser functionality for hecl. kXML 2 implements
 	  the XmlPull API. Please find general information about XmlPull parsers including the
-	  interface documentation at <ulink url="xmlpull.org">xmlpull.org</ulink>.
+	  interface documentation at <link xl:href="xmlpull.org">xmlpull.org</link>.
       </para>
       <note>
 	<para>
@@ -4050,7 +4189,7 @@ set highscore [rms.get highscore 1]
 	  <filename>cldc11midp20.properties</filename> file and recompile Hecl.
 	</para>
       </note>
-        <refentry id="kxml.create">
+        <refentry xml:id="kxml.create">
             <refnamediv>
                 <refname>kxml.create</refname>
                 <refpurpose>Returns the kxml parser object.</refpurpose>
@@ -4070,7 +4209,7 @@ set xmlParser [kxml.create]
             </refsect1>
         </refentry>
 
-      <refentry id="kxml.gettext">
+      <refentry xml:id="kxml.gettext">
 	<refnamediv>
 	  <refname>kxml.gettext</refname>
 	  <refpurpose>Returns the text content of the current event as a string.</refpurpose>
@@ -4094,15 +4233,18 @@ set xmlParser [kxml.create]
 	  </para>
 	  <para>
 	    <note>
-	      In case of ENTITY_REF, this method returns the entity replacement text (or an empty
-	      string if not available).
+	      <para>
+		In case of ENTITY_REF, this method returns the entity
+		replacement text (or an empty string if not
+		available).
+	      </para>
 	    </note>
 	  </para>
 	</refsect1>
       </refentry>
 
 
-        <refentry id="kxml.input">
+        <refentry xml:id="kxml.input">
             <refnamediv>
                 <refname>kxml.input</refname>
                 <refpurpose>Sets a input stream the kxml-parser is going to process.</refpurpose>
@@ -4128,7 +4270,7 @@ kxml.input $xmlParser $xmlStream
                 </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.nexttag">
+        <refentry xml:id="kxml.nexttag">
             <refnamediv>
                 <refname>kxml.nexttag</refname>
                 <refpurpose>Call <command>kxml.next</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.</refpurpose>
@@ -4146,7 +4288,7 @@ kxml.input $xmlParser $xmlStream
                 <para>Call <command>kxml.nexttag</command> and return event if it is START_TAG or END_TAG otherwise throw an exception.It will skip whitespace TEXT before actual tag if any.</para>
             </refsect1>
         </refentry>
-        <refentry id="kxml.next">
+        <refentry xml:id="kxml.next">
             <refnamediv>
                 <refname>kxml.next</refname>
                 <refpurpose>Get next parsing event.</refpurpose>
@@ -4188,111 +4330,112 @@ kxml.input $xmlParser $xmlStream
                 </itemizedlist>
             </refsect1>
         </refentry>
-        <refentry id="kxml.requirestart">
+        <refentry xml:id="kxml.requirestart">
             <refnamediv>
                 <refname>kxml.requirestart</refname>
                 <refpurpose>Test if the current event is START_TAG type and do match the given name.</refpurpose>
             </refnamediv>
+	    <refsynopsisdiv>
+	      <cmdsynopsis>
+		<command>kxml.requirestart</command>
+		<arg choice="req">
+		<replaceable>xmlParser</replaceable></arg>
+		<arg choice="req">
+		<replaceable>name</replaceable></arg>
+	      </cmdsynopsis>
+	    </refsynopsisdiv>
             <refsect1>
                 <title>Description</title>
-                <para>Test if the current event is START_TAG type do match the given name and any namesapce. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.</para>
-                <refsynopsisdiv>
-                    <cmdsynopsis>
-                        <command>kxml.requirestart</command>
-                        <arg choice="req">
-                        <replaceable>xmlParser</replaceable></arg>
-                        <arg choice="req">
-                        <replaceable>name</replaceable></arg>
-                    </cmdsynopsis>
-                </refsynopsisdiv>
+                <para>Test if the current event is START_TAG type do match the given name and any namesapce. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.
+		</para>
                 <programlisting>
 #-- assert the current event is a START_TAG event "forecast_conditions"
 kxml.requirestart $xmlParser "forecast_conditions"
                 </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.requireend">
+        <refentry xml:id="kxml.requireend">
             <refnamediv>
                 <refname>kxml.requireend</refname>
                 <refpurpose>Test if the current event is END_TAG type and do match the given name.</refpurpose>
             </refnamediv>
+	    <refsynopsisdiv>
+	      <cmdsynopsis>
+		<command>kxml.requireend</command>
+		<arg choice="req">
+		<replaceable>xmlParser</replaceable></arg>
+		<arg choice="req">
+		<replaceable>name</replaceable></arg>
+	      </cmdsynopsis>
+	    </refsynopsisdiv>
             <refsect1>
                 <title>Description</title>
                 <para>Test if the current event is END_TAG type and do match the given name and any namespace. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.</para>
-                <refsynopsisdiv>
-                    <cmdsynopsis>
-                    <command>kxml.requireend</command>
-                    <arg choice="req">
-                    <replaceable>xmlParser</replaceable></arg>
-                    <arg choice="req">
-                    <replaceable>name</replaceable></arg>
-                    </cmdsynopsis>
-                </refsynopsisdiv>
                 <programlisting>
 #-- assert we have reach the END_TAG event of "forecast_conditions"
 kxml.requireend $xmlParser "forecast_conditions"
-                </programlisting>   
+                </programlisting>
             </refsect1>
         </refentry>
-        <refentry id="kxml.attrcount">
+        <refentry xml:id="kxml.attrcount">
             <refnamediv>
                 <refname>kxml.attrcount</refname>
                 <refpurpose>Returns the number of attributes of the current start tag.</refpurpose>
             </refnamediv>
+	    <refsynopsisdiv>
+	      <cmdsynopsis>
+		<command>kxml.attrcount</command>
+		<arg choice="req">
+		<replaceable>xmlParser</replaceable></arg>
+	      </cmdsynopsis>
+	    </refsynopsisdiv>
             <refsect1>
-                <title>Description</title>
-                <para>Returns the number of attributes of the current start tag, or -1 if the current event type is not START_TAG. </para>
-                <refsynopsisdiv>
-                    <cmdsynopsis>
-                    <command>kxml.attrcount</command>
-                    <arg choice="req">
-                    <replaceable>xmlParser</replaceable></arg>
-                    </cmdsynopsis>
-                </refsynopsisdiv>
+	      <title>Description</title>
+	      <para>Returns the number of attributes of the current start tag, or -1 if the current event type is not START_TAG. </para>
             </refsect1>
         </refentry>
-        <refentry id="kxml.attrvalue">
+        <refentry xml:id="kxml.attrvalue">
             <refnamediv>
                 <refname>kxml.attrvalue</refname>
                 <refpurpose>Returns the given attributes value.</refpurpose>
             </refnamediv>
+	    <refsynopsisdiv>
+	      <cmdsynopsis>
+		<command>kxml.attrvalue</command>
+		<arg choice="req">
+		<replaceable>xmlParser</replaceable></arg>
+		<arg choice="req">
+		<replaceable>index</replaceable></arg>
+	      </cmdsynopsis>
+	    </refsynopsisdiv>
             <refsect1>
                 <title>Description</title>
                 <para>Returns the given attributes value.</para>
-                <refsynopsisdiv>
-                    <cmdsynopsis>
-                        <command>kxml.attrvalue</command>
-                        <arg choice="req">
-                        <replaceable>xmlParser</replaceable></arg>
-                        <arg choice="req">
-                        <replaceable>index</replaceable></arg>
-                    </cmdsynopsis>
-                </refsynopsisdiv>
             </refsect1>
         </refentry>
-        <refentry id="kxml.getname">
+        <refentry xml:id="kxml.getname">
             <refnamediv>
                 <refname>kxml.getname</refname>
                 <refpurpose> For START_TAG or END_TAG events, the name of the current element is returned.</refpurpose>
             </refnamediv>
+	    <refsynopsisdiv>
+	      <cmdsynopsis>
+		<command>kxml.getname</command>
+		<arg choice="req">
+		<replaceable>xmlParser</replaceable></arg>
+	      </cmdsynopsis>
+	    </refsynopsisdiv>
             <refsect1>
-                <title>Description</title>
-                <para>For START_TAG or END_TAG events, the name of the current element is returned.</para>
-                <refsynopsisdiv>
-                    <cmdsynopsis>
-                        <command>kxml.getname</command>
-                        <arg choice="req">
-                        <replaceable>xmlParser</replaceable></arg>
-                    </cmdsynopsis>
-                </refsynopsisdiv>
-                <programlisting>
+	      <title>Description</title>
+	      <para>For START_TAG or END_TAG events, the name of the current element is returned.</para>
+	      <programlisting>
 #-- loop over the stream as long as we reach the END_TAG event of "current_conditions"
 while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
     set name [kxml.getname $xmlParser]
     puts $name
     kxml.nexttag $xmlParser
 }
-            </programlisting>
+	      </programlisting>
             </refsect1>
         </refentry>
     </section>
@@ -4300,7 +4443,7 @@ while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
   </section>
 
 
-  <section id="heclandjava">
+  <section xml:id="heclandjava">
     <title>Interfacing Hecl and Java</title>
 
     <para>
@@ -4321,9 +4464,8 @@ import org.hecl.Interp;
 import org.hecl.Thing;
 import org.hecl.ListThing;
 import org.hecl.HeclException;
-      </programlisting>
+
 ...
-      <programlisting>
 
 	try {
 	    /* First, create a new interpreter, and pass it a
@@ -4353,7 +4495,7 @@ import org.hecl.HeclException;
       </para>
     </section>
 
-    <section id="creating_new_hecl_commands">
+    <section xml:id="creating_new_hecl_commands">
       <title>Creating new Hecl commands</title>
 
       <para>
@@ -4421,8 +4563,10 @@ class HelloCmd implements Command {
 	      <parameter>value</parameter>
 	    </methodparam>
 	  </methodsynopsis>
-	  This sets the value of <parameter>varname</parameter> to
-	  some value.
+	  <para>
+	    This sets the value of <parameter>varname</parameter> to
+	    some value.
+	  </para>
 	</listitem>
 
 	<listitem>
@@ -4443,9 +4587,12 @@ class HelloCmd implements Command {
 	      <parameter>varname</parameter>
 	    </methodparam>
 	  </methodsynopsis>
-	  These methods take a variable name, either in string form or
-	  as a <classname>Thing</classname>, and return the
-	  <classname>Thing</classname> associated with that variable.
+	  <para>
+	    These methods take a variable name, either in string form
+	    or as a <classname>Thing</classname>, and return the
+	    <classname>Thing</classname> associated with that
+	    variable.
+	  </para>
 	</listitem>
 
 	<listitem>
@@ -4464,7 +4611,7 @@ class HelloCmd implements Command {
 	      <parameter>thing</parameter>
 	    </methodparam>
 	  </methodsynopsis>
-	  Get an int from a Thing.
+	  <para>Get an int from a Thing.</para>
 	</listitem>
 
 	<listitem>
@@ -4476,7 +4623,7 @@ class HelloCmd implements Command {
 	      <parameter>thing</parameter>
 	    </methodparam>
 	  </methodsynopsis>
-	  Get a String from a Thing.
+	  <para>Get a String from a Thing.</para>
 	</listitem>
 
 	<listitem>
@@ -4488,7 +4635,7 @@ class HelloCmd implements Command {
 	      <parameter>i</parameter>
 	    </methodparam>
 	  </methodsynopsis>
-	  Creates a new thing from an int.
+	  <para>Creates a new thing from an int.</para>
 	</listitem>
 
       </itemizedlist>
@@ -4497,15 +4644,12 @@ class HelloCmd implements Command {
 
     </section>
 
-    <section id="building_hecl">
+    <section xml:id="building_hecl">
       <title>Building Hecl: Ant Targets</title>
 
       <para>
 	Since Hecl can be built for many different platforms, with many different capabilities, it
-	requires a fairly complex build system, based on <ulink
-	url="http://ant.apache.org/">Ant</ulink>, <ulink
-	url="http://antenna.sourceforge.net/">Antenna</ulink>, and for Java ME, <ulink
-	url="http://proguard.sourceforge.net/">Proguard.</ulink>.  However, it's not necessary to
+	requires a fairly complex build system, based on <link xl:href="http://ant.apache.org/">Ant</link>, <link xl:href="http://antenna.sourceforge.net/">Antenna</link>, and for Java ME, <link xl:href="http://proguard.sourceforge.net/">Proguard.</link>.  However, it's not necessary to
 	understand the intricacies of this system unless you're doing more advanced hacking: in that
 	case, you should ask on the mailing list if you need help.
       </para>
@@ -4545,12 +4689,11 @@ class HelloCmd implements Command {
     </section>
 
 
-    <section id="hecl_javadocs">
+    <section xml:id="hecl_javadocs">
       <title>JavaDocs</title>
 
       <para>
-	For the complete Hecl javadoc documentation, see the <ulink
-	  url="jdocs">Hecl Javadocs</ulink>.  And, of course, look at
+	For the complete Hecl javadoc documentation, see the <link xl:href="jdocs">Hecl Javadocs</link>.  And, of course, look at
 	  the Hecl source code to see how it's done!
       </para>
 
@@ -4559,7 +4702,7 @@ class HelloCmd implements Command {
   </section>
 
 
-  <section id="j2me">
+  <section xml:id="j2me">
     <title>Hecl and Java ME</title>
 
     <para>
@@ -4570,7 +4713,7 @@ class HelloCmd implements Command {
     </para>
 
 
-    <section id="javame_tutorial">
+    <section xml:id="javame_tutorial">
       <title>Hecl Java ME Tutorial</title>
 
     <note>
@@ -4583,9 +4726,9 @@ class HelloCmd implements Command {
 
       <para>
 	This tutorial first appeared here:
-	<ulink url="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl">
+	<link xl:href="http://www.freesoftwaremagazine.com/articles/creating_a_simple_application_with_hecl">
 	  Create a simple application with Hecl - Introducing Hecl, a mobile phone scripting
-	  language </ulink>.  It is a tutorial style introduction writing Hecl code for mobile
+	  language </link>.  It is a tutorial style introduction writing Hecl code for mobile
 	  phones, by David Welton.
       </para>
 
@@ -4597,28 +4740,27 @@ class HelloCmd implements Command {
       <itemizedlist>
 	<listitem>
 	  <para>
-	    Sun's Java. This is heading towards free software, but isn't quit there yet. If you run
-	    Ubuntu, like me, you can get Java with apt: <userinput>apt-get install
-	    sun-java5-jdk</userinput>, if you've added the "multiverse" repositories to your
-	    <filename>/etc/apt/sources.list</filename> file: <code>deb
-	    http://us.archive.ubuntu.com/ubuntu/ feisty multiverse</code>
+	    Sun's Java.  With Ubuntu, you can get this like so:
+	  </para>
+	  <screen>apt-get install openjdk-6-jdk</screen>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <link xl:href="http://java.sun.com/products/sjwtoolkit/index.jsp">Sun's
+	    WTK toolkit</link>. While you don't need the tools to
+	    compile Hecl (unless you want to hack on it!), you do want
+	    the emulator, so that you don't have to load your app onto
+	    your phone each time you want to test it. It's not open
+	    source software (yet?), but it does run on Linux, Mac and
+	    Windows, and of course it is free.
 	  </para>
 	</listitem>
 
 	<listitem>
 	  <para>
-	    <ulink url="http://java.sun.com/products/sjwtoolkit/download-2_5_1.html">Sun's WTK
-	    toolkit</ulink>. While you don't need the tools to compile Hecl (unless you want to hack
-	    on it!), you do want the emulator, so that you don't have to load your app onto your
-	    phone each time you want to test it. It's not open source software (yet?), but it does
-	    run on Linux, Mac and Windows, and of course it is free.
-	  </para>
-	</listitem>
-
-	<listitem>
-	  <para>
-	    Hecl itself. You can get it from the <ulink
-	      url="http://github.com/davidw/hecl/tree/master">GitHub project page</ulink>.
+	    Hecl itself. You can get the latest code here: <link
+	    xl:href="http://www.hecl.org/downloads/hecl-latest.tgz">http://www.hecl.org/downloads/hecl-latest.tgz</link>.
 	    <note>
 	      <para>
 		Hecl is always improving, so you should also consider checking out Hecl directly
@@ -4642,11 +4784,28 @@ class HelloCmd implements Command {
 	jars/cldc1.1-midp2.0/Hecl.jar Hecl</userinput>
       </para>
 
+      <note>
+	<para>
+	  With version 3 of the Sun WTK (which as of 2010-01 only runs
+	  on Windows and Mac), the command line you need is as
+	  follows:
+
+	  <userinput>
+	    /opt/WTK2.5.2/bin/emulator -Xjam:install jars/cldc1.1-midp2.0/Hecl.jad
+	  </userinput>
+	</para>
+      </note>
+
       <para>That should bring up something like this:</para>
 
       <screenshot>
-	<screeninfo>Figure 1: Hecl demo screen shot</screeninfo>
-	<graphic fileref="demo_screenshot.png"></graphic>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="demo_screenshot.png">
+	    </imagedata>
+	  </imageobject>
+	  <caption><para>Figure 1: Hecl demo screen shot</para></caption>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -4773,8 +4932,13 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<screeninfo>Figure 2: Hecl Hello World screenshot</screeninfo>
-	<graphic fileref="hello_screenshot1.png"></graphic>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="hello_screenshot1.png">
+	    </imagedata>
+	  </imageobject>
+	  <caption><para>Figure 2: Hecl Hello World screenshot</para></caption>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -4809,8 +4973,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 
       <para>
 	So far so good. Next, I'll create a small application that you can interact with to do
-	something useful. It's a simplified version of the shopping list that can be found <ulink
-	url="http://shoplist.dedasys.com">here</ulink>. The theory of operation behind this
+	something useful. It's a simplified version of the shopping list that can be found <link xl:href="http://shoplist.dedasys.com">here</link>. The theory of operation behind this
 	application is simple: typing a shopping list into a mobile phone is pretty painful - it's
 	much better to do the data entry via a web page, and then fetch the list with the mobile
 	phone application.
@@ -4818,8 +4981,8 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 
       <para>
 	For this tutorial, I've created a simple list on the ShopList web site, with the PIN number
-	<constant>346764</constant>, which can be viewed <ulink
-	href="http://shoplist.dedasys.com/list/show/346764">here</ulink>. Feel free to create your
+	<constant>346764</constant>, which can be viewed <link
+	xl:href="http://shoplist.dedasys.com/list/show/346764">here</link>. Feel free to create your
 	own shopping lists - the site costs nothing to use. The cell phone application works like
 	so: by entering the PIN, it downloads the list of items and displays them on the phone
 	screen as a series of checkboxes. Have a look at the code to do this:
@@ -4951,8 +5114,16 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 </programlisting>
 
       <screenshot>
-	<screeninfo>Figure 3: Initial shoplist form</screeninfo>
-	<graphic fileref="shoplist1.png"></graphic>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="shoplist1.png">
+	    </imagedata>
+	  </imageobject>
+	  <caption>
+	    <para>Figure 3: Initial shoplist form</para>
+	  </caption>
+	</mediaobject>
+
       </screenshot>
 
       <para>
@@ -4971,8 +5142,13 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
       </para>
 
       <screenshot>
-	<screeninfo>Figure 4: Shopping List</screeninfo>
-	<graphic fileref="shoplist2.png"></graphic>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="shoplist2.png">
+	    </imagedata>
+	  </imageobject>
+	  <caption><para>Figure 4: Shopping List</para></caption>
+	</mediaobject>
       </screenshot>
 
       <para>
@@ -4988,13 +5164,13 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	Of course, this tutorial barely scratches the surface. Hecl has a number of other GUI
 	commands, and is a complete programming language that can do some interesting and dynamic
 	things. If you're curious, the best way to learn more is to keep reading the documentation,
-	and sign up for the <ulink url="http://groups.google.com/group/hecl">Hecl Google
-	Group</ulink>, which can be accessed either as a web forum or as a mailing list.
+	and sign up for the <link xl:href="http://groups.google.com/group/hecl">Hecl Google
+	Group</link>, which can be accessed either as a web forum or as a mailing list.
       </para>
 
     </section>
 
-    <section id="javame_quick_start">
+    <section xml:id="javame_quick_start">
       <title>Quick start to developing Java ME apps</title>
 
       <para>
@@ -5046,13 +5222,15 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
     </section>
 
 
-    <section id="midp10_commands">
+    <section xml:id="midp10_commands">
       <title>Hecl J2ME MIDP1.0 Commands</title>
 
       <note>
-	Hecl has different GUI commands for the MIDP1.0 (older phones)
-	and MIDP2.0 (newer).  We are in the process of documenting the
-	MIDP2.0 commands.
+	<para>
+	  Hecl has different GUI commands for the MIDP1.0 (older
+	  phones) and MIDP2.0 (newer).  We are in the process of
+	  documenting the MIDP2.0 commands.
+	</para>
       </note>
 
       <para>
@@ -5062,7 +5240,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	these commands and widgets in use.
       </para>
 
-      <refentry id="midp10_alert">
+      <refentry xml:id="midp10_alert">
 	<refnamediv>
 	  <refname>alert</refname>
 	  <refpurpose>Creates an alert</refpurpose>
@@ -5094,7 +5272,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_choicegroup">
+      <refentry xml:id="midp10_choicegroup">
 	<refnamediv>
 	  <refname>choicegroup</refname>
 	  <refpurpose>Displays a choicegroup in the current form</refpurpose>
@@ -5121,7 +5299,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_cmd">
+      <refentry xml:id="midp10_cmd">
 	<refnamediv>
 	  <refname>cmd</refname>
 	  <refpurpose>Adds a command to a form/listbox/textbox</refpurpose>
@@ -5155,7 +5333,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_datefield">
+      <refentry xml:id="midp10_datefield">
 	<refnamediv>
 	  <refname>datefield</refname>
 	  <refpurpose>Displays an datefield in the current form</refpurpose>
@@ -5181,7 +5359,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_j2me_exit">
+      <refentry xml:id="midp10_j2me_exit">
 	<refnamediv>
 	  <refname>exit</refname>
 	  <refpurpose>Exits the application</refpurpose>
@@ -5199,7 +5377,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_form">
+      <refentry xml:id="midp10_form">
 	<refnamediv>
 	  <refname>form</refname>
 	  <refpurpose>Creates a form</refpurpose>
@@ -5222,7 +5400,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_gauge">
+      <refentry xml:id="midp10_gauge">
 	<refnamediv>
 	  <refname>gauge</refname>
 	  <refpurpose>Displays an gauge in the current form</refpurpose>
@@ -5251,7 +5429,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_getindex">
+      <refentry xml:id="midp10_getindex">
 	<refnamediv>
 	  <refname>getindex</refname>
 	  <refpurpose>Fetches a reference to the N'th element in a
@@ -5272,7 +5450,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_getprop">
+      <refentry xml:id="midp10_getprop">
 	<refnamediv>
 	  <refname>getprop</refname>
 	  <refpurpose>Fetches the value of a given property from a widget</refpurpose>
@@ -5303,7 +5481,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_listbox">
+      <refentry xml:id="midp10_listbox">
 	<refnamediv>
 	  <refname>listbox</refname>
 	  <refpurpose>Creates a listbox</refpurpose>
@@ -5337,7 +5515,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_noscreen">
+      <refentry xml:id="midp10_noscreen">
 	<refnamediv>
 	  <refname>noscreen</refname>
 	  <refpurpose>Runs without a current screen widget</refpurpose>
@@ -5360,7 +5538,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_screenappend">
+      <refentry xml:id="midp10_screenappend">
 	<refnamediv>
 	  <refname>screenappend</refname>
 	  <refpurpose>Appends an item to a form or listbox</refpurpose>
@@ -5384,7 +5562,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setcurrent">
+      <refentry xml:id="midp10_setcurrent">
 	<refnamediv>
 	  <refname>setcurrent</refname>
 	  <refpurpose>Displays an alert/form/listbox/textbox</refpurpose>
@@ -5409,7 +5587,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setindex">
+      <refentry xml:id="midp10_setindex">
 	<refnamediv>
 	  <refname>setindex</refname>
 
@@ -5437,7 +5615,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_setprop">
+      <refentry xml:id="midp10_setprop">
 	<refnamediv>
 	  <refname>setprop</refname>
 	  <refpurpose>Sets a given property of a widget</refpurpose>
@@ -5459,7 +5637,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_string">
+      <refentry xml:id="midp10_string">
 	<refnamediv>
 	  <refname>string</refname>
 	  <refpurpose>Adds a string to the current form.</refpurpose>
@@ -5480,7 +5658,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_stringitem">
+      <refentry xml:id="midp10_stringitem">
 	<refnamediv>
 	  <refname>stringitem</refname>
 	  <refpurpose>Displays a stringitem in the current form</refpurpose>
@@ -5500,7 +5678,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_textbox">
+      <refentry xml:id="midp10_textbox">
 	<refnamediv>
 	  <refname>textbox</refname>
 	  <refpurpose>Creates a textbox</refpurpose>
@@ -5535,7 +5713,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	</refsect1>
       </refentry>
 
-      <refentry id="midp10_textfield">
+      <refentry xml:id="midp10_textfield">
 	<refnamediv>
 	  <refname>textfield</refname>
 	  <refpurpose>Displays a textfield in the current form</refpurpose>
@@ -5569,22 +5747,20 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 
     </section>
 
-    <section id="midp20commands">
+    <section xml:id="midp20commands">
       <title>Hecl Java ME MIDP2.0 Commands</title>
 
       <para>
 	The MIDP 2.0 commands in Hecl are more complete and more
 	advanced than the 1.0 commands, and should be used if
 	possible.  This is a fairly complete list of which devices are
-	MIDP2.0 capable: <ulink
-	  url="http://devices.j2mepolish.org/interactivedb/searchdevices.faces"
+	MIDP2.0 capable: <link xl:href="http://devices.j2mepolish.org/interactivedb/searchdevices.faces"
 	/>
       </para>
 
       <para>
 	To fully understand these commands, a perusal of the
-	documentation here is likely a good idea: <ulink
-	url="http://java.sun.com/javame/reference/apis/jsr118/"></ulink>
+	documentation here is likely a good idea: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/"></link>
 	In particular, look at the lcdui package.
       </para>
 
@@ -5593,7 +5769,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	Wolfgang Kechel.  Thanks!
       </para>
 
-      <refentry id="lcdui_alert">
+      <refentry xml:id="lcdui_alert">
 	<refnamediv>
 	  <refname>lcdui.alert</refname>
 	  <refpurpose>Pops up an alert</refpurpose>
@@ -5652,8 +5828,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	    that can be called with a subcommand
 	    <option>setcurrent</option> to make the alert the
 	    currently displayed item.  For an in-depth look at the
-	    Java code that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Alert.html">javax.microedition.lcdui.Alert</ulink>
+	    Java code that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Alert.html">javax.microedition.lcdui.Alert</link>
 	  </para>
 	</refsect1>
 	<refsect1>
@@ -5664,12 +5839,12 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/141" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/141" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_canvas">
+      <refentry xml:id="lcdui_canvas">
 	<refnamediv>
 	  <refname>lcdui.canvas</refname>
 	  <refpurpose>Creates a canvas</refpurpose>
@@ -5741,8 +5916,7 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	    canvas that can be used to draw arbitrary items, such as
 	    rectangles, text, circles, and respond to keyboard events.
 	    For an in-depth look at the Java code that this command is
-	    based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/game/GameCanvas.html">javax.microedition.lcdui.game.GameCanvas</ulink>
+	    based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/game/GameCanvas.html">javax.microedition.lcdui.game.GameCanvas</link>
 	  </para>
 	  <para>
 	    The options describing the canvas are as follows:
@@ -5839,12 +6013,12 @@ $graphics frect [list 10 50] [list 80 10]
 $canvas setcurrent
 	  </programlisting>
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/142" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/142" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_choicegroup">
+      <refentry xml:id="lcdui_choicegroup">
 	<refnamediv>
 	  <refname>lcdui.choicegroup</refname>
 	  <refpurpose>Creates a group of potential choices that can be
@@ -5924,6 +6098,7 @@ $canvas setcurrent
 		</arg>
 		<arg choice="req">index</arg>
 		<arg choice="req">get</arg>
+		<arg choice="req">gettext</arg>
 		<arg choice="req">set <option><replaceable>index</replaceable></option></arg>
 	      </group>
 	    </arg>
@@ -5932,7 +6107,15 @@ $canvas setcurrent
 
 	  </cmdsynopsis>
 
+	  <note>
+	    <para>
+	      Choicegroups also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
+
 	<refsect1>
 	  <title>Description</title>
 	  <para>
@@ -5945,15 +6128,14 @@ $canvas setcurrent
 	    <option>multiple</option> type), or as a popup.  (check
 	    boxes).  For an in-depth look at the Java code that this
 	    command is based on, see:
-	    <ulink
-	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html">javax.microedition.lcdui.ChoiceGroup</ulink>
+	    <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ChoiceGroup.html">javax.microedition.lcdui.ChoiceGroup</link>
 	  </para>
 	  <para>
 	    The options describing the choicegroup are as follows:
 	  </para>
 	  <itemizedlist>
 	    <listitem>
-	      <para><option>-lable</option>: Labels the choicegroup
+	      <para><option>-label</option>: Labels the choicegroup
 		with the supplied text.
 	      </para>
 	    </listitem>
@@ -6046,6 +6228,12 @@ $canvas setcurrent
 		  </listitem>
 		  <listitem>
 		    <para>
+		      <command>gettext</command>: Returns the text of
+		      the selected element.
+		    </para>
+		  </listitem>
+		  <listitem>
+		    <para>
 		      <command>set</command>: Selects the specified item.
 		    </para>
 		  </listitem>
@@ -6082,12 +6270,12 @@ $form append $choicegroup
 $form setcurrent
 	  </programlisting>
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/143" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/143" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_command">
+      <refentry xml:id="lcdui_command">
 	<refnamediv>
 	  <refname>lcdui.command</refname>
 	  <refpurpose>Creates a command that can be attached to a screen</refpurpose>
@@ -6133,8 +6321,7 @@ $form setcurrent
 	    The <command>lcdui.command</command> command creates a
 	    command that can be attached to a Screen or an Item.  For
 	    an in-depth look at the Java code that this command is
-	    based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html">javax.microedition.lcdui.Command</ulink>
+	    based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html">javax.microedition.lcdui.Command</link>
 	  </para>
 	  <para>
 	    The options describing the choicegroup are as follows:
@@ -6158,8 +6345,7 @@ $form setcurrent
 
 	    <listitem>
 	      <para><option>-type</option>: Indicates the type of
-	      command.  The command types are documented <ulink
-	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary">here</ulink>
+	      command.  The command types are documented <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Command.html#field_summary">here</link>
               </para>
 	    </listitem>
 
@@ -6200,12 +6386,12 @@ NewForm
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/144" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/144" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_date">
+      <refentry xml:id="lcdui_date">
 	<refnamediv>
 	  <refname>lcdui.date</refname>
 	  <refpurpose>Date/Time widget for lcdui forms</refpurpose>
@@ -6247,6 +6433,13 @@ NewForm
 	    </arg>
 	  </cmdsynopsis>
 
+	  <note>
+	    <para>
+	      Date fields also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -6255,8 +6448,7 @@ NewForm
 	    that can either display, or allow the user to enter a
 	    date, a time, or both.  For
 	    an in-depth look at the Java code that this command is
-	    based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/DateField.html">javax.microedition.lcdui.DateField</ulink>
+	    based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/DateField.html">javax.microedition.lcdui.DateField</link>
 	  </para>
 	  <para>The <command>lcdui.date</command> command takes these
 	  options:</para>
@@ -6292,12 +6484,12 @@ $form setcurrent
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/144" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/144" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_event">
+      <refentry xml:id="lcdui_event">
 	<refnamediv>
 	  <refname><replaceable>$eventcmd</replaceable></refname>
 	  <refpurpose>Command/object describing a Canvas event.</refpurpose>
@@ -6456,16 +6648,17 @@ $form setcurrent
 	      the key involved in the event.
               </para>
 	      <note>
-		Be aware that different phones may use different
-		numbers.
+		<para>
+		  Be aware that different phones may use different
+		  numbers.
+		</para>
 	      </note>
 	    </listitem>
 
 	    <listitem>
 	      <para><option>-keyname</option>: Returns a string giving
 		a cross platform name for the key pressed.  Names are
-		given here: <ulink
-		url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#field_summary"
+		given here: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#field_summary"
 		/>, with the addition of "LEFT_SK" and "RIGHT_SK" for
 		the left and right soft keys These only occur when in
 		full screen mode and the soft key events go to the
@@ -6477,8 +6670,7 @@ $form setcurrent
 	      <para><option>-gameaction</option>: Returns the integer
 	      code for the game action.  Described in further detail
 	      here:
-		<ulink
-		  url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#gameactions"></ulink>
+		<link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Canvas.html#gameactions"></link>
               </para>
 	    </listitem>
 
@@ -6487,13 +6679,12 @@ $form setcurrent
 	<refsect1>
 	  <title>Example</title>
 	  <para>
-	    See the example script in the midp20/ directory.  <ulink
-	      url="http://github.com/davidw/hecl/blob/66bbb4890953a97e6a2880d19095d5da2336ba57/midp20/script.hcl"></ulink>
+	    See the example script in the midp20/ directory.  <link xl:href="http://github.com/davidw/hecl/blob/master/midp20/script.hcl"></link>
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_font">
+      <refentry xml:id="lcdui_font">
 	<refnamediv>
 	  <refname>lcdui.font</refname>
 	  <refpurpose>Font information and manipulation command.</refpurpose>
@@ -6546,8 +6737,7 @@ $form setcurrent
 	  <para>
 	    The <command>lcdui.font</command> command is used to fetch
 	    information about fonts.  For an in-depth look at the Java
-	    code that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Font.html">javax.microedition.lcdui.Font</ulink>
+	    code that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Font.html">javax.microedition.lcdui.Font</link>
 	  </para>
 	  <para>
 	    It accepts several subcommands:
@@ -6657,13 +6847,13 @@ foreach f [sort [lcdui.font names]] {
 }
 	  </programlisting>
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/147" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/147" />
 	  </para>
 
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_form">
+      <refentry xml:id="lcdui_form">
 	<refnamediv>
 	  <refname>lcdui.form</refname>
 	  <refpurpose>Creates a form that can contain various widgets</refpurpose>
@@ -6724,8 +6914,7 @@ foreach f [sort [lcdui.font names]] {
 	    The <command>lcdui.form</command> command creates a form,
 	    returning a command/object that can be used to further
 	    manipulate the created form.  For an in-depth look at the
-	    Java code that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html">javax.microedition.lcdui.Form</ulink>
+	    Java code that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html">javax.microedition.lcdui.Form</link>
 	  </para>
 	  <para>The subcommands accepted by the
 	    <command><replaceable>$formcmd</replaceable></command>
@@ -6790,12 +6979,12 @@ $form append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/148" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/148" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_gauge">
+      <refentry xml:id="lcdui_gauge">
 	<refnamediv>
 	  <refname>lcdui.gauge</refname>
 	  <refpurpose>Creates a gauge widget that can be attached to a
@@ -6830,14 +7019,20 @@ $form append [lcdui.gauge -label "How cool is Hecl?" -interactive 1 \
 	    </arg>
 	  </cmdsynopsis>
 
+	  <note>
+	    <para>
+	      Gauge items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
 	  <para>
 	    The <command>lcdui.gauge</command> command creates a gauge element, and returns a
 	    command/object that can be used to manipulate it. For an in-depth look at the Java code
-	    that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Gauge.html">javax.microedition.lcdui.Gauge</ulink>
+	    that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Gauge.html">javax.microedition.lcdui.Gauge</link>
 	  </para>
 	  <para>The options for this command are as follows:</para>
 	  <itemizedlist>
@@ -6869,12 +7064,12 @@ $form setcurrent
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/149" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/149" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_image">
+      <refentry xml:id="lcdui_image">
 	<refnamediv>
 	  <refname>lcdui.image</refname>
 	  <refpurpose>Creates an image.</refpurpose>
@@ -6933,8 +7128,7 @@ $form setcurrent
 	    that can be utilized to manipulate the image.  Mutable images are those loaded from
 	    existing data, generally.  Immutable images are created as a "blank slate", with white
 	    pixels.  For an in-depth look at the Java code that this command is based on, see:
-	    <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Image.html">javax.microedition.lcdui.Image</ulink>
+	    <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Image.html">javax.microedition.lcdui.Image</link>
 
 	  </para>
 	  <para>
@@ -7070,13 +7264,13 @@ $form setcurrent
 	  </programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/150" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/150" />
 	  </para>
 
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_imageitem">
+      <refentry xml:id="lcdui_imageitem">
 	<refnamediv>
 	  <refname>lcdui.imageitem</refname>
 	  <refpurpose>An item that can contain an image, in order to attach it to a form.</refpurpose>
@@ -7107,6 +7301,14 @@ $form setcurrent
 	      <replaceable>optval</replaceable>
 	    </arg>
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      Image items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7114,23 +7316,21 @@ $form setcurrent
 	    The <command>lcdui.imageitem</command> command creates an item holding an image, in
 	    order to be able to attach an image to a form.  It also returns a command/object that
 	    can be used to manipulate the ImageItem.  For an in-depth look at the Java code that
-	    this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ImageItem.html">javax.microedition.lcdui.ImageItem</ulink>
+	    this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/ImageItem.html">javax.microedition.lcdui.ImageItem</link>
 	  </para>
 	  <para>The options unique to this command are as follows:</para>
 	  <itemizedlist>
 	    <listitem>
 	      <para><option>-appearance</option>: Specifies the appearance and behavior of the
 	      imageitem.  The meaning of the various values is explained in further detail here:
-	      <ulink
-	      url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Item.html#appearance">javax.microedition.lcdui.Item</ulink>.
+	      <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Item.html#appearance">javax.microedition.lcdui.Item</link>.
               </para>
 	    </listitem>
 	  </itemizedlist>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_list">
+      <refentry xml:id="lcdui_list">
 	<refnamediv>
 	  <refname>lcdui.list</refname>
 	  <refpurpose>Creates a full-screen list</refpurpose>
@@ -7154,8 +7354,7 @@ $form setcurrent
 	  <para>
 	    The <command>lcdui.list</command> command creates a full-screen list and returns a
 	    command/object that can be used to manipulate it. For an in-depth look at the Java code
-	    that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/List.html">javax.microedition.lcdui.List</ulink>
+	    that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/List.html">javax.microedition.lcdui.List</link>
 	  </para>
 	  <para>The options unique to this command are as follows:</para>
 	  <itemizedlist>
@@ -7193,12 +7392,12 @@ proc selectname {cmd lst} {
 	  <para>Produces:</para>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/151" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/151" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_settings">
+      <refentry xml:id="lcdui_settings">
 	<refnamediv>
 	  <refname>lcdui.settings</refname>
 	  <refpurpose>Returns or sets information about the graphical environment.</refpurpose>
@@ -7269,26 +7468,26 @@ proc selectname {cmd lst} {
 	  </para>
 
 	  <itemizedlist>
-	    <listitem><option>-color</option>: is this a color display? 1 or 0</listitem>
-	    <listitem><option>-alphalevels</option>: number of alpha levels</listitem>
-	    <listitem><option>-alertimagewidth</option>: width in pixels of the alert image</listitem>
-	    <listitem><option>-alertimageheight</option>: height in pixels of the alert image</listitem>
-	    <listitem><option>-listimagewidth</option>: width in pixels of the list image</listitem>
-	    <listitem><option>-listimageheight</option>: height in pixels of the list image</listitem>
-	    <listitem><option>-choiceimagewidth</option>: width in pixels of the choice image</listitem>
-	    <listitem><option>-choiceimageheight</option>: height in pixels of the choice image</listitem>
+	    <listitem><para><option>-color</option>: is this a color display? 1 or 0</para></listitem>
+	    <listitem><para><option>-alphalevels</option>: number of alpha levels</para></listitem>
+	    <listitem><para><option>-alertimagewidth</option>: width in pixels of the alert image</para></listitem>
+	    <listitem><para><option>-alertimageheight</option>: height in pixels of the alert image</para></listitem>
+	    <listitem><para><option>-listimagewidth</option>: width in pixels of the list image</para></listitem>
+	    <listitem><para><option>-listimageheight</option>: height in pixels of the list image</para></listitem>
+	    <listitem><para><option>-choiceimagewidth</option>: width in pixels of the choice image</para></listitem>
+	    <listitem><para><option>-choiceimageheight</option>: height in pixels of the choice image</para></listitem>
 
-	    <listitem><option>-bg</option>: background color</listitem>
-	    <listitem><option>-fg</option>: foreground color</listitem>
+	    <listitem><para><option>-bg</option>: background color</para></listitem>
+	    <listitem><para><option>-fg</option>: foreground color</para></listitem>
 
-	    <listitem><option>-hilightbg</option>: background hilight color</listitem>
-	    <listitem><option>-hilightfg</option>: foreground hilight color</listitem>
+	    <listitem><para><option>-hilightbg</option>: background hilight color</para></listitem>
+	    <listitem><para><option>-hilightfg</option>: foreground hilight color</para></listitem>
 
-	    <listitem><option>-border</option>: border color</listitem>
-	    <listitem><option>-hilightborder</option>: border hilight color</listitem>
-	    <listitem><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</listitem>
-	    <listitem><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</listitem>
- 	    <listitem><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.
+	    <listitem><para><option>-border</option>: border color</para></listitem>
+	    <listitem><para><option>-hilightborder</option>: border hilight color</para></listitem>
+	    <listitem><para><option>-borderstyle</option>: border style - can be either DOTTED (1) or SOLID (0)</para></listitem>
+	    <listitem><para><option>-hilightborderstyle</option>: border highlight style - can be either DOTTED (1) or SOLID (0)</para></listitem>
+ 	    <listitem><para><option>-cvfullscreen</option>: Get/set whether full screen mode is allowed for the canvas widget.</para>
 	      <para>
 		This setting enables the use of fullscreen mode for a canvas. The lcdui
 		<classname>Canvas</classname> class behaves different in fullscreen mode: it does
@@ -7300,14 +7499,14 @@ proc selectname {cmd lst} {
 		features and turn off fullscreen mode generally for all canvases.
 	      </para>
 	      <para>
-		Devices being picky in fullscreen mode include most of the Blackberry devices since
+		Devices being picky in fullscreen mode include most of the BlackBerry devices since
 		handling of commands is totally different from other Java ME devices. Most
 		BlackBerry devices use the dial to select between command entries.
 	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvdocmds</option>: Get/set whether to display commands in the full
-	    screen canvas or not.
+	    <listitem><para><option>-cvdocmds</option>: Get/set whether to display commands in the full
+	    screen canvas or not.</para>
 	      <para>
 		Enables the display of commands by the hecl canvas. When it fullscreen mode,
 		canvases do not show commands. You may want a canvas in fullscreen mode and wish to
@@ -7316,7 +7515,7 @@ proc selectname {cmd lst} {
 	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.
+	    <listitem><para><option>-cvkeepcmdsinfullscreen</option>: Get/set whether to add commands in full screen mode.</para>
 	      <para>
 		Enables treatment of commands attached to a canvas even in fullscreen mode. This
 		behavior is implemented in the Hecl midp layer and may be slidely different from the
@@ -7327,15 +7526,18 @@ proc selectname {cmd lst} {
 	    </listitem>
 
 	    <listitem>
-	      <option>-cvcmdbg</option>: Get/set color value for command background color in canvas,
-	      when Hecl's full screen Canvas command handling is enabled (see above).
+	      <para>
+		<option>-cvcmdbg</option>: Get/set color value for
+		command background color in canvas, when Hecl's full
+		screen Canvas command handling is enabled (see above).
+	      </para>
 	    </listitem>
 
-	    <listitem><option>-cvcmdfg</option>: Get/set color value for command foreground color in
+	    <listitem><para><option>-cvcmdfg</option>: Get/set color value for command foreground color in
 	      canvas, when Hecl's full screen Canvas command handling is enabled (see above).
-	    </listitem>
+	    </para></listitem>
 
-	    <listitem><option>-skleft</option>: Get/set the numeric keycode for the left soft key.
+	    <listitem><para><option>-skleft</option>: Get/set the numeric keycode for the left soft key.</para>
 	      <para>
 		The values are used to identify the keys triggering command handling for a
 		canvas. The standard settings for these values are the usual keycode -6 (left) and
@@ -7344,7 +7546,7 @@ proc selectname {cmd lst} {
 	      </para>
 	      <para>
 		Siemens S65 and friends: -1 (left), -4 (right) - detected via existence of class
-		<classname>com.siemens.mp.lcdui.Image</classname> Blackberry: 524288=0x80000 (left),
+		<classname>com.siemens.mp.lcdui.Image</classname> BlackBerry: 524288=0x80000 (left),
 		0x1b0000 (right) - detected via existence of class
 		<classname>net.rim.device.api.system.Application</classname>
 	      </para>
@@ -7353,8 +7555,8 @@ proc selectname {cmd lst} {
 		own applications.
 	      </para>
 	    </listitem>
-	    <listitem><option>-skright</option>: Get/set the numeric keycode for the right soft key
-	    (see explanation above).</listitem>
+	    <listitem><para><option>-skright</option>: Get/set the numeric keycode for the right soft key
+	    (see explanation above).</para></listitem>
 
 	  </itemizedlist>
 
@@ -7386,12 +7588,12 @@ foreach s {"-color"
 }</programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/152" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/152" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_spacer">
+      <refentry xml:id="lcdui_spacer">
 	<refnamediv>
 	  <refname>lcdui.spacer</refname>
 	  <refpurpose>Creates a spacer element in a form.</refpurpose>
@@ -7402,6 +7604,14 @@ foreach s {"-color"
 	    <arg choice="req">-minwidth <replaceable>minimum width</replaceable></arg>
 	    <arg choice="req">-minheight <replaceable>minimum height</replaceable></arg>
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      Image items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7409,13 +7619,12 @@ foreach s {"-color"
 	    The <command>lcdui.spacer</command> command creates a spacer to separate form elements.
 	    Via the <option>-minwidth</option> and <option>-minheight</option> options, you can
 	    specify the minimum width and height.  For an in-depth look at the Java code that this
-	    command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Spacer.html">javax.microedition.lcdui.Spacer</ulink>
+	    command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Spacer.html">javax.microedition.lcdui.Spacer</link>
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_stringitem">
+      <refentry xml:id="lcdui_stringitem">
 	<refnamediv>
 	  <refname>lcdui.stringitem</refname>
 	  <refpurpose>Creates a string item that can be added to a form.</refpurpose>
@@ -7450,8 +7659,15 @@ foreach s {"-color"
 		<arg choice="req">-font <replaceable>font</replaceable></arg>
 	      </group>
 	    </arg>
-
 	  </cmdsynopsis>
+
+	  <note>
+	    <para>
+	      String items also utilize the common "item" options, described
+	      here: <link linkend="lcdui_item_options">lcdui item options</link>
+	    </para>
+	  </note>
+
 	</refsynopsisdiv>
 	<refsect1>
 	  <title>Description</title>
@@ -7459,13 +7675,12 @@ foreach s {"-color"
 	    The <command>lcdui.stringitem</command> command creates a string item (label + text)
 	    that can be attached to a form.  Normally, the label is bold, and the text is in the
 	    default font.  For an in-depth look at the Java code that this command is based on, see:
-	    <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/StringItem.html">javax.microedition.lcdui.StringItem</ulink>
+	    <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/StringItem.html">javax.microedition.lcdui.StringItem</link>
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_textbox">
+      <refentry xml:id="lcdui_textbox">
 	<refnamediv>
 	  <refname>lcdui.textbox</refname>
 	  <refpurpose>Creates a text box for editing larger blocks of text.</refpurpose>
@@ -7503,7 +7718,7 @@ foreach s {"-color"
 	      </group>
 	    </arg>
 
-	    <arg chocie="opt">
+	    <arg choice="opt">
 	      configure
 	      <group choice="req">
 		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
@@ -7549,8 +7764,7 @@ foreach s {"-color"
 	  <para>
 	    The <command>lcdui.textbox</command> command creates a full-screen text editing widget
 	    that can be used for editing longer, multi-line chunks of text.  For an in-depth look at
-	    the Java code that this command is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
+	    the Java code that this command is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</link>
 	  </para>
 	  <para>There are several options governing the functionality of this widget.  Note that
 	  more than one constraint may be selected at a time:</para>
@@ -7606,13 +7820,13 @@ proc runCode {cmd txtbox} {
 }</programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/153" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/153" />
 	  </para>
 
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_textfield">
+      <refentry xml:id="lcdui_textfield">
 	<refnamediv>
 	  <refname>lcdui.textfield</refname>
 	  <refpurpose>Creates a small text editing widget that can be attached to a
@@ -7651,7 +7865,7 @@ proc runCode {cmd txtbox} {
 	      </group>
 	    </arg>
 
-	    <arg chocie="opt">
+	    <arg choice="opt">
 	      configure
 	      <group choice="req">
 		<arg choice="req">-type <option><replaceable>type</replaceable></option></arg>
@@ -7698,8 +7912,7 @@ proc runCode {cmd txtbox} {
 	  <para>
 	    The <command>lcdui.textfield</command> command creates a one-line text editing widget
 	    that can be attached to a form.  For an in-depth look at the Java code that this command
-	    is based on, see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
+	    is based on, see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</link>
 	  </para>
 	</refsect1>
 	<refsect1>
@@ -7718,13 +7931,13 @@ proc runCode {txtfld cmd frm} {
 }</programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/154" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/154" />
 	  </para>
 
 	</refsect1>
       </refentry>
 
-      <refentry id="lcdui_ticker">
+      <refentry xml:id="lcdui_ticker">
 	<refnamediv>
 	  <refname>lcdui.ticker</refname>
 	  <refpurpose>Creates a ticker that scrolls horizontally.</refpurpose>
@@ -7740,8 +7953,7 @@ proc runCode {txtfld cmd frm} {
 	  <para>
 	    The <command>lcdui.ticker</command> command creates a ticker that runs horizontally
 	    across the screen.  For an in-depth look at the Java code that this command is based on,
-	    see: <ulink
-	    url="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</ulink>
+	    see: <link xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/TextBox.html">javax.microedition.lcdui.TextBox</link>
 	  </para>
 	</refsect1>
 	<refsect1>
@@ -7759,12 +7971,213 @@ proc updateTicker {ticker} {
 after 1000 [list updateTicker $ticker]</programlisting>
 
 	  <para>
-	    Live example: <ulink url="http://www.heclbuilder.com/scripts/show/155" />
+	    Live example: <link xl:href="http://www.heclbuilder.com/scripts/show/155" />
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_exit">
+      <refentry xml:id="lcdui_item_options">
+	<refnamediv>
+	  <refname>lcdui item options</refname>
+	  <refpurpose>common options for <link
+	  linkend="lcdui_choicegroup">lcdui.choicegroup</link>, <link
+	  linkend="lcdui_date">lcdui.date</link>, <link
+	  linkend="lcdui_gauge">lcdui.gauge</link>, <link
+	  linkend="lcdui_imageitem">lcdui.imageitem</link>, <link
+	  linkend="lcdui_spacer">lcdui.spacer</link>, and <link
+	  linkend="lcdui_stringitem">lcdui.stringitem</link></refpurpose>
+	</refnamediv>
+	<refsection>
+	  <title>Common lcdui item options</title>
+	  <para>
+	    The lcdui "item" elements have a number of options in common, which
+	    are described here.
+	  </para>
+	  <para>
+	    Many of these options are layout options, and correspond to what is
+	    described here: <link
+	    xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html#layout">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Form.html#layout</link>
+	  </para>
+	  <itemizedlist>
+	    <title>lcdui item configuration options</title>
+	    <para>
+	      These options may be set as follows, or as options at the time the
+	      item is created.
+	    </para>
+	    <cmdsynopsis>
+	      <command>$itemcmd</command>
+	      <arg choice="req">configure</arg>
+	      <arg choice="req"><replaceable>-optname</replaceable></arg>
+	      <arg choice="req"><replaceable>optvalue</replaceable></arg>
+	    </cmdsynopsis>
+
+	    <listitem>
+	      <para>
+	      <option>-label <replaceable>text</replaceable></option>: the item's label</para>
+	    </listitem>
+
+	    <listitem>
+	      <para><option>-anchor <replaceable>position</replaceable></option>: One of the following
+	      positions.  For more information, see <link
+	      xl:href="http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Graphics.html">http://java.sun.com/javame/reference/apis/jsr118/javax/microedition/lcdui/Graphics.html</link>
+	      </para>
+	      <itemizedlist>
+		<listitem>
+		  <para><constant>n</constant>: top/center</para>
+		</listitem>
+		<listitem>
+		  <para><constant>ne</constant>: top/right</para>
+		</listitem>
+		<listitem>
+		  <para><constant>e</constant>: right/vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>se</constant>: bottom/right</para>
+		</listitem>
+		<listitem>
+		  <para><constant>s</constant>: bottom/center</para>
+		</listitem>
+		<listitem>
+		  <para><constant>sw</constant>: bottom/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>w</constant>: left/vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>nw</constant>: top/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>center</constant>: horizontally and vertically centered</para>
+		</listitem>
+		<listitem>
+		  <para><constant>default</constant>: top/left</para>
+		</listitem>
+		<listitem>
+		  <para><constant>bl</constant>: left/baseline</para>
+		</listitem>
+		<listitem>
+		  <para><constant>bc</constant>: centered/baseline</para>
+		</listitem>
+		<listitem>
+		  <para><constant>br</constant>: right/baseline</para>
+		</listitem>
+	      </itemizedlist>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-shrink <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's width may be reduced to its minimum
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-expand <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's width may be increased to fill available space.
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-vexpand <replaceable>1 | 0</replaceable></option>
+		Indicate that this item's height may be increased to fill available space.
+		width.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-newlinebefore <replaceable>1 | 0</replaceable></option>
+		Indicate that the next item (if any) in the container should be
+		placed on a new line or row.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-newlineafter <replaceable>1 | 0</replaceable></option>
+		Indicate that this item should be placed at the beginning of a
+		new line or row.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-layout2 <replaceable>1 | 0</replaceable></option>
+		A layout directive indicating that new MIDP 2.0 layout rules are in effect for this item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-preferredwidth <replaceable>width</replaceable></option>
+		Preferred width for the item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-preferredheight <replaceable>height</replaceable></option>
+		Preferred height for the item.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-defaultcommand
+		<replaceable>command</replaceable></option> If this item is
+		clicked on, the default command to call.
+		<option><replaceable>command</replaceable></option> refers to a
+		command object, and not a Hecl proc or command.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<option>-commandaction
+		<replaceable>command</replaceable></option>
+
+		The Hecl command to call when a command is dispatched.
+	      </para>
+	    </listitem>
+
+	  </itemizedlist>
+
+	  <itemizedlist>
+	    <title>read-only configuration information</title>
+	    <para>
+	      All of the above attributes may be read as well as written. There
+	      are several more attributes that are "read only".  They can be
+	      obtained like so:
+	    </para>
+	    <cmdsynopsis>
+	      <command>$itemcmd</command>
+	      <arg choice="req">cget</arg>
+	      <arg choice="req"><replaceable>-optname</replaceable></arg>
+	      <arg choice="req"><replaceable>optvalue</replaceable></arg>
+	    </cmdsynopsis>
+	    <listitem>
+	      <para>
+		<option>-minwidth</option> : Returns the minimum width for this item.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<option>-minheight</option> : Returns the minimum height for this item.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	</refsection>
+      </refentry>
+
+      <refentry xml:id="midlet_exit">
 	<refnamediv>
 	  <refname>midlet.exit</refname>
 	  <refpurpose>Exit from the Midetl</refpurpose>
@@ -7780,7 +8193,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_pause">
+      <refentry xml:id="midlet_pause">
 	<refnamediv>
 	  <refname>midlet.pause</refname>
 	  <refpurpose>Pause the current midlet</refpurpose>
@@ -7798,7 +8211,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_resume">
+      <refentry xml:id="midlet_resume">
 	<refnamediv>
 	  <refname>midlet.resume</refname>
 	  <refpurpose>Resume execution of the current midlet</refpurpose>
@@ -7817,7 +8230,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_onpause">
+      <refentry xml:id="midlet_onpause">
 	<refnamediv>
 	  <refname>midlet.onpause</refname>
 	  <refpurpose>Hook to call when midlet execution is paused</refpurpose>
@@ -7835,7 +8248,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_onresume">
+      <refentry xml:id="midlet_onresume">
 	<refnamediv>
 	  <refname>midlet.onresume</refname>
 	  <refpurpose>Hook to call when midlet execution is resumed</refpurpose>
@@ -7854,7 +8267,7 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_checkpermissions">
+      <refentry xml:id="midlet_checkpermissions">
 	<refnamediv>
 	  <refname>midlet.checkpermissions</refname>
 	  <refpurpose>Query permission information</refpurpose>
@@ -7872,10 +8285,13 @@ after 1000 [list updateTicker $ticker]</programlisting>
 	    the midlet.  Quoting from the Java documentation:
 	  </para>
 	  <blockquote>
-	    Get the status of the specified permission. If no API on the device defines the specific
-	    permission requested then it must be reported as denied. If the status of the permission
-	    is not known because it might require a user interaction then it should be reported as
-	    unknown.
+	    <para>
+	      Get the status of the specified permission. If no API on
+	      the device defines the specific permission requested
+	      then it must be reported as denied. If the status of the
+	      permission is not known because it might require a user
+	      interaction then it should be reported as unknown.
+	    </para>
 	  </blockquote>
 	  <para>
 	    The command returns 0 if the permission is denied; 1 if the permission is allowed, and
@@ -7890,7 +8306,7 @@ midlet.checkpermissions "javax.microedition.io.Connector.file.read"
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_getappproperty">
+      <refentry xml:id="midlet_getappproperty">
 	<refnamediv>
 	  <refname>midlet.getappproperty</refname>
 	  <refpurpose>Get application properties</refpurpose>
@@ -7907,12 +8323,12 @@ midlet.checkpermissions "javax.microedition.io.Connector.file.read"
 	    Lets the midlet retrieve application properties, as defined in the .jad file.
 	  </para>
 	  <para>
-	    See also: <xref linkend="system_getproperty">system.getproperty</xref>
+	    See also: <link linkend="system_getproperty">system.getproperty</link>
 	  </para>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_platformrequest">
+      <refentry xml:id="midlet_platformrequest">
 	<refnamediv>
 	  <refname>midlet.platformrequest</refname>
 	  <refpurpose>Perform platform-specific actions</refpurpose>
@@ -7955,15 +8371,19 @@ midlet.platformrequest "http://www.hecl.org/jars/cldc1.1-midp2.0/Hecl.jad"
 	  </programlisting>
 
 	  <note>
-	    There is not much standard about this command.  It may or may not support different url
-	    types on different phones.  Making phone calls with "tel:" URL's should always work.
-	    Also, keep in mind that on some devices, launching an external application may terminate
-	    the currently running midlet.
+	    <para>
+	      There is not much standard about this command.  It may
+	      or may not support different url types on different
+	      phones.  Making phone calls with "tel:" URL's should
+	      always work.  Also, keep in mind that on some devices,
+	      launching an external application may terminate the
+	      currently running midlet.
+	    </para>
 	  </note>
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_resourceasstring">
+      <refentry xml:id="midlet_resourceasstring">
 	<refnamediv>
 	  <refname>midlet.resourceasstring</refname>
 	  <refpurpose>Get a resource file as a string</refpurpose>
@@ -7989,7 +8409,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_flashbacklight">
+      <refentry xml:id="midlet_flashbacklight">
 	<refnamediv>
 	  <refname>midlet.flashbacklight</refname>
 	  <refpurpose>Flash the device's backlight</refpurpose>
@@ -8009,7 +8429,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	</refsect1>
       </refentry>
 
-      <refentry id="midlet_vibrate">
+      <refentry xml:id="midlet_vibrate">
 	<refnamediv>
 	  <refname>midlet.vibrate</refname>
 	  <refpurpose>Vibrate the device</refpurpose>
@@ -8031,7 +8451,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 
     </section>
 
-    <section id="hacking_hecl_j2me">
+    <section xml:id="hacking_hecl_j2me">
       <title>Hacking Hecl's Java ME code</title>
 
       <para>
@@ -8043,9 +8463,8 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	JavaME has two layers that are of interest to us, "CLDC" and "MIDP".  CLDC is available in
 	1.0 and 1.1 configurations, whereas MIDP comes in 1.0 and 2.0 configurations.  The most
 	common configurations are CLDC 1.0 and MIDP 1.0, CLDC 1.0 and MIDP 2.0, and CLDC 1.1 with
-	MIDP 2.0.  Here are the Wikipedia entries describing <ulink
-	url="http://en.wikipedia.org/wiki/Connected_Limited_Device_Configuration">CLDC</ulink> and
-	<ulink url="http://en.wikipedia.org/wiki/MIDP">MIDP</ulink>.
+	MIDP 2.0.  Here are the Wikipedia entries describing <link xl:href="http://en.wikipedia.org/wiki/Connected_Limited_Device_Configuration">CLDC</link> and
+	<link xl:href="http://en.wikipedia.org/wiki/MIDP">MIDP</link>.
       </para>
 
       <para>
@@ -8091,12 +8510,211 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
     </section>
   </section>
 
-  <section id="android">
+  <section xml:id="blackberry">
+    <title>Hecl and BlackBerry</title>
+
+    <para>
+      The BlackBerry platform allows you to utilize Java ME code,
+      which is what we do to make Hecl run on that platform.  This
+      means that almost all of the <link linkend='midp20commands'>Java
+      ME commands</link> are available, plus additional commands
+      specific to the BlackBerry environment.
+    </para>
+
+    <section xml:id="blackberry_commands">
+      <title>BlackBerry Commands</title>
+
+      <refentry xml:id="browser_open">
+	<refnamediv>
+	  <refname>browser.open</refname>
+	  <refpurpose>Launches the BlackBerry browser</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>browser.open</command>
+	    <arg choice="req"><replaceable>url</replaceable></arg>
+	    <arg></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    The <command>browser.open</command> command launches the
+	    BlackBerry browser.  It does not block while the browser
+	    remains open, so the execution of the Hecl script
+	    continues.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="device_systemversion">
+	<refnamediv>
+	  <refname>device.systemversion</refname>
+	  <refpurpose>Returns a string with the system version information</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>device.systemversion</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Returns a string containing the system version of the device.
+	  </para>
+	  <note>
+	    <para>This always returns an empty string on the emulator</para>
+	  </note>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_call">
+	<refnamediv>
+	  <refname>invoke.call</refname>
+	  <refpurpose>Makes a phone call using the built-in dialer</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.call</command>
+	    <arg choice="req"><replaceable>phone_number</replaceable></arg>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Makes a call to the specified phone number, using the built in "dial" application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_calculator">
+	<refnamediv>
+	  <refname>invoke.calculator</refname>
+	  <refpurpose>Opens the built in calculator application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.calculator</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the calculator application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_camera">
+	<refnamediv>
+	  <refname>invoke.camera</refname>
+	  <refpurpose>Starts the camera application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.camera</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the camera application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="invoke_video">
+	<refnamediv>
+	  <refname>invoke.video</refname>
+	  <refpurpose>Starts the video application</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>invoke.video</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    Launches the video application.
+	  </para>
+	</refsect1>
+      </refentry>
+
+      <refentry xml:id="servicebook_records">
+	<refnamediv>
+	  <refname>servicebook.records</refname>
+	  <refpurpose>Retrieves connection information about various connection types</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+	  <cmdsynopsis>
+	    <command>servicebook.records</command>
+	  </cmdsynopsis>
+	</refsynopsisdiv>
+	<refsect1>
+	  <title>Description</title>
+	  <para>
+	    This call returns a list of all "service records".  Each
+	    record is a hash with the following fields defined.  For
+	    their meanings, please refer to this link: <link
+	    xl:href="http://www.blackberry.com/developers/docs/4.7.0api/net/rim/device/api/servicebook/ServiceRecord.html"></link>
+	  </para>
+	  <para>
+	    <constant>APN</constant>
+	    <constant>ApplicationData</constant>
+	    <constant>BBRHosts</constant>
+	    <constant>BBRHosts</constant>
+	    <constant>BBRPorts</constant>
+	    <constant>BBRPorts</constant>
+	    <constant>CAAddress</constant>
+	    <constant>CAPort</constant>
+	    <constant>CARealm</constant>
+	    <constant>CID</constant>
+	    <constant>UID</constant>
+	    <constant>CidHash</constant>
+	    <constant>CompressionMode</constant>
+	    <constant>DataSourceId</constant>
+	    <constant>Description</constant>
+	    <constant>DisabledState</constant>
+	    <constant>EncryptionMode</constant>
+	    <constant>HomeAddress</constant>
+	    <constant>Id</constant>
+	    <constant>KeyHashForService</constant>
+	    <constant>LastUpdated</constant>
+	    <constant>Name</constant>
+	    <constant>NameHash</constant>
+	    <constant>NetworkAddress</constant>
+	    <constant>NetworkType</constant>
+	    <constant>Source</constant>
+	    <constant>Type</constant>
+	    <constant>Uid</constant>
+	    <constant>UidHash</constant>
+	    <constant>UserId</constant>
+	    <constant>isDirty</constant>
+	    <constant>isDisabled</constant>
+	    <constant>isEncrypted</constant>
+	    <constant>isInvisible</constant>
+	    <constant>isRecordProtected</constant>
+	    <constant>isRestoredFromBackup</constant>
+	    <constant>isRestoreDisabled</constant>
+	    <constant>isRestoreEnabled</constant>
+	    <constant>isSecureService</constant>
+	    <constant>isValid</constant>
+	    <constant>isWeakSecureService</constant>
+	  </para>
+	</refsect1>
+      </refentry>
+
+
+    </section>
+
+  </section>
+
+  <section xml:id="android">
     <title>Hecl and Android</title>
 
     <para>
-      As of mid-2008, Hecl runs on Google's <ulink
-      url="http://code.google.com/android/">Android</ulink> platform, although it's not yet a
+      As of mid-2008, Hecl runs on Google's <link xl:href="http://code.google.com/android/">Android</link> platform, although it's not yet a
       'mature' port.  That's ok right now, though, because Android isn't production ready yet,
       either.
     </para>
@@ -8114,7 +8732,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
       dynamically create Hecl commands that call out to native Java calls.
     </para>
 
-    <section id="android_quick_start">
+    <section xml:id="android_quick_start">
       <title>Android Hecl Quick Start</title>
 
       <para>
@@ -8128,7 +8746,7 @@ eval [midlet.resourceasstring "./more_commands.hcl"]
 	<step>
 	  <para>
 	    To work with Android, of course the first thing you need to do is to get the SDK from
-	    Google: <ulink url="http://code.google.com/android/download.html" />.  On my system, I
+	    Google: <link xl:href="http://code.google.com/android/download.html" />.  On my system, I
 	    installed it in here: <filename>/opt/android-sdk/</filename>.
 	  </para>
 	</step>
@@ -8166,8 +8784,7 @@ $layout addview $tv
 	  <note>
 	    <para>
 	      You need to create an "AVD" before launching the emulator.  This is documented here:
-		<ulink
-		url="http://developer.android.com/guide/developing/tools/emulator.html#avds"></ulink>
+		<link xl:href="http://developer.android.com/guide/developing/tools/emulator.html#avds"></link>
 	    </para>
 	  </note>
 	</step>

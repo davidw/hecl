@@ -57,10 +57,6 @@ proc AddSample {name code} {
 # The following "AddSample"s are all examples of UI screens and
 # widgets:
 
-AddSample "BB Browser" {
-browser.open http://www.hecl.org
-}
-
 AddSample "Hello World" {
 # See Examples for more 9
 puts "hello world"
@@ -79,8 +75,8 @@ set lst {One Two Three Four Five Six}
 set menu [/list -selectcommand $sel -commandaction [: {cmd menu} {
     global sel lst
     if {eq $cmd $sel} {
-	set index [$menu selection get]
-	showmsg Selection "You choose [lindex $lst $index]" {
+	set text [$menu selection gettext]
+	showmsg Selection "You choose $text" {
 	    global menu
 	    $menu setcurrent
 	}
@@ -96,7 +92,7 @@ $menu addcommand $back
 $menu setcurrent
 }
 
-AddSample Form {
+AddSample "Form" {
 set form [/form -title "Demo Form" -commandaction [: {cmd form} {
     done
 }]]
@@ -185,11 +181,16 @@ AddSample Alert {
      -commandaction [: {c a} {done}]] setcurrent
 }
 
-AddSample "BlackBerry Information" {
-set form [/form -title "BlackBerry Information" -commandaction [: {c f} {done}]]
+AddSample "BlackBerry Browser" {
+browser.open http://www.hecl.org
+}
+
+AddSample "BlackBerry Connection Information" {
+set form [/form -title "BlackBerry Connection Information" -commandaction [: {c f} {done}]]
 foreach r [servicebook.records] {
     $form append "CID: [hget $r CID] Name: [hget $r Name]"
 }
+$form setcurrent
 }
 
 # Only add this if we have the location.get command:
@@ -227,11 +228,8 @@ set plist {
     "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
-    if {= [catch {set p [system.getproperty $p]}] 0} {
-	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text $p -uneditable 1]
-	}
-    }
+    set prop [system.getproperty $p]
+    $form append [/txt -label $l -uneditable 1 -growtext $prop]
 }
 
 $form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]

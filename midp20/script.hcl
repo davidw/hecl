@@ -69,8 +69,8 @@ set lst {One Two Three Four Five Six}
 set menu [/list -selectcommand $sel -commandaction [: {cmd menu} {
     global sel lst
     if {eq $cmd $sel} {
-	set index [$menu selection get]
-	showmsg Selection "You choose [lindex $lst $index]" {
+	set text [$menu selection gettext]
+	showmsg Selection "You choose $text" {
 	    global menu
 	    $menu setcurrent
 	}
@@ -210,11 +210,8 @@ set plist {
     "Location Version" microedition.location.version
 }
 foreach {l p} $plist {
-    if {= [catch {set p [system.getproperty $p]}] 0} {
-	if {> [strlen $p] 0} {
-	    $form append [/txt -label $l -text $p -uneditable 1]
-	}
-    }
+    set prop [system.getproperty $p]
+    $form append [/txt -label $l -uneditable 1 -growtext $prop]
 }
 
 $form append [/txt -label "Snapshot" -text [midlet.checkpermissions "javax.microedition.media.control.VideoControl.getSnapshot"] -uneditable 1]
@@ -292,7 +289,7 @@ proc FileSelect {infohash bselect bback binfo cmd menu} {
 	if { not $directory } {
 	    $bform append [lcdui.stringitem -label "Size" -text [file.size $cpath]]
 	}
-	$bform append [lcdui.stringitem -label "Basename" -text [file.basename $cpath]]
+	$bform append [lcdui.stringitem -label "Basename" -text [file.name $cpath]]
 	$bform append [lcdui.stringitem -label "Last Modified" -text [file.mtime $cpath]]
 	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
 	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]

@@ -1,4 +1,4 @@
-/* Copyright 2006-2007 David N. Welton
+/* Copyright 2006-2010 David N. Welton, DedaSys LLC
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -241,7 +241,7 @@ public class HeclBuilderGui extends javax.swing.JFrame {
         String outfile = outputTextField.getText() + File.separatorChar +
 	    newname + ".jar";
         try {
-            JarHack.substHecl(in, outfile, newname, scriptfile);
+            JarHack.substHecl(in, outfile, newname, null, scriptfile);
 	    JarHack.createJadForJar(outfile, newname);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(

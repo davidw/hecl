@@ -163,15 +163,6 @@ Uses of <A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">Pa
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseLine(org.hecl.ParseState)">parseLine</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>parseLine</code> method is where parsing starts on a new
- line.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>ParseList.</B><B><A HREF="../../../org/hecl/ParseList.html#parseLine(org.hecl.ParseState)">parseLine</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
 
 <BR>
@@ -179,11 +170,12 @@ Uses of <A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">Pa
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseText(org.hecl.ParseState)">parseText</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseLine(org.hecl.ParseState)">parseLine</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseText</code> parses a "string in quotes".</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>parseLine</code> method is where parsing starts on a new
+ line.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -197,18 +189,18 @@ Uses of <A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">Pa
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseVarBlock(org.hecl.ParseState)">parseVarBlock</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseText(org.hecl.ParseState)">parseText</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseText</code> parses a "string in quotes".</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseWord(org.hecl.ParseState)">parseWord</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseVarBlock(org.hecl.ParseState)">parseVarBlock</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseWord</code> parses a regular word not in quotes.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -217,6 +209,14 @@ Uses of <A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">Pa
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseWord</code> parses a plain Hecl word.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>Parse.</B><B><A HREF="../../../org/hecl/Parse.html#parseWord(org.hecl.ParseState)">parseWord</A></B>(<A HREF="../../../org/hecl/ParseState.html" title="class in org.hecl">ParseState</A>&nbsp;state)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>parseWord</code> parses a regular word not in quotes.</TD>
 </TR>
 </TABLE>
 &nbsp;

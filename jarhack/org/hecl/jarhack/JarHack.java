@@ -55,15 +55,17 @@ public class JarHack {
      * .jar's - one as input, the second as output, in addition to the
      * name of the application.  Where it counts, the old name (Hecl,
      * usually) is overridden with the new name, and the new .jar file
-     * is written to the specified outfile.
+     * is written to the specified outfile.  Via the iconname argument
+     * it is also possible to specify a new icon file to use.
      *
      * @param infile a <code>FileInputStream</code> value
      * @param outfile a <code>String</code> value
      * @param newname a <code>String</code> value
+     * @param iconname a <code>String</code> value
      * @exception IOException if an error occurs
      */
     public static void substHecl(InputStream infile, String outfile,
-				 String newname, String scriptfile)
+				 String newname, String iconname, String scriptfile)
 	throws IOException {
 
 	JarInputStream jif = new JarInputStream(infile);
@@ -109,8 +111,17 @@ public class JarHack {
 	    /* Don't copy the manifest file. */
             if ("META-INF/MANIFEST.MF".equals(entry.getName())) continue;
 
+		/* Insert our own icon */
+		if ( iconname != null && "Hecl.png".equals(entry.getName())) {
+			jof.putNextEntry(new JarEntry("Hecl.png"));
+			FileInputStream inf = new FileInputStream(iconname);
+			while ((read = inf.read(buf)) != -1 ) {
+				jof.write(buf, 0, read );
+			}
+			inf.close();	
+		}
 	    /* Insert our own copy of the script file. */
-	    if ("script.hcl".equals(entry.getName())) {
+	    else if ("script.hcl".equals(entry.getName())) {
 		jof.putNextEntry(new JarEntry("script.hcl"));
 		FileInputStream inf = new FileInputStream(scriptfile);
 		while ((read = inf.read(buf)) != -1) {
@@ -193,11 +204,13 @@ public class JarHack {
 	String destdir = null;
 	String appname = null;
 	String scriptfile = null;
+	String iconname = null;
 
 	opts.addOption("hecljar", true, "Location of Java ME Hecl jar");
 	opts.addOption("destdir", true, "Directory where the .jar and .jad will be created");
 	opts.addOption("name", true, "Name of MIDLet to create: $name.jar and $name.jad");
 	opts.addOption("script", true, "Script filename");
+	opts.addOption("icon", true, "Script icon" );
 
 	CommandLineParser parser = new PosixParser();
 	CommandLine cmd = parser.parse(opts, args);
@@ -222,6 +235,9 @@ public class JarHack {
 	} else {
 	    usage(opts);
 	}
+	if(cmd.hasOption("icon")) {
+		iconname = cmd.getOptionValue("icon");
+	}
 
 
 	String url;
@@ -236,11 +252,18 @@ public class JarHack {
 	    System.exit(1);
 	}
 
+	if ( iconname != null ) {
+		if (!(new File(iconname)).isFile()) {
+			System.err.println("Not a valid icon: " + iconname );
+			System.exit(1);
+		}
+	}
+
 	String newfn =  destdir + appname + ".jar";
 
 	try {
 	    FileInputStream infile = new FileInputStream(sourcefile);
-	    substHecl(infile, newfn, appname, scriptfile);
+	    substHecl(infile, newfn, appname, iconname, scriptfile);
 	    createJadForJar(newfn, appname, url);
 	} catch (Exception e) {
 	    System.err.println("Error: " + e);
