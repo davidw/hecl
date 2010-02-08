@@ -91,14 +91,24 @@ test parse-15 {
     lindex $foo 1
 } "\\\["
 
+
+test parse-numerics {
+    set a [list]
+    append $a [classof 1]
+    append $a [classof 1.0]
+    append $a [classof "1.0"]
+    append $a [classof "blah"]
+    append $a [classof blah]
+} {<int><double><string><string><string>}
+
 test parse-16 {
     set foo {a "b c}
     lindex $foo 1
 } {{PARSE_ERROR {Unbalanced open quote in list}} {lindex 3}}
 
 #test parse-15 {
-#     lindex "a\[ b" 0
-#} "a\["
+#     lindex \"a\[ b\" 0
+#} \"a\[\"
 
 test parse-17 {
     set a [list #foo bar]
