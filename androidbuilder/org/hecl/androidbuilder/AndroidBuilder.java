@@ -1,4 +1,4 @@
-/* Copyright 2008-2009 David N. Welton - DedaSys LLC - http://www.dedasys.com
+/* Copyright 2008-2010 David N. Welton - DedaSys LLC - http://www.dedasys.com
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -39,7 +39,8 @@ import org.apache.commons.cli.PosixParser;
 
 class AndroidBuilder {
     private static final String sep = File.separator;
-
+    private static final String eol = System.getProperty("line.separator");
+    private static final String pathsep = File.pathSeparator;
 
     public static void main(String[] args) throws IOException, ParseException {
 	String androiddir = null;
@@ -66,7 +67,7 @@ class AndroidBuilder {
 	    usage(opts);
 	}
 	String aapt = androiddir + sep + "tools" + sep + "aapt";
-	String dx = androiddir + sep + "tools" + sep + "dx";
+	String dx = androiddir + sep + "tools" + sep + "dx.bat";
 	String androidjar = androiddir + sep + "android.jar";
 
 	/* Get the application's class name.  */
@@ -119,9 +120,9 @@ class AndroidBuilder {
 	String tmppackage = dirname + sep + "Temp.apk";
 	String hecljar = dirname + sep + "Hecl.jar";
 	String heclapk = dirname + sep + "Hecl.apk";
-	String resdir = dirname + sep + "res/";
-	String icondir = resdir + sep + "drawable/";
-	String iconfile = icondir + "aicon.png";
+	String resdir = dirname + sep + "res";
+	String icondir = resdir + sep + "drawable";
+	String iconfile = (new File(icondir, "aicon.png")).toString();
 
 
 	String intentreceiver = "";
@@ -258,7 +259,7 @@ class AndroidBuilder {
 	fos.close();
 
 	/* Compile the new classes. */
-	runProcess("javac", mainJava, subJava, "-cp", hecljar + ":" + androidjar);
+	runProcess("javac", mainJava, subJava, "-cp", hecljar + pathsep + androidjar);
 
 	/* Stash them in the .jar. */
 	runProcess("jar", "uf", hecljar, "-C", dirname, mainClass);
@@ -365,11 +366,11 @@ class AndroidBuilder {
 	BufferedReader errStreamReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 	StringBuffer output = new StringBuffer();
 	StringBuffer error = new StringBuffer();
-	for(String line;(line=inputStreamReader.readLine())!=null;) {
-	    output.append(line);
-	}
 	for(String line;(line=errStreamReader.readLine())!=null;) {
-	    error.append(line);
+	    error.append(line + eol);
+	}
+	for(String line;(line=inputStreamReader.readLine())!=null;) {
+	    output.append(line + eol);
 	}
 
 	if (output.length() > 0) {
