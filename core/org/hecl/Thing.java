@@ -15,6 +15,12 @@
 
 package org.hecl;
 
+//#if j2se && memdebug
+import java.lang.ref.WeakReference;
+import java.util.Vector;
+import java.util.Enumeration;
+//#endif
+
 /**
  * The <code>Thing</code> class is what Hecl revolves around. "Things"
  * can be of several types, include strings, integers, lists, hash
@@ -47,6 +53,13 @@ public class Thing extends Object {
     /* Depth that things like lists are allowed to nest. */
     static final int NESTDEPTH = 10;
 
+//#if memdebug
+    /* Keep track of how many Things have been created. */
+    static public long thingcounter = 0;
+    /* Actually keep track, via week references, of all the allocated
+     * Things. */
+    static public Vector references = new Vector();
+//#endif
 
     /**
      * Creates a new <code>Thing</code> instance from a string.
@@ -55,6 +68,7 @@ public class Thing extends Object {
      *            a <code>String</code> value
      */
     public Thing(String s) {
+	thingCounterIncr();
         val = new StringThing(s);
     }
 
@@ -65,6 +79,7 @@ public class Thing extends Object {
      *            a <code>StringBuffer</code> value
      */
     public Thing(StringBuffer s) {
+	thingCounterIncr();
         val = new StringThing(s);
     }
 
@@ -76,8 +91,19 @@ public class Thing extends Object {
      *            a <code>RealThing</code> value
      */
     public Thing(RealThing realthing) {
+	thingCounterIncr();
         val = realthing;
     }
+
+//#if memdebug
+    private void thingCounterIncr() {
+	references.addElement(new WeakReference(this));
+ 	thingcounter ++;
+    }
+//#else
+    /* Hopefully this is a NOOP. */
+    private void thingCounterIncr() {}
+//#endif
 
     /**
      * <code>setVal</code> sets the internal representation of the Thing.
