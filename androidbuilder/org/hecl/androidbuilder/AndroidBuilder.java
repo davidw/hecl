@@ -282,10 +282,6 @@ class AndroidBuilder {
 	runProcess(dx, "-JXmx384M", "--dex", "--output=" + dexfile,
 		   "--positions=lines", hecljar);
 
-	/* Replace the apk's AndroidManifest.xml and classes.dex */
-	runProcess("zip", "-j", "-r", heclapk, manifest);
-	runProcess("zip", "-j", "-r", heclapk, dexfile);
-
 	/* Finally, rename the whole business back to the calling
 	 * directory.  We copy the whole thing across as a .zip
 	 * archive in order to replace the script.hcl file. */
@@ -306,6 +302,20 @@ class AndroidBuilder {
 		zof.putNextEntry(new ZipEntry(ze.getName()));
 		if ("res/raw/script.hcl".equals(ze.getName())) {
 		    FileInputStream inf = new FileInputStream(scriptFilename);
+		    while ((read = inf.read(buf)) != -1) {
+			zof.write(buf, 0, read);
+		    }
+		    inf.close();
+		    /* Replace the apk's AndroidManifest.xml ... */
+		} else if ("AndroidManifest.xml".equals(ze.getName())) {
+		    FileInputStream inf = new FileInputStream(manifest);
+		    while ((read = inf.read(buf)) != -1) {
+			zof.write(buf, 0, read);
+		    }
+		    inf.close();
+		    /* ... and classes.dex  */
+		} else if ("classes.dex".equals(ze.getName())) {
+		    FileInputStream inf = new FileInputStream(dexfile);
 		    while ((read = inf.read(buf)) != -1) {
 			zof.write(buf, 0, read);
 		    }
