@@ -67,7 +67,12 @@ class AndroidBuilder {
 	    usage(opts);
 	}
 	String aapt = androiddir + sep + "tools" + sep + "aapt";
-	String dx = androiddir + sep + "tools" + sep + "dx.bat";
+	String dx = androiddir + sep + "tools" + sep + "dx";
+	if (sep == "\\") {
+	    /* It's windows  */
+	    dx += ".bat";
+	}
+
 	String androidjar = androiddir + sep + "android.jar";
 
 	/* Get the application's class name.  */
