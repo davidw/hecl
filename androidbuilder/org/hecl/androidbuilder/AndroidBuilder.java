@@ -38,6 +38,8 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 class AndroidBuilder {
+    private static final String sep = File.separator;
+
 
     public static void main(String[] args) throws IOException, ParseException {
 	String androiddir = null;
@@ -63,9 +65,9 @@ class AndroidBuilder {
 	} else {
 	    usage(opts);
 	}
-	String aapt = androiddir + "/tools/aapt";
-	String dx = androiddir + "/tools/dx";
-	String androidjar = androiddir + "/android.jar";
+	String aapt = androiddir + sep + "tools" + sep + "aapt";
+	String dx = androiddir + sep + "tools" + sep + "dx";
+	String androidjar = androiddir + sep + "android.jar";
 
 	/* Get the application's class name.  */
 	String appclass = "Hackle";
@@ -111,13 +113,13 @@ class AndroidBuilder {
 
 	/* Calculate some other stuff based on the informatin we have. */
 	String tmpdir = System.getProperty("java.io.tmpdir");
-	String dirname = tmpdir + "/" + appclass + "-" + System.currentTimeMillis();
-	String manifest = dirname + "/" + "AndroidManifest.xml";
-	String tmppackage = dirname + "/" + "Temp.apk";
-	String hecljar = dirname + "/" + "Hecl.jar";
-	String heclapk = dirname + "/" + "Hecl.apk";
-	String resdir = dirname + "/" + "res/";
-	String icondir = resdir + "/" + "drawable/";
+	String dirname = tmpdir + sep + appclass + "-" + System.currentTimeMillis();
+	String manifest = dirname + sep + "AndroidManifest.xml";
+	String tmppackage = dirname + sep + "Temp.apk";
+	String hecljar = dirname + sep + "Hecl.jar";
+	String heclapk = dirname + sep + "Hecl.apk";
+	String resdir = dirname + sep + "res/";
+	String icondir = resdir + sep + "drawable/";
 	String iconfile = icondir + "aicon.png";
 
 
@@ -233,13 +235,13 @@ class AndroidBuilder {
 	String packagedir = dirname;
 	String jarpackagedir = ""; /* The name inside the jar file. */
 	for (String s : packagename.split("\\.")) {
-	    packagedir += "/" + s;
-	    jarpackagedir += s + "/";
+	    packagedir += sep + s;
+	    jarpackagedir += s + sep;
 	}
 	(new File(packagedir)).mkdirs();
 
-	String mainJava = packagedir + "/" + appclass + ".java";
-	String subJava = packagedir + "/Sub" + appclass + ".java";
+	String mainJava = packagedir + sep + appclass + ".java";
+	String subJava = packagedir + sep + "Sub" + appclass + ".java";
 	String mainClass = jarpackagedir + appclass + ".class";
 	String subClass = jarpackagedir + "Sub" + appclass + ".class";
 
@@ -265,7 +267,7 @@ class AndroidBuilder {
 	if (hasextraClass) {
 	    File ec = new File(extraClass);
 	    is = new FileInputStream(ec);
-	    String outfile = dirname + "/" + jarpackagedir + ec.getName();
+	    String outfile = dirname + sep + jarpackagedir + ec.getName();
 	    System.out.println("Moving " + extraClass + " to " + outfile);
 	    fos = new FileOutputStream(outfile);
 	    copyFileStream(is, fos);
@@ -274,7 +276,7 @@ class AndroidBuilder {
 
 
 	/* Run the dx program to turn them into Android dex stuff. */
-	String dexfile = dirname + "/" + "classes.dex";
+	String dexfile = dirname + sep + "classes.dex";
 	runProcess(dx, "-JXmx384M", "--dex", "--output=" + dexfile,
 		   "--positions=lines", hecljar);
 
@@ -286,7 +288,7 @@ class AndroidBuilder {
 	 * directory.  We copy the whole thing across as a .zip
 	 * archive in order to replace the script.hcl file. */
 
-	String newfilename = System.getProperty("user.dir") + "/" + appclass + ".apk";
+	String newfilename = System.getProperty("user.dir") + sep + appclass + ".apk";
 	if (scriptFilename == null) {
 	    /* Just move it over. */
 	    (new File(heclapk)).renameTo(new File(newfilename));
