@@ -113,7 +113,8 @@ class AndroidBuilder {
 
 	/* Calculate some other stuff based on the informatin we have. */
 	String tmpdir = System.getProperty("java.io.tmpdir");
-	String dirname = tmpdir + sep + appclass + "-" + System.currentTimeMillis();
+	File dirnamefile = new File(tmpdir, appclass + "-" + System.currentTimeMillis());
+	String dirname = dirnamefile.toString();
 	String manifest = dirname + sep + "AndroidManifest.xml";
 	String tmppackage = dirname + sep + "Temp.apk";
 	String hecljar = dirname + sep + "Hecl.jar";
