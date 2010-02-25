@@ -20,6 +20,10 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+//#if memdebug && j2se
+import java.lang.ref.WeakReference;
+//#endif
+
 /**
  * The <code>InterpCmds</code> implements various Hecl commands that
  * deal with the state of the interpreter.
@@ -64,6 +68,9 @@ class InterpCmds extends Operator {
 
 //#if android || j2se
     public static final int GETINTERP = 100;
+//#if memdebug
+    public static final int DUMPREFS = 101;
+//#endif
 //#endif
 
     public Thing operate(int cmd, Interp interp, Thing[] argv) throws HeclException {
@@ -318,6 +325,26 @@ class InterpCmds extends Operator {
 //#if android || j2se
 	    case GETINTERP:
 		return ObjectThing.create(interp);
+//#if memdebug
+	    case DUMPREFS: {
+		System.gc();
+		System.out.println("NTHINGS: " + Thing.references.size());
+		int live = 0;
+		int dead = 0;
+		for (Enumeration e = Thing.references.elements(); e.hasMoreElements();) {
+		    WeakReference wr = (WeakReference)e.nextElement();
+		    Thing t = (Thing)wr.get();
+		    if (t == null) {
+			dead ++;
+		    } else {
+			live ++;
+		    }
+		}
+		System.out.println("Live things: " + live + " Dead things: " + dead);
+		return null;
+	    }
+//#endif
+
 //#endif
 
 	  case GC:
@@ -475,6 +502,9 @@ class InterpCmds extends Operator {
 
 //#if android || j2se
         cmdtable.put("thisinterp", new InterpCmds(GETINTERP, 0, 0));
+//#if memdebug
+        cmdtable.put("dumprefs", new InterpCmds(DUMPREFS, 0, 0));
+//#endif
 //#endif
 
     }

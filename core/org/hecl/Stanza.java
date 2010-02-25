@@ -203,6 +203,8 @@ class Stanza {
 		msg = "Exception of type " + e.getClass() + ": " + msg;
 	    }
 	    throw new HeclException(msg,this.lineno);
+	} finally {
+	    newargv = null;
 	}
 
 	/* Go ahead and save the command. */
