@@ -27,8 +27,11 @@ import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.net.Socket;
+import java.net.InetSocketAddress;
 //#else
 import javax.microedition.io.Connector;
+import javax.microedition.io.StreamConnection;
 import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 //#endif
@@ -59,6 +62,7 @@ import org.hecl.Thing;
  */
 public class FileCmds extends Operator {
     public static final int OPEN = 1;
+    public static final int SOCKET = 5;
     public static final int READABLE = 10;
     public static final int WRITABLE = 20;
     public static final int HIDDEN = 30;
@@ -148,14 +152,14 @@ public class FileCmds extends Operator {
 	/* 'Regular' Java uses File, J2ME uses FileConnection. */
 //#if javaversion >= 1.5
 	File tfile = null;
-	if (cmd != LISTROOTS) {
+	if (cmd != LISTROOTS && cmd != SOCKET) {
 	    fname = StringThing.get(argv[1]);
 	    tfile = new File(fname);
 	}
 //#else
 	FileConnection fconn = null;
 
-	if (cmd != LISTROOTS) {
+	if (cmd != LISTROOTS && cmd != SOCKET) {
 	    fname = StringThing.get(argv[1]);
 	    try {
  		fconn = (FileConnection)Connector.open(fname);
@@ -188,6 +192,20 @@ public class FileCmds extends Operator {
 		    throw new HeclException("Error opening '" + fname + "' :" + ioe.toString());
 		}
 		return ObjectThing.create(retval);
+	    }
+
+	    case SOCKET: {
+		InetSocketAddress isa = null;
+		try {
+		    isa = new InetSocketAddress(argv[1].toString(), IntThing.get(argv[2]));
+		    Socket sock = new Socket();
+		    sock.connect(isa);
+		    HeclChannel retval = new HeclChannel(new DataInputStream(sock.getInputStream()),
+							 new DataOutputStream(sock.getOutputStream()));
+		    return ObjectThing.create(retval);
+		} catch (IOException ioe) {
+		    throw new HeclException("Error opening: " + isa + " " + ioe.toString());
+		}
 	    }
 
 	    case READABLE:
@@ -360,6 +378,18 @@ public class FileCmds extends Operator {
 		    return ObjectThing.create(retval);
 		}
 
+		case SOCKET: {
+		    String uri = "socket://" + argv[1].toString() + ":" + argv[2].toString();
+		    try {
+			StreamConnection sc = (StreamConnection) Connector.open(uri);
+			HeclChannel retval = new HeclChannel(new DataInputStream(sc.openInputStream()),
+						 new DataOutputStream(sc.openOutputStream()));
+			return ObjectThing.create(retval);
+		    } catch (IOException ioe) {
+			throw new HeclException("Error opening: " + uri + " " + ioe.toString());
+		    }
+		}
+
 		case READABLE:
 		{
 		    if (argv.length == 3) {
@@ -493,6 +523,7 @@ public class FileCmds extends Operator {
     static {
 	try {
 	    cmdtable.put("open", new FileCmds(OPEN,1,2));
+	    cmdtable.put("socket", new FileCmds(SOCKET,2,2));
 	    cmdtable.put("file.readable", new FileCmds(READABLE,1,2));
 	    cmdtable.put("file.writable", new FileCmds(WRITABLE,1,2));
 	    cmdtable.put("file.hidden", new FileCmds(HIDDEN,1,2));
