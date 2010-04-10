@@ -92,6 +92,7 @@ public class Hecl extends MIDlet {
 
 //#if files == 1
 	    org.hecl.files.FileCmds.load(interp);
+	    org.hecl.files.HeclStreamCmds.load(interp);
 	    org.hecl.files.FileFinderCmds.load(interp);
 //#endif
 
