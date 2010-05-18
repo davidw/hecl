@@ -200,7 +200,7 @@ ant packageCommandline
 	  this:
 	</para>
 	<screen>
-java -jar jars/j2se/Hecl.jar Hecl
+java -jar jars/j2se/Hecl.jar
 hecl> puts "hello world"
 hello world
 </screen>
