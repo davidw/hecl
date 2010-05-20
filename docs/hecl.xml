@@ -1866,7 +1866,7 @@ puts [llen {1 2 3 {a b c}}]
 	  elements from
 	  <option><replaceable>list</replaceable></option>, starting
 	  at element <option><replaceable>first</replaceable></option>
-	  and ending at <option><replaceable>first</replaceable></option>.
+	  and ending at <option><replaceable>last</replaceable></option>.
 	</para>
       </refsect1>
       <refsect1>
