@@ -348,14 +348,18 @@ set c [/canvas -title "Test Canvas" -commandaction [: {cmd canvas} {done}] \
 	       set reason [$event cget -reason]
 	       if {or [< $reason 5] [> $reason 7]} {return}
 
-	       set kc [$event cget -keyname]
-	       if {eq $kc UP} {
+	       set kc [$event cget -gameaction]
+	       # UP
+	       if {eq $kc 1} {
 		   set Y [+ $Y 10]
-	       } elseif {eq $kc DOWN} {
+	       } elseif {eq $kc 6} {
+		   # DOWN
 		   set Y [- $Y 10]
-	       } elseif {eq $kc LEFT} {
+	       } elseif {eq $kc 2} {
+		   # LEFT
 		   set X [- $X 10]
-	       } elseif {eq $kc RIGHT} {
+	       } elseif {eq $kc 5} {
+		   # RIGHT
 		   set X [+ $X 10]
 	       }
 	       DrawH [$canvas graphics] $X $Y

@@ -240,7 +240,7 @@ public class GraphicsCmd extends OptionCmd {
 	    // image, v(x,y), anchor
 	    if(startat+2 > argv.length)
 		throw HeclException.createWrongNumArgsException(
-		    argv, startat, "animage point [anchor]");
+		    argv, startat, "an image point [anchor]");
 	    
 	    int anchor = startat+2 < argv.length ?
 		WidgetInfo.toCanvasAnchor(argv[startat+2]) : Graphics.BOTTOM|Graphics.LEFT;
