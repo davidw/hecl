@@ -369,11 +369,14 @@ public class FileCmds extends Operator {
 			    write = true;
 			}
 		    }
-		    Object retval;
+		    HeclChannel retval;
 		    if (write) {
-			retval = fconn.openDataOutputStream();
+			if (!fconn.exists()) {
+			    fconn.create();
+			}
+			retval = new HeclChannel(fconn.openDataOutputStream());
 		    } else {
-			retval = fconn.openDataInputStream();
+			retval = new HeclChannel(fconn.openDataInputStream());
 		    }
 		    return ObjectThing.create(retval);
 		}
@@ -500,8 +503,8 @@ public class FileCmds extends Operator {
 					    + cmd + "'.");
 	    }
 	} catch (IOException e) {
-	    throw new HeclException("IO Exception in " +
-				    argv[0].toString() + ": " + e.toString());
+	    throw new HeclException("IO Exception: " +
+				    HeclException.argvToString(argv) + " : " + e.toString());
 	}
 //#endif
     }

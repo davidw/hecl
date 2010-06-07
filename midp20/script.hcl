@@ -254,7 +254,7 @@ $form setcurrent
 
 AddSample "File Browser" {
 
-proc FileSelect {infohash bselect bback binfo cmd menu} {
+proc FileSelect {infohash bselect bback binfo bwrite cmd menu} {
     set root [hget $infohash root]
 
     set index [$menu selection get]
@@ -294,6 +294,10 @@ proc FileSelect {infohash bselect bback binfo cmd menu} {
 	$bform append [lcdui.stringitem -label "Directory?" -text $directory]
 	$bform append [lcdui.stringitem -label "Open?" -text [file.isopen $cpath]]
 	$bform setcurrent
+    } elseif {eq $cmd $bwrite} {
+	set fl [open "${cpath}hecl.txt" w]
+	$fl writeln "Hecl was here"
+	$fl close
     }
 
     hset $infohash paths $lst
@@ -303,7 +307,7 @@ proc FileSelect {infohash bselect bback binfo cmd menu} {
     }
 
     #Re-add the infohash into the -commandaction.
-    $menu configure -commandaction [list FileSelect $infohash $bselect $bback $binfo]
+    $menu configure -commandaction [list FileSelect $infohash $bselect $bback $binfo $bwrite]
 }
 
 set h [hash {}]
@@ -314,10 +318,12 @@ hset $h root {}
 set bselect [lcdui.command -label Select -longlabel Select -type item]
 set bback [lcdui.command -label Back -longlabel Back -type item]
 set binfo [lcdui.command -label Info -longlabel "File Info" -type item]
+set bwrite [lcdui.command -label Write -longlabel "Write File" -type item]
 set browser [lcdui.list -selectcommand $bselect -title "File Browser" \
-		 -commandaction [list FileSelect $h $bselect $bback $binfo]]
+		 -commandaction [list FileSelect $h $bselect $bback $binfo $bwrite]]
 $browser addcommand $bback
 $browser addcommand $binfo
+$browser addcommand $bwrite
 $browser setcurrent
 foreach d $devs {
     $browser append $d
