@@ -120,13 +120,50 @@ public class HeclException extends Exception {
         return ListThing.create((Vector) stack);
     }
 
-    public static HeclException createWrongNumArgsException(Thing argv[],
-            int count, String message) throws HeclException {
+    /**
+     * The <code>argvToString</code> method turns an argv array into a
+     * string, suitable for printing in error messages.
+     *
+     * @param argv a <code>Thing</code> value
+     * @return a <code>StringBuffer</code> value
+     */
+
+    public static StringBuffer argvToString(Thing argv[]) {
+	return argvToString(argv, argv.length);
+    }
+
+    /**
+     * The <code>argvToString</code> method turns an argv array into a
+     * string, suitable for printing in error messages.
+     *
+     * @param argv a <code>Thing</code> value
+     * @param count a <code>Thing</code> value
+     * @return a <code>StringBuffer</code> value
+     */
+
+    public static StringBuffer argvToString(Thing argv[], int count) {
         StringBuffer str = new StringBuffer();
         for (int i = 0; i < count && i < argv.length; i++) {
             str.append(argv[i].toString());
             str.append(" ");
         }
+	return str;
+    }
+
+    /**
+     * The <code>createWrongNumArgsException</code> method creates a
+     * HeclException for a command that has received the wrong number
+     * of arguments.
+     *
+     * @param argv a <code>Thing</code> value
+     * @param count an <code>int</code> value
+     * @param message a <code>String</code> value
+     * @return a <code>HeclException</code> value
+     * @exception HeclException if an error occurs
+     */
+    public static HeclException createWrongNumArgsException(Thing argv[],
+            int count, String message) throws HeclException {
+	StringBuffer str = argvToString(argv, count);
         return new HeclException("wrong # args: should be \"" + str + message + "\"");
     }
     /**
