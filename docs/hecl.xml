@@ -1679,7 +1679,10 @@ puts "foo is now $foo"
  puts [sort [intro commands]]
 	  </programlisting>
 	  <para>Produces: (depending on the available commands)</para>
-	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for foreach global hash hget hset if incr intro join lappend lindex list llen lset proc puts ref return search set strindex strlen sort source split time true upeval while</screen>
+	  <screen>* + - / &lt; = &gt; append break catch continue copy eq eval filter for
+foreach global hash hget hset if incr intro join lappend lindex
+list llen lset proc puts ref return search set strindex strlen sort
+source split time true upeval while</screen>
       </refsect1>
     </refentry>
 
@@ -4264,8 +4267,8 @@ set xmlParser [kxml.create]
                 <title>Description</title>
                 <para>Set the xml input stream to the given xmlParser.</para>
                 <programlisting>
-set httpStream [http.geturl "http://www.google.com/ig/api?weather=$city,$country"]
-set xmlStream [hget $httpStream data]
+set http [http.geturl "http://www.google.com/ig/api?weather=$city,$country"]
+set xmlStream [hget $http data]
 kxml.input $xmlParser $xmlStream
                 </programlisting>
             </refsect1>
@@ -4349,7 +4352,7 @@ kxml.input $xmlParser $xmlStream
                 <para>Test if the current event is START_TAG type do match the given name and any namesapce. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.
 		</para>
                 <programlisting>
-#-- assert the current event is a START_TAG event "forecast_conditions"
+# assert the current event is a START_TAG event "forecast_conditions"
 kxml.requirestart $xmlParser "forecast_conditions"
                 </programlisting>
             </refsect1>
@@ -4372,7 +4375,7 @@ kxml.requirestart $xmlParser "forecast_conditions"
                 <title>Description</title>
                 <para>Test if the current event is END_TAG type and do match the given name and any namespace. If the test is not passed, an exception is thrown. The exception text indicates the parser position, the expected event and the current event that is not meeting the requirement.</para>
                 <programlisting>
-#-- assert we have reach the END_TAG event of "forecast_conditions"
+# assert we have reach the END_TAG event of "forecast_conditions"
 kxml.requireend $xmlParser "forecast_conditions"
                 </programlisting>
             </refsect1>
@@ -4429,7 +4432,7 @@ kxml.requireend $xmlParser "forecast_conditions"
 	      <title>Description</title>
 	      <para>For START_TAG or END_TAG events, the name of the current element is returned.</para>
 	      <programlisting>
-#-- loop over the stream as long as we reach the END_TAG event of "current_conditions"
+# loop over the stream until we reach the END_TAG event "current_conditions"
 while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
     set name [kxml.getname $xmlParser]
     puts $name
@@ -4913,7 +4916,8 @@ $form append [lcdui.stringitem -label "Hello" -text "World"]
       </para>
 
 <programlisting>
-java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name Hello -script hello.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar \
+    -destdir ~/ -name Hello -script hello.hcl
 </programlisting>
 
       <para>
@@ -5109,7 +5113,8 @@ $shopform configure -commandaction \
       <para>Now, let's build it and run it:</para>
 
 <programlisting>
-java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name ShopList -script shoplist.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar \
+    -destdir ~/ -name ShopList -script shoplist.hcl
 /opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </programlisting>
 
@@ -5835,7 +5840,8 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	  <title>Example</title>
 	  <programlisting>
 [lcdui.alert -title "Reactor core meltdown" -text \
-    "You went and pressed the red button, didn't you!" -timeout forever] setcurrent
+    "You went and pressed the red button, didn't you!" \
+    -timeout forever] setcurrent
 	  </programlisting>
 
 	  <para>
@@ -6005,7 +6011,8 @@ java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -n
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
+set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu \
+    -eventhandler canvasEvents]
 set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]
 $graphics frect [list 80 10] [list 10 80]
@@ -6355,9 +6362,12 @@ $form setcurrent
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-set exitcmd [lcdui.command -label Exit -longlabel Exit -type exit -priority 2]
-set backcmd [lcdui.command -label Back -longlabel Back -type back -priority 1]
-set addtextcmd [lcdui.command -label AddText -longlabel AddText -type screen -priority 1]
+set exitcmd [lcdui.command -label Exit -longlabel Exit \
+    -type exit -priority 2]
+set backcmd [lcdui.command -label Back -longlabel Back \
+    -type back -priority 1]
+set addtextcmd [lcdui.command -label AddText -longlabel AddText \
+    -type screen -priority 1]
 
 proc NewForm {} {
     global exitcmd
@@ -6376,7 +6386,8 @@ proc HandleCmd {cmd form} {
    if { eq $cmd $backcmd } {
    	NewForm
    } elseif { eq $cmd $exitcmd } {
-   	[lcdui.alert -title "Goodbye" -text "Goodbye!" -type info -timeout forever] setcurrent
+   	[lcdui.alert -title "Goodbye" -text "Goodbye!" -type info \
+            -timeout forever] setcurrent
         after 1000 midlet.exit
    }
    $form append "Blah blah"
@@ -6477,7 +6488,8 @@ NewForm
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-set date [lcdui.date -label "Current date and time:" -date [clock time] -type date_time]
+set date [lcdui.date -label "Current date and time:" \
+    -date [clock time] -type date_time]
 set form [lcdui.form -title "Date Form"]
 $form append $date
 $form setcurrent
@@ -7377,7 +7389,8 @@ $form setcurrent
 	<refsect1>
 	  <title>Example</title>
 	  <programlisting>
-set selectcmd [lcdui.command -label Select -longlabel Select -type item -priority 1]
+set selectcmd [lcdui.command -label Select -longlabel Select -type \
+    item -priority 1]
 set lst [lcdui.list -title "List Example" -commandaction selectname]
 set names {Anna Barbara Carla Daniela Emanuela Federica}
 foreach n $names {
@@ -7387,7 +7400,8 @@ $lst setcurrent
 $lst addcommand $selectcmd
 proc selectname {cmd lst} {
     global names
-    [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] setcurrent
+    [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] \
+        setcurrent
 }</programlisting>
 	  <para>Produces:</para>
 
@@ -7584,7 +7598,8 @@ foreach s {"-color"
     "-borderstyle"
     "-hilightborderstyle"
 } {
-    $form append [lcdui.stringitem -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
+    $form append [lcdui.stringitem -label "[strtrim $s -]:" -text \
+        [lcdui.settings cget $s]]
 }</programlisting>
 
 	  <para>
@@ -8765,7 +8780,8 @@ set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
-set tv [textview -new $context -text {Hello World} -layoutparams $layoutparams]
+set tv [textview -new $context -text {Hello World} \
+                 -layoutparams $layoutparams]
 
 $layout addview $tv
 [activity] setcontentview $layout
@@ -8793,7 +8809,10 @@ $layout addview $tv
 	  <para>Now we create the new <filename>Hello.apk</filename> file.
 	  </para>
 
-	  <programlisting>java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</programlisting>
+	  <programlisting>java -jar ./hecl/jars/AndroidBuilder.jar -android \
+    /opt/android-sdk/platforms/android-1.5/ -class Hello \
+    -label Hello -package hello.world \
+    -script hello.hcl</programlisting>
 
 	  <note>
 	    <para>It's important to point out that the directory used with the
@@ -8823,8 +8842,11 @@ $layout addview $tv
 	  <para>
 	    We now have a <filename>Hecl.apk</filename> file.  We need to sign it with the debug
 	    key:
-	    <programlisting>keytool -genkeypair -keystore debug.keystore -keypass android -alias androiddebugkey -storepass android -dname "CN=Android Debug,O=Android,C=US"</programlisting>
-	    <programlisting>jarsigner -keystore debug.keystore -keypass android -storepass android -verbose Hello.apk androiddebugkey</programlisting>
+	    <programlisting>keytool -genkeypair -keystore debug.keystore \
+    -keypass android -alias androiddebugkey -storepass android \
+    -dname "CN=Android Debug,O=Android,C=US"</programlisting>
+	    <programlisting>jarsigner -keystore debug.keystore -keypass android \
+    -storepass android -verbose Hello.apk androiddebugkey</programlisting>
 	  </para>
 	</step>
 
