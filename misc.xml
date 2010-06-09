@@ -75,6 +75,17 @@
     </exec>
   </target>
 
+  <target name="pdf" depends="docbookresolve">
+    <exec executable="fop">
+      <arg value="-xml" />
+      <arg value="docs/hecl.xml" />
+      <arg value="-xsl" />
+      <arg value="/usr/share/xml/docbook/stylesheet/docbook-xsl/fo/docbook.xsl" />
+      <arg value="-pdf" />
+      <arg value="docs/hecl.pdf" />
+    </exec>
+  </target>
+
   <target name="docs" depends="javadocs,docbook">
   </target>
 
