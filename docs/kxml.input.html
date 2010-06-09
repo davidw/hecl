@@ -18,8 +18,8 @@
                 
                 <p>Set the xml input stream to the given xmlParser.</p>
                 <pre class="programlisting">
-set httpStream [http.geturl "http://www.google.com/ig/api?weather=$city,$country"]
-set xmlStream [hget $httpStream data]
+set http [http.geturl "http://www.google.com/ig/api?weather=$city,$country"]
+set xmlStream [hget $http data]
 kxml.input $xmlParser $xmlStream
                 </pre>
             </div>

@@ -152,7 +152,8 @@ foreach s {"-color"
     "-borderstyle"
     "-hilightborderstyle"
 } {
-    $form append [lcdui.stringitem -label "[strtrim $s -]:" -text [lcdui.settings cget $s]]
+    $form append [lcdui.stringitem -label "[strtrim $s -]:" -text \
+        [lcdui.settings cget $s]]
 }</pre>
 
 	  <p>

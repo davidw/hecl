@@ -69,9 +69,12 @@
 	<div class="refsect1" title="Example"><a name="id-1.8.6.8.4"></a><h2>Example</h2>
 	  
 	  <pre class="programlisting">
-set exitcmd [lcdui.command -label Exit -longlabel Exit -type exit -priority 2]
-set backcmd [lcdui.command -label Back -longlabel Back -type back -priority 1]
-set addtextcmd [lcdui.command -label AddText -longlabel AddText -type screen -priority 1]
+set exitcmd [lcdui.command -label Exit -longlabel Exit \
+    -type exit -priority 2]
+set backcmd [lcdui.command -label Back -longlabel Back \
+    -type back -priority 1]
+set addtextcmd [lcdui.command -label AddText -longlabel AddText \
+    -type screen -priority 1]
 
 proc NewForm {} {
     global exitcmd
@@ -90,7 +93,8 @@ proc HandleCmd {cmd form} {
    if { eq $cmd $backcmd } {
    	NewForm
    } elseif { eq $cmd $exitcmd } {
-   	[lcdui.alert -title "Goodbye" -text "Goodbye!" -type info -timeout forever] setcurrent
+   	[lcdui.alert -title "Goodbye" -text "Goodbye!" -type info \
+            -timeout forever] setcurrent
         after 1000 midlet.exit
    }
    $form append "Blah blah"

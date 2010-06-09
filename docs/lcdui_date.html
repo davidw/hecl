@@ -80,7 +80,8 @@
 	<div class="refsect1" title="Example"><a name="id-1.8.6.9.4"></a><h2>Example</h2>
 	  
 	  <pre class="programlisting">
-set date [lcdui.date -label "Current date and time:" -date [clock time] -type date_time]
+set date [lcdui.date -label "Current date and time:" \
+    -date [clock time] -type date_time]
 set form [lcdui.form -title "Date Form"]
 $form append $date
 $form setcurrent

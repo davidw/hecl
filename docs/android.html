@@ -42,7 +42,8 @@ set layout [linearlayout -new $context]
 $layout setorientation VERTICAL
 set layoutparams [linearlayoutparams -new {FILL_PARENT WRAP_CONTENT}]
 
-set tv [textview -new $context -text {Hello World} -layoutparams $layoutparams]
+set tv [textview -new $context -text {Hello World} \
+                 -layoutparams $layoutparams]
 
 $layout addview $tv
 [activity] setcontentview $layout
@@ -66,7 +67,10 @@ $layout addview $tv
 	  <p>Now we create the new <code class="filename">Hello.apk</code> file.
 	  </p>
 
-	  <pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android /opt/android-sdk/platforms/android-1.5/ -class Hello -label Hello -package hello.world -script hello.hcl</pre>
+	  <pre class="programlisting">java -jar ./hecl/jars/AndroidBuilder.jar -android \
+    /opt/android-sdk/platforms/android-1.5/ -class Hello \
+    -label Hello -package hello.world \
+    -script hello.hcl</pre>
 
 	  <div class="note" title="Note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">
 	    <p>It's important to point out that the directory used with the
@@ -88,8 +92,11 @@ $layout addview $tv
 	  <p>
 	    We now have a <code class="filename">Hecl.apk</code> file.  We need to sign it with the debug
 	    key:
-	    </p><pre class="programlisting">keytool -genkeypair -keystore debug.keystore -keypass android -alias androiddebugkey -storepass android -dname "CN=Android Debug,O=Android,C=US"</pre><p>
-	    </p><pre class="programlisting">jarsigner -keystore debug.keystore -keypass android -storepass android -verbose Hello.apk androiddebugkey</pre><p>
+	    </p><pre class="programlisting">keytool -genkeypair -keystore debug.keystore \
+    -keypass android -alias androiddebugkey -storepass android \
+    -dname "CN=Android Debug,O=Android,C=US"</pre><p>
+	    </p><pre class="programlisting">jarsigner -keystore debug.keystore -keypass android \
+    -storepass android -verbose Hello.apk androiddebugkey</pre><p>
 	  </p>
 	</li><li class="step" title="Step 7">
 	  <p>At this piont, we can send the signed file, <code class="filename">Hello.apk</code> to the emulator:

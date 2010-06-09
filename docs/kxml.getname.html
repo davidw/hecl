@@ -14,7 +14,7 @@
 	      
 	      <p>For START_TAG or END_TAG events, the name of the current element is returned.</p>
 	      <pre class="programlisting">
-#-- loop over the stream as long as we reach the END_TAG event of "current_conditions"
+# loop over the stream until we reach the END_TAG event "current_conditions"
 while {!= [strcmp [kxml.getname $xmlParser] "current_conditions"] 0 } {
     set name [kxml.getname $xmlParser]
     puts $name

@@ -181,7 +181,8 @@ $form append [lcdui.stringitem -label "Hello" -text "World"]
       </p>
 
 <pre class="programlisting">
-java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name Hello -script hello.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar \
+    -destdir ~/ -name Hello -script hello.hcl
 </pre>
 
       <p>
@@ -370,7 +371,8 @@ $shopform configure -commandaction \
       <p>Now, let's build it and run it:</p>
 
 <pre class="programlisting">
-java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar -destdir ~/ -name ShopList -script shoplist.hcl
+java -jar jars/JarHack.jar -hecljar jars/cldc1.1-midp2.0/Hecl.jar \
+    -destdir ~/ -name ShopList -script shoplist.hcl
 /opt/WTK2.5.2/bin/emulator -classpath ShopList.jar Hecl
 </pre>
 

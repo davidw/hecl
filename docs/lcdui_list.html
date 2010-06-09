@@ -42,7 +42,8 @@
 	<div class="refsect1" title="Example"><a name="id-1.8.6.16.4"></a><h2>Example</h2>
 	  
 	  <pre class="programlisting">
-set selectcmd [lcdui.command -label Select -longlabel Select -type item -priority 1]
+set selectcmd [lcdui.command -label Select -longlabel Select -type \
+    item -priority 1]
 set lst [lcdui.list -title "List Example" -commandaction selectname]
 set names {Anna Barbara Carla Daniela Emanuela Federica}
 foreach n $names {
@@ -52,7 +53,8 @@ $lst setcurrent
 $lst addcommand $selectcmd
 proc selectname {cmd lst} {
     global names
-    [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] setcurrent
+    [lcdui.alert -text "Selected: [lindex $names [$lst selection get]]"] \
+        setcurrent
 }</pre>
 	  <p>Produces:</p>
 

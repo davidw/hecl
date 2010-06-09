@@ -143,7 +143,8 @@
 	<div class="refsect1" title="Example"><a name="id-1.8.6.6.4"></a><h2>Example</h2>
 	  
 	  <pre class="programlisting">
-set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu -eventhandler canvasEvents]
+set canvas [lcdui.canvas -title "Test Canvas" -commandaction backToMainMenu \
+    -eventhandler canvasEvents]
 set graphics [$canvas graphics]
 $graphics frect [list 10 10] [list 10 80]
 $graphics frect [list 80 10] [list 10 80]
