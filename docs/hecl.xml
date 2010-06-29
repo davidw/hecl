@@ -2775,6 +2775,35 @@ puts "Time is $time"
       </refsect1>
     </refentry>
 
+    <refentry xml:id="tnotify">
+      <refnamediv>
+	<refname>tnotify</refname>
+	<refpurpose>Notify a token</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>tnotify</command>
+	  <arg choice="req"><replaceable>token</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>tnotify</command> command notifies a token that is being waited on by the
+	  <command>twait</command> command.
+	</para>
+      </refsect1>
+
+      <refsect1>
+	<title>Examples</title>
+	<screen>
+FIXME
+	</screen>
+      </refsect1>
+    </refentry>
+
+
      <!-- true -->
      <refentry xml:id="true">
       <refnamediv>
@@ -2803,6 +2832,37 @@ if { true } {
 	  <screen>true is true</screen>
       </refsect1>
     </refentry>
+
+    <refentry xml:id="twait">
+      <refnamediv>
+	<refname>twait</refname>
+	<refpurpose>Wait on a token</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>twait</command>
+	  <arg choice="req"><replaceable>token</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>twait</command> command waits for a token to be "notified" via the
+	  <command>tnotify</command> command.  This is useful in situations where you want to return
+	  control from a GUI into some other code.
+	</para>
+      </refsect1>
+
+      <refsect1>
+	<title>Examples</title>
+	<screen>
+FIXME
+	</screen>
+      </refsect1>
+    </refentry>
+
+
 
     <!-- unset -->
     <refentry xml:id="unset">
