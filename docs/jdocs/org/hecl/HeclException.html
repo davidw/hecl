@@ -175,6 +175,25 @@ The <code>HeclException</code> class implements exceptions for Hecl.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.StringBuffer</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/HeclException.html#argvToString(org.hecl.Thing[])">argvToString</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>argvToString</code> method turns an argv array into a
+ string, suitable for printing in error messages.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;java.lang.StringBuffer</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../org/hecl/HeclException.html#argvToString(org.hecl.Thing[], int)">argvToString</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+             int&nbsp;count)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>argvToString</code> method turns an argv array into a
+ string, suitable for printing in error messages.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../org/hecl/HeclException.html#createInvalidParameter(org.hecl.Thing, java.lang.String, java.lang.String)">createInvalidParameter</A></B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>&nbsp;param,
                        java.lang.String&nbsp;type,
@@ -191,7 +210,9 @@ The <code>HeclException</code> class implements exceptions for Hecl.
                             java.lang.String&nbsp;message)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>createWrongNumArgsException</code> method creates a
+ HeclException for a command that has received the wrong number
+ of arguments.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -370,6 +391,37 @@ public <A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A> <
 </DL>
 <HR>
 
+<A NAME="argvToString(org.hecl.Thing[])"><!-- --></A><H3>
+argvToString</H3>
+<PRE>
+public static java.lang.StringBuffer <B>argvToString</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv)</PRE>
+<DL>
+<DD>The <code>argvToString</code> method turns an argv array into a
+ string, suitable for printing in error messages.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>argv</CODE> - a <code>Thing</code> value
+<DT><B>Returns:</B><DD>a <code>StringBuffer</code> value</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="argvToString(org.hecl.Thing[], int)"><!-- --></A><H3>
+argvToString</H3>
+<PRE>
+public static java.lang.StringBuffer <B>argvToString</B>(<A HREF="../../org/hecl/Thing.html" title="class in org.hecl">Thing</A>[]&nbsp;argv,
+                                                  int&nbsp;count)</PRE>
+<DL>
+<DD>The <code>argvToString</code> method turns an argv array into a
+ string, suitable for printing in error messages.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>argv</CODE> - a <code>Thing</code> value<DD><CODE>count</CODE> - a <code>Thing</code> value
+<DT><B>Returns:</B><DD>a <code>StringBuffer</code> value</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="createWrongNumArgsException(org.hecl.Thing[], int, java.lang.String)"><!-- --></A><H3>
 createWrongNumArgsException</H3>
 <PRE>
@@ -378,10 +430,15 @@ public static <A HREF="../../org/hecl/HeclException.html" title="class in org.he
                                                         java.lang.String&nbsp;message)
                                                  throws <A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></PRE>
 <DL>
+<DD>The <code>createWrongNumArgsException</code> method creates a
+ HeclException for a command that has received the wrong number
+ of arguments.
+<P>
 <DD><DL>
-
+<DT><B>Parameters:</B><DD><CODE>argv</CODE> - a <code>Thing</code> value<DD><CODE>count</CODE> - an <code>int</code> value<DD><CODE>message</CODE> - a <code>String</code> value
+<DT><B>Returns:</B><DD>a <code>HeclException</code> value
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE></DL>
+<DD><CODE><A HREF="../../org/hecl/HeclException.html" title="class in org.hecl">HeclException</A></CODE> - if an error occurs</DL>
 </DD>
 </DL>
 <HR>
