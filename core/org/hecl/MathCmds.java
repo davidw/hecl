@@ -279,6 +279,38 @@ public class MathCmds extends org.hecl.Operator {
 	    }
 	    return DoubleThing.create(a.doubleValue()%b.doubleValue());
 //#endif
+
+	    case MIN:
+//#if javaversion >= 1.5 || cldc > 1.0
+		if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		    IntegralThing i = (IntegralThing)a;
+		    IntegralThing j = (IntegralThing)b;
+		    if(i.isLong() && j.isLong()) {
+			return LongThing.create(Math.min(i.longValue(), j.longValue()));
+		    }
+		    return IntThing.create(Math.min(i.intValue(), j.intValue()));
+//#if javaversion >= 1.5 || cldc > 1.0
+		}
+		return DoubleThing.create(Math.min(a.doubleValue(), b.doubleValue()));
+//#endif
+
+	    case MAX:
+//#if javaversion >= 1.5 || cldc > 1.0
+		if(a.isIntegral() && b.isIntegral()) {
+//#endif
+		    IntegralThing i = (IntegralThing)a;
+		    IntegralThing j = (IntegralThing)b;
+		    if(i.isLong() && j.isLong()) {
+			return LongThing.create(Math.max(i.longValue(), j.longValue()));
+		    }
+		    return IntThing.create(Math.max(i.intValue(), j.intValue()));
+//#if javaversion >= 1.5 || cldc > 1.0
+		}
+		return DoubleThing.create(Math.max(a.doubleValue(), b.doubleValue()));
+//#endif
+
+
 	  case AND:
 //#if javaversion >= 1.5 || cldc > 1.0
 	    if(a.isIntegral() && b.isIntegral()) {
@@ -509,6 +541,9 @@ public class MathCmds extends org.hecl.Operator {
 	cmdtable.put("<=",new MathCmds(LE,2,2));
 	cmdtable.put(">",new MathCmds(GT,2,2));
 	cmdtable.put(">=",new MathCmds(GE,2,2));
+
+	cmdtable.put("min", new MathCmds(MIN,2,2));
+	cmdtable.put("max", new MathCmds(MAX,2,2));
 
 	// stuff not available in cldc 1.0
 //#if javaversion >= 1.5 || cldc > 1.0
