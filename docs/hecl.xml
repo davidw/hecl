@@ -1923,6 +1923,47 @@ a c</screen>
       </refsect1>
     </refentry>
 
+    <refentry xml:id="max">
+      <refnamediv>
+	<refname>max</refname>
+	<refpurpose>Returns the greater of two numbers</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>max</command>
+	  <arg choice="req"><replaceable>numbera</replaceable></arg>
+	  <arg choice="req"><replaceable>numberb</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>max</command> command returns the greater of two numbers.
+	</para>
+      </refsect1>
+    </refentry>
+
+
+    <refentry xml:id="min">
+      <refnamediv>
+	<refname>min</refname>
+	<refpurpose>Returns the smaller of two numbers</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+	<cmdsynopsis>
+	  <command>min</command>
+	  <arg choice="req"><replaceable>numbera</replaceable></arg>
+	  <arg choice="req"><replaceable>numberb</replaceable></arg>
+	</cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1>
+	<title>Description</title>
+	<para>
+	  The <command>min</command> command returns the lesser of two numbers.
+	</para>
+      </refsect1>
+    </refentry>
+
     <!-- ne -->
     <refentry xml:id="ne">
       <refnamediv>
