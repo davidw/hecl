@@ -229,7 +229,7 @@ class FontMap implements org.hecl.Command {
     }
 
     private static void checkOffsetAndLength(int offset,int len,int max) {
-	if(offset < 0 || offset > len)
+	if(offset < 0 || offset >= max)
 	    throw new ArrayIndexOutOfBoundsException("Invalid offset.");
 	if(offset+len > max)
 	    throw new ArrayIndexOutOfBoundsException("Invalid length.");
